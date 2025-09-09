@@ -1,0 +1,1701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Future Finders Chama Group</title>
+  <style>
+   body { 
+  font-family: Arial, sans-serif; 
+  margin: 0; 
+  padding: 0; 
+  background: #f9f9f9; 
+  padding-bottom: 60px; /* prevent overlap with footer */
+}
+
+header { 
+  background: #00695c; 
+  color: white; 
+  padding: 1.5rem; 
+  text-align: center; 
+}
+
+/* NAV BUTTONS */
+#navButtons { 
+  display: flex; 
+  flex-wrap: wrap; 
+  gap: 0.8rem; 
+  justify-content: center; 
+  margin: 1.5rem; 
+}
+
+.nav-btn {
+  flex: 1 1 180px; 
+  background-color: #00796b; 
+  color: white;
+  padding: 1rem; 
+  text-align: center; 
+  border-radius: 6px;
+  text-decoration: none; 
+  font-weight: bold; 
+  position: relative;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.2); 
+  cursor: pointer;
+}
+.nav-btn:hover { background-color: #004d40; }
+
+/* Spinner */
+.spinner {
+  display: none; 
+  border: 3px solid #f3f3f3; 
+  border-top: 3px solid white;
+  border-radius: 50%; 
+  width: 18px; 
+  height: 18px; 
+  animation: spin 1s linear infinite;
+  position: absolute; 
+  right: 12px; 
+  top: 50%; 
+  transform: translateY(-50%);
+}
+@keyframes spin { 
+  0% { transform: translateY(-50%) rotate(0deg);} 
+  100% { transform: translateY(-50%) rotate(360deg);} 
+}
+
+/* Sections */
+section {
+  padding: 2rem; 
+  background: white; 
+  margin: 1rem auto; 
+  border-radius: 8px;
+  max-width: 900px; 
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1); 
+  display: none;
+}
+section.active { display: block; }
+
+input, select {
+  padding: 10px; 
+  margin: 10px auto; 
+  width: 80%; 
+  display: block;
+  border: 1px solid #ccc; 
+  border-radius: 5px;
+}
+
+.action-btn {
+  display: block; 
+  background-color: #388e3c; 
+  color: white;
+  padding: 0.9rem; 
+  margin: 0.5rem auto; 
+  text-align: center;
+  border-radius: 6px; 
+  text-decoration: none; 
+  font-weight: bold;
+  position: relative; 
+  max-width: 250px; 
+  cursor: pointer;
+}
+.action-btn:hover { background-color: #1b5e20; }
+
+#dashboard, #admin { 
+  display: none; 
+  padding: 1rem; 
+  border-radius: 6px; 
+  margin-top: 20px; 
+  background: #f1f8e9; 
+}
+
+/* Popup Overlay */
+.popup-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Popup Box */
+.popup-box {
+  background: white;
+  padding: 20px 30px;
+  border-radius: 10px;
+  text-align: center;
+  max-width: 350px;
+  box-shadow: 0px 5px 15px rgba(0,0,0,0.3);
+  animation: popupFade 0.3s ease;
+}
+
+.popup-box h3 {
+  margin-bottom: 10px;
+}
+
+.popup-success {
+  border-top: 6px solid #4caf50;
+}
+.popup-error {
+  border-top: 6px solid #f44336;
+}
+
+.popup-btn {
+  margin-top: 15px;
+  padding: 8px 16px;
+  background: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+@keyframes popupFade {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* Glow effect */
+.glow {
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 0 5px #ff0, 0 0 10px #ff0, 0 0 20px #ffa500;
+  font-size: 18px;
+}
+
+/* Footer */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #111;
+  color: white;
+  text-align: center;
+  padding: 12px 0;
+  z-index: 1000;
+  overflow: hidden;
+}
+
+/* Modern marquee effect */
+.footer-marquee {
+  display: inline-block;
+  white-space: nowrap;
+  animation: marquee 12s linear infinite;
+}
+
+@keyframes marquee {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(-100%); }
+}
+/* Check Loan Eligibility Button */
+.check-loan-btn {
+  background: linear-gradient(135deg, #1976d2, #0d47a1);
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  display: inline-block;
+}
+
+.check-loan-btn:hover {
+  background: linear-gradient(135deg, #2196f3, #1565c0);
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+}
+
+.check-loan-btn:active {
+  transform: scale(0.97);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+/* Shake animation */
+@keyframes shake {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-5px); }
+  40% { transform: translateX(5px); }
+  60% { transform: translateX(-5px); }
+  80% { transform: translateX(5px); }
+  100% { transform: translateX(0); }
+}
+
+.shake {
+  animation: shake 0.4s ease;
+}
+/* Red glow effect */
+.input-error {
+  border: 2px solid #f44336 !important;
+  box-shadow: 0 0 8px #f44336;
+}
+/* 🎲 Dice container */
+#diceBox {
+  width: 80px;
+  height: 80px;
+  margin: 20px auto;
+  background: #fff;
+  border: 3px solid #333;
+  border-radius: 12px;
+  font-size: 30px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  transition: transform 0.6s ease;
+}
+
+/* Rolling animation */
+.roll {
+  animation: rollDice 0.3s linear infinite;
+}
+
+@keyframes rollDice {
+  0%   { transform: rotate(0deg); }
+  25%  { transform: rotate(90deg); }
+  50%  { transform: rotate(180deg); }
+  75%  { transform: rotate(270deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Pop-up effect when showing final number */
+.lucky-popup {
+  animation: popUp 0.6s ease forwards;
+  color: #1976d2;
+}
+
+@keyframes popUp {
+  0%   { transform: scale(0.2); opacity: 0; }
+  60%  { transform: scale(1.3); opacity: 1; }
+  100% { transform: scale(1); }
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+/* Contact Buttons */
+.contact-btn {
+  display: inline-block;
+  margin: 8px;
+  padding: 12px 18px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  color: white;
+  transition: transform 0.2s ease, opacity 0.3s;
+}
+
+.contact-btn:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+/* Specific colors */
+.contact-btn.email {
+  background: #1976d2; /* Blue */
+}
+.contact-btn.phone {
+  background: #d32f2f; /* Red */
+}
+.contact-btn.whatsapp {
+  background: #25d366; /* WhatsApp Green */
+}
+/* Initial hidden state */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+/* Visible state */
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+  </style>
+</head>
+<body>
+<!-- Custom Popup -->
+<div id="popup" class="popup-overlay">
+  <div id="popupBox" class="popup-box">
+    <h3 id="popupTitle"></h3>
+    <p id="popupMessage"></p>
+    <button class="popup-btn" onclick="closePopup()">OK</button>
+  </div>
+</div>
+<!-- System Update Banner -->
+<div id="systemBanner" style="display:none; background:#1976d2; color:white; text-align:center; padding:10px; font-weight:bold; position:fixed; top:0; left:0; width:100%; z-index:2000;">
+  <span id="bannerMessage">🚀 System Update: New features available!</span>
+  <button onclick="closeBanner()" style="margin-left:20px; background:#fff; color:#1976d2; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;">✖ Close</button>
+</div>
+
+<header>
+  <h1>🌍 Future Finders Chama Group</h1>
+  <p>Empowering our members through savings, merry-go-round, and loans.</p>
+</header>
+
+<!-- NAVIGATION -->
+<div id="navButtons">
+  <a class="nav-btn" onclick="simulateAction(this,'home')">🏠 Home <span class="spinner"></span></a>
+  <a class="nav-btn" onclick="simulateAction(this,'about')">ℹ️ About Us <span class="spinner"></span></a>
+<a class="nav-btn" onclick="simulateAction(this,'membership')">👥 Membership <span class="spinner"></span></a>
+
+  <a class="nav-btn" onclick="simulateAction(this,'picker')">🎲 Pick Number <span class="spinner"></span></a>
+  <a class="nav-btn" onclick="simulateAction(this,'services')">💼 Services <span class="spinner"></span></a>
+  <a class="nav-btn" onclick="simulateAction(this,'updates')">📰 News <span class="spinner"></span></a>
+<a class="nav-btn" onclick="simulateAction(this,'loginForm')">🔑 Member Login <span class="spinner"></span></a>
+
+
+  <a class="nav-btn" onclick="simulateAction(this,'adminLogin')">⚙️ Admin <span class="spinner"></span></a>
+ <a class="nav-btn" onclick="simulateAction(this,'contact')">📞 Contact <span class="spinner"></span>
+</a>
+
+</div>
+
+<!-- Sections -->
+ <!-- Services -->
+<section id="services">
+  <h2>💼 Our Services</h2>
+  <p>We provide savings plans, merry-go-round, and loan services to empower our members.</p>
+</section>
+
+<!-- News -->
+<section id="updates">
+  <h2>📰 Latest News</h2>
+  <p>Stay updated with the latest news and announcements from Future Finders Chama.</p>
+</section>
+
+<!-- Contact -->
+<section id="contact">
+  <h2>📞 Contact Us</h2>
+  <button class="contact-btn email" onclick="contactEmail()">📧 Email Us</button>
+  <button class="contact-btn phone" onclick="contactPhone()">📞 Call Us</button>
+  <button class="contact-btn whatsapp" onclick="contactWhatsApp()">💬 WhatsApp Chat</button>
+</section>
+
+<section id="home" class="active">
+  <h2>🏠 Home</h2>
+  <p>Welcome to Future Finders Chama. Together we save, invest, and grow.</p>
+</section>
+<!-- Random Picker -->
+<section id="picker">
+  <h2>🎉 Random Number Picker</h2>
+
+  <!-- Select member -->
+<label for="memberSelect"><b>Select Your Name:</b></label>
+<select id="memberSelect" required>
+  <option value="">-- Choose your name --</option>
+  <option>BONIFACE CHELLUGET</option>
+  <option>HILDA ODERO</option>
+  <option>JOEL EGESA</option>
+  <option>SHALIK SHIVERENGE</option>
+  <option>EVERLINE MAINA</option>
+  <option>ELVIS KAMASH</option>
+  <option>JULIUS KEBASO</option>
+  <option>CHRISTINE PIUS</option>
+  <option>EDNAH NANCY</option>
+  <option>JACKIENYARANGI</option>
+  <option>JUDITH OMWOYO</option>
+  <option>JANET NYAKUNDI</option>
+  <option>ANASTANCIA OMWOYO</option>
+  <option>PIUS NYAKUNDI</option>
+  <option>SAMUEL OYUGI</option>
+  <option>PURITY MOMANYI</option>
+  <option>KEFFA MOMANYI</option>
+  <option>KENNEDY MUTAYI</option>
+  <option>MIKE MORRIS</option>
+  <option>DAVY OMBATI</option>
+  <option>FAITH MOKOGI</option>
+  <option>SADLER KARAN</option>
+  <option>SHARON CHEPTOO</option>
+  <option>SHAMIM KAMASH</option>
+  <option>CLAUDIA MORAA</option>
+  <option>ESTHER OBEGI</option>
+</select>
+
+
+
+  <!-- Choose send method -->
+  <div style="margin: 10px 0;">
+    
+    <label><input type="radio" name="sendOption" value="whatsapp"> Send via WhatsApp 💬</label>
+  </div>
+
+  <!-- Pick button -->
+  <a class="action-btn" id="pickBtn" onclick="pickNumber()">
+  Pick Lucky Number <span class="spinner"></span>
+</a>
+<div id="diceBox">🎲</div>
+<div id="result" style="text-align:center; font-size:18px; margin-top:10px;"></div>
+
+  <p id="result"></p>
+</section>
+
+<section id="about">
+  <h2>ℹ️ About Us</h2>
+  <p>We are a merry-go-round and savings chama, soon launching loan services.</p>
+</section>
+<section id="adminLogin">
+  <h2>⚙️ Admin Login</h2>
+  <input type="text" id="adminUser" placeholder="Admin Name">
+  <input type="password" id="adminPass" placeholder="Password">
+  <a class="action-btn" id="adminBtn" onclick="adminLogin()">
+    Admin Login <span class="spinner"></span>
+  </a>
+  <p id="adminLoginMessage"></p>
+</section>
+
+<!-- Admin Panel (hidden until login) -->
+<section id="admin" style="display:none;">
+  <h2>🛠 Admin Panel</h2>
+
+  <!-- Admin logout -->
+<button id="logoutBtn" onclick="adminLogout()" 
+        style="margin-bottom:15px; padding:10px; background:#d32f2f; color:white; border:none; border-radius:5px; cursor:pointer; position:relative;">
+  🚪 Logout 
+  <span class="spinner" style="display:none; margin-left:8px; border:2px solid #f3f3f3; border-top:2px solid white; border-radius:50%; width:14px; height:14px; animation: spin 1s linear infinite; vertical-align:middle;"></span>
+</button>
+
+  <!-- Admin Controls -->
+  <h3>👤 Member Management</h3>
+
+  <!-- View Picked Numbers -->
+<button onclick="togglePickedNumbers()" 
+        style="padding:10px; margin:5px; background:#1976d2; color:white; border:none; border-radius:5px; cursor:pointer;">
+  🎲 View Picked Numbers
+</button>
+
+<!-- Lucky numbers table (hidden initially) -->
+<div id="pickedNumbersTable" style="display:none; margin-top:20px;">
+  <h3>🎲 Picked Lucky Numbers</h3>
+
+  <!-- Download CSV button -->
+  <button onclick="downloadPickedNumbers()" 
+          style="margin-bottom:10px; padding:8px 12px; background:#388e3c; color:white; border:none; border-radius:5px; cursor:pointer;">
+    ⬇️ Download CSV
+  </button>
+<!-- Reset Picked Numbers button -->
+<button onclick="resetPickedNumbers()" 
+        style="margin-bottom:10px; padding:8px 12px; background:#d32f2f; color:white; border:none; border-radius:5px; cursor:pointer;">
+  🗑️ Reset Picked Numbers
+</button>
+  <table border="1" style="width:100%; border-collapse:collapse; text-align:center;">
+    <thead style="background:#1976d2; color:white;">
+      <tr>
+        <th>Member</th>
+        <th>Lucky Number</th>
+      </tr>
+    </thead>
+    <tbody id="pickedNumbersBody">
+      <tr><td colspan="2" style="color:gray;">No numbers picked yet.</td></tr>
+    </tbody>
+  </table>
+</div>
+<div id="pendingMembersPanel" style="margin-top:20px;">
+  <h3>📝 Pending Member Registrations</h3>
+  <table border="1" style="width:100%; border-collapse:collapse; text-align:center;">
+    <thead style="background:#00796b; color:white;">
+      <tr>
+        <th>Name</th>
+        <th>Phone</th>
+        <th>Email</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="pendingMembersBody">
+      <tr><td colspan="5" style="color:gray;">No pending registrations.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- System Updates Section -->
+<h3>🚀 System Updates</h3>
+<textarea id="updateMessage" placeholder="Type new update..." 
+          style="width:90%; padding:10px; margin-bottom:10px;"></textarea><br>
+<button onclick="postUpdate()" 
+        style="padding:10px; background:#1976d2; color:white; border:none; border-radius:5px; cursor:pointer;">
+  📢 Post Update
+</button>
+<button onclick="clearUpdateHistory()" 
+        style="padding:10px; background:#d32f2f; color:white; border:none; border-radius:5px; cursor:pointer;">
+  🗑 Clear History
+</button>
+
+<!-- Updates History Table -->
+<div style="margin-top:20px;">
+  <h4>📜 Past Updates</h4>
+  <table border="1" style="width:100%; border-collapse:collapse; text-align:center;">
+    <thead style="background:#1976d2; color:white;">
+      <tr>
+        <th>All Updates (Click to Expand/Collapse)</th>
+      </tr>
+    </thead>
+    <tbody id="updateHistoryBody">
+      <tr><td style="color:gray;">No updates posted yet.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+
+
+</section>
+
+
+  
+
+<section id="membership" style="display:none;">
+  <h2>👥 Membership</h2>
+  <p>If you’re new, please register. If already a member, log in.</p>
+
+  <!-- Registration Form -->
+  <div id="registerForm">
+    <h3>📝 New Member Registration</h3>
+    <input type="text" id="regName" placeholder="Full Name" required>
+    <input type="text" id="regPhone" placeholder="Phone Number" required>
+    <input type="password" id="regPass" placeholder="Set Password" required>
+    <button onclick="registerMember()">Register</button>
+  </div>
+
+  
+
+</section>
+
+<!-- Member Login -->
+<section id="loginForm">
+  <h2>🔑 Member Login</h2>
+  <label for="memberName"><b>Select Your Name:</b></label>
+  <select id="memberName" required>
+    <option value="">-- Choose your name --</option>
+    <option>BONIFACE CHELLUGET</option>
+    <option>HILDA ODERO</option>
+    <option>JOEL EGESA</option>
+    <option>SHALIK SHIVERENGE</option>
+    <option>EVERLINE MAINA</option>
+    <option>ELVIS KAMASH</option>
+    <option>JULIUS KEBASO</option>
+    <option>CHRISTINE PIUS</option>
+    <option>EDNAH NANCY</option>
+    <option>JACKIE NYARANGI</option>
+    <option>JUDITH OMWOYO</option>
+    <option>JANET NYAKUNDI</option>
+    <option>ANASTANCIA OMWOYO</option>
+    <option>PIUS NYAKUNDI</option>
+    <option>SAMUEL OYUGI</option>
+    <option>PURITY MOMANYI</option>
+    <option>KEFFA MOMANYI</option>
+    <option>KENNEDY MUTAYI</option>
+    <option>MIKE MORRIS</option>
+    <option>DAVY OMBATI</option>
+    <option>FAITH MOKOGI</option>
+    <option>SADLER KARAN</option>
+    <option>SHARON CHEPTOO</option>
+    <option>SHAMIM KAMASH</option>
+    <option>CLAUDIA MORAA</option>
+    <option>ESTHER OBEGI</option>
+  </select>
+
+  <input type="password" id="memberPass" placeholder="Enter your phone number">
+  
+  <!-- Spinner already inside the button -->
+  <a class="action-btn" id="memberLoginBtn" onclick="login()">Login <span class="spinner"></span></a>
+  
+  <p id="loginMessage"></p>
+</section>
+
+
+<!-- Dashboard -->
+<div id="dashboard">
+  <h3>Welcome, <span id="memberDisplay"></span>!</h3>
+  <a class="action-btn" onclick="showCurrentSavings()">💰 View Current Savings</a>
+  <a class="action-btn" onclick="showMonthlySavings()">📊 View Monthly Savings</a>
+  <button class="check-loan-btn" onclick="checkLoan()">🔍 Check Loan Eligibility</button>
+
+
+
+<div id="loanMessage" style="margin-top:15px; font-weight:bold; color:#004d40;"></div>
+  <div id="allContributions" style="margin-top:20px;">
+  <h4>📊 Group Contributions</h4>
+<table border="1" style="width:100%; border-collapse:collapse; text-align:center;">
+  <thead style="background:#00796b; color:white;">
+    <tr>
+      <th>NAME</th>
+      <th>JAN</th>
+      <th>FEB</th>
+      <th>MAR</th>
+      <th>APR</th>
+      <th>MAY</th>
+      <th>JUNE</th>
+      <th>JULY</th>
+      <th>AUG</th>
+      <th>SEPT</th>
+      <th>OCT</th>
+      <th>NOV</th>
+      <th>DEC</th>
+      <th style="background:#004d40;">TOTAL</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>BONIFACE CHELLUGET</td><td>500</td><td>500</td><td>500</td><td>500</td><td>500</td><td>500</td><td>500</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>3500</b></td></tr><td>
+    <tr><td>HILDA ODERO</td><td>400</td><td>200</td><td>100</td><td>200</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>900</b></td></tr>
+    <tr><td>JOEL EGESA</td><td>200</td><td>0</td><td>20</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>220</b></td></tr>
+    <tr><td>SHALIK SHIVERENGE</td><td>250</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>250</b></td></tr>
+    <tr><td>EVERLINE MAINA</td><td>250</td><td>150</td><td>250</td><td>200</td><td>200</td><td>250</td><td>200</td><td>100</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>1600</b></td></tr>
+    <tr><td>ELVIS KAMASH</td><td>250</td><td>150</td><td>250</td><td>50</td><td>200</td><td>150</td><td>50</td><td>250</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>1350</b></td></tr>
+    <tr><td>JULIUS KEBASO</td><td>450</td><td>300</td><td>500</td><td>500</td><td>400</td><td>500</td><td>400</td><td>500</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>3550</b></td></tr>
+    <tr><td>CHRISTINE PIUS</td><td>50</td><td>150</td><td>250</td><td>150</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>600</b></td></tr>
+    <tr><td>EDNAH NANCY</td><td>250</td><td>100</td><td>100</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>450</b></td></tr>
+    <tr><td>JACKIENYARANGI</td><td>200</td><td>200</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>400</b></td></tr>
+    <tr><td>JUDITH OMWOYO</td><td>300</td><td>300</td><td>300</td><td>0</td><td>0</td><td>0</td><td>0</td><td>100</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>1000</b></td></tr>
+    <tr><td>JANET NYAKUNDI</td><td>150</td><td>0</td><td>100</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>250</b></td></tr>
+    <tr><td>ANASTANCIA OMWOYO</td><td>250</td><td>150</td><td>200</td><td>200</td><td>200</td><td>150</td><td>100</td><td>250</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>1500</b></td></tr>
+    <tr><td>PIUS NYAKUNDI</td><td>150</td><td>200</td><td>200</td><td>0</td><td>100</td><td>100</td><td>100</td><td>150</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>750</b></td></tr>
+    <tr><td>SAMUEL OYUGI</td><td>400</td><td>300</td><td>500</td><td>400</td><td>400</td><td>500</td><td>400</td><td>500</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>3400</b></td></tr>
+    <tr><td>PURITY MOMANYI</td><td>200</td><td>200</td><td>1200</td><td>950</td><td>800</td><td>400</td><td>350</td><td>100</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>4200</b></td></tr>
+    <tr><td>KEFFA MOMANYI</td><td>250</td><td>150</td><td>200</td><td>200</td><td>200</td><td>250</td><td>200</td><td>150</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>1650</b></td></tr>
+    <tr><td>KENNEDY MUTAYI</td><td>750</td><td>450</td><td>750</td><td>600</td><td>600</td><td>750</td><td>600</td><td>750</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>5250</b></td></tr>
+    <tr><td>MIKE MORRIS</td><td>0</td><td>0</td><td>100</td><td>50</td><td>0</td><td>0</td><td>0</td><td>150</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>300</b></td></tr>
+    <tr><td>DAVY OMBATI</td><td>0</td><td>0</td><td>50</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>50</b></td></tr>
+    <tr><td>FAITH MOKOGI</td><td>0</td><td>0</td><td>500</td><td>200</td><td>250</td><td>50</td><td>100</td><td>50</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>1000</b></td></tr>
+    <tr><td>SADLER KARAN</td><td>0</td><td>0</td><td>200</td><td>200</td><td>150</td><td>50</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>600</b></td></tr>
+    <tr><td>SHARON CHEPTOO</td><td>0</td><td>0</td><td>0</td><td>0</td><td>250</td><td>150</td><td>150</td><td>100</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>650</b></td></tr>
+    <tr><td>SHAMIM KAMASH</td><td>0</td><td>0</td><td>0</td><td>0</td><td>200</td><td>150</td><td>50</td><td>250</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>650</b></td></tr>
+    <tr><td>CLAUDIA MORAA</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>100</td><td>400</td><td>300</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>100</b></td></tr>
+  <tr><td>ESTHER OBEGI</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>500</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>500</b></td></tr>
+  </tbody>
+</table>
+<!-- Loan Applications History -->
+<div id="loanHistory" style="margin-top:30px;">
+  <h3>📜 Loan Applications History</h3>
+  <table border="1" style="width:100%; border-collapse:collapse; text-align:center;">
+    <thead style="background:#00796b; color:white;">
+      <tr>
+        <th>Name</th>
+        <th>Phone</th>
+        <th>Qualified Loan</th>
+        <th>Requested Amount</th>
+        <th>ID Number</th>
+        <th>Date</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody id="loanHistoryBody">
+      <tr><td colspan="7" style="color:gray;">No loan applications yet.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+</div>
+</div>
+</section>
+
+
+
+<footer style="position:fixed; bottom:0; width:100%; background:#111; padding:10px 0; text-align:center; color:white; z-index:1000;">
+  <div class="footer-marquee">
+    <span class="glow">🌟 FOUNDER: BONIFACE KAISER 🌟</span>
+  </div>
+</footer>
+
+
+
+
+<script>
+  // Load lucky numbers from localStorage or create new object
+let luckyNumbers = JSON.parse(localStorage.getItem("luckyNumbers")) || {};
+
+
+// Members data
+const members = {
+  "BONIFACE CHELLUGET": { phone: "0713953004", savings: 3500, monthly: [500,500,500,500,500,500,500] },
+  "HILDA ODERO": { phone: "0795341320", savings: 900, monthly: [400,200,100,200] },
+  "JOEL EGESA": { phone: "0768039551", savings: 220, monthly: [200,0,20] },
+  "SHALIK SHIVERENGE": { phone: "0746277086", savings: 250, monthly: [ 250,0,0] },
+  "EVERLINE MAINA": { phone: "0701360180", savings: 1600, monthly: [ 250,150,250,200,200,250,200,100,0] },
+  "ELVIS KAMASH": { phone: "079857851", savings: 1350, monthly: [ 250,150,250,50,200,150,50,250,0] },
+  "JULIUS KEBASO": { phone: "0705296154", savings: 3550, monthly: [ 450,300,500,500,400,500,400,500,0] },
+  "CHRISTINE PIUS": { phone: "0115603500", savings: 600, monthly: [ 50,150,250,150,0,0,0,0,0] },
+  "EDNAH NANCY": { phone: "0700000000", savings: 450, monthly: [ 250,100,100,0,0,0,0,0,0] },
+  "JACKIENYARANGI": { phone: "0790206224", savings: 400, monthly: [ 200,200,0,0,0,0,0,0,0] },
+ "JUDITH OMWOYO": { phone: "0741939235", savings: 1000, monthly: [ 300,300,300,0,0,0,0,100,0] },
+"JANET NYAKUNDI": { phone: "0706753288", savings: 250, monthly: [ 150,0,100,0,0,0,0,0,0] },
+"ANASTANCIA OMWOYO": { phone: "0748442547", savings: 1500, monthly: [ 250,150,200,200,200,150,100,250,0] },
+"PIUS NYAKUNDI": { phone: "0716845165", savings: 1000, monthly: [ 150,200,200,0,100,100,100,150,0] },
+"SAMUEL OYUGI": { phone: "0796860412", savings: 3400, monthly: [ 400,300,500,400,400,500,400,500,0] },
+"PURITY MOMANYI": { phone: "0103155480", savings: 4200, monthly: [ 200,200,1200,950,800,400,350,100,0] },
+"KEFFA MOMANYI": { phone: "0759237482", savings: 1650, monthly: [ 250,200,200,200,200,250,200,150,0] },
+"KENNEDY MUTAYI": { phone: "072412435", savings: 5250, monthly: [ 750,450,750,600,600,750,600,750,0] },
+"MIKE MORRIS": { phone: "0115570301", savings: 300, monthly: [ 0,0,100,50,0,0,0,150,0] },
+"DAVY OMBATI": { phone: "0793547166", savings: 250, monthly: [ 0,0,50,0,0,0,200,0,0] },
+"FAITH MOKOGI": { phone: "0706918919", savings: 1150, monthly: [ 0,0,500,200,250,50,100,50,0] },
+"SADLER KARAN": { phone: "0791730719", savings: 600, monthly: [ 0,0,200,200,150,50,0,0,0] },
+"SHARON CHEPTOO": { phone: "0768675656", savings: 650, monthly: [ 0,0,0,0,250,150,150,100,0] },
+"SHAMIM KAMASH": { phone: "0725978420", savings: 650, monthly: [ 0,0,0,0,200,150,50,250] },
+"CLAUDIA MORAA": { phone: "0741520782", savings: 800, monthly: [ 0,0,0,0,0,100,400,300,0] },
+"ESTHER OBEGI": { phone: "0748845363", savings: 500, monthly: [ 0,0,0,0,0,0,0,500,0] },
+};
+
+function simulateAction(btn, sectionId) {
+  // Show spinner
+  const spinner = btn.querySelector(".spinner");
+  spinner.style.display = "inline-block";
+
+  // Simulate loading delay
+  setTimeout(() => {
+    // Hide spinner
+    spinner.style.display = "none";
+
+    // Hide all sections
+    document.querySelectorAll("section, #dashboard, #admin").forEach(sec => {
+      sec.style.display = "none";
+    });
+
+    // Show the selected section
+    const target = document.getElementById(sectionId);
+    if (target) {
+      target.style.display = "block";
+    } else {
+      console.warn("No section found with id:", sectionId);
+    }
+  }, 500);
+}
+
+
+// Member login
+// Show Popup
+function showPopup(type, title, message) {
+  const popup = document.getElementById("popup");
+  const box = document.getElementById("popupBox");
+  document.getElementById("popupTitle").innerText = title;
+  document.getElementById("popupMessage").innerText = message;
+
+  // Reset classes
+  box.className = "popup-box";
+
+  // Add type style
+  if (type === "success") {
+    box.classList.add("popup-success");
+  } else if (type === "error") {
+    box.classList.add("popup-error");
+  }
+
+  popup.style.display = "flex";
+}
+
+// Close Popup
+function closePopup() {
+  document.getElementById("popup").style.display = "none";
+}
+
+function login() {
+  let btn = document.getElementById("memberLoginBtn");
+  let spinner = btn.querySelector(".spinner");
+  let name = document.getElementById("memberName").value.trim();
+  let pass = document.getElementById("memberPass").value.trim();
+  let msg = document.getElementById("loginMessage");
+
+  spinner.style.display = "inline-block";
+
+  setTimeout(() => {
+    spinner.style.display = "none";
+
+    if (!name || !pass) {
+      msg.innerText = "⚠️ Please select your name and enter your phone number.";
+      return;
+    }
+
+    // ✅ Check hardcoded members first
+    if (members[name] && members[name].phone === pass) {
+      msg.innerText = "";
+      document.getElementById("loginForm").style.display = "none";
+      document.getElementById("dashboard").style.display = "block";
+      document.getElementById("memberDisplay").innerText = name;
+      alert(`🎉 Welcome back ${name}!`);
+      return;
+    }
+
+    // 🔐 If not in hardcoded list, check approved members
+    let approved = JSON.parse(localStorage.getItem("approvedMembers")) || [];
+    let member = approved.find(m => m.name === name);
+
+    if (!member) {
+      msg.innerText = "❌ You are not approved yet. Please wait for admin approval.";
+      return;
+    }
+
+    if (member.phone !== pass) {
+      msg.innerText = "❌ Invalid phone number.";
+      return;
+    }
+
+    // ✅ Successful login for approved member
+    msg.innerText = "";
+    document.getElementById("loginForm").style.display = "none";
+    document.getElementById("dashboard").style.display = "block";
+    document.getElementById("memberDisplay").innerText = name;
+
+    alert(`🎉 Welcome ${name}!`);
+  }, 1000);
+}
+
+
+// Show Popup
+function showPopup(type, title, message) {
+  const popup = document.getElementById("popup");
+  const box = document.getElementById("popupBox");
+  document.getElementById("popupTitle").innerText = title;
+  document.getElementById("popupMessage").innerText = message;
+
+  // Reset classes
+  box.className = "popup-box";
+
+  // Add type style
+  if (type === "success") {
+    box.classList.add("popup-success");
+  } else if (type === "error") {
+    box.classList.add("popup-error");
+  }
+
+  popup.style.display = "flex";
+
+  // Auto close after 2 seconds
+  setTimeout(() => {
+    closePopup();
+  }, 5000);
+}
+
+// Close Popup
+function closePopup() {
+  document.getElementById("popup").style.display = "none";
+}
+
+
+// Show savings
+function showCurrentSavings() {
+  let name = document.getElementById("memberDisplay").innerText;
+  alert("💰 Current Savings: KES " + members[name].savings);
+}
+function showMonthlySavings() {
+  let name = document.getElementById("memberDisplay").innerText;
+  alert("📊 Monthly Contributions: " + members[name].monthly.join(", "));
+}
+function checkLoan() { 
+  let name = document.getElementById("memberDisplay").innerText;
+  let totalSavings = members[name].savings;
+
+  let loanResult = document.getElementById("loanMessage");
+  loanResult.innerHTML = ""; 
+
+  let loanAmount = 0, repaymentPeriod = "", repaymentAmount = 0;
+
+  // Loan rules with repayment details
+  if (totalSavings < 1500) {
+    loanResult.innerHTML = `❌ Sorry, ${name}, you are not yet eligible for a loan. Please keep on saving.`;
+    return;
+  } else if (totalSavings >= 1500 && totalSavings < 2000) {
+    loanAmount = 1200;
+    repaymentPeriod = "2 months";
+    repaymentAmount = 1330;
+  } else if (totalSavings >= 2000 && totalSavings < 3000) {
+    loanAmount = 1800;
+    repaymentPeriod = "2 months";
+    repaymentAmount = 1955;
+  } else if (totalSavings >= 3000 && totalSavings < 4000) {
+    loanAmount = 2800;
+    repaymentPeriod = "2.5 months";
+    repaymentAmount = 3010;
+  } else if (totalSavings >= 4000 && totalSavings < 5000) {
+    loanAmount = 3500;
+    repaymentPeriod = "3 months";
+    repaymentAmount = 3920;
+  } else if (totalSavings >= 5000 && totalSavings < 6500) {
+    loanAmount = 4100;
+    repaymentPeriod = "3.5 months";
+    repaymentAmount = 4430;
+  } else if (totalSavings >= 6500 && totalSavings < 7600) {
+    loanAmount = 5000;
+    repaymentPeriod = "5 months";
+    repaymentAmount = 5410;
+  } else if (totalSavings >= 7600) {
+    // Dynamic calculation for loans above 7600
+    let extraSteps = Math.floor((totalSavings - 7600) / 400);
+    loanAmount = 5000 + (extraSteps * 200);
+    repaymentPeriod = "6 months";
+    repaymentAmount = 5410 + (extraSteps * 200);
+  }
+
+  // Show qualification message + button
+  loanResult.innerHTML = `
+    ✅ Congratulations, ${name}!<br>
+    You qualify for a loan.<br><br>
+    <b>Loan Amount:</b> Ksh ${loanAmount}<br>
+    <b>Repayment Period:</b> ${repaymentPeriod}<br>
+    <b>Total Repayment:</b> Ksh ${repaymentAmount}<br><br>
+    <button onclick="showLoanForm('${name}', ${loanAmount}, '${repaymentPeriod}', ${repaymentAmount})" 
+      style="padding:10px 15px; background:#1976d2; color:white; border:none; border-radius:5px; cursor:pointer;">
+      👉 Click here to Apply
+    </button>
+  `;
+}
+
+// Show Loan Application Form
+function showLoanForm(name, amount, repaymentPeriod, repaymentAmount) {
+  let phone = members[name].phone; // get phone from login data
+
+  let loanResult = document.getElementById("loanMessage");
+  loanResult.innerHTML = `
+    <h3>📝 Loan Application Form</h3>
+    <form onsubmit="submitLoan(event, '${name}', ${amount}, '${phone}', '${repaymentPeriod}', ${repaymentAmount})">
+      <label><b>Name:</b></label><br>
+      <input type="text" value="${name}" readonly style="width:90%; padding:8px; margin-bottom:10px;"><br>
+      
+      <label><b>Phone Number:</b></label><br>
+      <input type="text" value="${phone}" readonly style="width:90%; padding:8px; margin-bottom:10px;"><br>
+      
+      <label><b>Qualified Loan Amount:</b></label><br>
+      <input type="text" value="Ksh ${amount}" readonly style="width:90%; padding:8px; margin-bottom:10px;"><br>
+
+      <label><b>Repayment Period:</b></label><br>
+      <input type="text" value="${repaymentPeriod}" readonly style="width:90%; padding:8px; margin-bottom:10px;"><br>
+
+      <label><b>Total Repayment Amount:</b></label><br>
+      <input type="text" value="Ksh ${repaymentAmount}" readonly style="width:90%; padding:8px; margin-bottom:10px;"><br>
+
+      <label><b>Enter Amount You Wish to Apply:</b></label><br>
+      <input type="number" id="applyAmount" min="500" max="${amount}" required 
+             placeholder="Enter amount (min 500, max ${amount})" 
+             style="width:90%; padding:8px; margin-bottom:10px;"><br>
+
+      <label><b>ID Number:</b></label><br>
+      <input type="number" id="loanId" required placeholder="Enter your ID Number" 
+             minlength="7" maxlength="8" 
+             oninput="if(this.value.length > 8) this.value = this.value.slice(0, 8);" 
+             style="width:90%; padding:8px; margin-bottom:10px;"><br>
+
+      <button type="submit" 
+        style="margin-top:10px; padding:10px; background:#388e3c; color:white; border:none; cursor:pointer;">
+        Submit Application
+      </button>
+    </form>
+  `;
+}
+
+
+// Handle Loan Submission
+function submitLoan(event, name, qualifiedAmount, phone, repaymentPeriod, repaymentAmount) {
+  event.preventDefault();
+
+  let applyAmount = parseInt(document.getElementById("applyAmount").value);
+  let idNumber = document.getElementById("loanId").value.trim();
+
+  // Validation
+  if (isNaN(applyAmount) || applyAmount < 500 || applyAmount > qualifiedAmount) {
+    alert(`❌ Enter a valid loan amount between 500 and ${qualifiedAmount}.`);
+    return;
+  }
+
+  if (!/^[0-9]{7,8}$/.test(idNumber)) {
+    alert("❌ Enter a valid Kenyan ID Number (7 or 8 digits).");
+    return;
+  }
+
+  // Get today's date
+  let today = new Date();
+  let dateStr = today.toLocaleDateString("en-KE", {
+    weekday: "long", year: "numeric", month: "long", day: "numeric"
+  });
+
+  // Save loan application into table
+  let historyBody = document.getElementById("loanHistoryBody");
+  if (historyBody.children[0].tagName === "TR" && historyBody.children[0].cells.length === 1) {
+    historyBody.innerHTML = ""; // remove "No loan applications yet."
+  }
+
+  let newRow = document.createElement("tr");
+  newRow.innerHTML = `
+    <td>${name}</td>
+    <td>${phone}</td>
+    <td>Ksh ${qualifiedAmount}</td>
+    <td>Ksh ${applyAmount}</td>
+    <td>${idNumber}</td>
+    <td>${repaymentPeriod}</td>
+    <td>Ksh ${repaymentAmount}</td>
+    <td>${dateStr}</td>
+    <td style="color:orange; font-weight:bold;">Pending</td>
+  `;
+  historyBody.appendChild(newRow);
+
+  // WhatsApp Message
+  let message = `Hello, I am ${name}. I am applying for a loan.\n\n` +
+                `📅 Date: ${dateStr}\n` +
+                `📞 Phone: ${phone}\n` +
+                `Qualified Loan: Ksh ${qualifiedAmount}\n` +
+                `Requested Amount: Ksh ${applyAmount}\n` +
+                `Repayment Period: ${repaymentPeriod}\n` +
+                `Total Repayment: Ksh ${repaymentAmount}\n` +
+                `ID Number: ${idNumber}`;
+
+  let whatsappUrl = "https://wa.me/254713953004?text=" + encodeURIComponent(message);
+  window.open(whatsappUrl, "_blank");
+}
+function addMember(event) {
+  event.preventDefault();
+
+  let name = document.getElementById("newMemberName").value.trim();
+  let phone = document.getElementById("newMemberPhone").value.trim();
+  let savings = parseInt(document.getElementById("newMemberSavings").value) || 0;
+
+  if (!name || !phone) {
+    alert("❌ Please fill in all required fields.");
+    return;
+  }
+
+  // ✅ Check if member already exists
+  if (members[name]) {
+    alert(`⚠️ Member "${name}" already exists in the system.`);
+    return;
+  }
+
+  // ✅ Add to members object
+  members[name] = { phone: phone, savings: savings };
+
+  // ✅ Add new member to login dropdown
+  let dropdown = document.getElementById("memberName");
+  let option = document.createElement("option");
+  option.value = name;
+  option.textContent = name;
+  dropdown.appendChild(option);
+
+  // ✅ Success message
+  alert(`✅ Member ${name} has been added successfully and can now log in!`);
+
+  // Reset form
+  document.getElementById("newMemberName").value = "";
+  document.getElementById("newMemberPhone").value = "";
+  document.getElementById("newMemberSavings").value = "0";
+
+  // Hide form
+  document.getElementById("addMemberForm").style.display = "none";
+}
+
+
+
+
+
+
+// Admin Login Function with Spinner + Shake
+function adminLogin() {
+  let usernameInput = document.getElementById("adminUser");
+  let passwordInput = document.getElementById("adminPass");
+  let username = usernameInput.value.trim().toLowerCase();
+  let password = passwordInput.value.trim();
+  let message = document.getElementById("adminLoginMessage");
+  let loginBtn = document.getElementById("adminBtn");
+  let spinner = loginBtn.querySelector(".spinner");
+
+  // Show spinner
+  spinner.style.display = "inline-block";
+  message.innerHTML = "";
+  loginBtn.style.pointerEvents = "none"; // disable button
+
+  setTimeout(() => {
+    // Hide spinner after 2 seconds
+    spinner.style.display = "none";
+    loginBtn.style.pointerEvents = "auto";
+
+    if (username === "bony" && password === "2025") {
+      // ✅ Successful login
+      message.style.color = "green";
+      message.innerHTML = "✅ Login successful! Welcome, Admin.";
+
+      document.getElementById("adminLogin").style.display = "none"; // hide login form
+      document.getElementById("admin").style.display = "block"; // show admin panel
+  // 🔔 Trigger system banner for members
+  showBanner("🔔 New Loan Rules have been added! Check your dashboard.");
+      // 🔑 Save session
+      localStorage.setItem("adminLoggedIn", "true");
+
+    } else {
+      // ❌ Failed login
+      message.style.color = "red";
+      message.innerHTML = "❌ Incorrect username or password!";
+
+      // Add red glow to inputs
+      usernameInput.classList.add("input-error");
+      passwordInput.classList.add("input-error");
+    }
+  }, 2000); // 2 sec delay
+}
+
+function adminLogout() {
+  let logoutBtn = document.getElementById("logoutBtn");
+  let spinner = logoutBtn.querySelector(".spinner");
+
+  // Show spinner
+  spinner.style.display = "inline-block";
+  logoutBtn.style.pointerEvents = "none";
+
+  setTimeout(() => {
+    // Clear session
+    localStorage.removeItem("adminLoggedIn");
+
+    // Hide admin panel
+    document.getElementById("admin").style.display = "none";
+
+    // Show login again
+    document.getElementById("adminLogin").style.display = "block";
+
+    // Reset button
+    spinner.style.display = "none";
+    logoutBtn.style.pointerEvents = "auto";
+
+    alert("✅ You have been logged out.");
+  }, 2000); // 2 sec delay
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function pickNumber() {
+  let member = document.getElementById("memberSelect").value;
+  let result = document.getElementById("result");
+  let dice = document.getElementById("diceBox");
+
+  if (!member) {
+    alert("⚠️ Please select your name first.");
+    return;
+  }
+
+  // If already picked
+  if (luckyNumbers[member]) {
+    result.innerHTML = `
+      ❌ Sorry ${member}, you already picked your lucky number: 
+      <b class="lucky-popup">${luckyNumbers[member]}</b><br><br>
+      <button onclick="resendNumber('${member}')"
+        style="padding:8px 12px; background:#00796b; color:white; border:none; border-radius:5px; cursor:pointer;">
+        🔁 Resend Number
+      </button>
+    `;
+    return;
+  }
+
+  // Start rolling
+  dice.classList.add("roll");
+  result.innerHTML = "Rolling your lucky number... 🎲";
+
+  // Stop after 4s
+  setTimeout(() => {
+    dice.classList.remove("roll");
+
+    // Final lucky number
+    let number = Math.floor(Math.random() * 27) + 1;
+    luckyNumbers[member] = number;
+    localStorage.setItem("luckyNumbers", JSON.stringify(luckyNumbers));
+
+    dice.innerHTML = `<span class="lucky-popup">${number}</span>`;
+    result.innerHTML = `
+      🎉 Congratulations ${member}, your lucky number is: 
+      <b class="lucky-popup">${number}</b><br><br>
+      <button onclick="resendNumber('${member}')"
+        style="padding:8px 12px; background:#1976d2; color:white; border:none; border-radius:5px; cursor:pointer;">
+        🔁 send/Resend Number( click here)
+      </button>
+    `;
+  }, 4000);
+}
+
+function resendNumber(member) {
+  let number = luckyNumbers[member];
+  let method = document.querySelector('input[name="sendOption"]:checked').value;
+
+  let message = `🎉 Hello ${member}, your lucky number is: ${number}`;
+
+  if (method === "whatsapp") {
+    window.open("https://wa.me/254713953004?text=" + encodeURIComponent(message), "_blank");
+  } else {
+    window.location.href = "mailto:?subject=Lucky Number&body=" + encodeURIComponent(message);
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Show Picked Numbers (Admin Only)
+function showPickedNumbers() {
+  let table = document.getElementById("pickedNumbersTable");
+  let body = document.getElementById("pickedNumbersBody");
+
+  // Load lucky numbers from localStorage
+  let luckyNumbers = JSON.parse(localStorage.getItem("luckyNumbers")) || {};
+
+  // Clear existing table
+  body.innerHTML = "";
+
+  // If no numbers yet
+  if (Object.keys(luckyNumbers).length === 0) {
+    body.innerHTML = `<tr><td colspan="2" style="color:gray;">No numbers picked yet.</td></tr>`;
+  } else {
+    // Add each member + number to table
+    for (let member in luckyNumbers) {
+      let row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${member}</td>
+        <td>${luckyNumbers[member]}</td>
+      `;
+      body.appendChild(row);
+    }
+  }
+
+  // Show the table
+  table.style.display = "block";
+}
+function togglePickedNumbers() {
+  let table = document.getElementById("pickedNumbersTable");
+  let body = document.getElementById("pickedNumbersBody");
+  let btn = document.querySelector('button[onclick="togglePickedNumbers()"]');
+
+  if (table.style.display === "none" || table.style.display === "") {
+    // Load lucky numbers from localStorage
+    let luckyNumbers = JSON.parse(localStorage.getItem("luckyNumbers")) || {};
+
+    // Clear table
+    body.innerHTML = "";
+
+    if (Object.keys(luckyNumbers).length === 0) {
+      body.innerHTML = `<tr><td colspan="2" style="color:gray;">No numbers picked yet.</td></tr>`;
+    } else {
+      for (let member in luckyNumbers) {
+        let row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${member}</td>
+          <td>${luckyNumbers[member]}</td>
+        `;
+        body.appendChild(row);
+      }
+    }
+
+    // Show table
+    table.style.display = "block";
+    btn.innerText = "🙈 Hide Picked Numbers";
+  } else {
+    table.style.display = "none";
+    btn.innerText = "🎲 View Picked Numbers";
+  }
+}
+function downloadPickedNumbers() {
+  let luckyNumbers = JSON.parse(localStorage.getItem("luckyNumbers")) || {};
+
+  if (Object.keys(luckyNumbers).length === 0) {
+    alert("⚠️ No picked numbers to download.");
+    return;
+  }
+
+  // Convert to CSV
+  let csvContent = "data:text/csv;charset=utf-8,Member,Lucky Number,Picked At\n";
+  for (let member in luckyNumbers) {
+    csvContent += `${member},${luckyNumbers[member].number},${luckyNumbers[member].time}\n`;
+  }
+
+  // Create hidden download link
+  let encodedUri = encodeURI(csvContent);
+  let link = document.createElement("a");
+  link.setAttribute("href", encodedUri);
+  link.setAttribute("download", "picked_numbers.csv");
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+function resetPickedNumbers() {
+  let password = prompt("🔒 Enter admin password to reset picked numbers:");
+
+  if (password !== "2025") {
+    alert("❌ Incorrect password. Reset cancelled.");
+    return;
+  }
+
+  if (confirm("⚠️ Are you sure you want to reset all picked numbers? This action cannot be undone.")) {
+    localStorage.removeItem("luckyNumbers"); // clear storage
+    luckyNumbers = {}; // reset in memory
+
+    // Refresh the table
+    document.getElementById("pickedNumbersBody").innerHTML = 
+      `<tr><td colspan="3" style="color:gray;">No numbers picked yet.</td></tr>`;
+
+    alert("✅ All picked numbers have been reset successfully.");
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function contactEmail() {
+  window.location.href = "mailto:Bonychelly@gmail.com";
+  showPopup("📧 Opening email client...", "success");
+}
+
+function contactPhone() {
+  window.location.href = "tel:+254713953004";
+  showPopup("📞 Dialing now...", "success");
+}
+
+function contactWhatsApp() {
+  let phone = "254713953004"; 
+  let message = "Hello, I would like to get in touch with you.";
+  window.open("https://wa.me/" + phone + "?text=" + encodeURIComponent(message), "_blank");
+  showPopup("💬 Opening WhatsApp chat...", "success");
+}
+
+function showPopup(message, type = "success") {
+  let overlay = document.createElement("div");
+  overlay.className = "popup-overlay";
+  let box = document.createElement("div");
+  box.className = "popup-box " + (type === "success" ? "popup-success" : "popup-error");
+  box.innerHTML = `<p>${message}</p>`;
+  overlay.appendChild(box);
+  document.body.appendChild(overlay);
+  overlay.style.display = "flex";
+
+  setTimeout(() => {
+    overlay.remove();
+  }, 2000);
+}
+// Fade-in on scroll
+window.addEventListener("scroll", () => {
+  let contactSection = document.getElementById("contact");
+  let position = contactSection.getBoundingClientRect().top;
+  let screenHeight = window.innerHeight;
+
+  if (position < screenHeight - 100) {
+    contactSection.classList.add("visible");
+  }
+});
+function simulateAction(button, sectionId) {
+  let spinner = button.querySelector(".spinner");
+
+  // Show spinner
+  spinner.style.display = "inline-block";
+  button.style.pointerEvents = "none";
+
+  setTimeout(() => {
+    // Hide spinner
+    spinner.style.display = "none";
+    button.style.pointerEvents = "auto";
+
+    // Hide all sections
+    document.querySelectorAll("section").forEach(sec => {
+      sec.style.display = "none";
+    });
+
+    // Show selected section
+    document.getElementById(sectionId).style.display = "block";
+  }, 800); // 0.8 sec loading effect
+}
+
+
+
+
+
+
+
+
+// Handle Membership button click
+function showMembership() {
+  document.querySelectorAll("section, #dashboard, #admin").forEach(sec => sec.style.display = "none");
+
+  // If members exist → show login, else show registration
+  if (Object.keys(members).length === 0) {
+    document.getElementById("registerForm").style.display = "block";
+    document.getElementById("loginForm").style.display = "none";
+  } else {
+    // Populate login dropdown with member names
+    let memberSelect = document.getElementById("memberName");
+    memberSelect.innerHTML = '<option value="">-- Choose your name --</option>';
+    Object.keys(members).forEach(m => {
+      let opt = document.createElement("option");
+      opt.textContent = m;
+      opt.value = m;
+      memberSelect.appendChild(opt);
+    });
+
+    document.getElementById("registerForm").style.display = "none";
+    document.getElementById("loginForm").style.display = "block";
+  }
+
+  document.getElementById("membership").style.display = "block";
+}
+
+function registerMember() {
+  let name = document.getElementById("regName").value.trim();
+  let phone = document.getElementById("regPhone").value.trim();
+  let pass = document.getElementById("regPass").value.trim();
+
+  if (!name || !phone || !pass) {
+    alert("⚠️ Please fill in all fields.");
+    return;
+  }
+
+  // Load pending members from localStorage
+  let pending = JSON.parse(localStorage.getItem("pendingMembers")) || [];
+  let approved = JSON.parse(localStorage.getItem("approvedMembers")) || [];
+
+  // Prevent duplicate names
+  if (approved.some(m => m.name === name) || pending.some(m => m.name === name)) {
+    alert("❌ This member is already registered or waiting for approval.");
+    return;
+  }
+
+  // Save to pending members
+  let newMember = { name, phone, pass };
+  pending.push(newMember);
+  localStorage.setItem("pendingMembers", JSON.stringify(pending));
+
+  alert(`✅ Registration successful!\n\nYour application is pending admin approval.`);
+
+  // Clear form
+  document.getElementById("regName").value = "";
+  document.getElementById("regPhone").value = "";
+  document.getElementById("regPass").value = "";
+
+  // 🚀 Send WhatsApp to Admin (optional)
+  let message = `🆕 New member registration:\n\n👤 Name: ${name}\n📞 Phone: ${phone}`;
+  let whatsappUrl = "https://wa.me/254713953004?text=" + encodeURIComponent(message);
+  window.open(whatsappUrl, "_blank");
+}
+
+
+
+  
+
+function updatePendingMembersTable() {
+  let pending = JSON.parse(localStorage.getItem("pendingMembers")) || [];
+  let tbody = document.getElementById("pendingMembersBody");
+
+  tbody.innerHTML = ""; // Clear old rows
+
+  if (pending.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="5" style="color:gray;">No pending registrations.</td></tr>`;
+    return;
+  }
+
+  pending.forEach((m, index) => {
+    let row = `<tr>
+      <td>${m.name}</td>
+      <td>${m.phone}</td>
+      <td>${m.email || "N/A"}</td>
+      <td>${m.status}</td>
+      <td>
+        <button onclick="approveMember(${index})" style="background:green;color:white;padding:5px;border:none;border-radius:4px;cursor:pointer;">✅ Approve</button>
+        <button onclick="rejectMember(${index})" style="background:red;color:white;padding:5px;border:none;border-radius:4px;cursor:pointer;">❌ Reject</button>
+      </td>
+    </tr>`;
+    tbody.innerHTML += row;
+  });
+}
+
+
+function approveMember(index) {
+  let pending = JSON.parse(localStorage.getItem("pendingMembers")) || [];
+  let member = pending[index];
+
+  // ✅ Add to approved members
+  members[member.name] = { phone: member.phone, savings: 0, monthly: [] };
+
+  // Remove from pending
+  pending.splice(index, 1);
+  localStorage.setItem("pendingMembers", JSON.stringify(pending));
+
+  // Add to login dropdown
+  let dropdown = document.getElementById("memberName");
+  let option = document.createElement("option");
+  option.value = member.name;
+  option.textContent = member.name;
+  dropdown.appendChild(option);
+
+  // ✅ WhatsApp Notification to User
+  let message = `🎉 Hello ${member.name}, your registration to Future Finders Chama has been APPROVED ✅. You can now log in with your phone number: ${member.phone}. Welcome aboard!`;
+  window.open("https://wa.me/" + member.phone.replace(/^0/, "254") + "?text=" + encodeURIComponent(message), "_blank");
+
+  alert(`✅ ${member.name} approved and added to members list!`);
+  updatePendingMembersTable();
+}
+function rejectMember(index) {
+  let pending = JSON.parse(localStorage.getItem("pendingMembers")) || [];
+  let member = pending[index];
+
+  // Remove from pending
+  pending.splice(index, 1);
+  localStorage.setItem("pendingMembers", JSON.stringify(pending));
+
+  // ❌ WhatsApp Notification to User
+  let message = `⚠️ Hello ${member.name}, unfortunately your registration to Future Finders Chama has been REJECTED ❌. Please contact the admin for more details.`;
+  window.open("https://wa.me/" + member.phone.replace(/^0/, "254") + "?text=" + encodeURIComponent(message), "_blank");
+
+  alert(`❌ ${member.name} has been rejected.`);
+  updatePendingMembersTable();
+}
+
+// ✅ Show banner
+function showBanner(message, time) {
+  document.getElementById("bannerMessage").innerHTML =
+    `📢 ${message} <br><small style="font-weight:normal;">🕒 Posted on ${time}</small>`;
+
+  let banner = document.getElementById("systemBanner");
+  banner.style.display = "block";
+  setTimeout(() => banner.classList.add("show"), 50);
+
+  // ⏳ Auto-hide after 8 seconds
+  setTimeout(() => {
+    closeBanner();
+  }, 8000);
+}
+
+// ✅ Post new update
+function postUpdate() {
+  let msg = document.getElementById("updateMessage").value.trim();
+  if (!msg) {
+    alert("⚠️ Please enter a message before posting.");
+    return;
+  }
+
+  let now = new Date();
+  let dateStr = now.toLocaleString("en-KE", {
+    weekday: "long", year: "numeric", month: "long", day: "numeric",
+    hour: "2-digit", minute: "2-digit"
+  });
+
+  let newUpdate = { message: msg, time: dateStr };
+
+  let updates = JSON.parse(localStorage.getItem("systemUpdates")) || [];
+  updates.push(newUpdate);
+  localStorage.setItem("systemUpdates", JSON.stringify(updates));
+
+  showBanner(msg, dateStr);
+  updateUpdateHistory();
+
+  alert("✅ Update posted successfully!");
+  document.getElementById("updateMessage").value = "";
+}
+
+// ✅ Load updates on refresh
+window.onload = function () {
+  let updates = JSON.parse(localStorage.getItem("systemUpdates")) || [];
+  if (updates.length > 0) {
+    let latest = updates[updates.length - 1];
+    showBanner(latest.message, latest.time);
+    updateUpdateHistory();
+  }
+};
+
+// ✅ Close banner
+function closeBanner() {
+  let banner = document.getElementById("systemBanner");
+  banner.classList.remove("show");
+  setTimeout(() => (banner.style.display = "none"), 600);
+  // Don’t clear localStorage here → history remains
+}
+
+// ✅ Update Admin History (collapsible list)
+function updateUpdateHistory() {
+  let updates = JSON.parse(localStorage.getItem("systemUpdates")) || [];
+  let body = document.getElementById("updateHistoryBody");
+
+  if (!body) return;
+
+  body.innerHTML = "";
+
+  if (updates.length === 0) {
+    body.innerHTML = `<tr><td colspan="2" style="color:gray;">No updates posted yet.</td></tr>`;
+    return;
+  }
+
+  updates.slice().reverse().forEach((update, index) => {
+    let row = document.createElement("tr");
+    row.innerHTML = `
+      <td colspan="2" style="text-align:left;">
+        <button onclick="toggleUpdate(${index})" 
+                style="background:#1976d2; color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;">
+          📢 ${update.time} ${index === 0 ? "(Latest)" : ""}
+        </button>
+        <div id="update-${index}" class="update-content" style="display:${index === 0 ? "block" : "none"}; margin-top:5px; padding:8px; border:1px solid #ccc; border-radius:5px;">
+          ${update.message}
+        </div>
+      </td>
+    `;
+    body.appendChild(row);
+  });
+}
+
+// ✅ Toggle update visibility
+function toggleUpdate(index) {
+  let content = document.getElementById(`update-${index}`);
+  if (content.style.display === "none") {
+    content.style.display = "block";
+  } else {
+    content.style.display = "none";
+  }
+}
+
+// ✅ Clear All Updates
+function clearUpdateHistory() {
+  if (confirm("⚠️ Are you sure you want to clear all updates?")) {
+    localStorage.removeItem("systemUpdates");
+    updateUpdateHistory();
+    alert("✅ All updates cleared!");
+  }
+}
+
+
+</script>
+</body>
+</html>
