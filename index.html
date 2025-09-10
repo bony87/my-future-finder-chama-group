@@ -319,9 +319,125 @@ footer {
   opacity: 1;
   transform: translateY(0);
 }
+/* show password css */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+  margin-top: 10px;
+  vertical-align: middle;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0;
+  right: 0; bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 24px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #388e3c; /* Green when active */
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+.toggle-label {
+  margin-left: 60px;
+  font-size: 14px;
+  color: #333;
+}
+/* About Us Section */
+#about {
+  background: #f9f9f9;
+  padding: 40px 20px;
+  border-radius: 10px;
+  margin: 20px auto;
+  max-width: 900px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+#about h2 {
+  text-align: center;
+  font-size: 28px;
+  color: #1976d2;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #1976d2;
+  display: inline-block;
+  padding-bottom: 5px;
+}
+
+#about h3 {
+  margin-top: 20px;
+  font-size: 22px;
+  color: #333;
+  border-left: 4px solid #1976d2;
+  padding-left: 10px;
+}
+
+#about p {
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 10px 0;
+  color: #444;
+}
+
+#about ul {
+  list-style: none;
+  padding: 0;
+}
+
+#about ul li {
+  background: #e3f2fd;
+  margin: 8px 0;
+  padding: 10px 12px;
+  border-radius: 6px;
+  font-size: 16px;
+  color: #1976d2;
+  transition: transform 0.2s ease, background 0.3s;
+}
+
+#about ul li:hover {
+  transform: scale(1.05);
+  background: #bbdefb;
+}
+
+/* About Logo/Image */
+#about img {
+  transition: transform 0.4s ease;
+}
+
+#about img:hover {
+  transform: scale(1.1) rotate(3deg);
+}
+
 
   </style>
 </head>
+
 <body>
 <!-- Custom Popup -->
 <div id="popup" class="popup-overlay">
@@ -346,12 +462,11 @@ footer {
 <div id="navButtons">
   <a class="nav-btn" onclick="simulateAction(this,'home')">🏠 Home <span class="spinner"></span></a>
   <a class="nav-btn" onclick="simulateAction(this,'about')">ℹ️ About Us <span class="spinner"></span></a>
-<a class="nav-btn" onclick="simulateAction(this,'membership')">👥 Membership <span class="spinner"></span></a>
-
-  <a class="nav-btn" onclick="simulateAction(this,'picker')">🎲 Pick Number <span class="spinner"></span></a>
+ <a class="nav-btn" onclick="simulateAction(this,'membership')">👥 Membership <span class="spinner"></span></a>
+ <a class="nav-btn" onclick="simulateAction(this,'picker')">🎲 Pick Number <span class="spinner"></span></a>
   <a class="nav-btn" onclick="simulateAction(this,'services')">💼 Services <span class="spinner"></span></a>
   <a class="nav-btn" onclick="simulateAction(this,'updates')">📰 News <span class="spinner"></span></a>
-<a class="nav-btn" onclick="simulateAction(this,'loginForm')">🔑 Member Login <span class="spinner"></span></a>
+ <a class="nav-btn" onclick="simulateAction(this,'loginForm')">🔑 Member Login <span class="spinner"></span></a>
 
 
   <a class="nav-btn" onclick="simulateAction(this,'adminLogin')">⚙️ Admin <span class="spinner"></span></a>
@@ -361,17 +476,52 @@ footer {
 </div>
 
 <!-- Sections -->
- <!-- Services -->
+<!-- 💼 Services -->
 <section id="services">
   <h2>💼 Our Services</h2>
-  <p>We provide savings plans, merry-go-round, and loan services to empower our members.</p>
+  <ul style="list-style:none; padding:0; font-size:16px;">
+    <li>💰 <b>Monthly Savings:</b> Contribute consistently and grow your financial discipline.</li>
+    <li>📊 <b>Group Contributions:</b> Transparent tracking of all members' contributions.</li>
+    <li>🏦 <b>Loan Services:</b> Apply for loans based on your savings history and eligibility.</li>
+    <li>🎲 <b>Lucky Number Draw:</b> Fun reward system to encourage participation.</li>
+    <li>📰 <b>System Updates:</b> Get notified instantly about changes and new features.</li>
+    <li>🤝 <b>Member Support:</b> Assistance via WhatsApp, phone, or email directly from the app.</li>
+  </ul>
+
+  <!-- Optional Buttons -->
+  <div style="margin-top:15px; display:flex; gap:10px; flex-wrap:wrap; justify-content:center;">
+
+  <!-- Register Button -->
+  <a class="action-btn" style="background:#388e3c;" 
+     onclick="simulateAction(this,'membership')">
+    📝 Register as Member <span class="spinner"></span>
+  </a>
+
+  <!-- Contact Button -->
+  <a class="action-btn" style="background:#1976d2;" 
+     onclick="simulateAction(this,'contact')">
+    📞 Contact Support <span class="spinner"></span>
+  </a>
+<!-- Back Button -->
+  <a class="action-btn" style="background:#d32f2f; margin-top:15px;" 
+     onclick="simulateAction(this,'services')">
+    ⬅️ Back to Services <span class="spinner"></span>
+  </a>
+</div>
 </section>
 
-<!-- News -->
+
 <section id="updates">
-  <h2>📰 Latest News</h2>
-  <p>Stay updated with the latest news and announcements from Future Finders Chama.</p>
+  <h2>📰 News & Updates</h2>
+
+  <div id="newsFeed" style="margin-top:15px;">
+  <p style="color:gray;">No updates yet.</p>
+</div>
+
+
+  
 </section>
+
 
 <!-- Contact -->
 <section id="contact">
@@ -439,11 +589,58 @@ footer {
   <p id="result"></p>
 </section>
 
+
+  <!-- ℹ️ About Us -->
 <section id="about">
   <h2>ℹ️ About Us</h2>
-  <p>We are a merry-go-round and savings chama, soon launching loan services.</p>
+  <p>
+    Welcome to <b>Future Finders Chama Group</b> – a community of dedicated individuals 
+    who believe in the power of <b>saving, supporting, and growing together</b>.
+  </p>
+
+  <!-- Mission & Vision -->
+  <h3>🌟 Our Mission</h3>
+  <p>To empower members through savings, merry-go-round, and access to loans for financial growth.</p>
+
+  <h3>👁️ Our Vision</h3>
+  <p>A financially independent community where members grow together and achieve prosperity.</p>
+
+  <!-- Core Values -->
+  <h3>💡 Our Values</h3>
+  <ul>
+    <li>🤝 Unity & Teamwork</li>
+    <li>📈 Growth & Prosperity</li>
+    <li>💰 Financial Discipline</li>
+    <li>🌍 Community Empowerment</li>
+  </ul>
+
+  <!-- Leadership -->
+  <h3>🧑‍💼 Our Leadership</h3>
+  <p>
+    Founded by <b>BONIFACE KAISER</b>, with a dedicated team of members 
+    who work together to ensure transparency, growth, and unity.
+  </p>
+
+  <!-- History -->
+  <h3>📜 Our Journey</h3>
+  <p>
+    Established in <b>2024 JANUARY</b>, Future Finders Chama began as a small savings group. 
+    Today, it has grown into a vibrant community offering savings, loans, and investments to its members.
+  </p>
+
+  <!-- Optional Logo -->
+  <div style="margin:20px 0; text-align:center;">
+    <img src="logo.png" alt="Chama Logo" style="width:150px; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.2);">
+    <p style="margin-top:10px; font-style:italic; color:#555;">Our Identity, Our Strength</p>
+  </div>
 </section>
-<section id="adminLogin">
+
+
+
+<!-- ⚙️ Admin Login -->
+
+  
+  <section id="adminLogin">
   <h2>⚙️ Admin Login</h2>
   <input type="text" id="adminUser" placeholder="Admin Name">
   <input type="password" id="adminPass" placeholder="Password">
@@ -451,6 +648,12 @@ footer {
     Admin Login <span class="spinner"></span>
   </a>
   <p id="adminLoginMessage"></p>
+  <!-- Modern toggle -->
+  <label class="switch">
+    <input type="checkbox" onclick="toggleAdminPassword()">
+    <span class="slider round"></span>
+    <span class="toggle-label">ShowPassword</span>
+  </label>
 </section>
 
 <!-- Admin Panel (hidden until login) -->
@@ -565,7 +768,10 @@ footer {
     <button onclick="registerMember()">Register</button>
   </div>
 
-  
+  <a class="action-btn" style="background:#d32f2f; margin-top:15px;" 
+   onclick="simulateAction(this,'services')">
+  ⬅️ Back to Services <span class="spinner"></span>
+</a>
 
 </section>
 
@@ -602,8 +808,15 @@ footer {
     <option>CLAUDIA MORAA</option>
     <option>ESTHER OBEGI</option>
   </select>
-
+<!-- Password input -->
   <input type="password" id="memberPass" placeholder="Enter your phone number">
+
+  <!-- Modern toggle -->
+  <label class="switch">
+    <input type="checkbox" onclick="togglePassword()">
+    <span class="slider round"></span>
+    <span class="toggle-label">ShowPassword</span>
+  </label>
   
   <!-- Spinner already inside the button -->
   <a class="action-btn" id="memberLoginBtn" onclick="login()">Login <span class="spinner"></span></a>
@@ -619,7 +832,12 @@ footer {
   <a class="action-btn" onclick="showMonthlySavings()">📊 View Monthly Savings</a>
   <button class="check-loan-btn" onclick="checkLoan()">🔍 Check Loan Eligibility</button>
 
-
+<!-- 🚪 Member Logout -->
+<button id="memberLogoutBtn" class="action-btn" style="background:#d32f2f; margin-top:15px; position:relative;"
+        onclick="memberLogout()">
+  🚪 Logout
+  <span class="spinner" style="display:none; margin-left:8px; border:2px solid #f3f3f3; border-top:2px solid white; border-radius:50%; width:14px; height:14px; animation: spin 1s linear infinite; vertical-align:middle;"></span>
+</button>
 
 <div id="loanMessage" style="margin-top:15px; font-weight:bold; color:#004d40;"></div>
   <div id="allContributions" style="margin-top:20px;">
@@ -640,36 +858,36 @@ footer {
       <th>OCT</th>
       <th>NOV</th>
       <th>DEC</th>
-      <th style="background:#004d40;">TOTAL</th>
+      <th style="background:#17da48;">TOTAL</th>
     </tr>
   </thead>
   <tbody>
-    <tr><td>BONIFACE CHELLUGET</td><td>500</td><td>500</td><td>500</td><td>500</td><td>500</td><td>500</td><td>500</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>3500</b></td></tr><td>
+    <tr><td>BONIFACE CHELLUGET</td><td>500</td><td>500</td><td>500</td><td>500</td><td>500</td><td>500</td><td>500</td><td>500</td><td>500</td><td>0</td><td>0</td><td>0</td><td><b>4500</b></td></tr><td>
     <tr><td>HILDA ODERO</td><td>400</td><td>200</td><td>100</td><td>200</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>900</b></td></tr>
     <tr><td>JOEL EGESA</td><td>200</td><td>0</td><td>20</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>220</b></td></tr>
     <tr><td>SHALIK SHIVERENGE</td><td>250</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>250</b></td></tr>
-    <tr><td>EVERLINE MAINA</td><td>250</td><td>150</td><td>250</td><td>200</td><td>200</td><td>250</td><td>200</td><td>100</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>1600</b></td></tr>
-    <tr><td>ELVIS KAMASH</td><td>250</td><td>150</td><td>250</td><td>50</td><td>200</td><td>150</td><td>50</td><td>250</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>1350</b></td></tr>
-    <tr><td>JULIUS KEBASO</td><td>450</td><td>300</td><td>500</td><td>500</td><td>400</td><td>500</td><td>400</td><td>500</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>3550</b></td></tr>
+    <tr><td>EVERLINE MAINA</td><td>250</td><td>150</td><td>250</td><td>200</td><td>200</td><td>250</td><td>200</td><td>100</td><td>50</td><td>0</td><td>0</td><td>0</td><td><b>1650</b></td></tr>
+    <tr><td>ELVIS KAMASH</td><td>250</td><td>150</td><td>250</td><td>50</td><td>200</td><td>150</td><td>50</td><td>250</td><td>50</td><td>0</td><td>0</td><td>0</td><td><b>1400</b></td></tr>
+    <tr><td>JULIUS KEBASO</td><td>450</td><td>300</td><td>500</td><td>500</td><td>400</td><td>500</td><td>400</td><td>500</td>100<td>0</td><td>0</td><td>0</td><td>0</td><td><b>3650</b></td></tr>
     <tr><td>CHRISTINE PIUS</td><td>50</td><td>150</td><td>250</td><td>150</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>600</b></td></tr>
     <tr><td>EDNAH NANCY</td><td>250</td><td>100</td><td>100</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>450</b></td></tr>
     <tr><td>JACKIENYARANGI</td><td>200</td><td>200</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>400</b></td></tr>
-    <tr><td>JUDITH OMWOYO</td><td>300</td><td>300</td><td>300</td><td>0</td><td>0</td><td>0</td><td>0</td><td>100</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>1000</b></td></tr>
+    <tr><td>JUDITH OMWOYO</td><td>300</td><td>300</td><td>300</td><td>0</td><td>0</td><td>0</td><td>0</td><td>100</td><td>50</td><td>0</td><td>0</td><td>0</td><td><b>1050</b></td></tr>
     <tr><td>JANET NYAKUNDI</td><td>150</td><td>0</td><td>100</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>250</b></td></tr>
-    <tr><td>ANASTANCIA OMWOYO</td><td>250</td><td>150</td><td>200</td><td>200</td><td>200</td><td>150</td><td>100</td><td>250</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>1500</b></td></tr>
+    <tr><td>ANASTANCIA OMWOYO</td><td>250</td><td>150</td><td>200</td><td>200</td><td>200</td><td>150</td><td>200</td><td>250</td><td>50</td><td>0</td><td>0</td><td>0</td><td><b>1650</b></td></tr>
     <tr><td>PIUS NYAKUNDI</td><td>150</td><td>200</td><td>200</td><td>0</td><td>100</td><td>100</td><td>100</td><td>150</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>750</b></td></tr>
-    <tr><td>SAMUEL OYUGI</td><td>400</td><td>300</td><td>500</td><td>400</td><td>400</td><td>500</td><td>400</td><td>500</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>3400</b></td></tr>
+    <tr><td>SAMUEL OYUGI</td><td>400</td><td>300</td><td>500</td><td>400</td><td>400</td><td>500</td><td>400</td><td>500</td><td>100</td><td>0</td><td>0</td><td>0</td><td><b>3500</b></td></tr>
     <tr><td>PURITY MOMANYI</td><td>200</td><td>200</td><td>1200</td><td>950</td><td>800</td><td>400</td><td>350</td><td>100</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>4200</b></td></tr>
-    <tr><td>KEFFA MOMANYI</td><td>250</td><td>150</td><td>200</td><td>200</td><td>200</td><td>250</td><td>200</td><td>150</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>1650</b></td></tr>
-    <tr><td>KENNEDY MUTAYI</td><td>750</td><td>450</td><td>750</td><td>600</td><td>600</td><td>750</td><td>600</td><td>750</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>5250</b></td></tr>
+    <tr><td>KEFFA MOMANYI</td><td>250</td><td>150</td><td>200</td><td>200</td><td>200</td><td>250</td><td>200</td><td>150</td><td>50</td><td>0</td><td>0</td><td>0</td><td><b>1700</b></td></tr>
+    <tr><td>KENNEDY MUTAYI</td><td>750</td><td>450</td><td>750</td><td>600</td><td>600</td><td>750</td><td>600</td><td>750</td>150<td>0</td><td>0</td><td>0</td><td>0</td><td><b>5400</b></td></tr>
     <tr><td>MIKE MORRIS</td><td>0</td><td>0</td><td>100</td><td>50</td><td>0</td><td>0</td><td>0</td><td>150</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>300</b></td></tr>
     <tr><td>DAVY OMBATI</td><td>0</td><td>0</td><td>50</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>50</b></td></tr>
     <tr><td>FAITH MOKOGI</td><td>0</td><td>0</td><td>500</td><td>200</td><td>250</td><td>50</td><td>100</td><td>50</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>1000</b></td></tr>
     <tr><td>SADLER KARAN</td><td>0</td><td>0</td><td>200</td><td>200</td><td>150</td><td>50</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>600</b></td></tr>
-    <tr><td>SHARON CHEPTOO</td><td>0</td><td>0</td><td>0</td><td>0</td><td>250</td><td>150</td><td>150</td><td>100</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>650</b></td></tr>
-    <tr><td>SHAMIM KAMASH</td><td>0</td><td>0</td><td>0</td><td>0</td><td>200</td><td>150</td><td>50</td><td>250</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>650</b></td></tr>
-    <tr><td>CLAUDIA MORAA</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>100</td><td>400</td><td>300</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>100</b></td></tr>
-  <tr><td>ESTHER OBEGI</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>500</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>500</b></td></tr>
+    <tr><td>SHARON CHEPTOO</td><td>0</td><td>0</td><td>0</td><td>0</td><td>250</td><td>150</td><td>150</td><td>100</td><td>50</td><td>0</td><td>0</td><td>0</td><td><b>700</b></td></tr>
+    <tr><td>SHAMIM KAMASH</td><td>0</td><td>0</td><td>0</td><td>0</td><td>200</td><td>150</td><td>50</td><td>250</td><td>50</td><td>0</td><td>0</td><td>0</td><td><b>700</b></td></tr>
+    <tr><td>CLAUDIA MORAA</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>100</td><td>400</td><td>300</td><td>100</td><td>0</td><td>0</td><td>0</td><td><b>800</b></td></tr>
+  <tr><td>ESTHER OBEGI</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>500</td><td>100</td><td>0</td><td>0</td><td>0</td><td><b>600</b></td></tr>
   </tbody>
 </table>
 <!-- Loan Applications History -->
@@ -695,6 +913,8 @@ footer {
 
 </div>
 </div>
+
+
 </section>
 
 
@@ -715,58 +935,56 @@ let luckyNumbers = JSON.parse(localStorage.getItem("luckyNumbers")) || {};
 
 // Members data
 const members = {
-  "BONIFACE CHELLUGET": { phone: "0713953004", savings: 3500, monthly: [500,500,500,500,500,500,500] },
+  "BONIFACE CHELLUGET": { phone: "0713953004", savings: 4500, monthly: [500,500,500,500,500,500,500] },
   "HILDA ODERO": { phone: "0795341320", savings: 900, monthly: [400,200,100,200] },
   "JOEL EGESA": { phone: "0768039551", savings: 220, monthly: [200,0,20] },
   "SHALIK SHIVERENGE": { phone: "0746277086", savings: 250, monthly: [ 250,0,0] },
-  "EVERLINE MAINA": { phone: "0701360180", savings: 1600, monthly: [ 250,150,250,200,200,250,200,100,0] },
-  "ELVIS KAMASH": { phone: "079857851", savings: 1350, monthly: [ 250,150,250,50,200,150,50,250,0] },
-  "JULIUS KEBASO": { phone: "0705296154", savings: 3550, monthly: [ 450,300,500,500,400,500,400,500,0] },
+  "EVERLINE MAINA": { phone: "0701360180", savings: 1650, monthly: [ 250,150,250,200,200,250,200,100,0] },
+  "ELVIS KAMASH": { phone: "079857851", savings: 1400, monthly: [ 250,150,250,50,200,150,50,250,0] },
+  "JULIUS KEBASO": { phone: "0705296154", savings: 3650, monthly: [ 450,300,500,500,400,500,400,500,0] },
   "CHRISTINE PIUS": { phone: "0115603500", savings: 600, monthly: [ 50,150,250,150,0,0,0,0,0] },
   "EDNAH NANCY": { phone: "0700000000", savings: 450, monthly: [ 250,100,100,0,0,0,0,0,0] },
   "JACKIENYARANGI": { phone: "0790206224", savings: 400, monthly: [ 200,200,0,0,0,0,0,0,0] },
- "JUDITH OMWOYO": { phone: "0741939235", savings: 1000, monthly: [ 300,300,300,0,0,0,0,100,0] },
+ "JUDITH OMWOYO": { phone: "0741939235", savings: 1050, monthly: [ 300,300,300,0,0,0,0,100,0] },
 "JANET NYAKUNDI": { phone: "0706753288", savings: 250, monthly: [ 150,0,100,0,0,0,0,0,0] },
-"ANASTANCIA OMWOYO": { phone: "0748442547", savings: 1500, monthly: [ 250,150,200,200,200,150,100,250,0] },
+"ANASTANCIA OMWOYO": { phone: "0748442547", savings: 1550, monthly: [ 250,150,200,200,200,150,100,250,0] },
 "PIUS NYAKUNDI": { phone: "0716845165", savings: 1000, monthly: [ 150,200,200,0,100,100,100,150,0] },
-"SAMUEL OYUGI": { phone: "0796860412", savings: 3400, monthly: [ 400,300,500,400,400,500,400,500,0] },
+"SAMUEL OYUGI": { phone: "0796860412", savings: 3500, monthly: [ 400,300,500,400,400,500,400,500,0] },
 "PURITY MOMANYI": { phone: "0103155480", savings: 4200, monthly: [ 200,200,1200,950,800,400,350,100,0] },
 "KEFFA MOMANYI": { phone: "0759237482", savings: 1650, monthly: [ 250,200,200,200,200,250,200,150,0] },
-"KENNEDY MUTAYI": { phone: "072412435", savings: 5250, monthly: [ 750,450,750,600,600,750,600,750,0] },
+"KENNEDY MUTAYI": { phone: "0724124735", savings: 5250, monthly: [ 750,450,750,600,600,750,600,750,0] },
 "MIKE MORRIS": { phone: "0115570301", savings: 300, monthly: [ 0,0,100,50,0,0,0,150,0] },
 "DAVY OMBATI": { phone: "0793547166", savings: 250, monthly: [ 0,0,50,0,0,0,200,0,0] },
 "FAITH MOKOGI": { phone: "0706918919", savings: 1150, monthly: [ 0,0,500,200,250,50,100,50,0] },
 "SADLER KARAN": { phone: "0791730719", savings: 600, monthly: [ 0,0,200,200,150,50,0,0,0] },
-"SHARON CHEPTOO": { phone: "0768675656", savings: 650, monthly: [ 0,0,0,0,250,150,150,100,0] },
+"SHARON CHEPTOO": { phone: "0768675656", savings: 650, monthly: [ 0,0,0,0,250,150,150,100,50] },
 "SHAMIM KAMASH": { phone: "0725978420", savings: 650, monthly: [ 0,0,0,0,200,150,50,250] },
 "CLAUDIA MORAA": { phone: "0741520782", savings: 800, monthly: [ 0,0,0,0,0,100,400,300,0] },
 "ESTHER OBEGI": { phone: "0748845363", savings: 500, monthly: [ 0,0,0,0,0,0,0,500,0] },
 };
 
 function simulateAction(btn, sectionId) {
-  // Show spinner
-  const spinner = btn.querySelector(".spinner");
-  spinner.style.display = "inline-block";
+  let spinner = btn.querySelector(".spinner");
+  if (spinner) spinner.style.display = "inline-block";
 
-  // Simulate loading delay
   setTimeout(() => {
-    // Hide spinner
-    spinner.style.display = "none";
+    if (spinner) spinner.style.display = "none";
 
     // Hide all sections
     document.querySelectorAll("section, #dashboard, #admin").forEach(sec => {
       sec.style.display = "none";
     });
 
-    // Show the selected section
-    const target = document.getElementById(sectionId);
+    // Show the target section
+    let target = document.getElementById(sectionId);
     if (target) {
       target.style.display = "block";
     } else {
-      console.warn("No section found with id:", sectionId);
+      console.error("❌ Section not found: " + sectionId);
     }
-  }, 500);
+  }, 800);
 }
+
 
 
 // Member login
@@ -1118,6 +1336,8 @@ function adminLogin() {
 
       document.getElementById("adminLogin").style.display = "none"; // hide login form
       document.getElementById("admin").style.display = "block"; // show admin panel
+      document.getElementById("postUpdateBox").style.display = "block";
+
   // 🔔 Trigger system banner for members
   showBanner("🔔 New Loan Rules have been added! Check your dashboard.");
       // 🔑 Save session
@@ -1692,6 +1912,108 @@ function clearUpdateHistory() {
     localStorage.removeItem("systemUpdates");
     updateUpdateHistory();
     alert("✅ All updates cleared!");
+  }
+}
+function togglePassword() {
+  let passField = document.getElementById("memberPass");
+  passField.type = passField.type === "password" ? "text" : "password";
+}
+function toggleAdminPassword() {
+  let passField = document.getElementById("adminPass");
+  passField.type = passField.type === "password" ? "text" : "password";
+}
+
+
+
+
+function memberLogout() {
+  let btn = document.getElementById("memberLogoutBtn");
+  let spinner = btn.querySelector(".spinner");
+
+  // Show spinner
+  spinner.style.display = "inline-block";
+  btn.style.pointerEvents = "none"; // disable button while processing
+
+  setTimeout(() => {
+    // Hide spinner
+    spinner.style.display = "none";
+    btn.style.pointerEvents = "auto";
+
+    // Hide dashboard
+    document.getElementById("dashboard").style.display = "none";
+
+    // Show login form again
+    document.getElementById("loginForm").style.display = "block";
+
+    // Clear member display
+    document.getElementById("memberDisplay").innerText = "";
+
+    // ✅ Show success popup instead of alert
+    showPopup("success see you again", "Logout Successful", "🚪 You have logged out successfully.");
+  }, 3000); // 3 seconds delay for effect
+}
+
+
+
+
+
+// Load news into section
+function loadNews() {
+  let newsFeed = document.getElementById("newsFeed");
+  let updates = JSON.parse(localStorage.getItem("systemUpdates")) || [];
+
+  if (updates.length === 0) {
+    newsFeed.innerHTML = "<p style='color:gray;'>No updates yet.</p>";
+    return;
+  }
+
+  newsFeed.innerHTML = updates.map(upd => `
+    <p>🗓️ <b>${upd.time}</b> – ${upd.message}</p>
+  `).join("");
+}
+
+// Load updates on refresh
+window.onload = function() {
+  let savedUpdate = localStorage.getItem("systemUpdate");
+  if (savedUpdate) {
+    let updateObj = JSON.parse(savedUpdate);
+    showBanner(updateObj.message, updateObj.time);
+  }
+  loadNews();
+};
+
+function loadNews() {
+  let newsFeed = document.getElementById("newsFeed");
+  let updates = JSON.parse(localStorage.getItem("systemUpdates")) || [];
+
+  if (updates.length === 0) {
+    newsFeed.innerHTML = "<p style='color:gray;'>No updates yet.</p>";
+    return;
+  }
+
+  let isAdmin = localStorage.getItem("adminLoggedIn") === "true"; // ✅ check if admin is logged in
+
+  newsFeed.innerHTML = updates.map((upd, index) => `
+    <div style="margin-bottom:10px; padding:10px; border:1px solid #ccc; border-radius:5px;">
+      <p>🗓️ <b>${upd.time}</b> – ${upd.message}</p>
+      ${isAdmin ? `<button onclick="deleteUpdate(${index})" 
+         style="padding:5px 10px; background:#d32f2f; color:white; border:none; border-radius:4px; cursor:pointer;">
+         🗑️ Delete
+       </button>` : ""}
+    </div>
+  `).join("");
+}
+function deleteUpdate(index) {
+  let password = prompt("🔑 Enter Admin Password to delete this update:");
+
+  if (password === "2025") {
+    let updates = JSON.parse(localStorage.getItem("newsUpdates")) || [];
+    updates.splice(index, 1); // remove update
+    localStorage.setItem("newsUpdates", JSON.stringify(updates));
+    renderUpdates(); // refresh list
+    alert("✅ Update deleted successfully!");
+  } else if (password !== null) {
+    alert("❌ Incorrect password. You are not allowed to delete.");
   }
 }
 
