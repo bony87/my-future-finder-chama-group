@@ -433,6 +433,91 @@ input:checked + .slider:before {
 #about img:hover {
   transform: scale(1.1) rotate(3deg);
 }
+body {
+  background-image: url("https://github.com/bony87/my-future-finder-chama-group/blob/main/ChatGPT%20Image%20Sep%2010,%202025,%2005_43_14%20PM.png?raw=true");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  position: relative;
+  z-index: 0;
+}
+
+/* Overlay */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.8); /* White overlay, 80% opaque */
+  z-index: -1; /* Push behind content */
+}
+/* Dice styling */
+#diceBox {
+  font-size: 70px;
+  text-align: center;
+  margin: 20px auto;
+  width: 100px;
+  height: 100px;
+  line-height: 100px;
+  border: 3px solid #1976d2;
+  border-radius: 12px;
+  background: white;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+/* Rolling spin */
+#diceBox.roll {
+  animation: rollDice 0.5s infinite;
+}
+
+@keyframes rollDice {
+  0%   { transform: rotate(0deg);   }
+  25%  { transform: rotate(90deg);  }
+  50%  { transform: rotate(180deg); background:#ffeb3b; } /* yellow flash */
+  75%  { transform: rotate(270deg); background:#4caf50; } /* green flash */
+  100% { transform: rotate(360deg); background:#f44336; } /* red flash */
+}
+
+
+@keyframes rollDice {
+  0%   { transform: rotate(0deg);   }
+  25%  { transform: rotate(90deg);  }
+  50%  { transform: rotate(180deg); }
+  75%  { transform: rotate(270deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+@keyframes rollDice {
+  0%   { transform: rotate(0deg);   }
+  25%  { transform: rotate(90deg);  }
+  50%  { transform: rotate(180deg); }
+  75%  { transform: rotate(270deg); }
+  100% { transform: rotate(360deg); }
+}
+.spinner {
+  display: none;
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid white;
+  border-radius: 50%;
+  width: 14px;
+  height: 14px;
+  animation: spin 1s linear infinite;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 
 
   </style>
@@ -447,6 +532,14 @@ input:checked + .slider:before {
     <button class="popup-btn" onclick="closePopup()">OK</button>
   </div>
 </div>
+<!-- Logo at the Top -->
+<div style="margin:20px 0; text-align:center;">
+  <img src="https://github.com/bony87/my-future-finder-chama-group/blob/main/ChatGPT%20Image%20Sep%2010,%202025,%2005_43_14%20PM.png?raw=true" 
+       alt="Future Finders Logo" 
+       style="width:150px; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.2);">
+  <p style="margin-top:10px; font-style:italic; color:#555;">Our Identity, Our Strength</p>
+</div>
+
 <!-- System Update Banner -->
 <div id="systemBanner" style="display:none; background:#1976d2; color:white; text-align:center; padding:10px; font-weight:bold; position:fixed; top:0; left:0; width:100%; z-index:2000;">
   <span id="bannerMessage">🚀 System Update: New features available!</span>
@@ -585,6 +678,8 @@ input:checked + .slider:before {
 </a>
 <div id="diceBox">🎲</div>
 <div id="result" style="text-align:center; font-size:18px; margin-top:10px;"></div>
+<audio id="diceSound" src="dice-roll.mp3" preload="auto"></audio>
+
 
   <p id="result"></p>
 </section>
@@ -657,6 +752,14 @@ input:checked + .slider:before {
 </section>
 
 <!-- Admin Panel (hidden until login) -->
+ <!-- Logo at the Top -->
+<div style="margin:20px 0; text-align:center;">
+  <img src="https://github.com/bony87/my-future-finder-chama-group/blob/main/ChatGPT%20Image%20Sep%2010,%202025,%2005_43_14%20PM.png?raw=true" 
+       alt="Future Finders Logo" 
+       style="width:150px; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.2);">
+  <p style="margin-top:10px; font-style:italic; color:#555;">Our Identity, Our Strength</p>
+</div>
+
 <section id="admin" style="display:none;">
   <h2>🛠 Admin Panel</h2>
 
@@ -824,6 +927,9 @@ input:checked + .slider:before {
   <p id="loginMessage"></p>
 </section>
 
+
+
+<!-- Dashboard -->
 
 <!-- Dashboard -->
 <div id="dashboard">
@@ -1403,53 +1509,80 @@ function adminLogout() {
 
 
 
+// Load lucky numbers from localStorage or create new object
+
+const diceFaces = ["⚀","⚁","⚂","⚃","⚄","⚅"];
+let usedNumbers = JSON.parse(localStorage.getItem("usedNumbers")) || [];
+
 function pickNumber() {
   let member = document.getElementById("memberSelect").value;
-  let result = document.getElementById("result");
   let dice = document.getElementById("diceBox");
+  let result = document.getElementById("result");
+  let diceSound = document.getElementById("diceSound"); // 🎵 sound element
 
   if (!member) {
     alert("⚠️ Please select your name first.");
     return;
   }
 
-  // If already picked
-  if (luckyNumbers[member]) {
-    result.innerHTML = `
-      ❌ Sorry ${member}, you already picked your lucky number: 
-      <b class="lucky-popup">${luckyNumbers[member]}</b><br><br>
-      <button onclick="resendNumber('${member}')"
-        style="padding:8px 12px; background:#00796b; color:white; border:none; border-radius:5px; cursor:pointer;">
-        🔁 Resend Number
-      </button>
-    `;
-    return;
-  }
+  // Play sound
+  diceSound.currentTime = 0; 
+  diceSound.play();
 
   // Start rolling
   dice.classList.add("roll");
-  result.innerHTML = "Rolling your lucky number... 🎲";
+  result.innerHTML = "🎲 Rolling your lucky number...";
+
+  let rollInterval = setInterval(() => {
+    dice.innerHTML = diceFaces[Math.floor(Math.random() * diceFaces.length)];
+    let colors = ["#ffeb3b","#4caf50","#f44336","#2196f3","#9c27b0","#ff9800"];
+    dice.style.background = colors[Math.floor(Math.random() * colors.length)];
+  }, 200);
 
   // Stop after 4s
   setTimeout(() => {
+    clearInterval(rollInterval);
     dice.classList.remove("roll");
+    dice.style.background = "white"; 
 
-    // Final lucky number
-    let number = Math.floor(Math.random() * 27) + 1;
+    // Check if already has number
+    if (luckyNumbers[member]) {
+      dice.innerHTML = luckyNumbers[member]; 
+      result.innerHTML = `
+        ❌ Sorry ${member}, you already picked your lucky number: 
+        <b>${luckyNumbers[member]}</b><br><br>
+        <button onclick="resendNumber('${member}')"
+          style="padding:8px 12px; background:#00796b; color:white; border:none; border-radius:5px; cursor:pointer;">
+          🔁 Resend Number
+        </button>
+      `;
+      return;
+    }
+
+    // Generate unique number
+    let number;
+    do {
+      number = Math.floor(Math.random() * 25) + 1;
+    } while (usedNumbers.includes(number));
+
     luckyNumbers[member] = number;
+    usedNumbers.push(number);
     localStorage.setItem("luckyNumbers", JSON.stringify(luckyNumbers));
+    localStorage.setItem("usedNumbers", JSON.stringify(usedNumbers));
 
-    dice.innerHTML = `<span class="lucky-popup">${number}</span>`;
+    // Show number
+    dice.innerHTML = number; 
     result.innerHTML = `
       🎉 Congratulations ${member}, your lucky number is: 
-      <b class="lucky-popup">${number}</b><br><br>
+      <b>${number}</b><br><br>
       <button onclick="resendNumber('${member}')"
         style="padding:8px 12px; background:#1976d2; color:white; border:none; border-radius:5px; cursor:pointer;">
-        🔁 send/Resend Number( click here)
+        🔁 Resend Number
       </button>
     `;
   }, 4000);
 }
+
 
 function resendNumber(member) {
   let number = luckyNumbers[member];
