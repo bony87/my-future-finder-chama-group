@@ -586,6 +586,17 @@ body::before {
 .action-btn:hover {
   background: #b71c1c !important;
 }
+.summary-card {
+  flex: 1;
+  min-width: 220px;
+  padding: 12px;
+  background: #f4f6f9;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-weight: bold;
+  color: #333;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
 
 
 
@@ -630,7 +641,12 @@ body::before {
  <a class="nav-btn" onclick="simulateAction(this,'membership')">👥 Membership <span class="spinner"></span></a>
  <a class="nav-btn" onclick="simulateAction(this,'picker')">🎲 Pick Number <span class="spinner"></span></a>
   <a class="nav-btn" onclick="simulateAction(this,'services')">💼 Services <span class="spinner"></span></a>
-  <a class="nav-btn" onclick="simulateAction(this,'updates')">📰 News <span class="spinner"></span></a>
+  <a class="nav-btn" onclick="simulateAction(this,'updates')">
+  📰 News 
+  <span id="newsBadge" style="display:none; color:red; font-weight:bold; margin-left:5px;">●</span>
+  <span class="spinner"></span>
+</a>
+
  <a class="nav-btn" onclick="simulateAction(this,'loginForm')">🔑 Member Login <span class="spinner"></span></a>
 
 
@@ -676,12 +692,14 @@ body::before {
 </section>
 
 
+
 <section id="updates">
   <h2>📰 News & Updates</h2>
-
   <div id="newsFeed" style="margin-top:15px;">
-  <p style="color:gray;">No updates yet.</p>
-</div>
+    <p style="color:gray;">No updates yet.</p>
+  </div>
+</section>
+
 
 
   
@@ -841,9 +859,28 @@ body::before {
   🚪 Logout 
   <span class="spinner" style="display:none; margin-left:8px; border:2px solid #f3f3f3; border-top:2px solid white; border-radius:50%; width:14px; height:14px; animation: spin 1s linear infinite; vertical-align:middle;"></span>
 </button>
+<button onclick="showAvailableNumbers()" 
+        style="margin-top:10px; padding:8px 14px; background:#388e3c; color:white; border:none; border-radius:5px; cursor:pointer;">
+  📋 Show Available Numbers
+</button>
 
   <!-- Admin Controls -->
   <h3>👤 Member Management</h3>
+  <input type="text" id="loanSearch" placeholder="🔍 Search loans by name, phone, or status..." 
+       onkeyup="filterLoans()" 
+       style="width:95%; padding:8px; margin:10px 0; border:1px solid #ccc; border-radius:5px;">
+<select id="loanStatusFilter" onchange="filterLoans()" 
+        style="padding:8px; margin:10px 0; border:1px solid #ccc; border-radius:5px;">
+  <option value="">📂 Show All</option>
+  <option value="Pending">⏳ Pending</option>
+  <option value="Approved">✅ Approved</option>
+  <option value="Rejected">❌ Rejected</option>
+</select>
+<button onclick="exportLoans()" 
+        style="padding:8px 12px; margin:10px 0; background:#1976d2; color:white; border:none; border-radius:5px; cursor:pointer;">
+  📂 Export Loans (CSV)
+</button>
+
 <h3>📜 Loan Applications</h3>
 <table border="1" style="width:100%; border-collapse:collapse; text-align:center;">
   <thead style="background:#1976d2; color:white;">
@@ -917,16 +954,42 @@ body::before {
 
 <!-- System Updates Section -->
 <h3>🚀 System Updates</h3>
+
 <textarea id="updateMessage" placeholder="Type new update..." 
           style="width:90%; padding:10px; margin-bottom:10px;"></textarea><br>
+
 <button onclick="postUpdate()" 
         style="padding:10px; background:#1976d2; color:white; border:none; border-radius:5px; cursor:pointer;">
   📢 Post Update
 </button>
-<button onclick="clearUpdateHistory()" 
-        style="padding:10px; background:#d32f2f; color:white; border:none; border-radius:5px; cursor:pointer;">
-  🗑 Clear History
-</button>
+
+<div id="memberSelectionBox" style="display:none; margin-top:8px;">
+  <label><b>Select Members:</b></label><br>
+  <select id="memberSelectMulti" multiple size="10" style="width:260px; padding:6px;">
+    <!-- Members will be loaded dynamically -->
+  </select>
+  <br>
+  <button type="button" onclick="selectAllMembers()" 
+          style="margin-top:5px; padding:5px 10px; background:#388e3c; color:white; border:none; border-radius:4px; cursor:pointer;">
+    ✅ Select All
+  </button>
+  <!-- 🔍 Search bar -->
+  <input type="text" id="memberSearch" onkeyup="filterMembers()" 
+         placeholder="🔍 Search member..." 
+         style="width:260px; padding:6px; margin-bottom:6px;">
+  <button type="button" onclick="clearAllMembers()" 
+          style="margin-top:5px; padding:5px 10px; background:#d32f2f; color:white; border:none; border-radius:4px; cursor:pointer;">
+    ❌ Clear All
+  </button>
+  <p style="font-size:12px; color:gray; margin-top:5px;">(Hold CTRL/SHIFT to select multiple manually)</p>
+</div>
+
+
+ <label style="display:block; margin-top:8px;">
+  <input type="checkbox" id="sendWhatsAppUpdate" onchange="toggleMemberSelection()"> 
+  📲 Send WhatsApp notification to members
+</label>
+
 
 <!-- Updates History Table -->
 <div style="margin-top:20px;">
@@ -941,6 +1004,12 @@ body::before {
       <tr><td style="color:gray;">No updates posted yet.</td></tr>
     </tbody>
   </table>
+</div>
+<div id="adminSummary" style="display:flex; gap:15px; margin:15px 0; flex-wrap:wrap;">
+  <div class="summary-card" id="totalMembersCard">👥 Total Members: 0</div>
+  <div class="summary-card" id="totalSavingsCard">💰 Total Savings: Ksh 0</div>
+  <div class="summary-card" id="totalLoansCard">📑 Total Loans: 0</div>
+  <div class="summary-card" id="loanBreakdownCard">📊 Loan Status: 0 Pending / 0 Approved / 0 Rejected</div>
 </div>
 
 
@@ -1123,9 +1192,10 @@ body::before {
         <th>Status</th>
       </tr>
     </thead>
-    <tbody id="loanHistoryBody">
-      <tr><td colspan="7" style="color:gray;">No loan applications yet.</td></tr>
-    </tbody>
+   <tbody id="loanHistoryBody">
+   <tr><td colspan="7" style="color:gray;">No loan applications yet.</td></tr>
+</tbody>
+
   </table>
 </div>
 
@@ -1147,76 +1217,84 @@ body::before {
 
 
 <script>
-  // Load lucky numbers from localStorage or create new object
-let luckyNumbers = JSON.parse(localStorage.getItem("luckyNumbers")) || {};
+ 
 
 
-// Members data
+
+// 👥 Members data (hardcoded + savings history)
 const members = {
-  "BONIFACE CHELLUGET": { phone: "0713953004", savings: 4500, monthly: [500,500,500,500,500,500,500] },
-  "HILDA ODERO": { phone: "0795341320", savings: 900, monthly: [400,200,100,200] },
-  "JOEL EGESA": { phone: "0768039551", savings: 220, monthly: [200,0,20,1000] },
-  "SHALIK SHIVERENGE": { phone: "0746277086", savings: 250, monthly: [ 250,0,0] },
-  "EVERLINE MAINA": { phone: "0701360180", savings: 1650, monthly: [ 250,150,250,200,200,250,200,100,0] },
-  "ELVIS KAMASH": { phone: "079857851", savings: 1400, monthly: [ 250,150,250,50,200,150,50,250,0] },
-  "JULIUS KEBASO": { phone: "0705296154", savings: 3650, monthly: [ 450,300,500,500,400,500,400,500,0] },
-  "CHRISTINE PIUS": { phone: "0115603500", savings: 600, monthly: [ 50,150,250,150,0,0,0,0,0] },
-  "EDNAH NANCY": { phone: "0700000000", savings: 450, monthly: [ 250,100,100,0,0,0,0,0,0] },
-  "JACKIENYARANGI": { phone: "0790206224", savings: 400, monthly: [ 200,200,0,0,0,0,0,0,0] },
- "JUDITH OMWOYO": { phone: "0741939235", savings: 1050, monthly: [ 300,300,300,0,0,0,0,100,0] },
-"JANET NYAKUNDI": { phone: "0706753288", savings: 250, monthly: [ 150,0,100,0,0,0,0,0,0] },
-"ANASTANCIA OMWOYO": { phone: "0748442547", savings: 1550, monthly: [ 250,150,200,200,200,150,100,250,0] },
-"PIUS NYAKUNDI": { phone: "0716845165", savings: 1000, monthly: [ 150,200,200,0,100,100,100,150,0] },
-"SAMUEL OYUGI": { phone: "0796860412", savings: 3500, monthly: [ 400,300,500,400,400,500,400,500,0] },
-"PURITY MOMANYI": { phone: "0103155480", savings: 4200, monthly: [ 200,200,1200,950,800,400,350,100,0] },
-"KEFFA MOMANYI": { phone: "0759237482", savings: 1650, monthly: [ 250,200,200,200,200,250,200,150,0] },
-"KENNEDY MUTAYI": { phone: "0724124735", savings: 5250, monthly: [ 750,450,750,600,600,750,600,750,0] },
-"MIKE MORRIS": { phone: "0115570301", savings: 300, monthly: [ 0,0,100,50,0,0,0,150,0] },
-"DAVY OMBATI": { phone: "0793547166", savings: 250, monthly: [ 0,0,50,0,0,0,200,0,0] },
-"FAITH MOKOGI": { phone: "0706918919", savings: 1150, monthly: [ 0,0,500,200,250,50,100,50,0] },
-"SADLER KARAN": { phone: "0791730719", savings: 600, monthly: [ 0,0,200,200,150,50,0,0,0] },
-"SHARON CHEPTOO": { phone: "0768675656", savings: 650, monthly: [ 0,0,0,0,250,150,150,100,50] },
-"SHAMIM KAMASH": { phone: "0725978420", savings: 650, monthly: [ 0,0,0,0,200,150,50,250] },
-"CLAUDIA MORAA": { phone: "0741520782", savings: 800, monthly: [ 0,0,0,0,0,100,400,300,0] },
-"ESTHER OBEGI": { phone: "0748845363", savings: 500, monthly: [ 0,0,0,0,0,0,0,500,0] },
+  "BONIFACE CHELLUGET": { phone: "0713953004", savings: 4500, monthly: [500, 500, 500, 500, 500, 500, 500] },
+  "HILDA ODERO": { phone: "0795341320", savings: 900, monthly: [400, 200, 100, 200] },
+  "JOEL EGESA": { phone: "0768039551", savings: 220, monthly: [200, 0, 20, 1000] },
+  "SHALIK SHIVERENGE": { phone: "0746277086", savings: 250, monthly: [250, 0, 0] },
+  "EVERLINE MAINA": { phone: "0701360180", savings: 1650, monthly: [250, 150, 250, 200, 200, 250, 200, 100, 0] },
+  "ELVIS KAMASH": { phone: "079857851", savings: 1400, monthly: [250, 150, 250, 50, 200, 150, 50, 250, 0] },
+  "JULIUS KEBASO": { phone: "0705296154", savings: 3650, monthly: [450, 300, 500, 500, 400, 500, 400, 500, 0] },
+  "CHRISTINE PIUS": { phone: "0115603500", savings: 600, monthly: [50, 150, 250, 150, 0, 0, 0, 0, 0] },
+  "EDNAH NANCY": { phone: "0700000000", savings: 450, monthly: [250, 100, 100, 0, 0, 0, 0, 0, 0] },
+  "JACKIENYARANGI": { phone: "0790206224", savings: 400, monthly: [200, 200, 0, 0, 0, 0, 0, 0, 0] },
+  "JUDITH OMWOYO": { phone: "0741939235", savings: 1050, monthly: [300, 300, 300, 0, 0, 0, 0, 100, 0] },
+  "JANET NYAKUNDI": { phone: "0706753288", savings: 250, monthly: [150, 0, 100, 0, 0, 0, 0, 0, 0] },
+  "ANASTANCIA OMWOYO": { phone: "0748442547", savings: 1550, monthly: [250, 150, 200, 200, 200, 150, 100, 250, 0] },
+  "PIUS NYAKUNDI": { phone: "0716845165", savings: 1000, monthly: [150, 200, 200, 0, 100, 100, 100, 150, 0] },
+  "SAMUEL OYUGI": { phone: "0796860412", savings: 3500, monthly: [400, 300, 500, 400, 400, 500, 400, 500, 0] },
+  "PURITY MOMANYI": { phone: "0103155480", savings: 4200, monthly: [200, 200, 1200, 950, 800, 400, 350, 100, 0] },
+  "KEFFA MOMANYI": { phone: "0759237482", savings: 1650, monthly: [250, 200, 200, 200, 200, 250, 200, 150, 0] },
+  "KENNEDY MUTAYI": { phone: "0724124735", savings: 5250, monthly: [750, 450, 750, 600, 600, 750, 600, 750, 0] },
+  "MIKE MORRIS": { phone: "0115570301", savings: 300, monthly: [0, 0, 100, 50, 0, 0, 0, 150, 0] },
+  "DAVY OMBATI": { phone: "0793547166", savings: 250, monthly: [0, 0, 50, 0, 0, 0, 200, 0, 0] },
+  "FAITH MOKOGI": { phone: "0706918919", savings: 1150, monthly: [0, 0, 500, 200, 250, 50, 100, 50, 0] },
+  "SADLER KARAN": { phone: "0791730719", savings: 600, monthly: [0, 0, 200, 200, 150, 50, 0, 0, 0] },
+  "SHARON CHEPTOO": { phone: "0768675656", savings: 650, monthly: [0, 0, 0, 0, 250, 150, 150, 100, 50] },
+  "SHAMIM KAMASH": { phone: "0725978420", savings: 650, monthly: [0, 0, 0, 0, 200, 150, 50, 250] },
+  "CLAUDIA MORAA": { phone: "0741520782", savings: 800, monthly: [0, 0, 0, 0, 0, 100, 400, 300, 0] },
+  "ESTHER OBEGI": { phone: "0748845363", savings: 500, monthly: [0, 0, 0, 0, 0, 0, 0, 500, 0] }
 };
+// 🔄 Simulate loading action (button + spinner + section switch)
+function simulateAction(button, sectionId) {
+  let spinner = button.querySelector(".spinner");
 
-function simulateAction(btn, sectionId) {
-  let spinner = btn.querySelector(".spinner");
+  // Show spinner
   if (spinner) spinner.style.display = "inline-block";
+  button.style.pointerEvents = "none";
 
   setTimeout(() => {
+    // Hide spinner
     if (spinner) spinner.style.display = "none";
+    button.style.pointerEvents = "auto";
 
     // Hide all sections
-    document.querySelectorAll("section, #dashboard, #admin").forEach(sec => {
+    document.querySelectorAll("section, #dashboard, #admin, #newsSection").forEach(sec => {
       sec.style.display = "none";
     });
 
-    // Show the target section
+    // Show selected section
     let target = document.getElementById(sectionId);
     if (target) {
       target.style.display = "block";
+
+      // ✅ Special handling for News Section
+      if (sectionId === "newsSection") {
+        loadNews();
+        markNewsRead();
+      }
     } else {
-      console.error("❌ Section not found: " + sectionId);
+      console.error("❌ Section not found:", sectionId);
     }
-  }, 800);
+  }, 800); // 0.8 sec loading effect
 }
 
-
-
-// Member login
-// Show Popup
+// 🔔 Show Popup
 function showPopup(type, title, message) {
   const popup = document.getElementById("popup");
   const box = document.getElementById("popupBox");
+
   document.getElementById("popupTitle").innerText = title;
   document.getElementById("popupMessage").innerText = message;
 
-  // Reset classes
+  // Reset styles
   box.className = "popup-box";
 
-  // Add type style
   if (type === "success") {
     box.classList.add("popup-success");
   } else if (type === "error") {
@@ -1224,13 +1302,18 @@ function showPopup(type, title, message) {
   }
 
   popup.style.display = "flex";
+
+  // Auto-close after 5s
+  setTimeout(() => {
+    closePopup();
+  }, 5000);
 }
 
-// Close Popup
+// ❌ Close Popup
 function closePopup() {
   document.getElementById("popup").style.display = "none";
 }
-
+// 🔐 Member Login
 function login() { 
   let btn = document.getElementById("memberLoginBtn");
   let spinner = btn.querySelector(".spinner");
@@ -1248,21 +1331,21 @@ function login() {
       return;
     }
 
-    // ✅ Check hardcoded members first
+    // ✅ Check hardcoded members
     if (members[name] && members[name].phone === pass) {
       msg.innerText = "";
       document.getElementById("loginForm").style.display = "none";
       document.getElementById("dashboard").style.display = "block";
       document.getElementById("memberDisplay").innerText = name;
 
-      // ✅ Load their loan history immediately
+      // Load loan history
       loadMemberLoanHistory(name);
 
-      alert(`🎉 Welcome back ${name}!`);
+      showPopup("success", "Welcome Back 🎉", `Hello ${name}, glad to see you again!`);
       return;
     }
 
-    // 🔐 If not in hardcoded list, check approved members
+    // 🔐 Check approved members from localStorage
     let approved = JSON.parse(localStorage.getItem("approvedMembers")) || [];
     let member = approved.find(m => m.name === name);
 
@@ -1282,64 +1365,45 @@ function login() {
     document.getElementById("dashboard").style.display = "block";
     document.getElementById("memberDisplay").innerText = name;
 
-    // ✅ Load their loan history immediately
     loadMemberLoanHistory(name);
 
-    alert(`🎉 Welcome ${name}!`);
+    showPopup("success", "Welcome 🎉", `Hello ${name}, you are now logged in!`);
   }, 1000);
 }
-
-// Show Popup
-function showPopup(type, title, message) {
-  const popup = document.getElementById("popup");
-  const box = document.getElementById("popupBox");
-  document.getElementById("popupTitle").innerText = title;
-  document.getElementById("popupMessage").innerText = message;
-
-  // Reset classes
-  box.className = "popup-box";
-
-  // Add type style
-  if (type === "success") {
-    box.classList.add("popup-success");
-  } else if (type === "error") {
-    box.classList.add("popup-error");
-  }
-
-  popup.style.display = "flex";
-
-  // Auto close after 2 seconds
-  setTimeout(() => {
-    closePopup();
-  }, 5000);
-}
-
-// Close Popup
-function closePopup() {
-  document.getElementById("popup").style.display = "none";
-}
-
-
-// Show savings
+// 💰 Show current savings
 function showCurrentSavings() {
   let name = document.getElementById("memberDisplay").innerText;
+  if (!name || !members[name]) {
+    alert("⚠️ Please log in first.");
+    return;
+  }
   alert("💰 Current Savings: KES " + members[name].savings);
 }
+
+// 📊 Show monthly contributions
 function showMonthlySavings() {
   let name = document.getElementById("memberDisplay").innerText;
+  if (!name || !members[name]) {
+    alert("⚠️ Please log in first.");
+    return;
+  }
   alert("📊 Monthly Contributions: " + members[name].monthly.join(", "));
 }
-// Loan Eligibility Check
+// 🏦 Loan Eligibility Check
 function checkLoan() { 
   let name = document.getElementById("memberDisplay").innerText;
-  let totalSavings = members[name].savings;
+  if (!name || !members[name]) {
+    alert("⚠️ Please log in first.");
+    return;
+  }
 
+  let totalSavings = members[name].savings;
   let loanResult = document.getElementById("loanMessage");
   loanResult.innerHTML = ""; 
 
   let loanAmount = 0, repaymentPeriod = "";
 
-  // Loan qualification rules (max loan + period only)
+  // Qualification rules
   if (totalSavings < 1500) {
     loanResult.innerHTML = `❌ Sorry, ${name}, you are not yet eligible for a loan. Please keep on saving.`;
     return;
@@ -1367,7 +1431,7 @@ function checkLoan() {
     repaymentPeriod = "6 months";
   }
 
-  // Show qualification message + button
+  // Show result + Apply button
   loanResult.innerHTML = `
     ✅ Congratulations, ${name}!<br>
     You qualify for a loan.<br><br>
@@ -1375,12 +1439,11 @@ function checkLoan() {
     <b>Repayment Period:</b> ${repaymentPeriod}<br><br>
     <button onclick="showLoanForm('${name}', ${loanAmount}, '${repaymentPeriod}')" 
       style="padding:10px 15px; background:#1976d2; color:white; border:none; border-radius:5px; cursor:pointer;">
-      👉 Click here to Apply
+      👉 Apply Now
     </button>
   `;
 }
-
-// Loan Application Form
+// 📝 Loan Application Form
 function showLoanForm(name, maxAmount, repaymentPeriod) {
   let phone = members[name].phone;
 
@@ -1388,6 +1451,7 @@ function showLoanForm(name, maxAmount, repaymentPeriod) {
   loanResult.innerHTML = `
     <h3>📝 Loan Application Form</h3>
     <form onsubmit="submitLoan(event, '${name}', ${maxAmount}, '${phone}', '${repaymentPeriod}')">
+      
       <label><b>Name:</b></label><br>
       <input type="text" value="${name}" readonly style="width:90%; padding:8px; margin-bottom:10px;"><br>
       
@@ -1418,8 +1482,7 @@ function showLoanForm(name, maxAmount, repaymentPeriod) {
     </form>
   `;
 }
-
-// Handle Loan Submission (Combined Member + Admin)
+// 📤 Handle Loan Submission
 function submitLoan(event, name, maxAmount, phone, repaymentPeriod) {
   event.preventDefault();
 
@@ -1440,33 +1503,13 @@ function submitLoan(event, name, maxAmount, phone, repaymentPeriod) {
   // Apply 12% interest
   let repaymentAmount = Math.round(applyAmount * 1.12);
 
-  // Get today's date
+  // Get today’s date
   let today = new Date();
   let dateStr = today.toLocaleDateString("en-KE", {
     weekday: "long", year: "numeric", month: "long", day: "numeric"
   });
 
-  // --- Save loan into member dashboard table ---
-  let historyBody = document.getElementById("loanHistoryBody");
-  if (historyBody.children[0].tagName === "TR" && historyBody.children[0].cells.length === 1) {
-    historyBody.innerHTML = ""; // remove "No loan applications yet."
-  }
-
-  let newRow = document.createElement("tr");
-  newRow.innerHTML = `
-    <td>${name}</td>
-    <td>${phone}</td>
-    <td>Ksh ${maxAmount}</td>
-    <td>Ksh ${applyAmount}</td>
-    <td>${idNumber}</td>
-    <td>${repaymentPeriod}</td>
-    <td>Ksh ${repaymentAmount}</td>
-    <td>${dateStr}</td>
-    <td style="color:orange; font-weight:bold;">Pending</td>
-  `;
-  historyBody.appendChild(newRow);
-
-  // --- Save loan into localStorage for admin ---
+  // --- Save loan into localStorage ---
   let applications = JSON.parse(localStorage.getItem("loanApplications")) || [];
   let newApp = {
     name: name,
@@ -1482,76 +1525,22 @@ function submitLoan(event, name, maxAmount, phone, repaymentPeriod) {
   applications.push(newApp);
   localStorage.setItem("loanApplications", JSON.stringify(applications));
 
-  // Refresh Admin Panel loan table if admin is logged in
+  // --- Refresh Member Loan History ---
+  loadMemberLoanHistory(name);
+
+  // --- Refresh Admin Panel if logged in ---
   if (document.getElementById("admin").style.display === "block") {
     loadLoanApplications();
-    // Reload member history with updated data
- loadMemberLoanHistory(name);
-
   }
 
-  // --- Send WhatsApp Message ---
-  let message = `Hello, I am ${name}. I am applying for a loan.\n\n` +
-                `📅 Date: ${dateStr}\n` +
-                `📞 Phone: ${phone}\n` +
-                `Qualified Loan: Ksh ${maxAmount}\n` +
-                `Requested Amount: Ksh ${applyAmount}\n` +
-                `Repayment Period: ${repaymentPeriod}\n` +
-                `Total Repayment: Ksh ${repaymentAmount}\n` +
-                `ID Number: ${idNumber}`;
-
+  // --- Notify Admin via WhatsApp ---
+  let message = `🆕 Loan Application\n\n👤 Name: ${name}\n📞 Phone: ${phone}\n💰 Requested: Ksh ${applyAmount}\n💳 Repayment: Ksh ${repaymentAmount}\n⏳ Period: ${repaymentPeriod}\n🆔 ID: ${idNumber}\n📅 Date: ${dateStr}`;
   let whatsappUrl = "https://wa.me/254713953004?text=" + encodeURIComponent(message);
   window.open(whatsappUrl, "_blank");
 
   alert(`✅ Loan application submitted successfully!`);
 }
-
-function addMember(event) {
-  event.preventDefault();
-
-  let name = document.getElementById("newMemberName").value.trim();
-  let phone = document.getElementById("newMemberPhone").value.trim();
-  let savings = parseInt(document.getElementById("newMemberSavings").value) || 0;
-
-  if (!name || !phone) {
-    alert("❌ Please fill in all required fields.");
-    return;
-  }
-
-  // ✅ Check if member already exists
-  if (members[name]) {
-    alert(`⚠️ Member "${name}" already exists in the system.`);
-    return;
-  }
-
-  // ✅ Add to members object
-  members[name] = { phone: phone, savings: savings };
-
-  // ✅ Add new member to login dropdown
-  let dropdown = document.getElementById("memberName");
-  let option = document.createElement("option");
-  option.value = name;
-  option.textContent = name;
-  dropdown.appendChild(option);
-
-  // ✅ Success message
-  alert(`✅ Member ${name} has been added successfully and can now log in!`);
-
-  // Reset form
-  document.getElementById("newMemberName").value = "";
-  document.getElementById("newMemberPhone").value = "";
-  document.getElementById("newMemberSavings").value = "0";
-
-  // Hide form
-  document.getElementById("addMemberForm").style.display = "none";
-}
-
-
-
-
-
-
-// Admin Login Function with Spinner + Shake
+// 🔑 Admin Login with Spinner
 function adminLogin() {
   let usernameInput = document.getElementById("adminUser");
   let passwordInput = document.getElementById("adminPass");
@@ -1561,69 +1550,719 @@ function adminLogin() {
   let loginBtn = document.getElementById("adminBtn");
   let spinner = loginBtn.querySelector(".spinner");
 
-  // Show spinner
   spinner.style.display = "inline-block";
   message.innerHTML = "";
-  loginBtn.style.pointerEvents = "none"; // disable button
+  loginBtn.style.pointerEvents = "none";
 
   setTimeout(() => {
-    // Hide spinner after 2 seconds
     spinner.style.display = "none";
     loginBtn.style.pointerEvents = "auto";
 
     if (username === "bony" && password === "2025") {
-      // ✅ Successful login
+      // ✅ Success
       message.style.color = "green";
       message.innerHTML = "✅ Login successful! Welcome, Admin.";
 
-      document.getElementById("adminLogin").style.display = "none"; // hide login form
-      document.getElementById("admin").style.display = "block"; // show admin panel
-      document.getElementById("postUpdateBox").style.display = "block";
+      document.getElementById("adminLogin").style.display = "none";
+      document.getElementById("admin").style.display = "block";
 
-  // 🔔 Trigger system banner for members
-  showBanner("🔔 New Loan Rules have been added! Check your dashboard.");
-      // 🔑 Save session
       localStorage.setItem("adminLoggedIn", "true");
-// ✅ Load applications immediately when admin logs in
-    loadLoanApplications();
-    loadMemberLoanHistory(name);
 
+      // Load loan applications immediately
+      loadLoanApplications();
     } else {
-      // ❌ Failed login
+      // ❌ Fail
       message.style.color = "red";
       message.innerHTML = "❌ Incorrect username or password!";
-
-      // Add red glow to inputs
-      usernameInput.classList.add("input-error");
-      passwordInput.classList.add("input-error");
     }
-  }, 2000); // 2 sec delay
+  }, 2000);
 }
 
+
+// 🚪 Admin Logout
 function adminLogout() {
   let logoutBtn = document.getElementById("logoutBtn");
   let spinner = logoutBtn.querySelector(".spinner");
 
-  // Show spinner
   spinner.style.display = "inline-block";
   logoutBtn.style.pointerEvents = "none";
 
   setTimeout(() => {
-    // Clear session
     localStorage.removeItem("adminLoggedIn");
 
-    // Hide admin panel
     document.getElementById("admin").style.display = "none";
-
-    // Show login again
     document.getElementById("adminLogin").style.display = "block";
 
-    // Reset button
     spinner.style.display = "none";
     logoutBtn.style.pointerEvents = "auto";
 
     alert("✅ You have been logged out.");
-  }, 2000); // 2 sec delay
+  }, 2000);
+}
+function loadLoanApplications() {
+  let applications = JSON.parse(localStorage.getItem("loanApplications")) || [];
+  let body = document.getElementById("adminLoanBody");
+
+  if (applications.length === 0) {
+    body.innerHTML = `<tr><td colspan="11" style="color:gray;">No applications yet.</td></tr>`;
+    return;
+  }
+
+  body.innerHTML = "";
+  applications.forEach((app, index) => {
+    let row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${app.name}</td>
+      <td>${app.phone}</td>
+      <td>Ksh ${app.qualifiedAmount}</td>
+      <td>Ksh ${app.requestedAmount}</td>
+      <td>${app.idNumber}</td>
+      <td>${app.repaymentPeriod}</td>
+      <td>Ksh ${app.repaymentAmount}</td>
+      <td>${app.date}</td>
+      <td style="font-weight:bold; color:${app.status.includes("Pending") ? "orange" : app.status.includes("Approved") ? "green" : "red"};">
+        ${app.status}${app.reason ? `<br><small style="color:gray;">${app.reason}</small>` : ""}
+      </td>
+      <td>
+        <button onclick="approveLoan(${index})" style="background:#388e3c; color:white; padding:5px; border:none; border-radius:3px; cursor:pointer;">Approve</button>
+        <button onclick="rejectLoan(${index})" style="background:#d32f2f; color:white; padding:5px; border:none; border-radius:3px; cursor:pointer;">Reject</button>
+        <button onclick="deleteLoan(${index})" style="background:#757575; color:white; padding:5px; border:none; border-radius:3px; cursor:pointer;">Delete</button>
+      </td>
+    `;
+    body.appendChild(row);
+  });
+}
+
+// 📲 Send WhatsApp Notification (to Admin)
+function sendWhatsAppNotification(message) {
+  let adminPhone = "254713953004";  // Admin’s WhatsApp number
+  let url = `https://wa.me/${adminPhone}?text=${encodeURIComponent(message)}`;
+  window.open(url, "_blank");
+}
+function approveLoan(index) {
+  let applications = JSON.parse(localStorage.getItem("loanApplications")) || [];
+  if (applications[index]) {
+    applications[index].status = "Approved ✅";
+    localStorage.setItem("loanApplications", JSON.stringify(applications));
+    loadLoanApplications();
+    loadMemberLoanHistory(applications[index].name);
+
+    // ✅ Refresh stats
+    updateAdminSummary();
+    loadLoanApplications();
+    loadMemberLoanHistory(applications[index].name);
+    populateMemberDropdown();
+    // ✅ WhatsApp Notification
+    let msg = `Hello ${applications[index].name},\n\n🎉 Good news! Your loan of Ksh ${applications[index].requestedAmount} has been *APPROVED*.\n\n📅 Repayment Period: ${applications[index].repaymentPeriod}\n💰 Total Repayment: Ksh ${applications[index].repaymentAmount}\n\n✅ Thank you for trusting Future Finders Chama.`;
+    sendWhatsAppNotification(msg);
+
+    alert(`🎉 Loan for ${applications[index].name} has been approved!`);
+  }
+}
+
+
+// ❌ Reject Loan
+function rejectLoan(index) {
+  let applications = JSON.parse(localStorage.getItem("loanApplications")) || [];
+  
+  if (applications[index]) {
+    // Ask for rejection reason
+    let reason = prompt("⚠️ Enter reason for rejection:");
+    if (!reason) {
+      alert("❌ Rejection reason is required.");
+      return;
+    }
+
+    applications[index].status = "Rejected ❌";
+    applications[index].reason = reason;
+    localStorage.setItem("loanApplications", JSON.stringify(applications));
+
+    // Refresh views
+    updateAdminSummary();
+    loadLoanApplications();
+    loadMemberLoanHistory(applications[index].name);
+
+    // Notify Admin via WhatsApp
+    let msg = `❌ Loan Rejected\n\n👤 Member: ${applications[index].name}\n💰 Amount: Ksh ${applications[index].requestedAmount}\n📞 Phone: ${applications[index].phone}\n📅 Date: ${applications[index].date}\nReason: ${reason}`;
+    sendWhatsAppNotification(msg);
+
+    alert(`⚠️ Loan for ${applications[index].name} has been rejected.`);
+  }
+}
+
+
+
+function deleteLoan(index) {
+  let applications = JSON.parse(localStorage.getItem("loanApplications")) || [];
+
+  if (applications[index]) {
+    if (applications[index].status.includes("Pending")) {
+      alert("⚠️ You cannot delete a pending loan.");
+      return;
+    }
+
+    if (confirm(`🗑 Are you sure you want to delete this ${applications[index].status} loan?`)) {
+      applications.splice(index, 1);
+      localStorage.setItem("loanApplications", JSON.stringify(applications));
+
+      loadLoanApplications();
+      let memberName = document.getElementById("memberDisplay").innerText;
+      if (memberName) {
+        loadMemberLoanHistory(memberName);
+      }
+
+      
+
+      alert("✅ Loan deleted successfully.");
+    }
+  }
+}
+
+// 🔍 Filter loans by search + status
+function filterLoans() {
+  let input = document.getElementById("loanSearch").value.toLowerCase();
+  let statusFilter = document.getElementById("loanStatusFilter").value;
+  let rows = document.querySelectorAll("#adminLoanBody tr");
+
+  rows.forEach(row => {
+    let text = row.innerText.toLowerCase();
+    let matchesSearch = text.includes(input);
+    let matchesStatus = !statusFilter || text.includes(statusFilter.toLowerCase());
+
+    row.style.display = (matchesSearch && matchesStatus) ? "" : "none";
+  });
+}
+// 📂 Export Loans to CSV
+function exportLoans() {
+  let applications = JSON.parse(localStorage.getItem("loanApplications")) || [];
+
+  if (applications.length === 0) {
+    alert("⚠️ No loans to export.");
+    return;
+  }
+
+  // CSV Header
+  let csvContent = "data:text/csv;charset=utf-8,Name,Phone,Qualified Amount,Requested Amount,ID Number,Repayment Period,Repayment Amount,Date,Status,Reason\n";
+
+  // CSV Rows
+  applications.forEach(app => {
+    let row = [
+      app.name,
+      app.phone,
+      "Ksh " + app.qualifiedAmount,
+      "Ksh " + app.requestedAmount,
+      app.idNumber,
+      app.repaymentPeriod,
+      "Ksh " + app.repaymentAmount,
+      app.date,
+      app.status,
+      app.reason || ""
+    ];
+    csvContent += row.join(",") + "\n";
+  });
+
+  // Download File
+  let encodedUri = encodeURI(csvContent);
+  let link = document.createElement("a");
+  link.setAttribute("href", encodedUri);
+  link.setAttribute("download", "loan_applications.csv");
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+// 📝 Register New Member
+function registerMember() {
+  let name = document.getElementById("regName").value.trim();
+  let phone = document.getElementById("regPhone").value.trim();
+  let pass = document.getElementById("regPass").value.trim();
+
+  if (!name || !phone || !pass) {
+    alert("⚠️ Please fill in all fields.");
+    return;
+  }
+
+  // Load existing pending + approved
+  let pending = JSON.parse(localStorage.getItem("pendingMembers")) || [];
+  let approved = JSON.parse(localStorage.getItem("approvedMembers")) || [];
+
+  // Prevent duplicates
+  if (approved.some(m => m.name === name) || pending.some(m => m.name === name)) {
+    alert("❌ This member is already registered or waiting for approval.");
+    return;
+  }
+
+  // Save to pending
+  let newMember = { name, phone, pass };
+  pending.push(newMember);
+  localStorage.setItem("pendingMembers", JSON.stringify(pending));
+
+  alert(`✅ Registration successful!\n\nYour application is pending admin approval.`);
+
+  // Reset form
+  document.getElementById("regName").value = "";
+  document.getElementById("regPhone").value = "";
+  document.getElementById("regPass").value = "";
+
+  // 🚀 Notify Admin on WhatsApp
+  let message = `🆕 New Member Registration\n\n👤 Name: ${name}\n📞 Phone: ${phone}`;
+  let whatsappUrl = "https://wa.me/254713953004?text=" + encodeURIComponent(message);
+  window.open(whatsappUrl, "_blank");
+}
+// 📋 Show Pending Members in Admin Panel
+function updatePendingMembersTable() {
+  let pending = JSON.parse(localStorage.getItem("pendingMembers")) || [];
+  let tbody = document.getElementById("pendingMembersBody");
+
+  tbody.innerHTML = "";
+
+  if (pending.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="4" style="color:gray;">No pending registrations.</td></tr>`;
+    return;
+  }
+
+  pending.forEach((m, index) => {
+    let row = `
+      <tr>
+        <td>${m.name}</td>
+        <td>${m.phone}</td>
+        <td>
+          <button onclick="approveMember(${index})" style="background:green; color:white; padding:5px; border:none; border-radius:4px; cursor:pointer;">✅ Approve</button>
+          <button onclick="rejectMember(${index})" style="background:red; color:white; padding:5px; border:none; border-radius:4px; cursor:pointer;">❌ Reject</button>
+        </td>
+      </tr>
+    `;
+    tbody.innerHTML += row;
+  });
+}
+function approveMember(index) {
+  let pending = JSON.parse(localStorage.getItem("pendingMembers")) || [];
+  let member = pending[index];
+
+  // ✅ Add to approved members
+  members[member.name] = { phone: member.phone, savings: 0, monthly: [] };
+
+  // Remove from pending
+  pending.splice(index, 1);
+  localStorage.setItem("pendingMembers", JSON.stringify(pending));
+
+  // Add to login dropdown
+  let dropdown = document.getElementById("memberName");
+  let option = document.createElement("option");
+  option.value = member.name;
+  option.textContent = member.name;
+  dropdown.appendChild(option);
+
+  // ✅ Add to WhatsApp member selection instantly
+  populateMemberDropdown();
+
+  // ✅ WhatsApp Notification to User
+  let message = `🎉 Hello ${member.name}, your registration to Future Finders Chama has been APPROVED ✅. You can now log in with your phone number: ${member.phone}. Welcome aboard!`;
+  window.open("https://wa.me/" + member.phone.replace(/^0/, "254") + "?text=" + encodeURIComponent(message), "_blank");
+
+  alert(`✅ ${member.name} approved and added to members list!`);
+  updatePendingMembersTable();
+}
+
+function rejectMember(index) {
+  let pending = JSON.parse(localStorage.getItem("pendingMembers")) || [];
+  let member = pending[index];
+
+  // Remove from pending
+  pending.splice(index, 1);
+  localStorage.setItem("pendingMembers", JSON.stringify(pending));
+
+  // ❌ Refresh dropdown just in case
+  populateMemberDropdown();
+
+  // ❌ WhatsApp Notification to User
+  let message = `⚠️ Hello ${member.name}, unfortunately your registration to Future Finders Chama has been REJECTED ❌. Please contact the admin for more details.`;
+  window.open("https://wa.me/" + member.phone.replace(/^0/, "254") + "?text=" + encodeURIComponent(message), "_blank");
+
+  alert(`❌ ${member.name} has been rejected.`);
+  updatePendingMembersTable();
+}
+
+// 📢 Show System Banner
+function showBanner(message, time) {
+  document.getElementById("bannerMessage").innerHTML =
+    `📢 ${message} <br><small style="font-weight:normal;">🕒 Posted on ${time}</small>`;
+
+  let banner = document.getElementById("systemBanner");
+  banner.style.display = "block";
+
+  // Smooth fade-in
+  setTimeout(() => banner.classList.add("show"), 50);
+
+  // Auto-hide after 8 seconds
+  setTimeout(() => {
+    closeBanner();
+  }, 8000);
+}
+
+// ❌ Close Banner
+function closeBanner() {
+  let banner = document.getElementById("systemBanner");
+  banner.classList.remove("show");
+  setTimeout(() => (banner.style.display = "none"), 600);
+}
+function loadNews() {
+  let updates = JSON.parse(localStorage.getItem("systemUpdates")) || [];
+  let contentDiv = document.getElementById("newsFeed"); // ✅ fixed
+  if (!contentDiv) return;
+
+  if (updates.length === 0) {
+    contentDiv.innerHTML = "<p style='color:gray;'>No news yet.</p>";
+    return;
+  }
+
+  contentDiv.innerHTML = "";
+  updates.slice().reverse().forEach(update => {
+    contentDiv.innerHTML += `
+      <div style="border-bottom:1px solid #ddd; padding:10px 0;">
+        <b style="color:#333;">${update.time}</b><br>
+        <span>${update.message}</span>
+      </div>
+    `;
+  });
+}
+
+
+function markNewsRead() {
+  let updates = JSON.parse(localStorage.getItem("systemUpdates")) || [];
+  if (updates.length > 0) {
+    let lastUpdateTime = updates[updates.length - 1].time;
+    localStorage.setItem("lastReadUpdate", lastUpdateTime);
+  }
+
+  let badge = document.getElementById("newsBadge");
+  if (badge) badge.style.display = "none";
+}
+
+// ✅ Post New Update (Admin)
+function postUpdate() {
+  let msg = document.getElementById("updateMessage").value.trim();
+  if (!msg) {
+    alert("⚠️ Please enter a message before posting.");
+    return;
+  }
+
+  let now = new Date();
+  let dateStr = now.toLocaleString("en-KE", {
+    weekday: "long", year: "numeric", month: "long", day: "numeric",
+    hour: "2-digit", minute: "2-digit"
+  });
+
+  let newUpdate = { message: msg, time: dateStr };
+
+  let updates = JSON.parse(localStorage.getItem("systemUpdates")) || [];
+  updates.push(newUpdate);
+  localStorage.setItem("systemUpdates", JSON.stringify(updates));
+
+  showBanner(msg, dateStr);
+  loadNews();
+
+  // ✅ Show red dot badge
+  document.getElementById("newsBadge").style.display = "inline";
+
+  alert("✅ Update posted successfully!");
+  document.getElementById("updateMessage").value = "";
+  document.getElementById("sendWhatsAppUpdate").checked = false;
+  document.getElementById("memberSelectionBox").style.display = "none";
+}
+
+// ✅ Check Badge on Page Load
+function checkNewsBadge() {
+  let updates = JSON.parse(localStorage.getItem("systemUpdates")) || [];
+  let lastRead = localStorage.getItem("lastReadUpdate");
+
+  if (updates.length > 0) {
+    let lastUpdateTime = updates[updates.length - 1].time;
+    if (lastUpdateTime !== lastRead) {
+      document.getElementById("newsBadge").style.display = "inline"; // show red dot
+    }
+  }
+}
+
+// Run check when dashboard loads
+checkNewsBadge();
+
+// 📜 Update History (Admin Only) 
+function updateUpdateHistory() {
+  let updates = JSON.parse(localStorage.getItem("systemUpdates")) || [];
+  let body = document.getElementById("updateHistoryBody");
+
+  if (!body) return; // Skip if table not present
+
+  body.innerHTML = "";
+
+  if (updates.length === 0) {
+    body.innerHTML = `<tr><td colspan="2" style="color:gray;">No updates posted yet.</td></tr>`;
+    return;
+  }
+
+  // Show most recent first
+  updates.slice().reverse().forEach((update, index) => {
+    let row = document.createElement("tr");
+    row.innerHTML = `
+      <td colspan="2" style="text-align:left;">
+        <button onclick="toggleUpdate(${index})" 
+                style="background:#1976d2; color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;">
+          📢 ${update.time} ${index === 0 ? "(Latest)" : ""}
+        </button>
+        <button onclick="deleteUpdate(${updates.length - 1 - index})" 
+                style="background:#d32f2f; color:white; border:none; padding:5px 10px; border-radius:4px; margin-left:5px; cursor:pointer;">
+          🗑️ Delete
+        </button>
+        <div id="update-${index}" class="update-content" 
+             style="display:${index === 0 ? "block" : "none"}; margin-top:5px; padding:8px; border:1px solid #ccc; border-radius:5px;">
+          ${update.message}
+        </div>
+      </td>
+    `;
+    body.appendChild(row);
+  });
+}
+
+// Toggle update visibility
+function toggleUpdate(index) {
+  let content = document.getElementById(`update-${index}`);
+  content.style.display = (content.style.display === "none") ? "block" : "none";
+}
+
+
+
+// 🗑️ Delete a Single Update
+function deleteUpdate(index) {
+  let password = prompt("🔑 Enter Admin Password to delete this update:");
+
+  if (password === "2025") {
+    let updates = JSON.parse(localStorage.getItem("systemUpdates")) || [];
+
+    // Remove the update
+    updates.splice(index, 1);
+    localStorage.setItem("systemUpdates", JSON.stringify(updates));
+
+    // Refresh history
+    updateUpdateHistory();
+
+    // ✅ If latest was deleted → hide banner
+    if (index === updates.length) { 
+      closeBanner();
+    } else if (updates.length > 0) {
+      // Show new latest update as banner
+      let latest = updates[updates.length - 1];
+      showBanner(latest.message, latest.time);
+    } else {
+      // No updates left → hide banner
+      closeBanner();
+    }
+
+    alert("✅ Update deleted successfully!");
+  } else if (password !== null) {
+    alert("❌ Incorrect password. You are not allowed to delete.");
+  }
+}
+
+// 🧹 Clear All Updates
+function clearUpdateHistory() {
+  if (confirm("⚠️ Are you sure you want to clear all updates? This cannot be undone.")) {
+    localStorage.removeItem("systemUpdates");
+    updateUpdateHistory();
+    closeBanner(); // ✅ Hide banner too
+    alert("✅ All updates cleared!");
+  }
+}
+// 📝 Post New Update (Admin Only)
+function postUpdate() {
+  let msg = document.getElementById("updateMessage").value.trim();
+  if (!msg) {
+    alert("⚠️ Please enter a message before posting.");
+    return;
+  }
+
+  let now = new Date();
+  let dateStr = now.toLocaleString("en-KE", {
+    weekday: "long", year: "numeric", month: "long", day: "numeric",
+    hour: "2-digit", minute: "2-digit"
+  });
+
+  let newUpdate = { message: msg, time: dateStr };
+
+  let updates = JSON.parse(localStorage.getItem("systemUpdates")) || [];
+  updates.push(newUpdate);
+  localStorage.setItem("systemUpdates", JSON.stringify(updates));
+
+  // Show banner immediately
+  showBanner(msg, dateStr);
+
+  // Update history table
+  updateUpdateHistory();
+
+  // ✅ If checkbox checked → send WhatsApp
+  if (document.getElementById("sendWhatsAppUpdate").checked) {
+    let selected = Array.from(document.getElementById("memberSelectMulti").selectedOptions).map(o => o.value);
+
+    if (selected.length === 0) {
+      // If none selected → send to ALL
+      broadcastWhatsAppUpdate(msg, dateStr);
+    } else {
+      // Send only to selected members
+      broadcastWhatsAppUpdate(msg, dateStr, selected);
+    }
+  }
+
+  alert("✅ Update posted successfully!");
+  document.getElementById("updateMessage").value = "";
+  document.getElementById("sendWhatsAppUpdate").checked = false;
+  document.getElementById("memberSelectionBox").style.display = "none";
+}
+
+// 📢 Send Update to Members on WhatsApp (Sequential with Delay)
+function broadcastWhatsAppUpdate(message, time, selectedMembers = null) {
+  let fullMsg = `📢 Future Finders Update\n\n${message}\n\n🕒 Posted on: ${time}\n\n- Admin`;
+
+  // Use selected list, or all members
+  let targetMembers = selectedMembers || Object.keys(members);
+
+  let index = 0;
+
+  function sendNext() {
+    if (index >= targetMembers.length) {
+      alert("✅ WhatsApp notifications sent to all selected members!");
+      return;
+    }
+
+    let memberName = targetMembers[index];
+    if (members[memberName]) {
+      let phone = members[memberName].phone.replace(/^0/, "254");
+      let url = `https://wa.me/${phone}?text=${encodeURIComponent(fullMsg)}`;
+      window.open(url, "_blank");
+    }
+
+    index++;
+    setTimeout(sendNext, 2000); // ⏳ 2 sec delay per message
+  }
+
+  sendNext();
+}
+
+
+// 🎯 Show/Hide Member Selection when checkbox toggled
+function toggleMemberSelection() {
+  let box = document.getElementById("memberSelectionBox");
+  let checkbox = document.getElementById("sendWhatsAppUpdate");
+
+  if (checkbox.checked) {
+    box.style.display = "block";
+
+    // Populate members if empty
+    let select = document.getElementById("memberSelectMulti");
+    if (select.options.length === 0) {
+      Object.keys(members).forEach(name => {
+        let opt = document.createElement("option");
+        opt.value = name;
+        opt.textContent = name;
+        select.appendChild(opt);
+      });
+    }
+  } else {
+    box.style.display = "none";
+  }
+}
+// ✅ Select All Members
+function selectAllMembers() {
+  let select = document.getElementById("memberSelectMulti");
+  for (let i = 0; i < select.options.length; i++) {
+    select.options[i].selected = true;
+  }
+}
+
+// 🔄 Populate Member Dropdown from `members` object
+function populateMemberDropdown() {
+  let select = document.getElementById("memberSelectMulti");
+  if (!select) return;
+
+  // Clear old options
+  select.innerHTML = "";
+
+  // Add members dynamically
+  Object.keys(members).forEach(name => {
+    let opt = document.createElement("option");
+    opt.value = name;
+    opt.textContent = name;
+    select.appendChild(opt);
+  });
+}
+
+// 🔍 Filter Members in Dropdown
+function filterMembers() {
+  let input = document.getElementById("memberSearch").value.toLowerCase();
+  let select = document.getElementById("memberSelectMulti");
+
+  for (let i = 0; i < select.options.length; i++) {
+    let option = select.options[i];
+    let text = option.textContent.toLowerCase();
+    option.style.display = text.includes(input) ? "" : "none";
+  }
+}
+// 📊 Update Admin Summary Stats
+function updateAdminSummary() {
+  // Members
+  let totalMembers = Object.keys(members).length;
+
+  // Total savings
+  let totalSavings = Object.values(members).reduce((sum, m) => sum + (m.savings || 0), 0);
+
+  // Loans
+  let applications = JSON.parse(localStorage.getItem("loanApplications")) || [];
+  let totalLoans = applications.length;
+
+  let pendingCount = applications.filter(a => a.status.includes("Pending")).length;
+  let approvedCount = applications.filter(a => a.status.includes("Approved")).length;
+  let rejectedCount = applications.filter(a => a.status.includes("Rejected")).length;
+
+  // Update UI
+  document.getElementById("totalMembersCard").innerText = `👥 Total Members: ${totalMembers}`;
+  document.getElementById("totalSavingsCard").innerText = `💰 Total Savings: Ksh ${totalSavings}`;
+  document.getElementById("totalLoansCard").innerText = `📑 Total Loans: ${totalLoans}`;
+  document.getElementById("loanBreakdownCard").innerText = `📊 Loan Status: ${pendingCount} Pending / ${approvedCount} Approved / ${rejectedCount} Rejected`;
+}
+// 🎯 Show/Hide Member Selection when checkbox toggled
+function toggleMemberSelection() {
+  let box = document.getElementById("memberSelectionBox");
+  let checkbox = document.getElementById("sendWhatsAppUpdate");
+
+  if (checkbox.checked) {
+    box.style.display = "block";
+
+    // Populate members if empty
+    let select = document.getElementById("memberSelectMulti");
+    if (select.options.length === 0) {
+      Object.keys(members).forEach(name => {
+        let opt = document.createElement("option");
+        opt.value = name;
+        opt.textContent = name;
+        select.appendChild(opt);
+      });
+    }
+  } else {
+    box.style.display = "none";
+  }
+}
+// ✅ Select All Members
+function selectAllMembers() {
+  let select = document.getElementById("memberSelectMulti");
+  for (let i = 0; i < select.options.length; i++) {
+    select.options[i].selected = true;
+  }
+}
+
+// ❌ Clear All Members
+function clearAllMembers() {
+  let select = document.getElementById("memberSelectMulti");
+  for (let i = 0; i < select.options.length; i++) {
+    select.options[i].selected = false;
+  }
 }
 
 
@@ -1631,28 +2270,27 @@ function adminLogout() {
 
 
 
+window.onload = function () {
+  let updates = JSON.parse(localStorage.getItem("systemUpdates")) || [];
+  if (updates.length > 0) {
+    let latest = updates[updates.length - 1];
+    showBanner(latest.message, latest.time);
+    updateUpdateHistory();
+  }
+
+  // ✅ Populate members when page loads
+  populateMemberDropdown();
+};
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Load lucky numbers from localStorage or create new object
 
 const diceFaces = ["⚀","⚁","⚂","⚃","⚄","⚅"];
-let usedNumbers = JSON.parse(localStorage.getItem("usedNumbers")) || [];
 
+// Load from localStorage or create fresh
+let usedNumbers = JSON.parse(localStorage.getItem("usedNumbers")) || [];
+let luckyNumbers = JSON.parse(localStorage.getItem("luckyNumbers")) || {}; // ✅ global fix
+
+// 🎲 Pick Number
 function pickNumber() {
   let member = document.getElementById("memberSelect").value;
   let dice = document.getElementById("diceBox");
@@ -1686,10 +2324,10 @@ function pickNumber() {
 
     // Check if already has number
     if (luckyNumbers[member]) {
-      dice.innerHTML = luckyNumbers[member]; 
+      dice.innerHTML = luckyNumbers[member].number; 
       result.innerHTML = `
         ❌ Sorry ${member}, you already picked your lucky number: 
-        <b>${luckyNumbers[member]}</b><br><br>
+        <b>${luckyNumbers[member].number}</b><br><br>
         <button onclick="resendNumber('${member}')"
           style="padding:8px 12px; background:#00796b; color:white; border:none; border-radius:5px; cursor:pointer;">
           🔁 Resend Number
@@ -1704,8 +2342,13 @@ function pickNumber() {
       number = Math.floor(Math.random() * 25) + 1;
     } while (usedNumbers.includes(number));
 
-    luckyNumbers[member] = number;
+    // Save number with timestamp
+    luckyNumbers[member] = { 
+      number: number, 
+      time: new Date().toLocaleString() 
+    };
     usedNumbers.push(number);
+
     localStorage.setItem("luckyNumbers", JSON.stringify(luckyNumbers));
     localStorage.setItem("usedNumbers", JSON.stringify(usedNumbers));
 
@@ -1722,10 +2365,10 @@ function pickNumber() {
   }, 4000);
 }
 
-
+// 🔁 Resend number
 function resendNumber(member) {
-  let number = luckyNumbers[member];
-  let method = document.querySelector('input[name="sendOption"]:checked').value;
+  let number = luckyNumbers[member].number;
+  let method = document.querySelector('input[name="sendOption"]:checked')?.value || "whatsapp";
 
   let message = `🎉 Hello ${member}, your lucky number is: ${number}`;
 
@@ -1736,77 +2379,36 @@ function resendNumber(member) {
   }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Show Picked Numbers (Admin Only)
+// 📊 Show Picked Numbers (Admin Only)
 function showPickedNumbers() {
   let table = document.getElementById("pickedNumbersTable");
   let body = document.getElementById("pickedNumbersBody");
 
-  // Load lucky numbers from localStorage
-  let luckyNumbers = JSON.parse(localStorage.getItem("luckyNumbers")) || {};
-
-  // Clear existing table
   body.innerHTML = "";
 
-  // If no numbers yet
   if (Object.keys(luckyNumbers).length === 0) {
-    body.innerHTML = `<tr><td colspan="2" style="color:gray;">No numbers picked yet.</td></tr>`;
+    body.innerHTML = `<tr><td colspan="3" style="color:gray;">No numbers picked yet.</td></tr>`;
   } else {
-    // Add each member + number to table
     for (let member in luckyNumbers) {
       let row = document.createElement("tr");
       row.innerHTML = `
         <td>${member}</td>
-        <td>${luckyNumbers[member]}</td>
+        <td>${luckyNumbers[member].number}</td>
+        <td>${luckyNumbers[member].time}</td>
       `;
       body.appendChild(row);
     }
   }
-
-  // Show the table
   table.style.display = "block";
 }
+
+// 👁 Toggle picked numbers table
 function togglePickedNumbers() {
   let table = document.getElementById("pickedNumbersTable");
-  let body = document.getElementById("pickedNumbersBody");
   let btn = document.querySelector('button[onclick="togglePickedNumbers()"]');
 
   if (table.style.display === "none" || table.style.display === "") {
-    // Load lucky numbers from localStorage
-    let luckyNumbers = JSON.parse(localStorage.getItem("luckyNumbers")) || {};
-
-    // Clear table
-    body.innerHTML = "";
-
-    if (Object.keys(luckyNumbers).length === 0) {
-      body.innerHTML = `<tr><td colspan="2" style="color:gray;">No numbers picked yet.</td></tr>`;
-    } else {
-      for (let member in luckyNumbers) {
-        let row = document.createElement("tr");
-        row.innerHTML = `
-          <td>${member}</td>
-          <td>${luckyNumbers[member]}</td>
-        `;
-        body.appendChild(row);
-      }
-    }
-
-    // Show table
+    showPickedNumbers();
     table.style.display = "block";
     btn.innerText = "🙈 Hide Picked Numbers";
   } else {
@@ -1814,21 +2416,19 @@ function togglePickedNumbers() {
     btn.innerText = "🎲 View Picked Numbers";
   }
 }
-function downloadPickedNumbers() {
-  let luckyNumbers = JSON.parse(localStorage.getItem("luckyNumbers")) || {};
 
+// 📥 Download as CSV
+function downloadPickedNumbers() {
   if (Object.keys(luckyNumbers).length === 0) {
     alert("⚠️ No picked numbers to download.");
     return;
   }
 
-  // Convert to CSV
   let csvContent = "data:text/csv;charset=utf-8,Member,Lucky Number,Picked At\n";
   for (let member in luckyNumbers) {
     csvContent += `${member},${luckyNumbers[member].number},${luckyNumbers[member].time}\n`;
   }
 
-  // Create hidden download link
   let encodedUri = encodeURI(csvContent);
   let link = document.createElement("a");
   link.setAttribute("href", encodedUri);
@@ -1837,6 +2437,8 @@ function downloadPickedNumbers() {
   link.click();
   document.body.removeChild(link);
 }
+
+// 🔄 Reset all picked numbers (Admin only)
 function resetPickedNumbers() {
   let password = prompt("🔒 Enter admin password to reset picked numbers:");
 
@@ -1846,603 +2448,89 @@ function resetPickedNumbers() {
   }
 
   if (confirm("⚠️ Are you sure you want to reset all picked numbers? This action cannot be undone.")) {
-    localStorage.removeItem("luckyNumbers"); // clear storage
-    luckyNumbers = {}; // reset in memory
+    localStorage.removeItem("luckyNumbers");
+    localStorage.removeItem("usedNumbers");
+    luckyNumbers = {};
+    usedNumbers = [];
 
-    // Refresh the table
     document.getElementById("pickedNumbersBody").innerHTML = 
       `<tr><td colspan="3" style="color:gray;">No numbers picked yet.</td></tr>`;
 
     alert("✅ All picked numbers have been reset successfully.");
+    showAvailableNumbers(); // ✅ refresh available numbers too
   }
 }
 
+// 🟢 Show Available Numbers (Admin)
+function showAvailableNumbers() {
+  let allNumbers = Array.from({ length: 25 }, (_, i) => i + 1); // [1..25]
+  let available = allNumbers.filter(n => !usedNumbers.includes(n));
 
+  // ✅ Ensure container exists inside Admin panel
+  let adminPanel = document.getElementById("admin");
+  let box = document.getElementById("availableNumbersBox");
 
-
-
-
-
-
-
-
-
-
-
-
-
-function contactEmail() {
-  window.location.href = "mailto:Bonychelly@gmail.com";
-  showPopup("📧 Opening email client...", "success");
-}
-
-function contactPhone() {
-  window.location.href = "tel:+254713953004";
-  showPopup("📞 Dialing now...", "success");
-}
-
-function contactWhatsApp() {
-  let phone = "254713953004"; 
-  let message = "Hello, I would like to get in touch with you.";
-  window.open("https://wa.me/" + phone + "?text=" + encodeURIComponent(message), "_blank");
-  showPopup("💬 Opening WhatsApp chat...", "success");
-}
-
-function showPopup(message, type = "success") {
-  let overlay = document.createElement("div");
-  overlay.className = "popup-overlay";
-  let box = document.createElement("div");
-  box.className = "popup-box " + (type === "success" ? "popup-success" : "popup-error");
-  box.innerHTML = `<p>${message}</p>`;
-  overlay.appendChild(box);
-  document.body.appendChild(overlay);
-  overlay.style.display = "flex";
-
-  setTimeout(() => {
-    overlay.remove();
-  }, 2000);
-}
-// Fade-in on scroll
-window.addEventListener("scroll", () => {
-  let contactSection = document.getElementById("contact");
-  let position = contactSection.getBoundingClientRect().top;
-  let screenHeight = window.innerHeight;
-
-  if (position < screenHeight - 100) {
-    contactSection.classList.add("visible");
+  if (!box) {
+    box = document.createElement("div");
+    box.id = "availableNumbersBox";
+    adminPanel.appendChild(box); // put it inside #admin
   }
-});
-function simulateAction(button, sectionId) {
-  let spinner = button.querySelector(".spinner");
 
-  // Show spinner
-  spinner.style.display = "inline-block";
-  button.style.pointerEvents = "none";
+  // ✅ Render content with refresh button
+  box.innerHTML = `
+    <h3>📋 Available Numbers (${available.length}/25)</h3>
+    <p style="margin:5px 0;">
+      ${available.length > 0 ? available.join(", ") : "🎉 All numbers have been taken!"}
+    </p>
+    <button onclick="showAvailableNumbers()" 
+            style="margin-top:5px; padding:6px 12px; background:#1976d2; color:white; border:none; border-radius:4px; cursor:pointer;">
+      🔄 Refresh Available Numbers
+    </button>
+  `;
 
-  setTimeout(() => {
-    // Hide spinner
-    spinner.style.display = "none";
-    button.style.pointerEvents = "auto";
-
-    // Hide all sections
-    document.querySelectorAll("section").forEach(sec => {
-      sec.style.display = "none";
-    });
-
-    // Show selected section
-    document.getElementById(sectionId).style.display = "block";
-  }, 800); // 0.8 sec loading effect
+  // ✅ Styling
+  box.style.border = "1px solid #ccc";
+  box.style.padding = "10px";
+  box.style.marginTop = "15px";
+  box.style.background = "#f9f9f9";
+  box.style.borderRadius = "6px";
 }
 
+function resendNumber(member) {
+  let number = luckyNumbers[member];
+  let method = document.querySelector('input[name="sendOption"]:checked')?.value || "whatsapp";
 
+  let message = `🎉 Hello ${member}, your lucky number is: ${number}`;
 
-
-
-
-
-
-// Handle Membership button click
-function showMembership() {
-  document.querySelectorAll("section, #dashboard, #admin").forEach(sec => sec.style.display = "none");
-
-  // If members exist → show login, else show registration
-  if (Object.keys(members).length === 0) {
-    document.getElementById("registerForm").style.display = "block";
-    document.getElementById("loginForm").style.display = "none";
+  if (method === "whatsapp") {
+    window.open("https://wa.me/254713953004?text=" + encodeURIComponent(message), "_blank");
   } else {
-    // Populate login dropdown with member names
-    let memberSelect = document.getElementById("memberName");
-    memberSelect.innerHTML = '<option value="">-- Choose your name --</option>';
-    Object.keys(members).forEach(m => {
-      let opt = document.createElement("option");
-      opt.textContent = m;
-      opt.value = m;
-      memberSelect.appendChild(opt);
-    });
-
-    document.getElementById("registerForm").style.display = "none";
-    document.getElementById("loginForm").style.display = "block";
-  }
-
-  document.getElementById("membership").style.display = "block";
-}
-
-function registerMember() {
-  let name = document.getElementById("regName").value.trim();
-  let phone = document.getElementById("regPhone").value.trim();
-  let pass = document.getElementById("regPass").value.trim();
-
-  if (!name || !phone || !pass) {
-    alert("⚠️ Please fill in all fields.");
-    return;
-  }
-
-  // Load pending members from localStorage
-  let pending = JSON.parse(localStorage.getItem("pendingMembers")) || [];
-  let approved = JSON.parse(localStorage.getItem("approvedMembers")) || [];
-
-  // Prevent duplicate names
-  if (approved.some(m => m.name === name) || pending.some(m => m.name === name)) {
-    alert("❌ This member is already registered or waiting for approval.");
-    return;
-  }
-
-  // Save to pending members
-  let newMember = { name, phone, pass };
-  pending.push(newMember);
-  localStorage.setItem("pendingMembers", JSON.stringify(pending));
-
-  alert(`✅ Registration successful!\n\nYour application is pending admin approval.`);
-
-  // Clear form
-  document.getElementById("regName").value = "";
-  document.getElementById("regPhone").value = "";
-  document.getElementById("regPass").value = "";
-
-  // 🚀 Send WhatsApp to Admin (optional)
-  let message = `🆕 New member registration:\n\n👤 Name: ${name}\n📞 Phone: ${phone}`;
-  let whatsappUrl = "https://wa.me/254713953004?text=" + encodeURIComponent(message);
-  window.open(whatsappUrl, "_blank");
-}
-
-
-
-  
-
-function updatePendingMembersTable() {
-  let pending = JSON.parse(localStorage.getItem("pendingMembers")) || [];
-  let tbody = document.getElementById("pendingMembersBody");
-
-  tbody.innerHTML = ""; // Clear old rows
-
-  if (pending.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="5" style="color:gray;">No pending registrations.</td></tr>`;
-    return;
-  }
-
-  pending.forEach((m, index) => {
-    let row = `<tr>
-      <td>${m.name}</td>
-      <td>${m.phone}</td>
-      <td>${m.email || "N/A"}</td>
-      <td>${m.status}</td>
-      <td>
-        <button onclick="approveMember(${index})" style="background:green;color:white;padding:5px;border:none;border-radius:4px;cursor:pointer;">✅ Approve</button>
-        <button onclick="rejectMember(${index})" style="background:red;color:white;padding:5px;border:none;border-radius:4px;cursor:pointer;">❌ Reject</button>
-      </td>
-    </tr>`;
-    tbody.innerHTML += row;
-  });
-}
-
-
-function approveMember(index) {
-  let pending = JSON.parse(localStorage.getItem("pendingMembers")) || [];
-  let member = pending[index];
-
-  // ✅ Add to approved members
-  members[member.name] = { phone: member.phone, savings: 0, monthly: [] };
-
-  // Remove from pending
-  pending.splice(index, 1);
-  localStorage.setItem("pendingMembers", JSON.stringify(pending));
-
-  // Add to login dropdown
-  let dropdown = document.getElementById("memberName");
-  let option = document.createElement("option");
-  option.value = member.name;
-  option.textContent = member.name;
-  dropdown.appendChild(option);
-
-  // ✅ WhatsApp Notification to User
-  let message = `🎉 Hello ${member.name}, your registration to Future Finders Chama has been APPROVED ✅. You can now log in with your phone number: ${member.phone}. Welcome aboard!`;
-  window.open("https://wa.me/" + member.phone.replace(/^0/, "254") + "?text=" + encodeURIComponent(message), "_blank");
-
-  alert(`✅ ${member.name} approved and added to members list!`);
-  updatePendingMembersTable();
-}
-function rejectMember(index) {
-  let pending = JSON.parse(localStorage.getItem("pendingMembers")) || [];
-  let member = pending[index];
-
-  // Remove from pending
-  pending.splice(index, 1);
-  localStorage.setItem("pendingMembers", JSON.stringify(pending));
-
-  // ❌ WhatsApp Notification to User
-  let message = `⚠️ Hello ${member.name}, unfortunately your registration to Future Finders Chama has been REJECTED ❌. Please contact the admin for more details.`;
-  window.open("https://wa.me/" + member.phone.replace(/^0/, "254") + "?text=" + encodeURIComponent(message), "_blank");
-
-  alert(`❌ ${member.name} has been rejected.`);
-  updatePendingMembersTable();
-}
-
-// ✅ Show banner
-function showBanner(message, time) {
-  document.getElementById("bannerMessage").innerHTML =
-    `📢 ${message} <br><small style="font-weight:normal;">🕒 Posted on ${time}</small>`;
-
-  let banner = document.getElementById("systemBanner");
-  banner.style.display = "block";
-  setTimeout(() => banner.classList.add("show"), 50);
-
-  // ⏳ Auto-hide after 8 seconds
-  setTimeout(() => {
-    closeBanner();
-  }, 8000);
-}
-
-// ✅ Post new update
-function postUpdate() {
-  let msg = document.getElementById("updateMessage").value.trim();
-  if (!msg) {
-    alert("⚠️ Please enter a message before posting.");
-    return;
-  }
-
-  let now = new Date();
-  let dateStr = now.toLocaleString("en-KE", {
-    weekday: "long", year: "numeric", month: "long", day: "numeric",
-    hour: "2-digit", minute: "2-digit"
-  });
-
-  let newUpdate = { message: msg, time: dateStr };
-
-  let updates = JSON.parse(localStorage.getItem("systemUpdates")) || [];
-  updates.push(newUpdate);
-  localStorage.setItem("systemUpdates", JSON.stringify(updates));
-
-  showBanner(msg, dateStr);
-  updateUpdateHistory();
-
-  alert("✅ Update posted successfully!");
-  document.getElementById("updateMessage").value = "";
-}
-
-// ✅ Load updates on refresh
-window.onload = function () {
-  let updates = JSON.parse(localStorage.getItem("systemUpdates")) || [];
-  if (updates.length > 0) {
-    let latest = updates[updates.length - 1];
-    showBanner(latest.message, latest.time);
-    updateUpdateHistory();
-  }
-};
-
-// ✅ Close banner
-function closeBanner() {
-  let banner = document.getElementById("systemBanner");
-  banner.classList.remove("show");
-  setTimeout(() => (banner.style.display = "none"), 600);
-  // Don’t clear localStorage here → history remains
-}
-
-// ✅ Update Admin History (collapsible list)
-function updateUpdateHistory() {
-  let updates = JSON.parse(localStorage.getItem("systemUpdates")) || [];
-  let body = document.getElementById("updateHistoryBody");
-
-  if (!body) return;
-
-  body.innerHTML = "";
-
-  if (updates.length === 0) {
-    body.innerHTML = `<tr><td colspan="2" style="color:gray;">No updates posted yet.</td></tr>`;
-    return;
-  }
-
-  updates.slice().reverse().forEach((update, index) => {
-    let row = document.createElement("tr");
-    row.innerHTML = `
-      <td colspan="2" style="text-align:left;">
-        <button onclick="toggleUpdate(${index})" 
-                style="background:#1976d2; color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;">
-          📢 ${update.time} ${index === 0 ? "(Latest)" : ""}
-        </button>
-        <div id="update-${index}" class="update-content" style="display:${index === 0 ? "block" : "none"}; margin-top:5px; padding:8px; border:1px solid #ccc; border-radius:5px;">
-          ${update.message}
-        </div>
-      </td>
-    `;
-    body.appendChild(row);
-  });
-}
-
-// ✅ Toggle update visibility
-function toggleUpdate(index) {
-  let content = document.getElementById(`update-${index}`);
-  if (content.style.display === "none") {
-    content.style.display = "block";
-  } else {
-    content.style.display = "none";
-  }
-}
-
-// ✅ Clear All Updates
-function clearUpdateHistory() {
-  if (confirm("⚠️ Are you sure you want to clear all updates?")) {
-    localStorage.removeItem("systemUpdates");
-    updateUpdateHistory();
-    alert("✅ All updates cleared!");
-  }
-}
-function togglePassword() {
-  let passField = document.getElementById("memberPass");
-  passField.type = passField.type === "password" ? "text" : "password";
-}
-function toggleAdminPassword() {
-  let passField = document.getElementById("adminPass");
-  passField.type = passField.type === "password" ? "text" : "password";
-}
-
-
-
-
-function memberLogout() {
-  let btn = document.getElementById("memberLogoutBtn");
-  let spinner = btn.querySelector(".spinner");
-
-  // Show spinner
-  spinner.style.display = "inline-block";
-  btn.style.pointerEvents = "none"; // disable button while processing
-
-  setTimeout(() => {
-    // Hide spinner
-    spinner.style.display = "none";
-    btn.style.pointerEvents = "auto";
-
-    // Hide dashboard
-    document.getElementById("dashboard").style.display = "none";
-
-    // Show login form again
-    document.getElementById("loginForm").style.display = "block";
-
-    // Clear member display
-    document.getElementById("memberDisplay").innerText = "";
-
-    // ✅ Show success popup instead of alert
-    showPopup("success see you again", "Logout Successful", "🚪 You have logged out successfully.");
-  }, 3000); // 3 seconds delay for effect
-}
-
-
-
-
-
-// Load news into section
-function loadNews() {
-  let newsFeed = document.getElementById("newsFeed");
-  let updates = JSON.parse(localStorage.getItem("systemUpdates")) || [];
-
-  if (updates.length === 0) {
-    newsFeed.innerHTML = "<p style='color:gray;'>No updates yet.</p>";
-    return;
-  }
-
-  newsFeed.innerHTML = updates.map(upd => `
-    <p>🗓️ <b>${upd.time}</b> – ${upd.message}</p>
-  `).join("");
-}
-
-// Load updates on refresh
-window.onload = function() {
-  let savedUpdate = localStorage.getItem("systemUpdate");
-  if (savedUpdate) {
-    let updateObj = JSON.parse(savedUpdate);
-    showBanner(updateObj.message, updateObj.time);
-  }
-  loadNews();
-};
-
-function loadNews() {
-  let newsFeed = document.getElementById("newsFeed");
-  let updates = JSON.parse(localStorage.getItem("systemUpdates")) || [];
-
-  if (updates.length === 0) {
-    newsFeed.innerHTML = "<p style='color:gray;'>No updates yet.</p>";
-    return;
-  }
-
-  let isAdmin = localStorage.getItem("adminLoggedIn") === "true"; // ✅ check if admin is logged in
-
-  newsFeed.innerHTML = updates.map((upd, index) => `
-    <div style="margin-bottom:10px; padding:10px; border:1px solid #ccc; border-radius:5px;">
-      <p>🗓️ <b>${upd.time}</b> – ${upd.message}</p>
-      ${isAdmin ? `<button onclick="deleteUpdate(${index})" 
-         style="padding:5px 10px; background:#d32f2f; color:white; border:none; border-radius:4px; cursor:pointer;">
-         🗑️ Delete
-       </button>` : ""}
-    </div>
-  `).join("");
-}
-function deleteUpdate(index) {
-  let password = prompt("🔑 Enter Admin Password to delete this update:");
-
-  if (password === "2025") {
-    let updates = JSON.parse(localStorage.getItem("newsUpdates")) || [];
-    updates.splice(index, 1); // remove update
-    localStorage.setItem("newsUpdates", JSON.stringify(updates));
-    renderUpdates(); // refresh list
-    alert("✅ Update deleted successfully!");
-  } else if (password !== null) {
-    alert("❌ Incorrect password. You are not allowed to delete.");
+    window.location.href = "mailto:?subject=Lucky Number&body=" + encodeURIComponent(message);
   }
 }
 function loadMemberLoanHistory(name) {
   let applications = JSON.parse(localStorage.getItem("loanApplications")) || [];
-  let historyBody = document.getElementById("loanHistoryBody");
-  historyBody.innerHTML = "";
+  let memberLoans = applications.filter(app => app.name === name);
 
-  let memberApps = applications.filter(app => app.name === name);
+  let historyDiv = document.getElementById("loanHistory");
+  if (!historyDiv) return;
 
-  if (memberApps.length === 0) {
-    historyBody.innerHTML = `<tr><td colspan="7" style="color:gray;">No loan applications yet.</td></tr>`;
+  if (memberLoans.length === 0) {
+    historyDiv.innerHTML = `<p style="color:gray;">No loan history yet.</p>`;
     return;
   }
 
-  memberApps.forEach(app => {
-    let row = document.createElement("tr");
-    row.innerHTML = `
-      <td>${app.name}</td>
-      <td>${app.phone}</td>
-      <td>Ksh ${app.qualifiedAmount}</td>
-      <td>Ksh ${app.requestedAmount}</td>
-      <td>${app.idNumber}</td>
-      <td>${app.date}</td>
-      <td style="font-weight:bold; color:${app.status === "Approved" ? "green" : app.status === "Rejected" ? "red" : "orange"};">
-        ${app.status}${app.reason ? `<br><small style="color:gray;">Reason: ${app.reason}</small>` : ""}
-      </td>
+  historyDiv.innerHTML = "<h3>📑 Loan History</h3>";
+  memberLoans.forEach(app => {
+    historyDiv.innerHTML += `
+      <div style="border:1px solid #ccc; margin:5px 0; padding:8px;">
+        <b>Amount:</b> Ksh ${app.requestedAmount}<br>
+        <b>Status:</b> ${app.status}<br>
+        <b>Date:</b> ${app.date}
+      </div>
     `;
-    historyBody.appendChild(row);
   });
 }
-
-function updateLoanStatus(index, newStatus) {
-  let applications = JSON.parse(localStorage.getItem("loanApplications")) || [];
-
-  if (applications[index]) {
-    if (newStatus === "Rejected") {
-      let reason = prompt("❌ Please enter a reason for rejection:");
-      if (!reason) {
-        alert("⚠️ Rejection reason is required.");
-        return;
-      }
-      applications[index].status = "Rejected";
-      applications[index].reason = reason;
-    } else if (newStatus === "Approved") {
-      applications[index].status = "Approved";
-      applications[index].reason = ""; // clear reason
-    }
-
-    localStorage.setItem("loanApplications", JSON.stringify(applications));
-
-    // ✅ Refresh Admin and Member Views
-    loadLoanApplications();
-    let memberName = document.getElementById("memberDisplay").innerText;
-    if (memberName) {
-      loadMemberLoanHistory(memberName);
-    }
-
-    alert(`✅ Loan for ${applications[index].name} has been ${newStatus}.`);
-  }
-}
-
-
-
-// Load all loan applications into Admin Panel
-function loadLoanApplications() {
-  let applications = JSON.parse(localStorage.getItem("loanApplications")) || [];
-  let adminBody = document.getElementById("adminLoanBody");
-  adminBody.innerHTML = "";
-
-  if (applications.length === 0) {
-    adminBody.innerHTML = `<tr><td colspan="10" style="color:gray;">No applications yet.</td></tr>`;
-    return;
-  }
-
-  applications.forEach((app, index) => {
-    let row = document.createElement("tr");
-    row.innerHTML = `
-      <td>${app.name}</td>
-      <td>${app.phone}</td>
-      <td>Ksh ${app.qualifiedAmount}</td>
-      <td>Ksh ${app.requestedAmount}</td>
-      <td>${app.idNumber}</td>
-      <td>${app.repaymentPeriod}</td>
-      <td>Ksh ${app.repaymentAmount}</td>
-      <td>${app.date}</td>
-      <td style="font-weight:bold; color:${app.status === "Approved" ? "green" : app.status === "Rejected" ? "red" : "orange"};">
-        ${app.status}${app.reason ? `<br><small style="color:gray;">Reason: ${app.reason}</small>` : ""}
-      </td>
-      <td>
-        ${app.status === "Pending" ? `
-          <button onclick="updateLoanStatus(${index}, 'Approved')" style="background:green; color:white; padding:5px 10px; border:none; border-radius:4px; cursor:pointer;">Approve</button>
-          <button onclick="updateLoanStatus(${index}, 'Rejected')" style="background:red; color:white; padding:5px 10px; border:none; border-radius:4px; cursor:pointer;">Reject</button>
-        ` : `
-          <button onclick="deleteLoan(${index})" style="background:gray; color:white; padding:5px 10px; border:none; border-radius:4px; cursor:pointer;">Delete</button>
-        `}
-      </td>
-    `;
-    adminBody.appendChild(row);
-  });
-}
-
-function loadMemberLoanHistory(name) {
-  let applications = JSON.parse(localStorage.getItem("loanApplications")) || [];
-  let historyBody = document.getElementById("loanHistoryBody");
-  historyBody.innerHTML = "";
-
-  let memberApps = applications.filter(app => app.name === name);
-
-  if (memberApps.length === 0) {
-    historyBody.innerHTML = `<tr><td colspan="7" style="color:gray;">No loan applications yet.</td></tr>`;
-    return;
-  }
-
-  memberApps.forEach(app => {
-    let row = document.createElement("tr");
-    row.innerHTML = `
-      <td>${app.name}</td>
-      <td>${app.phone}</td>
-      <td>Ksh ${app.qualifiedAmount}</td>
-      <td>Ksh ${app.requestedAmount}</td>
-      <td>${app.idNumber}</td>
-      <td>${app.date}</td>
-      <td style="font-weight:bold; color:${app.status === "Approved" ? "green" : app.status === "Rejected" ? "red" : "orange"};">
-        ${app.status}${app.reason ? `<br><small style="color:gray;">Reason: ${app.reason}</small>` : ""}
-      </td>
-    `;
-    historyBody.appendChild(row);
-  });
-}
-
-function deleteLoan(index) {
-  let applications = JSON.parse(localStorage.getItem("loanApplications")) || [];
-
-  if (applications[index]) {
-    if (applications[index].status === "Pending") {
-      alert("⚠️ You cannot delete a pending loan.");
-      return;
-    }
-
-    if (confirm(`🗑 Are you sure you want to delete this ${applications[index].status} loan?`)) {
-      applications.splice(index, 1);
-      localStorage.setItem("loanApplications", JSON.stringify(applications));
-
-      // ✅ Refresh Admin and Member Views
-      loadLoanApplications();
-      let memberName = document.getElementById("memberDisplay").innerText;
-      if (memberName) {
-        loadMemberLoanHistory(memberName);
-      }
-
-      alert("✅ Loan deleted successfully.");
-    }
-  }
-}
-
-
-
 
 </script>
 </body>
