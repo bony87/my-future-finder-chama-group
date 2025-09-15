@@ -597,6 +597,39 @@ body::before {
   color: #333;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
+.fade-out {
+  animation: fadeOut 0.6s ease forwards;
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(0.97); }
+}
+.fade-in {
+  animation: fadeIn 0.6s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.97); }
+  to { opacity: 1; transform: scale(1); }
+}
+/* Popup Box */
+.popup-box {
+  background: white;
+  padding: 20px 30px;
+  border-radius: 10px;
+  text-align: center;
+  max-width: 350px;
+  box-shadow: 0px 5px 15px rgba(0,0,0,0.3);
+  animation: slideIn 0.5s ease forwards;
+  transform: translateY(-30px);
+  opacity: 0;
+}
+
+@keyframes slideIn {
+  from { transform: translateY(-30px); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
 
 
 
@@ -607,6 +640,25 @@ body::before {
 </head>
 
 <body>
+  <!-- WhatsApp Contact Popup -->
+<div id="whatsappOverlay" class="popup-overlay">
+  <div class="popup-box" style="max-width:400px; text-align:left;">
+    <h3>💬 Describe Your Issue</h3>
+    <textarea id="whatsappMessage" rows="4" placeholder="Type your message here..." 
+              style="width:100%; padding:10px; border:1px solid #ccc; border-radius:6px; resize:none;"></textarea>
+    <div style="margin-top:15px; text-align:right;">
+      <button onclick="sendWhatsApp()" 
+              style="padding:10px 16px; background:#25d366; color:white; border:none; border-radius:6px; cursor:pointer; font-weight:bold;">
+        🚀 Send
+      </button>
+      <button onclick="closeWhatsAppForm()" 
+              style="padding:10px 16px; background:#d32f2f; color:white; border:none; border-radius:6px; cursor:pointer;">
+        ❌ Cancel
+      </button>
+    </div>
+  </div>
+</div>
+
 <!-- Custom Popup -->
 <div id="popup" class="popup-overlay">
   <div id="popupBox" class="popup-box">
@@ -712,6 +764,7 @@ body::before {
   <button class="contact-btn email" onclick="contactEmail()">📧 Email Us</button>
   <button class="contact-btn phone" onclick="contactPhone()">📞 Call Us</button>
   <button class="contact-btn whatsapp" onclick="contactWhatsApp()">💬 WhatsApp Chat</button>
+  
 </section>
 
 <section id="home" class="active">
@@ -828,18 +881,18 @@ body::before {
   <section id="adminLogin">
   <h2>⚙️ Admin Login</h2>
   <input type="text" id="adminUser" placeholder="Admin Name">
-  <input type="password" id="adminPass" placeholder="Password">
-  <a class="action-btn" id="adminBtn" onclick="adminLogin()">
+  
+  
+  <!-- Admin Password -->
+<div class="password-container">
+  <input type="password" id="adminPass" placeholder="Admin Password">
+  <span class="toggle-eye" onclick="togglePassword('adminPass', this)">👁️</span>
+</div>
+<a class="action-btn" id="adminBtn" onclick="adminLogin()">
     Admin Login <span class="spinner"></span>
   </a>
   <p id="adminLoginMessage"></p>
-  <!-- Modern toggle -->
-  <label class="switch">
-    <input type="checkbox" onclick="toggleAdminPassword()">
-    <span class="slider round"></span>
-    <span class="toggle-label">ShowPassword</span>
-  </label>
-</section>
+  </section>
 
 <!-- Admin Panel (hidden until login) -->
  <!-- Logo at the Top -->
@@ -1083,16 +1136,12 @@ body::before {
     <option>CLAUDIA MORAA</option>
     <option>ESTHER OBEGI</option>
   </select>
-<!-- Password input -->
+<!-- Member Password -->
+<div class="password-container">
   <input type="password" id="memberPass" placeholder="Enter your phone number">
+  <span class="toggle-eye" onclick="togglePassword('memberPass', this)">👁️ Show password</span>
+</div>
 
-  <!-- Modern toggle -->
-  <label class="switch">
-    <input type="checkbox" onclick="togglePassword()">
-    <span class="slider round"></span>
-    <span class="toggle-label">ShowPassword</span>
-  </label>
-  
   <!-- Spinner already inside the button -->
   <a class="action-btn" id="memberLoginBtn" onclick="login()">Login <span class="spinner"></span></a>
   
@@ -1153,28 +1202,28 @@ body::before {
     <tr><td>HILDA ODERO</td><td>400</td><td>200</td><td>100</td><td>200</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>900</b></td></tr>
     <tr><td>JOEL EGESA</td><td>200</td><td>0</td><td>20</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1000</td><td>0</td><td>0</td><td>0</td><td><b>1220</b></td></tr>
     <tr><td>SHALIK SHIVERENGE</td><td>250</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>250</b></td></tr>
-    <tr><td>EVERLINE MAINA</td><td>250</td><td>150</td><td>250</td><td>200</td><td>200</td><td>250</td><td>200</td><td>100</td><td>50</td><td>0</td><td>0</td><td>0</td><td><b>1650</b></td></tr>
-    <tr><td>ELVIS KAMASH</td><td>250</td><td>150</td><td>250</td><td>50</td><td>200</td><td>150</td><td>50</td><td>250</td><td>50</td><td>0</td><td>0</td><td>0</td><td><b>1400</b></td></tr>
-    <tr><td>JULIUS KEBASO</td><td>450</td><td>300</td><td>500</td><td>500</td><td>400</td><td>500</td><td>400</td><td>500</td>100<td>0</td><td>0</td><td>0</td><td>0</td><td><b>3650</b></td></tr>
+    <tr><td>EVERLINE MAINA</td><td>250</td><td>150</td><td>250</td><td>200</td><td>200</td><td>250</td><td>200</td><td>100</td><td>100</td><td>0</td><td>0</td><td>0</td><td><b>1700</b></td></tr>
+    <tr><td>ELVIS KAMASH</td><td>250</td><td>150</td><td>250</td><td>50</td><td>200</td><td>150</td><td>50</td><td>250</td><td>100</td><td>0</td><td>0</td><td>0</td><td><b>1450</b></td></tr>
+    <tr><td>JULIUS KEBASO</td><td>450</td><td>300</td><td>500</td><td>500</td><td>400</td><td>500</td><td>400</td><td>500</td>200<td>0</td><td>0</td><td>0</td><td>0</td><td><b>3750</b></td></tr>
     <tr><td>CHRISTINE PIUS</td><td>50</td><td>150</td><td>250</td><td>150</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>600</b></td></tr>
     <tr><td>EDNAH NANCY</td><td>250</td><td>100</td><td>100</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>450</b></td></tr>
     <tr><td>JACKIENYARANGI</td><td>200</td><td>200</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>400</b></td></tr>
     <tr><td>JUDITH OMWOYO</td><td>300</td><td>300</td><td>300</td><td>0</td><td>0</td><td>0</td><td>0</td><td>100</td><td>50</td><td>0</td><td>0</td><td>0</td><td><b>1050</b></td></tr>
     <tr><td>JANET NYAKUNDI</td><td>150</td><td>0</td><td>100</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>250</b></td></tr>
-    <tr><td>ANASTANCIA OMWOYO</td><td>250</td><td>150</td><td>200</td><td>200</td><td>200</td><td>150</td><td>200</td><td>250</td><td>50</td><td>0</td><td>0</td><td>0</td><td><b>1650</b></td></tr>
+    <tr><td>ANASTANCIA OMWOYO</td><td>250</td><td>150</td><td>200</td><td>200</td><td>200</td><td>150</td><td>200</td><td>250</td><td>100</td><td>0</td><td>0</td><td>0</td><td><b>1700</b></td></tr>
     <tr><td>PIUS NYAKUNDI</td><td>150</td><td>200</td><td>200</td><td>0</td><td>100</td><td>100</td><td>100</td><td>150</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>750</b></td></tr>
-    <tr><td>SAMUEL OYUGI</td><td>400</td><td>300</td><td>500</td><td>400</td><td>400</td><td>500</td><td>400</td><td>500</td><td>100</td><td>0</td><td>0</td><td>0</td><td><b>3500</b></td></tr>
+    <tr><td>SAMUEL OYUGI</td><td>400</td><td>300</td><td>500</td><td>400</td><td>400</td><td>500</td><td>400</td><td>500</td><td>200</td><td>0</td><td>0</td><td>0</td><td><b>3600</b></td></tr>
     <tr><td>PURITY MOMANYI</td><td>200</td><td>200</td><td>1200</td><td>950</td><td>800</td><td>400</td><td>350</td><td>100</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>4200</b></td></tr>
-    <tr><td>KEFFA MOMANYI</td><td>250</td><td>150</td><td>200</td><td>200</td><td>200</td><td>250</td><td>200</td><td>150</td><td>50</td><td>0</td><td>0</td><td>0</td><td><b>1700</b></td></tr>
-    <tr><td>KENNEDY MUTAYI</td><td>750</td><td>450</td><td>750</td><td>600</td><td>600</td><td>750</td><td>600</td><td>750</td>150<td>0</td><td>0</td><td>0</td><td>0</td><td><b>5400</b></td></tr>
+    <tr><td>KEFFA MOMANYI</td><td>250</td><td>150</td><td>200</td><td>200</td><td>200</td><td>250</td><td>200</td><td>150</td><td>100</td><td>0</td><td>0</td><td>0</td><td><b>1750</b></td></tr>
+    <tr><td>KENNEDY MUTAYI</td><td>750</td><td>450</td><td>750</td><td>600</td><td>600</td><td>750</td><td>600</td><td>750</td>300<td>0</td><td>0</td><td>0</td><td>0</td><td><b>5500</b></td></tr>
     <tr><td>MIKE MORRIS</td><td>0</td><td>0</td><td>100</td><td>50</td><td>0</td><td>0</td><td>0</td><td>150</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>300</b></td></tr>
     <tr><td>DAVY OMBATI</td><td>0</td><td>0</td><td>50</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>50</b></td></tr>
-    <tr><td>FAITH MOKOGI</td><td>0</td><td>0</td><td>500</td><td>200</td><td>250</td><td>50</td><td>100</td><td>50</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>1000</b></td></tr>
+    <tr><td>FAITH MOKOGI</td><td>0</td><td>0</td><td>500</td><td>200</td><td>250</td><td>50</td><td>100</td><td>50</td><td>50</td><td>0</td><td>0</td><td>0</td><td><b>1200</b></td></tr>
     <tr><td>SADLER KARAN</td><td>0</td><td>0</td><td>200</td><td>200</td><td>150</td><td>50</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>600</b></td></tr>
-    <tr><td>SHARON CHEPTOO</td><td>0</td><td>0</td><td>0</td><td>0</td><td>250</td><td>150</td><td>150</td><td>100</td><td>50</td><td>0</td><td>0</td><td>0</td><td><b>700</b></td></tr>
-    <tr><td>SHAMIM KAMASH</td><td>0</td><td>0</td><td>0</td><td>0</td><td>200</td><td>150</td><td>50</td><td>250</td><td>50</td><td>0</td><td>0</td><td>0</td><td><b>700</b></td></tr>
-    <tr><td>CLAUDIA MORAA</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>100</td><td>400</td><td>300</td><td>100</td><td>0</td><td>0</td><td>0</td><td><b>800</b></td></tr>
-  <tr><td>ESTHER OBEGI</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>500</td><td>100</td><td>0</td><td>0</td><td>0</td><td><b>600</b></td></tr>
+    <tr><td>SHARON CHEPTOO</td><td>0</td><td>0</td><td>0</td><td>0</td><td>250</td><td>150</td><td>150</td><td>100</td><td>100</td><td>0</td><td>0</td><td>0</td><td><b>750</b></td></tr>
+    <tr><td>SHAMIM KAMASH</td><td>0</td><td>0</td><td>0</td><td>0</td><td>200</td><td>150</td><td>50</td><td>250</td><td>100</td><td>0</td><td>0</td><td>0</td><td><b>750</b></td></tr>
+    <tr><td>CLAUDIA MORAA</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>100</td><td>400</td><td>300</td><td>150</td><td>0</td><td>0</td><td>0</td><td><b>850</b></td></tr>
+  <tr><td>ESTHER OBEGI</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>500</td><td>200</td><td>0</td><td>0</td><td>0</td><td><b>700</b></td></tr>
   </tbody>
 </table>
 <!-- Loan Applications History -->
@@ -1337,7 +1386,21 @@ function login() {
       document.getElementById("loginForm").style.display = "none";
       document.getElementById("dashboard").style.display = "block";
       document.getElementById("memberDisplay").innerText = name;
-
+// ===========================
+// 🔹 Keyboard Support for Member Login
+// ===========================
+document.querySelectorAll("#loginForm input").forEach(input => {
+  input.addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      login(); // call your member login function
+    }
+    if (event.key === "Escape") {
+      document.getElementById("memberName").value = "";
+      document.getElementById("memberPass").value = "";
+    }
+  });
+});
       // Load loan history
       loadMemberLoanHistory(name);
 
@@ -1770,44 +1833,77 @@ function exportLoans() {
   link.click();
   document.body.removeChild(link);
 }
-// 📝 Register New Member
 function registerMember() {
   let name = document.getElementById("regName").value.trim();
   let phone = document.getElementById("regPhone").value.trim();
   let pass = document.getElementById("regPass").value.trim();
 
+  // ✅ Validate required fields
   if (!name || !phone || !pass) {
-    alert("⚠️ Please fill in all fields.");
+    showPopup("error", "⚠️ Registration Failed", "Please fill in all fields.");
     return;
   }
 
-  // Load existing pending + approved
-  let pending = JSON.parse(localStorage.getItem("pendingMembers")) || [];
-  let approved = JSON.parse(localStorage.getItem("approvedMembers")) || [];
-
-  // Prevent duplicates
-  if (approved.some(m => m.name === name) || pending.some(m => m.name === name)) {
-    alert("❌ This member is already registered or waiting for approval.");
+  // ✅ Validate password length (min 4 characters)
+  if (pass.length < 4) {
+    showPopup("error", "⚠️ Weak Password", "Password must be at least 4 characters.");
     return;
   }
 
-  // Save to pending
-  let newMember = { name, phone, pass };
-  pending.push(newMember);
-  localStorage.setItem("pendingMembers", JSON.stringify(pending));
+  // ✅ Normalize and validate phone number
+  phone = phone.replace(/\D/g, ""); // remove non-digits
 
-  alert(`✅ Registration successful!\n\nYour application is pending admin approval.`);
+  if (phone.startsWith("07") && phone.length === 10) {
+    // Auto-convert 07XXXXXXXX → 2547XXXXXXXX
+    phone = "254" + phone.substring(1);
+  }
 
-  // Reset form
+  // ✅ Strict format: must be 2547XXXXXXXX (12 digits)
+  let phonePattern = /^2547\d{8}$/;
+  if (!phonePattern.test(phone)) {
+    showPopup("error", "⚠️ Invalid Phone Number", "Phone must be in format 2547XXXXXXXX (e.g. 254712345678).");
+    return;
+  }
+
+  // ✅ Prevent duplicate registration
+  let members = JSON.parse(localStorage.getItem("members")) || [];
+  let exists = members.some(m => m.phone === phone);
+  if (exists) {
+    showPopup("error", "⚠️ Duplicate Registration", "This phone number is already registered.");
+    return;
+  }
+
+  // ✅ Save member to localStorage
+  members.push({ name, phone, pass });
+  localStorage.setItem("members", JSON.stringify(members));
+
+  // ✅ Clear form
   document.getElementById("regName").value = "";
   document.getElementById("regPhone").value = "";
   document.getElementById("regPass").value = "";
 
-  // 🚀 Notify Admin on WhatsApp
-  let message = `🆕 New Member Registration\n\n👤 Name: ${name}\n📞 Phone: ${phone}`;
-  let whatsappUrl = "https://wa.me/254713953004?text=" + encodeURIComponent(message);
-  window.open(whatsappUrl, "_blank");
+  // ✅ Get registration timestamp
+  let timestamp = new Date().toLocaleString(); // e.g. "9/15/2025, 3:25:10 PM"
+
+  // ✅ Show success popup
+  showPopup(
+    "success", 
+    "🎉 Registration Successful", 
+    `Welcome ${name}, your registration has been received! ✅\n\nAn admin will review and confirm when your account is fully active in the system.`
+  );
+
+  // ✅ Auto-send to admin WhatsApp (with password + time)
+  let adminMessage = `📝 New Member Registration\n\n👤 Name: ${name}\n📞 Phone: ${phone}\n🔑 Password: ${pass}\n🕒 Registered At: ${timestamp}\n\n⚠️ Please review and activate this member in the system.`;
+  window.open("https://wa.me/254713953004?text=" + encodeURIComponent(adminMessage), "_blank");
+
+  // ✅ Delay before sending welcome message to member
+  setTimeout(() => {
+    let memberMessage = `🎉 Hello ${name}, welcome to the Chama Savings Group!\n\n✅ Your registration has been received.\n⚠️ Please wait for admin confirmation before accessing all features.\n\nThank you for joining us! 🙏`;
+    window.open("https://wa.me/" + phone + "?text=" + encodeURIComponent(memberMessage), "_blank");
+  }, 20000); // wait 2.5 seconds
 }
+
+
 // 📋 Show Pending Members in Admin Panel
 function updatePendingMembersTable() {
   let pending = JSON.parse(localStorage.getItem("pendingMembers")) || [];
@@ -2283,12 +2379,11 @@ window.onload = function () {
 };
 
 
-
 const diceFaces = ["⚀","⚁","⚂","⚃","⚄","⚅"];
 
 // Load from localStorage or create fresh
 let usedNumbers = JSON.parse(localStorage.getItem("usedNumbers")) || [];
-let luckyNumbers = JSON.parse(localStorage.getItem("luckyNumbers")) || {}; // ✅ global fix
+let luckyNumbers = JSON.parse(localStorage.getItem("luckyNumbers")) || {}; 
 
 // 🎲 Pick Number
 function pickNumber() {
@@ -2325,14 +2420,18 @@ function pickNumber() {
     // Check if already has number
     if (luckyNumbers[member]) {
       dice.innerHTML = luckyNumbers[member].number; 
-      result.innerHTML = `
-        ❌ Sorry ${member}, you already picked your lucky number: 
-        <b>${luckyNumbers[member].number}</b><br><br>
-        <button onclick="resendNumber('${member}')"
-          style="padding:8px 12px; background:#00796b; color:white; border:none; border-radius:5px; cursor:pointer;">
-          🔁 Resend Number
-        </button>
-      `;
+     result.innerHTML = `
+  ❌ Sorry ${member}, you already picked your lucky number: 
+  <b>${luckyNumbers[member].number}</b><br><br>
+  <button onclick="resendNumber('${member}')"
+    style="padding:8px 12px; background:#00796b; color:white; border:none; border-radius:5px; cursor:pointer;">
+    🔁 Resend Number
+  </button>
+  <p style="margin-top:10px; color:#d32f2f; font-weight:bold;">
+    ⚠️ Please make sure your number was sent to the admin immediately!
+  </p>
+`;
+
       return;
     }
 
@@ -2354,18 +2453,27 @@ function pickNumber() {
 
     // Show number
     dice.innerHTML = number; 
-    result.innerHTML = `
-      🎉 Congratulations ${member}, your lucky number is: 
-      <b>${number}</b><br><br>
-      <button onclick="resendNumber('${member}')"
-        style="padding:8px 12px; background:#1976d2; color:white; border:none; border-radius:5px; cursor:pointer;">
-        🔁 Resend Number
-      </button>
-    `;
+   result.innerHTML = `
+  🎉 Congratulations ${member}, your lucky number is: 
+  <b>${number}</b><br><br>
+  <button onclick="resendNumber('${member}')"
+    style="padding:8px 12px; background:#1976d2; color:white; border:none; border-radius:5px; cursor:pointer;">
+    🔁 Resend Number
+  </button>
+  <p style="margin-top:10px; color:#d32f2f; font-weight:bold;">
+    ⚠️ Please send your number to the admin immediately after picking!
+  </p>
+`;
+
+
+    // ✅ Auto-send to admin WhatsApp
+    let message = `🎉 Hello Admin, ${member} just picked lucky number: ${number}`;
+    window.open("https://wa.me/254713953004?text=" + encodeURIComponent(message), "_blank");
+
   }, 4000);
 }
 
-// 🔁 Resend number
+// 🔁 Resend number (Admin forwarding again)
 function resendNumber(member) {
   let number = luckyNumbers[member].number;
   let method = document.querySelector('input[name="sendOption"]:checked')?.value || "whatsapp";
@@ -2496,6 +2604,7 @@ function showAvailableNumbers() {
   box.style.borderRadius = "6px";
 }
 
+
 function resendNumber(member) {
   let number = luckyNumbers[member];
   let method = document.querySelector('input[name="sendOption"]:checked')?.value || "whatsapp";
@@ -2531,6 +2640,250 @@ function loadMemberLoanHistory(name) {
     `;
   });
 }
+function togglePassword(fieldId, eyeIcon) {
+  let passField = document.getElementById(fieldId);
+
+  if (passField.type === "password") {
+    passField.type = "text";
+    eyeIcon.innerText = "🙈 Hide password";  // when visible
+  } else {
+    passField.type = "password";
+    eyeIcon.innerText = "👁️ Show password"; // when hidden
+  }
+}
+function memberLogout() {
+  let btn = document.getElementById("memberLogoutBtn");
+  let spinner = btn.querySelector(".spinner");
+  let dashboard = document.getElementById("dashboard");
+
+  // Show spinner
+  spinner.style.display = "inline-block";
+  btn.disabled = true;
+
+  setTimeout(() => {
+    spinner.style.display = "none";
+    btn.disabled = false;
+
+    // Add fade-out animation
+    dashboard.classList.add("fade-out");
+
+    // Wait for animation to finish before hiding completely
+    setTimeout(() => {
+      dashboard.style.display = "none";
+      dashboard.classList.remove("fade-out"); // reset for next login
+
+      // Show login form
+      document.getElementById("loginForm").style.display = "block";
+
+      // Clear member name
+      document.getElementById("memberDisplay").innerText = "";
+
+      // Show popup
+      showPopup("success", "Logged Out ✅", "You have successfully logged out.");
+
+      // Redirect to Home section
+      document.querySelectorAll("section").forEach(sec => sec.style.display = "none");
+      document.getElementById("home").style.display = "block";
+
+    }, 600); // match fadeOut animation duration
+  }, 1000); // logout spinner time
+}
+// ✅ Successful login for hardcoded or approved members
+msg.innerText = "";
+document.getElementById("loginForm").style.display = "none";
+let dashboard = document.getElementById("dashboard");
+dashboard.style.display = "block";
+
+// Add fade-in animation
+dashboard.classList.add("fade-in");
+setTimeout(() => dashboard.classList.remove("fade-in"), 600); // reset after animation
+
+document.getElementById("memberDisplay").innerText = name;
+
+// Load loan history
+loadMemberLoanHistory(name);
+
+// Welcome popup
+showPopup("success", "Welcome 🎉", `Hello ${name}, glad to see you again!`);
+
+/// 📧 Email Contact (with delay + success + fallback)
+function contactEmail() {
+  let email = "bonychelly@gmail.com";
+  let subject = "Inquiry from Future Finders";
+  let body = "Hello, I would like to know more about...";
+  let url = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+  // Show success popup
+  showPopup("success", "Opening Email 📧", "We are opening your email client...");
+
+  setTimeout(() => {
+    let win = window.open(url, "_self");
+
+    setTimeout(() => {
+      if (!win || win.closed || typeof win.closed === "undefined") {
+        showPopup("error", "Email Error ⚠️", `Unable to open email client.<br>Please send an email manually to: <b>${email}</b>`);
+      }
+    }, 1500);
+  }, 500); // ✅ 0.5s delay before redirect
+}
+
+// 📞 Phone Contact (with delay + success + fallback)
+function contactPhone() {
+  let phone = "0713953004";
+  let url = `tel:${phone}`;
+
+  // Show success popup
+  showPopup("success", "Opening Phone 📞", "We are opening your dialer...");
+
+  setTimeout(() => {
+    let win = window.open(url, "_self");
+
+    setTimeout(() => {
+      if (!win || win.closed || typeof win.closed === "undefined") {
+        showPopup("error", "Phone Error 📞", `Unable to open dialer.<br>Please call manually: <b>${phone}</b>`);
+      }
+    }, 1500);
+  }, 500); // ✅ 0.5s delay
+}
+
+// Open WhatsApp form (popup)
+function contactWhatsApp() {
+  document.getElementById("whatsappOverlay").style.display = "flex";
+
+  let textarea = document.getElementById("whatsappMessage");
+
+  // Restore saved message if exists
+  let savedMsg = localStorage.getItem("whatsappDraft");
+  if (savedMsg) {
+    textarea.value = savedMsg;
+  }
+
+  // ✅ Auto-focus input
+  setTimeout(() => textarea.focus(), 100);
+}
+
+// Close the WhatsApp form
+function closeWhatsAppForm() {
+  document.getElementById("whatsappOverlay").style.display = "none";
+
+  // Save draft before closing
+  let msg = document.getElementById("whatsappMessage").value.trim();
+  if (msg) {
+    localStorage.setItem("whatsappDraft", msg);
+  }
+}
+
+// Send WhatsApp message
+function sendWhatsApp() {
+  let phoneNumber = "254713953004"; // ✅ international format
+  let message = document.getElementById("whatsappMessage").value.trim();
+
+  if (!message) {
+    showPopup("error", "Message Required ⚠️", "Please type your issue before sending.");
+    return;
+  }
+
+  let url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+
+  // Show success popup and redirect
+  showPopup("success", "Opening WhatsApp 💬", "Redirecting you to WhatsApp...");
+  setTimeout(() => {
+    window.open(url, "_blank");
+    closeWhatsAppForm();
+
+    // ✅ Clear draft after successful send
+    localStorage.removeItem("whatsappDraft");
+    document.getElementById("whatsappMessage").value = "";
+  }, 500);
+}
+let formCallback = null; // store function for submit action
+
+// Open universal form popup
+function openFormPopup(title, placeholder, btnText, callback) {
+  document.getElementById("formOverlay").style.display = "flex";
+  document.getElementById("formTitle").innerText = title;
+  document.getElementById("formMessage").placeholder = placeholder;
+  document.getElementById("formSubmitBtn").innerText = btnText;
+
+  // Restore draft if exists
+  let savedMsg = localStorage.getItem("formDraft");
+  if (savedMsg) {
+    document.getElementById("formMessage").value = savedMsg;
+  }
+
+  // Auto-focus textarea
+  setTimeout(() => document.getElementById("formMessage").focus(), 100);
+
+  // Set callback for submit
+  formCallback = callback;
+}
+
+// Close the popup
+function closeFormPopup() {
+  document.getElementById("formOverlay").style.display = "none";
+
+  // Save draft
+  let msg = document.getElementById("formMessage").value.trim();
+  if (msg) {
+    localStorage.setItem("formDraft", msg);
+  }
+}
+
+// Handle submit
+document.getElementById("formSubmitBtn").addEventListener("click", () => {
+  let msg = document.getElementById("formMessage").value.trim();
+
+  if (!msg) {
+    showPopup("error", "Message Required ⚠️", "Please type your message before submitting.");
+    return;
+  }
+
+  if (formCallback) {
+    formCallback(msg); // run custom action
+  }
+
+  // Clear and close after submit
+  localStorage.removeItem("formDraft");
+  document.getElementById("formMessage").value = "";
+  closeFormPopup();
+});
+
+
+// ===========================
+// 🔹 Keyboard Shortcuts
+// ===========================
+
+// Enter = Submit (Shift+Enter = newline)
+document.getElementById("formMessage").addEventListener("keydown", function(event) {
+  if (event.key === "Enter" && !event.shiftKey) {
+    event.preventDefault(); // stop newline
+    document.getElementById("formSubmitBtn").click(); // submit
+  }
+});
+
+// Escape = Close popup
+document.addEventListener("keydown", function(event) {
+  if (event.key === "Escape" && document.getElementById("formOverlay").style.display === "flex") {
+    closeFormPopup();
+  }
+});
+// ===========================
+// 🔹 Keyboard Support for Admin Login
+// ===========================
+document.querySelectorAll("#adminLoginForm input").forEach(input => {
+  input.addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      adminLogin(); // call your admin login function
+    }
+    if (event.key === "Escape") {
+      document.getElementById("adminPass").value = ""; // clear
+    }
+  });
+});
+
+
+
 
 </script>
 </body>
