@@ -632,14 +632,209 @@ body::before {
 }
 
 
+/* General Button Styles */
+.download-btn {
+  margin-top: 10px;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #fff;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
 
+.download-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
 
+.csv-btn {
+  background: #388e3c;
+}
+
+.pdf-btn {
+  background: #1976d2;
+}
+
+.latest-btn {
+  background: #009688;
+}
+
+/* Toast Notification */
+.toast {
+  visibility: hidden;
+  min-width: 250px;
+  margin-left: -125px;
+  background: #323232;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 12px;
+  position: fixed;
+  z-index: 9999;
+  left: 50%;
+  bottom: 30px;
+  font-size: 14px;
+  opacity: 0;
+  transition: opacity 0.5s, bottom 0.5s;
+}
+
+.toast.show {
+  visibility: visible;
+  opacity: 1;
+  bottom: 50px;
+}
+
+.download-btn {
+  margin: 2px;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #fff;
+}
+.pdf-btn { background: #1976d2; }
+
+/* General Card Layout */
+.card {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+}
+
+/* Buttons */
+.action-btn {
+  display: inline-block;
+  margin: 6px 4px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  background: #00796b;
+  color: white;
+  transition: 0.2s;
+}
+.action-btn:hover { opacity: 0.9; }
+.action-btn.primary { background: #1976d2; }
+.action-btn.danger { background: #d32f2f; }
+
+/* Spinner inside button */
+.spinner {
+  display: none;
+  margin-left: 8px;
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid white;
+  border-radius: 50%;
+  width: 14px;
+  height: 14px;
+  animation: spin 1s linear infinite;
+  vertical-align: middle;
+}
+@keyframes spin { 100% { transform: rotate(360deg); } }
+
+/* Password Input */
+.password-container {
+  display: flex;
+  align-items: center;
+  margin: 12px 0;
+}
+.password-container input {
+  flex: 1;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+.password-container .toggle-eye {
+  margin-left: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* Info Box */
+.info-box {
+  margin: 20px 0;
+  padding: 15px;
+  background: #e3f2fd;
+  border-left: 6px solid #1976d2;
+  border-radius: 8px;
+}
+
+/* Tables */
+.table-container {
+  overflow-x: auto;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+}
+table th, table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+table th {
+  background: #00796b;
+  color: white;
+}
+.highlight {
+  background: #17da48 !important;
+}
+
+/* Download buttons */
+.download-buttons {
+  margin: 15px 0;
+}
+.download-btn {
+  margin: 5px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  color: white;
+}
+.csv-btn { background: #388e3c; }
+.pdf-btn { background: #1976d2; }
+
+/* Toast */
+.toast {
+  visibility: hidden;
+  min-width: 250px;
+  background: #323232;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 12px;
+  position: fixed;
+  z-index: 9999;
+  left: 50%;
+  bottom: 30px;
+  transform: translateX(-50%);
+  font-size: 14px;
+  opacity: 0;
+  transition: opacity 0.5s, bottom 0.5s;
+}
+.toast.show {
+  visibility: visible;
+  opacity: 1;
+  bottom: 50px;
+}
 
 
   </style>
 </head>
 
 <body>
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+
   <!-- WhatsApp Contact Popup -->
 <div id="whatsappOverlay" class="popup-overlay">
   <div class="popup-box" style="max-width:400px; text-align:left;">
@@ -705,6 +900,9 @@ body::before {
   <a class="nav-btn" onclick="simulateAction(this,'adminLogin')">⚙️ Admin <span class="spinner"></span></a>
  <a class="nav-btn" onclick="simulateAction(this,'contact')">📞 Contact <span class="spinner"></span>
 </a>
+<a id="backBtn" class="nav-btn" style="display:none; background:#d32f2f;"
+   onclick="showAllButtons()">⬅️ Back to Menu <span class="spinner"></span></a>
+
 
 </div>
 
@@ -1102,10 +1300,14 @@ body::before {
   </a>
 </section>
 
+   
+  
+
 
 <!-- Member Login -->
 <section id="loginForm">
   <h2>🔑 Member Login</h2>
+   <h1>Chama Savings & Loan System</h1>
   <label for="memberName"><b>Select Your Name:</b></label>
   <select id="memberName" required>
     <option value="">-- Choose your name --</option>
@@ -1210,8 +1412,8 @@ body::before {
     <tr><td>JACKIENYARANGI</td><td>200</td><td>200</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>400</b></td></tr>
     <tr><td>JUDITH OMWOYO</td><td>300</td><td>300</td><td>300</td><td>0</td><td>0</td><td>0</td><td>0</td><td>100</td><td>50</td><td>0</td><td>0</td><td>0</td><td><b>1050</b></td></tr>
     <tr><td>JANET NYAKUNDI</td><td>150</td><td>0</td><td>100</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>250</b></td></tr>
-    <tr><td>ANASTANCIA OMWOYO</td><td>250</td><td>150</td><td>200</td><td>200</td><td>200</td><td>150</td><td>200</td><td>250</td><td>100</td><td>0</td><td>0</td><td>0</td><td><b>1700</b></td></tr>
-    <tr><td>PIUS NYAKUNDI</td><td>150</td><td>200</td><td>200</td><td>0</td><td>100</td><td>100</td><td>100</td><td>150</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>750</b></td></tr>
+    <tr><td>ANASTANCIA OMWOYO</td><td>250</td><td>150</td><td>200</td><td>200</td><td>200</td><td>150</td><td>200</td><td>250</td><td>100</td><td>0</td><td>0</td><td>0</td><td><b>1600</b></td></tr>
+    <tr><td>PIUS NYAKUNDI</td><td>150</td><td>200</td><td>200</td><td>0</td><td>100</td><td>100</td><td>100</td><td>150</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>950</b></td></tr>
     <tr><td>SAMUEL OYUGI</td><td>400</td><td>300</td><td>500</td><td>400</td><td>400</td><td>500</td><td>400</td><td>500</td><td>200</td><td>0</td><td>0</td><td>0</td><td><b>3600</b></td></tr>
     <tr><td>PURITY MOMANYI</td><td>200</td><td>200</td><td>1200</td><td>950</td><td>800</td><td>400</td><td>350</td><td>100</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>4200</b></td></tr>
     <tr><td>KEFFA MOMANYI</td><td>250</td><td>150</td><td>200</td><td>200</td><td>200</td><td>250</td><td>200</td><td>150</td><td>100</td><td>0</td><td>0</td><td>0</td><td><b>1750</b></td></tr>
@@ -1226,6 +1428,26 @@ body::before {
   <tr><td>ESTHER OBEGI</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>500</td><td>200</td><td>0</td><td>0</td><td>0</td><td><b>700</b></td></tr>
   </tbody>
 </table>
+<!-- Download Options -->
+<button onclick="downloadContributionsCSV()" class="download-btn csv-btn">
+  ⬇️ Download Excel (CSV)
+</button>
+
+<button onclick="downloadContributionsPDF()" class="download-btn pdf-btn">
+  ⬇️ Download PDF
+</button>
+
+<div id="latestContributions" style="margin-top:15px;">
+  <button id="downloadLatestContributions" class="download-btn latest-btn" style="display:none;">
+    ⬇️ Download Latest Contributions
+  </button>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="toast"></div>
+
+
+
 <!-- Loan Applications History -->
 <div id="loanHistory" style="margin-top:30px;">
   <h3>📜 Loan Applications History</h3>
@@ -1239,13 +1461,34 @@ body::before {
         <th>ID Number</th>
         <th>Date</th>
         <th>Status</th>
+        <th>Receipt</th> <!-- ✅ Added -->
       </tr>
     </thead>
-   <tbody id="loanHistoryBody">
-   <tr><td colspan="7" style="color:gray;">No loan applications yet.</td></tr>
-</tbody>
 
+    <tbody id="loanHistoryBody">
+      <!-- Example loan row -->
+      <tr>
+        <td>Boniface Chelluget</td>
+        <td>0713953004</td>
+        <td>Ksh 5,000</td>
+        <td>Ksh 3,000</td>
+        <td>12345678</td>
+        <td>16-09-2025</td>
+        <td>Pending</td>
+        <td>
+          <button onclick="downloadLoanReceipt('Boniface Chelluget','0713953004','5000','3000','12345678','16-09-2025','Pending')" 
+                  class="download-btn pdf-btn" style="padding:4px 8px; font-size:12px;">
+            🧾 Receipt
+          </button>
+        </td>
+      </tr>
+
+      <!-- Default row if no applications -->
+      <tr><td colspan="8" style="color:gray;">No loan applications yet.</td></tr>
+    </tbody>
   </table>
+</div>
+
 </div>
 
 </div>
@@ -1272,33 +1515,35 @@ body::before {
 
 // 👥 Members data (hardcoded + savings history)
 const members = {
-  "BONIFACE CHELLUGET": { phone: "0713953004", savings: 4500, monthly: [500, 500, 500, 500, 500, 500, 500] },
+  "BONIFACE CHELLUGET": { phone: "0713953004", savings: 4500, monthly: [500, 500, 500, 500, 500, 500, 500,500,500] },
   "HILDA ODERO": { phone: "0795341320", savings: 900, monthly: [400, 200, 100, 200] },
-  "JOEL EGESA": { phone: "0768039551", savings: 220, monthly: [200, 0, 20, 1000] },
+  "JOEL EGESA": { phone: "0768039551", savings: 1220, monthly: [200, 0, 20, 1000] },
   "SHALIK SHIVERENGE": { phone: "0746277086", savings: 250, monthly: [250, 0, 0] },
-  "EVERLINE MAINA": { phone: "0701360180", savings: 1650, monthly: [250, 150, 250, 200, 200, 250, 200, 100, 0] },
-  "ELVIS KAMASH": { phone: "079857851", savings: 1400, monthly: [250, 150, 250, 50, 200, 150, 50, 250, 0] },
-  "JULIUS KEBASO": { phone: "0705296154", savings: 3650, monthly: [450, 300, 500, 500, 400, 500, 400, 500, 0] },
+  "EVERLINE MAINA": { phone: "0701360180", savings: 1700, monthly: [250, 150, 250, 200, 200, 250, 200, 100, 0] },
+  "ELVIS KAMASH": { phone: "0798577851", savings: 1450, monthly: [250, 150, 250, 50, 200, 150, 50, 250, 100] },
+  "JULIUS KEBASO": { phone: "0705296154", savings: 3750, monthly: [450, 300, 500, 500, 400, 500, 400, 500,200] },
   "CHRISTINE PIUS": { phone: "0115603500", savings: 600, monthly: [50, 150, 250, 150, 0, 0, 0, 0, 0] },
-  "EDNAH NANCY": { phone: "0700000000", savings: 450, monthly: [250, 100, 100, 0, 0, 0, 0, 0, 0] },
+  "EDNAH NANCY": { phone: "0717684177", savings: 450, monthly: [250, 100, 100, 0, 0, 0, 0, 0, 0] },
   "JACKIENYARANGI": { phone: "0790206224", savings: 400, monthly: [200, 200, 0, 0, 0, 0, 0, 0, 0] },
   "JUDITH OMWOYO": { phone: "0741939235", savings: 1050, monthly: [300, 300, 300, 0, 0, 0, 0, 100, 0] },
   "JANET NYAKUNDI": { phone: "0706753288", savings: 250, monthly: [150, 0, 100, 0, 0, 0, 0, 0, 0] },
-  "ANASTANCIA OMWOYO": { phone: "0748442547", savings: 1550, monthly: [250, 150, 200, 200, 200, 150, 100, 250, 0] },
-  "PIUS NYAKUNDI": { phone: "0716845165", savings: 1000, monthly: [150, 200, 200, 0, 100, 100, 100, 150, 0] },
-  "SAMUEL OYUGI": { phone: "0796860412", savings: 3500, monthly: [400, 300, 500, 400, 400, 500, 400, 500, 0] },
+  "ANASTANCIA OMWOYO": { phone: "0748442547", savings: 1600, monthly: [250, 150, 200, 200, 200, 150, 100, 250, 0] },
+  "PIUS NYAKUNDI": { phone: "0716845165", savings: 950, monthly: [150, 200, 200, 0, 100, 100, 100, 150, 0] },
+  "SAMUEL OYUGI": { phone: "0796860412", savings: 3600, monthly: [400, 300, 500, 400, 400, 500, 400, 500, 0] },
   "PURITY MOMANYI": { phone: "0103155480", savings: 4200, monthly: [200, 200, 1200, 950, 800, 400, 350, 100, 0] },
-  "KEFFA MOMANYI": { phone: "0759237482", savings: 1650, monthly: [250, 200, 200, 200, 200, 250, 200, 150, 0] },
+  "KEFFA MOMANYI": { phone: "0759237482", savings: 1750, monthly: [250, 200, 200, 200, 200, 250, 200, 150, 0] },
   "KENNEDY MUTAYI": { phone: "0724124735", savings: 5250, monthly: [750, 450, 750, 600, 600, 750, 600, 750, 0] },
   "MIKE MORRIS": { phone: "0115570301", savings: 300, monthly: [0, 0, 100, 50, 0, 0, 0, 150, 0] },
   "DAVY OMBATI": { phone: "0793547166", savings: 250, monthly: [0, 0, 50, 0, 0, 0, 200, 0, 0] },
   "FAITH MOKOGI": { phone: "0706918919", savings: 1150, monthly: [0, 0, 500, 200, 250, 50, 100, 50, 0] },
   "SADLER KARAN": { phone: "0791730719", savings: 600, monthly: [0, 0, 200, 200, 150, 50, 0, 0, 0] },
   "SHARON CHEPTOO": { phone: "0768675656", savings: 650, monthly: [0, 0, 0, 0, 250, 150, 150, 100, 50] },
-  "SHAMIM KAMASH": { phone: "0725978420", savings: 650, monthly: [0, 0, 0, 0, 200, 150, 50, 250] },
+  "SHAMIM KAMASH": { phone: "0725979420", savings: 650, monthly: [0, 0, 0, 0, 200, 150, 50, 250] },
   "CLAUDIA MORAA": { phone: "0741520782", savings: 800, monthly: [0, 0, 0, 0, 0, 100, 400, 300, 0] },
   "ESTHER OBEGI": { phone: "0748845363", savings: 500, monthly: [0, 0, 0, 0, 0, 0, 0, 500, 0] }
 };
+
+
 // 🔄 Simulate loading action (button + spinner + section switch)
 function simulateAction(button, sectionId) {
   let spinner = button.querySelector(".spinner");
@@ -1308,7 +1553,6 @@ function simulateAction(button, sectionId) {
   button.style.pointerEvents = "none";
 
   setTimeout(() => {
-    // Hide spinner
     if (spinner) spinner.style.display = "none";
     button.style.pointerEvents = "auto";
 
@@ -1316,6 +1560,12 @@ function simulateAction(button, sectionId) {
     document.querySelectorAll("section, #dashboard, #admin, #newsSection").forEach(sec => {
       sec.style.display = "none";
     });
+
+    // Hide all nav buttons except the clicked one
+    document.querySelectorAll("#navButtons .nav-btn").forEach(btn => {
+      btn.style.display = "none";
+    });
+    button.style.display = "inline-block"; // keep clicked one
 
     // Show selected section
     let target = document.getElementById(sectionId);
@@ -1330,7 +1580,42 @@ function simulateAction(button, sectionId) {
     } else {
       console.error("❌ Section not found:", sectionId);
     }
+
+    // ✅ Show Back button
+    document.getElementById("backBtn").style.display = "inline-block";
   }, 800); // 0.8 sec loading effect
+}
+
+
+function showAllButtons() {
+  // Show all nav buttons again
+  document.querySelectorAll("#navButtons .nav-btn").forEach(btn => {
+    btn.style.display = "inline-block";
+  });
+
+  // Hide the back button
+  document.getElementById("backBtn").style.display = "none";
+
+  // Hide all sections except Home
+  document.querySelectorAll("section, #dashboard, #admin, #newsSection").forEach(sec => {
+    sec.style.display = "none";
+  });
+  document.getElementById("home").style.display = "block"; // default back to Home
+}
+
+function delayedShowAllButtons(btn) {
+  // Add loading effect
+  btn.querySelector(".spinner").textContent = " ⏳";
+
+  // Disable button while loading
+  btn.style.pointerEvents = "none";
+
+  // Wait 2 seconds, then run the function
+  setTimeout(() => {
+    btn.querySelector(".spinner").textContent = "";
+    btn.style.pointerEvents = "auto";
+    showAllButtons();
+  }, 2000);
 }
 
 // 🔔 Show Popup
@@ -2882,6 +3167,95 @@ document.querySelectorAll("#adminLoginForm input").forEach(input => {
   });
 });
 
+// ✅ Toast Notification
+function showToast(message, color = "#323232") {
+  const toast = document.getElementById("toast");
+  toast.innerText = message;
+  toast.style.background = color;
+  toast.className = "toast show";
+  setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
+}
+
+// ✅ Download as CSV
+function downloadContributionsCSV() {
+  const table = document.querySelector("#allContributions table");
+  if (!table) {
+    showToast("❌ No contributions table found!", "red");
+    return;
+  }
+
+  let rows = table.querySelectorAll("tr");
+  let csv = [];
+
+  rows.forEach(row => {
+    let cols = row.querySelectorAll("th, td");
+    let rowData = [];
+    cols.forEach(col => rowData.push(col.innerText.trim()));
+    csv.push(rowData.join(","));
+  });
+
+  let blob = new Blob([csv.join("\n")], { type: "text/csv;charset=utf-8;" });
+  let link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "Contributions_Report.csv";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+
+  showToast("✅ Excel (CSV) downloaded successfully!", "#388e3c");
+}
+
+// ✅ Download as PDF
+function downloadContributionsPDF() {
+  const { jsPDF } = window.jspdf;
+  const table = document.querySelector("#allContributions table");
+  if (!table) {
+    showToast("❌ No contributions table found!", "red");
+    return;
+  }
+
+  const doc = new jsPDF();
+  doc.setFontSize(16);
+  doc.text("📊 Contributions Report", 14, 15);
+
+  doc.autoTable({
+    html: table,
+    startY: 25,
+    theme: "grid",
+    headStyles: { fillColor: [25, 118, 210] },
+    bodyStyles: { fontSize: 10 },
+    styles: { halign: "center" }
+  });
+
+  doc.save("Contributions_Report.pdf");
+  showToast("✅ PDF downloaded successfully!", "#1976d2");
+}
+function downloadLoanReceipt(name, phone, qualified, requested, idNo, date, status) {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  // Header
+  doc.setFontSize(14);
+  doc.text("🧾 Loan Application Receipt", 14, 20);
+
+  // Info box
+  doc.setFontSize(11);
+  doc.text(`Name: ${name}`, 14, 40);
+  doc.text(`Phone: ${phone}`, 14, 50);
+  doc.text(`Qualified Loan: Ksh ${qualified}`, 14, 60);
+  doc.text(`Requested Amount: Ksh ${requested}`, 14, 70);
+  doc.text(`ID Number: ${idNo}`, 14, 80);
+  doc.text(`Date: ${date}`, 14, 90);
+  doc.text(`Status: ${status}`, 14, 100);
+
+  // Footer
+  doc.setFontSize(10);
+  doc.text("✅ Thank you for applying. Keep this receipt for reference.", 14, 120);
+
+  // Save
+  doc.save(`Loan_Receipt_${name.replace(/\s+/g, "_")}.pdf`);
+  showToast("✅ Loan receipt downloaded!", "#1976d2");
+}
 
 
 
