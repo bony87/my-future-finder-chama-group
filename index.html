@@ -827,11 +827,68 @@ table th {
 }
 
 
+#countdown {
+      font-size: 1.5em;
+      font-weight: bold;
+      padding: 15px;
+      border: 2px solid;
+      display: inline-block;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    .green { background: #e8f5e9; border-color: #4caf50; color: #2e7d32; }
+    .yellow { background: #fffde7; border-color: #ffeb3b; color: #f57f17; }
+    .red { background: #ffebee; border-color: #f44336; color: #b71c1c; }
+
+    /* Progress Bar */
+    .progress-container {
+      width: 80%;
+      background: #ddd;
+      border-radius: 10px;
+      margin: 0 auto;
+      height: 20px;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%;
+      text-align: center;
+      line-height: 20px;
+      color: white;
+      width: 100%;
+      transition: width 1s linear;
+    }
+    .progress-green { background: #4caf50; }
+    .progress-yellow { background: #ff9800; }
+    .progress-red { background: #f44336; }
+
+#countdownBar > span:first-child {
+  font-weight: 700;
+  font-size: 1.1rem;
+  padding: 6px 12px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #1976d2, #0d47a1);
+  color: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  letter-spacing: 0.5px;
+}
+
+
+
+
+
   </style>
 </head>
 
 <body>
-  
+  <!-- Fixed Countdown Bar -->
+<div id="countdownBar">
+  <span>⏳ Weekly Contributions Countdown: </span>
+  <span id="countdown">Loading...</span>
+</div>
+<!-- Progress Bar -->
+  <div class="progress-container">
+    <div id="progressBar" class="progress-bar">100%</div>
+  </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
 
@@ -898,6 +955,10 @@ table th {
 
 
   <a class="nav-btn" onclick="simulateAction(this,'adminLogin')">⚙️ Admin <span class="spinner"></span></a>
+   <a class="nav-btn" onclick="simulateAction(this,'rules')">
+  📜 Rules and Regulations <span class="spinner"></span>
+</a>
+
  <a class="nav-btn" onclick="simulateAction(this,'contact')">📞 Contact <span class="spinner"></span>
 </a>
 <a id="backBtn" class="nav-btn" style="display:none; background:#d32f2f;"
@@ -907,6 +968,65 @@ table th {
 </div>
 
 <!-- Sections -->
+ <!-- 📜 Rules & Regulations -->
+<section id="rules">
+  <h2>📜 Rules & Regulations</h2>
+  <p>These rules guide how members of <b>Future Finders Chama Group</b> operate, 
+     ensuring fairness, transparency, and discipline.</p>
+
+  <h3>👥 Membership</h3>
+  <ul>
+    <li>✅ Every member must register and keep their contact details up to date.</li>
+    <li>✅ New members may join only with approval from existing members.</li>
+    <li>✅ Membership becomes official after a minimum of 4 months of active participation.</li>
+  </ul>
+
+  <h3>💰 Savings & Contributions</h3>
+  <ul>
+    <li>✅ Every member must contribute <b>Ksh 200 weekly</b> for the merry-go-round.</li>
+    <li>✅ In addition, every member must save at least <b>Ksh 50 weekly</b>. (Higher savings are encouraged.)</li>
+    <li>✅ All contributions must be received by <b>midnight every Sunday</b>.</li>
+    <li>⚠️ Failure to pay by the deadline attracts a fine of <b>Ksh 30</b>, added to the member’s account.</li>
+    <li>✅ Savings and contributions records will be transparent and accessible to all members.</li>
+  </ul>
+
+  <h3>🏦 Loans</h3>
+  <ul>
+    <li>✅ A member qualifies for a loan after saving at least Ksh 1,500 and being active for 4 months.</li>
+    <li>✅ Loans are given based on savings history and repayment ability.</li>
+    <li>✅ All loans must be approved by the leadership/committee.</li>
+    <li>✅ Repayments must be done within the agreed period, with penalties for late payment.</li>
+  </ul>
+
+  <h3>🤝 Conduct</h3>
+  <ul>
+    <li>✅ Respect, honesty, and transparency are expected in all group dealings.</li>
+    <li>✅ Members must attend scheduled meetings or provide an apology in advance.</li>
+    <li>✅ Confidentiality of group matters must be maintained.</li>
+  </ul>
+
+  <h3>🧑‍💼 Leadership</h3>
+  <ul>
+    <li>✅ The group shall have elected officials (Chairperson, Secretary, Treasurer).</li>
+    <li>✅ Leaders serve for agreed terms and can be re-elected or replaced through voting.</li>
+    <li>✅ Leaders must provide regular reports on savings, loans, and group projects.</li>
+  </ul>
+
+  <h3>⚖️ Disciplinary Actions</h3>
+  <ul>
+    <li>✅ Members who fail to meet obligations may face penalties or suspension.</li>
+    <li>✅ Continuous misconduct can lead to removal from the group.</li>
+    <li>✅ Disputes shall be resolved through dialogue and, if needed, a vote.</li>
+  </ul>
+
+  <!-- Back Button -->
+  <a class="action-btn" style="background:#d32f2f; margin-top:15px;"
+     onclick="simulateAction(this,'home')">
+    ⬅️ Back to Home <span class="spinner"></span>
+  </a>
+</section>
+
+
 <!-- 💼 Services -->
 <section id="services">
   <h2>💼 Our Services</h2>
@@ -1303,8 +1423,10 @@ table th {
    
   
 
+ 
 
 <!-- Member Login -->
+ 
 <section id="loginForm">
   <h2>🔑 Member Login</h2>
    <h1>Chama Savings & Loan System</h1>
@@ -1355,8 +1477,10 @@ table th {
 
 
 
-<!-- Dashboard -->
-<div id="dashboard">
+
+
+  
+
   <h3>Welcome, <span id="memberDisplay"></span>!</h3>
   <a class="action-btn" onclick="showCurrentSavings()">💰 View Current Savings</a>
   <a class="action-btn" onclick="showMonthlySavings()">📊 View Monthly Savings</a>
@@ -1698,7 +1822,7 @@ document.querySelectorAll("#loginForm input").forEach(input => {
 });
       // Load loan history
       loadMemberLoanHistory(name);
-
+   
       showPopup("success", "Welcome Back 🎉", `Hello ${name}, glad to see you again!`);
       return;
     }
@@ -1724,7 +1848,7 @@ document.querySelectorAll("#loginForm input").forEach(input => {
     document.getElementById("memberDisplay").innerText = name;
 
     loadMemberLoanHistory(name);
-
+    
     showPopup("success", "Welcome 🎉", `Hello ${name}, you are now logged in!`);
   }, 1000);
 }
@@ -3267,8 +3391,97 @@ function downloadLoanReceipt(name, phone, qualified, requested, idNo, date, stat
   showToast("✅ Loan receipt downloaded!", "#1976d2");
 }
 
+// Countdown target: every Sunday midnight
+function getNextSundayMidnight() {
+  const now = new Date();
+  const result = new Date();
+
+  // set to Sunday midnight
+  result.setDate(now.getDate() + (7 - now.getDay())); 
+  result.setHours(24, 0, 0, 0); 
+  return result;
+}
+
+let countdownInterval;
+
+
 
 
 </script>
+
+<script>
+  function updateCountdown() {
+    const now = new Date();
+
+    // Always set deadline to this coming Sunday midnight
+    const deadline = new Date(now);
+    const day = now.getDay(); // 0=Sunday, 1=Monday, ... 6=Saturday
+    deadline.setDate(now.getDate() + (7 - day));
+    deadline.setHours(23, 59, 59, 999);
+
+    // If it's already past this Sunday midnight, roll to next week
+    if (day === 0 && now > deadline) {
+      deadline.setDate(deadline.getDate() + 7);
+    }
+
+    const timeDiff = deadline - now;
+    const countdownBox = document.getElementById("countdown");
+    const progressBar = document.getElementById("progressBar");
+
+    if (timeDiff <= 0) {
+      countdownBox.innerText =
+        "⚠️ The deadline has passed! Late fine of Ksh 30 applies.";
+      countdownBox.className = "red";
+      if(progressBar){
+        progressBar.style.width = "0%";
+        progressBar.innerText = "0%";
+        progressBar.className = "progress-bar progress-red";
+      }
+      return;
+    }
+
+    const d = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+    const h = Math.floor((timeDiff / (1000 * 60 * 60)) % 24);
+    const m = Math.floor((timeDiff / (1000 * 60)) % 60);
+    const s = Math.floor((timeDiff / 1000) % 60);
+
+    countdownBox.innerText =
+      `Time left: ${d} days, ${h} hours, ${m} minutes, ${s} seconds`;
+
+    // 📊 Progress calculation
+    const weekStart = new Date(now);
+    weekStart.setDate(now.getDate() - (day - 1 < 0 ? 6 : day - 1)); // Monday morning
+    weekStart.setHours(0, 0, 0, 0);
+
+    const weekDuration = deadline - weekStart;
+    const weekPassed = now - weekStart;
+    const percentLeft = Math.max(
+      0,
+      Math.min(100, ((weekDuration - weekPassed) / weekDuration) * 100)
+    );
+
+    if(progressBar){
+      progressBar.style.width = percentLeft.toFixed(1) + "%";
+      progressBar.innerText = percentLeft.toFixed(1) + "%";
+
+      // 🚦 Color by urgency
+      if (percentLeft > 40) {
+        countdownBox.className = "green";
+        progressBar.className = "progress-bar progress-green";
+      } else if (percentLeft > 20) {
+        countdownBox.className = "yellow";
+        progressBar.className = "progress-bar progress-yellow";
+      } else {
+        countdownBox.className = "red";
+        progressBar.className = "progress-bar progress-red";
+      }
+    }
+  }
+
+  // Run immediately and update every second
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+</script>
+
 </body>
 </html>
