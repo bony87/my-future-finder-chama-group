@@ -1640,38 +1640,37 @@ table th {
 
 
 
-// 👥 Members data (hardcoded + savings history)
 const members = {
-  "BONIFACE CHELLUGET": { phone: "0713953004", savings: 4500, monthly: [500, 500, 500, 500, 500, 500, 500,500,500] },
-  "HILDA ODERO": { phone: "0795341320", savings: 900, monthly: [400, 200, 100, 200] },
-  "JOEL EGESA": { phone: "0768039551", savings: 1220, monthly: [200, 0, 20, 1000] },
-  "SHALIK SHIVERENGE": { phone: "0746277086", savings: 250, monthly: [250, 0, 0] },
-  "EVERLINE MAINA": { phone: "0701360180", savings: 1700, monthly: [250, 150, 250, 200, 200, 250, 200, 100, 0] },
-  "ELVIS KAMASH": { phone: "0798577851", savings: 1450, monthly: [250, 150, 250, 50, 200, 150, 50, 250, 100] },
-  "JULIUS KEBASO": { phone: "0705296154", savings: 3750, monthly: [450, 300, 500, 500, 400, 500, 400, 500,200] },
-  "CHRISTINE PIUS": { phone: "0115603500", savings: 600, monthly: [50, 150, 250, 150, 0, 0, 0, 0, 0] },
-  "EDNAH NANCY": { phone: "0717684177", savings: 450, monthly: [250, 100, 100, 0, 0, 0, 0, 0, 0] },
-  "JACKIENYARANGI": { phone: "0790206224", savings: 400, monthly: [200, 200, 0, 0, 0, 0, 0, 0, 0] },
-  "JUDITH OMWOYO": { phone: "0741939235", savings: 1050, monthly: [300, 300, 300, 0, 0, 0, 0, 100, 0] },
-  "JANET NYAKUNDI": { phone: "0706753288", savings: 250, monthly: [150, 0, 100, 0, 0, 0, 0, 0, 0] },
-  "ANASTANCIA OMWOYO": { phone: "0748442547", savings: 1600, monthly: [250, 150, 200, 200, 200, 150, 100, 250, 0] },
-  "PIUS NYAKUNDI": { phone: "0716845165", savings: 950, monthly: [150, 200, 200, 0, 100, 100, 100, 150, 0] },
-  "SAMUEL OYUGI": { phone: "0796860412", savings: 3600, monthly: [400, 300, 500, 400, 400, 500, 400, 500, 0] },
-  "PURITY MOMANYI": { phone: "0103155480", savings: 4200, monthly: [200, 200, 1200, 950, 800, 400, 350, 100, 0] },
-  "KEFFA MOMANYI": { phone: "0759237482", savings: 1750, monthly: [250, 200, 200, 200, 200, 250, 200, 150, 0] },
-  "KENNEDY MUTAYI": { phone: "0724124735", savings: 5250, monthly: [750, 450, 750, 600, 600, 750, 600, 750, 0] },
-  "MIKE MORRIS": { phone: "0115570301", savings: 300, monthly: [0, 0, 100, 50, 0, 0, 0, 150, 0] },
-  "DAVY OMBATI": { phone: "0793547166", savings: 250, monthly: [0, 0, 50, 0, 0, 0, 200, 0, 0] },
-  "FAITH MOKOGI": { phone: "0706918919", savings: 1150, monthly: [0, 0, 500, 200, 250, 50, 100, 50, 0] },
-  "SADLER KARAN": { phone: "0791730719", savings: 600, monthly: [0, 0, 200, 200, 150, 50, 0, 0, 0] },
-  "SHARON CHEPTOO": { phone: "0768675656", savings: 650, monthly: [0, 0, 0, 0, 250, 150, 150, 100, 50] },
-  "SHAMIM KAMASH": { phone: "0725979420", savings: 650, monthly: [0, 0, 0, 0, 200, 150, 50, 250] },
-  "CLAUDIA MORAA": { phone: "0741520782", savings: 800, monthly: [0, 0, 0, 0, 0, 100, 400, 300, 0] },
-  "ESTHER OBEGI": { phone: "0748845363", savings: 500, monthly: [0, 0, 0, 0, 0, 0, 0, 500, 0] },
-   "DENNIS KIEYA": { phone: "@dennis12", savings: 50, monthly: [0, 0, 0, 0, 0, 0, 0, 0, 50] },
-   "BRIGIDE NYABERI": { phone: "Brigide", savings: 50, monthly: [0, 0, 0, 0, 0, 0, 0, 0, 50] }
-  
+  "BONIFACE CHELLUGET": { phone: "0713953004", password: "0713953004", savings: 4500, monthly: [500,500,500,500,500,500,500,500,500] },
+  "HILDA ODERO": { phone: "0795341320", password: "0795341320", savings: 900, monthly: [400,200,100,200] },
+  "JOEL EGESA": { phone: "0768039551", password: "0768039551", savings: 1220, monthly: [200,0,20,1000] },
+  "SHALIK SHIVERENGE": { phone: "0746277086", password: "0746277086", savings: 250, monthly: [250,0,0] },
+  "EVERLINE MAINA": { phone: "0701360180", password: "0701360180", savings: 1700, monthly: [250,150,250,200,200,250,200,100,0] },
+  "ELVIS KAMASH": { phone: "0798577851", password: "0798577851", savings: 1450, monthly: [250,150,250,50,200,150,50,250,100] },
+  "JULIUS KEBASO": { phone: "0705296154", password: "0705296154", savings: 3750, monthly: [450,300,500,500,400,500,400,500,200] },
+  "CHRISTINE PIUS": { phone: "0115603500", password: "0115603500", savings: 600, monthly: [50,150,250,150,0,0,0,0,0] },
+  "EDNAH NANCY": { phone: "0717684177", password: "0717684177", savings: 450, monthly: [250,100,100,0,0,0,0,0,0] },
+  "JACKIENYARANGI": { phone: "0790206224", password: "0790206224", savings: 400, monthly: [200,200,0,0,0,0,0,0,0] },
+  "JUDITH OMWOYO": { phone: "0741939235", password: "0741939235", savings: 1050, monthly: [300,300,300,0,0,0,0,100,0] },
+  "JANET NYAKUNDI": { phone: "0706753288", password: "0706753288", savings: 250, monthly: [150,0,100,0,0,0,0,0,0] },
+  "ANASTANCIA OMWOYO": { phone: "0748442547", password: "0748442547", savings: 1600, monthly: [250,150,200,200,200,150,100,250,0] },
+  "PIUS NYAKUNDI": { phone: "0716845165", password: "0716845165", savings: 950, monthly: [150,200,200,0,100,100,100,150,0] },
+  "SAMUEL OYUGI": { phone: "0796860412", password: "0796860412", savings: 3600, monthly: [400,300,500,400,400,500,400,500,0] },
+  "PURITY MOMANYI": { phone: "0103155480", password: "0103155480", savings: 4200, monthly: [200,200,1200,950,800,400,350,100,0] },
+  "KEFFA MOMANYI": { phone: "0759237482", password: "0759237482", savings: 1750, monthly: [250,200,200,200,200,250,200,150,0] },
+  "KENNEDY MUTAYI": { phone: "0724124735", password: "0724124735", savings: 5250, monthly: [750,450,750,600,600,750,600,750,0] },
+  "MIKE MORRIS": { phone: "0115570301", password: "0115570301", savings: 300, monthly: [0,0,100,50,0,0,0,150,0] },
+  "DAVY OMBATI": { phone: "0793547166", password: "0793547166", savings: 250, monthly: [0,0,50,0,0,0,200,0,0] },
+  "FAITH MOKOGI": { phone: "0706918919", password: "0706918919", savings: 1150, monthly: [0,0,500,200,250,50,100,50,0] },
+  "SADLER KARAN": { phone: "0791730719", password: "0791730719", savings: 600, monthly: [0,0,200,200,150,50,0,0,0] },
+  "SHARON CHEPTOO": { phone: "0768675656", password: "0768675656", savings: 650, monthly: [0,0,0,0,250,150,150,100,50] },
+  "SHAMIM KAMASH": { phone: "0725979420", password: "0725979420", savings: 650, monthly: [0,0,0,0,200,150,50,250] },
+  "CLAUDIA MORAA": { phone: "0741520782", password: "0741520782", savings: 800, monthly: [0,0,0,0,0,100,400,300,0] },
+  "ESTHER OBEGI": { phone: "0748845363", password: "0748845363", savings: 500, monthly: [0,0,0,0,0,0,0,500,0] },
+  "DENNIS KIEYA": { phone: "0711111111", password: "@dennis12", savings: 50, monthly: [0,0,0,0,0,0,0,0,50] },
+  "BRIGIDE NYABERI": { phone: "0722222222", password: "Brigide", savings: 50, monthly: [0,0,0,0,0,0,0,0,50] }
 };
+
 
 
 // 🔄 Simulate loading action (button + spinner + section switch)
@@ -1791,31 +1790,33 @@ function login() {
     spinner.style.display = "none";
 
     if (!name || !pass) {
-      msg.innerText = "⚠️ Please select your name and enter your phone number / password created.";
+      msg.innerText = "⚠️ Please select your name and enter your password.";
       return;
     }
 
     // ✅ Check hardcoded members
-    if (members[name] && members[name].phone === pass) {
+    if (members[name] && members[name].password === pass) {
       msg.innerText = "";
       document.getElementById("loginForm").style.display = "none";
       document.getElementById("dashboard").style.display = "block";
       document.getElementById("memberDisplay").innerText = name;
-// ===========================
-// 🔹 Keyboard Support for Member Login
-// ===========================
-document.querySelectorAll("#loginForm input").forEach(input => {
-  input.addEventListener("keydown", function(event) {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      login(); // call your member login function
-    }
-    if (event.key === "Escape") {
-      document.getElementById("memberName").value = "";
-      document.getElementById("memberPass").value = "";
-    }
-  });
-});
+
+      // ===========================
+      // 🔹 Keyboard Support for Member Login
+      // ===========================
+      document.querySelectorAll("#loginForm input").forEach(input => {
+        input.addEventListener("keydown", function(event) {
+          if (event.key === "Enter") {
+            event.preventDefault();
+            login(); // call member login
+          }
+          if (event.key === "Escape") {
+            document.getElementById("memberName").value = "";
+            document.getElementById("memberPass").value = "";
+          }
+        });
+      });
+
       // Load loan history
       loadMemberLoanHistory(name);
 
@@ -1832,8 +1833,8 @@ document.querySelectorAll("#loginForm input").forEach(input => {
       return;
     }
 
-    if (member.phone !== pass) {
-      msg.innerText = "❌ Invalid phone number.";
+    if (member.password !== pass) {   // ✅ Check password instead of phone
+      msg.innerText = "❌ Invalid password.";
       return;
     }
 
@@ -1848,6 +1849,7 @@ document.querySelectorAll("#loginForm input").forEach(input => {
     showPopup("success", "Welcome 🎉", `Hello ${name}, you are now logged in!`);
   }, 1000);
 }
+
 // 💰 Show current savings
 function showCurrentSavings() {
   let name = document.getElementById("memberDisplay").innerText;
@@ -3477,6 +3479,16 @@ let countdownInterval;
   // Run immediately and update every second
   updateCountdown();
   setInterval(updateCountdown, 1000);
+  // 🚫 Disable copy/paste/cut for password input
+const passInput = document.getElementById("memberPass");
+
+["copy", "paste", "cut"].forEach(evt => {
+  passInput.addEventListener(evt, function(e) {
+    e.preventDefault();
+    alert("⚠️ Copy & paste are disabled for security reasons.");
+  });
+});
+
 </script>
 
 </body>
