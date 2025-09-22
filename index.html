@@ -1426,7 +1426,6 @@ table th {
  
 
 <!-- Member Login -->
- 
 <section id="loginForm">
   <h2>🔑 Member Login</h2>
    <h1>Chama Savings & Loan System</h1>
@@ -1460,8 +1459,6 @@ table th {
     <option>CLAUDIA MORAA</option>
     <option>ESTHER OBEGI</option>
     <option>DENNIS KIEYA</option>
-     <option>BRIGIDE NYABERI</option>
-    
   </select>
 <!-- Member Password -->
 <div class="password-container">
@@ -1477,10 +1474,8 @@ table th {
 
 
 
-
-
-  
-
+<!-- Dashboard -->
+<div id="dashboard">
   <h3>Welcome, <span id="memberDisplay"></span>!</h3>
   <a class="action-btn" onclick="showCurrentSavings()">💰 View Current Savings</a>
   <a class="action-btn" onclick="showMonthlySavings()">📊 View Monthly Savings</a>
@@ -1492,6 +1487,7 @@ table th {
   🚪 Logout
   <span class="spinner" style="display:none; margin-left:8px; border:2px solid #f3f3f3; border-top:2px solid white; border-radius:50%; width:14px; height:14px; animation: spin 1s linear infinite; vertical-align:middle;"></span>
 </button>
+
 
 
 <div id="loanMessage" style="margin-top:15px; font-weight:bold; color:#004d40;"></div>
@@ -1822,7 +1818,7 @@ document.querySelectorAll("#loginForm input").forEach(input => {
 });
       // Load loan history
       loadMemberLoanHistory(name);
-   
+
       showPopup("success", "Welcome Back 🎉", `Hello ${name}, glad to see you again!`);
       return;
     }
@@ -1848,7 +1844,7 @@ document.querySelectorAll("#loginForm input").forEach(input => {
     document.getElementById("memberDisplay").innerText = name;
 
     loadMemberLoanHistory(name);
-    
+
     showPopup("success", "Welcome 🎉", `Hello ${name}, you are now logged in!`);
   }, 1000);
 }
