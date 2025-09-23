@@ -1,10 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Future Finders Chama Group</title>
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Future Finders Chama Group</title>
+<style>
    body { 
   font-family: Arial, sans-serif; 
   margin: 0; 
@@ -878,769 +879,615 @@ table th {
 
   </style>
 </head>
-
 <body>
-  <!-- Fixed Countdown Bar -->
+<!-- Fixed Countdown Bar -->
 <div id="countdownBar">
-  <span>⏳ Weekly Contributions Countdown: </span>
-  <span id="countdown">Loading...</span>
+<span>⏳ Weekly Contributions Countdown: </span>
+<span id="countdown">Loading...</span>
 </div>
 <!-- Progress Bar -->
-  <div class="progress-container">
-    <div id="progressBar" class="progress-bar">100%</div>
-  </div>
+<div class="progress-container">
+<div class="progress-bar" id="progressBar">100%</div>
+</div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
-
-  <!-- WhatsApp Contact Popup -->
-<div id="whatsappOverlay" class="popup-overlay">
-  <div class="popup-box" style="max-width:400px; text-align:left;">
-    <h3>💬 Describe Your Issue</h3>
-    <textarea id="whatsappMessage" rows="4" placeholder="Type your message here..." 
-              style="width:100%; padding:10px; border:1px solid #ccc; border-radius:6px; resize:none;"></textarea>
-    <div style="margin-top:15px; text-align:right;">
-      <button onclick="sendWhatsApp()" 
-              style="padding:10px 16px; background:#25d366; color:white; border:none; border-radius:6px; cursor:pointer; font-weight:bold;">
+<!-- WhatsApp Contact Popup -->
+<div class="popup-overlay" id="whatsappOverlay">
+<div class="popup-box" style="max-width:400px; text-align:left;">
+<h3>💬 Describe Your Issue</h3>
+<textarea id="whatsappMessage" placeholder="Type your message here..." rows="4" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:6px; resize:none;"></textarea>
+<div style="margin-top:15px; text-align:right;">
+<button onclick="sendWhatsApp()" style="padding:10px 16px; background:#25d366; color:white; border:none; border-radius:6px; cursor:pointer; font-weight:bold;">
         🚀 Send
       </button>
-      <button onclick="closeWhatsAppForm()" 
-              style="padding:10px 16px; background:#d32f2f; color:white; border:none; border-radius:6px; cursor:pointer;">
+<button onclick="closeWhatsAppForm()" style="padding:10px 16px; background:#d32f2f; color:white; border:none; border-radius:6px; cursor:pointer;">
         ❌ Cancel
       </button>
-    </div>
-  </div>
 </div>
-
+</div>
+</div>
 <!-- Custom Popup -->
-<div id="popup" class="popup-overlay">
-  <div id="popupBox" class="popup-box">
-    <h3 id="popupTitle"></h3>
-    <p id="popupMessage"></p>
-    <button class="popup-btn" onclick="closePopup()">OK</button>
-  </div>
+<div class="popup-overlay" id="popup">
+<div class="popup-box" id="popupBox">
+<h3 id="popupTitle"></h3>
+<p id="popupMessage"></p>
+<button class="popup-btn" onclick="closePopup()">OK</button>
+</div>
 </div>
 <!-- Logo at the Top -->
 <div style="margin:20px 0; text-align:center;">
-  <img src="https://github.com/bony87/my-future-finder-chama-group/blob/main/ChatGPT%20Image%20Sep%2010,%202025,%2005_43_14%20PM.png?raw=true" 
-       alt="Future Finders Logo" 
-       style="width:150px; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.2);">
-  <p style="margin-top:10px; font-style:italic; color:#555;">Our Identity, Our Strength</p>
+<img alt="Future Finders Logo" src="https://github.com/bony87/my-future-finder-chama-group/blob/main/ChatGPT%20Image%20Sep%2010,%202025,%2005_43_14%20PM.png?raw=true" style="width:150px; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.2);"/>
+<p style="margin-top:10px; font-style:italic; color:#555;">Our Identity, Our Strength</p>
 </div>
-
 <!-- System Update Banner -->
 <div id="systemBanner" style="display:none; background:#1976d2; color:white; text-align:center; padding:10px; font-weight:bold; position:fixed; top:0; left:0; width:100%; z-index:2000;">
-  <span id="bannerMessage">🚀 System Update: New features available!</span>
-  <button onclick="closeBanner()" style="margin-left:20px; background:#fff; color:#1976d2; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;">✖ Close</button>
+<span id="bannerMessage">🚀 System Update: New features available!</span>
+<button onclick="closeBanner()" style="margin-left:20px; background:#fff; color:#1976d2; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;">✖ Close</button>
 </div>
-
 <header>
-  <h1>🌍 Future Finders Chama Group</h1>
-  <p>Empowering our members through savings, merry-go-round, and loans.</p>
+<h1>🌍 Future Finders Chama Group</h1>
+<p>Empowering our members through savings, merry-go-round, and loans.</p>
 </header>
-
 <!-- NAVIGATION -->
 <div id="navButtons">
-  <a class="nav-btn" onclick="simulateAction(this,'home')">🏠 Home <span class="spinner"></span></a>
-  <a class="nav-btn" onclick="simulateAction(this,'about')">ℹ️ About Us <span class="spinner"></span></a>
- <a class="nav-btn" onclick="simulateAction(this,'membership')">👥 Membership <span class="spinner"></span></a>
- <a class="nav-btn" onclick="simulateAction(this,'picker')">🎲 Pick Number <span class="spinner"></span></a>
-  <a class="nav-btn" onclick="simulateAction(this,'services')">💼 Services <span class="spinner"></span></a>
-  <a class="nav-btn" onclick="simulateAction(this,'updates')">
+<a class="nav-btn" onclick="simulateAction(this,'home')">🏠 Home <span class="spinner"></span></a>
+<a class="nav-btn" onclick="simulateAction(this,'about')">ℹ️ About Us <span class="spinner"></span></a>
+<a class="nav-btn" onclick="simulateAction(this,'membership')">👥 Membership <span class="spinner"></span></a>
+<a class="nav-btn" onclick="simulateAction(this,'picker')">🎲 Pick Number <span class="spinner"></span></a>
+<a class="nav-btn" onclick="simulateAction(this,'services')">💼 Services <span class="spinner"></span></a>
+<a class="nav-btn" onclick="simulateAction(this,'updates')">
   📰 News 
   <span id="newsBadge" style="display:none; color:red; font-weight:bold; margin-left:5px;">●</span>
-  <span class="spinner"></span>
+<span class="spinner"></span>
 </a>
-
- <a class="nav-btn" onclick="simulateAction(this,'loginForm')">🔑 Member Login <span class="spinner"></span></a>
-
-
-  <a class="nav-btn" onclick="simulateAction(this,'adminLogin')">⚙️ Admin <span class="spinner"></span></a>
-   <a class="nav-btn" onclick="simulateAction(this,'rules')">
+<a class="nav-btn" onclick="simulateAction(this,'loginForm')">🔑 Member Login <span class="spinner"></span></a>
+<a class="nav-btn" onclick="simulateAction(this,'adminLogin')">⚙️ Admin <span class="spinner"></span></a>
+<a class="nav-btn" onclick="simulateAction(this,'rules')">
   📜 Rules and Regulations <span class="spinner"></span>
 </a>
-
- <a class="nav-btn" onclick="simulateAction(this,'contact')">📞 Contact <span class="spinner"></span>
+<a class="nav-btn" onclick="simulateAction(this,'contact')">📞 Contact <span class="spinner"></span>
 </a>
-<a id="backBtn" class="nav-btn" style="display:none; background:#d32f2f;"
-   onclick="showAllButtons()">⬅️ Back to Menu <span class="spinner"></span></a>
-
-
+<a class="nav-btn" id="backBtn" onclick="showAllButtons()" style="display:none; background:#d32f2f;">⬅️ Back to Menu <span class="spinner"></span></a>
 </div>
-
 <!-- Sections -->
- <!-- 📜 Rules & Regulations -->
+<!-- 📜 Rules & Regulations -->
 <section id="rules">
-  <h2>📜 Rules & Regulations</h2>
-  <p>These rules guide how members of <b>Future Finders Chama Group</b> operate, 
+<h2>📜 Rules &amp; Regulations</h2>
+<p>These rules guide how members of <b>Future Finders Chama Group</b> operate, 
      ensuring fairness, transparency, and discipline.</p>
-
-  <h3>👥 Membership</h3>
-  <ul>
-    <li>✅ Every member must register and keep their contact details up to date.</li>
-    <li>✅ New members may join only with approval from existing members.</li>
-    <li>✅ Membership becomes official after a minimum of 4 months of active participation.</li>
-  </ul>
-
-  <h3>💰 Savings & Contributions</h3>
-  <ul>
-    <li>✅ Every member must contribute <b>Ksh 200 weekly</b> for the merry-go-round.</li>
-    <li>✅ In addition, every member must save at least <b>Ksh 50 weekly</b>. (Higher savings are encouraged.)</li>
-    <li>✅ All contributions must be received by <b>midnight every Sunday</b>.</li>
-    <li>⚠️ Failure to pay by the deadline attracts a fine of <b>Ksh 30</b>, added to the member’s account.</li>
-    <li>✅ Savings and contributions records will be transparent and accessible to all members.</li>
-  </ul>
-
-  <h3>🏦 Loans</h3>
-  <ul>
-    <li>✅ A member qualifies for a loan after saving at least Ksh 1,500 and being active for 4 months.</li>
-    <li>✅ Loans are given based on savings history and repayment ability.</li>
-    <li>✅ All loans must be approved by the leadership/committee.</li>
-    <li>✅ Repayments must be done within the agreed period, with penalties for late payment.</li>
-  </ul>
-
-  <h3>🤝 Conduct</h3>
-  <ul>
-    <li>✅ Respect, honesty, and transparency are expected in all group dealings.</li>
-    <li>✅ Members must attend scheduled meetings or provide an apology in advance.</li>
-    <li>✅ Confidentiality of group matters must be maintained.</li>
-  </ul>
-
-  <h3>🧑‍💼 Leadership</h3>
-  <ul>
-    <li>✅ The group shall have elected officials (Chairperson, Secretary, Treasurer).</li>
-    <li>✅ Leaders serve for agreed terms and can be re-elected or replaced through voting.</li>
-    <li>✅ Leaders must provide regular reports on savings, loans, and group projects.</li>
-  </ul>
-
-  <h3>⚖️ Disciplinary Actions</h3>
-  <ul>
-    <li>✅ Members who fail to meet obligations may face penalties or suspension.</li>
-    <li>✅ Continuous misconduct can lead to removal from the group.</li>
-    <li>✅ Disputes shall be resolved through dialogue and, if needed, a vote.</li>
-  </ul>
-
-  <!-- Back Button -->
-  <a class="action-btn" style="background:#d32f2f; margin-top:15px;"
-     onclick="simulateAction(this,'home')">
+<h3>👥 Membership</h3>
+<ul>
+<li>✅ Every member must register and keep their contact details up to date.</li>
+<li>✅ New members may join only with approval from existing members.</li>
+<li>✅ Membership becomes official after a minimum of 4 months of active participation.</li>
+</ul>
+<h3>💰 Savings &amp; Contributions</h3>
+<ul>
+<li>✅ Every member must contribute <b>Ksh 200 weekly</b> for the merry-go-round.</li>
+<li>✅ In addition, every member must save at least <b>Ksh 50 weekly</b>. (Higher savings are encouraged.)</li>
+<li>✅ All contributions must be received by <b>midnight every Sunday</b>.</li>
+<li>⚠️ Failure to pay by the deadline attracts a fine of <b>Ksh 30</b>, added to the member’s account.</li>
+<li>✅ Savings and contributions records will be transparent and accessible to all members.</li>
+</ul>
+<h3>🏦 Loans</h3>
+<ul>
+<li>✅ A member qualifies for a loan after saving at least Ksh 1,500 and being active for 4 months.</li>
+<li>✅ Loans are given based on savings history and repayment ability.</li>
+<li>✅ All loans must be approved by the leadership/committee.</li>
+<li>✅ Repayments must be done within the agreed period, with penalties for late payment.</li>
+</ul>
+<h3>🤝 Conduct</h3>
+<ul>
+<li>✅ Respect, honesty, and transparency are expected in all group dealings.</li>
+<li>✅ Members must attend scheduled meetings or provide an apology in advance.</li>
+<li>✅ Confidentiality of group matters must be maintained.</li>
+</ul>
+<h3>🧑‍💼 Leadership</h3>
+<ul>
+<li>✅ The group shall have elected officials (Chairperson, Secretary, Treasurer).</li>
+<li>✅ Leaders serve for agreed terms and can be re-elected or replaced through voting.</li>
+<li>✅ Leaders must provide regular reports on savings, loans, and group projects.</li>
+</ul>
+<h3>⚖️ Disciplinary Actions</h3>
+<ul>
+<li>✅ Members who fail to meet obligations may face penalties or suspension.</li>
+<li>✅ Continuous misconduct can lead to removal from the group.</li>
+<li>✅ Disputes shall be resolved through dialogue and, if needed, a vote.</li>
+</ul>
+<!-- Back Button -->
+<a class="action-btn" onclick="simulateAction(this,'home')" style="background:#d32f2f; margin-top:15px;">
     ⬅️ Back to Home <span class="spinner"></span>
-  </a>
+</a>
 </section>
-
-
 <!-- 💼 Services -->
 <section id="services">
-  <h2>💼 Our Services</h2>
-  <ul style="list-style:none; padding:0; font-size:16px;">
-    <li>💰 <b>Monthly Savings:</b> Contribute consistently and grow your financial discipline.</li>
-    <li>📊 <b>Group Contributions:</b> Transparent tracking of all members' contributions.</li>
-    <li>🏦 <b>Loan Services:</b> Apply for loans based on your savings history and eligibility.</li>
-    <li>🎲 <b>Lucky Number Draw:</b> Fun reward system to encourage participation.</li>
-    <li>📰 <b>System Updates:</b> Get notified instantly about changes and new features.</li>
-    <li>🤝 <b>Member Support:</b> Assistance via WhatsApp, phone, or email directly from the app.</li>
-  </ul>
-
-  <!-- Optional Buttons -->
-  <div style="margin-top:15px; display:flex; gap:10px; flex-wrap:wrap; justify-content:center;">
-
-  <!-- Register Button -->
-  <a class="action-btn" style="background:#388e3c;" 
-     onclick="simulateAction(this,'membership')">
+<h2>💼 Our Services</h2>
+<ul style="list-style:none; padding:0; font-size:16px;">
+<li>💰 <b>Monthly Savings:</b> Contribute consistently and grow your financial discipline.</li>
+<li>📊 <b>Group Contributions:</b> Transparent tracking of all members' contributions.</li>
+<li>🏦 <b>Loan Services:</b> Apply for loans based on your savings history and eligibility.</li>
+<li>🎲 <b>Lucky Number Draw:</b> Fun reward system to encourage participation.</li>
+<li>📰 <b>System Updates:</b> Get notified instantly about changes and new features.</li>
+<li>🤝 <b>Member Support:</b> Assistance via WhatsApp, phone, or email directly from the app.</li>
+</ul>
+<!-- Optional Buttons -->
+<div style="margin-top:15px; display:flex; gap:10px; flex-wrap:wrap; justify-content:center;">
+<!-- Register Button -->
+<a class="action-btn" onclick="simulateAction(this,'membership')" style="background:#388e3c;">
     📝 Register as Member <span class="spinner"></span>
-  </a>
-
-  <!-- Contact Button -->
-  <a class="action-btn" style="background:#1976d2;" 
-     onclick="simulateAction(this,'contact')">
+</a>
+<!-- Contact Button -->
+<a class="action-btn" onclick="simulateAction(this,'contact')" style="background:#1976d2;">
     📞 Contact Support <span class="spinner"></span>
-  </a>
+</a>
 <!-- Back Button -->
-  <a class="action-btn" style="background:#d32f2f; margin-top:15px;" 
-     onclick="simulateAction(this,'services')">
+<a class="action-btn" onclick="simulateAction(this,'services')" style="background:#d32f2f; margin-top:15px;">
     ⬅️ Back to Services <span class="spinner"></span>
-  </a>
+</a>
 </div>
 </section>
-
-
-
 <section id="updates">
-  <h2>📰 News & Updates</h2>
-  <div id="newsFeed" style="margin-top:15px;">
-    <p style="color:gray;">No updates yet.</p>
-  </div>
+<h2>📰 News &amp; Updates</h2>
+<div id="newsFeed" style="margin-top:15px;">
+<p style="color:gray;">No updates yet.</p>
+</div>
 </section>
-
-
-
-  
-</section>
-
 
 <!-- Contact -->
 <section id="contact">
-  <h2>📞 Contact Us</h2>
-  <button class="contact-btn email" onclick="contactEmail()">📧 Email Us</button>
-  <button class="contact-btn phone" onclick="contactPhone()">📞 Call Us</button>
-  <button class="contact-btn whatsapp" onclick="contactWhatsApp()">💬 WhatsApp Chat</button>
-  
+<h2>📞 Contact Us</h2>
+<button class="contact-btn email" onclick="contactEmail()">📧 Email Us</button>
+<button class="contact-btn phone" onclick="contactPhone()">📞 Call Us</button>
+<button class="contact-btn whatsapp" onclick="contactWhatsApp()">💬 WhatsApp Chat</button>
 </section>
-
-<section id="home" class="active">
-  <h2>🏠 Home</h2>
-  <p>Welcome to Future Finders Chama. Together we save, invest, and grow.</p>
+<section class="active" id="home">
+<h2>🏠 Home</h2>
+<p>Welcome to Future Finders Chama. Together we save, invest, and grow.</p>
 </section>
 <!-- Random Picker -->
 <section id="picker">
-  <h2>🎉 Random Number Picker</h2>
-
-  <!-- Select member -->
+<h2>🎉 Random Number Picker</h2>
+<!-- Select member -->
 <label for="memberSelect"><b>Select Your Name:</b></label>
-<select id="memberSelect" required>
-  <option value="">-- Choose your name --</option>
-  <option>BONIFACE CHELLUGET</option>
-  <option>HILDA ODERO</option>
-  <option>JOEL EGESA</option>
-  <option>SHALIK SHIVERENGE</option>
-  <option>EVERLINE MAINA</option>
-  <option>ELVIS KAMASH</option>
-  <option>JULIUS KEBASO</option>
-  <option>CHRISTINE PIUS</option>
-  <option>EDNAH NANCY</option>
-  <option>JACKIENYARANGI</option>
-  <option>JUDITH OMWOYO</option>
-  <option>JANET NYAKUNDI</option>
-  <option>ANASTANCIA OMWOYO</option>
-  <option>PIUS NYAKUNDI</option>
-  <option>SAMUEL OYUGI</option>
-  <option>PURITY MOMANYI</option>
-  <option>KEFFA MOMANYI</option>
-  <option>KENNEDY MUTAYI</option>
-  <option>MIKE MORRIS</option>
-  <option>DAVY OMBATI</option>
-  <option>FAITH MOKOGI</option>
-  <option>SADLER KARAN</option>
-  <option>SHARON CHEPTOO</option>
-  <option>SHAMIM KAMASH</option>
-  <option>CLAUDIA MORAA</option>
-  <option>ESTHER OBEGI</option>
+<select id="memberSelect" required="">
+<option value="">-- Choose your name --</option>
+<option>BONIFACE CHELLUGET</option>
+<option>HILDA ODERO</option>
+<option>JOEL EGESA</option>
+<option>SHALIK SHIVERENGE</option>
+<option>EVERLINE MAINA</option>
+<option>ELVIS KAMASH</option>
+<option>JULIUS KEBASO</option>
+<option>CHRISTINE PIUS</option>
+<option>EDNAH NANCY</option>
+<option>JACKIENYARANGI</option>
+<option>JUDITH OMWOYO</option>
+<option>JANET NYAKUNDI</option>
+<option>ANASTANCIA OMWOYO</option>
+<option>PIUS NYAKUNDI</option>
+<option>SAMUEL OYUGI</option>
+<option>PURITY MOMANYI</option>
+<option>KEFFA MOMANYI</option>
+<option>KENNEDY MUTAYI</option>
+<option>MIKE MORRIS</option>
+<option>DAVY OMBATI</option>
+<option>FAITH MOKOGI</option>
+<option>SADLER KARAN</option>
+<option>SHARON CHEPTOO</option>
+<option>SHAMIM KAMASH</option>
+<option>CLAUDIA MORAA</option>
+<option>ESTHER OBEGI</option>
 </select>
-
-
-
-  <!-- Choose send method -->
-  <div style="margin: 10px 0;">
-    
-    <label><input type="radio" name="sendOption" value="whatsapp"> Send via WhatsApp 💬</label>
-  </div>
-
-  <!-- Pick button -->
-  <a class="action-btn" id="pickBtn" onclick="pickNumber()">
+<!-- Choose send method -->
+<div style="margin: 10px 0;">
+<label><input name="sendOption" type="radio" value="whatsapp"/> Send via WhatsApp 💬</label>
+</div>
+<!-- Pick button -->
+<a class="action-btn" id="pickBtn" onclick="pickNumber()">
   Pick Lucky Number <span class="spinner"></span>
 </a>
 <div id="diceBox">🎲</div>
 <div id="result" style="text-align:center; font-size:18px; margin-top:10px;"></div>
-<audio id="diceSound" src="dice-roll.mp3" preload="auto"></audio>
-
-
-  <p id="result"></p>
+<audio id="diceSound" preload="auto" src="dice-roll.mp3"></audio>
+<p id="result"></p>
 </section>
-
-
-  <!-- ℹ️ About Us -->
+<!-- ℹ️ About Us -->
 <section id="about">
-  <h2>ℹ️ About Us</h2>
-  <p>
+<h2>ℹ️ About Us</h2>
+<p>
     Welcome to <b>Future Finders Chama Group</b> – a community of dedicated individuals 
     who believe in the power of <b>saving, supporting, and growing together</b>.
   </p>
-
-  <!-- Mission & Vision -->
-  <h3>🌟 Our Mission</h3>
-  <p>To empower members through savings, merry-go-round, and access to loans for financial growth.</p>
-
-  <h3>👁️ Our Vision</h3>
-  <p>A financially independent community where members grow together and achieve prosperity.</p>
-
-  <!-- Core Values -->
-  <h3>💡 Our Values</h3>
-  <ul>
-    <li>🤝 Unity & Teamwork</li>
-    <li>📈 Growth & Prosperity</li>
-    <li>💰 Financial Discipline</li>
-    <li>🌍 Community Empowerment</li>
-  </ul>
-
-  <!-- Leadership -->
-  <h3>🧑‍💼 Our Leadership</h3>
-  <p>
+<!-- Mission & Vision -->
+<h3>🌟 Our Mission</h3>
+<p>To empower members through savings, merry-go-round, and access to loans for financial growth.</p>
+<h3>👁️ Our Vision</h3>
+<p>A financially independent community where members grow together and achieve prosperity.</p>
+<!-- Core Values -->
+<h3>💡 Our Values</h3>
+<ul>
+<li>🤝 Unity &amp; Teamwork</li>
+<li>📈 Growth &amp; Prosperity</li>
+<li>💰 Financial Discipline</li>
+<li>🌍 Community Empowerment</li>
+</ul>
+<!-- Leadership -->
+<h3>🧑‍💼 Our Leadership</h3>
+<p>
     Founded by <b>BONIFACE KAISER</b>, with a dedicated team of members 
     who work together to ensure transparency, growth, and unity.
   </p>
-
-  <!-- History -->
-  <h3>📜 Our Journey</h3>
-  <p>
+<!-- History -->
+<h3>📜 Our Journey</h3>
+<p>
     Established in <b>2024 JANUARY</b>, Future Finders Chama began as a small savings group. 
     Today, it has grown into a vibrant community offering savings, loans, and investments to its members.
   </p>
-
-  <!-- Optional Logo -->
-  <div style="margin:20px 0; text-align:center;">
-    <img src="logo.png" alt="Chama Logo" style="width:150px; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.2);">
-    <p style="margin-top:10px; font-style:italic; color:#555;">Our Identity, Our Strength</p>
-  </div>
+<!-- Optional Logo -->
+<div style="margin:20px 0; text-align:center;">
+<img alt="Chama Logo" src="logo.png" style="width:150px; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.2);"/>
+<p style="margin-top:10px; font-style:italic; color:#555;">Our Identity, Our Strength</p>
+</div>
 </section>
-
-
-
 <!-- ⚙️ Admin Login -->
-
-  
-  <section id="adminLogin">
-  <h2>⚙️ Admin Login</h2>
-  <input type="text" id="adminUser" placeholder="Admin Name">
-  
-  
-  <!-- Admin Password -->
+<section id="adminLogin">
+<h2>⚙️ Admin Login</h2>
+<input id="adminUser" placeholder="Admin Name" type="text"/>
+<!-- Admin Password -->
 <div class="password-container">
-  <input type="password" id="adminPass" placeholder="Admin Password">
-  <span class="toggle-eye" onclick="togglePassword('adminPass', this)">👁️</span>
+<input id="adminPass" placeholder="Admin Password" type="password"/>
+<span class="toggle-eye" onclick="togglePassword('adminPass', this)">👁️</span>
 </div>
 <a class="action-btn" id="adminBtn" onclick="adminLogin()">
     Admin Login <span class="spinner"></span>
-  </a>
-  <p id="adminLoginMessage"></p>
-  </section>
-
+</a>
+<p id="adminLoginMessage"></p>
+</section>
 <!-- Admin Panel (hidden until login) -->
- <!-- Logo at the Top -->
+<!-- Logo at the Top -->
 <div style="margin:20px 0; text-align:center;">
-  <img src="https://github.com/bony87/my-future-finder-chama-group/blob/main/ChatGPT%20Image%20Sep%2010,%202025,%2005_43_14%20PM.png?raw=true" 
-       alt="Future Finders Logo" 
-       style="width:150px; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.2);">
-  <p style="margin-top:10px; font-style:italic; color:#555;">Our Identity, Our Strength</p>
+<img alt="Future Finders Logo" src="https://github.com/bony87/my-future-finder-chama-group/blob/main/ChatGPT%20Image%20Sep%2010,%202025,%2005_43_14%20PM.png?raw=true" style="width:150px; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.2);"/>
+<p style="margin-top:10px; font-style:italic; color:#555;">Our Identity, Our Strength</p>
 </div>
-
 <section id="admin" style="display:none;">
-  <h2>🛠 Admin Panel</h2>
-
-  <!-- Admin logout -->
-<button id="logoutBtn" onclick="adminLogout()" 
-        style="margin-bottom:15px; padding:10px; background:#d32f2f; color:white; border:none; border-radius:5px; cursor:pointer; position:relative;">
+<h2>🛠 Admin Panel</h2>
+<!-- Admin logout -->
+<button id="logoutBtn" onclick="adminLogout()" style="margin-bottom:15px; padding:10px; background:#d32f2f; color:white; border:none; border-radius:5px; cursor:pointer; position:relative;">
   🚪 Logout 
   <span class="spinner" style="display:none; margin-left:8px; border:2px solid #f3f3f3; border-top:2px solid white; border-radius:50%; width:14px; height:14px; animation: spin 1s linear infinite; vertical-align:middle;"></span>
 </button>
-<button onclick="showAvailableNumbers()" 
-        style="margin-top:10px; padding:8px 14px; background:#388e3c; color:white; border:none; border-radius:5px; cursor:pointer;">
+<button onclick="showAvailableNumbers()" style="margin-top:10px; padding:8px 14px; background:#388e3c; color:white; border:none; border-radius:5px; cursor:pointer;">
   📋 Show Available Numbers
 </button>
-
-  <!-- Admin Controls -->
-  <h3>👤 Member Management</h3>
-  <input type="text" id="loanSearch" placeholder="🔍 Search loans by name, phone, or status..." 
-       onkeyup="filterLoans()" 
-       style="width:95%; padding:8px; margin:10px 0; border:1px solid #ccc; border-radius:5px;">
-<select id="loanStatusFilter" onchange="filterLoans()" 
-        style="padding:8px; margin:10px 0; border:1px solid #ccc; border-radius:5px;">
-  <option value="">📂 Show All</option>
-  <option value="Pending">⏳ Pending</option>
-  <option value="Approved">✅ Approved</option>
-  <option value="Rejected">❌ Rejected</option>
+<!-- Admin Controls -->
+<h3>👤 Member Management</h3>
+<input id="loanSearch" onkeyup="filterLoans()" placeholder="🔍 Search loans by name, phone, or status..." style="width:95%; padding:8px; margin:10px 0; border:1px solid #ccc; border-radius:5px;" type="text"/>
+<select id="loanStatusFilter" onchange="filterLoans()" style="padding:8px; margin:10px 0; border:1px solid #ccc; border-radius:5px;">
+<option value="">📂 Show All</option>
+<option value="Pending">⏳ Pending</option>
+<option value="Approved">✅ Approved</option>
+<option value="Rejected">❌ Rejected</option>
 </select>
-<button onclick="exportLoans()" 
-        style="padding:8px 12px; margin:10px 0; background:#1976d2; color:white; border:none; border-radius:5px; cursor:pointer;">
+<button onclick="exportLoans()" style="padding:8px 12px; margin:10px 0; background:#1976d2; color:white; border:none; border-radius:5px; cursor:pointer;">
   📂 Export Loans (CSV)
 </button>
-
 <h3>📜 Loan Applications</h3>
 <table border="1" style="width:100%; border-collapse:collapse; text-align:center;">
-  <thead style="background:#1976d2; color:white;">
-    <tr>
-      <th>Name</th>
-      <th>Phone</th>
-      <th>Qualified Loan</th>
-      <th>Requested Amount</th>
-      <th>ID Number</th>
-      <th>Period</th>
-      <th>Repayment</th>
-      <th>Date</th>
-      <th>Status</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  <tbody id="adminLoanBody">
-    <tr><td colspan="10" style="color:gray;">No applications yet.</td></tr>
-  </tbody>
+<thead style="background:#1976d2; color:white;">
+<tr>
+<th>Name</th>
+<th>Phone</th>
+<th>Qualified Loan</th>
+<th>Requested Amount</th>
+<th>ID Number</th>
+<th>Period</th>
+<th>Repayment</th>
+<th>Date</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody id="adminLoanBody">
+<tr><td colspan="10" style="color:gray;">No applications yet.</td></tr>
+</tbody>
 </table>
-
-  <!-- View Picked Numbers -->
-<button onclick="togglePickedNumbers()" 
-        style="padding:10px; margin:5px; background:#1976d2; color:white; border:none; border-radius:5px; cursor:pointer;">
+<!-- View Picked Numbers -->
+<button onclick="togglePickedNumbers()" style="padding:10px; margin:5px; background:#1976d2; color:white; border:none; border-radius:5px; cursor:pointer;">
   🎲 View Picked Numbers
 </button>
-
 <!-- Lucky numbers table (hidden initially) -->
 <div id="pickedNumbersTable" style="display:none; margin-top:20px;">
-  <h3>🎲 Picked Lucky Numbers</h3>
-
-  <!-- Download CSV button -->
-  <button onclick="downloadPickedNumbers()" 
-          style="margin-bottom:10px; padding:8px 12px; background:#388e3c; color:white; border:none; border-radius:5px; cursor:pointer;">
+<h3>🎲 Picked Lucky Numbers</h3>
+<!-- Download CSV button -->
+<button onclick="downloadPickedNumbers()" style="margin-bottom:10px; padding:8px 12px; background:#388e3c; color:white; border:none; border-radius:5px; cursor:pointer;">
     ⬇️ Download CSV
   </button>
 <!-- Reset Picked Numbers button -->
-<button onclick="resetPickedNumbers()" 
-        style="margin-bottom:10px; padding:8px 12px; background:#d32f2f; color:white; border:none; border-radius:5px; cursor:pointer;">
+<button onclick="resetPickedNumbers()" style="margin-bottom:10px; padding:8px 12px; background:#d32f2f; color:white; border:none; border-radius:5px; cursor:pointer;">
   🗑️ Reset Picked Numbers
 </button>
-  <table border="1" style="width:100%; border-collapse:collapse; text-align:center;">
-    <thead style="background:#1976d2; color:white;">
-      <tr>
-        <th>Member</th>
-        <th>Lucky Number</th>
-      </tr>
-    </thead>
-    <tbody id="pickedNumbersBody">
-      <tr><td colspan="2" style="color:gray;">No numbers picked yet.</td></tr>
-    </tbody>
-  </table>
+<table border="1" style="width:100%; border-collapse:collapse; text-align:center;">
+<thead style="background:#1976d2; color:white;">
+<tr>
+<th>Member</th>
+<th>Lucky Number</th>
+</tr>
+</thead>
+<tbody id="pickedNumbersBody">
+<tr><td colspan="2" style="color:gray;">No numbers picked yet.</td></tr>
+</tbody>
+</table>
 </div>
 <div id="pendingMembersPanel" style="margin-top:20px;">
-  <h3>📝 Pending Member Registrations</h3>
-  <table border="1" style="width:100%; border-collapse:collapse; text-align:center;">
-    <thead style="background:#00796b; color:white;">
-      <tr>
-        <th>Name</th>
-        <th>Phone</th>
-        <th>Email</th>
-        <th>Status</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody id="pendingMembersBody">
-      <tr><td colspan="5" style="color:gray;">No pending registrations.</td></tr>
-    </tbody>
-  </table>
+<h3>📝 Pending Member Registrations</h3>
+<table border="1" style="width:100%; border-collapse:collapse; text-align:center;">
+<thead style="background:#00796b; color:white;">
+<tr>
+<th>Name</th>
+<th>Phone</th>
+<th>Email</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody id="pendingMembersBody">
+<tr><td colspan="5" style="color:gray;">No pending registrations.</td></tr>
+</tbody>
+</table>
 </div>
-
 <!-- System Updates Section -->
 <h3>🚀 System Updates</h3>
-
-<textarea id="updateMessage" placeholder="Type new update..." 
-          style="width:90%; padding:10px; margin-bottom:10px;"></textarea><br>
-
-<button onclick="postUpdate()" 
-        style="padding:10px; background:#1976d2; color:white; border:none; border-radius:5px; cursor:pointer;">
+<textarea id="updateMessage" placeholder="Type new update..." style="width:90%; padding:10px; margin-bottom:10px;"></textarea><br/>
+<button onclick="postUpdate()" style="padding:10px; background:#1976d2; color:white; border:none; border-radius:5px; cursor:pointer;">
   📢 Post Update
 </button>
-
 <div id="memberSelectionBox" style="display:none; margin-top:8px;">
-  <label><b>Select Members:</b></label><br>
-  <select id="memberSelectMulti" multiple size="10" style="width:260px; padding:6px;">
-    <!-- Members will be loaded dynamically -->
-  </select>
-  <br>
-  <button type="button" onclick="selectAllMembers()" 
-          style="margin-top:5px; padding:5px 10px; background:#388e3c; color:white; border:none; border-radius:4px; cursor:pointer;">
+<label><b>Select Members:</b></label><br/>
+<select id="memberSelectMulti" multiple="" size="10" style="width:260px; padding:6px;">
+<!-- Members will be loaded dynamically -->
+</select>
+<br/>
+<button onclick="selectAllMembers()" style="margin-top:5px; padding:5px 10px; background:#388e3c; color:white; border:none; border-radius:4px; cursor:pointer;" type="button">
     ✅ Select All
   </button>
-  <!-- 🔍 Search bar -->
-  <input type="text" id="memberSearch" onkeyup="filterMembers()" 
-         placeholder="🔍 Search member..." 
-         style="width:260px; padding:6px; margin-bottom:6px;">
-  <button type="button" onclick="clearAllMembers()" 
-          style="margin-top:5px; padding:5px 10px; background:#d32f2f; color:white; border:none; border-radius:4px; cursor:pointer;">
+<!-- 🔍 Search bar -->
+<input id="memberSearch" onkeyup="filterMembers()" placeholder="🔍 Search member..." style="width:260px; padding:6px; margin-bottom:6px;" type="text"/>
+<button onclick="clearAllMembers()" style="margin-top:5px; padding:5px 10px; background:#d32f2f; color:white; border:none; border-radius:4px; cursor:pointer;" type="button">
     ❌ Clear All
   </button>
-  <p style="font-size:12px; color:gray; margin-top:5px;">(Hold CTRL/SHIFT to select multiple manually)</p>
+<p style="font-size:12px; color:gray; margin-top:5px;">(Hold CTRL/SHIFT to select multiple manually)</p>
 </div>
-
-
- <label style="display:block; margin-top:8px;">
-  <input type="checkbox" id="sendWhatsAppUpdate" onchange="toggleMemberSelection()"> 
+<label style="display:block; margin-top:8px;">
+<input id="sendWhatsAppUpdate" onchange="toggleMemberSelection()" type="checkbox"/> 
   📲 Send WhatsApp notification to members
 </label>
-
-
 <!-- Updates History Table -->
 <div style="margin-top:20px;">
-  <h4>📜 Past Updates</h4>
-  <table border="1" style="width:100%; border-collapse:collapse; text-align:center;">
-    <thead style="background:#1976d2; color:white;">
-      <tr>
-        <th>All Updates (Click to Expand/Collapse)</th>
-      </tr>
-    </thead>
-    <tbody id="updateHistoryBody">
-      <tr><td style="color:gray;">No updates posted yet.</td></tr>
-    </tbody>
-  </table>
+<h4>📜 Past Updates</h4>
+<table border="1" style="width:100%; border-collapse:collapse; text-align:center;">
+<thead style="background:#1976d2; color:white;">
+<tr>
+<th>All Updates (Click to Expand/Collapse)</th>
+</tr>
+</thead>
+<tbody id="updateHistoryBody">
+<tr><td style="color:gray;">No updates posted yet.</td></tr>
+</tbody>
+</table>
 </div>
 <div id="adminSummary" style="display:flex; gap:15px; margin:15px 0; flex-wrap:wrap;">
-  <div class="summary-card" id="totalMembersCard">👥 Total Members: 0</div>
-  <div class="summary-card" id="totalSavingsCard">💰 Total Savings: Ksh 0</div>
-  <div class="summary-card" id="totalLoansCard">📑 Total Loans: 0</div>
-  <div class="summary-card" id="loanBreakdownCard">📊 Loan Status: 0 Pending / 0 Approved / 0 Rejected</div>
+<div class="summary-card" id="totalMembersCard">👥 Total Members: 0</div>
+<div class="summary-card" id="totalSavingsCard">💰 Total Savings: Ksh 0</div>
+<div class="summary-card" id="totalLoansCard">📑 Total Loans: 0</div>
+<div class="summary-card" id="loanBreakdownCard">📊 Loan Status: 0 Pending / 0 Approved / 0 Rejected</div>
 </div>
-
-
-
 </section>
-
-
-  
-
 <section id="membership" style="display:none;">
-  <h2>👥 Membership</h2>
-  <p>If you’re new, please register. If already a member, log in.</p>
-
-  <!-- Eligibility Info -->
-  <div style="margin:20px auto; padding:15px; background:#e3f2fd; border-left:6px solid #1976d2; border-radius:8px; max-width:600px;">
-    <h3 style="color:#1976d2; margin-bottom:10px;">📌 Membership & Loan Eligibility</h3>
-    <p style="line-height:1.6; color:#333;">
-      ✅ <b>Loan Qualification:</b> A member must have saved at least <b>Ksh 1,500</b>.<br><br>
-      ✅ <b>Official Membership:</b> To become an official member, you must be active for a minimum of <b>4 months</b> in the chama.<br><br>
-      ✅ <b>Commitment:</b> Members are expected to contribute consistently and maintain good financial discipline.<br><br>
-      ✅ <b>Support & Trust:</b> Being a member means supporting one another and upholding transparency within the group.
+<h2>👥 Membership</h2>
+<p>If you’re new, please register. If already a member, log in.</p>
+<!-- Eligibility Info -->
+<div style="margin:20px auto; padding:15px; background:#e3f2fd; border-left:6px solid #1976d2; border-radius:8px; max-width:600px;">
+<h3 style="color:#1976d2; margin-bottom:10px;">📌 Membership &amp; Loan Eligibility</h3>
+<p style="line-height:1.6; color:#333;">
+      ✅ <b>Loan Qualification:</b> A member must have saved at least <b>Ksh 1,500</b>.<br/><br/>
+      ✅ <b>Official Membership:</b> To become an official member, you must be active for a minimum of <b>4 months</b> in the chama.<br/><br/>
+      ✅ <b>Commitment:</b> Members are expected to contribute consistently and maintain good financial discipline.<br/><br/>
+      ✅ <b>Support &amp; Trust:</b> Being a member means supporting one another and upholding transparency within the group.
     </p>
-  </div>
-
-  <!-- Registration Form -->
-  <div id="registerForm">
-    <h3>📝 New Member Registration</h3>
-    <input type="text" id="regName" placeholder="Full Name" required>
-    <input type="text" id="regPhone" placeholder="Phone Number" required>
-    <input type="password" id="regPass" placeholder="Set Password" required>
-    <button onclick="registerMember()">Register</button>
-  </div>
-
-  <a class="action-btn" style="background:#d32f2f; margin-top:15px;" 
-   onclick="simulateAction(this,'services')">
+</div>
+<!-- Registration Form -->
+<div id="registerForm">
+<h3>📝 New Member Registration</h3>
+<input id="regName" placeholder="Full Name" required="" type="text"/>
+<input id="regPhone" placeholder="Phone Number" required="" type="text"/>
+<input id="regPass" placeholder="Set Password" required="" type="password"/>
+<button onclick="registerMember()">Register</button>
+</div>
+<a class="action-btn" onclick="simulateAction(this,'services')" style="background:#d32f2f; margin-top:15px;">
     ⬅️ Back to Services <span class="spinner"></span>
-  </a>
+</a>
 </section>
-
-   
-  
-
- 
-
 <!-- Member Login -->
 <section id="loginForm">
-  <h2>🔑 Member Login</h2>
-   <h1>Chama Savings & Loan System</h1>
-  <label for="memberName"><b>Select Your Name:</b></label>
-  <select id="memberName" required>
-    <option value="">-- Choose your name --</option>
-    <option>BONIFACE CHELLUGET</option>
-    <option>HILDA ODERO</option>
-    <option>JOEL EGESA</option>
-    <option>SHALIK SHIVERENGE</option>
-    <option>EVERLINE MAINA</option>
-    <option>ELVIS KAMASH</option>
-    <option>JULIUS KEBASO</option>
-    <option>CHRISTINE PIUS</option>
-    <option>EDNAH NANCY</option>
-    <option>JACKIE NYARANGI</option>
-    <option>JUDITH OMWOYO</option>
-    <option>JANET NYAKUNDI</option>
-    <option>ANASTANCIA OMWOYO</option>
-    <option>PIUS NYAKUNDI</option>
-    <option>SAMUEL OYUGI</option>
-    <option>PURITY MOMANYI</option>
-    <option>KEFFA MOMANYI</option>
-    <option>KENNEDY MUTAYI</option>
-    <option>MIKE MORRIS</option>
-    <option>DAVY OMBATI</option>
-    <option>FAITH MOKOGI</option>
-    <option>SADLER KARAN</option>
-    <option>SHARON CHEPTOO</option>
-    <option>SHAMIM KAMASH</option>
-    <option>CLAUDIA MORAA</option>
-    <option>ESTHER OBEGI</option>
-    <option>DENNIS KIEYA</option>
-  </select>
+<h2>🔑 Member Login</h2>
+<h1>Chama Savings &amp; Loan System</h1>
+<label for="memberName"><b>Select Your Name:</b></label>
+<select id="memberName" required="">
+<option value="">-- Choose your name --</option>
+<option>BONIFACE CHELLUGET</option>
+<option>HILDA ODERO</option>
+<option>JOEL EGESA</option>
+<option>SHALIK SHIVERENGE</option>
+<option>EVERLINE MAINA</option>
+<option>ELVIS KAMASH</option>
+<option>JULIUS KEBASO</option>
+<option>CHRISTINE PIUS</option>
+<option>EDNAH NANCY</option>
+<option>JACKIE NYARANGI</option>
+<option>JUDITH OMWOYO</option>
+<option>JANET NYAKUNDI</option>
+<option>ANASTANCIA OMWOYO</option>
+<option>PIUS NYAKUNDI</option>
+<option>SAMUEL OYUGI</option>
+<option>PURITY MOMANYI</option>
+<option>KEFFA MOMANYI</option>
+<option>KENNEDY MUTAYI</option>
+<option>MIKE MORRIS</option>
+<option>DAVY OMBATI</option>
+<option>FAITH MOKOGI</option>
+<option>SADLER KARAN</option>
+<option>SHARON CHEPTOO</option>
+<option>SHAMIM KAMASH</option>
+<option>CLAUDIA MORAA</option>
+<option>ESTHER OBEGI</option>
+<option>DENNIS KIEYA</option>
+<option>BRIGIDE NYABERI</option>
+</select>
 <!-- Member Password -->
 <div class="password-container">
-  <input type="password" id="memberPass" placeholder="Enter your phone number or password created by you">
-  <span class="toggle-eye" onclick="togglePassword('memberPass', this)">👁️ Show password</span>
+<input id="memberPass" placeholder="Enter your phone number or password created by you" type="password"/>
+<span class="toggle-eye" onclick="togglePassword('memberPass', this)">👁️ Show password</span>
 </div>
-
-  <!-- Spinner already inside the button -->
-  <a class="action-btn" id="memberLoginBtn" onclick="login()">Login <span class="spinner"></span></a>
-  
-  <p id="loginMessage"></p>
+<!-- Spinner already inside the button -->
+<a class="action-btn" id="memberLoginBtn" onclick="login()">Login <span class="spinner"></span></a>
+<p id="loginMessage"></p>
 </section>
-
-
-
 <!-- Dashboard -->
 <div id="dashboard">
-  <h3>Welcome, <span id="memberDisplay"></span>!</h3>
-  <a class="action-btn" onclick="showCurrentSavings()">💰 View Current Savings</a>
-  <a class="action-btn" onclick="showMonthlySavings()">📊 View Monthly Savings</a>
-  <button class="check-loan-btn" onclick="checkLoan()">🔍 Check Loan Eligibility</button>
-
+<h3>Welcome, <span id="memberDisplay"></span>!</h3>
+<a class="action-btn" onclick="showCurrentSavings()">💰 View Current Savings</a>
+<a class="action-btn" onclick="showMonthlySavings()">📊 View Monthly Savings</a>
+<button class="check-loan-btn" onclick="checkLoan()">🔍 Check Loan Eligibility</button>
 <!-- 🚪 Member Logout -->
-<button id="memberLogoutBtn" class="action-btn" style="background:#d32f2f; margin-top:15px; position:relative;"
-        onclick="memberLogout()">
+<button class="action-btn" id="memberLogoutBtn" onclick="memberLogout()" style="background:#d32f2f; margin-top:15px; position:relative;">
   🚪 Logout
   <span class="spinner" style="display:none; margin-left:8px; border:2px solid #f3f3f3; border-top:2px solid white; border-radius:50%; width:14px; height:14px; animation: spin 1s linear infinite; vertical-align:middle;"></span>
 </button>
-
-
-
 <div id="loanMessage" style="margin-top:15px; font-weight:bold; color:#004d40;"></div>
-  <div id="allContributions" style="margin-top:20px;">
-    <!-- Eligibility Info Box -->
-  <div style="margin:20px auto; padding:15px; background:#e3f2fd; border-left:6px solid #1976d2; border-radius:8px; max-width:600px;">
-    <h3 style="color:#1976d2; margin-bottom:10px;">📌 Membership & Loan Eligibility</h3>
-    <p style="line-height:1.6; color:#333;">
-      ✅ <b>Loan Qualification:</b> A member must have saved at least <b>Ksh 1,500</b>.<br><br>
-      ✅ <b>Official Membership:</b> To become an official member, you must be active for a minimum of <b>4 months</b> in the chama.<br><br>
-      ✅ <b>Commitment:</b> Members are expected to contribute consistently and maintain good financial discipline.<br><br>
-      ✅ <b>Support & Trust:</b> Being a member means supporting one another and upholding transparency within the group.
+<div id="allContributions" style="margin-top:20px;">
+<!-- Eligibility Info Box -->
+<div style="margin:20px auto; padding:15px; background:#e3f2fd; border-left:6px solid #1976d2; border-radius:8px; max-width:600px;">
+<h3 style="color:#1976d2; margin-bottom:10px;">📌 Membership &amp; Loan Eligibility</h3>
+<p style="line-height:1.6; color:#333;">
+      ✅ <b>Loan Qualification:</b> A member must have saved at least <b>Ksh 1,500</b>.<br/><br/>
+      ✅ <b>Official Membership:</b> To become an official member, you must be active for a minimum of <b>4 months</b> in the chama.<br/><br/>
+      ✅ <b>Commitment:</b> Members are expected to contribute consistently and maintain good financial discipline.<br/><br/>
+      ✅ <b>Support &amp; Trust:</b> Being a member means supporting one another and upholding transparency within the group.
     </p>
-  </div>
-  <h4>📊 Group Contributions</h4>
+</div>
+<h4>📊 Group Contributions</h4>
 <table border="1" style="width:100%; border-collapse:collapse; text-align:center;">
-  <thead style="background:#00796b; color:white;">
-    <tr>
-      <th>NAME</th>
-      <th>JAN</th>
-      <th>FEB</th>
-      <th>MAR</th>
-      <th>APR</th>
-      <th>MAY</th>
-      <th>JUNE</th>
-      <th>JULY</th>
-      <th>AUG</th>
-      <th>SEPT</th>
-      <th>OCT</th>
-      <th>NOV</th>
-      <th>DEC</th>
-      <th style="background:#17da48;">TOTAL</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr><td>BONIFACE CHELLUGET</td><td>500</td><td>500</td><td>500</td><td>500</td><td>500</td><td>500</td><td>500</td><td>500</td><td>500</td><td>200</td><td>0</td><td>0</td><td><b>4700</b></td></tr><td>
-    <tr><td>HILDA ODERO</td><td>400</td><td>200</td><td>100</td><td>200</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>900</b></td></tr>
-    <tr><td>JOEL EGESA</td><td>200</td><td>0</td><td>20</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>500</td><td>0</td><td>0</td><td>0</td><td><b>720</b></td></tr>
-    <tr><td>SHALIK SHIVERENGE</td><td>250</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>250</b></td></tr>
-    <tr><td>EVERLINE MAINA</td><td>250</td><td>150</td><td>250</td><td>200</td><td>200</td><td>250</td><td>200</td><td>100</td><td>150</td><td>0</td><td>0</td><td>0</td><td><b>1750</b></td></tr>
-    <tr><td>ELVIS KAMASH</td><td>250</td><td>150</td><td>250</td><td>50</td><td>200</td><td>150</td><td>50</td><td>250</td><td>150</td><td>0</td><td>0</td><td>0</td><td><b>1500</b></td></tr>
-    <tr><td>JULIUS KEBASO</td><td>450</td><td>300</td><td>500</td><td>500</td><td>400</td><td>500</td><td>400</td><td>500</td>300<td>0</td><td>0</td><td>0</td><td>0</td><td><b>3800</b></td></tr>
-    <tr><td>CHRISTINE PIUS</td><td>50</td><td>150</td><td>250</td><td>150</td><td>0</td><td>0</td><td>0</td><td>0</td><td>50</td><td>0</td><td>0</td><td>0</td><td><b>650</b></td></tr>
-    <tr><td>EDNAH NANCY</td><td>250</td><td>100</td><td>100</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>50</td><td>0</td><td>0</td><td>0</td><td><b>500</b></td></tr>
-    <tr><td>JACKIENYARANGI</td><td>200</td><td>200</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>50</td><td>0</td><td>0</td><td>0</td><td><b>450</b></td></tr>
-    <tr><td>JUDITH OMWOYO</td><td>300</td><td>300</td><td>300</td><td>0</td><td>0</td><td>0</td><td>0</td><td>100</td><td>150</td><td>0</td><td>0</td><td>0</td><td><b>1150</b></td></tr>
-    <tr><td>JANET NYAKUNDI</td><td>150</td><td>0</td><td>100</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>250</b></td></tr>
-    <tr><td>ANASTANCIA OMWOYO</td><td>250</td><td>150</td><td>200</td><td>200</td><td>200</td><td>150</td><td>200</td><td>250</td><td>150</td><td>0</td><td>0</td><td>0</td><td><b>1650</b></td></tr>
-    <tr><td>PIUS NYAKUNDI</td><td>150</td><td>200</td><td>200</td><td>0</td><td>100</td><td>100</td><td>100</td><td>150</td><td>50</td><td>0</td><td>0</td><td>0</td><td><b>1000</b></td></tr>
-    <tr><td>SAMUEL OYUGI</td><td>400</td><td>300</td><td>500</td><td>400</td><td>400</td><td>500</td><td>400</td><td>500</td><td>200</td><td>0</td><td>0</td><td>0</td><td><b>3700</b></td></tr>
-    <tr><td>PURITY MOMANYI</td><td>200</td><td>200</td><td>1200</td><td>950</td><td>800</td><td>400</td><td>350</td><td>100</td><td>200</td><td>0</td><td>0</td><td>0</td><td><b>4400</b></td></tr>
-    <tr><td>KEFFA MOMANYI</td><td>250</td><td>150</td><td>200</td><td>200</td><td>200</td><td>250</td><td>200</td><td>150</td><td>150</td><td>0</td><td>0</td><td>0</td><td><b>1800</b></td></tr>
-    <tr><td>KENNEDY MUTAYI</td><td>750</td><td>450</td><td>750</td><td>600</td><td>600</td><td>750</td><td>600</td><td>750</td>450<td>0</td><td>0</td><td>0</td><td>0</td><td><b>5650</b></td></tr>
-    <tr><td>MIKE MORRIS</td><td>0</td><td>0</td><td>100</td><td>50</td><td>0</td><td>0</td><td>0</td><td>150</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>300</b></td></tr>
-    <tr><td>DAVY OMBATI</td><td>0</td><td>0</td><td>50</td><td>0</td><td>0</td><td>0</td><td>0</td><td>200</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>250</b></td></tr>
-    <tr><td>FAITH MOKOGI</td><td>0</td><td>0</td><td>500</td><td>200</td><td>250</td><td>50</td><td>100</td><td>50</td><td>250</td><td>0</td><td>0</td><td>0</td><td><b>1400</b></td></tr>
-    <tr><td>SADLER KARAN</td><td>0</td><td>0</td><td>200</td><td>200</td><td>150</td><td>50</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>600</b></td></tr>
-    <tr><td>SHARON CHEPTOO</td><td>0</td><td>0</td><td>0</td><td>0</td><td>250</td><td>150</td><td>150</td><td>100</td><td>100</td><td>0</td><td>0</td><td>0</td><td><b>750</b></td></tr>
-    <tr><td>SHAMIM KAMASH</td><td>0</td><td>0</td><td>0</td><td>0</td><td>200</td><td>150</td><td>50</td><td>250</td><td>150</td><td>0</td><td>0</td><td>0</td><td><b>800</b></td></tr>
-    <tr><td>CLAUDIA MORAA</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>100</td><td>400</td><td>300</td><td>200</td><td>0</td><td>0</td><td>0</td><td><b>900</b></td></tr>
-  <tr><td>ESTHER OBEGI</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>500</td><td>300</td><td>0</td><td>0</td><td>0</td><td><b>800</b></td></tr>
-  <tr><td>DENNIS KIEYA</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>50</td><td>0</td><td>0</td><td>0</td><td><b>50</b></td></tr>
-  <tr><td>BRIGIDE NYABERI</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>50</td><td>0</td><td>0</td><td>0</td><td><b>50</b></td></tr>
-  </tbody>
-  </tbody>
-  </tbody>
-</table>
-<tr id="grandTotalRow" style="background:#17da48; font-weight:bold;">
-  <td colspan="13" style="text-align:right;">GRAND TOTAL</td>
-  <td>35720</td>
+<thead style="background:#00796b; color:white;">
+<tr>
+<th>NAME</th>
+<th>JAN</th>
+<th>FEB</th>
+<th>MAR</th>
+<th>APR</th>
+<th>MAY</th>
+<th>JUNE</th>
+<th>JULY</th>
+<th>AUG</th>
+<th>SEPT</th>
+<th>OCT</th>
+<th>NOV</th>
+<th>DEC</th>
+<th style="background:#17da48;">TOTAL</th>
 </tr>
+</thead>
+<tbody>
+<tr><td>BONIFACE CHELLUGET</td><td><input type="number" value="500"/></td><td><input type="number" value="500"/></td><td><input type="number" value="500"/></td><td><input type="number" value="500"/></td><td><input type="number" value="500"/></td><td><input type="number" value="500"/></td><td><input type="number" value="500"/></td><td><input type="number" value="500"/></td><td><input type="number" value="500"/></td><td><input type="number" value="200"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">4500</td></tr><td>
+<tr><td>HILDA ODERO</td><td><input type="number" value="400"/></td><td><input type="number" value="200"/></td><td><input type="number" value="100"/></td><td><input type="number" value="200"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">900</td></tr>
+<tr><td>JOEL EGESA</td><td><input type="number" value="200"/></td><td><input type="number" value="0"/></td><td><input type="number" value="20"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="500"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">720</td></tr>
+<tr><td>SHALIK SHIVERENGE</td><td><input type="number" value="250"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">250</td></tr>
+<tr><td>EVERLINE MAINA</td><td><input type="number" value="250"/></td><td><input type="number" value="150"/></td><td><input type="number" value="250"/></td><td><input type="number" value="200"/></td><td><input type="number" value="200"/></td><td><input type="number" value="250"/></td><td><input type="number" value="200"/></td><td><input type="number" value="100"/></td><td><input type="number" value="150"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">1750</td></tr>
+<tr><td>ELVIS KAMASH</td><td><input type="number" value="250"/></td><td><input type="number" value="150"/></td><td><input type="number" value="250"/></td><td><input type="number" value="50"/></td><td><input type="number" value="200"/></td><td><input type="number" value="150"/></td><td><input type="number" value="50"/></td><td><input type="number" value="250"/></td><td><input type="number" value="150"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">1500</td></tr>
+<tr><td>JULIUS KEBASO</td><td><input type="number" value="450"/></td><td><input type="number" value="300"/></td><td><input type="number" value="500"/></td><td><input type="number" value="500"/></td><td><input type="number" value="400"/></td><td><input type="number" value="500"/></td><td><input type="number" value="400"/></td><td><input type="number" value="500"/></td>300<td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">3800</td></tr>
+<tr><td>CHRISTINE PIUS</td><td><input type="number" value="50"/></td><td><input type="number" value="150"/></td><td><input type="number" value="250"/></td><td><input type="number" value="150"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="50"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">650</td></tr>
+<tr><td>EDNAH NANCY</td><td><input type="number" value="250"/></td><td><input type="number" value="100"/></td><td><input type="number" value="100"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="50"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">500</td></tr>
+<tr><td>JACKIENYARANGI</td><td><input type="number" value="200"/></td><td><input type="number" value="200"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="50"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">450</td></tr>
+<tr><td>JUDITH OMWOYO</td><td><input type="number" value="300"/></td><td><input type="number" value="300"/></td><td><input type="number" value="300"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="100"/></td><td><input type="number" value="150"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">1150</td></tr>
+<tr><td>JANET NYAKUNDI</td><td><input type="number" value="150"/></td><td><input type="number" value="0"/></td><td><input type="number" value="100"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">250</td></tr>
+<tr><td>ANASTANCIA OMWOYO</td><td><input type="number" value="250"/></td><td><input type="number" value="150"/></td><td><input type="number" value="200"/></td><td><input type="number" value="200"/></td><td><input type="number" value="200"/></td><td><input type="number" value="150"/></td><td><input type="number" value="200"/></td><td><input type="number" value="250"/></td><td><input type="number" value="150"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">1650</td></tr>
+<tr><td>PIUS NYAKUNDI</td><td><input type="number" value="150"/></td><td><input type="number" value="200"/></td><td><input type="number" value="200"/></td><td><input type="number" value="0"/></td><td><input type="number" value="100"/></td><td><input type="number" value="100"/></td><td><input type="number" value="100"/></td><td><input type="number" value="150"/></td><td><input type="number" value="50"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">1000</td></tr>
+<tr><td>SAMUEL OYUGI</td><td><input type="number" value="400"/></td><td><input type="number" value="300"/></td><td><input type="number" value="500"/></td><td><input type="number" value="400"/></td><td><input type="number" value="400"/></td><td><input type="number" value="500"/></td><td><input type="number" value="400"/></td><td><input type="number" value="500"/></td><td><input type="number" value="200"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">3700</td></tr>
+<tr><td>PURITY MOMANYI</td><td><input type="number" value="200"/></td><td><input type="number" value="200"/></td><td><input type="number" value="1200"/></td><td><input type="number" value="950"/></td><td><input type="number" value="800"/></td><td><input type="number" value="400"/></td><td><input type="number" value="350"/></td><td><input type="number" value="100"/></td><td><input type="number" value="200"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">4400</td></tr>
+<tr><td>KEFFA MOMANYI</td><td><input type="number" value="250"/></td><td><input type="number" value="150"/></td><td><input type="number" value="200"/></td><td><input type="number" value="200"/></td><td><input type="number" value="200"/></td><td><input type="number" value="250"/></td><td><input type="number" value="200"/></td><td><input type="number" value="150"/></td><td><input type="number" value="150"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">1800</td></tr>
+<tr><td>KENNEDY MUTAYI</td><td><input type="number" value="750"/></td><td><input type="number" value="450"/></td><td><input type="number" value="750"/></td><td><input type="number" value="600"/></td><td><input type="number" value="600"/></td><td><input type="number" value="750"/></td><td><input type="number" value="600"/></td><td><input type="number" value="750"/></td>450<td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">5650</td></tr>
+<tr><td>MIKE MORRIS</td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="100"/></td><td><input type="number" value="50"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="150"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">300</td></tr>
+<tr><td>DAVY OMBATI</td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="50"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="200"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">250</td></tr>
+<tr><td>FAITH MOKOGI</td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="500"/></td><td><input type="number" value="200"/></td><td><input type="number" value="250"/></td><td><input type="number" value="50"/></td><td><input type="number" value="100"/></td><td><input type="number" value="50"/></td><td><input type="number" value="250"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">1400</td></tr>
+<tr><td>SADLER KARAN</td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="200"/></td><td><input type="number" value="200"/></td><td><input type="number" value="150"/></td><td><input type="number" value="50"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">600</td></tr>
+<tr><td>SHARON CHEPTOO</td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="250"/></td><td><input type="number" value="150"/></td><td><input type="number" value="150"/></td><td><input type="number" value="100"/></td><td><input type="number" value="100"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">750</td></tr>
+<tr><td>SHAMIM KAMASH</td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="200"/></td><td><input type="number" value="150"/></td><td><input type="number" value="50"/></td><td><input type="number" value="250"/></td><td><input type="number" value="150"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">800</td></tr>
+<tr><td>CLAUDIA MORAA</td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="100"/></td><td><input type="number" value="400"/></td><td><input type="number" value="300"/></td><td><input type="number" value="200"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">900</td></tr>
+<tr><td>ESTHER OBEGI</td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="500"/></td><td><input type="number" value="300"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">800</td></tr>
+<tr><td>DENNIS KIEYA</td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="50"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">50</td></tr>
+<tr><td>BRIGIDE NYABERI</td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="50"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">50</td></tr>
+</td><tr id="grandTotalRow"><td colspan="13" style="text-align:right;">GRAND TOTAL</td><td>0</td></tr></tbody>
 
 
+</table>
 <!-- Download Options -->
-<button onclick="downloadContributionsCSV()" class="download-btn csv-btn">
+<button class="download-btn csv-btn" onclick="downloadContributionsCSV()">
   ⬇️ Download Excel (CSV)
 </button>
-
-<button onclick="downloadContributionsPDF()" class="download-btn pdf-btn">
+<button class="download-btn pdf-btn" onclick="downloadContributionsPDF()">
   ⬇️ Download PDF
 </button>
-
 <div id="latestContributions" style="margin-top:15px;">
-  <button id="downloadLatestContributions" class="download-btn latest-btn" style="display:none;">
+<button class="download-btn latest-btn" id="downloadLatestContributions" style="display:none;">
     ⬇️ Download Latest Contributions
   </button>
 </div>
-
 <!-- Toast -->
-<div id="toast" class="toast"></div>
-
-
-
+<div class="toast" id="toast"></div>
 <!-- Loan Applications History -->
 <div id="loanHistory" style="margin-top:30px;">
-  <h3>📜 Loan Applications History</h3>
-  <table border="1" style="width:100%; border-collapse:collapse; text-align:center;">
-    <thead style="background:#00796b; color:white;">
-      <tr>
-        <th>Name</th>
-        <th>Phone</th>
-        <th>Qualified Loan</th>
-        <th>Requested Amount</th>
-        <th>ID Number</th>
-        <th>Date</th>
-        <th>Status</th>
-        <th>Receipt</th> <!-- ✅ Added -->
-      </tr>
-    </thead>
-
-    <tbody id="loanHistoryBody">
-      <!-- Example loan row -->
-      <tr>
-        <td>Boniface Chelluget</td>
-        <td>0713953004</td>
-        <td>Ksh 5,000</td>
-        <td>Ksh 3,000</td>
-        <td>12345678</td>
-        <td>16-09-2025</td>
-        <td>Pending</td>
-        <td>
-          <button onclick="downloadLoanReceipt('Boniface Chelluget','0713953004','5000','3000','12345678','16-09-2025','Pending')" 
-                  class="download-btn pdf-btn" style="padding:4px 8px; font-size:12px;">
+<h3>📜 Loan Applications History</h3>
+<table border="1" style="width:100%; border-collapse:collapse; text-align:center;">
+<thead style="background:#00796b; color:white;">
+<tr>
+<th>Name</th>
+<th>Phone</th>
+<th>Qualified Loan</th>
+<th>Requested Amount</th>
+<th>ID Number</th>
+<th>Date</th>
+<th>Status</th>
+<th>Receipt</th> <!-- ✅ Added -->
+</tr>
+</thead>
+<tbody id="loanHistoryBody">
+<!-- Example loan row -->
+<tr>
+<td>Boniface Chelluget</td>
+<td>0713953004</td>
+<td>Ksh 5,000</td>
+<td>Ksh 3,000</td>
+<td>12345678</td>
+<td>16-09-2025</td>
+<td>Pending</td>
+<td>
+<button class="download-btn pdf-btn" onclick="downloadLoanReceipt('Boniface Chelluget','0713953004','5000','3000','12345678','16-09-2025','Pending')" style="padding:4px 8px; font-size:12px;">
             🧾 Receipt
           </button>
-        </td>
-      </tr>
-
-      <!-- Default row if no applications -->
-      <tr><td colspan="8" style="color:gray;">No loan applications yet.</td></tr>
-    </tbody>
-  </table>
-</div>
-
-</div>
-
+</td>
+</tr>
+<!-- Default row if no applications -->
+<tr><td colspan="8" style="color:gray;">No loan applications yet.</td></tr>
+</tbody>
+</table>
 </div>
 </div>
-
-
-</section>
-
+</div>
 
 
 <footer style="position:fixed; bottom:0; width:100%; background:#111; padding:10px 0; text-align:center; color:white; z-index:1000;">
-  <div class="footer-marquee">
-    <span class="glow">🌟 FOUNDER: BONIFACE KAISER 🌟</span>
-  </div>
+<div class="footer-marquee">
+<span class="glow">🌟 FOUNDER: BONIFACE KAISER 🌟</span>
+</div>
 </footer>
-
-
-
-
 <script>
  
 
@@ -1782,7 +1629,8 @@ function showPopup(type, title, message) {
 function closePopup() {
   document.getElementById("popup").style.display = "none";
 }
-// 🔐 Member Login
+
+// 🔐 Member Login  
 function login() { 
   let btn = document.getElementById("memberLoginBtn");
   let spinner = btn.querySelector(".spinner");
@@ -1808,13 +1656,13 @@ function login() {
       document.getElementById("memberDisplay").innerText = name;
 
       // ===========================
-      // 🔹 Keyboard Support for Member Login
+      // 🔹 Keyboard Support
       // ===========================
       document.querySelectorAll("#loginForm input").forEach(input => {
         input.addEventListener("keydown", function(event) {
           if (event.key === "Enter") {
             event.preventDefault();
-            login(); // call member login
+            login(); 
           }
           if (event.key === "Escape") {
             document.getElementById("memberName").value = "";
@@ -1825,6 +1673,57 @@ function login() {
 
       // Load loan history
       loadMemberLoanHistory(name);
+
+      // ===========================
+      // 🔐 Table Edit Permissions + Badge
+      // ===========================
+      let rows = document.querySelectorAll("table tbody tr");
+
+      // Create badge
+      let badge = document.createElement("span");
+      badge.style.marginLeft = "10px";
+      badge.style.padding = "4px 10px";
+      badge.style.borderRadius = "12px";
+      badge.style.fontSize = "12px";
+      badge.style.fontWeight = "bold";
+
+      rows.forEach(row => {
+        const firstCell = row.querySelector("td");
+        if (!firstCell) return;
+
+        const rowName = firstCell.textContent.trim().toUpperCase();
+        const inputs = row.querySelectorAll("input[type='number']");
+
+        if (name.toUpperCase() === "BONIFACE CHELLUGET") {
+          // 🔓 Boniface can edit
+          inputs.forEach(input => {
+            input.disabled = false;
+            input.addEventListener("input", () => updateRowTotal(row));
+          });
+          updateRowTotal(row);
+
+          // Green badge for Boniface
+          badge.textContent = "Editor Mode ✅";
+          badge.style.background = "#4CAF50";
+          badge.style.color = "white";
+        } else {
+          // 🔒 Others only view
+          inputs.forEach(input => {
+            let td = input.parentElement;
+            td.textContent = input.value;
+          });
+
+          // Grey badge for others
+          badge.textContent = "View-Only 🔒";
+          badge.style.background = "#9E9E9E";
+          badge.style.color = "white";
+        }
+      });
+
+      // Attach badge next to name
+      document.getElementById("memberDisplay").appendChild(badge);
+
+      calculateGrandTotal();
 
       showPopup("success", "Welcome Back 🎉", `Hello ${name}, glad to see you again!`);
       return;
@@ -1839,7 +1738,7 @@ function login() {
       return;
     }
 
-    if (member.password !== pass) {   // ✅ Check password instead of phone
+    if (member.password !== pass) {   
       msg.innerText = "❌ Invalid password.";
       return;
     }
@@ -1851,6 +1750,51 @@ function login() {
     document.getElementById("memberDisplay").innerText = name;
 
     loadMemberLoanHistory(name);
+
+    // ===========================
+    // 🔐 Table Edit Permissions + Badge
+    // ===========================
+    let rows = document.querySelectorAll("table tbody tr");
+
+    let badge = document.createElement("span");
+    badge.style.marginLeft = "10px";
+    badge.style.padding = "4px 10px";
+    badge.style.borderRadius = "12px";
+    badge.style.fontSize = "12px";
+    badge.style.fontWeight = "bold";
+
+    rows.forEach(row => {
+      const firstCell = row.querySelector("td");
+      if (!firstCell) return;
+
+      const rowName = firstCell.textContent.trim().toUpperCase();
+      const inputs = row.querySelectorAll("input[type='number']");
+
+      if (name.toUpperCase() === "BONIFACE CHELLUGET") {
+        inputs.forEach(input => {
+          input.disabled = false;
+          input.addEventListener("input", () => updateRowTotal(row));
+        });
+        updateRowTotal(row);
+
+        badge.textContent = "Editor Mode ✅";
+        badge.style.background = "#4CAF50";
+        badge.style.color = "white";
+      } else {
+        inputs.forEach(input => {
+          let td = input.parentElement;
+          td.textContent = input.value;
+        });
+
+        badge.textContent = "View-Only 🔒";
+        badge.style.background = "#9E9E9E";
+        badge.style.color = "white";
+      }
+    });
+
+    document.getElementById("memberDisplay").appendChild(badge);
+
+    calculateGrandTotal();
 
     showPopup("success", "Welcome 🎉", `Hello ${name}, you are now logged in!`);
   }, 1000);
@@ -1875,6 +1819,7 @@ function showMonthlySavings() {
   }
   alert("📊 Monthly Contributions: " + members[name].monthly.join(", "));
 }
+
 // 🏦 Loan Eligibility Check
 function checkLoan() { 
   let name = document.getElementById("memberDisplay").innerText;
@@ -1929,6 +1874,7 @@ function checkLoan() {
     </button>
   `;
 }
+
 // 📝 Loan Application Form
 function showLoanForm(name, maxAmount, repaymentPeriod) {
   let phone = members[name].phone;
@@ -1968,6 +1914,7 @@ function showLoanForm(name, maxAmount, repaymentPeriod) {
     </form>
   `;
 }
+
 // 📤 Handle Loan Submission
 function submitLoan(event, name, maxAmount, phone, repaymentPeriod) {
   event.preventDefault();
@@ -2026,6 +1973,27 @@ function submitLoan(event, name, maxAmount, phone, repaymentPeriod) {
 
   alert(`✅ Loan application submitted successfully!`);
 }
+
+// =========================
+// 🔄 Contributions Totals
+// =========================
+function updateRowTotal(row) {
+  let inputs = row.querySelectorAll("input[type='number']");
+  let sum = 0;
+  inputs.forEach(input => sum += parseInt(input.value) || 0);
+  row.querySelector(".rowTotal").textContent = sum;
+  calculateGrandTotal();
+}
+
+function calculateGrandTotal() {
+  let total = 0;
+  document.querySelectorAll(".rowTotal").forEach(cell => {
+    total += parseInt(cell.textContent) || 0;
+  });
+  document.querySelector("#grandTotalRow td:last-child").textContent = total;
+}
+
+
 // 🔑 Admin Login with Spinner
 function adminLogin() {
   let usernameInput = document.getElementById("adminUser");
@@ -3412,41 +3380,6 @@ let countdownInterval;
 
 
 </script>
-
-<script>
-function calculateGrandTotal() {
-  let rows = document.querySelectorAll("#allContributions table tbody tr");
-  let sum = 0;
-
-  rows.forEach(row => {
-    let cells = row.querySelectorAll("td");
-    if (cells.length > 0) {
-      let lastCell = cells[cells.length - 1];
-      let value = parseInt(lastCell.textContent.replace(/[^0-9]/g, "")) || 0;
-      sum += value;
-    }
-  });
-
-  // Update the existing total row
-  let totalRow = document.getElementById("grandTotalRow");
-  if (totalRow) {
-    totalRow.querySelector("td:last-child").textContent = sum;
-  }
-}
-
-// Run on page load
-window.addEventListener("load", calculateGrandTotal);
-
-// Watch for any table changes (auto-update total)
-const targetTable = document.querySelector("#allContributions table tbody");
-if (targetTable) {
-  const observer = new MutationObserver(calculateGrandTotal);
-  observer.observe(targetTable, { childList: true, subtree: true, characterData: true });
-}
-</script>
-
-
-
 <script>
   function updateCountdown() {
     const now = new Date();
@@ -3531,5 +3464,34 @@ const passInput = document.getElementById("memberPass");
 
 </script>
 
+<script>
+function updateRowTotal(row) {
+  let inputs = row.querySelectorAll("input[type='number']");
+  let sum = 0;
+  inputs.forEach(input => sum += parseInt(input.value) || 0);
+  row.querySelector(".rowTotal").textContent = sum;
+  calculateGrandTotal();
+}
+
+function calculateGrandTotal() {
+  let total = 0;
+  document.querySelectorAll(".rowTotal").forEach(cell => {
+    total += parseInt(cell.textContent) || 0;
+  });
+  document.querySelector("#grandTotalRow td:last-child").textContent = total;
+}
+
+document.querySelectorAll("table tbody tr").forEach(row => {
+  let inputs = row.querySelectorAll("input[type='number']");
+  if (inputs.length > 0) {
+    inputs.forEach(input => {
+      input.addEventListener("input", () => updateRowTotal(row));
+    });
+    updateRowTotal(row);
+  }
+});
+
+calculateGrandTotal();
+</script>
 </body>
 </html>
