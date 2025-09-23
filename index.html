@@ -1523,7 +1523,7 @@ table th {
     </tr>
   </thead>
   <tbody>
-    <tr><td>BONIFACE CHELLUGET</td><td>500</td><td>500</td><td>500</td><td>500</td><td>500</td><td>500</td><td>500</td><td>500</td><td>500</td><td>0</td><td>0</td><td>0</td><td><b>4500</b></td></tr><td>
+    <tr><td>BONIFACE CHELLUGET</td><td>500</td><td>500</td><td>500</td><td>500</td><td>500</td><td>500</td><td>500</td><td>500</td><td>500</td><td>200</td><td>0</td><td>0</td><td><b>4700</b></td></tr><td>
     <tr><td>HILDA ODERO</td><td>400</td><td>200</td><td>100</td><td>200</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>900</b></td></tr>
     <tr><td>JOEL EGESA</td><td>200</td><td>0</td><td>20</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>500</td><td>0</td><td>0</td><td>0</td><td><b>720</b></td></tr>
     <tr><td>SHALIK SHIVERENGE</td><td>250</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>250</b></td></tr>
@@ -1538,7 +1538,7 @@ table th {
     <tr><td>ANASTANCIA OMWOYO</td><td>250</td><td>150</td><td>200</td><td>200</td><td>200</td><td>150</td><td>200</td><td>250</td><td>150</td><td>0</td><td>0</td><td>0</td><td><b>1650</b></td></tr>
     <tr><td>PIUS NYAKUNDI</td><td>150</td><td>200</td><td>200</td><td>0</td><td>100</td><td>100</td><td>100</td><td>150</td><td>50</td><td>0</td><td>0</td><td>0</td><td><b>1000</b></td></tr>
     <tr><td>SAMUEL OYUGI</td><td>400</td><td>300</td><td>500</td><td>400</td><td>400</td><td>500</td><td>400</td><td>500</td><td>200</td><td>0</td><td>0</td><td>0</td><td><b>3700</b></td></tr>
-    <tr><td>PURITY MOMANYI</td><td>200</td><td>200</td><td>1200</td><td>950</td><td>800</td><td>400</td><td>350</td><td>100</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>4200</b></td></tr>
+    <tr><td>PURITY MOMANYI</td><td>200</td><td>200</td><td>1200</td><td>950</td><td>800</td><td>400</td><td>350</td><td>100</td><td>200</td><td>0</td><td>0</td><td>0</td><td><b>4400</b></td></tr>
     <tr><td>KEFFA MOMANYI</td><td>250</td><td>150</td><td>200</td><td>200</td><td>200</td><td>250</td><td>200</td><td>150</td><td>150</td><td>0</td><td>0</td><td>0</td><td><b>1800</b></td></tr>
     <tr><td>KENNEDY MUTAYI</td><td>750</td><td>450</td><td>750</td><td>600</td><td>600</td><td>750</td><td>600</td><td>750</td>450<td>0</td><td>0</td><td>0</td><td>0</td><td><b>5650</b></td></tr>
     <tr><td>MIKE MORRIS</td><td>0</td><td>0</td><td>100</td><td>50</td><td>0</td><td>0</td><td>0</td><td>150</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>300</b></td></tr>
@@ -1555,6 +1555,12 @@ table th {
   </tbody>
   </tbody>
 </table>
+<tr id="grandTotalRow" style="background:#17da48; font-weight:bold;">
+  <td colspan="13" style="text-align:right;">GRAND TOTAL</td>
+  <td>35720</td>
+</tr>
+
+
 <!-- Download Options -->
 <button onclick="downloadContributionsCSV()" class="download-btn csv-btn">
   ⬇️ Download Excel (CSV)
@@ -3406,6 +3412,40 @@ let countdownInterval;
 
 
 </script>
+
+<script>
+function calculateGrandTotal() {
+  let rows = document.querySelectorAll("#allContributions table tbody tr");
+  let sum = 0;
+
+  rows.forEach(row => {
+    let cells = row.querySelectorAll("td");
+    if (cells.length > 0) {
+      let lastCell = cells[cells.length - 1];
+      let value = parseInt(lastCell.textContent.replace(/[^0-9]/g, "")) || 0;
+      sum += value;
+    }
+  });
+
+  // Update the existing total row
+  let totalRow = document.getElementById("grandTotalRow");
+  if (totalRow) {
+    totalRow.querySelector("td:last-child").textContent = sum;
+  }
+}
+
+// Run on page load
+window.addEventListener("load", calculateGrandTotal);
+
+// Watch for any table changes (auto-update total)
+const targetTable = document.querySelector("#allContributions table tbody");
+if (targetTable) {
+  const observer = new MutationObserver(calculateGrandTotal);
+  observer.observe(targetTable, { childList: true, subtree: true, characterData: true });
+}
+</script>
+
+
 
 <script>
   function updateCountdown() {
