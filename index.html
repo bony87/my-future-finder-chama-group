@@ -1402,7 +1402,7 @@ table th {
 <tr><td>SHALIK SHIVERENGE</td><td><input type="number" value="250"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">250</td></tr>
 <tr><td>EVERLINE MAINA</td><td><input type="number" value="250"/></td><td><input type="number" value="150"/></td><td><input type="number" value="250"/></td><td><input type="number" value="200"/></td><td><input type="number" value="200"/></td><td><input type="number" value="250"/></td><td><input type="number" value="200"/></td><td><input type="number" value="100"/></td><td><input type="number" value="150"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">1750</td></tr>
 <tr><td>ELVIS KAMASH</td><td><input type="number" value="250"/></td><td><input type="number" value="150"/></td><td><input type="number" value="250"/></td><td><input type="number" value="50"/></td><td><input type="number" value="200"/></td><td><input type="number" value="150"/></td><td><input type="number" value="50"/></td><td><input type="number" value="250"/></td><td><input type="number" value="150"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">1500</td></tr>
-<tr><td>JULIUS KEBASO</td><td><input type="number" value="450"/></td><td><input type="number" value="300"/></td><td><input type="number" value="500"/></td><td><input type="number" value="500"/></td><td><input type="number" value="400"/></td><td><input type="number" value="500"/></td><td><input type="number" value="400"/></td><td><input type="number" value="500"/></td>300<td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">3800</td></tr>
+<tr><td>JULIUS KEBASO</td><td><input type="number" value="450"/></td><td><input type="number" value="300"/></td><td><input type="number" value="500"/></td><td><input type="number" value="500"/></td><td><input type="number" value="400"/></td><td><input type="number" value="500"/></td><td><input type="number" value="400"/></td><td><input type="number" value="500"/></td><td><input type="number" value="300"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">3800</td></tr>
 <tr><td>CHRISTINE PIUS</td><td><input type="number" value="50"/></td><td><input type="number" value="150"/></td><td><input type="number" value="250"/></td><td><input type="number" value="150"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="50"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">650</td></tr>
 <tr><td>EDNAH NANCY</td><td><input type="number" value="250"/></td><td><input type="number" value="100"/></td><td><input type="number" value="100"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="50"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">500</td></tr>
 <tr><td>JACKIENYARANGI</td><td><input type="number" value="200"/></td><td><input type="number" value="200"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="50"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">450</td></tr>
@@ -1629,8 +1629,10 @@ function showPopup(type, title, message) {
 function closePopup() {
   document.getElementById("popup").style.display = "none";
 }
+// 🌍 Global variable to track logged-in user
+let loggedInUser = "";
 
-// 🔐 Member Login  
+// 🔐 Member Login    
 function login() { 
   let btn = document.getElementById("memberLoginBtn");
   let spinner = btn.querySelector(".spinner");
@@ -1650,36 +1652,19 @@ function login() {
 
     // ✅ Check hardcoded members
     if (members[name] && members[name].password === pass) {
+      loggedInUser = name; // ✅ store clean name
       msg.innerText = "";
       document.getElementById("loginForm").style.display = "none";
       document.getElementById("dashboard").style.display = "block";
       document.getElementById("memberDisplay").innerText = name;
 
-      // ===========================
-      // 🔹 Keyboard Support
-      // ===========================
-      document.querySelectorAll("#loginForm input").forEach(input => {
-        input.addEventListener("keydown", function(event) {
-          if (event.key === "Enter") {
-            event.preventDefault();
-            login(); 
-          }
-          if (event.key === "Escape") {
-            document.getElementById("memberName").value = "";
-            document.getElementById("memberPass").value = "";
-          }
-        });
-      });
-
       // Load loan history
       loadMemberLoanHistory(name);
 
       // ===========================
-      // 🔐 Table Edit Permissions + Badge
+      // 🔐 Table Edit Permissions Only
       // ===========================
       let rows = document.querySelectorAll("table tbody tr");
-
-      // Create badge
       let badge = document.createElement("span");
       badge.style.marginLeft = "10px";
       badge.style.padding = "4px 10px";
@@ -1688,47 +1673,39 @@ function login() {
       badge.style.fontWeight = "bold";
 
       rows.forEach(row => {
-        const firstCell = row.querySelector("td");
-        if (!firstCell) return;
-
-        const rowName = firstCell.textContent.trim().toUpperCase();
         const inputs = row.querySelectorAll("input[type='number']");
-
+        
         if (name.toUpperCase() === "BONIFACE CHELLUGET") {
-          // 🔓 Boniface can edit
+          // 🔓 Boniface can edit contributions
           inputs.forEach(input => {
             input.disabled = false;
             input.addEventListener("input", () => updateRowTotal(row));
           });
           updateRowTotal(row);
 
-          // Green badge for Boniface
           badge.textContent = "Editor Mode ✅";
           badge.style.background = "#4CAF50";
           badge.style.color = "white";
         } else {
-          // 🔒 Others only view
+          // 🔒 Others view-only (disable editing, keep other features working)
           inputs.forEach(input => {
-            let td = input.parentElement;
-            td.textContent = input.value;
+            input.disabled = true;
           });
 
-          // Grey badge for others
           badge.textContent = "View-Only 🔒";
           badge.style.background = "#9E9E9E";
           badge.style.color = "white";
         }
       });
 
-      // Attach badge next to name
+      // Attach badge
       document.getElementById("memberDisplay").appendChild(badge);
 
       calculateGrandTotal();
-
-      showPopup("success", "Welcome Back 🎉", `Hello ${name}, glad to see you again!`);
+      showPopup("success", "Welcome 🎉", `Hello ${name}, glad to see you again!`);
       return;
     }
-
+    
     // 🔐 Check approved members from localStorage
     let approved = JSON.parse(localStorage.getItem("approvedMembers")) || [];
     let member = approved.find(m => m.name === name);
@@ -1744,6 +1721,7 @@ function login() {
     }
 
     // ✅ Successful login for approved member
+    loggedInUser = name; // ✅ store clean name
     msg.innerText = "";
     document.getElementById("loginForm").style.display = "none";
     document.getElementById("dashboard").style.display = "block";
@@ -1752,10 +1730,9 @@ function login() {
     loadMemberLoanHistory(name);
 
     // ===========================
-    // 🔐 Table Edit Permissions + Badge
+    // 🔐 Table Edit Permissions Only
     // ===========================
     let rows = document.querySelectorAll("table tbody tr");
-
     let badge = document.createElement("span");
     badge.style.marginLeft = "10px";
     badge.style.padding = "4px 10px";
@@ -1764,12 +1741,8 @@ function login() {
     badge.style.fontWeight = "bold";
 
     rows.forEach(row => {
-      const firstCell = row.querySelector("td");
-      if (!firstCell) return;
-
-      const rowName = firstCell.textContent.trim().toUpperCase();
       const inputs = row.querySelectorAll("input[type='number']");
-
+      
       if (name.toUpperCase() === "BONIFACE CHELLUGET") {
         inputs.forEach(input => {
           input.disabled = false;
@@ -1782,8 +1755,7 @@ function login() {
         badge.style.color = "white";
       } else {
         inputs.forEach(input => {
-          let td = input.parentElement;
-          td.textContent = input.value;
+          input.disabled = true;
         });
 
         badge.textContent = "View-Only 🔒";
@@ -1795,40 +1767,37 @@ function login() {
     document.getElementById("memberDisplay").appendChild(badge);
 
     calculateGrandTotal();
-
     showPopup("success", "Welcome 🎉", `Hello ${name}, you are now logged in!`);
   }, 1000);
 }
 
+
 // 💰 Show current savings
 function showCurrentSavings() {
-  let name = document.getElementById("memberDisplay").innerText;
-  if (!name || !members[name]) {
+  if (!loggedInUser || !members[loggedInUser]) {
     alert("⚠️ Please log in first.");
     return;
   }
-  alert("💰 Current Savings: KES " + members[name].savings);
+  alert("💰 Current Savings: KES " + members[loggedInUser].savings);
 }
 
 // 📊 Show monthly contributions
 function showMonthlySavings() {
-  let name = document.getElementById("memberDisplay").innerText;
-  if (!name || !members[name]) {
+  if (!loggedInUser || !members[loggedInUser]) {
     alert("⚠️ Please log in first.");
     return;
   }
-  alert("📊 Monthly Contributions: " + members[name].monthly.join(", "));
+  alert("📊 Monthly Contributions: " + members[loggedInUser].monthly.join(", "));
 }
 
 // 🏦 Loan Eligibility Check
 function checkLoan() { 
-  let name = document.getElementById("memberDisplay").innerText;
-  if (!name || !members[name]) {
+  if (!loggedInUser || !members[loggedInUser]) {
     alert("⚠️ Please log in first.");
     return;
   }
 
-  let totalSavings = members[name].savings;
+  let totalSavings = members[loggedInUser].savings;
   let loanResult = document.getElementById("loanMessage");
   loanResult.innerHTML = ""; 
 
@@ -1836,7 +1805,7 @@ function checkLoan() {
 
   // Qualification rules
   if (totalSavings < 1500) {
-    loanResult.innerHTML = `❌ Sorry, ${name}, you are not yet eligible for a loan. Please keep on saving.`;
+    loanResult.innerHTML = `❌ Sorry, ${loggedInUser}, you are not yet eligible for a loan. Please keep on saving.`;
     return;
   } else if (totalSavings >= 1500 && totalSavings < 2000) {
     loanAmount = 1200;
@@ -1864,11 +1833,11 @@ function checkLoan() {
 
   // Show result + Apply button
   loanResult.innerHTML = `
-    ✅ Congratulations, ${name}!<br>
+    ✅ Congratulations, ${loggedInUser}!<br>
     You qualify for a loan.<br><br>
     <b>Maximum Loan You Can Borrow:</b> Ksh ${loanAmount}<br>
     <b>Repayment Period:</b> ${repaymentPeriod}<br><br>
-    <button onclick="showLoanForm('${name}', ${loanAmount}, '${repaymentPeriod}')" 
+    <button onclick="showLoanForm('${loggedInUser}', ${loanAmount}, '${repaymentPeriod}')" 
       style="padding:10px 15px; background:#1976d2; color:white; border:none; border-radius:5px; cursor:pointer;">
       👉 Apply Now
     </button>
