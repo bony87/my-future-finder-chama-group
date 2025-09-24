@@ -880,6 +880,14 @@ table th {
   </style>
 </head>
 <body>
+    <!-- Success Popup -->
+<div id="successPopup" 
+     style="display:none; position:fixed; top:20px; right:20px; background:#4caf50; color:#fff; 
+            padding:10px 20px; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.2); 
+            font-weight:bold; z-index:1000;">
+  ✅ Download successful!
+</div>
+
 <!-- Fixed Countdown Bar -->
 <div id="countdownBar">
 <span>⏳ Weekly Contributions Countdown: </span>
@@ -891,6 +899,8 @@ table th {
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+
+
 <!-- WhatsApp Contact Popup -->
 <div class="popup-overlay" id="whatsappOverlay">
 <div class="popup-box" style="max-width:400px; text-align:left;">
@@ -1375,6 +1385,11 @@ table th {
       ✅ <b>Support &amp; Trust:</b> Being a member means supporting one another and upholding transparency within the group.
     </p>
 </div>
+<div class="download-buttons" style="text-align:right; margin-bottom:10px;">
+  <button class="download-btn csv-btn" onclick="downloadTableCSV()">⬇️ Download CSV</button>
+  <button class="download-btn pdf-btn" onclick="downloadTablePDF()">⬇️ Download PDF</button>
+</div>
+
 <h4>📊 Group Contributions</h4>
 <table border="1" style="width:100%; border-collapse:collapse; text-align:center;">
 <thead style="background:#00796b; color:white;">
@@ -1428,18 +1443,7 @@ table th {
 
 
 </table>
-<!-- Download Options -->
-<button class="download-btn csv-btn" onclick="downloadContributionsCSV()">
-  ⬇️ Download Excel (CSV)
-</button>
-<button class="download-btn pdf-btn" onclick="downloadContributionsPDF()">
-  ⬇️ Download PDF
-</button>
-<div id="latestContributions" style="margin-top:15px;">
-<button class="download-btn latest-btn" id="downloadLatestContributions" style="display:none;">
-    ⬇️ Download Latest Contributions
-  </button>
-</div>
+
 <!-- Toast -->
 <div class="toast" id="toast"></div>
 <!-- Loan Applications History -->
@@ -3251,86 +3255,71 @@ function showToast(message, color = "#323232") {
   setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
 }
 
-// ✅ Download as CSV
+
+
 function downloadContributionsCSV() {
-  const table = document.querySelector("#allContributions table");
-  if (!table) {
-    showToast("❌ No contributions table found!", "red");
-    return;
-  }
+    let table = document.querySelector("table");
+    let rows = table.querySelectorAll("tr");
+    let csv = [];
 
-  let rows = table.querySelectorAll("tr");
-  let csv = [];
+    rows.forEach(row => {
+        let cols = row.querySelectorAll("td, th");
+        let rowData = [];
+        cols.forEach(col => {
+            let input = col.querySelector("input");
+            if (input) {
+                rowData.push(input.value);
+            } else {
+                rowData.push(col.innerText.trim());
+            }
+        });
+        csv.push(rowData.join(","));
+    });
 
-  rows.forEach(row => {
-    let cols = row.querySelectorAll("th, td");
-    let rowData = [];
-    cols.forEach(col => rowData.push(col.innerText.trim()));
-    csv.push(rowData.join(","));
-  });
-
-  let blob = new Blob([csv.join("\n")], { type: "text/csv;charset=utf-8;" });
-  let link = document.createElement("a");
-  link.href = URL.createObjectURL(blob);
-  link.download = "Contributions_Report.csv";
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-
-  showToast("✅ Excel (CSV) downloaded successfully!", "#388e3c");
+    let csvContent = "data:text/csv;charset=utf-8," + csv.join("\n");
+    let link = document.createElement("a");
+    link.setAttribute("href", encodeURI(csvContent));
+    link.setAttribute("download", "Group_Contributions.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 }
 
-// ✅ Download as PDF
 function downloadContributionsPDF() {
-  const { jsPDF } = window.jspdf;
-  const table = document.querySelector("#allContributions table");
-  if (!table) {
-    showToast("❌ No contributions table found!", "red");
-    return;
-  }
+    const { jsPDF } = window.jspdf;
+    let doc = new jsPDF();
 
-  const doc = new jsPDF();
-  doc.setFontSize(16);
-  doc.text("📊 Contributions Report", 14, 15);
+    let table = document.querySelector("table");
+    let rows = [];
+    let headers = [];
 
-  doc.autoTable({
-    html: table,
-    startY: 25,
-    theme: "grid",
-    headStyles: { fillColor: [25, 118, 210] },
-    bodyStyles: { fontSize: 10 },
-    styles: { halign: "center" }
-  });
+    // extract headers
+    table.querySelectorAll("thead th").forEach(th => {
+        headers.push(th.innerText.trim());
+    });
 
-  doc.save("Contributions_Report.pdf");
-  showToast("✅ PDF downloaded successfully!", "#1976d2");
+    // extract rows
+    table.querySelectorAll("tbody tr").forEach(tr => {
+        let rowData = [];
+        tr.querySelectorAll("td").forEach(td => {
+            let input = td.querySelector("input");
+            if (input) {
+                rowData.push(input.value);
+            } else {
+                rowData.push(td.innerText.trim());
+            }
+        });
+        rows.push(rowData);
+    });
+
+    doc.autoTable({
+        head: [headers],
+        body: rows
+    });
+
+    doc.save("Group_Contributions.pdf");
 }
-function downloadLoanReceipt(name, phone, qualified, requested, idNo, date, status) {
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
 
-  // Header
-  doc.setFontSize(14);
-  doc.text("🧾 Loan Application Receipt", 14, 20);
-
-  // Info box
-  doc.setFontSize(11);
-  doc.text(`Name: ${name}`, 14, 40);
-  doc.text(`Phone: ${phone}`, 14, 50);
-  doc.text(`Qualified Loan: Ksh ${qualified}`, 14, 60);
-  doc.text(`Requested Amount: Ksh ${requested}`, 14, 70);
-  doc.text(`ID Number: ${idNo}`, 14, 80);
-  doc.text(`Date: ${date}`, 14, 90);
-  doc.text(`Status: ${status}`, 14, 100);
-
-  // Footer
-  doc.setFontSize(10);
-  doc.text("✅ Thank you for applying. Keep this receipt for reference.", 14, 120);
-
-  // Save
-  doc.save(`Loan_Receipt_${name.replace(/\s+/g, "_")}.pdf`);
-  showToast("✅ Loan receipt downloaded!", "#1976d2");
-}
 
 // Countdown target: every Sunday midnight
 function getNextSundayMidnight() {
@@ -3461,6 +3450,117 @@ document.querySelectorAll("table tbody tr").forEach(row => {
 });
 
 calculateGrandTotal();
+
+
+
+// 🔄 Recalculate row totals & grand total
+function recalcTotals() {
+  const rows = document.querySelectorAll("#dashboard table tbody tr");
+  let grandTotal = 0;
+
+  rows.forEach(row => {
+    const inputs = row.querySelectorAll("td input[type='number']");
+    let rowSum = 0;
+
+    inputs.forEach(input => {
+      rowSum += Number(input.value) || 0;
+    });
+
+    const totalCell = row.querySelector(".rowTotal");
+    if (totalCell) {
+      totalCell.textContent = rowSum;
+      grandTotal += rowSum;
+    }
+  });
+
+  // update GRAND TOTAL row
+  const grandRow = document.getElementById("grandTotalRow");
+  if (grandRow) {
+    grandRow.querySelector("td:last-child").textContent = grandTotal;
+  }
+}
+
+// ✅ Show success popup
+function showSuccessPopup(message = "✅ Download successful!") {
+  const popup = document.getElementById("successPopup");
+  popup.textContent = message;
+  popup.style.display = "block";
+
+  setTimeout(() => {
+    popup.style.display = "none";
+  }, 2500); // hide after 2.5 sec
+}
+
+// 📥 Export Group Contributions Table as CSV
+function downloadTableCSV() {
+  recalcTotals();
+
+  const table = document.querySelector("#dashboard table");
+  let rows = table.querySelectorAll("tr");
+  let csv = [];
+
+  rows.forEach(row => {
+    let cols = row.querySelectorAll("th, td");
+    let rowData = [];
+    cols.forEach(col => {
+      const input = col.querySelector("input");
+      rowData.push('"' + (input ? input.value : col.innerText).replace(/"/g, '""') + '"');
+    });
+    csv.push(rowData.join(","));
+  });
+
+  let csvFile = new Blob([csv.join("\n")], { type: "text/csv" });
+  let downloadLink = document.createElement("a");
+  downloadLink.download = "GroupContributions.csv";
+  downloadLink.href = window.URL.createObjectURL(csvFile);
+  downloadLink.click();
+
+  showSuccessPopup("✅ CSV downloaded successfully!");
+}
+
+// 📥 Export Group Contributions Table as PDF
+function downloadTablePDF() {
+  recalcTotals();
+
+  const { jsPDF } = window.jspdf;
+  let doc = new jsPDF();
+  doc.text("📊 Group Contributions", 14, 14);
+
+  let table = document.querySelector("#dashboard table");
+  let headers = [];
+  table.querySelectorAll("thead th").forEach(th => headers.push(th.innerText));
+
+  let data = [];
+  table.querySelectorAll("tbody tr").forEach(tr => {
+    let rowData = [];
+    tr.querySelectorAll("td").forEach(td => {
+      const input = td.querySelector("input");
+      rowData.push(input ? input.value : td.innerText);
+    });
+    data.push(rowData);
+  });
+
+  doc.autoTable({
+    head: [headers],
+    body: data,
+    startY: 20
+  });
+
+  doc.save("GroupContributions.pdf");
+
+  showSuccessPopup("✅ PDF downloaded successfully!");
+}
+
+// 🔄 Auto-update totals when inputs change
+document.addEventListener("input", function(e) {
+  if (e.target.matches("td input[type='number']")) {
+    recalcTotals();
+  }
+});
+
+// Run once on page load
+window.onload = recalcTotals;
+
 </script>
 </body>
 </html>
