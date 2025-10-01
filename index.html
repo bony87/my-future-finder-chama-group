@@ -1934,19 +1934,19 @@ function updateLoanSummary(maxAmount) {
   `;
 }
 
-// 📤 Handle Loan Submission
-function submitLoan(event, name, maxAmount, phone, repaymentPeriod) {
+// 📤 Handle Loan Submission + PDF Download
+function submitLoan(event, name, maxAmount, phone) {
   event.preventDefault();
 
   let applyAmount = parseInt(document.getElementById("applyAmount").value);
   let idNumber = document.getElementById("loanId").value.trim();
+  let repaymentPeriod = document.getElementById("repaymentPeriod").value;
 
   // Validation
   if (isNaN(applyAmount) || applyAmount < 500 || applyAmount > maxAmount) {
     alert(`❌ Enter a valid loan amount between 500 and ${maxAmount}.`);
     return;
   }
-
   if (!/^[0-9]{7,8}$/.test(idNumber)) {
     alert("❌ Enter a valid Kenyan ID Number (7 or 8 digits).");
     return;
@@ -1954,14 +1954,8 @@ function submitLoan(event, name, maxAmount, phone, repaymentPeriod) {
 
   // Apply 12% interest
   let repaymentAmount = Math.round(applyAmount * 1.12);
-
-  // 🧮 Calculate monthly installment if repayment is >= 2 months
-  let months = parseFloat(repaymentPeriod); // e.g. "2 months" → 2
-  if (!isNaN(months) && months >= 2) {
-    var monthlyRepay = Math.round(repaymentAmount / months);
-  } else {
-    var monthlyRepay = repaymentAmount; // full in one month
-  }
+  let months = parseInt(repaymentPeriod) || 1;
+  let monthlyRepay = Math.round(repaymentAmount / months);
 
   // Get today’s date
   let today = new Date();
@@ -1972,36 +1966,53 @@ function submitLoan(event, name, maxAmount, phone, repaymentPeriod) {
   // --- Save loan into localStorage ---
   let applications = JSON.parse(localStorage.getItem("loanApplications")) || [];
   let newApp = {
-    name: name,
-    phone: phone,
+    name, phone,
     qualifiedAmount: maxAmount,
     requestedAmount: applyAmount,
-    idNumber: idNumber,
-    repaymentPeriod: repaymentPeriod,
-    repaymentAmount: repaymentAmount,
-    monthlyRepay: monthlyRepay,
+    idNumber,
+    repaymentPeriod: months + " month(s)",
+    repaymentAmount,
+    monthlyRepay,
     date: dateStr,
     status: "Pending"
   };
   applications.push(newApp);
   localStorage.setItem("loanApplications", JSON.stringify(applications));
 
-  // --- Refresh Member Loan History ---
+  // Refresh
   loadMemberLoanHistory(name);
-
-  // --- Refresh Admin Panel if logged in ---
   if (document.getElementById("admin").style.display === "block") {
     loadLoanApplications();
   }
 
-  // --- Notify Admin via WhatsApp ---
-  let message = `🆕 Loan Application\n\n👤 Name: ${name}\n📞 Phone: ${phone}\n💰 Requested: Ksh ${applyAmount}\n💳 Repayment: Ksh ${repaymentAmount}\n⏳ Period: ${repaymentPeriod}\n📅 Date: ${dateStr}\n\n📌 Monthly Repayment: Ksh ${monthlyRepay}`;
+  // --- Generate PDF Download ---
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  doc.setFontSize(16);
+  doc.text("📑 Loan Application Form", 20, 20);
+
+  doc.setFontSize(12);
+  doc.text(`Name: ${name}`, 20, 40);
+  doc.text(`Phone: ${phone}`, 20, 50);
+  doc.text(`ID Number: ${idNumber}`, 20, 60);
+  doc.text(`Qualified Loan: Ksh ${maxAmount}`, 20, 70);
+  doc.text(`Requested Amount: Ksh ${applyAmount}`, 20, 80);
+  doc.text(`Repayment Period: ${months} month(s)`, 20, 90);
+  doc.text(`Total Repayment: Ksh ${repaymentAmount}`, 20, 100);
+  doc.text(`Monthly Installment: Ksh ${monthlyRepay}`, 20, 110);
+  doc.text(`Date Submitted: ${dateStr}`, 20, 120);
+  doc.text(`Status: Pending`, 20, 130);
+
+  doc.save(`Loan_Application_${name}.pdf`);
+
+  // --- Notify Admin via WhatsApp (as before) ---
+  let message = `🆕 Loan Application\n\n👤 Name: ${name}\n📞 Phone: ${phone}\n💰 Requested: Ksh ${applyAmount}\n💳 Repayment: Ksh ${repaymentAmount}\n⏳ Period: ${months} month(s)\n📅 Date: ${dateStr}\n\n📌 Monthly Repayment: Ksh ${monthlyRepay}`;
   let whatsappUrl = "https://wa.me/254713953004?text=" + encodeURIComponent(message);
   window.open(whatsappUrl, "_blank");
 
-  alert(`✅ Loan application submitted successfully!\n\n💳 Total to repay: Ksh ${repaymentAmount}\n📌 Monthly: Ksh ${monthlyRepay}`);
+  alert(`✅ Loan application submitted!\n\n💳 Total repay: Ksh ${repaymentAmount}\n📌 Monthly: Ksh ${monthlyRepay}\n📑 A PDF copy has been downloaded.`);
 }
-
 
 // =========================
 // 🔄 Contributions Totals
@@ -3617,6 +3628,76 @@ document.addEventListener("input", function(e) {
 
 // Run once on page load
 window.onload = recalcTotals;
+function downloadLoanPDF(index) {
+  let applications = JSON.parse(localStorage.getItem("loanApplications")) || [];
+  let loan = applications[index];
+  if (!loan) {
+    alert("❌ Loan application not found.");
+    return;
+  }
+
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  doc.setFontSize(16);
+  doc.text("📑 Loan Application Form", 20, 20);
+
+  doc.setFontSize(12);
+  doc.text(`Name: ${loan.name}`, 20, 40);
+  doc.text(`Phone: ${loan.phone}`, 20, 50);
+  doc.text(`ID Number: ${loan.idNumber}`, 20, 60);
+  doc.text(`Qualified Loan: Ksh ${loan.qualifiedAmount}`, 20, 70);
+  doc.text(`Requested Amount: Ksh ${loan.requestedAmount}`, 20, 80);
+  doc.text(`Repayment Period: ${loan.repaymentPeriod}`, 20, 90);
+  doc.text(`Total Repayment: Ksh ${loan.repaymentAmount}`, 20, 100);
+  doc.text(`Monthly Installment: Ksh ${loan.monthlyRepay}`, 20, 110);
+  doc.text(`Date Submitted: ${loan.date}`, 20, 120);
+  doc.text(`Status: ${loan.status}`, 20, 130);
+
+  doc.save(`Loan_Application_${loan.name}_${loan.date}.pdf`);
+}
+function loadMemberLoanHistory(name) {
+  let applications = JSON.parse(localStorage.getItem("loanApplications")) || [];
+  let userLoans = applications.filter(app => app.name === name);
+
+  let loanMessage = document.getElementById("loanMessage");
+  if (userLoans.length === 0) {
+    loanMessage.innerHTML = "📭 No past loan applications found.";
+    return;
+  }
+
+  let html = `<h3>📜 Loan History</h3>
+  <table border="1" style="width:100%; border-collapse:collapse; text-align:center;">
+    <thead style="background:#1976d2; color:white;">
+      <tr>
+        <th>Date</th>
+        <th>Requested</th>
+        <th>Repayment</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>`;
+
+  userLoans.forEach((loan, index) => {
+    html += `
+      <tr>
+        <td>${loan.date}</td>
+        <td>Ksh ${loan.requestedAmount}</td>
+        <td>Ksh ${loan.repaymentAmount} (${loan.repaymentPeriod})</td>
+        <td>${loan.status}</td>
+        <td>
+          <button onclick="downloadLoanPDF(${applications.indexOf(loan)})" 
+            style="padding:5px 10px; background:#1976d2; color:white; border:none; border-radius:4px; cursor:pointer;">
+            ⬇️ Download PDF
+          </button>
+        </td>
+      </tr>`;
+  });
+
+  html += `</tbody></table>`;
+  loanMessage.innerHTML = html;
+}
 
 </script>
 </body>
