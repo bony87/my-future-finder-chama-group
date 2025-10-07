@@ -959,17 +959,19 @@ table th {
 </a>
 <a class="nav-btn" id="backBtn" onclick="showAllButtons()" style="display:none; background:#d32f2f;">⬅️ Back to Menu <span class="spinner"></span></a>
 </div>
-<!-- 📜 Rules & Regulations -->
-<section id="rules" style="background:#f9f9fb; padding:25px; border-radius:10px; box-shadow:0 2px 10px rgba(0,0,0,0.08);">
-  <h2 style="text-align:center; color:#2c3e50; font-family:'Poppins', sans-serif;">📜 Rules &amp; Regulations</h2>
-  <p style="text-align:center; color:#555; font-size:16px;">
+<!-- 📜 Rules & Regulations (Green Theme with Tooltip) -->
+<section id="rules" style="background:#f5fff7; padding:30px; border-radius:12px; box-shadow:0 2px 12px rgba(0,0,0,0.08); font-family:'Poppins', sans-serif; color:#2e3b32;">
+  
+  <h2 style="text-align:center; color:#2e7d32; font-size:28px; margin-bottom:10px;">📜 Rules &amp; Regulations</h2>
+  <p style="text-align:center; color:#4e5d50; font-size:16px;">
     These rules guide how members of <b>Future Finders Chama Group</b> operate, ensuring fairness, transparency, and unity among members.
   </p>
-  
-  <hr style="border:0; height:1px; background:#ddd; margin:20px 0;">
-  
-  <h3 style="color:#1e88e5;">👥 Membership</h3>
-  <ul style="line-height:1.8; color:#333;">
+
+  <hr style="border:0; height:2px; background:#a5d6a7; margin:25px 0; border-radius:2px;">
+
+  <!-- Membership -->
+  <h3 style="color:#1b5e20;">👥 Membership</h3>
+  <ul style="line-height:1.8;">
     <li>✅ Every member must register and keep their contact details up to date.</li>
     <li>✅ New members may join only with approval from existing members.</li>
     <li>✅ Membership becomes official after a minimum of <b>4 months</b> of active participation.</li>
@@ -982,65 +984,103 @@ table th {
     </li>
   </ul>
 
-  <h3 style="color:#43a047;">💰 Savings &amp; Contributions</h3>
-  <ul style="line-height:1.8; color:#333;">
+  <!-- Savings -->
+  <h3 style="color:#2e7d32;">💰 Savings &amp; Contributions</h3>
+  <ul style="line-height:1.8;">
     <li>✅ Every member must contribute according to their chosen category.</li>
     <li>✅ Savings above the minimum are encouraged and can increase loan eligibility.</li>
     <li>✅ All weekly or bi-monthly contributions must be received by the agreed deadlines.</li>
     <li>⚠️ Failure to pay by the deadline attracts a fine of <b>Ksh 30</b>, added to the member’s account.</li>
     <li>✅ Savings and contributions records will be transparent and accessible to all members.</li>
-    <li>🎄 Members who have saved above <b>Ksh 1,500</b> for a continuous period of <b>12 months</b> will receive <b>70% of their total savings</b> shared back to their accounts on <b>Christmas Day</b>. The remaining <b>30%</b> will stay in their savings account for future <b>loans, investments, or emergency assistance</b>.</li>
-    <li>🎁 Members who started saving in the <b>middle of the year</b> and have saved for at least <b>6 months</b> with total savings above <b>Ksh 1,200</b> will receive <b>60% of their total savings</b> shared back to their accounts on <b>Christmas Day</b>, while the remaining <b>40%</b> will stay in their account for the same purposes.</li>
+    <li>🎄 Members who have saved above <b>Ksh 1,500</b> for a continuous period of <b>12 months</b> will receive <b>70% of their total savings</b> shared back to their accounts on <b>Christmas Day</b>. The remaining <b>30%</b> will stay in their account for future <b>loans, investments, or emergencies</b>.</li>
+    <li>🎁 Members who started saving in the <b>middle of the year</b> and have saved for at least <b>6 months</b> with total savings above <b>Ksh 1,200</b> will receive <b>60% of their total savings</b> on <b>Christmas Day</b>, while the remaining <b>40%</b> remains for similar purposes.</li>
   </ul>
 
-  <h3 style="color:#8e24aa;">🏦 Loans</h3>
-  <ul style="line-height:1.8; color:#333;">
+  <!-- Loans -->
+  <h3 style="color:#43a047;">🏦 Loans</h3>
+  <ul style="line-height:1.8;">
     <li>✅ A member qualifies for a loan after saving at least <b>Ksh 1,500</b> and being active for <b>4 months</b>.</li>
     <li>✅ Loans are given based on savings history and repayment ability.</li>
-    <li>✅ All loans must be approved by the leadership/committee.</li>
+    <li>✅ All loans must be approved by the leadership.</li>
     <li>✅ Repayments must be done within the agreed period, with penalties for late payment.</li>
+    <li>💸 Upon loan repayment, the <b>interest earned</b> will be divided as follows:
+      <span style="position:relative; display:inline-block; cursor:pointer;">
+        <span style="background:#2e7d32; color:white; border-radius:50%; padding:3px 8px; font-size:13px; margin-left:6px;">?</span>
+        <span style="visibility:hidden; width:250px; background-color:#2e7d32; color:#fff; text-align:left; border-radius:8px; padding:8px; position:absolute; z-index:1; bottom:125%; left:50%; margin-left:-125px; opacity:0; transition:opacity 0.3s;">
+          📘 Example: If a member pays Ksh 500 interest — Ksh 200 (40%) goes to their savings, and Ksh 300 (60%) is shared among members.
+        </span>
+      </span>
+      <script>
+        const tooltip = document.currentScript.previousElementSibling;
+        const icon = tooltip.querySelector('span');
+        icon.addEventListener('mouseenter', () => tooltip.querySelectorAll('span')[1].style.visibility = 'visible');
+        icon.addEventListener('mouseleave', () => tooltip.querySelectorAll('span')[1].style.visibility = 'hidden');
+      </script>
+      <ul style="margin-top:8px; line-height:1.6;">
+        <li>🌿 <b>40%</b> of the interest goes back into the borrower’s <b>savings account</b>.</li>
+        <li>🤝 The remaining <b>60%</b> is shared among all members according to their individual <b>savings ratio</b>.</li>
+      </ul>
+    </li>
   </ul>
 
-  <h3 style="color:#fb8c00;">🤝 Conduct</h3>
-  <ul style="line-height:1.8; color:#333;">
+  <!-- Example box -->
+  <div style="background:#e8f5e9; border-left:5px solid #43a047; padding:12px 15px; border-radius:8px; margin:10px 0 25px;">
+    <p style="margin:0; color:#2e3b32;">
+      📘 <b>Detailed Example:</b> If a member borrows <b>Ksh 5,000</b> and repays with <b>Ksh 500 interest</b> —  
+      <br>✅ <b>Ksh 200 (40%)</b> goes back into their savings.  
+      <br>✅ <b>Ksh 300 (60%)</b> is shared among all members according to their total savings.  
+      <br>➡️ This encourages saving and rewards every member’s participation.
+    </p>
+  </div>
+
+  <!-- Conduct -->
+  <h3 style="color:#388e3c;">🤝 Conduct</h3>
+  <ul style="line-height:1.8;">
     <li>✅ Respect, honesty, and transparency are expected in all group dealings.</li>
     <li>✅ Members must attend scheduled meetings or provide an apology in advance.</li>
     <li>✅ Confidentiality of group matters must be maintained.</li>
   </ul>
 
-  <h3 style="color:#3949ab;">🧑‍💼 Leadership</h3>
-  <ul style="line-height:1.8; color:#333;">
+  <!-- Leadership -->
+  <h3 style="color:#1b5e20;">🧑‍💼 Leadership</h3>
+  <ul style="line-height:1.8;">
     <li>✅ Since the chama operates <b>online</b>, leadership will consist of only <b>two officials</b> — the <b>Chairperson</b> and the <b>Treasurer</b>.</li>
     <li>✅ These leaders will oversee contributions, savings, loans, and welfare matters.</li>
     <li>✅ Leaders serve for agreed terms and can be re-elected or replaced through voting by members.</li>
     <li>✅ Regular updates on group finances and activities will be shared with all members to maintain transparency.</li>
   </ul>
 
-  <h3 style="color:#6d4c41;">💞 Member Assistance &amp; Welfare</h3>
-  <ul style="line-height:1.8; color:#333;">
-    <li>💐 In the unfortunate event that a member loses their <b>child</b>, or their <b>parent or guardian</b> passes away, every member will be required to contribute <b>Ksh 100</b> in support of the affected member.</li>
-    <li>🚑 In the event of a personal <b>emergency</b>, a member may be assisted with up to <b>30%</b> of their total savings. When it becomes their turn to receive money from the merry-go-round, <b>20%</b> will be deducted to recover part of the assistance.</li>
-    <li>❤️ Additional support may be provided upon agreement by the members, depending on the situation and available funds.</li>
+  <!-- Welfare -->
+  <h3 style="color:#2e7d32;">💞 Member Assistance &amp; Welfare</h3>
+  <ul style="line-height:1.8;">
+    <li>💐 If a member loses their <b>child</b>, or their <b>parent or guardian</b> passes away, every member will be required to contribute <b>Ksh 100</b> in support of the affected member.</li>
+    <li>🚑 In the event of a personal <b>emergency</b>, a member with total savings of <b>Ksh 1,500 and above</b> may be assisted with up to <b>30%</b> of their savings. When their turn to receive money comes, <b>20%</b> will be deducted to recover part of the assistance. This assistance applies <b>only once per round</b>.</li>
+    <li>❤️ Additional support may be provided upon agreement by members, depending on the situation and available funds.</li>
   </ul>
 
-  <h3 style="color:#d32f2f;">⚖️ Disciplinary Actions</h3>
-  <ul style="line-height:1.8; color:#333;">
+  <p style="margin-top:10px; color:#33691e; font-style:italic;">
+    💡 <b>Note:</b> Members are encouraged to plan their finances carefully to minimize frequent emergencies and ensure long-term stability within the group.
+  </p>
+
+  <!-- Discipline -->
+  <h3 style="color:#558b2f;">⚖️ Disciplinary Actions</h3>
+  <ul style="line-height:1.8;">
     <li>✅ Members who fail to meet obligations may face penalties or suspension.</li>
     <li>✅ Continuous misconduct can lead to removal from the group.</li>
     <li>✅ Disputes shall be resolved through dialogue and, if needed, a vote.</li>
   </ul>
 
-  <hr style="border:0; height:1px; background:#ddd; margin:25px 0;">
+  <hr style="border:0; height:2px; background:#a5d6a7; margin:25px 0; border-radius:2px;">
 
-  <p style="text-align:center; color:#444; font-style:italic;">
+  <p style="text-align:center; color:#1b5e20; font-style:italic;">
     ⚠️ <b>Please adhere to all the above rules and regulations.</b><br>
-    For any questions or concerns, kindly reach out to the <b>Chairperson</b> through the <a href="#contact" style="color:#1e88e5; text-decoration:none;">Contact Section</a>.
+    For any questions or concerns, kindly reach out to the <b>Chairperson</b> through the <a href="#contact" style="color:#2e7d32; text-decoration:none; font-weight:bold;">Contact Section</a>.
   </p>
 
   <!-- Back Button -->
   <div style="text-align:center; margin-top:25px;">
     <a class="action-btn" onclick="simulateAction(this,'home')" 
-       style="background:#d32f2f; color:white; padding:10px 20px; border-radius:8px; text-decoration:none; font-weight:bold;">
+       style="background:#2e7d32; color:white; padding:12px 24px; border-radius:8px; text-decoration:none; font-weight:bold; box-shadow:0 2px 5px rgba(46,125,50,0.3);">
       ⬅️ Back to Home <span class="spinner"></span>
     </a>
   </div>
