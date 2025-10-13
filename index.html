@@ -880,6 +880,39 @@ table th {
   </style>
 </head>
 <body>
+  <!-- 🗒️ Member Note Popup -->
+<div id="notePopup" style="
+  display:none;
+  position:fixed;
+  top:0; left:0; width:100%; height:100%;
+  background:rgba(0,0,0,0.6);
+  z-index:9999;
+  align-items:center;
+  justify-content:center;
+">
+  <div style="
+    background:white;
+    padding:25px;
+    border-radius:10px;
+    max-width:450px;
+    width:90%;
+    box-shadow:0 5px 15px rgba(0,0,0,0.3);
+    text-align:center;
+    position:relative;
+  ">
+    <h2 style="color:#2e7d32;">🗒️ Personal Note</h2>
+    <p id="noteText" style="font-size:16px; color:#333; margin:20px 0;">Loading your note...</p>
+    <button onclick="closeNotePopup()" style="
+      background:#2e7d32;
+      color:white;
+      padding:10px 20px;
+      border:none;
+      border-radius:5px;
+      cursor:pointer;
+    ">Close</button>
+  </div>
+</div>
+
     <!-- Success Popup -->
 <div id="successPopup" 
      style="display:none; position:fixed; top:20px; right:20px; background:#4caf50; color:#fff; 
@@ -1441,13 +1474,16 @@ table th {
 <!-- Spinner already inside the button -->
 <a class="action-btn" id="memberLoginBtn" onclick="login()">Login <span class="spinner"></span></a>
 <p id="loginMessage"></p>
+
 </section>
 <!-- Dashboard -->
+ 
 <div id="dashboard">
 <h3>Welcome, <span id="memberDisplay"></span>!</h3>
 <a class="action-btn" onclick="showCurrentSavings()">💰 View Current Savings</a>
 <a class="action-btn" onclick="showMonthlySavings()">📊 View Monthly Savings</a>
 <button class="check-loan-btn" onclick="checkLoan()">🔍 Check Loan Eligibility</button>
+<button class="action-btn" onclick="openNotePopup()">🗒️ View Note</button>
 <!-- 🚪 Member Logout -->
 <button class="action-btn" id="memberLogoutBtn" onclick="memberLogout()" style="background:#d32f2f; margin-top:15px; position:relative;">
   🚪 Logout
@@ -1470,59 +1506,480 @@ table th {
   <button class="download-btn pdf-btn" onclick="downloadTablePDF()">⬇️ Download PDF</button>
 </div>
 
+
+<!-- 🗒️ Personal Member Note Section -->
+<div id="memberNoteSection" style="margin-top:30px; background:#e8f5e9; padding:15px; border-radius:8px; display:none;">
+  <h3 style="color:#2e7d32;">🗒️ Your Note</h3>
+  <p id="personalNote" style="font-size:16px; color:#333;">Welcome! Your note will appear here after login.</p>
+</div>
+
 <h4>📊 Group Contributions</h4>
+
 <table border="1" style="width:100%; border-collapse:collapse; text-align:center;">
-<thead style="background:#00796b; color:white;">
-<tr>
-<th>NAME</th>
-<th>JAN</th>
-<th>FEB</th>
-<th>MAR</th>
-<th>APR</th>
-<th>MAY</th>
-<th>JUNE</th>
-<th>JULY</th>
-<th>AUG</th>
-<th>SEPT</th>
-<th>OCT</th>
-<th>NOV</th>
-<th>DEC</th>
-<th style="background:#17da48;">TOTAL</th>
+  <thead style="background:#00796b; color:white;">
+    <tr>
+      <th>NAME</th>
+      <th>JAN</th>
+      <th>FEB</th>
+      <th>MAR</th>
+      <th>APR</th>
+      <th>MAY</th>
+      <th>JUNE</th>
+      <th>JULY</th>
+      <th>AUG</th>
+      <th>SEPT</th>
+      <th>OCT</th>
+      <th>NOV</th>
+      <th>DEC</th>
+      <th style="background:#17da48;">TOTAL</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr><td>BONIFACE CHELLUGET</td>
+      <td><input type="number" value="300"/></td>
+      <td><input type="number" value="300"/></td>
+      <td><input type="number" value="300"/></td>
+      <td><input type="number" value="300"/></td>
+      <td><input type="number" value="300"/></td>
+      <td><input type="number" value="300"/></td>
+      <td><input type="number" value="300"/></td>
+      <td><input type="number" value="300"/></td>
+      <td><input type="number" value="300"/></td>
+      <td><input type="number" value="300"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">3000</td></tr>
+
+    <tr><td>HILDA ODERO</td>
+      <td><input type="number" value="400"/>
+      </td><td><input type="number" value="200"/></td>
+      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">900</td></tr>
+
+    <tr><td>JOEL EGESA</td><td>
+      <input type="number" value="200"/>
+    </td><td><input type="number" value="0"/></td>
+    <td><input type="number" value="20"/></td>
+    <td><input type="number" value="0"/></td>
+    <td><input type="number" value="0"/></td>
+    <td><input type="number" value="0"/></td>
+    <td><input type="number" value="0"/></td>
+    <td><input type="number" value="0"/></td>
+    <td><input type="number" value="500"/></td>
+    <td><input type="number" value="0"/></td>
+    <td><input type="number" value="0"/></td>
+    <td><input type="number" value="0"/></td>
+    <td class="rowTotal">720</td></tr>
+
+    <tr><td>SHALIK SHIVERENGE</td><td>
+      <input type="number" value="250"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">250</td></tr>
+
+    <tr><td>EVERLINE MAINA</td><td>
+      <input type="number" value="250"/></td>
+      <td><input type="number" value="150"/></td>
+      <td><input type="number" value="250"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="250"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">1850</td></tr>
+
+    <tr><td>ELVIS KAMASH</td><td>
+      <input type="number" value="250"/></td>
+      <td><input type="number" value="150"/></td>
+      <td><input type="number" value="250"/></td>
+      <td><input type="number" value="50"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="150"/></td>
+      <td><input type="number" value="50"/></td>
+      <td><input type="number" value="250"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">1600</td></tr>
+
+    <tr><td>JULIUS KEBASO</td><td>
+      <input type="number" value="450"/></td>
+      <td><input type="number" value="300"/></td>
+      <td><input type="number" value="500"/></td>
+      <td><input type="number" value="500"/></td>
+      <td><input type="number" value="400"/></td>
+      <td><input type="number" value="500"/></td>
+      <td><input type="number" value="400"/></td>
+      <td><input type="number" value="500"/></td>
+      <td><input type="number" value="400"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">4050</td></tr>
+
+    <tr><td>CHRISTINE PIUS</td>
+      <td><input type="number" value="50"/></td>
+      <td><input type="number" value="150"/></td>
+      <td><input type="number" value="250"/></td>
+      <td><input type="number" value="150"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="600"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">750</td></tr>
+
+    <tr><td>EDNAH NANCY</td><td>
+      <input type="number" value="250"/></td>
+      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">600</td></tr>
+
+    <tr><td>JACKIENYARANGI</td><td>
+      <input type="number" value="200"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">550</td></tr>
+
+    <tr><td>JUDITH OMWOYO</td><td>
+      <input type="number" value="300"/></td>
+      <td><input type="number" value="300"/></td>
+      <td><input type="number" value="300"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="250"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">1250</td></tr>
+
+    <tr><td>JANET NYAKUNDI</td><td>
+      <input type="number" value="150"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">250</td></tr>
+
+    <tr><td>ANASTANCIA OMWOYO</td><td>
+      <input type="number" value="250"/></td>
+      <td><input type="number" value="150"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="150"/></td>
+      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="250"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">1850</td></tr>
+
+    <tr><td>PIUS NYAKUNDI</td><td>
+      <input type="number" value="150"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="150"/></td>
+      <td><input type="number" value="150"/></td>
+      <td><input type="number" value="50"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">1050</td></tr>
+
+    <tr><td>SAMUEL OYUGI</td><td>
+      <input type="number" value="400"/></td>
+      <td><input type="number" value="300"/>
+      </td><td><input type="number" value="500"/></td>
+      <td><input type="number" value="400"/></td>
+      <td><input type="number" value="400"/></td>
+      <td><input type="number" value="500"/></td>
+      <td><input type="number" value="400"/></td>
+      <td><input type="number" value="500"/></td>
+      <td><input type="number" value="400"/></td>
+      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">3800</td></tr>
+
+    <tr><td>PURITY MOMANYI</td><td>
+      <input type="number" value="200"/>
+    </td><td><input type="number" value="200"/></td>
+    <td><input type="number" value="1200"/></td>
+    <td><input type="number" value="950"/></td>
+    <td><input type="number" value="800"/></td>
+    <td><input type="number" value="400"/></td>
+    <td><input type="number" value="350"/></td>
+    <td><input type="number" value="100"/></td>
+    <td><input type="number" value="200"/></td>
+    <td><input type="number" value="0"/></td>
+    <td><input type="number" value="0"/></td>
+    <td><input type="number" value="0"/></td>
+    <td class="rowTotal">4400</td></tr>
+
+    <tr><td>KEFFA MOMANYI</td><td>
+      <input type="number" value="250"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="250"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="150"/></td>
+      <td><input type="number" value="200"/></td>
+      
+      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">1850</td></tr>
+
+    <tr><td>KENNEDY MUTAYI</td><td>
+      <input type="number" value="750"/></td>
+      <td><input type="number" value="450"/></td>
+      <td><input type="number" value="750"/></td>
+      <td><input type="number" value="600"/></td>
+      <td><input type="number" value="600"/></td>
+      <td><input type="number" value="750"/></td>
+      <td><input type="number" value="600"/></td>
+      <td><input type="number" value="750"/></td>
+      <td><input type="number" value="600"/></td>
+      <td><input type="number" value="150"/></td>
+      td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">6000</td></tr>
+
+    <tr><td>MIKE MORRIS</td><td>
+      <input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="50"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="150"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">300</td></tr>
+
+    <tr><td>DAVY OMBATI</td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="50"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">250</td></tr>
+
+    <tr><td>FAITH MOKOGI</td><td>
+      <input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="500"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="250"/></td>
+      <td><input type="number" value="50"/></td>
+      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="50"/></td>
+      <td><input type="number" value="350"/></td>
+      <td><input type="number" value="800"/></td>
+      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">2300</td></tr>
+
+    <tr><td>SADLER KARAN</td><td>
+      <input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="150"/></td>
+      <td><input type="number" value="50"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">600</td></tr>
+
+    <tr><td>SHARON CHEPTOO</td><td>
+      <input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="250"/></td>
+      <td><input type="number" value="150"/></td>
+      <td><input type="number" value="150"/></td>
+      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="150"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">800</td></tr>
+
+    <tr><td>SHAMIM KAMASH</td><td>
+      <input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="150"/></td>
+      <td><input type="number" value="50"/></td>
+      <td><input type="number" value="250"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">900</td></tr>
+
+    <tr><td>CLAUDIA MORAA</td><td>
+      <input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="400"/></td>
+      <td><input type="number" value="300"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">1050</td></tr>
+
+    <tr><td>ESTHER OBEGI</td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="500"/></td>
+      <td><input type="number" value="450"/></td>
+      <td><input type="number" value="300"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">1100</td></tr>
+
+    <tr><td>DENNIS KIEYA</td><td>
+      <input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">150</td></tr>
+
+   <tr>
+  <td>BRIGIDE NYABERI</td>
+  <td><input type="number" value="0"/></td>   <!-- Jan -->
+  <td><input type="number" value="0"/></td>   <!-- Feb -->
+  <td><input type="number" value="0"/></td>   <!-- Mar -->
+  <td><input type="number" value="0"/></td>   <!-- Apr -->
+  <td><input type="number" value="0"/></td>   <!-- May -->
+  <td><input type="number" value="0"/></td>   <!-- Jun -->
+  <td><input type="number" value="0"/></td>   <!-- Jul -->
+  <td><input type="number" value="0"/></td>   <!-- Aug -->
+  <td><input type="number" value="50"/></td>  <!-- Sep -->
+  <td><input type="number" value="50"/></td>  <!-- Oct -->
+  <td><input type="number" value="0"/></td>   <!-- Nov -->
+  <td><input type="number" value="0"/></td>   <!-- Dec -->
+  <td class="rowTotal">50</td>
 </tr>
-</thead>
-<tbody>
-<tr><td>BONIFACE CHELLUGET</td><td><input type="number" value="300"/></td><td><input type="number" value="300"/></td><td><input type="number" value="300"/></td><td><input type="number" value="300"/></td><td><input type="number" value="300"/></td><td><input type="number" value="300"/></td><td><input type="number" value="300"/></td><td><input type="number" value="300"/></td><td><input type="number" value="300"/></td><td><input type="number" value="300"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">3000</td></tr><td>
-<tr><td>HILDA ODERO</td><td><input type="number" value="400"/></td><td><input type="number" value="200"/></td><td><input type="number" value="100"/></td><td><input type="number" value="200"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">900</td></tr>
-<tr><td>JOEL EGESA</td><td><input type="number" value="200"/></td><td><input type="number" value="0"/></td><td><input type="number" value="20"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="500"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">720</td></tr>
-<tr><td>SHALIK SHIVERENGE</td><td><input type="number" value="250"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">250</td></tr>
-<tr><td>EVERLINE MAINA</td><td><input type="number" value="250"/></td><td><input type="number" value="150"/></td><td><input type="number" value="250"/></td><td><input type="number" value="200"/></td><td><input type="number" value="200"/></td><td><input type="number" value="250"/></td><td><input type="number" value="200"/></td><td><input type="number" value="100"/></td><td><input type="number" value="200"/></td><td><input type="number" value="50"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">1850</td></tr>
-<tr><td>ELVIS KAMASH</td><td><input type="number" value="250"/></td><td><input type="number" value="150"/></td><td><input type="number" value="250"/></td><td><input type="number" value="50"/></td><td><input type="number" value="200"/></td><td><input type="number" value="150"/></td><td><input type="number" value="50"/></td><td><input type="number" value="250"/></td><td><input type="number" value="200"/></td><td><input type="number" value="50"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">1600</td></tr>
-<tr><td>JULIUS KEBASO</td><td><input type="number" value="450"/></td><td><input type="number" value="300"/></td><td><input type="number" value="500"/></td><td><input type="number" value="500"/></td><td><input type="number" value="400"/></td><td><input type="number" value="500"/></td><td><input type="number" value="400"/></td><td><input type="number" value="500"/></td><td><input type="number" value="400"/></td><td><input type="number" value="100"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">4000</td></tr>
-<tr><td>CHRISTINE PIUS</td><td><input type="number" value="50"/></td><td><input type="number" value="150"/></td><td><input type="number" value="250"/></td><td><input type="number" value="150"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="100"/></td><td><input type="number" value="50"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">750</td></tr>
-<tr><td>EDNAH NANCY</td><td><input type="number" value="250"/></td><td><input type="number" value="100"/></td><td><input type="number" value="100"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="100"/></td><td><input type="number" value="50"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">600</td></tr>
-<tr><td>JACKIENYARANGI</td><td><input type="number" value="200"/></td><td><input type="number" value="200"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="100"/></td><td><input type="number" value="50"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">550</td></tr>
-<tr><td>JUDITH OMWOYO</td><td><input type="number" value="300"/></td><td><input type="number" value="300"/></td><td><input type="number" value="300"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="100"/></td><td><input type="number" value="250"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">1250</td></tr>
-<tr><td>JANET NYAKUNDI</td><td><input type="number" value="150"/></td><td><input type="number" value="0"/></td><td><input type="number" value="100"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">250</td></tr>
-<tr><td>ANASTANCIA OMWOYO</td><td><input type="number" value="250"/></td><td><input type="number" value="150"/></td><td><input type="number" value="200"/></td><td><input type="number" value="200"/></td><td><input type="number" value="200"/></td><td><input type="number" value="150"/></td><td><input type="number" value="200"/></td><td><input type="number" value="250"/></td><td><input type="number" value="200"/></td><td><input type="number" value="50"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">1750</td></tr>
-<tr><td>PIUS NYAKUNDI</td><td><input type="number" value="150"/></td><td><input type="number" value="200"/></td><td><input type="number" value="200"/></td><td><input type="number" value="0"/></td><td><input type="number" value="100"/></td><td><input type="number" value="100"/></td><td><input type="number" value="100"/></td><td><input type="number" value="150"/></td><td><input type="number" value="50"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">1000</td></tr>
-<tr><td>SAMUEL OYUGI</td><td><input type="number" value="400"/></td><td><input type="number" value="300"/></td><td><input type="number" value="500"/></td><td><input type="number" value="400"/></td><td><input type="number" value="400"/></td><td><input type="number" value="500"/></td><td><input type="number" value="400"/></td><td><input type="number" value="500"/></td><td><input type="number" value="400"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">3800</td></tr>
-<tr><td>PURITY MOMANYI</td><td><input type="number" value="200"/></td><td><input type="number" value="200"/></td><td><input type="number" value="1200"/></td><td><input type="number" value="950"/></td><td><input type="number" value="800"/></td><td><input type="number" value="400"/></td><td><input type="number" value="350"/></td><td><input type="number" value="100"/></td><td><input type="number" value="200"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">4400</td></tr>
-<tr><td>KEFFA MOMANYI</td><td><input type="number" value="250"/></td><td><input type="number" value="150"/></td><td><input type="number" value="200"/></td><td><input type="number" value="200"/></td><td><input type="number" value="200"/></td><td><input type="number" value="250"/></td><td><input type="number" value="200"/></td><td><input type="number" value="150"/></td><td><input type="number" value="200"/></td><td><input type="number" value="50"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">1900</td></tr>
-<tr><td>KENNEDY MUTAYI</td><td><input type="number" value="750"/></td><td><input type="number" value="450"/></td><td><input type="number" value="750"/></td><td><input type="number" value="600"/></td><td><input type="number" value="600"/></td><td><input type="number" value="750"/></td><td><input type="number" value="600"/></td><td><input type="number" value="750"/></td><td><input type="number" value="600"/></td><td><input type="number" value="150"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">5950</td></tr>
-<tr><td>MIKE MORRIS</td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="100"/></td><td><input type="number" value="50"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="150"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">300</td></tr>
-<tr><td>DAVY OMBATI</td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="50"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="200"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">250</td></tr>
-<tr><td>FAITH MOKOGI</td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="500"/></td><td><input type="number" value="200"/></td><td><input type="number" value="250"/></td><td><input type="number" value="50"/></td><td><input type="number" value="100"/></td><td><input type="number" value="50"/></td><td><input type="number" value="350"/></td><td><input type="number" value="800"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">2300</td></tr>
-<tr><td>SADLER KARAN</td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="200"/></td><td><input type="number" value="200"/></td><td><input type="number" value="150"/></td><td><input type="number" value="50"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">600</td></tr>
-<tr><td>SHARON CHEPTOO</td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="250"/></td><td><input type="number" value="150"/></td><td><input type="number" value="150"/></td><td><input type="number" value="100"/></td><td><input type="number" value="150"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">800</td></tr>
-<tr><td>SHAMIM KAMASH</td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="200"/></td><td><input type="number" value="150"/></td><td><input type="number" value="50"/></td><td><input type="number" value="250"/></td><td><input type="number" value="200"/></td><td><input type="number" value="50"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">900</td></tr>
-<tr><td>CLAUDIA MORAA</td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="100"/></td><td><input type="number" value="400"/></td><td><input type="number" value="300"/></td><td><input type="number" value="250"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">950</td></tr>
-<tr><td>ESTHER OBEGI</td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="500"/></td><td><input type="number" value="450"/></td><td><input type="number" value="150"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">1100</td></tr>
-<tr><td>DENNIS KIEYA</td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="100"/></td><td><input type="number" value="50"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">100</td></tr>
-<tr><td>BRIGIDE NYABERI</td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="50"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">100</td></tr>
-<tr><td>VANICE MOMANYI</td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td><input type="number" value="100"/></td><td><input type="number" value="100"/></td><td><input type="number" value="0"/></td><td><input type="number" value="0"/></td><td class="rowTotal">200</td></tr>
-</td><tr id="grandTotalRow"><td colspan="13" style="text-align:right;">GRAND TOTAL</td><td>0</td></tr></tbody>
 
 
+    <tr><td>VANICE MOMANYI</td><td>
+      <input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">200</td></tr>
+
+    <tr id="grandTotalRow" style="font-weight:bold; background:#e0f2f1;">
+      <td colspan="13" style="text-align:right;">GRAND TOTAL</td>
+      <td>0</td>
+    </tr>
+  </tbody>
 </table>
 
 <!-- Toast -->
@@ -1544,21 +2001,7 @@ table th {
 </tr>
 </thead>
 <tbody id="loanHistoryBody">
-<!-- Example loan row -->
-<tr>
-<td>Boniface Chelluget</td>
-<td>0713953004</td>
-<td>Ksh 5,000</td>
-<td>Ksh 3,000</td>
-<td>12345678</td>
-<td>16-09-2025</td>
-<td>Pending</td>
-<td>
-<button class="download-btn pdf-btn" onclick="downloadLoanReceipt('Boniface Chelluget','0713953004','5000','3000','12345678','16-09-2025','Pending')" style="padding:4px 8px; font-size:12px;">
-            🧾 Receipt
-          </button>
-</td>
-</tr>
+
 <!-- Default row if no applications -->
 <tr><td colspan="8" style="color:gray;">No loan applications yet.</td></tr>
 </tbody>
@@ -1579,39 +2022,210 @@ table th {
 
 
 const members = {
-  "BONIFACE CHELLUGET": { phone: "0713953004", password: "0713953004", savings: 3000, monthly: [300,300,300,300,300,300,300,300,300] },
-  "HILDA ODERO": { phone: "0795341320", password: "0795341320", savings: 900, monthly: [400,200,100,200] },
-  "JOEL EGESA": { phone: "0768039551", password: "0768039551", savings: 1220, monthly: [200,0,20,500] },
-  "SHALIK SHIVERENGE": { phone: "0746277086", password: "0746277086", savings: 250, monthly: [250,0,0] },
-  "EVERLINE MAINA": { phone: "0701360180", password: "0701360180", savings: 1850, monthly: [250,150,250,200,200,250,200,100,200,50] },
-  "ELVIS KAMASH": { phone: "0798577851", password: "0798577851", savings: 1600, monthly: [250,150,250,50,200,150,50,250,200,50] },
-  "JULIUS KEBASO": { phone: "0705296154", password: "0705296154", savings: 4050, monthly: [450,300,500,500,400,500,400,500,400,100] },
-  "CHRISTINE PIUS": { phone: "0115603500", password: "0115603500", savings: 750, monthly: [50,150,250,150,0,0,0,0,100,50] },
-  "EDNAH NANCY": { phone: "0717684177", password: "0717684177", savings: 600, monthly: [250,100,100,0,0,0,0,0,100,50] },
-  "JACKIENYARANGI": { phone: "0790206224", password: "0790206224", savings: 550, monthly: [200,200,0,0,0,0,0,0,100,50] },
-  "JUDITH OMWOYO": { phone: "0741939235", password: "0741939235", savings: 1250, monthly: [300,300,300,0,0,0,0,100,250] },
-  "JANET NYAKUNDI": { phone: "0706753288", password: "0706753288", savings: 250, monthly: [150,0,100,0,0,0,0,0,0] },
-  "ANASTANCIA OMWOYO": { phone: "0748442547", password: "0748442547", savings: 1850, monthly: [250,150,200,200,200,150,100,250,200,50] },
-  "PIUS NYAKUNDI": { phone: "0716845165", password: "0716845165", savings: 1050, monthly: [150,200,200,0,100,100,100,150,150,50] },
-  "SAMUEL OYUGI": { phone: "0796860412", password: "0796860412", savings: 3900, monthly: [400,300,500,400,400,500,400,500,400,100] },
-  "PURITY MOMANYI": { phone: "0103155480", password: "0103155480", savings: 4400, monthly: [200,200,1200,950,800,400,350,100,200] },
-  "KEFFA MOMANYI": { phone: "0759237482", password: "0759237482", savings: 1850, monthly: [250,200,200,200,200,250,200,150,200,50] },
-  "KENNEDY MUTAYI": { phone: "0724124735", password: "0724124735", savings: 6000, monthly: [750,450,750,600,600,750,600,750,600,150] },
-  "MIKE MORRIS": { phone: "0115570301", password: "0115570301", savings: 300, monthly: [0,0,100,50,0,0,0,150,0] },
-  "DAVY OMBATI": { phone: "0793547166", password: "0793547166", savings: 250, monthly: [0,0,50,0,0,0,200,0,0] },
-  "FAITH MOKOGI": { phone: "0706918919", password: "0706918919", savings: 2300, monthly: [0,0,500,200,250,50,100,50,350,800] },
-  "SADLER KARAN": { phone: "0791730719", password: "0791730719", savings: 600, monthly: [0,0,200,200,150,50,0,0,0] },
-  "SHARON CHEPTOO": { phone: "0768675656", password: "0768675656", savings: 800, monthly: [0,0,0,0,250,150,150,100,150] },
-  "SHAMIM KAMASH": { phone: "0725979420", password: "0725979420", savings: 900, monthly: [0,0,0,0,200,150,50,250,200,50] },
-  "CLAUDIA MORAA": { phone: "0741520782", password: "0741520782", savings: 1050, monthly: [0,0,0,0,0,100,400,300,200,50] },
-  "ESTHER OBEGI": { phone: "0748845363", password: "0748845363", savings: 500, monthly: [0,0,0,0,0,0,0,500,0] },
-  "DENNIS KIEYA": { phone: "0706150465", password: "@dennis12", savings: 150, monthly: [0,0,0,0,0,0,0,0,100,50] },
-  "BRIGIDE NYABERI": { phone: "0716011603", password: "Brigide", savings: 50, monthly: [0,0,0,0,0,0,0,0,50] },
-  "VANICE MOMANYI":{ phone: "0769552081", password: "41362859", savings: 200, monthly: [0,0,0,0,0,0,0,0,100,100] },
- 
-
+  "BONIFACE CHELLUGET": {
+    phone: "0713953004",
+    password: "0713953004",
+    savings: 3000,
+    monthly: [300,300,300,300,300,300,300,300,300],
+    note: "Consistent saver — eligible for next loan review."
+  },
+  "HILDA ODERO": {
+    phone: "0795341320",
+    password: "0795341320",
+    savings: 900,
+    monthly: [400,200,100,200],
+    note: "Missed March payment — follow up on consistency."
+  },
+  "JOEL EGESA": {
+    phone: "0768039551",
+    password: "0768039551",
+    savings: 1220,
+    monthly: [200,0,20,500],
+    note: "New member; low savings but improving gradually."
+  },
+  "SHALIK SHIVERENGE": {
+    phone: "0746277086",
+    password: "0746277086",
+    savings: 250,
+    monthly: [250,0,0],
+    note: "Needs encouragement to make regular deposits."
+  },
+  "EVERLINE MAINA": {
+    phone: "0701360180",
+    password: "0701360180",
+    savings: 1850,
+    monthly: [250,150,250,200,200,250,200,100,200,50],
+    note: "Active and consistent member — good standing."
+  },
+  "ELVIS KAMASH": {
+    phone: "0798577851",
+    password: "0798577851",
+    savings: 1600,
+    monthly: [250,150,250,50,200,150,50,250,200,50],
+    note: "Slightly irregular, but maintains contributions."
+  },
+  "JULIUS KEBASO": {
+    phone: "0705296154",
+    password: "0705296154",
+    savings: 4050,
+    monthly: [450,300,500,500,400,500,400,500,400,100],
+    note: "Very reliable saver — possible leadership candidate."
+  },
+  "CHRISTINE PIUS": {
+    phone: "0115603500",
+    password: "0115603500",
+    savings: 750,
+    monthly: [50,150,250,150,0,0,0,0,100,50],
+    note: "Inconsistent months; encourage steady saving."
+  },
+  "EDNAH NANCY": {
+    phone: "0717684177",
+    password: "0717684177",
+    savings: 600,
+    monthly: [250,100,100,0,0,0,0,0,100,50],
+    note: "Low activity; may need reminder of savings goals."
+  },
+  "JACKIENYARANGI": {
+    phone: "0790206224",
+    password: "0790206224",
+    savings: 550,
+    monthly: [200,200,0,0,0,0,0,0,100,50],
+    note: "Missed several months; check commitment level."
+  },
+  "JUDITH OMWOYO": {
+    phone: "0741939235",
+    password: "0741939235",
+    savings: 1250,
+    monthly: [300,300,300,0,0,0,0,100,250],
+    note: "Consistent saver, possible for small loan soon."
+  },
+  "JANET NYAKUNDI": {
+    phone: "0706753288",
+    password: "0706753288",
+    savings: 250,
+    monthly: [150,0,100,0,0,0,0,0,0],
+    note: "New member; encourage regular savings pattern."
+  },
+  "ANASTANCIA OMWOYO": {
+    phone: "0748442547",
+    password: "0748442547",
+    savings: 1850,
+    monthly: [250,150,200,200,200,150,100,250,200,50],
+    note: " "
+  },
+  "PIUS NYAKUNDI": {
+    phone: "0716845165",
+    password: "0716845165",
+    savings: 1050,
+    monthly: [150,200,200,0,100,100,100,150,150,50],
+    note: " "
+  },
+  "SAMUEL OYUGI": {
+    phone: "0796860412",
+    password: "0796860412",
+    savings: 3900,
+    monthly: [400,300,500,400,400,500,400,500,400,100],
+    note: "Very active; good candidate for larger loans."
+  },
+  "PURITY MOMANYI": {
+    phone: "0103155480",
+    password: "0103155480",
+    savings: 4400,
+    monthly: [200,200,1200,950,800,400,350,100,200],
+    note: "High savings rate — leadership potential."
+  },
+  "KEFFA MOMANYI": {
+    phone: "0759237482",
+    password: "0759237482",
+    savings: 1850,
+    monthly: [250,200,200,200,200,250,200,150,200,50],
+    note: " "
+  },
+  "KENNEDY MUTAYI": {
+    phone: "0724124735",
+    password: "0724124735",
+    savings: 6000,
+    monthly: [750,450,750,600,600,750,600,750,600,150],
+    note: " "
+  },
+  "MIKE MORRIS": {
+    phone: "0115570301",
+    password: "0115570301",
+    savings: 300,
+    monthly: [0,0,100,50,0,0,0,150,0],
+    note: " "
+  },
+  "DAVY OMBATI": {
+    phone: "0793547166",
+    password: "0793547166",
+    savings: 250,
+    monthly: [0,0,50,0,0,0,200,0,0],
+    note: " "
+  },
+  "FAITH MOKOGI": {
+    phone: "0706918919",
+    password: "0706918919",
+    savings: 2300,
+    monthly: [0,0,500,200,250,50,100,50,350,800],
+    note: "On 13TH October , borrowed a loan of 1500, repayment amount 1680 ,period 7 days."
+  },
+  "SADLER KARAN": {
+    phone: "0791730719",
+    password: "0791730719",
+    savings: 600,
+    monthly: [0,0,200,200,150,50,0,0,0],
+    note: ""
+  },
+  "SHARON CHEPTOO": {
+    phone: "0768675656",
+    password: "0768675656",
+    savings: 800,
+    monthly: [0,0,0,0,250,150,150,100,150],
+    note: "sharon you are required to clear you debt of 400 as of 12 october"
+  },
+  "SHAMIM KAMASH": {
+    phone: "0725979420",
+    password: "0725979420",
+    savings: 900,
+    monthly: [0,0,0,0,200,150,50,250,200,50],
+    note: " "
+  },
+  "CLAUDIA MORAA": {
+    phone: "0741520782",
+    password: "0741520782",
+    savings: 1050,
+    monthly: [0,0,0,0,0,100,400,300,200,50],
+    note: " "
+  },
+  "ESTHER OBEGI": {
+    phone: "0748845363",
+    password: "0748845363",
+    savings: 500,
+    monthly: [0,0,0,0,0,0,0,500,0],
+    note: " "
+  },
+  "DENNIS KIEYA": {
+    phone: "0706150465",
+    password: "@dennis12",
+    savings: 150,
+    monthly: [0,0,0,0,0,0,0,0,100,50],
+    note: " "
+  },
+  "BRIGIDE NYABERI": {
+    phone: "0716011603",
+    password: "Brigide",
+    savings: 50,
+    monthly: [0,0,0,0,0,0,0,0,50],
+    note: " "
+  },
+  "VANICE MOMANYI": {
+    phone: "0769552081",
+    password: "41362859",
+    savings: 200,
+    monthly: [0,0,0,0,0,0,0,0,100,100],
+    note: " "
+  }
 };
-
 
 
 // 🔄 Simulate loading action (button + spinner + section switch)
@@ -1816,6 +2430,11 @@ function login() {
     document.getElementById("memberDisplay").innerText = name;
 
     loadMemberLoanHistory(name);
+ // ✅ Show only their note
+  const noteSection = document.getElementById("memberNoteSection");
+  const noteParagraph = document.getElementById("personalNote");
+  noteParagraph.innerText = member.note || "No note available for this member yet.";
+  noteSection.style.display = "block";
 
     // ===========================
     // 🔐 Table Edit Permissions Only
@@ -3776,6 +4395,51 @@ function loadMemberLoanHistory(name) {
   html += `</tbody></table>`;
   loanMessage.innerHTML = html;
 }
+
+function toggleNote() {
+  const noteSection = document.getElementById("memberNoteSection");
+  const name = document.getElementById("memberDisplay").innerText;
+  const member = members[name];
+
+  if (!member) {
+    alert("Please log in to view your note.");
+    return;
+  }
+
+  // Toggle visibility
+  if (noteSection.style.display === "none") {
+    document.getElementById("personalNote").innerText = member.note || "No note available yet.";
+    noteSection.style.display = "block";
+  } else {
+    noteSection.style.display = "none";
+  }
+}
+function openNotePopup() {
+  const name = document.getElementById("memberDisplay").innerText;
+  const member = members[name];
+
+  if (!member) {
+    alert("Please log in to view your note.");
+    return;
+  }
+
+  // Get note or default message
+  const noteText = member.note || "No personal note yet. Please check back later.";
+  document.getElementById("noteText").innerText = noteText;
+
+  // Show popup
+  document.getElementById("notePopup").style.display = "flex";
+}
+
+function closeNotePopup() {
+  document.getElementById("notePopup").style.display = "none";
+}
+window.onclick = function(event) {
+  const popup = document.getElementById("notePopup");
+  if (event.target === popup) {
+    popup.style.display = "none";
+  }
+};
 
 </script>
 </body>
