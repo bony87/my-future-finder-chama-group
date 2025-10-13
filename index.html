@@ -1792,20 +1792,23 @@ table th {
       <td><input type="number" value="0"/></td>
       <td class="rowTotal">1850</td></tr>
 
-    <tr><td>KENNEDY MUTAYI</td><td>
-      <input type="number" value="750"/></td>
-      <td><input type="number" value="450"/></td>
-      <td><input type="number" value="750"/></td>
-      <td><input type="number" value="600"/></td>
-      <td><input type="number" value="600"/></td>
-      <td><input type="number" value="750"/></td>
-      <td><input type="number" value="600"/></td>
-      <td><input type="number" value="750"/></td>
-      <td><input type="number" value="600"/></td>
-      <td><input type="number" value="150"/></td>
-      td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td class="rowTotal">6000</td></tr>
+    <tr>
+  <td>KENNEDY MUTAYI</td>
+  <td><input type="number" value="750"/></td>   <!-- Jan -->
+  <td><input type="number" value="450"/></td>   <!-- Feb -->
+  <td><input type="number" value="750"/></td>   <!-- Mar -->
+  <td><input type="number" value="600"/></td>   <!-- Apr -->
+  <td><input type="number" value="600"/></td>   <!-- May -->
+  <td><input type="number" value="750"/></td>   <!-- Jun -->
+  <td><input type="number" value="600"/></td>   <!-- Jul -->
+  <td><input type="number" value="750"/></td>   <!-- Aug -->
+  <td><input type="number" value="600"/></td>   <!-- Sept -->
+  <td><input type="number" value="300"/></td>   <!-- Oct -->
+  <td><input type="number" value="0"/></td>     <!-- Nov -->
+  <td><input type="number" value="0"/></td>     <!-- Dec -->
+  <td class="rowTotal">6000</td>
+</tr>
+
 
     <tr><td>MIKE MORRIS</td><td>
       <input type="number" value="0"/></td>
@@ -4415,21 +4418,30 @@ function toggleNote() {
   }
 }
 function openNotePopup() {
-  const name = document.getElementById("memberDisplay").innerText;
-  const member = members[name];
-
-  if (!member) {
-    alert("Please log in to view your note.");
+  // Get currently logged in user
+  const name = loggedInUser || document.getElementById("memberDisplay").innerText.trim();
+  if (!name) {
+    alert("⚠️ Please log in first.");
     return;
   }
 
-  // Get note or default message
-  const noteText = member.note || "No personal note yet. Please check back later.";
+  // Check both hardcoded and approved members
+  const approved = JSON.parse(localStorage.getItem("approvedMembers")) || [];
+  let member = members[name] || approved.find(m => m.name === name);
+
+  if (!member) {
+    alert("⚠️ Member record not found. Please contact admin.");
+    return;
+  }
+
+  // Display note
+  const noteText = member.note && member.note.trim() !== "" ? member.note : "No personal note yet. Please check back later.";
   document.getElementById("noteText").innerText = noteText;
 
   // Show popup
   document.getElementById("notePopup").style.display = "flex";
 }
+
 
 function closeNotePopup() {
   document.getElementById("notePopup").style.display = "none";
