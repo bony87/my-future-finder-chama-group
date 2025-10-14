@@ -1281,6 +1281,62 @@ table th {
   📋 Show Available Numbers
 </button>
 <!-- Admin Controls -->
+ <!-- Members Notes (Admin) -->
+<div id="membersNotesPanel" style="margin-top:25px; border-top:1px dashed #ddd; padding-top:15px;">
+  <h3>🗒️ Members Notes</h3>
+
+  <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:flex-start;">
+    <input id="noteMemberName" placeholder="Member name (optional)" type="text"
+      style="padding:8px; border:1px solid #ccc; border-radius:5px; width:250px;" />
+
+    <textarea id="noteText" placeholder="Type your note here..." rows="3"
+      style="flex:1; min-width:260px; padding:8px; border:1px solid #ccc; border-radius:5px;"></textarea>
+
+    <div style="display:flex; flex-direction:column; gap:8px;">
+      <button id="saveNoteBtn" onclick="saveMemberNote()" style="padding:10px 14px; background:#1976d2; color:white; border:none; border-radius:5px; cursor:pointer;">
+        💾 Save Note
+      </button>
+      <button onclick="clearNoteInputs()" style="padding:8px 12px; background:#9e9e9e; color:white; border:none; border-radius:5px; cursor:pointer;">
+        ✖ Clear
+      </button>
+    </div>
+  </div>
+
+  <p id="noteMessage" style="color:green; margin-top:8px;"></p>
+
+  <div style="margin-top:12px;">
+    <label style="font-weight:600;">Saved Notes (most recent first)</label>
+    <button onclick="downloadNotesCSV()" style="margin-left:8px; padding:6px 10px; background:#388e3c; color:white; border:none; border-radius:4px; cursor:pointer;">
+      ⬇️ Download CSV
+    </button>
+    <button onclick="clearAllNotes()" style="margin-left:6px; padding:6px 10px; background:#d32f2f; color:white; border:none; border-radius:4px; cursor:pointer;">
+      🗑️ Clear All
+    </button>
+
+    <table id="membersNotesTable" border="1" style="width:100%; border-collapse:collapse; text-align:left; margin-top:10px;">
+      <thead style="background:#1976d2; color:white;">
+        <tr>
+          <th style="width:160px;">Date</th>
+          <th style="width:160px;">Member</th>
+          <th>Note</th>
+          <th style="width:120px; text-align:center;">Actions</th>
+        </tr>
+      </thead>
+      <tbody id="membersNotesBody">
+        <tr><td colspan="4" style="color:gray; text-align:center;">No notes yet.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<style>
+  /* Optional small styles to match admin UI */
+  #membersNotesTable td, #membersNotesTable th { padding:8px; vertical-align:top; }
+  .note-action-btn { padding:6px 8px; margin:0 4px; border-radius:4px; border:none; cursor:pointer; }
+  .note-edit { background:#1976d2; color:white; }
+  .note-delete { background:#d32f2f; color:white; }
+</style>
+
 <h3>👤 Member Management</h3>
 <input id="loanSearch" onkeyup="filterLoans()" placeholder="🔍 Search loans by name, phone, or status..." style="width:95%; padding:8px; margin:10px 0; border:1px solid #ccc; border-radius:5px;" type="text"/>
 <select id="loanStatusFilter" onchange="filterLoans()" style="padding:8px; margin:10px 0; border:1px solid #ccc; border-radius:5px;">
@@ -4452,7 +4508,149 @@ window.onclick = function(event) {
     popup.style.display = "none";
   }
 };
+// Members Notes JavaScript (use once; stores notes in localStorage under "membersNotes")
+  (function(){
+    const STORAGE_KEY = 'membersNotes';
 
+    // Load and render on page load
+    document.addEventListener('DOMContentLoaded', renderMemberNotes);
+
+    // Save a new note
+    window.saveMemberNote = function() {
+      const name = document.getElementById('noteMemberName').value.trim();
+      const text = document.getElementById('noteText').value.trim();
+      const msg = document.getElementById('noteMessage');
+
+      if (!text) {
+        msg.style.color = 'crimson';
+        msg.textContent = 'Please enter a note before saving.';
+        return;
+      }
+
+      const notes = getNotes();
+      const newNote = {
+        id: Date.now().toString(),
+        member: name || '—',
+        text,
+        createdAt: new Date().toISOString()
+      };
+      notes.unshift(newNote); // most recent first
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(notes));
+      msg.style.color = 'green';
+      msg.textContent = 'Note saved.';
+      clearNoteInputs();
+      renderMemberNotes();
+      setTimeout(()=> msg.textContent = '', 3000);
+    };
+
+    // Get notes array
+    function getNotes() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      } catch (e) {
+        console.error('Failed to parse notes', e);
+        return [];
+      }
+    }
+
+    // Render notes into table
+    window.renderMemberNotes = function() {
+      const body = document.getElementById('membersNotesBody');
+      const notes = getNotes();
+      if (!notes.length) {
+        body.innerHTML = '<tr><td colspan="4" style="color:gray; text-align:center;">No notes yet.</td></tr>';
+        return;
+      }
+
+      body.innerHTML = notes.map(n => {
+        const date = new Date(n.createdAt);
+        const dateStr = date.toLocaleString();
+        const safeText = escapeHtml(n.text).replace(/\n/g, '<br/>');
+        const safeMember = escapeHtml(n.member);
+        return `<tr data-id="${n.id}">
+          <td style="white-space:nowrap;">${dateStr}</td>
+          <td>${safeMember}</td>
+          <td>${safeText}</td>
+          <td style="text-align:center;">
+            <button class="note-action-btn note-edit" onclick="editMemberNote('${n.id}')">✏️ Edit</button>
+            <button class="note-action-btn note-delete" onclick="deleteMemberNote('${n.id}')">🗑️ Delete</button>
+          </td>
+        </tr>`;
+      }).join('');
+    };
+
+    // Clear input fields
+    window.clearNoteInputs = function() {
+      document.getElementById('noteMemberName').value = '';
+      document.getElementById('noteText').value = '';
+    };
+
+    // Delete a note by id
+    window.deleteMemberNote = function(id) {
+      if (!confirm('Delete this note?')) return;
+      const notes = getNotes().filter(n => n.id !== id);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(notes));
+      renderMemberNotes();
+    };
+
+    // Edit a note: load into inputs and remove original
+    window.editMemberNote = function(id) {
+      const notes = getNotes();
+      const note = notes.find(n => n.id === id);
+      if (!note) return alert('Note not found.');
+      document.getElementById('noteMemberName').value = note.member === '—' ? '' : note.member;
+      document.getElementById('noteText').value = note.text;
+      // remove the old note (so saving will create a new timestamped entry)
+      const remaining = notes.filter(n => n.id !== id);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(remaining));
+      renderMemberNotes();
+      document.getElementById('noteMessage').style.color = '#1976d2';
+      document.getElementById('noteMessage').textContent = 'Editing note — update and click Save.';
+      setTimeout(()=> document.getElementById('noteMessage').textContent = '', 4000);
+    };
+
+    // Clear all notes
+    window.clearAllNotes = function() {
+      if (!confirm('Clear ALL notes? This cannot be undone.')) return;
+      localStorage.removeItem(STORAGE_KEY);
+      renderMemberNotes();
+    };
+
+    // Download notes as CSV
+    window.downloadNotesCSV = function() {
+      const notes = getNotes();
+      if (!notes.length) return alert('No notes to download.');
+      const rows = [
+        ['createdAt', 'member', 'text']
+      ];
+      notes.forEach(n => rows.push([n.createdAt, n.member, n.text.replace(/\n/g, ' ') ]));
+      const csv = rows.map(r => r.map(cell => `"${String(cell).replace(/"/g,'""')}"`).join(',')).join('\n');
+      const blob = new Blob([csv], {type: 'text/csv'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'members_notes.csv';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    };
+
+    // Helper: escape HTML
+    function escapeHtml(s) {
+      return String(s)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    // expose render on load if DOMContentLoaded already fired
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+      renderMemberNotes();
+    }
+  })();
 </script>
 </body>
 </html>
