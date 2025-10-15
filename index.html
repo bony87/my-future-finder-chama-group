@@ -1252,213 +1252,267 @@ table th {
 </section>
 <!-- ⚙️ Admin Login -->
 <section id="adminLogin">
-<h2>⚙️ Admin Login</h2>
-<input id="adminUser" placeholder="Admin Name" type="text"/>
-<!-- Admin Password -->
-<div class="password-container">
-<input id="adminPass" placeholder="Admin Password" type="password"/>
-<span class="toggle-eye" onclick="togglePassword('adminPass', this)">👁️</span>
-</div>
-<a class="action-btn" id="adminBtn" onclick="adminLogin()">
-    Admin Login <span class="spinner"></span>
-</a>
-<p id="adminLoginMessage"></p>
-</section>
-<!-- Admin Panel (hidden until login) -->
-<!-- Logo at the Top -->
-<div style="margin:20px 0; text-align:center;">
-<img alt="Future Finders Logo" src="https://github.com/bony87/my-future-finder-chama-group/blob/main/ChatGPT%20Image%20Sep%2010,%202025,%2005_43_14%20PM.png?raw=true" style="width:150px; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.2);"/>
-<p style="margin-top:10px; font-style:italic; color:#555;">Our Identity, Our Strength</p>
-</div>
-<section id="admin" style="display:none;">
-<h2>🛠 Admin Panel</h2>
-<!-- Admin logout -->
-<button id="logoutBtn" onclick="adminLogout()" style="margin-bottom:15px; padding:10px; background:#d32f2f; color:white; border:none; border-radius:5px; cursor:pointer; position:relative;">
-  🚪 Logout 
-  <span class="spinner" style="display:none; margin-left:8px; border:2px solid #f3f3f3; border-top:2px solid white; border-radius:50%; width:14px; height:14px; animation: spin 1s linear infinite; vertical-align:middle;"></span>
-</button>
-<button onclick="showAvailableNumbers()" style="margin-top:10px; padding:8px 14px; background:#388e3c; color:white; border:none; border-radius:5px; cursor:pointer;">
-  📋 Show Available Numbers
-</button>
-<!-- Admin Controls -->
- <!-- Members Notes (Admin) -->
-<div id="membersNotesPanel" style="margin-top:25px; border-top:1px dashed #ddd; padding-top:15px;">
-  <h3>🗒️ Members Notes</h3>
+  <h2>⚙️ Admin Login</h2>
+  <input id="adminUser" placeholder="Admin Name" type="text" />
 
-  <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:flex-start;">
-    <input id="noteMemberName" placeholder="Member name (optional)" type="text"
-      style="padding:8px; border:1px solid #ccc; border-radius:5px; width:250px;" />
-
-    <textarea id="noteText" placeholder="Type your note here..." rows="3"
-      style="flex:1; min-width:260px; padding:8px; border:1px solid #ccc; border-radius:5px;"></textarea>
-
-    <div style="display:flex; flex-direction:column; gap:8px;">
-      <button id="saveNoteBtn" onclick="saveMemberNote()" style="padding:10px 14px; background:#1976d2; color:white; border:none; border-radius:5px; cursor:pointer;">
-        💾 Save Note
-      </button>
-      <button onclick="clearNoteInputs()" style="padding:8px 12px; background:#9e9e9e; color:white; border:none; border-radius:5px; cursor:pointer;">
-        ✖ Clear
-      </button>
-    </div>
+  <!-- Admin Password -->
+  <div class="password-container">
+    <input id="adminPass" placeholder="Admin Password" type="password" />
+    <span class="toggle-eye" onclick="togglePassword('adminPass', this)">👁️</span>
   </div>
 
-  <p id="noteMessage" style="color:green; margin-top:8px;"></p>
+  <a class="action-btn" id="adminBtn" onclick="adminLogin()">
+    Admin Login <span class="spinner"></span>
+  </a>
+  <p id="adminLoginMessage"></p>
+</section>
 
-  <div style="margin-top:12px;">
-    <label style="font-weight:600;">Saved Notes (most recent first)</label>
-    <button onclick="downloadNotesCSV()" style="margin-left:8px; padding:6px 10px; background:#388e3c; color:white; border:none; border-radius:4px; cursor:pointer;">
-      ⬇️ Download CSV
-    </button>
-    <button onclick="clearAllNotes()" style="margin-left:6px; padding:6px 10px; background:#d32f2f; color:white; border:none; border-radius:4px; cursor:pointer;">
-      🗑️ Clear All
-    </button>
+<!-- =================== ADMIN PANEL =================== -->
+<section id="admin" style="display:none;">
+  <!-- Logo and Motto -->
+  <div style="margin:20px 0; text-align:center;">
+    <img alt="Future Finders Logo"
+      src="https://github.com/bony87/my-future-finder-chama-group/blob/main/ChatGPT%20Image%20Sep%2010,%202025,%2005_43_14%20PM.png?raw=true"
+      style="width:150px; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.2);" />
+    <p style="margin-top:10px; font-style:italic; color:#555;">Our Identity, Our Strength</p>
+  </div>
 
-    <table id="membersNotesTable" border="1" style="width:100%; border-collapse:collapse; text-align:left; margin-top:10px;">
-      <thead style="background:#1976d2; color:white;">
+  <!-- Logout -->
+  <button id="logoutBtn" onclick="adminLogout()" style="margin-bottom:15px; padding:10px; background:#d32f2f; color:white; border:none; border-radius:5px; cursor:pointer;">
+    🚪 Logout
+    <span class="spinner" style="display:none; margin-left:8px; border:2px solid #f3f3f3; border-top:2px solid white; border-radius:50%; width:14px; height:14px; animation: spin 1s linear infinite; vertical-align:middle;"></span>
+  </button>
+
+  <!-- Quick Tools -->
+  <button onclick="showAvailableNumbers()" style="margin-top:10px; padding:8px 14px; background:#388e3c; color:white; border:none; border-radius:5px; cursor:pointer;">
+    📋 Show Available Numbers
+  </button>
+
+  <!-- SUMMARY CARDS -->
+  <div id="adminSummary" style="display:flex; gap:15px; margin:15px 0; flex-wrap:wrap;">
+    <div class="summary-card" id="totalMembersCard">👥 Total Members: 0</div>
+    <div class="summary-card" id="totalSavingsCard">💰 Total Savings: Ksh 0</div>
+    <div class="summary-card" id="totalLoansCard">📑 Total Loans: 0</div>
+    <div class="summary-card" id="loanBreakdownCard">📊 Loan Status: 0 Pending / 0 Approved / 0 Rejected</div>
+  </div>
+
+  <!-- 🗒️ Members Notes -->
+  <div id="membersNotesPanel" style="margin-top:25px; border-top:1px dashed #ddd; padding-top:15px;">
+    <h3>🗒️ Members Notes</h3>
+    <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:flex-start;">
+      <input id="noteMemberName" placeholder="Member name (optional)" type="text"
+        style="padding:8px; border:1px solid #ccc; border-radius:5px; width:250px;" />
+      <textarea id="noteText" placeholder="Type your note here..." rows="3"
+        style="flex:1; min-width:260px; padding:8px; border:1px solid #ccc; border-radius:5px;"></textarea>
+      <div style="display:flex; flex-direction:column; gap:8px;">
+        <button id="saveNoteBtn" onclick="saveMemberNote()" style="padding:10px 14px; background:#1976d2; color:white; border:none; border-radius:5px; cursor:pointer;">💾 Save Note</button>
+        <button onclick="clearNoteInputs()" style="padding:8px 12px; background:#9e9e9e; color:white; border:none; border-radius:5px; cursor:pointer;">✖ Clear</button>
+      </div>
+    </div>
+    <p id="noteMessage" style="color:green; margin-top:8px;"></p>
+    <div style="margin-top:12px;">
+      <label style="font-weight:600;">Saved Notes (most recent first)</label>
+      <button onclick="downloadNotesCSV()" style="margin-left:8px; padding:6px 10px; background:#388e3c; color:white; border:none; border-radius:4px; cursor:pointer;">⬇️ Download CSV</button>
+      <button onclick="clearAllNotes()" style="margin-left:6px; padding:6px 10px; background:#d32f2f; color:white; border:none; border-radius:4px; cursor:pointer;">🗑️ Clear All</button>
+      <table id="membersNotesTable" border="1" style="width:100%; border-collapse:collapse; text-align:left; margin-top:10px;">
+        <thead style="background:#1976d2; color:white;">
+          <tr>
+            <th style="width:160px;">Date</th>
+            <th style="width:160px;">Member</th>
+            <th>Note</th>
+            <th style="width:120px; text-align:center;">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="membersNotesBody">
+          <tr><td colspan="4" style="color:gray; text-align:center;">No notes yet.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<!-- 👥 Members Overview Section -->
+<div id="membersOverviewPanel" style="margin-top:30px; border-top:1px dashed #ccc; padding-top:20px;">
+  <h2 style="color:#1976d2; margin-bottom:15px;">👥 Members Overview</h2>
+
+  <!-- Search and Export -->
+  <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
+    <input id="memberSearchInput" onkeyup="filterMembersTable()" placeholder="🔍 Search by name or phone..."
+      style="flex:1; min-width:200px; padding:10px; border:1px solid #bbb; border-radius:6px; font-size:15px;">
+    <button onclick="exportMembersCSV()" 
+      style="padding:10px 16px; background:#1976d2; color:white; border:none; border-radius:6px; cursor:pointer;">
+      ⬇️ Export CSV
+    </button>
+  </div>
+
+  <!-- Styled Table -->
+  <div style="overflow-x:auto; border:1px solid #ccc; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+    <table id="membersTable" style="width:100%; border-collapse:collapse; font-size:15px;">
+      <thead style="background:#1565c0; color:white; text-align:left; cursor:pointer;">
+  <tr>
+    <th onclick="sortMembersTable('name')" style="padding:10px;">Name ⬍</th>
+    <th onclick="sortMembersTable('phone')" style="padding:10px;">Phone ⬍</th>
+    <th onclick="sortMembersTable('savings')" style="padding:10px;">Total Savings (Ksh) ⬍</th>
+    <th style="padding:10px;">Monthly Deposits</th>
+    <th onclick="sortMembersTable('note')" style="padding:10px;">Note ⬍</th>
+  </tr>
+</thead>
+
+      <tbody id="membersTableBody" style="background:white;">
         <tr>
-          <th style="width:160px;">Date</th>
-          <th style="width:160px;">Member</th>
-          <th>Note</th>
-          <th style="width:120px; text-align:center;">Actions</th>
+          <td colspan="5" style="text-align:center; color:gray; padding:20px;">Loading members...</td>
         </tr>
-      </thead>
-      <tbody id="membersNotesBody">
-        <tr><td colspan="4" style="color:gray; text-align:center;">No notes yet.</td></tr>
       </tbody>
     </table>
   </div>
+
+  <!-- Summary -->
+  <div id="membersSummary" style="margin-top:15px; font-weight:600; color:#333;">
+    👤 Total Members: <span id="totalMembersCount">0</span> |
+    💰 Combined Savings: Ksh <span id="totalSavingsSum">0</span>
+  </div>
 </div>
 
+<!-- Table Styles -->
 <style>
-  /* Optional small styles to match admin UI */
-  #membersNotesTable td, #membersNotesTable th { padding:8px; vertical-align:top; }
-  .note-action-btn { padding:6px 8px; margin:0 4px; border-radius:4px; border:none; cursor:pointer; }
-  .note-edit { background:#1976d2; color:white; }
-  .note-delete { background:#d32f2f; color:white; }
+  #membersTable tbody tr:nth-child(even) {
+    background: #f9f9f9;
+  }
+  #membersTable tbody tr:hover {
+    background: #e3f2fd;
+    transition: 0.2s;
+  }
+  #membersTable th, #membersTable td {
+    border-bottom: 1px solid #ddd;
+    padding: 10px;
+    vertical-align: top;
+  }
+  #membersTable td {
+    color: #333;
+  }
 </style>
 
-<h3>👤 Member Management</h3>
-<input id="loanSearch" onkeyup="filterLoans()" placeholder="🔍 Search loans by name, phone, or status..." style="width:95%; padding:8px; margin:10px 0; border:1px solid #ccc; border-radius:5px;" type="text"/>
-<select id="loanStatusFilter" onchange="filterLoans()" style="padding:8px; margin:10px 0; border:1px solid #ccc; border-radius:5px;">
-<option value="">📂 Show All</option>
-<option value="Pending">⏳ Pending</option>
-<option value="Approved">✅ Approved</option>
-<option value="Rejected">❌ Rejected</option>
-</select>
-<button onclick="exportLoans()" style="padding:8px 12px; margin:10px 0; background:#1976d2; color:white; border:none; border-radius:5px; cursor:pointer;">
-  📂 Export Loans (CSV)
-</button>
-<h3>📜 Loan Applications</h3>
-<table border="1" style="width:100%; border-collapse:collapse; text-align:center;">
-<thead style="background:#1976d2; color:white;">
-<tr>
-<th>Name</th>
-<th>Phone</th>
-<th>Qualified Loan</th>
-<th>Requested Amount</th>
-<th>ID Number</th>
-<th>Period</th>
-<th>Repayment</th>
-<th>Date</th>
-<th>Status</th>
-<th>Action</th>
-</tr>
-</thead>
-<tbody id="adminLoanBody">
-<tr><td colspan="10" style="color:gray;">No applications yet.</td></tr>
-</tbody>
-</table>
-<!-- View Picked Numbers -->
-<button onclick="togglePickedNumbers()" style="padding:10px; margin:5px; background:#1976d2; color:white; border:none; border-radius:5px; cursor:pointer;">
-  🎲 View Picked Numbers
-</button>
-<!-- Lucky numbers table (hidden initially) -->
-<div id="pickedNumbersTable" style="display:none; margin-top:20px;">
-<h3>🎲 Picked Lucky Numbers</h3>
-<!-- Download CSV button -->
-<button onclick="downloadPickedNumbers()" style="margin-bottom:10px; padding:8px 12px; background:#388e3c; color:white; border:none; border-radius:5px; cursor:pointer;">
-    ⬇️ Download CSV
+
+  <!-- 👤 Member Management -->
+  <h3>👤 Member Management</h3>
+  <input id="loanSearch" onkeyup="filterLoans()" placeholder="🔍 Search loans by name, phone, or status..." style="width:95%; padding:8px; margin:10px 0; border:1px solid #ccc; border-radius:5px;" type="text" />
+  <select id="loanStatusFilter" onchange="filterLoans()" style="padding:8px; margin:10px 0; border:1px solid #ccc; border-radius:5px;">
+    <option value="">📂 Show All</option>
+    <option value="Pending">⏳ Pending</option>
+    <option value="Approved">✅ Approved</option>
+    <option value="Rejected">❌ Rejected</option>
+  </select>
+  <button onclick="exportLoans()" style="padding:8px 12px; margin:10px 0; background:#1976d2; color:white; border:none; border-radius:5px; cursor:pointer;">
+    📂 Export Loans (CSV)
   </button>
-<!-- Reset Picked Numbers button -->
-<button onclick="resetPickedNumbers()" style="margin-bottom:10px; padding:8px 12px; background:#d32f2f; color:white; border:none; border-radius:5px; cursor:pointer;">
-  🗑️ Reset Picked Numbers
-</button>
-<table border="1" style="width:100%; border-collapse:collapse; text-align:center;">
-<thead style="background:#1976d2; color:white;">
-<tr>
-<th>Member</th>
-<th>Lucky Number</th>
-</tr>
-</thead>
-<tbody id="pickedNumbersBody">
-<tr><td colspan="2" style="color:gray;">No numbers picked yet.</td></tr>
-</tbody>
-</table>
-</div>
-<div id="pendingMembersPanel" style="margin-top:20px;">
-<h3>📝 Pending Member Registrations</h3>
-<table border="1" style="width:100%; border-collapse:collapse; text-align:center;">
-<thead style="background:#00796b; color:white;">
-<tr>
-<th>Name</th>
-<th>Phone</th>
-<th>Email</th>
-<th>Status</th>
-<th>Action</th>
-</tr>
-</thead>
-<tbody id="pendingMembersBody">
-<tr><td colspan="5" style="color:gray;">No pending registrations.</td></tr>
-</tbody>
-</table>
-</div>
-<!-- System Updates Section -->
-<h3>🚀 System Updates</h3>
-<textarea id="updateMessage" placeholder="Type new update..." style="width:90%; padding:10px; margin-bottom:10px;"></textarea><br/>
-<button onclick="postUpdate()" style="padding:10px; background:#1976d2; color:white; border:none; border-radius:5px; cursor:pointer;">
-  📢 Post Update
-</button>
-<div id="memberSelectionBox" style="display:none; margin-top:8px;">
-<label><b>Select Members:</b></label><br/>
-<select id="memberSelectMulti" multiple="" size="10" style="width:260px; padding:6px;">
-<!-- Members will be loaded dynamically -->
-</select>
-<br/>
-<button onclick="selectAllMembers()" style="margin-top:5px; padding:5px 10px; background:#388e3c; color:white; border:none; border-radius:4px; cursor:pointer;" type="button">
-    ✅ Select All
+
+  <!-- 📜 Loan Applications Table -->
+  <h3>📜 Loan Applications</h3>
+  <table border="1" style="width:100%; border-collapse:collapse; text-align:center;">
+    <thead style="background:#1976d2; color:white;">
+      <tr>
+        <th>Name</th>
+        <th>Phone</th>
+        <th>Qualified Loan</th>
+        <th>Requested Amount</th>
+        <th>ID Number</th>
+        <th>Period</th>
+        <th>Repayment</th>
+        <th>Date</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="adminLoanBody">
+      <tr><td colspan="10" style="color:gray;">No applications yet.</td></tr>
+    </tbody>
+  </table>
+
+  <!-- 🎲 Lucky Numbers -->
+  <button onclick="togglePickedNumbers()" style="padding:10px; margin:5px; background:#1976d2; color:white; border:none; border-radius:5px; cursor:pointer;">
+    🎲 View Picked Numbers
   </button>
-<!-- 🔍 Search bar -->
-<input id="memberSearch" onkeyup="filterMembers()" placeholder="🔍 Search member..." style="width:260px; padding:6px; margin-bottom:6px;" type="text"/>
-<button onclick="clearAllMembers()" style="margin-top:5px; padding:5px 10px; background:#d32f2f; color:white; border:none; border-radius:4px; cursor:pointer;" type="button">
-    ❌ Clear All
-  </button>
-<p style="font-size:12px; color:gray; margin-top:5px;">(Hold CTRL/SHIFT to select multiple manually)</p>
-</div>
-<label style="display:block; margin-top:8px;">
-<input id="sendWhatsAppUpdate" onchange="toggleMemberSelection()" type="checkbox"/> 
-  📲 Send WhatsApp notification to members
-</label>
-<!-- Updates History Table -->
-<div style="margin-top:20px;">
-<h4>📜 Past Updates</h4>
-<table border="1" style="width:100%; border-collapse:collapse; text-align:center;">
-<thead style="background:#1976d2; color:white;">
-<tr>
-<th>All Updates (Click to Expand/Collapse)</th>
-</tr>
-</thead>
-<tbody id="updateHistoryBody">
-<tr><td style="color:gray;">No updates posted yet.</td></tr>
-</tbody>
-</table>
-</div>
-<div id="adminSummary" style="display:flex; gap:15px; margin:15px 0; flex-wrap:wrap;">
-<div class="summary-card" id="totalMembersCard">👥 Total Members: 0</div>
-<div class="summary-card" id="totalSavingsCard">💰 Total Savings: Ksh 0</div>
-<div class="summary-card" id="totalLoansCard">📑 Total Loans: 0</div>
-<div class="summary-card" id="loanBreakdownCard">📊 Loan Status: 0 Pending / 0 Approved / 0 Rejected</div>
-</div>
+  <div id="pickedNumbersTable" style="display:none; margin-top:20px;">
+    <h3>🎲 Picked Lucky Numbers</h3>
+    <button onclick="downloadPickedNumbers()" style="margin-bottom:10px; padding:8px 12px; background:#388e3c; color:white; border:none; border-radius:5px; cursor:pointer;">⬇️ Download CSV</button>
+    <button onclick="resetPickedNumbers()" style="margin-bottom:10px; padding:8px 12px; background:#d32f2f; color:white; border:none; border-radius:5px; cursor:pointer;">🗑️ Reset Picked Numbers</button>
+    <table border="1" style="width:100%; border-collapse:collapse; text-align:center;">
+      <thead style="background:#1976d2; color:white;">
+        <tr><th>Member</th><th>Lucky Number</th></tr>
+      </thead>
+      <tbody id="pickedNumbersBody">
+        <tr><td colspan="2" style="color:gray;">No numbers picked yet.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 📝 Pending Members -->
+  <div id="pendingMembersPanel" style="margin-top:20px;">
+    <h3>📝 Pending Member Registrations</h3>
+    <table border="1" style="width:100%; border-collapse:collapse; text-align:center;">
+      <thead style="background:#00796b; color:white;">
+        <tr>
+          <th>Name</th>
+          <th>Phone</th>
+          <th>Email</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="pendingMembersBody">
+        <tr><td colspan="5" style="color:gray;">No pending registrations.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 🚀 System Updates -->
+  <h3>🚀 System Updates</h3>
+  <textarea id="updateMessage" placeholder="Type new update..." style="width:90%; padding:10px; margin-bottom:10px;"></textarea><br />
+  <button onclick="postUpdate()" style="padding:10px; background:#1976d2; color:white; border:none; border-radius:5px; cursor:pointer;">📢 Post Update</button>
+
+  <!-- Optional WhatsApp Notifications -->
+  <div id="memberSelectionBox" style="display:none; margin-top:8px;">
+    <label><b>Select Members:</b></label><br />
+    <select id="memberSelectMulti" multiple size="10" style="width:260px; padding:6px;"></select><br />
+    <button onclick="selectAllMembers()" style="margin-top:5px; padding:5px 10px; background:#388e3c; color:white; border:none; border-radius:4px; cursor:pointer;">✅ Select All</button>
+    <input id="memberSearch" onkeyup="filterMembers()" placeholder="🔍 Search member..." style="width:260px; padding:6px; margin-bottom:6px;" type="text" />
+    <button onclick="clearAllMembers()" style="margin-top:5px; padding:5px 10px; background:#d32f2f; color:white; border:none; border-radius:4px; cursor:pointer;">❌ Clear All</button>
+    <p style="font-size:12px; color:gray; margin-top:5px;">(Hold CTRL/SHIFT to select multiple manually)</p>
+  </div>
+
+  <label style="display:block; margin-top:8px;">
+    <input id="sendWhatsAppUpdate" onchange="toggleMemberSelection()" type="checkbox" /> 📲 Send WhatsApp notification to members
+  </label>
+
+  <!-- 📜 Past Updates -->
+  <div style="margin-top:20px;">
+    <h4>📜 Past Updates</h4>
+    <table border="1" style="width:100%; border-collapse:collapse; text-align:center;">
+      <thead style="background:#1976d2; color:white;">
+        <tr><th>All Updates (Click to Expand/Collapse)</th></tr>
+      </thead>
+      <tbody id="updateHistoryBody">
+        <tr><td style="color:gray;">No updates posted yet.</td></tr>
+      </tbody>
+    </table>
+  </div>
 </section>
+
+<!-- Styles for Notes Table -->
+<style>
+  #membersNotesTable td, #membersNotesTable th {
+    padding: 8px;
+    vertical-align: top;
+  }
+  .note-action-btn {
+    padding: 6px 8px;
+    margin: 0 4px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+  }
+  .note-edit { background: #1976d2; color: white; }
+  .note-delete { background: #d32f2f; color: white; }
+</style>
+
 <section id="membership" style="display:none;">
 <h2>👥 Membership</h2>
 <p>If you’re new, please register. If already a member, log in.</p>
@@ -4508,149 +4562,301 @@ window.onclick = function(event) {
     popup.style.display = "none";
   }
 };
-// Members Notes JavaScript (use once; stores notes in localStorage under "membersNotes")
-  (function(){
-    const STORAGE_KEY = 'membersNotes';
 
-    // Load and render on page load
-    document.addEventListener('DOMContentLoaded', renderMemberNotes);
+ 
 
-    // Save a new note
-    window.saveMemberNote = function() {
-      const name = document.getElementById('noteMemberName').value.trim();
-      const text = document.getElementById('noteText').value.trim();
-      const msg = document.getElementById('noteMessage');
 
-      if (!text) {
-        msg.style.color = 'crimson';
-        msg.textContent = 'Please enter a note before saving.';
-        return;
-      }
-
-      const notes = getNotes();
-      const newNote = {
-        id: Date.now().toString(),
-        member: name || '—',
-        text,
-        createdAt: new Date().toISOString()
-      };
-      notes.unshift(newNote); // most recent first
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(notes));
-      msg.style.color = 'green';
-      msg.textContent = 'Note saved.';
-      clearNoteInputs();
-      renderMemberNotes();
-      setTimeout(()=> msg.textContent = '', 3000);
-    };
-
-    // Get notes array
-    function getNotes() {
-      try {
-        return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-      } catch (e) {
-        console.error('Failed to parse notes', e);
-        return [];
-      }
-    }
-
-    // Render notes into table
-    window.renderMemberNotes = function() {
-      const body = document.getElementById('membersNotesBody');
-      const notes = getNotes();
-      if (!notes.length) {
-        body.innerHTML = '<tr><td colspan="4" style="color:gray; text-align:center;">No notes yet.</td></tr>';
-        return;
-      }
-
-      body.innerHTML = notes.map(n => {
-        const date = new Date(n.createdAt);
-        const dateStr = date.toLocaleString();
-        const safeText = escapeHtml(n.text).replace(/\n/g, '<br/>');
-        const safeMember = escapeHtml(n.member);
-        return `<tr data-id="${n.id}">
-          <td style="white-space:nowrap;">${dateStr}</td>
-          <td>${safeMember}</td>
-          <td>${safeText}</td>
-          <td style="text-align:center;">
-            <button class="note-action-btn note-edit" onclick="editMemberNote('${n.id}')">✏️ Edit</button>
-            <button class="note-action-btn note-delete" onclick="deleteMemberNote('${n.id}')">🗑️ Delete</button>
-          </td>
-        </tr>`;
-      }).join('');
-    };
-
-    // Clear input fields
-    window.clearNoteInputs = function() {
-      document.getElementById('noteMemberName').value = '';
-      document.getElementById('noteText').value = '';
-    };
-
-    // Delete a note by id
-    window.deleteMemberNote = function(id) {
-      if (!confirm('Delete this note?')) return;
-      const notes = getNotes().filter(n => n.id !== id);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(notes));
-      renderMemberNotes();
-    };
-
-    // Edit a note: load into inputs and remove original
-    window.editMemberNote = function(id) {
-      const notes = getNotes();
-      const note = notes.find(n => n.id === id);
-      if (!note) return alert('Note not found.');
-      document.getElementById('noteMemberName').value = note.member === '—' ? '' : note.member;
-      document.getElementById('noteText').value = note.text;
-      // remove the old note (so saving will create a new timestamped entry)
-      const remaining = notes.filter(n => n.id !== id);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(remaining));
-      renderMemberNotes();
-      document.getElementById('noteMessage').style.color = '#1976d2';
-      document.getElementById('noteMessage').textContent = 'Editing note — update and click Save.';
-      setTimeout(()=> document.getElementById('noteMessage').textContent = '', 4000);
-    };
-
-    // Clear all notes
-    window.clearAllNotes = function() {
-      if (!confirm('Clear ALL notes? This cannot be undone.')) return;
-      localStorage.removeItem(STORAGE_KEY);
-      renderMemberNotes();
-    };
-
-    // Download notes as CSV
-    window.downloadNotesCSV = function() {
-      const notes = getNotes();
-      if (!notes.length) return alert('No notes to download.');
-      const rows = [
-        ['createdAt', 'member', 'text']
-      ];
-      notes.forEach(n => rows.push([n.createdAt, n.member, n.text.replace(/\n/g, ' ') ]));
-      const csv = rows.map(r => r.map(cell => `"${String(cell).replace(/"/g,'""')}"`).join(',')).join('\n');
-      const blob = new Blob([csv], {type: 'text/csv'});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'members_notes.csv';
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      URL.revokeObjectURL(url);
-    };
-
-    // Helper: escape HTML
-    function escapeHtml(s) {
-      return String(s)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;');
-    }
-
-    // expose render on load if DOMContentLoaded already fired
-    if (document.readyState === 'complete' || document.readyState === 'interactive') {
-      renderMemberNotes();
-    }
-  })();
+ 
 </script>
+
+<script>
+document.addEventListener("DOMContentLoaded", loadNotes);
+let editIndex = null;
+
+// 🔔 Popup message helper
+function showPopup(message, color = "#4CAF50") {
+  let popup = document.createElement("div");
+  popup.textContent = message;
+  popup.style.position = "fixed";
+  popup.style.bottom = "20px";
+  popup.style.right = "20px";
+  popup.style.background = color;
+  popup.style.color = "white";
+  popup.style.padding = "10px 18px";
+  popup.style.borderRadius = "6px";
+  popup.style.boxShadow = "0 2px 8px rgba(0,0,0,0.3)";
+  popup.style.zIndex = "9999";
+  popup.style.fontWeight = "bold";
+  popup.style.transition = "opacity 0.5s";
+  document.body.appendChild(popup);
+
+  setTimeout(() => { popup.style.opacity = "0"; }, 2000);
+  setTimeout(() => popup.remove(), 2500);
+}
+
+// 💾 Save or Update Note
+function saveMemberNote() {
+  const name = document.getElementById("noteMemberName").value.trim();
+  const note = document.getElementById("noteText").value.trim();
+  const message = document.getElementById("noteMessage");
+
+  if (!note) {
+    showPopup("⚠️ Please type a note before saving.", "#d32f2f");
+    return;
+  }
+
+  let notes = JSON.parse(localStorage.getItem("membersNotes") || "[]");
+
+  if (editIndex !== null) {
+    // Update existing note
+    notes[editIndex].name = name || "—";
+    notes[editIndex].note = note;
+    notes[editIndex].date = new Date().toLocaleString();
+    editIndex = null;
+    showPopup("✏️ Note updated successfully!", "#1976d2");
+  } else {
+    // Add new note
+    notes.unshift({
+      date: new Date().toLocaleString(),
+      name: name || "—",
+      note
+    });
+    showPopup("✅ Note saved successfully!");
+  }
+
+  localStorage.setItem("membersNotes", JSON.stringify(notes));
+  renderNotes();
+  clearNoteInputs();
+  message.textContent = "";
+}
+
+// 🧹 Clear inputs
+function clearNoteInputs() {
+  document.getElementById("noteMemberName").value = "";
+  document.getElementById("noteText").value = "";
+  editIndex = null;
+}
+
+// 🖋 Render Notes Table
+function renderNotes() {
+  const tbody = document.getElementById("membersNotesBody");
+  const notes = JSON.parse(localStorage.getItem("membersNotes") || "[]");
+
+  if (!tbody) return;
+  if (notes.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="4" style="color:gray; text-align:center;">No notes yet.</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = notes
+    .map(
+      (n, i) => `
+      <tr>
+        <td>${n.date}</td>
+        <td>${n.name}</td>
+        <td>${n.note}</td>
+        <td style="text-align:center;">
+          <button class="note-action-btn note-edit" onclick="editNote(${i})">✏️ Edit</button>
+          <button class="note-action-btn note-delete" onclick="deleteNote(${i})">🗑️ Delete</button>
+        </td>
+      </tr>
+    `
+    )
+    .join("");
+}
+
+// ✏️ Edit an Existing Note
+function editNote(i) {
+  const notes = JSON.parse(localStorage.getItem("membersNotes") || "[]");
+  const n = notes[i];
+  document.getElementById("noteMemberName").value = n.name === "—" ? "" : n.name;
+  document.getElementById("noteText").value = n.note;
+  editIndex = i;
+  showPopup("✏️ Edit mode: make changes and click Save Note.", "#1976d2");
+}
+
+// 🗑 Delete One Note
+function deleteNote(i) {
+  if (!confirm("Are you sure you want to delete this note?")) return;
+  let notes = JSON.parse(localStorage.getItem("membersNotes") || "[]");
+  notes.splice(i, 1);
+  localStorage.setItem("membersNotes", JSON.stringify(notes));
+  renderNotes();
+  showPopup("🗑️ Note deleted.", "#d32f2f");
+}
+
+// 🧹 Clear All Notes
+function clearAllNotes() {
+  if (confirm("⚠️ This will delete ALL notes. Continue?")) {
+    localStorage.removeItem("membersNotes");
+    renderNotes();
+    showPopup("🧹 All notes cleared.", "#d32f2f");
+  }
+}
+
+// ⬇️ Download CSV
+function downloadNotesCSV() {
+  const notes = JSON.parse(localStorage.getItem("membersNotes") || "[]");
+  if (notes.length === 0) {
+    showPopup("No notes to download.", "#d32f2f");
+    return;
+  }
+  let csv = "Date,Member,Note\n" + notes.map(n =>
+    `"${n.date}","${n.name}","${n.note.replace(/"/g, '""')}"`
+  ).join("\n");
+  const blob = new Blob([csv], { type: "text/csv" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "members_notes.csv";
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// 🧠 Load existing notes on startup
+function loadNotes() {
+  renderNotes();
+}
+
+
+
+
+
+// 🧾 Render members table
+function renderMembersTable() {
+  const tbody = document.getElementById("membersTableBody");
+  const totalMembers = Object.keys(members).length;
+  let totalSavings = 0;
+
+  if (totalMembers === 0) {
+    tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:gray;">No members data available.</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = Object.entries(members).map(([name, data]) => {
+    totalSavings += data.savings || 0;
+    const months = (data.monthly || []).join(", ");
+    return `
+      <tr>
+        <td>${name}</td>
+        <td>${data.phone}</td>
+        <td>Ksh ${data.savings.toLocaleString()}</td>
+        <td>${months}</td>
+        <td>${data.note || ""}</td>
+      </tr>
+    `;
+  }).join("");
+
+  // ✅ Update summary
+  document.getElementById("totalMembersCount").textContent = totalMembers;
+  document.getElementById("totalSavingsSum").textContent = totalSavings.toLocaleString();
+}
+
+// 🔍 Search filter
+function filterMembersTable() {
+  const query = document.getElementById("memberSearchInput").value.toLowerCase();
+  const rows = document.querySelectorAll("#membersTableBody tr");
+  rows.forEach(row => {
+    const text = row.textContent.toLowerCase();
+    row.style.display = text.includes(query) ? "" : "none";
+  });
+}
+
+// ⬇️ Export CSV
+function exportMembersCSV() {
+  const rows = [["Name", "Phone", "Total Savings", "Monthly Deposits", "Note"]];
+  Object.entries(members).forEach(([name, data]) => {
+    rows.push([
+      name,
+      data.phone,
+      data.savings,
+      (data.monthly || []).join(" | "),
+      data.note || ""
+    ]);
+  });
+
+  const csv = rows.map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(",")).join("\n");
+  const blob = new Blob([csv], { type: "text/csv" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "members_data.csv";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
+// 🧠 Load members automatically
+document.addEventListener("DOMContentLoaded", renderMembersTable);
+
+
+// =============================
+// 🔽 SORTING FUNCTIONALITY BELOW
+// =============================
+
+let sortDirection = 1; // 1 = ascending, -1 = descending
+let currentSortKey = null;
+
+function sortMembersTable(key) {
+  const entries = Object.entries(members);
+
+  // Toggle sorting direction
+  if (currentSortKey === key) sortDirection *= -1;
+  else {
+    sortDirection = 1;
+    currentSortKey = key;
+  }
+
+  entries.sort((a, b) => {
+    const memberA = a[1];
+    const memberB = b[1];
+
+    switch (key) {
+      case "name":
+        return a[0].localeCompare(b[0]) * sortDirection;
+      case "phone":
+        return (memberA.phone || "").localeCompare(memberB.phone || "") * sortDirection;
+      case "savings":
+        return ((memberA.savings || 0) - (memberB.savings || 0)) * sortDirection;
+      case "note":
+        return (memberA.note || "").localeCompare(memberB.note || "") * sortDirection;
+      default:
+        return 0;
+    }
+  });
+
+  // Render sorted data
+  const sortedMembers = Object.fromEntries(entries);
+  renderSortedMembers(sortedMembers);
+}
+
+function renderSortedMembers(sortedData) {
+  const tbody = document.getElementById("membersTableBody");
+  let totalSavings = 0;
+
+  tbody.innerHTML = Object.entries(sortedData).map(([name, data]) => {
+    totalSavings += data.savings || 0;
+    const months = (data.monthly || []).join(", ");
+    return `
+      <tr>
+        <td>${name}</td>
+        <td>${data.phone}</td>
+        <td>Ksh ${data.savings.toLocaleString()}</td>
+        <td>${months}</td>
+        <td>${data.note || ""}</td>
+      </tr>
+    `;
+  }).join("");
+
+  // ✅ Update summary
+  document.getElementById("totalMembersCount").textContent = Object.keys(sortedData).length;
+  document.getElementById("totalSavingsSum").textContent = totalSavings.toLocaleString();
+}
+
+
+</script>
+
+
 </body>
 </html>
