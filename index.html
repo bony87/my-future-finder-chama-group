@@ -874,6 +874,19 @@ table th {
 }
 
 
+.fine-text {
+  background: #ffebee;
+  border: 2px solid #c62828;
+  color: #b71c1c;
+  font-weight: bold;
+  padding: 10px 12px;
+  border-radius: 5px;
+  font-size: 17px;
+  text-align: center;
+}
+
+
+
 
 
 
@@ -1691,6 +1704,9 @@ table th {
 <a class="action-btn" onclick="showMonthlySavings()">📊 View Monthly Savings</a>
 <button class="check-loan-btn" onclick="checkLoan()">🔍 Check Loan Eligibility</button>
 <button class="action-btn" onclick="openNotePopup()">🗒️ View Note</button>
+<button class="action-btn" onclick="openFinesModal()">💸 View Fines</button>
+
+
 <!-- 🚪 Member Logout -->
 <button class="action-btn" id="memberLogoutBtn" onclick="memberLogout()" style="background:#d32f2f; margin-top:15px; position:relative;">
   🚪 Logout
@@ -1719,6 +1735,61 @@ table th {
   <h3 style="color:#2e7d32;">🗒️ Your Note</h3>
   <p id="personalNote" style="font-size:16px; color:#333;">Welcome! Your note will appear here after login.</p>
 </div>
+<!-- 💸 Fines Modal -->
+<div id="finesModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeFinesModal()">&times;</span>
+    <h3 style="color:#e65100;">💸 Your Fines</h3>
+    <p id="personalFines" style="font-size:16px; color:#333;">You currently have no fines.</p>
+  </div>
+</div>
+<style>
+/* 💸 Modal Overlay */
+.modal {
+  display: none; 
+  position: fixed; 
+  z-index: 1001; 
+  padding-top: 100px; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+}
+
+/* 💸 Modal Box */
+.modal-content {
+  background-color: #fff3e0;
+  margin: auto;
+  padding: 20px;
+  border: 2px solid #e65100;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 500px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  animation: fadeIn 0.4s;
+}
+
+/* ❌ Close Button */
+.close {
+  color: #e65100;
+  float: right;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.close:hover {
+  color: #b71c1c;
+}
+
+/* ✨ Animation */
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(-20px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+</style>
+
 
 <h4>📊 Group Contributions</h4>
 
@@ -1753,7 +1824,7 @@ table th {
       <td><input type="number" value="300"/></td>
       <td><input type="number" value="300"/></td>
       <td><input type="number" value="300"/></td>
-      <td><input type="number" value="300"/></td>
+      <td><input type="number" value="310"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
       <td class="rowTotal">3000</td></tr>
@@ -1813,8 +1884,8 @@ table th {
       <td><input type="number" value="200"/></td>
       <td><input type="number" value="100"/></td>
       <td><input type="number" value="200"/></td>
-      <td><input type="number" value="150"/></td>
-      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="55"/></td>
       <td><input type="number" value="0"/></td>
       <td class="rowTotal">1850</td></tr>
 
@@ -1828,8 +1899,8 @@ table th {
       <td><input type="number" value="50"/></td>
       <td><input type="number" value="250"/></td>
       <td><input type="number" value="200"/></td>
-      <td><input type="number" value="100"/></td>
-      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="150"/></td>
+      <td><input type="number" value="55"/></td>
       <td><input type="number" value="0"/></td>
       <td class="rowTotal">1600</td></tr>
 
@@ -1843,8 +1914,8 @@ table th {
       <td><input type="number" value="400"/></td>
       <td><input type="number" value="500"/></td>
       <td><input type="number" value="400"/></td>
-      <td><input type="number" value="300"/></td>
-      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="400"/></td>
+      <td><input type="number" value="105"/></td>
       <td><input type="number" value="0"/></td>
       <td class="rowTotal">4050</td></tr>
 
@@ -1858,8 +1929,8 @@ table th {
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="100"/></td>
-      <td><input type="number" value="650"/></td>
-      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="700"/></td>
+      <td><input type="number" value="55"/></td>
       <td><input type="number" value="0"/></td>
       <td class="rowTotal">750</td></tr>
 
@@ -1873,8 +1944,8 @@ table th {
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="100"/></td>
-      <td><input type="number" value="150"/></td>
-      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="50"/></td>
       <td><input type="number" value="0"/></td>
       <td class="rowTotal">600</td></tr>
 
@@ -1888,7 +1959,7 @@ table th {
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="100"/></td>
-      <td><input type="number" value="150"/></td>
+      <td><input type="number" value="200"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
       <td class="rowTotal">550</td></tr>
@@ -1903,7 +1974,7 @@ table th {
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="100"/></td>
       <td><input type="number" value="250"/></td>
-      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="205"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
       <td class="rowTotal">1250</td></tr>
@@ -1933,8 +2004,8 @@ table th {
       <td><input type="number" value="100"/></td>
       <td><input type="number" value="250"/></td>
       <td><input type="number" value="200"/></td>
-      <td><input type="number" value="150"/></td>
-      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="55"/></td>
       <td><input type="number" value="0"/></td>
       <td class="rowTotal">1850</td></tr>
 
@@ -1963,8 +2034,8 @@ table th {
       <td><input type="number" value="400"/></td>
       <td><input type="number" value="500"/></td>
       <td><input type="number" value="400"/></td>
-      <td><input type="number" value="200"/></td>
-      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="300"/></td>
+      <td><input type="number" value="105"/></td>
       <td><input type="number" value="0"/></td>
       <td class="rowTotal">3800</td></tr>
 
@@ -1977,7 +2048,7 @@ table th {
     <td><input type="number" value="400"/></td>
     <td><input type="number" value="350"/></td>
     <td><input type="number" value="100"/></td>
-    <td><input type="number" value="200"/></td>
+    <td><input type="number" value="205"/></td>
     <td><input type="number" value="0"/></td>
     <td><input type="number" value="0"/></td>
     <td><input type="number" value="0"/></td>
@@ -1994,8 +2065,8 @@ table th {
       <td><input type="number" value="150"/></td>
       <td><input type="number" value="200"/></td>
       
-      <td><input type="number" value="150"/></td>
-      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="50"/></td>
       <td><input type="number" value="0"/></td>
       <td class="rowTotal">1850</td></tr>
 
@@ -2010,8 +2081,8 @@ table th {
   <td><input type="number" value="600"/></td>   <!-- Jul -->
   <td><input type="number" value="750"/></td>   <!-- Aug -->
   <td><input type="number" value="600"/></td>   <!-- Sept -->
-  <td><input type="number" value="450"/></td>   <!-- Oct -->
-  <td><input type="number" value="0"/></td>     <!-- Nov -->
+  <td><input type="number" value="600"/></td>   <!-- Oct -->
+  <td><input type="number" value="155"/></td>     <!-- Nov -->
   <td><input type="number" value="0"/></td>     <!-- Dec -->
   <td class="rowTotal">6000</td>
 </tr>
@@ -2057,8 +2128,8 @@ table th {
       <td><input type="number" value="100"/></td>
       <td><input type="number" value="50"/></td>
       <td><input type="number" value="350"/></td>
-      <td><input type="number" value="800"/></td>
-      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="970"/></td>
+      <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
       <td class="rowTotal">2300</td></tr>
 
@@ -2102,8 +2173,8 @@ table th {
       <td><input type="number" value="50"/></td>
       <td><input type="number" value="250"/></td>
       <td><input type="number" value="200"/></td>
-      <td><input type="number" value="100"/></td>
-      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="150"/></td>
+      <td><input type="number" value="50"/></td>
       <td><input type="number" value="0"/></td>
       <td class="rowTotal">900</td></tr>
 
@@ -2117,8 +2188,8 @@ table th {
       <td><input type="number" value="400"/></td>
       <td><input type="number" value="300"/></td>
       <td><input type="number" value="200"/></td>
-      <td><input type="number" value="150"/></td>
-      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="50"/></td>
       <td><input type="number" value="0"/></td>
       <td class="rowTotal">1050</td></tr>
 
@@ -2132,8 +2203,8 @@ table th {
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="500"/></td>
       <td><input type="number" value="450"/></td>
-      <td><input type="number" value="450"/></td>
-      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="600"/></td>
+      <td><input type="number" value="150"/></td>
       <td><input type="number" value="0"/></td>
       <td class="rowTotal">1100</td></tr>
 
@@ -2146,9 +2217,9 @@ table th {
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
-      <td><input type="number" value="100"/></td>
-      <td><input type="number" value="100"/></td>
-      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="150"/></td>
+      <td><input type="number" value="150"/></td>
+      <td><input type="number" value="50"/></td>
       <td><input type="number" value="0"/></td>
       <td class="rowTotal">150</td></tr>
 
@@ -2163,8 +2234,8 @@ table th {
   <td><input type="number" value="0"/></td>   <!-- Jul -->
   <td><input type="number" value="0"/></td>   <!-- Aug -->
   <td><input type="number" value="50"/></td>  <!-- Sep -->
-  <td><input type="number" value="50"/></td>  <!-- Oct -->
-  <td><input type="number" value="0"/></td>   <!-- Nov -->
+  <td><input type="number" value="100"/></td>  <!-- Oct -->
+  <td><input type="number" value="50"/></td>   <!-- Nov -->
   <td><input type="number" value="0"/></td>   <!-- Dec -->
   <td class="rowTotal">50</td>
 </tr>
@@ -2180,8 +2251,8 @@ table th {
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="100"/></td>
-      <td><input type="number" value="300"/></td>
-      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="400"/></td>
+      <td><input type="number" value="100"/></td>
       <td><input type="number" value="0"/></td>
       <td class="rowTotal">200</td></tr>
 
@@ -2237,56 +2308,64 @@ const members = {
     password: "0713953004",
     savings: 3000,
     monthly: [300,300,300,300,300,300,300,300,300],
-    note: "Consistent saver — eligible for next loan review."
+    note: "Consistent saver — eligible for next loan review.",
+   fines: "nil as of 2nd nov 25"
   },
   "HILDA ODERO": {
     phone: "0795341320",
     password: "0795341320",
     savings: 900,
     monthly: [400,200,100,200],
-    note: "Missed March payment — follow up on consistency."
+    note: "Missed March payment — follow up on consistency.",
+    fines: ""
   },
   "JOEL EGESA": {
     phone: "0768039551",
     password: "0768039551",
     savings: 1220,
     monthly: [200,0,20,500],
-    note: "New member; low savings but improving gradually."
+    note: "New member; low savings but improving gradually.",
+    fines: ""
   },
   "SHALIK SHIVERENGE": {
     phone: "0746277086",
     password: "0746277086",
     savings: 250,
     monthly: [250,0,0],
-    note: "Needs encouragement to make regular deposits."
+    note: "Needs encouragement to make regular deposits.",
+    fines: ""
   },
   "EVERLINE MAINA": {
     phone: "0701360180",
     password: "0701360180",
     savings: 1850,
     monthly: [250,150,250,200,200,250,200,100,200,50],
-    note: "Active and consistent member — good standing."
+    note: "Active and consistent member — good standing.",
+    fines: ""
   },
   "ELVIS KAMASH": {
     phone: "0798577851",
     password: "0798577851",
     savings: 1600,
     monthly: [250,150,250,50,200,150,50,250,200,50],
-    note: "Slightly irregular, but maintains contributions."
+    note: "Slightly irregular, but maintains contributions.",
+    fines: ""
   },
   "JULIUS KEBASO": {
     phone: "0705296154",
     password: "0705296154",
     savings: 4050,
     monthly: [450,300,500,500,400,500,400,500,400,100],
-    note: "Very reliable saver — possible leadership candidate."
+    note: "Very reliable saver — possible leadership candidate.",
+    fines: ""
   },
   "CHRISTINE PIUS": {
     phone: "0115603500",
     password: "0115603500",
     savings: 750,
     monthly: [50,150,250,150,0,0,0,0,100,50],
-    note: "Inconsistent months; encourage steady saving."
+    note: "Inconsistent months; encourage steady saving.",
+    fines: ""
   },
   "EDNAH NANCY": {
     phone: "0717684177",
@@ -2300,126 +2379,146 @@ const members = {
     password: "0790206224",
     savings: 550,
     monthly: [200,200,0,0,0,0,0,0,100,50],
-    note: "Missed several months; check commitment level."
+    note: "Missed several months; check commitment level.",
+    fines: ""
   },
   "JUDITH OMWOYO": {
     phone: "0741939235",
     password: "0741939235",
     savings: 1250,
     monthly: [300,300,300,0,0,0,0,100,250],
-    note: "1.Consistent saver, possible for small loan soon. 2.sent 1500 on 20 october as a patial payment for mery-go-round."
+    note: "1.Consistent saver, possible for small loan soon. 2.sent 1500 on 20 october as a patial payment for mery-go-round.",
+    fines: "240-as of 2nd Nov 25, paid 180 not paid 60"
   },
   "JANET NYAKUNDI": {
     phone: "0706753288",
     password: "0706753288",
     savings: 250,
     monthly: [150,0,100,0,0,0,0,0,0],
-    note: "New member; encourage regular savings pattern."
+    note: "you have a debt payment of 850",
+    fines: "90-as of 2nd nov 25 paid 0 not paid 60"
   },
   "ANASTANCIA OMWOYO": {
     phone: "0748442547",
     password: "0748442547",
     savings: 1850,
     monthly: [250,150,200,200,200,150,100,250,200,50],
-    note: " "
+    note: " ",
+    fines: "90-as of 2nd nov 25 paid 0 not paid 90"
   },
   "PIUS NYAKUNDI": {
     phone: "0716845165",
     password: "0716845165",
     savings: 1050,
     monthly: [150,200,200,0,100,100,100,150,150,50],
-    note: "on 13 oct requested for no exchange with judy - request approved "
+    note: "on 13 oct requested for no exchange with judy - request approved ",
+    fines: "120-as of 2nd nov 25 paid 0 not paid 120"
   },
   "SAMUEL OYUGI": {
     phone: "0796860412",
     password: "0796860412",
     savings: 3900,
     monthly: [400,300,500,400,400,500,400,500,400,100],
-    note: "Very active; good candidate for larger loans."
+    note: "Very active; good candidate for larger loans.",
+    fines: "360-as of 2nd nov 25 paid 0 not paid 360"
   },
   "PURITY MOMANYI": {
     phone: "0103155480",
     password: "0103155480",
     savings: 4400,
     monthly: [200,200,1200,950,800,400,350,100,200],
-    note: "High savings rate — leadership potential."
+    note: "High savings rate — leadership potential.",
+    fines: "30-as of 2nd nov 25 paid 30 not paid 0"
   },
   "KEFFA MOMANYI": {
     phone: "0759237482",
     password: "0759237482",
     savings: 1850,
     monthly: [250,200,200,200,200,250,200,150,200,50],
-    note: " "
+    note: " ",
+    fines: "60-as of 2nd nov 25 paid 0 not paid 60"
   },
   "KENNEDY MUTAYI": {
     phone: "0724124735",
     password: "0724124735",
     savings: 6000,
     monthly: [750,450,750,600,600,750,600,750,600,150],
-    note: " "
+    note: " ",
+    fines: ""
   },
   "MIKE MORRIS": {
     phone: "0115570301",
     password: "0115570301",
     savings: 300,
     monthly: [0,0,100,50,0,0,0,150,0],
-    note: " "
+    note: " ",
+    fines: "150-as of 2nd nov 25 paid 120 not paid 30"
   },
   "DAVY OMBATI": {
     phone: "0793547166",
     password: "0793547166",
     savings: 250,
     monthly: [0,0,50,0,0,0,200,0,0],
-    note: " "
+    note: " ",
+    fines: "150-as of 2nd nov 25 paid 90 not paid 60"
   },
-  "FAITH MOKOGI": {
-    phone: "0706918919",
-    password: "0706918919",
-    savings: 2300,
-    monthly: [0,0,500,200,250,50,100,50,350,800],
-    note: "On 13TH October , borrowed a loan of 1500, repayment amount 1680 ,period 7 days."
-  },
+ "FAITH MOKOGI": {
+  phone: "0706918919",
+  password: "0706918919",
+  savings: 2300,
+  monthly: [0,0,500,200,250,50,100,50,350,800],
+  note: "1) On 13TH October, borrowed a loan of 1500 (repayment amount 1680, period 7 days).\n2) Loan successfully paid on 24th October (full payment).",
+  fines: "90-as of 2nd nov 25 paid 0 not paid 30"
+},
+
+
   "SADLER KARAN": {
     phone: "0791730719",
     password: "0791730719",
     savings: 600,
     monthly: [0,0,200,200,150,50,0,0,0],
-    note: ""
+    note: "",
+    fines: "240-as of 2nd nov 25 paid 90 not paid 150"
   },
   "SHARON CHEPTOO": {
     phone: "0768675656",
     password: "0768675656",
     savings: 800,
     monthly: [0,0,0,0,250,150,150,100,150],
-    note: "sharon you are required to clear you debt of 600 as of 19 october"
+    note: "sharon you are required to clear you debt of 1000 as of 2nd Nov 2025",
+    fines: "90-as of 2nd nov 25 paid 0 not paid 90"
   },
   "SHAMIM KAMASH": {
     phone: "0725979420",
     password: "0725979420",
     savings: 900,
     monthly: [0,0,0,0,200,150,50,250,200,50],
-    note: " "
+    note: " ",
+    fines: ""
   },
   "CLAUDIA MORAA": {
     phone: "0741520782",
     password: "0741520782",
     savings: 1050,
     monthly: [0,0,0,0,0,100,400,300,200,50],
-    note: " "
+    note: " ",
+    fines: ""
   },
   "ESTHER OBEGI": {
     phone: "0748845363",
     password: "0748845363",
     savings: 500,
     monthly: [0,0,0,0,0,0,0,500,0],
-    note: " "
+    note: " ",
+    fines: ""
   },
   "DENNIS KIEYA": {
     phone: "0706150465",
     password: "@dennis12",
     savings: 150,
     monthly: [0,0,0,0,0,0,0,0,100,50],
-    note: " "
+    note: " ",
+    fines: ""
   },
   "BRIGIDE NYABERI": {
     phone: "0716011603",
@@ -4958,6 +5057,32 @@ function renderSortedMembers(sortedData) {
     wrapper.addEventListener('mouseenter', () => tooltip.style.visibility = 'visible');
     wrapper.addEventListener('mouseleave', () => tooltip.style.visibility = 'hidden');
   });
+function openFinesModal() {
+  const memberName = document.getElementById("memberDisplay").innerText.trim();
+  const member = members[memberName];
+  const finesText = document.getElementById("personalFines");
+
+  if (member && member.fines) {
+    finesText.innerHTML = `<div class="fine-text">${member.fines}</div>`;
+  } else {
+    finesText.innerHTML = "<p style='color:green;'>✅ You currently have no recorded fines.</p>";
+  }
+
+  document.getElementById("finesModal").style.display = "block";
+}
+
+function closeFinesModal() {
+  document.getElementById("finesModal").style.display = "none";
+}
+
+// Optional: close modal when clicking outside the fines popup
+window.onclick = function(event) {
+  const modal = document.getElementById("finesModal");
+  if (event.target === modal) {
+    modal.style.display = "none";
+  }
+};
+
 
 
 </script>
