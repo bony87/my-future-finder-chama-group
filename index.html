@@ -885,6 +885,9 @@ table th {
   text-align: center;
 }
 
+#personalNote {
+  font-weight: bold;
+}
 
 
 
@@ -893,6 +896,39 @@ table th {
   </style>
 </head>
 <body>
+  <!-- 💸 Member Fines Popup -->
+<div id="finePopup" style="
+  display:none;
+  position:fixed;
+  top:0; left:0; width:100%; height:100%;
+  background:rgba(0,0,0,0.6);
+  z-index:9999;
+  align-items:center;
+  justify-content:center;
+">
+  <div style="
+    background:white;
+    padding:25px;
+    border-radius:10px;
+    max-width:450px;
+    width:90%;
+    box-shadow:0 5px 15px rgba(0,0,0,0.3);
+    text-align:center;
+    position:relative;
+  ">
+    <h2 style="color:#c62828;">💸 Fines Summary</h2>
+    <p id="fineText" style="font-size:16px; color:#333; margin:20px 0;">Loading your fines...</p>
+    <button onclick="closeFinePopup()" style="
+      background:#c62828;
+      color:white;
+      padding:10px 20px;
+      border:none;
+      border-radius:5px;
+      cursor:pointer;
+    ">Close</button>
+  </div>
+</div>
+
   <!-- 🗒️ Member Note Popup -->
 <div id="notePopup" style="
   display:none;
@@ -913,7 +949,7 @@ table th {
     text-align:center;
     position:relative;
   ">
-    <h2 style="color:#2e7d32;">🗒️ Personal Note</h2>
+    <h2 style="color:#2e7d32;">🗒️ Personal Note/your fines </h2>
     <p id="noteText" style="font-size:16px; color:#333; margin:20px 0;">Loading your note...</p>
     <button onclick="closeNotePopup()" style="
       background:#2e7d32;
@@ -1703,8 +1739,9 @@ table th {
 <a class="action-btn" onclick="showCurrentSavings()">💰 View Current Savings</a>
 <a class="action-btn" onclick="showMonthlySavings()">📊 View Monthly Savings</a>
 <button class="check-loan-btn" onclick="checkLoan()">🔍 Check Loan Eligibility</button>
-<button class="action-btn" onclick="openNotePopup()">🗒️ View Note</button>
-<button class="action-btn" onclick="openFinesModal()">💸 View Fines</button>
+<button class="action-btn" onclick="openNotePopup()">🗒️ View Note/fines</button>
+
+
 
 
 <!-- 🚪 Member Logout -->
@@ -1732,63 +1769,13 @@ table th {
 
 <!-- 🗒️ Personal Member Note Section -->
 <div id="memberNoteSection" style="margin-top:30px; background:#e8f5e9; padding:15px; border-radius:8px; display:none;">
-  <h3 style="color:#2e7d32;">🗒️ Your Note</h3>
-  <p id="personalNote" style="font-size:16px; color:#333;">Welcome! Your note will appear here after login.</p>
+  <h3 style="color:#2e7d32;">🗒️ Your Note / Fines</h3>
+  <p id="personalNote" style="font-size:16px; color:#333; font-weight:bold;">
+    Welcome! Your note will appear here after login.
+  </p>
 </div>
-<!-- 💸 Fines Modal -->
-<div id="finesModal" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closeFinesModal()">&times;</span>
-    <h3 style="color:#e65100;">💸 Your Fines</h3>
-    <p id="personalFines" style="font-size:16px; color:#333;">You currently have no fines.</p>
-  </div>
-</div>
-<style>
-/* 💸 Modal Overlay */
-.modal {
-  display: none; 
-  position: fixed; 
-  z-index: 1001; 
-  padding-top: 100px; 
-  left: 0;
-  top: 0;
-  width: 100%; 
-  height: 100%; 
-  overflow: auto;
-  background-color: rgba(0,0,0,0.4);
-}
 
-/* 💸 Modal Box */
-.modal-content {
-  background-color: #fff3e0;
-  margin: auto;
-  padding: 20px;
-  border: 2px solid #e65100;
-  border-radius: 10px;
-  width: 80%;
-  max-width: 500px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  animation: fadeIn 0.4s;
-}
 
-/* ❌ Close Button */
-.close {
-  color: #e65100;
-  float: right;
-  font-size: 24px;
-  font-weight: bold;
-  cursor: pointer;
-}
-.close:hover {
-  color: #b71c1c;
-}
-
-/* ✨ Animation */
-@keyframes fadeIn {
-  from {opacity: 0; transform: translateY(-20px);}
-  to {opacity: 1; transform: translateY(0);}
-}
-</style>
 
 
 <h4>📊 Group Contributions</h4>
@@ -2304,12 +2291,13 @@ table th {
 
 const members = {
   "BONIFACE CHELLUGET": {
-    phone: "0713953004",
-    password: "0713953004",
-    savings: 3000,
-    monthly: [300,300,300,300,300,300,300,300,300],
-    note: "Consistent saver — eligible for next loan review.",
-   fines: "nil as of 2nd nov 25"
+    "phone": "0713953004",
+    "password": "0713953004",
+    "savings": 3000,
+    "monthly": [300, 300, 300, 300, 300, 300, 300, 300, 300],
+    "note": "Consistent saver — eligible for next loan review. Fines: nil as of 2nd Nov 25."
+
+
   },
   "HILDA ODERO": {
     phone: "0795341320",
@@ -2317,7 +2305,7 @@ const members = {
     savings: 900,
     monthly: [400,200,100,200],
     note: "Missed March payment — follow up on consistency.",
-    fines: ""
+    
   },
   "JOEL EGESA": {
     phone: "0768039551",
@@ -2325,7 +2313,7 @@ const members = {
     savings: 1220,
     monthly: [200,0,20,500],
     note: "New member; low savings but improving gradually.",
-    fines: ""
+    
   },
   "SHALIK SHIVERENGE": {
     phone: "0746277086",
@@ -2333,7 +2321,7 @@ const members = {
     savings: 250,
     monthly: [250,0,0],
     note: "Needs encouragement to make regular deposits.",
-    fines: ""
+    
   },
   "EVERLINE MAINA": {
     phone: "0701360180",
@@ -2387,56 +2375,56 @@ const members = {
     password: "0741939235",
     savings: 1250,
     monthly: [300,300,300,0,0,0,0,100,250],
-    note: "1.Consistent saver, possible for small loan soon. 2.sent 1500 on 20 october as a patial payment for mery-go-round.",
-    fines: "240-as of 2nd Nov 25, paid 180 not paid 60"
+    note: "1.Consistent saver, possible for small loan soon. 2.sent 1500 on 20 october as a patial payment for mery-go-round.240-as of 2nd Nov 25, paid 180 not paid 60",
+   
   },
   "JANET NYAKUNDI": {
     phone: "0706753288",
     password: "0706753288",
     savings: 250,
     monthly: [150,0,100,0,0,0,0,0,0],
-    note: "you have a debt payment of 850",
-    fines: "90-as of 2nd nov 25 paid 0 not paid 60"
+    note: "you have a debt payment of 850 .90-as of 2nd nov 25 paid 0 not paid 60",
+   
   },
   "ANASTANCIA OMWOYO": {
     phone: "0748442547",
     password: "0748442547",
     savings: 1850,
     monthly: [250,150,200,200,200,150,100,250,200,50],
-    note: " ",
-    fines: "90-as of 2nd nov 25 paid 0 not paid 90"
+    note: "fines: 0-as of 2nd nov 25 ",
+    
   },
   "PIUS NYAKUNDI": {
     phone: "0716845165",
     password: "0716845165",
     savings: 1050,
     monthly: [150,200,200,0,100,100,100,150,150,50],
-    note: "on 13 oct requested for no exchange with judy - request approved ",
-    fines: "120-as of 2nd nov 25 paid 0 not paid 120"
+    note: "fines:120-as of 2nd nov 25 paid 0 not paid 120 on 13 oct requested for no exchange with judy - request approved.",
+   
   },
   "SAMUEL OYUGI": {
     phone: "0796860412",
     password: "0796860412",
     savings: 3900,
     monthly: [400,300,500,400,400,500,400,500,400,100],
-    note: "Very active; good candidate for larger loans.",
-    fines: "360-as of 2nd nov 25 paid 0 not paid 360"
+    note: "fines:360-as of 2nd nov 25 paid 0 not paid 360 1.Very active; good candidate for larger loans.",
+
   },
   "PURITY MOMANYI": {
     phone: "0103155480",
     password: "0103155480",
     savings: 4400,
     monthly: [200,200,1200,950,800,400,350,100,200],
-    note: "High savings rate — leadership potential.",
-    fines: "30-as of 2nd nov 25 paid 30 not paid 0"
+    note: "fines: 30-as of 2nd nov 25 paid 30 not paid 0High savings rate — leadership potential.",
+   
   },
   "KEFFA MOMANYI": {
     phone: "0759237482",
     password: "0759237482",
     savings: 1850,
     monthly: [250,200,200,200,200,250,200,150,200,50],
-    note: " ",
-    fines: "60-as of 2nd nov 25 paid 0 not paid 60"
+    note: "1. on 4th nov borrowered 300.60-as of 2nd nov 25 paid 0 not paid 60 ",
+    fines: ""
   },
   "KENNEDY MUTAYI": {
     phone: "0724124735",
@@ -2444,31 +2432,31 @@ const members = {
     savings: 6000,
     monthly: [750,450,750,600,600,750,600,750,600,150],
     note: " ",
-    fines: ""
+   
   },
   "MIKE MORRIS": {
     phone: "0115570301",
     password: "0115570301",
     savings: 300,
     monthly: [0,0,100,50,0,0,0,150,0],
-    note: " ",
-    fines: "150-as of 2nd nov 25 paid 120 not paid 30"
+    note: " fines:150-as of 2nd nov 25 paid 120 not paid 30",
+    
   },
   "DAVY OMBATI": {
     phone: "0793547166",
     password: "0793547166",
     savings: 250,
     monthly: [0,0,50,0,0,0,200,0,0],
-    note: " ",
-    fines: "150-as of 2nd nov 25 paid 90 not paid 60"
+    note: "fines:150-as of 2nd nov 25 paid 90 not paid 60 ",
+    
   },
  "FAITH MOKOGI": {
   phone: "0706918919",
   password: "0706918919",
   savings: 2300,
   monthly: [0,0,500,200,250,50,100,50,350,800],
-  note: "1) On 13TH October, borrowed a loan of 1500 (repayment amount 1680, period 7 days).\n2) Loan successfully paid on 24th October (full payment).",
-  fines: "90-as of 2nd nov 25 paid 0 not paid 30"
+  note: "fines:90-as of 2nd nov 25 paid 0 not paid 30 1) On 13TH October, borrowed a loan of 1500 (repayment amount 1680, period 7 days).\n2) Loan successfully paid on 24th October (full payment).",
+ 
 },
 
 
@@ -2477,16 +2465,16 @@ const members = {
     password: "0791730719",
     savings: 600,
     monthly: [0,0,200,200,150,50,0,0,0],
-    note: "",
-    fines: "240-as of 2nd nov 25 paid 90 not paid 150"
+    note: "fines: 240-as of 2nd nov 25 paid 90 not paid 150",
+   
   },
   "SHARON CHEPTOO": {
     phone: "0768675656",
     password: "0768675656",
     savings: 800,
     monthly: [0,0,0,0,250,150,150,100,150],
-    note: "sharon you are required to clear you debt of 1000 as of 2nd Nov 2025",
-    fines: "90-as of 2nd nov 25 paid 0 not paid 90"
+    note: "fines: 90-as of 2nd nov 25 paid 0 not paid 90sharon you are required to clear you debt of 1000 as of 2nd Nov 2025",
+    
   },
   "SHAMIM KAMASH": {
     phone: "0725979420",
@@ -2494,7 +2482,7 @@ const members = {
     savings: 900,
     monthly: [0,0,0,0,200,150,50,250,200,50],
     note: " ",
-    fines: ""
+    
   },
   "CLAUDIA MORAA": {
     phone: "0741520782",
@@ -2502,7 +2490,7 @@ const members = {
     savings: 1050,
     monthly: [0,0,0,0,0,100,400,300,200,50],
     note: " ",
-    fines: ""
+ 
   },
   "ESTHER OBEGI": {
     phone: "0748845363",
@@ -2510,7 +2498,7 @@ const members = {
     savings: 500,
     monthly: [0,0,0,0,0,0,0,500,0],
     note: " ",
-    fines: ""
+  
   },
   "DENNIS KIEYA": {
     phone: "0706150465",
@@ -2518,7 +2506,7 @@ const members = {
     savings: 150,
     monthly: [0,0,0,0,0,0,0,0,100,50],
     note: " ",
-    fines: ""
+    
   },
   "BRIGIDE NYABERI": {
     phone: "0716011603",
@@ -2744,6 +2732,13 @@ function login() {
   const noteParagraph = document.getElementById("personalNote");
   noteParagraph.innerText = member.note || "No note available for this member yet.";
   noteSection.style.display = "block";
+// 💸 Show their fines
+const finesSection = document.getElementById("memberFinesSection");
+const finesParagraph = document.getElementById("personalFines");
+finesParagraph.innerText = (member.fines && member.fines.trim() !== "")
+  ? member.fines
+  : "No fines recorded for this member.";
+finesSection.style.display = "block";
 
     // ===========================
     // 🔐 Table Edit Permissions Only
@@ -5057,31 +5052,22 @@ function renderSortedMembers(sortedData) {
     wrapper.addEventListener('mouseenter', () => tooltip.style.visibility = 'visible');
     wrapper.addEventListener('mouseleave', () => tooltip.style.visibility = 'hidden');
   });
-function openFinesModal() {
-  const memberName = document.getElementById("memberDisplay").innerText.trim();
-  const member = members[memberName];
-  const finesText = document.getElementById("personalFines");
 
-  if (member && member.fines) {
-    finesText.innerHTML = `<div class="fine-text">${member.fines}</div>`;
-  } else {
-    finesText.innerHTML = "<p style='color:green;'>✅ You currently have no recorded fines.</p>";
-  }
+function showFinePopup(fines) {
+  const finePopup = document.getElementById("finePopup");
+  const fineText = document.getElementById("fineText");
 
-  document.getElementById("finesModal").style.display = "block";
+  fineText.innerText = (fines && fines.trim() !== "")
+    ? fines
+    : "No fines recorded.";
+
+  finePopup.style.display = "flex";
 }
 
-function closeFinesModal() {
-  document.getElementById("finesModal").style.display = "none";
+function closeFinePopup() {
+  document.getElementById("finePopup").style.display = "none";
 }
 
-// Optional: close modal when clicking outside the fines popup
-window.onclick = function(event) {
-  const modal = document.getElementById("finesModal");
-  if (event.target === modal) {
-    modal.style.display = "none";
-  }
-};
 
 
 
