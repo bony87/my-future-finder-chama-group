@@ -1,0 +1,5132 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Future Finders Chama Group</title>
+<style>
+   body { 
+  font-family: Arial, sans-serif; 
+  margin: 0; 
+  padding: 0; 
+  background: #f9f9f9; 
+  padding-bottom: 60px; /* prevent overlap with footer */
+}
+
+header { 
+  background: #00695c; 
+  color: white; 
+  padding: 1.5rem; 
+  text-align: center; 
+}
+
+/* NAV BUTTONS */
+#navButtons { 
+  display: flex; 
+  flex-wrap: wrap; 
+  gap: 0.8rem; 
+  justify-content: center; 
+  margin: 1.5rem; 
+}
+
+.nav-btn {
+  flex: 1 1 180px; 
+  background-color: #00796b; 
+  color: white;
+  padding: 1rem; 
+  text-align: center; 
+  border-radius: 6px;
+  text-decoration: none; 
+  font-weight: bold; 
+  position: relative;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.2); 
+  cursor: pointer;
+}
+.nav-btn:hover { background-color: #004d40; }
+
+/* Spinner */
+.spinner {
+  display: none; 
+  border: 3px solid #f3f3f3; 
+  border-top: 3px solid white;
+  border-radius: 50%; 
+  width: 18px; 
+  height: 18px; 
+  animation: spin 1s linear infinite;
+  position: absolute; 
+  right: 12px; 
+  top: 50%; 
+  transform: translateY(-50%);
+}
+@keyframes spin { 
+  0% { transform: translateY(-50%) rotate(0deg);} 
+  100% { transform: translateY(-50%) rotate(360deg);} 
+}
+
+/* Sections */
+section {
+  padding: 2rem; 
+  background: white; 
+  margin: 1rem auto; 
+  border-radius: 8px;
+  max-width: 900px; 
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1); 
+  display: none;
+}
+section.active { display: block; }
+
+input, select {
+  padding: 10px; 
+  margin: 10px auto; 
+  width: 80%; 
+  display: block;
+  border: 1px solid #ccc; 
+  border-radius: 5px;
+}
+
+.action-btn {
+  display: block; 
+  background-color: #388e3c; 
+  color: white;
+  padding: 0.9rem; 
+  margin: 0.5rem auto; 
+  text-align: center;
+  border-radius: 6px; 
+  text-decoration: none; 
+  font-weight: bold;
+  position: relative; 
+  max-width: 250px; 
+  cursor: pointer;
+}
+.action-btn:hover { background-color: #1b5e20; }
+
+#dashboard, #admin { 
+  display: none; 
+  padding: 1rem; 
+  border-radius: 6px; 
+  margin-top: 20px; 
+  background: #f1f8e9; 
+}
+
+/* Popup Overlay */
+.popup-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Popup Box */
+.popup-box {
+  background: white;
+  padding: 20px 30px;
+  border-radius: 10px;
+  text-align: center;
+  max-width: 350px;
+  box-shadow: 0px 5px 15px rgba(0,0,0,0.3);
+  animation: popupFade 0.3s ease;
+}
+
+.popup-box h3 {
+  margin-bottom: 10px;
+}
+
+.popup-success {
+  border-top: 6px solid #4caf50;
+}
+.popup-error {
+  border-top: 6px solid #f44336;
+}
+
+.popup-btn {
+  margin-top: 15px;
+  padding: 8px 16px;
+  background: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+@keyframes popupFade {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* Glow effect */
+.glow {
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 0 5px #ff0, 0 0 10px #ff0, 0 0 20px #ffa500;
+  font-size: 18px;
+}
+
+/* Footer */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #111;
+  color: white;
+  text-align: center;
+  padding: 12px 0;
+  z-index: 1000;
+  overflow: hidden;
+}
+
+/* Modern marquee effect */
+.footer-marquee {
+  display: inline-block;
+  white-space: nowrap;
+  animation: marquee 12s linear infinite;
+}
+
+@keyframes marquee {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(-100%); }
+}
+/* Check Loan Eligibility Button */
+.check-loan-btn {
+  background: linear-gradient(135deg, #1976d2, #0d47a1);
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  display: inline-block;
+}
+
+.check-loan-btn:hover {
+  background: linear-gradient(135deg, #2196f3, #1565c0);
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+}
+
+.check-loan-btn:active {
+  transform: scale(0.97);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+/* Shake animation */
+@keyframes shake {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-5px); }
+  40% { transform: translateX(5px); }
+  60% { transform: translateX(-5px); }
+  80% { transform: translateX(5px); }
+  100% { transform: translateX(0); }
+}
+
+.shake {
+  animation: shake 0.4s ease;
+}
+/* Red glow effect */
+.input-error {
+  border: 2px solid #f44336 !important;
+  box-shadow: 0 0 8px #f44336;
+}
+/* 🎲 Dice container */
+#diceBox {
+  width: 80px;
+  height: 80px;
+  margin: 20px auto;
+  background: #fff;
+  border: 3px solid #333;
+  border-radius: 12px;
+  font-size: 30px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  transition: transform 0.6s ease;
+}
+
+/* Rolling animation */
+.roll {
+  animation: rollDice 0.3s linear infinite;
+}
+
+@keyframes rollDice {
+  0%   { transform: rotate(0deg); }
+  25%  { transform: rotate(90deg); }
+  50%  { transform: rotate(180deg); }
+  75%  { transform: rotate(270deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Pop-up effect when showing final number */
+.lucky-popup {
+  animation: popUp 0.6s ease forwards;
+  color: #1976d2;
+}
+
+@keyframes popUp {
+  0%   { transform: scale(0.2); opacity: 0; }
+  60%  { transform: scale(1.3); opacity: 1; }
+  100% { transform: scale(1); }
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+/* Contact Buttons */
+.contact-btn {
+  display: inline-block;
+  margin: 8px;
+  padding: 12px 18px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  color: white;
+  transition: transform 0.2s ease, opacity 0.3s;
+}
+
+.contact-btn:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+/* Specific colors */
+.contact-btn.email {
+  background: #1976d2; /* Blue */
+}
+.contact-btn.phone {
+  background: #d32f2f; /* Red */
+}
+.contact-btn.whatsapp {
+  background: #25d366; /* WhatsApp Green */
+}
+/* Initial hidden state */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+/* Visible state */
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+/* show password css */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+  margin-top: 10px;
+  vertical-align: middle;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0;
+  right: 0; bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 24px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #388e3c; /* Green when active */
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+.toggle-label {
+  margin-left: 60px;
+  font-size: 14px;
+  color: #333;
+}
+/* About Us Section */
+#about {
+  background: #f9f9f9;
+  padding: 40px 20px;
+  border-radius: 10px;
+  margin: 20px auto;
+  max-width: 900px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+#about h2 {
+  text-align: center;
+  font-size: 28px;
+  color: #1976d2;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #1976d2;
+  display: inline-block;
+  padding-bottom: 5px;
+}
+
+#about h3 {
+  margin-top: 20px;
+  font-size: 22px;
+  color: #333;
+  border-left: 4px solid #1976d2;
+  padding-left: 10px;
+}
+
+#about p {
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 10px 0;
+  color: #444;
+}
+
+#about ul {
+  list-style: none;
+  padding: 0;
+}
+
+#about ul li {
+  background: #e3f2fd;
+  margin: 8px 0;
+  padding: 10px 12px;
+  border-radius: 6px;
+  font-size: 16px;
+  color: #1976d2;
+  transition: transform 0.2s ease, background 0.3s;
+}
+
+#about ul li:hover {
+  transform: scale(1.05);
+  background: #bbdefb;
+}
+
+/* About Logo/Image */
+#about img {
+  transition: transform 0.4s ease;
+}
+
+#about img:hover {
+  transform: scale(1.1) rotate(3deg);
+}
+body {
+  background-image: url("https://github.com/bony87/my-future-finder-chama-group/blob/main/ChatGPT%20Image%20Sep%2010,%202025,%2005_43_14%20PM.png?raw=true");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  position: relative;
+  z-index: 0;
+}
+
+/* Overlay */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.8); /* White overlay, 80% opaque */
+  z-index: -1; /* Push behind content */
+}
+/* Dice styling */
+#diceBox {
+  font-size: 70px;
+  text-align: center;
+  margin: 20px auto;
+  width: 100px;
+  height: 100px;
+  line-height: 100px;
+  border: 3px solid #1976d2;
+  border-radius: 12px;
+  background: white;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+/* Rolling spin */
+#diceBox.roll {
+  animation: rollDice 0.5s infinite;
+}
+
+@keyframes rollDice {
+  0%   { transform: rotate(0deg);   }
+  25%  { transform: rotate(90deg);  }
+  50%  { transform: rotate(180deg); background:#ffeb3b; } /* yellow flash */
+  75%  { transform: rotate(270deg); background:#4caf50; } /* green flash */
+  100% { transform: rotate(360deg); background:#f44336; } /* red flash */
+}
+
+
+@keyframes rollDice {
+  0%   { transform: rotate(0deg);   }
+  25%  { transform: rotate(90deg);  }
+  50%  { transform: rotate(180deg); }
+  75%  { transform: rotate(270deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+@keyframes rollDice {
+  0%   { transform: rotate(0deg);   }
+  25%  { transform: rotate(90deg);  }
+  50%  { transform: rotate(180deg); }
+  75%  { transform: rotate(270deg); }
+  100% { transform: rotate(360deg); }
+}
+.spinner {
+  display: none;
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid white;
+  border-radius: 50%;
+  width: 14px;
+  height: 14px;
+  animation: spin 1s linear infinite;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+/* Container for the form */
+#registerForm {
+  width: 320px;
+  margin: 30px auto;
+  padding: 20px;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+/* Form Title */
+#registerForm h3 {
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 20px;
+}
+
+/* Input fields */
+#registerForm input {
+  width: 90%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  transition: border 0.3s;
+}
+
+#registerForm input:focus {
+  border-color: #1976d2;
+  outline: none;
+}
+
+/* Register button */
+#registerForm button {
+  width: 95%;
+  padding: 12px;
+  margin-top: 15px;
+  background: #1976d2;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+#registerForm button:hover {
+  background: #1565c0;
+}
+
+/* Back to services button */
+.action-btn {
+  display: inline-block;
+  padding: 10px 18px;
+  margin: 20px auto;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 14px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.action-btn:hover {
+  background: #b71c1c !important;
+}
+.summary-card {
+  flex: 1;
+  min-width: 220px;
+  padding: 12px;
+  background: #f4f6f9;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-weight: bold;
+  color: #333;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.fade-out {
+  animation: fadeOut 0.6s ease forwards;
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(0.97); }
+}
+.fade-in {
+  animation: fadeIn 0.6s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.97); }
+  to { opacity: 1; transform: scale(1); }
+}
+/* Popup Box */
+.popup-box {
+  background: white;
+  padding: 20px 30px;
+  border-radius: 10px;
+  text-align: center;
+  max-width: 350px;
+  box-shadow: 0px 5px 15px rgba(0,0,0,0.3);
+  animation: slideIn 0.5s ease forwards;
+  transform: translateY(-30px);
+  opacity: 0;
+}
+
+@keyframes slideIn {
+  from { transform: translateY(-30px); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+
+
+/* General Button Styles */
+.download-btn {
+  margin-top: 10px;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #fff;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.download-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.csv-btn {
+  background: #388e3c;
+}
+
+.pdf-btn {
+  background: #1976d2;
+}
+
+.latest-btn {
+  background: #009688;
+}
+
+/* Toast Notification */
+.toast {
+  visibility: hidden;
+  min-width: 250px;
+  margin-left: -125px;
+  background: #323232;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 12px;
+  position: fixed;
+  z-index: 9999;
+  left: 50%;
+  bottom: 30px;
+  font-size: 14px;
+  opacity: 0;
+  transition: opacity 0.5s, bottom 0.5s;
+}
+
+.toast.show {
+  visibility: visible;
+  opacity: 1;
+  bottom: 50px;
+}
+
+.download-btn {
+  margin: 2px;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #fff;
+}
+.pdf-btn { background: #1976d2; }
+
+/* General Card Layout */
+.card {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+}
+
+/* Buttons */
+.action-btn {
+  display: inline-block;
+  margin: 6px 4px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  background: #00796b;
+  color: white;
+  transition: 0.2s;
+}
+.action-btn:hover { opacity: 0.9; }
+.action-btn.primary { background: #1976d2; }
+.action-btn.danger { background: #d32f2f; }
+
+/* Spinner inside button */
+.spinner {
+  display: none;
+  margin-left: 8px;
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid white;
+  border-radius: 50%;
+  width: 14px;
+  height: 14px;
+  animation: spin 1s linear infinite;
+  vertical-align: middle;
+}
+@keyframes spin { 100% { transform: rotate(360deg); } }
+
+/* Password Input */
+.password-container {
+  display: flex;
+  align-items: center;
+  margin: 12px 0;
+}
+.password-container input {
+  flex: 1;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+.password-container .toggle-eye {
+  margin-left: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* Info Box */
+.info-box {
+  margin: 20px 0;
+  padding: 15px;
+  background: #e3f2fd;
+  border-left: 6px solid #1976d2;
+  border-radius: 8px;
+}
+
+/* Tables */
+.table-container {
+  overflow-x: auto;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+}
+table th, table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+table th {
+  background: #00796b;
+  color: white;
+}
+.highlight {
+  background: #17da48 !important;
+}
+
+/* Download buttons */
+.download-buttons {
+  margin: 15px 0;
+}
+.download-btn {
+  margin: 5px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  color: white;
+}
+.csv-btn { background: #388e3c; }
+.pdf-btn { background: #1976d2; }
+
+/* Toast */
+.toast {
+  visibility: hidden;
+  min-width: 250px;
+  background: #323232;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 12px;
+  position: fixed;
+  z-index: 9999;
+  left: 50%;
+  bottom: 30px;
+  transform: translateX(-50%);
+  font-size: 14px;
+  opacity: 0;
+  transition: opacity 0.5s, bottom 0.5s;
+}
+.toast.show {
+  visibility: visible;
+  opacity: 1;
+  bottom: 50px;
+}
+
+
+#countdown {
+      font-size: 1.5em;
+      font-weight: bold;
+      padding: 15px;
+      border: 2px solid;
+      display: inline-block;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    .green { background: #e8f5e9; border-color: #4caf50; color: #2e7d32; }
+    .yellow { background: #fffde7; border-color: #ffeb3b; color: #f57f17; }
+    .red { background: #ffebee; border-color: #f44336; color: #b71c1c; }
+
+    /* Progress Bar */
+    .progress-container {
+      width: 80%;
+      background: #ddd;
+      border-radius: 10px;
+      margin: 0 auto;
+      height: 20px;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%;
+      text-align: center;
+      line-height: 20px;
+      color: white;
+      width: 100%;
+      transition: width 1s linear;
+    }
+    .progress-green { background: #4caf50; }
+    .progress-yellow { background: #ff9800; }
+    .progress-red { background: #f44336; }
+
+#countdownBar > span:first-child {
+  font-weight: 700;
+  font-size: 1.1rem;
+  padding: 6px 12px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #1976d2, #0d47a1);
+  color: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  letter-spacing: 0.5px;
+}
+
+
+.fine-text {
+  background: #ffebee;
+  border: 2px solid #c62828;
+  color: #b71c1c;
+  font-weight: bold;
+  padding: 10px 12px;
+  border-radius: 5px;
+  font-size: 17px;
+  text-align: center;
+}
+
+#personalNote {
+  font-weight: bold;
+}
+
+
+
+
+
+  </style>
+</head>
+<body>
+  <!-- 💸 Member Fines Popup -->
+<div id="finePopup" style="
+  display:none;
+  position:fixed;
+  top:0; left:0; width:100%; height:100%;
+  background:rgba(0,0,0,0.6);
+  z-index:9999;
+  align-items:center;
+  justify-content:center;
+">
+  <div style="
+    background:white;
+    padding:25px;
+    border-radius:10px;
+    max-width:450px;
+    width:90%;
+    box-shadow:0 5px 15px rgba(0,0,0,0.3);
+    text-align:center;
+    position:relative;
+  ">
+    <h2 style="color:#c62828;">💸 Fines Summary</h2>
+    <p id="fineText" style="font-size:16px; color:#333; margin:20px 0;">Loading your fines...</p>
+    <button onclick="closeFinePopup()" style="
+      background:#c62828;
+      color:white;
+      padding:10px 20px;
+      border:none;
+      border-radius:5px;
+      cursor:pointer;
+    ">Close</button>
+  </div>
+</div>
+
+  <!-- 🗒️ Member Note Popup -->
+<div id="notePopup" style="
+  display:none;
+  position:fixed;
+  top:0; left:0; width:100%; height:100%;
+  background:rgba(0,0,0,0.6);
+  z-index:9999;
+  align-items:center;
+  justify-content:center;
+">
+  <div style="
+    background:white;
+    padding:25px;
+    border-radius:10px;
+    max-width:450px;
+    width:90%;
+    box-shadow:0 5px 15px rgba(0,0,0,0.3);
+    text-align:center;
+    position:relative;
+  ">
+    <h2 style="color:#2e7d32;">🗒️ Personal Note/your fines </h2>
+    <p id="noteText" style="font-size:16px; color:#333; margin:20px 0;">Loading your note...</p>
+    <button onclick="closeNotePopup()" style="
+      background:#2e7d32;
+      color:white;
+      padding:10px 20px;
+      border:none;
+      border-radius:5px;
+      cursor:pointer;
+    ">Close</button>
+  </div>
+</div>
+
+    <!-- Success Popup -->
+<div id="successPopup" 
+     style="display:none; position:fixed; top:20px; right:20px; background:#4caf50; color:#fff; 
+            padding:10px 20px; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.2); 
+            font-weight:bold; z-index:1000;">
+  ✅ Download successful!
+</div>
+
+<!-- Fixed Countdown Bar -->
+<div id="countdownBar">
+<span>⏳ Weekly Contributions Countdown: </span>
+<span id="countdown">Loading...</span>
+</div>
+<!-- Progress Bar -->
+<div class="progress-container">
+<div class="progress-bar" id="progressBar">100%</div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+
+
+<!-- WhatsApp Contact Popup -->
+<div class="popup-overlay" id="whatsappOverlay">
+<div class="popup-box" style="max-width:400px; text-align:left;">
+<h3>💬 Describe Your Issue</h3>
+<textarea id="whatsappMessage" placeholder="Type your message here..." rows="4" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:6px; resize:none;"></textarea>
+<div style="margin-top:15px; text-align:right;">
+<button onclick="sendWhatsApp()" style="padding:10px 16px; background:#25d366; color:white; border:none; border-radius:6px; cursor:pointer; font-weight:bold;">
+        🚀 Send
+      </button>
+<button onclick="closeWhatsAppForm()" style="padding:10px 16px; background:#d32f2f; color:white; border:none; border-radius:6px; cursor:pointer;">
+        ❌ Cancel
+      </button>
+</div>
+</div>
+</div>
+<!-- Custom Popup -->
+<div class="popup-overlay" id="popup">
+<div class="popup-box" id="popupBox">
+<h3 id="popupTitle"></h3>
+<p id="popupMessage"></p>
+<button class="popup-btn" onclick="closePopup()">OK</button>
+</div>
+</div>
+<!-- Logo at the Top -->
+<div style="margin:20px 0; text-align:center;">
+<img alt="Future Finders Logo" src="https://github.com/bony87/my-future-finder-chama-group/blob/main/ChatGPT%20Image%20Sep%2010,%202025,%2005_43_14%20PM.png?raw=true" style="width:150px; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.2);"/>
+<p style="margin-top:10px; font-style:italic; color:#555;">Our Identity, Our Strength</p>
+</div>
+<!-- System Update Banner -->
+<div id="systemBanner" style="display:none; background:#1976d2; color:white; text-align:center; padding:10px; font-weight:bold; position:fixed; top:0; left:0; width:100%; z-index:2000;">
+<span id="bannerMessage">🚀 System Update: New features available!</span>
+<button onclick="closeBanner()" style="margin-left:20px; background:#fff; color:#1976d2; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;">✖ Close</button>
+</div>
+<header>
+<h1>🌍 Future Finders Chama Group</h1>
+<p>Empowering our members through savings, merry-go-round, and loans.</p>
+</header>
+<!-- NAVIGATION -->
+<div id="navButtons">
+<a class="nav-btn" onclick="simulateAction(this,'home')">🏠 Home <span class="spinner"></span></a>
+<a class="nav-btn" onclick="simulateAction(this,'about')">ℹ️ About Us <span class="spinner"></span></a>
+<a class="nav-btn" onclick="simulateAction(this,'membership')">👥 Membership <span class="spinner"></span></a>
+<a class="nav-btn" onclick="simulateAction(this,'picker')">🎲 Pick Number <span class="spinner"></span></a>
+<a class="nav-btn" onclick="simulateAction(this,'services')">💼 Services <span class="spinner"></span></a>
+<a class="nav-btn" onclick="simulateAction(this,'updates')">
+  📰 News 
+  <span id="newsBadge" style="display:none; color:red; font-weight:bold; margin-left:5px;">●</span>
+<span class="spinner"></span>
+</a>
+<a class="nav-btn" onclick="simulateAction(this,'loginForm')">🔑 Member Login <span class="spinner"></span></a>
+<a class="nav-btn" onclick="simulateAction(this,'adminLogin')">⚙️ Admin <span class="spinner"></span></a>
+<a class="nav-btn" onclick="simulateAction(this,'rules')">
+  📜 Rules and Regulations <span class="spinner"></span>
+</a>
+<a class="nav-btn" onclick="simulateAction(this,'contact')">📞 Contact <span class="spinner"></span>
+</a>
+<a class="nav-btn" id="backBtn" onclick="showAllButtons()" style="display:none; background:#d32f2f;">⬅️ Back to Menu <span class="spinner"></span></a>
+</div>
+<!-- 📜 Rules & Regulations (Green Theme with Tooltip) -->
+<section id="rules" style="background:#f5fff7; padding:30px; border-radius:12px; box-shadow:0 2px 12px rgba(0,0,0,0.08); font-family:'Poppins', sans-serif; color:#2e3b32;">
+  
+  <h2 style="text-align:center; color:#2e7d32; font-size:28px; margin-bottom:10px;">📜 Rules &amp; Regulations</h2>
+  <p style="text-align:center; color:#4e5d50; font-size:16px;">
+    These rules guide how members of <b>Future Finders Chama Group</b> operate, ensuring fairness, transparency, and unity among members.
+  </p>
+
+  <hr style="border:0; height:2px; background:#a5d6a7; margin:25px 0; border-radius:2px;">
+
+  <!-- Membership -->
+  <h3 style="color:#1b5e20;">👥 Membership</h3>
+  <ul style="line-height:1.8;">
+    <li>✅ Every member must register and keep their contact details up to date.</li>
+    <li>✅ New members may join only with approval from existing members.</li>
+    <li>✅ Membership becomes official after a minimum of <b>4 months</b> of active participation.</li>
+    <li>🆕 Starting <b>January 2026</b>, all new members will be required to register with a one-time fee of <b>Ksh 100</b>. This amount will be used to support logistics in case of any future <b>physical meetings</b>.</li>
+    <li>💡 From <b>2026 onwards</b>, the chama will have <b>two categories</b> of participation:
+      <ul style="margin-top:8px; line-height:1.6;">
+        <li>💎 <b>Category A:</b> Weekly contribution of <b>Ksh 200</b> + minimum savings of <b>Ksh 50</b>.</li>
+        <li>💼 <b>Category B:</b> Contribution of <b>Ksh 500 twice a month</b> + minimum savings of <b>Ksh 50</b>.</li>
+      </ul>
+    </li>
+  </ul>
+
+  <!-- Savings -->
+  <h3 style="color:#2e7d32;">💰 Savings &amp; Contributions</h3>
+  <ul style="line-height:1.8;">
+    <li>✅ Every member must contribute according to their chosen category.</li>
+    <li>✅ Savings above the minimum are encouraged and can increase loan eligibility.</li>
+    <li>✅ All weekly or bi-monthly contributions must be received by the agreed deadlines.</li>
+    <li>⚠️ Failure to pay by the deadline attracts a fine of <b>Ksh 30</b>, added to the member’s account.</li>
+    <li>✅ Savings and contributions records will be transparent and accessible to all members.</li>
+    <li>🎄 Members who have saved above <b>Ksh 1,500</b> for a continuous period of <b>12 months</b> will receive <b>70% of their total savings</b> shared back to their accounts on <b>Christmas Day</b>. The remaining <b>30%</b> will stay in their account for future <b>loans, investments, or emergencies</b>.</li>
+    <li>🎁 Members who started saving in the <b>middle of the year</b> and have saved for at least <b>6 months</b> with total savings above <b>Ksh 1,200</b> will receive <b>60% of their total savings</b> on <b>Christmas Day</b>, while the remaining <b>40%</b> remains for similar purposes.</li>
+  </ul>
+
+  <!-- Loans -->
+  <h3 style="color:#43a047;">🏦 Loans</h3>
+  <ul style="line-height:1.8;">
+    <li>✅ A member qualifies for a loan after saving at least <b>Ksh 1,500</b> and being active for <b>4 months</b>.</li>
+    <li>✅ Loans are given based on savings history and repayment ability.</li>
+    <li>✅ All loans must be approved by the leadership.</li>
+    <li>✅ Repayments must be done within the agreed period, with penalties for late payment.</li>
+    <li>💸 Upon loan repayment, the <b>interest earned</b> will be divided as follows:
+      <span style="position:relative; display:inline-block; cursor:pointer;">
+        <span style="background:#2e7d32; color:white; border-radius:50%; padding:3px 8px; font-size:13px; margin-left:6px;">?</span>
+        <span style="visibility:hidden; width:250px; background-color:#2e7d32; color:#fff; text-align:left; border-radius:8px; padding:8px; position:absolute; z-index:1; bottom:125%; left:50%; margin-left:-125px; opacity:0; transition:opacity 0.3s;">
+          📘 Example: If a member pays Ksh 500 interest — Ksh 200 (40%) goes to their savings, and Ksh 300 (60%) is shared among members.
+        </span>
+      </span>
+      <script>
+        const tooltip = document.currentScript.previousElementSibling;
+        const icon = tooltip.querySelector('span');
+        icon.addEventListener('mouseenter', () => tooltip.querySelectorAll('span')[1].style.visibility = 'visible');
+        icon.addEventListener('mouseleave', () => tooltip.querySelectorAll('span')[1].style.visibility = 'hidden');
+      </script>
+      <ul style="margin-top:8px; line-height:1.6;">
+        <li>🌿 <b>40%</b> of the interest goes back into the borrower’s <b>savings account</b>.</li>
+        <li>🤝 The remaining <b>60%</b> is shared among all members according to their individual <b>savings ratio</b>.</li>
+      </ul>
+    </li>
+  </ul>
+
+  <!-- Example box -->
+  <div style="background:#e8f5e9; border-left:5px solid #43a047; padding:12px 15px; border-radius:8px; margin:10px 0 25px;">
+    <p style="margin:0; color:#2e3b32;">
+      📘 <b>Detailed Example:</b> If a member borrows <b>Ksh 5,000</b> and repays with <b>Ksh 500 interest</b> —  
+      <br>✅ <b>Ksh 200 (40%)</b> goes back into their savings.  
+      <br>✅ <b>Ksh 300 (60%)</b> is shared among all members according to their total savings.  
+      <br>➡️ This encourages saving and rewards every member’s participation.
+    </p>
+  </div>
+
+  <!-- Conduct -->
+  <h3 style="color:#388e3c;">🤝 Conduct</h3>
+  <ul style="line-height:1.8;">
+    <li>✅ Respect, honesty, and transparency are expected in all group dealings.</li>
+    <li>✅ Members must attend scheduled meetings or provide an apology in advance.</li>
+    <li>✅ Confidentiality of group matters must be maintained.</li>
+  </ul>
+
+ <!-- Leadership --> 
+<h3 style="color:#1b5e20;">🧑‍💼 Leadership</h3>
+<ul style="line-height:1.8;">
+  <li>✅ The chama currently has <b>two leaders</b>:
+    <ul style="margin-top:8px; line-height:1.6;">
+      <li style="color:#2e7d32; font-weight:bold;">
+        <span style="position:relative; display:inline-block; cursor:pointer;">
+          💰 <b>Chairman:</b>
+          <span style="visibility:hidden; width:220px; background-color:#2e7d32; color:#fff; text-align:left; border-radius:8px; padding:6px 10px; position:absolute; z-index:1; bottom:125%; left:50%; margin-left:-110px; opacity:0; transition:opacity 0.3s;">
+            Founder of the group who oversees all financial matters and fund control.
+          </span>
+        </span> Founder of the group who oversees all <b>financial matters and fund control</b>, approves loans, and ensures proper allocation of contributions and welfare support.
+      </li>
+      <li style="color:#388e3c;">
+        <span style="position:relative; display:inline-block; cursor:pointer;">
+          👩‍💼 <b>Chairlady:</b>
+          <span style="visibility:hidden; width:220px; background-color:#388e3c; color:#fff; text-align:left; border-radius:8px; padding:6px 10px; position:absolute; z-index:1; bottom:125%; left:50%; margin-left:-110px; opacity:0; transition:opacity 0.3s;">
+            Assists in coordination, member welfare, communication, and monitoring contributions and activities.
+          </span>
+        </span> Assists in coordination, member welfare, communication, and helps monitor contributions and activities to ensure smooth operations.
+      </li>
+    </ul>
+  </li>
+  <li>✅ Since the chama operates <b>online</b>, leadership is kept minimal for efficiency and transparency.</li>
+  <li>✅ Both leaders oversee contributions, savings, loans, and welfare matters to ensure smooth group operations.</li>
+  <li>✅ Leaders serve for agreed terms and can be re-elected or replaced through a transparent vote by members.</li>
+  <li>✅ Regular updates on group finances and activities will be shared with all members to maintain accountability.</li>
+</ul>
+
+
+
+
+ <!-- Welfare -->
+<h3 style="color:#2e7d32;">💞 Member Assistance &amp; Welfare</h3>
+<ul style="line-height:1.8;">
+  <li>💐 If a member loses their <b>child</b>, or their <b>parent or guardian</b> passes away, every member will be required to contribute <b>Ksh 100</b> in support of the affected member.</li>
+  <li>🎂 To foster unity and care, members will also support each other during <b>birthdays</b>. Each member will receive a total of <b>Ksh 1,000</b> as birthday support, contributed collectively by members. 
+    <br>🎁 <b>Note:</b> Birthday gifts will be awarded <b>only to eligible members</b> who have total savings of <b>Ksh 1,500 and above</b>.
+  </li>
+  <li>🚑 In the event of a personal <b>emergency</b>, a member with total savings of <b>Ksh 1,500 and above</b> may be assisted with up to <b>30%</b> of their savings. When their turn to receive money comes, <b>20%</b> will be deducted to recover part of the assistance. This assistance applies <b>only once per round</b>.</li>
+  <li>❤️ Additional support may be provided upon agreement by members, depending on the situation and available funds.</li>
+</ul>
+
+<p style="margin-top:10px; color:#33691e; font-style:italic;">
+  💡 <b>Note:</b> Members are encouraged to plan their finances carefully to minimize frequent emergencies and ensure long-term stability within the group.
+</p>
+
+
+  <!-- Discipline -->
+  <h3 style="color:#558b2f;">⚖️ Disciplinary Actions</h3>
+  <ul style="line-height:1.8;">
+    <li>✅ Members who fail to meet obligations may face penalties or suspension.</li>
+    <li>✅ Continuous misconduct can lead to removal from the group.</li>
+    <li>✅ Disputes shall be resolved through dialogue and, if needed, a vote.</li>
+  </ul>
+
+  <hr style="border:0; height:2px; background:#a5d6a7; margin:25px 0; border-radius:2px;">
+
+  <p style="text-align:center; color:#1b5e20; font-style:italic;">
+    ⚠️ <b>Please adhere to all the above rules and regulations.</b><br>
+    For any questions or concerns, kindly reach out to the <b>Chairperson</b> through the <a href="#contact" style="color:#2e7d32; text-decoration:none; font-weight:bold;">Contact Section</a>.
+  </p>
+
+  <!-- Back Button -->
+  <div style="text-align:center; margin-top:25px;">
+    <a class="action-btn" onclick="simulateAction(this,'home')" 
+       style="background:#2e7d32; color:white; padding:12px 24px; border-radius:8px; text-decoration:none; font-weight:bold; box-shadow:0 2px 5px rgba(46,125,50,0.3);">
+      ⬅️ Back to Home <span class="spinner"></span>
+    </a>
+  </div>
+</section>
+
+
+<!-- 💼 Services -->
+<section id="services">
+<h2>💼 Our Services</h2>
+<ul style="list-style:none; padding:0; font-size:16px;">
+<li>💰 <b>Monthly Savings:</b> Contribute consistently and grow your financial discipline.</li>
+<li>📊 <b>Group Contributions:</b> Transparent tracking of all members' contributions.</li>
+<li>🏦 <b>Loan Services:</b> Apply for loans based on your savings history and eligibility.</li>
+<li>🎲 <b>Lucky Number Draw:</b> Fun reward system to encourage participation.</li>
+<li>📰 <b>System Updates:</b> Get notified instantly about changes and new features.</li>
+<li>🤝 <b>Member Support:</b> Assistance via WhatsApp, phone, or email directly from the app.</li>
+</ul>
+<!-- Optional Buttons -->
+<div style="margin-top:15px; display:flex; gap:10px; flex-wrap:wrap; justify-content:center;">
+<!-- Register Button -->
+<a class="action-btn" onclick="simulateAction(this,'membership')" style="background:#388e3c;">
+    📝 Register as Member <span class="spinner"></span>
+</a>
+<!-- Contact Button -->
+<a class="action-btn" onclick="simulateAction(this,'contact')" style="background:#1976d2;">
+    📞 Contact Support <span class="spinner"></span>
+</a>
+<!-- Back Button -->
+<a class="action-btn" onclick="simulateAction(this,'services')" style="background:#d32f2f; margin-top:15px;">
+    ⬅️ Back to Services <span class="spinner"></span>
+</a>
+</div>
+</section>
+<!-- 📰 News & Updates Section with Recurring Popup Reminder -->
+<section id="updates">
+  <h2>📰 News & Updates</h2>
+  <div id="newsFeed" style="margin-top:15px;">
+    <div style="background:#e8f5e9; border-left:6px solid #388e3c; padding:15px; border-radius:8px; margin-bottom:15px;">
+      <h3 style="color:#1b5e20;">🗓️ FUTURE FINDERS CHAMA GROUP – MEETING NOTICE</h3>
+      <p><b>Date:</b> Sunday<br>
+      <b>Time:</b> 8:30 PM<br>
+      <b>Platform:</b> WhatsApp Group</p>
+      <p><b>Agenda:</b></p>
+      <ol>
+        <li>🧾 Polishing of Rules & Regulations</li>
+        <li>📈 Chama Progress Discussion</li>
+        <li>💸 Fine of Ksh 30</li>
+      </ol>
+      <p style="font-style:italic; color:#2e7d32;">All members are requested to attend on time.<br>
+      Together we grow — <b>Future Finders, Our Identity, Our Strength.</b></p>
+      <div id="meetingCountdown" style="margin-top:20px; font-weight:bold; font-size:18px; color:#1976d2;"></div>
+    </div>
+  </div>
+
+  <!-- Global Popup Reminder -->
+  <div id="meetingPopup" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:99999; justify-content:center; align-items:center;">
+    <div style="background:white; padding:25px; border-radius:10px; text-align:center; max-width:350px; box-shadow:0 5px 15px rgba(0,0,0,0.3);">
+      <h2 style="color:#2e7d32;">⏰ Reminder!</h2>
+      <p style="font-size:16px; color:#333;">Your Future Finders Chama meeting is coming soon.<br>Stay ready for <b>Sunday 8:30 PM</b> on WhatsApp.</p>
+    </div>
+  </div>
+
+  <script>
+    const countdownElement = document.getElementById('meetingCountdown');
+    const popup = document.getElementById('meetingPopup');
+
+    function updateCountdown() {
+      const now = new Date();
+      const dayOfWeek = now.getDay(); // 0=Sunday
+      let meeting = new Date(now);
+
+      // Set to next Sunday 8:30 PM
+      meeting.setDate(now.getDate() + ((7 - dayOfWeek) % 7));
+      meeting.setHours(20, 30, 0, 0);
+
+      if (now > meeting) {
+        meeting.setDate(meeting.getDate() + 7);
+      }
+
+      const diff = meeting - now;
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      countdownElement.textContent = `⏳ Meeting starts in ${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+      if (diff < 0) {
+        countdownElement.textContent = '✅ Meeting is happening now on WhatsApp!';
+        clearInterval(interval);
+      }
+    }
+
+    // Function to show popup and close after 5s
+    function showPopup() {
+      popup.style.display = 'flex';
+      setTimeout(() => { popup.style.display = 'none'; }, 10000);
+    }
+
+    // Initial popup show
+    showPopup();
+
+    // Repeat popup every hour
+    setInterval(showPopup, 60 * 60 * 1000);
+
+    // Countdown updater
+    const interval = setInterval(updateCountdown, 1000);
+  </script>
+</section>
+
+<!-- Contact -->
+<section id="contact">
+<h2>📞 Contact Us</h2>
+<button class="contact-btn email" onclick="contactEmail()">📧 Email Us</button>
+<button class="contact-btn phone" onclick="contactPhone()">📞 Call Us</button>
+<button class="contact-btn whatsapp" onclick="contactWhatsApp()">💬 WhatsApp Chat</button>
+</section>
+<section class="active" id="home">
+<h2>🏠 Home</h2>
+<p>Welcome to Future Finders Chama. Together we save, invest, and grow.</p>
+</section>
+<!-- Random Picker -->
+<section id="picker">
+<h2>🎉 Random Number Picker</h2>
+<!-- Select member -->
+<label for="memberSelect"><b>Select Your Name:</b></label>
+<select id="memberSelect" required="">
+<option value="">-- Choose your name --</option>
+<option>BONIFACE CHELLUGET</option>
+<option>HILDA ODERO</option>
+<option>JOEL EGESA</option>
+<option>SHALIK SHIVERENGE</option>
+<option>EVERLINE MAINA</option>
+<option>ELVIS KAMASH</option>
+<option>JULIUS KEBASO</option>
+<option>CHRISTINE PIUS</option>
+<option>EDNAH NANCY</option>
+<option>JACKIENYARANGI</option>
+<option>JUDITH OMWOYO</option>
+<option>JANET NYAKUNDI</option>
+<option>ANASTANCIA OMWOYO</option>
+<option>PIUS NYAKUNDI</option>
+<option>SAMUEL OYUGI</option>
+<option>PURITY MOMANYI</option>
+<option>KEFFA MOMANYI</option>
+<option>KENNEDY MUTAYI</option>
+<option>MIKE MORRIS</option>
+<option>DAVY OMBATI</option>
+<option>FAITH MOKOGI</option>
+<option>SADLER KARAN</option>
+<option>SHARON CHEPTOO</option>
+<option>SHAMIM KAMASH</option>
+<option>CLAUDIA MORAA</option>
+<option>ESTHER OBEGI</option>
+</select>
+<!-- Choose send method -->
+<div style="margin: 10px 0;">
+<label><input name="sendOption" type="radio" value="whatsapp"/> Send via WhatsApp 💬</label>
+</div>
+<!-- Pick button -->
+<a class="action-btn" id="pickBtn" onclick="pickNumber()">
+  Pick Lucky Number <span class="spinner"></span>
+</a>
+<div id="diceBox">🎲</div>
+<div id="result" style="text-align:center; font-size:18px; margin-top:10px;"></div>
+<audio id="diceSound" preload="auto" src="dice-roll.mp3"></audio>
+<p id="result"></p>
+</section>
+<!-- ℹ️ About Us -->
+<section id="about">
+<h2>ℹ️ About Us</h2>
+<p>
+    Welcome to <b>Future Finders Chama Group</b> – a community of dedicated individuals 
+    who believe in the power of <b>saving, supporting, and growing together</b>.
+  </p>
+<!-- Mission & Vision -->
+<h3>🌟 Our Mission</h3>
+<p>To empower members through savings, merry-go-round, and access to loans for financial growth.</p>
+<h3>👁️ Our Vision</h3>
+<p>A financially independent community where members grow together and achieve prosperity.</p>
+<!-- Core Values -->
+<h3>💡 Our Values</h3>
+<ul>
+<li>🤝 Unity &amp; Teamwork</li>
+<li>📈 Growth &amp; Prosperity</li>
+<li>💰 Financial Discipline</li>
+<li>🌍 Community Empowerment</li>
+</ul>
+<!-- Leadership -->
+<h3>🧑‍💼 Our Leadership</h3>
+<p>
+    Founded by <b>BONIFACE KAISER</b>, with a dedicated team of members 
+    who work together to ensure transparency, growth, and unity.
+  </p>
+<!-- History -->
+<h3>📜 Our Journey</h3>
+<p>
+    Established in <b>2024 JANUARY</b>, Future Finders Chama began as a small savings group. 
+    Today, it has grown into a vibrant community offering savings, loans, and investments to its members.
+  </p>
+<!-- Optional Logo -->
+<div style="margin:20px 0; text-align:center;">
+<img alt="Chama Logo" src="logo.png" style="width:150px; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.2);"/>
+<p style="margin-top:10px; font-style:italic; color:#555;">Our Identity, Our Strength</p>
+</div>
+</section>
+<!-- ⚙️ Admin Login -->
+<section id="adminLogin">
+  <h2>⚙️ Admin Login</h2>
+  <input id="adminUser" placeholder="Admin Name" type="text" />
+
+  <!-- Admin Password -->
+  <div class="password-container">
+    <input id="adminPass" placeholder="Admin Password" type="password" />
+    <span class="toggle-eye" onclick="togglePassword('adminPass', this)">👁️</span>
+  </div>
+
+  <a class="action-btn" id="adminBtn" onclick="adminLogin()">
+    Admin Login <span class="spinner"></span>
+  </a>
+  <p id="adminLoginMessage"></p>
+</section>
+
+<!-- =================== ADMIN PANEL =================== -->
+<section id="admin" style="display:none;">
+  <!-- Logo and Motto -->
+  <div style="margin:20px 0; text-align:center;">
+    <img alt="Future Finders Logo"
+      src="https://github.com/bony87/my-future-finder-chama-group/blob/main/ChatGPT%20Image%20Sep%2010,%202025,%2005_43_14%20PM.png?raw=true"
+      style="width:150px; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.2);" />
+    <p style="margin-top:10px; font-style:italic; color:#555;">Our Identity, Our Strength</p>
+  </div>
+
+  <!-- Logout -->
+  <button id="logoutBtn" onclick="adminLogout()" style="margin-bottom:15px; padding:10px; background:#d32f2f; color:white; border:none; border-radius:5px; cursor:pointer;">
+    🚪 Logout
+    <span class="spinner" style="display:none; margin-left:8px; border:2px solid #f3f3f3; border-top:2px solid white; border-radius:50%; width:14px; height:14px; animation: spin 1s linear infinite; vertical-align:middle;"></span>
+  </button>
+
+  <!-- Quick Tools -->
+  <button onclick="showAvailableNumbers()" style="margin-top:10px; padding:8px 14px; background:#388e3c; color:white; border:none; border-radius:5px; cursor:pointer;">
+    📋 Show Available Numbers
+  </button>
+
+  <!-- SUMMARY CARDS -->
+  <div id="adminSummary" style="display:flex; gap:15px; margin:15px 0; flex-wrap:wrap;">
+    <div class="summary-card" id="totalMembersCard">👥 Total Members: 0</div>
+    <div class="summary-card" id="totalSavingsCard">💰 Total Savings: Ksh 0</div>
+    <div class="summary-card" id="totalLoansCard">📑 Total Loans: 0</div>
+    <div class="summary-card" id="loanBreakdownCard">📊 Loan Status: 0 Pending / 0 Approved / 0 Rejected</div>
+  </div>
+
+  <!-- 🗒️ Members Notes -->
+  <div id="membersNotesPanel" style="margin-top:25px; border-top:1px dashed #ddd; padding-top:15px;">
+    <h3>🗒️ Members Notes</h3>
+    <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:flex-start;">
+      <input id="noteMemberName" placeholder="Member name (optional)" type="text"
+        style="padding:8px; border:1px solid #ccc; border-radius:5px; width:250px;" />
+      <textarea id="noteText" placeholder="Type your note here..." rows="3"
+        style="flex:1; min-width:260px; padding:8px; border:1px solid #ccc; border-radius:5px;"></textarea>
+      <div style="display:flex; flex-direction:column; gap:8px;">
+        <button id="saveNoteBtn" onclick="saveMemberNote()" style="padding:10px 14px; background:#1976d2; color:white; border:none; border-radius:5px; cursor:pointer;">💾 Save Note</button>
+        <button onclick="clearNoteInputs()" style="padding:8px 12px; background:#9e9e9e; color:white; border:none; border-radius:5px; cursor:pointer;">✖ Clear</button>
+      </div>
+    </div>
+    <p id="noteMessage" style="color:green; margin-top:8px;"></p>
+    <div style="margin-top:12px;">
+      <label style="font-weight:600;">Saved Notes (most recent first)</label>
+      <button onclick="downloadNotesCSV()" style="margin-left:8px; padding:6px 10px; background:#388e3c; color:white; border:none; border-radius:4px; cursor:pointer;">⬇️ Download CSV</button>
+      <button onclick="clearAllNotes()" style="margin-left:6px; padding:6px 10px; background:#d32f2f; color:white; border:none; border-radius:4px; cursor:pointer;">🗑️ Clear All</button>
+      <table id="membersNotesTable" border="1" style="width:100%; border-collapse:collapse; text-align:left; margin-top:10px;">
+        <thead style="background:#1976d2; color:white;">
+          <tr>
+            <th style="width:160px;">Date</th>
+            <th style="width:160px;">Member</th>
+            <th>Note</th>
+            <th style="width:120px; text-align:center;">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="membersNotesBody">
+          <tr><td colspan="4" style="color:gray; text-align:center;">No notes yet.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<!-- 👥 Members Overview Section -->
+<div id="membersOverviewPanel" style="margin-top:30px; border-top:1px dashed #ccc; padding-top:20px;">
+  <h2 style="color:#1976d2; margin-bottom:15px;">👥 Members Overview</h2>
+
+  <!-- Search and Export -->
+  <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
+    <input id="memberSearchInput" onkeyup="filterMembersTable()" placeholder="🔍 Search by name or phone..."
+      style="flex:1; min-width:200px; padding:10px; border:1px solid #bbb; border-radius:6px; font-size:15px;">
+    <button onclick="exportMembersCSV()" 
+      style="padding:10px 16px; background:#1976d2; color:white; border:none; border-radius:6px; cursor:pointer;">
+      ⬇️ Export CSV
+    </button>
+  </div>
+
+  <!-- Styled Table -->
+  <div style="overflow-x:auto; border:1px solid #ccc; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+    <table id="membersTable" style="width:100%; border-collapse:collapse; font-size:15px;">
+      <thead style="background:#1565c0; color:white; text-align:left; cursor:pointer;">
+  <tr>
+    <th onclick="sortMembersTable('name')" style="padding:10px;">Name ⬍</th>
+    <th onclick="sortMembersTable('phone')" style="padding:10px;">Phone ⬍</th>
+    <th onclick="sortMembersTable('savings')" style="padding:10px;">Total Savings (Ksh) ⬍</th>
+    <th style="padding:10px;">Monthly Deposits</th>
+    <th onclick="sortMembersTable('note')" style="padding:10px;">Note ⬍</th>
+  </tr>
+</thead>
+
+      <tbody id="membersTableBody" style="background:white;">
+        <tr>
+          <td colspan="5" style="text-align:center; color:gray; padding:20px;">Loading members...</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Summary -->
+  <div id="membersSummary" style="margin-top:15px; font-weight:600; color:#333;">
+    👤 Total Members: <span id="totalMembersCount">0</span> |
+    💰 Combined Savings: Ksh <span id="totalSavingsSum">0</span>
+  </div>
+</div>
+
+<!-- Table Styles -->
+<style>
+  #membersTable tbody tr:nth-child(even) {
+    background: #f9f9f9;
+  }
+  #membersTable tbody tr:hover {
+    background: #e3f2fd;
+    transition: 0.2s;
+  }
+  #membersTable th, #membersTable td {
+    border-bottom: 1px solid #ddd;
+    padding: 10px;
+    vertical-align: top;
+  }
+  #membersTable td {
+    color: #333;
+  }
+</style>
+
+
+  <!-- 👤 Member Management -->
+  <h3>👤 Member Management</h3>
+  <input id="loanSearch" onkeyup="filterLoans()" placeholder="🔍 Search loans by name, phone, or status..." style="width:95%; padding:8px; margin:10px 0; border:1px solid #ccc; border-radius:5px;" type="text" />
+  <select id="loanStatusFilter" onchange="filterLoans()" style="padding:8px; margin:10px 0; border:1px solid #ccc; border-radius:5px;">
+    <option value="">📂 Show All</option>
+    <option value="Pending">⏳ Pending</option>
+    <option value="Approved">✅ Approved</option>
+    <option value="Rejected">❌ Rejected</option>
+  </select>
+  <button onclick="exportLoans()" style="padding:8px 12px; margin:10px 0; background:#1976d2; color:white; border:none; border-radius:5px; cursor:pointer;">
+    📂 Export Loans (CSV)
+  </button>
+
+  <!-- 📜 Loan Applications Table -->
+  <h3>📜 Loan Applications</h3>
+  <table border="1" style="width:100%; border-collapse:collapse; text-align:center;">
+    <thead style="background:#1976d2; color:white;">
+      <tr>
+        <th>Name</th>
+        <th>Phone</th>
+        <th>Qualified Loan</th>
+        <th>Requested Amount</th>
+        <th>ID Number</th>
+        <th>Period</th>
+        <th>Repayment</th>
+        <th>Date</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="adminLoanBody">
+      <tr><td colspan="10" style="color:gray;">No applications yet.</td></tr>
+    </tbody>
+  </table>
+
+  <!-- 🎲 Lucky Numbers -->
+  <button onclick="togglePickedNumbers()" style="padding:10px; margin:5px; background:#1976d2; color:white; border:none; border-radius:5px; cursor:pointer;">
+    🎲 View Picked Numbers
+  </button>
+  <div id="pickedNumbersTable" style="display:none; margin-top:20px;">
+    <h3>🎲 Picked Lucky Numbers</h3>
+    <button onclick="downloadPickedNumbers()" style="margin-bottom:10px; padding:8px 12px; background:#388e3c; color:white; border:none; border-radius:5px; cursor:pointer;">⬇️ Download CSV</button>
+    <button onclick="resetPickedNumbers()" style="margin-bottom:10px; padding:8px 12px; background:#d32f2f; color:white; border:none; border-radius:5px; cursor:pointer;">🗑️ Reset Picked Numbers</button>
+    <table border="1" style="width:100%; border-collapse:collapse; text-align:center;">
+      <thead style="background:#1976d2; color:white;">
+        <tr><th>Member</th><th>Lucky Number</th></tr>
+      </thead>
+      <tbody id="pickedNumbersBody">
+        <tr><td colspan="2" style="color:gray;">No numbers picked yet.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 📝 Pending Members -->
+  <div id="pendingMembersPanel" style="margin-top:20px;">
+    <h3>📝 Pending Member Registrations</h3>
+    <table border="1" style="width:100%; border-collapse:collapse; text-align:center;">
+      <thead style="background:#00796b; color:white;">
+        <tr>
+          <th>Name</th>
+          <th>Phone</th>
+          <th>Email</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="pendingMembersBody">
+        <tr><td colspan="5" style="color:gray;">No pending registrations.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 🚀 System Updates -->
+  <h3>🚀 System Updates</h3>
+  <textarea id="updateMessage" placeholder="Type new update..." style="width:90%; padding:10px; margin-bottom:10px;"></textarea><br />
+  <button onclick="postUpdate()" style="padding:10px; background:#1976d2; color:white; border:none; border-radius:5px; cursor:pointer;">📢 Post Update</button>
+
+  <!-- Optional WhatsApp Notifications -->
+  <div id="memberSelectionBox" style="display:none; margin-top:8px;">
+    <label><b>Select Members:</b></label><br />
+    <select id="memberSelectMulti" multiple size="10" style="width:260px; padding:6px;"></select><br />
+    <button onclick="selectAllMembers()" style="margin-top:5px; padding:5px 10px; background:#388e3c; color:white; border:none; border-radius:4px; cursor:pointer;">✅ Select All</button>
+    <input id="memberSearch" onkeyup="filterMembers()" placeholder="🔍 Search member..." style="width:260px; padding:6px; margin-bottom:6px;" type="text" />
+    <button onclick="clearAllMembers()" style="margin-top:5px; padding:5px 10px; background:#d32f2f; color:white; border:none; border-radius:4px; cursor:pointer;">❌ Clear All</button>
+    <p style="font-size:12px; color:gray; margin-top:5px;">(Hold CTRL/SHIFT to select multiple manually)</p>
+  </div>
+
+  <label style="display:block; margin-top:8px;">
+    <input id="sendWhatsAppUpdate" onchange="toggleMemberSelection()" type="checkbox" /> 📲 Send WhatsApp notification to members
+  </label>
+
+  <!-- 📜 Past Updates -->
+  <div style="margin-top:20px;">
+    <h4>📜 Past Updates</h4>
+    <table border="1" style="width:100%; border-collapse:collapse; text-align:center;">
+      <thead style="background:#1976d2; color:white;">
+        <tr><th>All Updates (Click to Expand/Collapse)</th></tr>
+      </thead>
+      <tbody id="updateHistoryBody">
+        <tr><td style="color:gray;">No updates posted yet.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- Styles for Notes Table -->
+<style>
+  #membersNotesTable td, #membersNotesTable th {
+    padding: 8px;
+    vertical-align: top;
+  }
+  .note-action-btn {
+    padding: 6px 8px;
+    margin: 0 4px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+  }
+  .note-edit { background: #1976d2; color: white; }
+  .note-delete { background: #d32f2f; color: white; }
+</style>
+
+<section id="membership" style="display:none;">
+<h2>👥 Membership</h2>
+<p>If you’re new, please register. If already a member, log in.</p>
+<!-- Eligibility Info -->
+<div style="margin:20px auto; padding:15px; background:#e3f2fd; border-left:6px solid #1976d2; border-radius:8px; max-width:600px;">
+<h3 style="color:#1976d2; margin-bottom:10px;">📌 Membership &amp; Loan Eligibility</h3>
+<p style="line-height:1.6; color:#333;">
+      ✅ <b>Loan Qualification:</b> A member must have saved at least <b>Ksh 1,500</b>.<br/><br/>
+      ✅ <b>Official Membership:</b> To become an official member, you must be active for a minimum of <b>4 months</b> in the chama.<br/><br/>
+      ✅ <b>Commitment:</b> Members are expected to contribute consistently and maintain good financial discipline.<br/><br/>
+      ✅ <b>Support &amp; Trust:</b> Being a member means supporting one another and upholding transparency within the group.
+    </p>
+</div>
+<!-- Registration Form -->
+<div id="registerForm">
+<h3>📝 New Member Registration</h3>
+<input id="regName" placeholder="Full Name" required="" type="text"/>
+<input id="regPhone" placeholder="Phone Number" required="" type="text"/>
+<input id="regPass" placeholder="Set Password" required="" type="password"/>
+<button onclick="registerMember()">Register</button>
+</div>
+<a class="action-btn" onclick="simulateAction(this,'services')" style="background:#d32f2f; margin-top:15px;">
+    ⬅️ Back to Services <span class="spinner"></span>
+</a>
+</section>
+<!-- Member Login -->
+<section id="loginForm">
+<h2>🔑 Member Login</h2>
+<h1>Chama Savings &amp; Loan System</h1>
+<label for="memberName"><b>Select Your Name:</b></label>
+<select id="memberName" required="">
+<option value="">-- Choose your name --</option>
+<option>BONIFACE CHELLUGET</option>
+<option>HILDA ODERO</option>
+<option>JOEL EGESA</option>
+<option>SHALIK SHIVERENGE</option>
+<option>EVERLINE MAINA</option>
+<option>ELVIS KAMASH</option>
+<option>JULIUS KEBASO</option>
+<option>CHRISTINE PIUS</option>
+<option>EDNAH NANCY</option>
+<option>JACKIE NYARANGI</option>
+<option>JUDITH OMWOYO</option>
+<option>JANET NYAKUNDI</option>
+<option>ANASTANCIA OMWOYO</option>
+<option>PIUS NYAKUNDI</option>
+<option>SAMUEL OYUGI</option>
+<option>PURITY MOMANYI</option>
+<option>KEFFA MOMANYI</option>
+<option>KENNEDY MUTAYI</option>
+<option>MIKE MORRIS</option>
+<option>DAVY OMBATI</option>
+<option>FAITH MOKOGI</option>
+<option>SADLER KARAN</option>
+<option>SHARON CHEPTOO</option>
+<option>SHAMIM KAMASH</option>
+<option>CLAUDIA MORAA</option>
+<option>ESTHER OBEGI</option>
+<option>DENNIS KIEYA</option>
+<option>BRIGIDE NYABERI</option>
+<option>VANICE MOMANYI</option>
+<option>ELIZABETH SHIUNDU</option>
+<option>LILIAN KERUBO</option>
+
+</select>
+<!-- Member Password -->
+<div class="password-container">
+<input id="memberPass" placeholder="Enter your phone number or password created by you" type="password"/>
+<span class="toggle-eye" onclick="togglePassword('memberPass', this)">👁️ Show password</span>
+</div>
+<!-- Spinner already inside the button -->
+<a class="action-btn" id="memberLoginBtn" onclick="login()">Login <span class="spinner"></span></a>
+<p id="loginMessage"></p>
+
+</section>
+<!-- Dashboard -->
+ 
+<div id="dashboard">
+<h3>Welcome, <span id="memberDisplay"></span>!</h3>
+<a class="action-btn" onclick="showCurrentSavings()">💰 View Current Savings</a>
+<a class="action-btn" onclick="showMonthlySavings()">📊 View Monthly Savings</a>
+<button class="check-loan-btn" onclick="checkLoan()">🔍 Check Loan Eligibility</button>
+<button class="action-btn" onclick="openNotePopup()">🗒️ View Note/fines</button>
+
+
+
+
+<!-- 🚪 Member Logout -->
+<button class="action-btn" id="memberLogoutBtn" onclick="memberLogout()" style="background:#d32f2f; margin-top:15px; position:relative;">
+  🚪 Logout
+  <span class="spinner" style="display:none; margin-left:8px; border:2px solid #f3f3f3; border-top:2px solid white; border-radius:50%; width:14px; height:14px; animation: spin 1s linear infinite; vertical-align:middle;"></span>
+</button>
+<div id="loanMessage" style="margin-top:15px; font-weight:bold; color:#004d40;"></div>
+<div id="allContributions" style="margin-top:20px;">
+<!-- Eligibility Info Box -->
+<div style="margin:20px auto; padding:15px; background:#e3f2fd; border-left:6px solid #1976d2; border-radius:8px; max-width:600px;">
+<h3 style="color:#1976d2; margin-bottom:10px;">📌 Membership &amp; Loan Eligibility</h3>
+<p style="line-height:1.6; color:#333;">
+      ✅ <b>Loan Qualification:</b> A member must have saved at least <b>Ksh 1,500</b>.<br/><br/>
+      ✅ <b>Official Membership:</b> To become an official member, you must be active for a minimum of <b>4 months</b> in the chama.<br/><br/>
+      ✅ <b>Commitment:</b> Members are expected to contribute consistently and maintain good financial discipline.<br/><br/>
+      ✅ <b>Support &amp; Trust:</b> Being a member means supporting one another and upholding transparency within the group.
+    </p>
+</div>
+<div class="download-buttons" style="text-align:right; margin-bottom:10px;">
+  <button class="download-btn csv-btn" onclick="downloadTableCSV()">⬇️ Download CSV</button>
+  <button class="download-btn pdf-btn" onclick="downloadTablePDF()">⬇️ Download PDF</button>
+</div>
+
+
+<!-- 🗒️ Personal Member Note Section -->
+<div id="memberNoteSection" style="margin-top:30px; background:#e8f5e9; padding:15px; border-radius:8px; display:none;">
+  <h3 style="color:#2e7d32;">🗒️ Your Note / Fines</h3>
+  <p id="personalNote" style="font-size:16px; color:#333; font-weight:bold;">
+    Welcome! Your note will appear here after login.
+  </p>
+</div>
+
+
+
+
+<h4>📊 Group Contributions</h4>
+
+<table border="1" style="width:100%; border-collapse:collapse; text-align:center;">
+  <thead style="background:#00796b; color:white;">
+    <tr>
+      <th>NAME</th>
+      <th>JAN</th>
+      <th>FEB</th>
+      <th>MAR</th>
+      <th>APR</th>
+      <th>MAY</th>
+      <th>JUNE</th>
+      <th>JULY</th>
+      <th>AUG</th>
+      <th>SEPT</th>
+      <th>OCT</th>
+      <th>NOV</th>
+      <th>DEC</th>
+      <th style="background:#17da48;">TOTAL</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr><td>BONIFACE CHELLUGET</td>
+      <td><input type="number" value="300"/></td>
+      <td><input type="number" value="300"/></td>
+      <td><input type="number" value="300"/></td>
+      <td><input type="number" value="300"/></td>
+      <td><input type="number" value="300"/></td>
+      <td><input type="number" value="300"/></td>
+      <td><input type="number" value="300"/></td>
+      <td><input type="number" value="300"/></td>
+      <td><input type="number" value="300"/></td>
+      <td><input type="number" value="310"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">3000</td></tr>
+
+    <tr><td>HILDA ODERO</td>
+      <td><input type="number" value="400"/>
+      </td><td><input type="number" value="200"/></td>
+      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">900</td></tr>
+
+    <tr><td>JOEL EGESA</td><td>
+      <input type="number" value="200"/>
+    </td><td><input type="number" value="0"/></td>
+    <td><input type="number" value="20"/></td>
+    <td><input type="number" value="0"/></td>
+    <td><input type="number" value="0"/></td>
+    <td><input type="number" value="0"/></td>
+    <td><input type="number" value="0"/></td>
+    <td><input type="number" value="0"/></td>
+    <td><input type="number" value="500"/></td>
+    <td><input type="number" value="0"/></td>
+    <td><input type="number" value="0"/></td>
+    <td><input type="number" value="0"/></td>
+    <td class="rowTotal">720</td></tr>
+
+    <tr><td>SHALIK SHIVERENGE</td><td>
+      <input type="number" value="250"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">250</td></tr>
+
+    <tr><td>EVERLINE MAINA</td><td>
+      <input type="number" value="250"/></td>
+      <td><input type="number" value="150"/></td>
+      <td><input type="number" value="250"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="250"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="105"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">1850</td></tr>
+
+    <tr><td>ELVIS KAMASH</td><td>
+      <input type="number" value="250"/></td>
+      <td><input type="number" value="150"/></td>
+      <td><input type="number" value="250"/></td>
+      <td><input type="number" value="50"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="150"/></td>
+      <td><input type="number" value="50"/></td>
+      <td><input type="number" value="250"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="150"/></td>
+      <td><input type="number" value="105"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">1600</td></tr>
+
+    <tr><td>JULIUS KEBASO</td><td>
+      <input type="number" value="450"/></td>
+      <td><input type="number" value="300"/></td>
+      <td><input type="number" value="500"/></td>
+      <td><input type="number" value="500"/></td>
+      <td><input type="number" value="400"/></td>
+      <td><input type="number" value="500"/></td>
+      <td><input type="number" value="400"/></td>
+      <td><input type="number" value="500"/></td>
+      <td><input type="number" value="400"/></td>
+      <td><input type="number" value="400"/></td>
+      <td><input type="number" value="405"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">4050</td></tr>
+
+    <tr><td>CHRISTINE PIUS</td>
+      <td><input type="number" value="50"/></td>
+      <td><input type="number" value="150"/></td>
+      <td><input type="number" value="250"/></td>
+      <td><input type="number" value="150"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="700"/></td>
+      <td><input type="number" value="205"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">750</td></tr>
+
+    <tr><td>EDNAH NANCY</td><td>
+      <input type="number" value="250"/></td>
+      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">600</td></tr>
+
+    <tr><td>JACKIENYARANGI</td><td>
+      <input type="number" value="200"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="150"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">550</td></tr>
+
+    <tr><td>JUDITH OMWOYO</td><td>
+      <input type="number" value="300"/></td>
+      <td><input type="number" value="300"/></td>
+      <td><input type="number" value="300"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="250"/></td>
+      <td><input type="number" value="305"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">1250</td></tr>
+
+    <tr><td>JANET NYAKUNDI</td><td>
+      <input type="number" value="150"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">250</td></tr>
+
+    <tr><td>ANASTANCIA OMWOYO</td><td>
+      <input type="number" value="250"/></td>
+      <td><input type="number" value="150"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="150"/></td>
+      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="250"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="205"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">1850</td></tr>
+
+    <tr><td>PIUS NYAKUNDI</td><td>
+      <input type="number" value="150"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="150"/></td>
+      <td><input type="number" value="150"/></td>
+      <td><input type="number" value="50"/></td>
+      <td><input type="number" value="150"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">1050</td></tr>
+
+    <tr><td>SAMUEL OYUGI</td><td>
+      <input type="number" value="400"/></td>
+      <td><input type="number" value="300"/>
+      </td><td><input type="number" value="500"/></td>
+      <td><input type="number" value="400"/></td>
+      <td><input type="number" value="400"/></td>
+      <td><input type="number" value="500"/></td>
+      <td><input type="number" value="400"/></td>
+      <td><input type="number" value="500"/></td>
+      <td><input type="number" value="400"/></td>
+      <td><input type="number" value="300"/></td>
+      <td><input type="number" value="405"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">3800</td></tr>
+
+    <tr><td>PURITY MOMANYI</td><td>
+      <input type="number" value="200"/>
+    </td><td><input type="number" value="200"/></td>
+    <td><input type="number" value="1200"/></td>
+    <td><input type="number" value="950"/></td>
+    <td><input type="number" value="800"/></td>
+    <td><input type="number" value="400"/></td>
+    <td><input type="number" value="350"/></td>
+    <td><input type="number" value="100"/></td>
+    <td><input type="number" value="205"/></td>
+    <td><input type="number" value="0"/></td>
+    <td><input type="number" value="200"/></td>
+    <td><input type="number" value="0"/></td>
+    <td class="rowTotal">4400</td></tr>
+
+    <tr><td>KEFFA MOMANYI</td><td>
+      <input type="number" value="250"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="250"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="150"/></td>
+      <td><input type="number" value="200"/></td>
+      
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">1850</td></tr>
+
+    <tr>
+  <td>KENNEDY MUTAYI</td>
+  <td><input type="number" value="750"/></td>   <!-- Jan -->
+  <td><input type="number" value="450"/></td>   <!-- Feb -->
+  <td><input type="number" value="750"/></td>   <!-- Mar -->
+  <td><input type="number" value="600"/></td>   <!-- Apr -->
+  <td><input type="number" value="600"/></td>   <!-- May -->
+  <td><input type="number" value="750"/></td>   <!-- Jun -->
+  <td><input type="number" value="600"/></td>   <!-- Jul -->
+  <td><input type="number" value="750"/></td>   <!-- Aug -->
+  <td><input type="number" value="600"/></td>   <!-- Sept -->
+  <td><input type="number" value="600"/></td>   <!-- Oct -->
+  <td><input type="number" value="605"/></td>     <!-- Nov -->
+  <td><input type="number" value="0"/></td>     <!-- Dec -->
+  <td class="rowTotal">6000</td>
+</tr>
+
+
+    <tr><td>MIKE MORRIS</td><td>
+      <input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="50"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="150"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="50"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">300</td></tr>
+
+    <tr><td>DAVY OMBATI</td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="50"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">250</td></tr>
+
+    <tr><td>FAITH MOKOGI</td><td>
+      <input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="500"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="250"/></td>
+      <td><input type="number" value="50"/></td>
+      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="50"/></td>
+      <td><input type="number" value="350"/></td>
+      <td><input type="number" value="970"/></td>
+      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">2300</td></tr>
+
+    <tr><td>SADLER KARAN</td><td>
+      <input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="150"/></td>
+      <td><input type="number" value="50"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">600</td></tr>
+
+    <tr><td>SHARON CHEPTOO</td><td>
+      <input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="250"/></td>
+      <td><input type="number" value="150"/></td>
+      <td><input type="number" value="150"/></td>
+      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="150"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">800</td></tr>
+
+    <tr><td>SHAMIM KAMASH</td><td>
+      <input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="150"/></td>
+      <td><input type="number" value="50"/></td>
+      <td><input type="number" value="250"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="150"/></td>
+      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">900</td></tr>
+
+    <tr><td>CLAUDIA MORAA</td><td>
+      <input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="400"/></td>
+      <td><input type="number" value="300"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="250"/></td>
+      <td><input type="number" value="200"/></td>
+      <td class="rowTotal">1050</td></tr>
+
+    <tr><td>ESTHER OBEGI</td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="500"/></td>
+      <td><input type="number" value="450"/></td>
+      <td><input type="number" value="600"/></td>
+      <td><input type="number" value="500"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">1100</td></tr>
+
+    <tr><td>DENNIS KIEYA</td><td>
+      <input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="150"/></td>
+      <td><input type="number" value="150"/></td>
+      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">150</td></tr>
+
+   <tr>
+  <td>BRIGIDE NYABERI</td>
+  <td><input type="number" value="0"/></td>   <!-- Jan -->
+  <td><input type="number" value="0"/></td>   <!-- Feb -->
+  <td><input type="number" value="0"/></td>   <!-- Mar -->
+  <td><input type="number" value="0"/></td>   <!-- Apr -->
+  <td><input type="number" value="0"/></td>   <!-- May -->
+  <td><input type="number" value="0"/></td>   <!-- Jun -->
+  <td><input type="number" value="0"/></td>   <!-- Jul -->
+  <td><input type="number" value="0"/></td>   <!-- Aug -->
+  <td><input type="number" value="50"/></td>  <!-- Sep -->
+  <td><input type="number" value="100"/></td>  <!-- Oct -->
+  <td><input type="number" value="100"/></td>   <!-- Nov -->
+  <td><input type="number" value="0"/></td>   <!-- Dec -->
+  <td class="rowTotal">50</td>
+</tr>
+
+
+    <tr><td>VANICE MOMANYI</td><td>
+      <input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="400"/></td>
+      <td><input type="number" value="400"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">200</td></tr>
+     
+     
+      <tr><td>ELIZABETH SHIUNDU</td><td>
+      <input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">0</td></tr>
+
+
+      <tr><td>LILIAN KERUBO</td><td>
+      <input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">0</td></tr>
+
+
+
+   
+
+    <tr id="grandTotalRow" style="font-weight:bold; background:#e0f2f1;">
+      <td colspan="13" style="text-align:right;">GRAND TOTAL</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+<!-- Loan Applications History -->
+<div id="loanHistory" style="margin-top:30px;">
+<h3>📜 Loan Applications History</h3>
+<table border="1" style="width:100%; border-collapse:collapse; text-align:center;">
+<thead style="background:#00796b; color:white;">
+<tr>
+<th>Name</th>
+<th>Phone</th>
+<th>Qualified Loan</th>
+<th>Requested Amount</th>
+<th>ID Number</th>
+<th>Date</th>
+<th>Status</th>
+<th>Receipt</th> <!-- ✅ Added -->
+</tr>
+</thead>
+<tbody id="loanHistoryBody">
+
+<!-- Default row if no applications -->
+<tr><td colspan="8" style="color:gray;">No loan applications yet.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+<footer style="position:fixed; bottom:0; width:100%; background:#111; padding:10px 0; text-align:center; color:white; z-index:1000;">
+<div class="footer-marquee">
+<span class="glow">🌟 FOUNDER: BONIFACE KAISER 🌟</span>
+</div>
+</footer>
+<script>
+ 
+
+
+
+const members = {
+  "BONIFACE CHELLUGET": {
+    "phone": "0713953004",
+    "password": "0713953004",
+    "savings": 3000,
+    "monthly": [300, 300, 300, 300, 300, 300, 300, 300, 300],
+    "note": "Consistent saver — eligible for next loan review. Fines: nil as of 17nd Nov 25."
+
+
+  },
+  "HILDA ODERO": {
+    phone: "0795341320",
+    password: "0795341320",
+    savings: 900,
+    monthly: [400,200,100,200],
+    note: "Missed March payment — follow up on consistency.",
+    
+  },
+  "JOEL EGESA": {
+    phone: "0768039551",
+    password: "0768039551",
+    savings: 1220,
+    monthly: [200,0,20,500],
+    note: "New member; low savings but improving gradually.",
+    
+  },
+  "SHALIK SHIVERENGE": {
+    phone: "0746277086",
+    password: "0746277086",
+    savings: 250,
+    monthly: [250,0,0],
+    note: "Needs encouragement to make regular deposits.",
+    
+  },
+  "EVERLINE MAINA": {
+    phone: "0701360180",
+    password: "0701360180",
+    savings: 1850,
+    monthly: [250,150,250,200,200,250,200,100,200,50],
+    note: "Active and consistent member — good standing.",
+    fines: ""
+  },
+  "ELVIS KAMASH": {
+    phone: "0798577851",
+    password: "0798577851",
+    savings: 1600,
+    monthly: [250,150,250,50,200,150,50,250,200,50],
+    note: "Slightly irregular, but maintains contributions.",
+    fines: ""
+  },
+  "JULIUS KEBASO": {
+    phone: "0705296154",
+    password: "0705296154",
+    savings: 4050,
+    monthly: [450,300,500,500,400,500,400,500,400,100],
+    note: "Very reliable saver — possible leadership candidate.Fines: 30 as of 17nd Nov 25 paid 25",
+    fines: ""
+  },
+  "CHRISTINE PIUS": {
+    phone: "0115603500",
+    password: "0115603500",
+    savings: 750,
+    monthly: [50,150,250,150,0,0,0,0,100,50],
+    note: "Inconsistent months; encourage steady saving.",
+    fines: ""
+  },
+  "EDNAH NANCY": {
+    phone: "0717684177",
+    password: "0717684177",
+    savings: 600,
+    monthly: [250,100,100,0,0,0,0,0,100,50],
+    note: "Low activity; may need reminder of savings goals."
+  },
+  "JACKIENYARANGI": {
+    phone: "0790206224",
+    password: "0790206224",
+    savings: 550,
+    monthly: [200,200,0,0,0,0,0,0,100,50],
+    note: "Missed several months; check commitment level.",
+    fines: ""
+  },
+  "JUDITH OMWOYO": {
+    phone: "0741939235",
+    password: "0741939235",
+    savings: 1250,
+    monthly: [300,300,300,0,0,0,0,100,250],
+    note: "1.Consistent saver, possible for small loan soon. 2.sent 1500 on 20 october as a patial payment for mery-go-round.240-as of 2nd Nov 25, paid 180 not paid 60",
+   
+  },
+  "JANET NYAKUNDI": {
+    phone: "0706753288",
+    password: "0706753288",
+    savings: 250,
+    monthly: [150,0,100,0,0,0,0,0,0],
+    note: "you have a debt payment of 850 .90-as of 2nd nov 25 paid 0 not paid 60",
+   
+  },
+  "ANASTANCIA OMWOYO": {
+    phone: "0748442547",
+    password: "0748442547",
+    savings: 1850,
+    monthly: [250,150,200,200,200,150,100,250,200,50],
+    note: "fines: 0-as of 2nd nov 25 ",
+    
+  },
+  "PIUS NYAKUNDI": {
+    phone: "0716845165",
+    password: "0716845165",
+    savings: 1050,
+    monthly: [150,200,200,0,100,100,100,150,150,50],
+    note: "fines:120-as of 2nd nov 25 paid 0 not paid 120 on 13 oct requested for no exchange with judy - request approved.",
+   
+  },
+  "SAMUEL OYUGI": {
+    phone: "0796860412",
+    password: "0796860412",
+    savings: 3900,
+    monthly: [400,300,500,400,400,500,400,500,400,100],
+    note: "fines:360-as of 2nd nov 25 paid 0 not paid 360 1.Very active; good candidate for larger loans.",
+
+  },
+  "PURITY MOMANYI": {
+    phone: "0103155480",
+    password: "0103155480",
+    savings: 4400,
+    monthly: [200,200,1200,950,800,400,350,100,200],
+    note: "fines: 30-as of 2nd nov 25 paid 30 not paid 0High savings rate — leadership potential.",
+   
+  },
+  "KEFFA MOMANYI": {
+    phone: "0759237482",
+    password: "0759237482",
+    savings: 1850,
+    monthly: [250,200,200,200,200,250,200,150,200,50],
+    note: "1. on 4th nov borrowered 300.60-as of 2nd nov 25 paid 0 not paid 60 ",
+    fines: ""
+  },
+  "KENNEDY MUTAYI": {
+    phone: "0724124735",
+    password: "0724124735",
+    savings: 6000,
+    monthly: [750,450,750,600,600,750,600,750,600,150],
+    note: " ",
+   
+  },
+  "MIKE MORRIS": {
+    phone: "0115570301",
+    password: "0115570301",
+    savings: 300,
+    monthly: [0,0,100,50,0,0,0,150,0],
+    note: " fines:150-as of 2nd nov 25 paid 120 not paid 30",
+    
+  },
+  "DAVY OMBATI": {
+    phone: "0793547166",
+    password: "0793547166",
+    savings: 250,
+    monthly: [0,0,50,0,0,0,200,0,0],
+    note: "fines:150-as of 2nd nov 25 paid 90 not paid 60 ",
+    
+  },
+ "FAITH MOKOGI": {
+  phone: "0706918919",
+  password: "0706918919",
+  savings: 2300,
+  monthly: [0,0,500,200,250,50,100,50,350,800],
+  note: "fines:90-as of 2nd nov 25 paid 0 not paid 30 1) On 13TH October, borrowed a loan of 1500 (repayment amount 1680, period 7 days).\n2) Loan successfully paid on 24th October (full payment).",
+ 
+},
+
+
+  "SADLER KARAN": {
+    phone: "0791730719",
+    password: "0791730719",
+    savings: 600,
+    monthly: [0,0,200,200,150,50,0,0,0],
+    note: "fines: 240-as of 17th nov 25 paid 120 not paid 150",
+   
+  },
+  "SHARON CHEPTOO": {
+    phone: "0768675656",
+    password: "0768675656",
+    savings: 800,
+    monthly: [0,0,0,0,250,150,150,100,150],
+    note: "fines: 90-as of 2nd nov 25 paid 0 not paid 90sharon you are required to clear you debt of 1000 as of 2nd Nov 2025",
+    
+  },
+  "SHAMIM KAMASH": {
+    phone: "0725979420",
+    password: "0725979420",
+    savings: 900,
+    monthly: [0,0,0,0,200,150,50,250,200,50],
+    note: " ",
+    
+  },
+  "CLAUDIA MORAA": {
+    phone: "0741520782",
+    password: "0741520782",
+    savings: 1050,
+    monthly: [0,0,0,0,0,100,400,300,200,50],
+    note: " ",
+ 
+  },
+  "ESTHER OBEGI": {
+    phone: "0748845363",
+    password: "0748845363",
+    savings: 500,
+    monthly: [0,0,0,0,0,0,0,500,0],
+    note: " ",
+  
+  },
+  "DENNIS KIEYA": {
+    phone: "0706150465",
+    password: "@dennis12",
+    savings: 150,
+    monthly: [0,0,0,0,0,0,0,0,100,50],
+    note: " ",
+    
+  },
+  "BRIGIDE NYABERI": {
+    phone: "0716011603",
+    password: "Brigide",
+    savings: 50,
+    monthly: [0,0,0,0,0,0,0,0,50],
+    note: " "
+  },
+  "VANICE MOMANYI": {
+    phone: "0769552081",
+    password: "41362859",
+    savings: 200,
+    monthly: [0,0,0,0,0,0,0,0,100,100],
+    note: " "
+  },
+  
+  "ELIZABETH SHIUNDU": {
+    phone: "0745078964",
+    password: "0745078964",
+    savings: 100,
+    monthly: [0,0,0,0,0,0,0,0,100,],
+    note: " "
+  },
+   "LILIAN KERUBO": {
+    phone: "0796476808",
+    password: "kerubo",
+    savings: 100,
+    monthly: [0,0,0,0,0,0,0,0,100,],
+    note: " "
+  }
+ 
+};
+
+
+// 🔄 Simulate loading action (button + spinner + section switch)
+function simulateAction(button, sectionId) {
+  let spinner = button.querySelector(".spinner");
+
+  // Show spinner
+  if (spinner) spinner.style.display = "inline-block";
+  button.style.pointerEvents = "none";
+
+  setTimeout(() => {
+    if (spinner) spinner.style.display = "none";
+    button.style.pointerEvents = "auto";
+
+    // Hide all sections
+    document.querySelectorAll("section, #dashboard, #admin, #newsSection").forEach(sec => {
+      sec.style.display = "none";
+    });
+
+    // Hide all nav buttons except the clicked one
+    document.querySelectorAll("#navButtons .nav-btn").forEach(btn => {
+      btn.style.display = "none";
+    });
+    button.style.display = "inline-block"; // keep clicked one
+
+    // Show selected section
+    let target = document.getElementById(sectionId);
+    if (target) {
+      target.style.display = "block";
+
+      // ✅ Special handling for News Section
+      if (sectionId === "newsSection") {
+        loadNews();
+        markNewsRead();
+      }
+    } else {
+      console.error("❌ Section not found:", sectionId);
+    }
+
+    // ✅ Show Back button
+    document.getElementById("backBtn").style.display = "inline-block";
+  }, 800); // 0.8 sec loading effect
+}
+
+
+function showAllButtons() {
+  // Show all nav buttons again
+  document.querySelectorAll("#navButtons .nav-btn").forEach(btn => {
+    btn.style.display = "inline-block";
+  });
+
+  // Hide the back button
+  document.getElementById("backBtn").style.display = "none";
+
+  // Hide all sections except Home
+  document.querySelectorAll("section, #dashboard, #admin, #newsSection").forEach(sec => {
+    sec.style.display = "none";
+  });
+  document.getElementById("home").style.display = "block"; // default back to Home
+}
+
+function delayedShowAllButtons(btn) {
+  // Add loading effect
+  btn.querySelector(".spinner").textContent = " ⏳";
+
+  // Disable button while loading
+  btn.style.pointerEvents = "none";
+
+  // Wait 2 seconds, then run the function
+  setTimeout(() => {
+    btn.querySelector(".spinner").textContent = "";
+    btn.style.pointerEvents = "auto";
+    showAllButtons();
+  }, 2000);
+}
+
+// 🔔 Show Popup
+function showPopup(type, title, message) {
+  const popup = document.getElementById("popup");
+  const box = document.getElementById("popupBox");
+
+  document.getElementById("popupTitle").innerText = title;
+  document.getElementById("popupMessage").innerText = message;
+
+  // Reset styles
+  box.className = "popup-box";
+
+  if (type === "success") {
+    box.classList.add("popup-success");
+  } else if (type === "error") {
+    box.classList.add("popup-error");
+  }
+
+  popup.style.display = "flex";
+
+  // Auto-close after 5s
+  setTimeout(() => {
+    closePopup();
+  }, 5000);
+}
+
+// ❌ Close Popup
+function closePopup() {
+  document.getElementById("popup").style.display = "none";
+}
+// 🌍 Global variable to track logged-in user
+let loggedInUser = "";
+
+// 🔐 Member Login    
+function login() { 
+  let btn = document.getElementById("memberLoginBtn");
+  let spinner = btn.querySelector(".spinner");
+  let name = document.getElementById("memberName").value.trim();
+  let pass = document.getElementById("memberPass").value.trim();
+  let msg = document.getElementById("loginMessage");
+
+  spinner.style.display = "inline-block";
+
+  setTimeout(() => {
+    spinner.style.display = "none";
+
+    if (!name || !pass) {
+      msg.innerText = "⚠️ Please select your name and enter your password.";
+      return;
+    }
+
+    // ✅ Check hardcoded members
+    if (members[name] && members[name].password === pass) {
+      loggedInUser = name; // ✅ store clean name
+      msg.innerText = "";
+      document.getElementById("loginForm").style.display = "none";
+      document.getElementById("dashboard").style.display = "block";
+      document.getElementById("memberDisplay").innerText = name;
+
+      // Load loan history
+      loadMemberLoanHistory(name);
+
+      // ===========================
+      // 🔐 Table Edit Permissions Only
+      // ===========================
+      let rows = document.querySelectorAll("table tbody tr");
+      let badge = document.createElement("span");
+      badge.style.marginLeft = "10px";
+      badge.style.padding = "4px 10px";
+      badge.style.borderRadius = "12px";
+      badge.style.fontSize = "12px";
+      badge.style.fontWeight = "bold";
+
+      rows.forEach(row => {
+        const inputs = row.querySelectorAll("input[type='number']");
+        
+        if (name.toUpperCase() === "BONIFACE CHELLUGET") {
+          // 🔓 Boniface can edit contributions
+          inputs.forEach(input => {
+            input.disabled = false;
+            input.addEventListener("input", () => updateRowTotal(row));
+          });
+          updateRowTotal(row);
+
+          badge.textContent = "Editor Mode ✅";
+          badge.style.background = "#4CAF50";
+          badge.style.color = "white";
+        } else {
+          // 🔒 Others view-only (disable editing, keep other features working)
+          inputs.forEach(input => {
+            input.disabled = true;
+          });
+
+          badge.textContent = "View-Only 🔒";
+          badge.style.background = "#9E9E9E";
+          badge.style.color = "white";
+        }
+      });
+
+      // Attach badge
+      document.getElementById("memberDisplay").appendChild(badge);
+
+      calculateGrandTotal();
+      showPopup("success", "Welcome 🎉", `Hello ${name}, glad to see you again!`);
+      return;
+    }
+    
+    // 🔐 Check approved members from localStorage
+    let approved = JSON.parse(localStorage.getItem("approvedMembers")) || [];
+    let member = approved.find(m => m.name === name);
+
+    if (!member) {
+      msg.innerText = "❌ You are not approved yet. Please wait for admin approval.";
+      return;
+    }
+
+    if (member.password !== pass) {   
+      msg.innerText = "❌ Invalid password.";
+      return;
+    }
+
+    // ✅ Successful login for approved member
+    loggedInUser = name; // ✅ store clean name
+    msg.innerText = "";
+    document.getElementById("loginForm").style.display = "none";
+    document.getElementById("dashboard").style.display = "block";
+    document.getElementById("memberDisplay").innerText = name;
+
+    loadMemberLoanHistory(name);
+ // ✅ Show only their note
+  const noteSection = document.getElementById("memberNoteSection");
+  const noteParagraph = document.getElementById("personalNote");
+  noteParagraph.innerText = member.note || "No note available for this member yet.";
+  noteSection.style.display = "block";
+// 💸 Show their fines
+const finesSection = document.getElementById("memberFinesSection");
+const finesParagraph = document.getElementById("personalFines");
+finesParagraph.innerText = (member.fines && member.fines.trim() !== "")
+  ? member.fines
+  : "No fines recorded for this member.";
+finesSection.style.display = "block";
+
+    // ===========================
+    // 🔐 Table Edit Permissions Only
+    // ===========================
+    let rows = document.querySelectorAll("table tbody tr");
+    let badge = document.createElement("span");
+    badge.style.marginLeft = "10px";
+    badge.style.padding = "4px 10px";
+    badge.style.borderRadius = "12px";
+    badge.style.fontSize = "12px";
+    badge.style.fontWeight = "bold";
+
+    rows.forEach(row => {
+      const inputs = row.querySelectorAll("input[type='number']");
+      
+      if (name.toUpperCase() === "BONIFACE CHELLUGET") {
+        inputs.forEach(input => {
+          input.disabled = false;
+          input.addEventListener("input", () => updateRowTotal(row));
+        });
+        updateRowTotal(row);
+
+        badge.textContent = "Editor Mode ✅";
+        badge.style.background = "#4CAF50";
+        badge.style.color = "white";
+      } else {
+        inputs.forEach(input => {
+          input.disabled = true;
+        });
+
+        badge.textContent = "View-Only 🔒";
+        badge.style.background = "#9E9E9E";
+        badge.style.color = "white";
+      }
+    });
+
+    document.getElementById("memberDisplay").appendChild(badge);
+
+    calculateGrandTotal();
+    showPopup("success", "Welcome 🎉", `Hello ${name}, you are now logged in!`);
+  }, 1000);
+}
+
+
+// 💰 Show current savings
+function showCurrentSavings() {
+  if (!loggedInUser || !members[loggedInUser]) {
+    alert("⚠️ Please log in first.");
+    return;
+  }
+  alert("💰 Current Savings: KES " + members[loggedInUser].savings);
+}
+
+// 📊 Show monthly contributions
+function showMonthlySavings() {
+  if (!loggedInUser || !members[loggedInUser]) {
+    alert("⚠️ Please log in first.");
+    return;
+  }
+  alert("📊 Monthly Contributions: " + members[loggedInUser].monthly.join(", "));
+}
+
+// 🏦 Loan Eligibility Check
+function checkLoan() { 
+  if (!loggedInUser || !members[loggedInUser]) {
+    alert("⚠️ Please log in first.");
+    return;
+  }
+
+  let totalSavings = members[loggedInUser].savings;
+  let loanResult = document.getElementById("loanMessage");
+  loanResult.innerHTML = ""; 
+
+  let loanAmount = 0, repaymentPeriod = "";
+
+  // Qualification rules
+  if (totalSavings < 1500) {
+    loanResult.innerHTML = `❌ Sorry, ${loggedInUser}, you are not yet eligible for a loan. Please keep on saving.`;
+    return;
+  } else if (totalSavings >= 1500 && totalSavings < 2000) {
+    loanAmount = 1200;
+    repaymentPeriod = "2 months";
+  } else if (totalSavings >= 2000 && totalSavings < 3000) {
+    loanAmount = 1800;
+    repaymentPeriod = "2 months";
+  } else if (totalSavings >= 3000 && totalSavings < 4000) {
+    loanAmount = 2800;
+    repaymentPeriod = "2.5 months";
+  } else if (totalSavings >= 4000 && totalSavings < 5000) {
+    loanAmount = 3500;
+    repaymentPeriod = "3 months";
+  } else if (totalSavings >= 5000 && totalSavings < 6500) {
+    loanAmount = 4100;
+    repaymentPeriod = "3.5 months";
+  } else if (totalSavings >= 6500 && totalSavings < 7600) {
+    loanAmount = 5000;
+    repaymentPeriod = "5 months";
+  } else if (totalSavings >= 7600) {
+    let extraSteps = Math.floor((totalSavings - 7600) / 400);
+    loanAmount = 5000 + (extraSteps * 200);
+    repaymentPeriod = "6 months";
+  }
+
+  // Show result + Apply button
+  loanResult.innerHTML = `
+    ✅ Congratulations, ${loggedInUser}!<br>
+    You qualify for a loan.<br><br>
+    <b>Maximum Loan You Can Borrow:</b> Ksh ${loanAmount}<br>
+    <b>Repayment Period:</b> ${repaymentPeriod}<br><br>
+    <button onclick="showLoanForm('${loggedInUser}', ${loanAmount}, '${repaymentPeriod}')" 
+      style="padding:10px 15px; background:#1976d2; color:white; border:none; border-radius:5px; cursor:pointer;">
+      👉 Apply Now
+    </button>
+  `;
+}
+
+// 📝 Loan Application Form
+function showLoanForm(name, maxAmount, repaymentPeriod) {
+  let phone = members[name].phone;
+
+  let loanResult = document.getElementById("loanMessage");
+  loanResult.innerHTML = `
+   <h3>📝 Loan Application Form</h3>
+<form onsubmit="submitLoan(event, '${name}', ${maxAmount}, '${phone}')">
+  
+  <label><b>Name:</b></label><br>
+  <input type="text" value="${name}" readonly 
+         style="width:90%; padding:8px; margin-bottom:10px;"><br>
+  
+  <label><b>Phone Number:</b></label><br>
+  <input type="text" value="${phone}" readonly 
+         style="width:90%; padding:8px; margin-bottom:10px;"><br>
+  
+  <label><b>Maximum You Can Borrow:</b></label><br>
+  <input type="text" value="Ksh ${maxAmount}" readonly 
+         style="width:90%; padding:8px; margin-bottom:10px;"><br>
+
+  <label><b>Repayment Period:</b></label><br>
+  <select id="repaymentPeriod" onchange="updateLoanSummary(${maxAmount})" 
+          style="width:90%; padding:8px; margin-bottom:10px;">
+    <option value="">-- Select Period --</option>
+    <option value="1">1 Month</option>
+    <option value="2">2 Months</option>
+    <option value="3">3 Months</option>
+    <option value="6">6 Months</option>
+  </select><br>
+
+  <label><b>Enter Amount You Wish to Apply:</b></label><br>
+  <input type="number" id="applyAmount" min="500" max="${maxAmount}" required 
+         placeholder="Enter amount (min 500, max ${maxAmount})" 
+         oninput="updateLoanSummary(${maxAmount})"
+         style="width:90%; padding:8px; margin-bottom:10px;"><br>
+
+  <div id="loanSummary" 
+       style="margin-top:10px; font-weight:bold; color:#00796b;">
+    💳 Total Repayment: Ksh 0 <br>
+    📌 Monthly Installment: Ksh 0
+  </div>
+
+  <label><b>ID Number:</b></label><br>
+  <input type="number" id="loanId" required placeholder="Enter your ID Number" 
+         minlength="7" maxlength="8" 
+         oninput="if(this.value.length > 8) this.value = this.value.slice(0, 8);" 
+         style="width:90%; padding:8px; margin-bottom:10px;"><br>
+
+  <button type="submit" 
+          style="margin-top:10px; padding:10px; background:#388e3c; color:white; border:none; cursor:pointer;">
+    Submit Application
+  </button>
+</form>
+
+  `;
+}
+function updateLoanSummary(maxAmount) {
+  let applyAmount = parseInt(document.getElementById("applyAmount").value);
+  let repaymentPeriod = parseInt(document.getElementById("repaymentPeriod").value);
+
+  if (isNaN(applyAmount) || applyAmount < 500 || applyAmount > maxAmount) {
+    document.getElementById("loanSummary").innerHTML =
+      "⚠️ Enter a valid loan amount between 500 and " + maxAmount;
+    return;
+  }
+
+  let repaymentAmount = Math.round(applyAmount * 1.12); // 12% interest
+  let monthlyRepay = repaymentAmount;
+
+  if (!isNaN(repaymentPeriod) && repaymentPeriod >= 2) {
+    monthlyRepay = Math.round(repaymentAmount / repaymentPeriod);
+  }
+
+  document.getElementById("loanSummary").innerHTML = `
+    💳 Total Repayment: Ksh ${repaymentAmount} <br>
+    📌 Monthly Installment: Ksh ${monthlyRepay} (${repaymentPeriod || 1} month${repaymentPeriod > 1 ? "s" : ""})
+  `;
+}
+
+// 📤 Handle Loan Submission + PDF Download
+function submitLoan(event, name, maxAmount, phone) {
+  event.preventDefault();
+
+  let applyAmount = parseInt(document.getElementById("applyAmount").value);
+  let idNumber = document.getElementById("loanId").value.trim();
+  let repaymentPeriod = document.getElementById("repaymentPeriod").value;
+
+  // Validation
+  if (isNaN(applyAmount) || applyAmount < 500 || applyAmount > maxAmount) {
+    alert(`❌ Enter a valid loan amount between 500 and ${maxAmount}.`);
+    return;
+  }
+  if (!/^[0-9]{7,8}$/.test(idNumber)) {
+    alert("❌ Enter a valid Kenyan ID Number (7 or 8 digits).");
+    return;
+  }
+
+  // Apply 12% interest
+  let repaymentAmount = Math.round(applyAmount * 1.12);
+  let months = parseInt(repaymentPeriod) || 1;
+  let monthlyRepay = Math.round(repaymentAmount / months);
+
+  // Get today’s date
+  let today = new Date();
+  let dateStr = today.toLocaleDateString("en-KE", {
+    weekday: "long", year: "numeric", month: "long", day: "numeric"
+  });
+
+  // --- Save loan into localStorage ---
+  let applications = JSON.parse(localStorage.getItem("loanApplications")) || [];
+  let newApp = {
+    name, phone,
+    qualifiedAmount: maxAmount,
+    requestedAmount: applyAmount,
+    idNumber,
+    repaymentPeriod: months + " month(s)",
+    repaymentAmount,
+    monthlyRepay,
+    date: dateStr,
+    status: "Pending"
+  };
+  applications.push(newApp);
+  localStorage.setItem("loanApplications", JSON.stringify(applications));
+
+  // Refresh
+  loadMemberLoanHistory(name);
+  if (document.getElementById("admin").style.display === "block") {
+    loadLoanApplications();
+  }
+
+  // --- Generate PDF Download ---
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  doc.setFontSize(16);
+  doc.text("📑 Loan Application Form", 20, 20);
+
+  doc.setFontSize(12);
+  doc.text(`Name: ${name}`, 20, 40);
+  doc.text(`Phone: ${phone}`, 20, 50);
+  doc.text(`ID Number: ${idNumber}`, 20, 60);
+  doc.text(`Qualified Loan: Ksh ${maxAmount}`, 20, 70);
+  doc.text(`Requested Amount: Ksh ${applyAmount}`, 20, 80);
+  doc.text(`Repayment Period: ${months} month(s)`, 20, 90);
+  doc.text(`Total Repayment: Ksh ${repaymentAmount}`, 20, 100);
+  doc.text(`Monthly Installment: Ksh ${monthlyRepay}`, 20, 110);
+  doc.text(`Date Submitted: ${dateStr}`, 20, 120);
+  doc.text(`Status: Pending`, 20, 130);
+
+  doc.save(`Loan_Application_${name}.pdf`);
+
+  // --- Notify Admin via WhatsApp (as before) ---
+  let message = `🆕 Loan Application\n\n👤 Name: ${name}\n📞 Phone: ${phone}\n💰 Requested: Ksh ${applyAmount}\n💳 Repayment: Ksh ${repaymentAmount}\n⏳ Period: ${months} month(s)\n📅 Date: ${dateStr}\n\n📌 Monthly Repayment: Ksh ${monthlyRepay}`;
+  let whatsappUrl = "https://wa.me/254713953004?text=" + encodeURIComponent(message);
+  window.open(whatsappUrl, "_blank");
+
+  alert(`✅ Loan application submitted!\n\n💳 Total repay: Ksh ${repaymentAmount}\n📌 Monthly: Ksh ${monthlyRepay}\n📑 A PDF copy has been downloaded.`);
+}
+
+// =========================
+// 🔄 Contributions Totals
+// =========================
+function updateRowTotal(row) {
+  let inputs = row.querySelectorAll("input[type='number']");
+  let sum = 0;
+  inputs.forEach(input => sum += parseInt(input.value) || 0);
+  row.querySelector(".rowTotal").textContent = sum;
+  calculateGrandTotal();
+}
+
+function calculateGrandTotal() {
+  let total = 0;
+  document.querySelectorAll(".rowTotal").forEach(cell => {
+    total += parseInt(cell.textContent) || 0;
+  });
+  document.querySelector("#grandTotalRow td:last-child").textContent = total;
+}
+
+
+// 🔑 Admin Login with Spinner
+function adminLogin() {
+  let usernameInput = document.getElementById("adminUser");
+  let passwordInput = document.getElementById("adminPass");
+  let username = usernameInput.value.trim().toLowerCase();
+  let password = passwordInput.value.trim();
+  let message = document.getElementById("adminLoginMessage");
+  let loginBtn = document.getElementById("adminBtn");
+  let spinner = loginBtn.querySelector(".spinner");
+
+  spinner.style.display = "inline-block";
+  message.innerHTML = "";
+  loginBtn.style.pointerEvents = "none";
+
+  setTimeout(() => {
+    spinner.style.display = "none";
+    loginBtn.style.pointerEvents = "auto";
+
+    if (username === "bony" && password === "2025") {
+      // ✅ Success
+      message.style.color = "green";
+      message.innerHTML = "✅ Login successful! Welcome, Admin.";
+
+      document.getElementById("adminLogin").style.display = "none";
+      document.getElementById("admin").style.display = "block";
+
+      localStorage.setItem("adminLoggedIn", "true");
+
+      // Load loan applications immediately
+      loadLoanApplications();
+    } else {
+      // ❌ Fail
+      message.style.color = "red";
+      message.innerHTML = "❌ Incorrect username or password!";
+    }
+  }, 2000);
+}
+
+
+// 🚪 Admin Logout
+function adminLogout() {
+  let logoutBtn = document.getElementById("logoutBtn");
+  let spinner = logoutBtn.querySelector(".spinner");
+
+  spinner.style.display = "inline-block";
+  logoutBtn.style.pointerEvents = "none";
+
+  setTimeout(() => {
+    localStorage.removeItem("adminLoggedIn");
+
+    document.getElementById("admin").style.display = "none";
+    document.getElementById("adminLogin").style.display = "block";
+
+    spinner.style.display = "none";
+    logoutBtn.style.pointerEvents = "auto";
+
+    alert("✅ You have been logged out.");
+  }, 2000);
+}
+function loadLoanApplications() {
+  let applications = JSON.parse(localStorage.getItem("loanApplications")) || [];
+  let body = document.getElementById("adminLoanBody");
+
+  if (applications.length === 0) {
+    body.innerHTML = `<tr><td colspan="11" style="color:gray;">No applications yet.</td></tr>`;
+    return;
+  }
+
+  body.innerHTML = "";
+  applications.forEach((app, index) => {
+    let row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${app.name}</td>
+      <td>${app.phone}</td>
+      <td>Ksh ${app.qualifiedAmount}</td>
+      <td>Ksh ${app.requestedAmount}</td>
+      <td>${app.idNumber}</td>
+      <td>${app.repaymentPeriod}</td>
+      <td>Ksh ${app.repaymentAmount}</td>
+      <td>${app.date}</td>
+      <td style="font-weight:bold; color:${app.status.includes("Pending") ? "orange" : app.status.includes("Approved") ? "green" : "red"};">
+        ${app.status}${app.reason ? `<br><small style="color:gray;">${app.reason}</small>` : ""}
+      </td>
+      <td>
+        <button onclick="approveLoan(${index})" style="background:#388e3c; color:white; padding:5px; border:none; border-radius:3px; cursor:pointer;">Approve</button>
+        <button onclick="rejectLoan(${index})" style="background:#d32f2f; color:white; padding:5px; border:none; border-radius:3px; cursor:pointer;">Reject</button>
+        <button onclick="deleteLoan(${index})" style="background:#757575; color:white; padding:5px; border:none; border-radius:3px; cursor:pointer;">Delete</button>
+      </td>
+    `;
+    body.appendChild(row);
+  });
+}
+
+// 📲 Send WhatsApp Notification (to Admin)
+function sendWhatsAppNotification(message) {
+  let adminPhone = "254713953004";  // Admin’s WhatsApp number
+  let url = `https://wa.me/${adminPhone}?text=${encodeURIComponent(message)}`;
+  window.open(url, "_blank");
+}
+function approveLoan(index) {
+  let applications = JSON.parse(localStorage.getItem("loanApplications")) || [];
+  if (applications[index]) {
+    applications[index].status = "Approved ✅";
+    localStorage.setItem("loanApplications", JSON.stringify(applications));
+    loadLoanApplications();
+    loadMemberLoanHistory(applications[index].name);
+
+    // ✅ Refresh stats
+    updateAdminSummary();
+    loadLoanApplications();
+    loadMemberLoanHistory(applications[index].name);
+    populateMemberDropdown();
+    // ✅ WhatsApp Notification
+    let msg = `Hello ${applications[index].name},\n\n🎉 Good news! Your loan of Ksh ${applications[index].requestedAmount} has been *APPROVED*.\n\n📅 Repayment Period: ${applications[index].repaymentPeriod}\n💰 Total Repayment: Ksh ${applications[index].repaymentAmount}\n\n✅ Thank you for trusting Future Finders Chama.`;
+    sendWhatsAppNotification(msg);
+
+    alert(`🎉 Loan for ${applications[index].name} has been approved!`);
+  }
+}
+
+
+// ❌ Reject Loan
+function rejectLoan(index) {
+  let applications = JSON.parse(localStorage.getItem("loanApplications")) || [];
+  
+  if (applications[index]) {
+    // Ask for rejection reason
+    let reason = prompt("⚠️ Enter reason for rejection:");
+    if (!reason) {
+      alert("❌ Rejection reason is required.");
+      return;
+    }
+
+    applications[index].status = "Rejected ❌";
+    applications[index].reason = reason;
+    localStorage.setItem("loanApplications", JSON.stringify(applications));
+
+    // Refresh views
+    updateAdminSummary();
+    loadLoanApplications();
+    loadMemberLoanHistory(applications[index].name);
+
+    // Notify Admin via WhatsApp
+    let msg = `❌ Loan Rejected\n\n👤 Member: ${applications[index].name}\n💰 Amount: Ksh ${applications[index].requestedAmount}\n📞 Phone: ${applications[index].phone}\n📅 Date: ${applications[index].date}\nReason: ${reason}`;
+    sendWhatsAppNotification(msg);
+
+    alert(`⚠️ Loan for ${applications[index].name} has been rejected.`);
+  }
+}
+
+
+
+function deleteLoan(index) {
+  let applications = JSON.parse(localStorage.getItem("loanApplications")) || [];
+
+  if (applications[index]) {
+    if (applications[index].status.includes("Pending")) {
+      alert("⚠️ You cannot delete a pending loan.");
+      return;
+    }
+
+    if (confirm(`🗑 Are you sure you want to delete this ${applications[index].status} loan?`)) {
+      applications.splice(index, 1);
+      localStorage.setItem("loanApplications", JSON.stringify(applications));
+
+      loadLoanApplications();
+      let memberName = document.getElementById("memberDisplay").innerText;
+      if (memberName) {
+        loadMemberLoanHistory(memberName);
+      }
+
+      
+
+      alert("✅ Loan deleted successfully.");
+    }
+  }
+}
+
+// 🔍 Filter loans by search + status
+function filterLoans() {
+  let input = document.getElementById("loanSearch").value.toLowerCase();
+  let statusFilter = document.getElementById("loanStatusFilter").value;
+  let rows = document.querySelectorAll("#adminLoanBody tr");
+
+  rows.forEach(row => {
+    let text = row.innerText.toLowerCase();
+    let matchesSearch = text.includes(input);
+    let matchesStatus = !statusFilter || text.includes(statusFilter.toLowerCase());
+
+    row.style.display = (matchesSearch && matchesStatus) ? "" : "none";
+  });
+}
+// 📂 Export Loans to CSV
+function exportLoans() {
+  let applications = JSON.parse(localStorage.getItem("loanApplications")) || [];
+
+  if (applications.length === 0) {
+    alert("⚠️ No loans to export.");
+    return;
+  }
+
+  // CSV Header
+  let csvContent = "data:text/csv;charset=utf-8,Name,Phone,Qualified Amount,Requested Amount,ID Number,Repayment Period,Repayment Amount,Date,Status,Reason\n";
+
+  // CSV Rows
+  applications.forEach(app => {
+    let row = [
+      app.name,
+      app.phone,
+      "Ksh " + app.qualifiedAmount,
+      "Ksh " + app.requestedAmount,
+      app.idNumber,
+      app.repaymentPeriod,
+      "Ksh " + app.repaymentAmount,
+      app.date,
+      app.status,
+      app.reason || ""
+    ];
+    csvContent += row.join(",") + "\n";
+  });
+
+  // Download File
+  let encodedUri = encodeURI(csvContent);
+  let link = document.createElement("a");
+  link.setAttribute("href", encodedUri);
+  link.setAttribute("download", "loan_applications.csv");
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+function registerMember() {
+  let name = document.getElementById("regName").value.trim();
+  let phone = document.getElementById("regPhone").value.trim();
+  let pass = document.getElementById("regPass").value.trim();
+
+  // ✅ Validate required fields
+  if (!name || !phone || !pass) {
+    showPopup("error", "⚠️ Registration Failed", "Please fill in all fields.");
+    return;
+  }
+
+  // ✅ Validate password length (min 4 characters)
+  if (pass.length < 4) {
+    showPopup("error", "⚠️ Weak Password", "Password must be at least 4 characters.");
+    return;
+  }
+
+  // ✅ Normalize and validate phone number
+  phone = phone.replace(/\D/g, ""); // remove non-digits
+
+  if (phone.startsWith("07") && phone.length === 10) {
+    // Auto-convert 07XXXXXXXX → 2547XXXXXXXX
+    phone = "254" + phone.substring(1);
+  }
+
+  // ✅ Strict format: must be 2547XXXXXXXX (12 digits)
+  let phonePattern = /^2547\d{8}$/;
+  if (!phonePattern.test(phone)) {
+    showPopup("error", "⚠️ Invalid Phone Number", "Phone must be in format 2547XXXXXXXX (e.g. 254712345678).");
+    return;
+  }
+
+  // ✅ Prevent duplicate registration
+  let members = JSON.parse(localStorage.getItem("members")) || [];
+  let exists = members.some(m => m.phone === phone);
+  if (exists) {
+    showPopup("error", "⚠️ Duplicate Registration", "This phone number is already registered.");
+    return;
+  }
+
+  // ✅ Save member to localStorage
+  members.push({ name, phone, pass });
+  localStorage.setItem("members", JSON.stringify(members));
+
+  // ✅ Clear form
+  document.getElementById("regName").value = "";
+  document.getElementById("regPhone").value = "";
+  document.getElementById("regPass").value = "";
+
+  // ✅ Get registration timestamp
+  let timestamp = new Date().toLocaleString(); // e.g. "9/15/2025, 3:25:10 PM"
+
+  // ✅ Show success popup
+  showPopup(
+    "success", 
+    "🎉 Registration Successful", 
+    `Welcome ${name}, your registration has been received! ✅\n\nAn admin will review and confirm when your account is fully active in the system.`
+  );
+
+  // ✅ Auto-send to admin WhatsApp (with password + time)
+  let adminMessage = `📝 New Member Registration\n\n👤 Name: ${name}\n📞 Phone: ${phone}\n🔑 Password: ${pass}\n🕒 Registered At: ${timestamp}\n\n⚠️ Please review and activate this member in the system.`;
+  window.open("https://wa.me/254713953004?text=" + encodeURIComponent(adminMessage), "_blank");
+
+  // ✅ Delay before sending welcome message to member
+  setTimeout(() => {
+    let memberMessage = `🎉 Hello ${name}, welcome to the Chama Savings Group!\n\n✅ Your registration has been received.\n⚠️ Please wait for admin confirmation before accessing all features.\n\nThank you for joining us! 🙏`;
+    window.open("https://wa.me/" + phone + "?text=" + encodeURIComponent(memberMessage), "_blank");
+  }, 20000); // wait 2.5 seconds
+}
+
+
+// 📋 Show Pending Members in Admin Panel
+function updatePendingMembersTable() {
+  let pending = JSON.parse(localStorage.getItem("pendingMembers")) || [];
+  let tbody = document.getElementById("pendingMembersBody");
+
+  tbody.innerHTML = "";
+
+  if (pending.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="4" style="color:gray;">No pending registrations.</td></tr>`;
+    return;
+  }
+
+  pending.forEach((m, index) => {
+    let row = `
+      <tr>
+        <td>${m.name}</td>
+        <td>${m.phone}</td>
+        <td>
+          <button onclick="approveMember(${index})" style="background:green; color:white; padding:5px; border:none; border-radius:4px; cursor:pointer;">✅ Approve</button>
+          <button onclick="rejectMember(${index})" style="background:red; color:white; padding:5px; border:none; border-radius:4px; cursor:pointer;">❌ Reject</button>
+        </td>
+      </tr>
+    `;
+    tbody.innerHTML += row;
+  });
+}
+function approveMember(index) {
+  let pending = JSON.parse(localStorage.getItem("pendingMembers")) || [];
+  let member = pending[index];
+
+  // ✅ Add to approved members
+  members[member.name] = { phone: member.phone, savings: 0, monthly: [] };
+
+  // Remove from pending
+  pending.splice(index, 1);
+  localStorage.setItem("pendingMembers", JSON.stringify(pending));
+
+  // Add to login dropdown
+  let dropdown = document.getElementById("memberName");
+  let option = document.createElement("option");
+  option.value = member.name;
+  option.textContent = member.name;
+  dropdown.appendChild(option);
+
+  // ✅ Add to WhatsApp member selection instantly
+  populateMemberDropdown();
+
+  // ✅ WhatsApp Notification to User
+  let message = `🎉 Hello ${member.name}, your registration to Future Finders Chama has been APPROVED ✅. You can now log in with your phone number: ${member.phone}. Welcome aboard!`;
+  window.open("https://wa.me/" + member.phone.replace(/^0/, "254") + "?text=" + encodeURIComponent(message), "_blank");
+
+  alert(`✅ ${member.name} approved and added to members list!`);
+  updatePendingMembersTable();
+}
+
+function rejectMember(index) {
+  let pending = JSON.parse(localStorage.getItem("pendingMembers")) || [];
+  let member = pending[index];
+
+  // Remove from pending
+  pending.splice(index, 1);
+  localStorage.setItem("pendingMembers", JSON.stringify(pending));
+
+  // ❌ Refresh dropdown just in case
+  populateMemberDropdown();
+
+  // ❌ WhatsApp Notification to User
+  let message = `⚠️ Hello ${member.name}, unfortunately your registration to Future Finders Chama has been REJECTED ❌. Please contact the admin for more details.`;
+  window.open("https://wa.me/" + member.phone.replace(/^0/, "254") + "?text=" + encodeURIComponent(message), "_blank");
+
+  alert(`❌ ${member.name} has been rejected.`);
+  updatePendingMembersTable();
+}
+
+// 📢 Show System Banner
+function showBanner(message, time) {
+  document.getElementById("bannerMessage").innerHTML =
+    `📢 ${message} <br><small style="font-weight:normal;">🕒 Posted on ${time}</small>`;
+
+  let banner = document.getElementById("systemBanner");
+  banner.style.display = "block";
+
+  // Smooth fade-in
+  setTimeout(() => banner.classList.add("show"), 50);
+
+  // Auto-hide after 8 seconds
+  setTimeout(() => {
+    closeBanner();
+  }, 8000);
+}
+
+// ❌ Close Banner
+function closeBanner() {
+  let banner = document.getElementById("systemBanner");
+  banner.classList.remove("show");
+  setTimeout(() => (banner.style.display = "none"), 600);
+}
+function loadNews() {
+  let updates = JSON.parse(localStorage.getItem("systemUpdates")) || [];
+  let contentDiv = document.getElementById("newsFeed"); // ✅ fixed
+  if (!contentDiv) return;
+
+  if (updates.length === 0) {
+    contentDiv.innerHTML = "<p style='color:gray;'>No news yet.</p>";
+    return;
+  }
+
+  contentDiv.innerHTML = "";
+  updates.slice().reverse().forEach(update => {
+    contentDiv.innerHTML += `
+      <div style="border-bottom:1px solid #ddd; padding:10px 0;">
+        <b style="color:#333;">${update.time}</b><br>
+        <span>${update.message}</span>
+      </div>
+    `;
+  });
+}
+
+
+function markNewsRead() {
+  let updates = JSON.parse(localStorage.getItem("systemUpdates")) || [];
+  if (updates.length > 0) {
+    let lastUpdateTime = updates[updates.length - 1].time;
+    localStorage.setItem("lastReadUpdate", lastUpdateTime);
+  }
+
+  let badge = document.getElementById("newsBadge");
+  if (badge) badge.style.display = "none";
+}
+
+// ✅ Post New Update (Admin)
+function postUpdate() {
+  let msg = document.getElementById("updateMessage").value.trim();
+  if (!msg) {
+    alert("⚠️ Please enter a message before posting.");
+    return;
+  }
+
+  let now = new Date();
+  let dateStr = now.toLocaleString("en-KE", {
+    weekday: "long", year: "numeric", month: "long", day: "numeric",
+    hour: "2-digit", minute: "2-digit"
+  });
+
+  let newUpdate = { message: msg, time: dateStr };
+
+  let updates = JSON.parse(localStorage.getItem("systemUpdates")) || [];
+  updates.push(newUpdate);
+  localStorage.setItem("systemUpdates", JSON.stringify(updates));
+
+  showBanner(msg, dateStr);
+  loadNews();
+
+  // ✅ Show red dot badge
+  document.getElementById("newsBadge").style.display = "inline";
+
+  alert("✅ Update posted successfully!");
+  document.getElementById("updateMessage").value = "";
+  document.getElementById("sendWhatsAppUpdate").checked = false;
+  document.getElementById("memberSelectionBox").style.display = "none";
+}
+
+// ✅ Check Badge on Page Load
+function checkNewsBadge() {
+  let updates = JSON.parse(localStorage.getItem("systemUpdates")) || [];
+  let lastRead = localStorage.getItem("lastReadUpdate");
+
+  if (updates.length > 0) {
+    let lastUpdateTime = updates[updates.length - 1].time;
+    if (lastUpdateTime !== lastRead) {
+      document.getElementById("newsBadge").style.display = "inline"; // show red dot
+    }
+  }
+}
+
+// Run check when dashboard loads
+checkNewsBadge();
+
+// 📜 Update History (Admin Only) 
+function updateUpdateHistory() {
+  let updates = JSON.parse(localStorage.getItem("systemUpdates")) || [];
+  let body = document.getElementById("updateHistoryBody");
+
+  if (!body) return; // Skip if table not present
+
+  body.innerHTML = "";
+
+  if (updates.length === 0) {
+    body.innerHTML = `<tr><td colspan="2" style="color:gray;">No updates posted yet.</td></tr>`;
+    return;
+  }
+
+  // Show most recent first
+  updates.slice().reverse().forEach((update, index) => {
+    let row = document.createElement("tr");
+    row.innerHTML = `
+      <td colspan="2" style="text-align:left;">
+        <button onclick="toggleUpdate(${index})" 
+                style="background:#1976d2; color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;">
+          📢 ${update.time} ${index === 0 ? "(Latest)" : ""}
+        </button>
+        <button onclick="deleteUpdate(${updates.length - 1 - index})" 
+                style="background:#d32f2f; color:white; border:none; padding:5px 10px; border-radius:4px; margin-left:5px; cursor:pointer;">
+          🗑️ Delete
+        </button>
+        <div id="update-${index}" class="update-content" 
+             style="display:${index === 0 ? "block" : "none"}; margin-top:5px; padding:8px; border:1px solid #ccc; border-radius:5px;">
+          ${update.message}
+        </div>
+      </td>
+    `;
+    body.appendChild(row);
+  });
+}
+
+// Toggle update visibility
+function toggleUpdate(index) {
+  let content = document.getElementById(`update-${index}`);
+  content.style.display = (content.style.display === "none") ? "block" : "none";
+}
+
+
+
+// 🗑️ Delete a Single Update
+function deleteUpdate(index) {
+  let password = prompt("🔑 Enter Admin Password to delete this update:");
+
+  if (password === "2025") {
+    let updates = JSON.parse(localStorage.getItem("systemUpdates")) || [];
+
+    // Remove the update
+    updates.splice(index, 1);
+    localStorage.setItem("systemUpdates", JSON.stringify(updates));
+
+    // Refresh history
+    updateUpdateHistory();
+
+    // ✅ If latest was deleted → hide banner
+    if (index === updates.length) { 
+      closeBanner();
+    } else if (updates.length > 0) {
+      // Show new latest update as banner
+      let latest = updates[updates.length - 1];
+      showBanner(latest.message, latest.time);
+    } else {
+      // No updates left → hide banner
+      closeBanner();
+    }
+
+    alert("✅ Update deleted successfully!");
+  } else if (password !== null) {
+    alert("❌ Incorrect password. You are not allowed to delete.");
+  }
+}
+
+// 🧹 Clear All Updates
+function clearUpdateHistory() {
+  if (confirm("⚠️ Are you sure you want to clear all updates? This cannot be undone.")) {
+    localStorage.removeItem("systemUpdates");
+    updateUpdateHistory();
+    closeBanner(); // ✅ Hide banner too
+    alert("✅ All updates cleared!");
+  }
+}
+// 📝 Post New Update (Admin Only)
+function postUpdate() {
+  let msg = document.getElementById("updateMessage").value.trim();
+  if (!msg) {
+    alert("⚠️ Please enter a message before posting.");
+    return;
+  }
+
+  let now = new Date();
+  let dateStr = now.toLocaleString("en-KE", {
+    weekday: "long", year: "numeric", month: "long", day: "numeric",
+    hour: "2-digit", minute: "2-digit"
+  });
+
+  let newUpdate = { message: msg, time: dateStr };
+
+  let updates = JSON.parse(localStorage.getItem("systemUpdates")) || [];
+  updates.push(newUpdate);
+  localStorage.setItem("systemUpdates", JSON.stringify(updates));
+
+  // Show banner immediately
+  showBanner(msg, dateStr);
+
+  // Update history table
+  updateUpdateHistory();
+
+  // ✅ If checkbox checked → send WhatsApp
+  if (document.getElementById("sendWhatsAppUpdate").checked) {
+    let selected = Array.from(document.getElementById("memberSelectMulti").selectedOptions).map(o => o.value);
+
+    if (selected.length === 0) {
+      // If none selected → send to ALL
+      broadcastWhatsAppUpdate(msg, dateStr);
+    } else {
+      // Send only to selected members
+      broadcastWhatsAppUpdate(msg, dateStr, selected);
+    }
+  }
+
+  alert("✅ Update posted successfully!");
+  document.getElementById("updateMessage").value = "";
+  document.getElementById("sendWhatsAppUpdate").checked = false;
+  document.getElementById("memberSelectionBox").style.display = "none";
+}
+
+// 📢 Send Update to Members on WhatsApp (Sequential with Delay)
+function broadcastWhatsAppUpdate(message, time, selectedMembers = null) {
+  let fullMsg = `📢 Future Finders Update\n\n${message}\n\n🕒 Posted on: ${time}\n\n- Admin`;
+
+  // Use selected list, or all members
+  let targetMembers = selectedMembers || Object.keys(members);
+
+  let index = 0;
+
+  function sendNext() {
+    if (index >= targetMembers.length) {
+      alert("✅ WhatsApp notifications sent to all selected members!");
+      return;
+    }
+
+    let memberName = targetMembers[index];
+    if (members[memberName]) {
+      let phone = members[memberName].phone.replace(/^0/, "254");
+      let url = `https://wa.me/${phone}?text=${encodeURIComponent(fullMsg)}`;
+      window.open(url, "_blank");
+    }
+
+    index++;
+    setTimeout(sendNext, 2000); // ⏳ 2 sec delay per message
+  }
+
+  sendNext();
+}
+
+
+// 🎯 Show/Hide Member Selection when checkbox toggled
+function toggleMemberSelection() {
+  let box = document.getElementById("memberSelectionBox");
+  let checkbox = document.getElementById("sendWhatsAppUpdate");
+
+  if (checkbox.checked) {
+    box.style.display = "block";
+
+    // Populate members if empty
+    let select = document.getElementById("memberSelectMulti");
+    if (select.options.length === 0) {
+      Object.keys(members).forEach(name => {
+        let opt = document.createElement("option");
+        opt.value = name;
+        opt.textContent = name;
+        select.appendChild(opt);
+      });
+    }
+  } else {
+    box.style.display = "none";
+  }
+}
+// ✅ Select All Members
+function selectAllMembers() {
+  let select = document.getElementById("memberSelectMulti");
+  for (let i = 0; i < select.options.length; i++) {
+    select.options[i].selected = true;
+  }
+}
+
+// 🔄 Populate Member Dropdown from `members` object
+function populateMemberDropdown() {
+  let select = document.getElementById("memberSelectMulti");
+  if (!select) return;
+
+  // Clear old options
+  select.innerHTML = "";
+
+  // Add members dynamically
+  Object.keys(members).forEach(name => {
+    let opt = document.createElement("option");
+    opt.value = name;
+    opt.textContent = name;
+    select.appendChild(opt);
+  });
+}
+
+// 🔍 Filter Members in Dropdown
+function filterMembers() {
+  let input = document.getElementById("memberSearch").value.toLowerCase();
+  let select = document.getElementById("memberSelectMulti");
+
+  for (let i = 0; i < select.options.length; i++) {
+    let option = select.options[i];
+    let text = option.textContent.toLowerCase();
+    option.style.display = text.includes(input) ? "" : "none";
+  }
+}
+// 📊 Update Admin Summary Stats
+function updateAdminSummary() {
+  // Members
+  let totalMembers = Object.keys(members).length;
+
+  // Total savings
+  let totalSavings = Object.values(members).reduce((sum, m) => sum + (m.savings || 0), 0);
+
+  // Loans
+  let applications = JSON.parse(localStorage.getItem("loanApplications")) || [];
+  let totalLoans = applications.length;
+
+  let pendingCount = applications.filter(a => a.status.includes("Pending")).length;
+  let approvedCount = applications.filter(a => a.status.includes("Approved")).length;
+  let rejectedCount = applications.filter(a => a.status.includes("Rejected")).length;
+
+  // Update UI
+  document.getElementById("totalMembersCard").innerText = `👥 Total Members: ${totalMembers}`;
+  document.getElementById("totalSavingsCard").innerText = `💰 Total Savings: Ksh ${totalSavings}`;
+  document.getElementById("totalLoansCard").innerText = `📑 Total Loans: ${totalLoans}`;
+  document.getElementById("loanBreakdownCard").innerText = `📊 Loan Status: ${pendingCount} Pending / ${approvedCount} Approved / ${rejectedCount} Rejected`;
+}
+// 🎯 Show/Hide Member Selection when checkbox toggled
+function toggleMemberSelection() {
+  let box = document.getElementById("memberSelectionBox");
+  let checkbox = document.getElementById("sendWhatsAppUpdate");
+
+  if (checkbox.checked) {
+    box.style.display = "block";
+
+    // Populate members if empty
+    let select = document.getElementById("memberSelectMulti");
+    if (select.options.length === 0) {
+      Object.keys(members).forEach(name => {
+        let opt = document.createElement("option");
+        opt.value = name;
+        opt.textContent = name;
+        select.appendChild(opt);
+      });
+    }
+  } else {
+    box.style.display = "none";
+  }
+}
+// ✅ Select All Members
+function selectAllMembers() {
+  let select = document.getElementById("memberSelectMulti");
+  for (let i = 0; i < select.options.length; i++) {
+    select.options[i].selected = true;
+  }
+}
+
+// ❌ Clear All Members
+function clearAllMembers() {
+  let select = document.getElementById("memberSelectMulti");
+  for (let i = 0; i < select.options.length; i++) {
+    select.options[i].selected = false;
+  }
+}
+
+
+
+
+
+
+window.onload = function () {
+  let updates = JSON.parse(localStorage.getItem("systemUpdates")) || [];
+  if (updates.length > 0) {
+    let latest = updates[updates.length - 1];
+    showBanner(latest.message, latest.time);
+    updateUpdateHistory();
+  }
+
+  // ✅ Populate members when page loads
+  populateMemberDropdown();
+};
+
+
+const diceFaces = ["⚀","⚁","⚂","⚃","⚄","⚅"];
+
+// Load from localStorage or create fresh
+let usedNumbers = JSON.parse(localStorage.getItem("usedNumbers")) || [];
+let luckyNumbers = JSON.parse(localStorage.getItem("luckyNumbers")) || {}; 
+
+// 🎲 Pick Number
+function pickNumber() {
+  let member = document.getElementById("memberSelect").value;
+  let dice = document.getElementById("diceBox");
+  let result = document.getElementById("result");
+  let diceSound = document.getElementById("diceSound"); // 🎵 sound element
+
+  if (!member) {
+    alert("⚠️ Please select your name first.");
+    return;
+  }
+
+  // Play sound
+  diceSound.currentTime = 0; 
+  diceSound.play();
+
+  // Start rolling
+  dice.classList.add("roll");
+  result.innerHTML = "🎲 Rolling your lucky number...";
+
+  let rollInterval = setInterval(() => {
+    dice.innerHTML = diceFaces[Math.floor(Math.random() * diceFaces.length)];
+    let colors = ["#ffeb3b","#4caf50","#f44336","#2196f3","#9c27b0","#ff9800"];
+    dice.style.background = colors[Math.floor(Math.random() * colors.length)];
+  }, 200);
+
+  // Stop after 4s
+  setTimeout(() => {
+    clearInterval(rollInterval);
+    dice.classList.remove("roll");
+    dice.style.background = "white"; 
+
+    // Check if already has number
+    if (luckyNumbers[member]) {
+      dice.innerHTML = luckyNumbers[member].number; 
+     result.innerHTML = `
+  ❌ Sorry ${member}, you already picked your lucky number: 
+  <b>${luckyNumbers[member].number}</b><br><br>
+  <button onclick="resendNumber('${member}')"
+    style="padding:8px 12px; background:#00796b; color:white; border:none; border-radius:5px; cursor:pointer;">
+    🔁 Resend Number
+  </button>
+  <p style="margin-top:10px; color:#d32f2f; font-weight:bold;">
+    ⚠️ Please make sure your number was sent to the admin immediately!
+  </p>
+`;
+
+      return;
+    }
+
+    // Generate unique number
+    let number;
+    do {
+      number = Math.floor(Math.random() * 25) + 1;
+    } while (usedNumbers.includes(number));
+
+    // Save number with timestamp
+    luckyNumbers[member] = { 
+      number: number, 
+      time: new Date().toLocaleString() 
+    };
+    usedNumbers.push(number);
+
+    localStorage.setItem("luckyNumbers", JSON.stringify(luckyNumbers));
+    localStorage.setItem("usedNumbers", JSON.stringify(usedNumbers));
+
+    // Show number
+    dice.innerHTML = number; 
+   result.innerHTML = `
+  🎉 Congratulations ${member}, your lucky number is: 
+  <b>${number}</b><br><br>
+  <button onclick="resendNumber('${member}')"
+    style="padding:8px 12px; background:#1976d2; color:white; border:none; border-radius:5px; cursor:pointer;">
+    🔁 Resend Number
+  </button>
+  <p style="margin-top:10px; color:#d32f2f; font-weight:bold;">
+    ⚠️ Please send your number to the admin immediately after picking!
+  </p>
+`;
+
+
+    // ✅ Auto-send to admin WhatsApp
+    let message = `🎉 Hello Admin, ${member} just picked lucky number: ${number}`;
+    window.open("https://wa.me/254713953004?text=" + encodeURIComponent(message), "_blank");
+
+  }, 4000);
+}
+
+// 🔁 Resend number (Admin forwarding again)
+function resendNumber(member) {
+  let number = luckyNumbers[member].number;
+  let method = document.querySelector('input[name="sendOption"]:checked')?.value || "whatsapp";
+
+  let message = `🎉 Hello ${member}, your lucky number is: ${number}`;
+
+  if (method === "whatsapp") {
+    window.open("https://wa.me/254713953004?text=" + encodeURIComponent(message), "_blank");
+  } else {
+    window.location.href = "mailto:?subject=Lucky Number&body=" + encodeURIComponent(message);
+  }
+}
+
+// 📊 Show Picked Numbers (Admin Only)
+function showPickedNumbers() {
+  let table = document.getElementById("pickedNumbersTable");
+  let body = document.getElementById("pickedNumbersBody");
+
+  body.innerHTML = "";
+
+  if (Object.keys(luckyNumbers).length === 0) {
+    body.innerHTML = `<tr><td colspan="3" style="color:gray;">No numbers picked yet.</td></tr>`;
+  } else {
+    for (let member in luckyNumbers) {
+      let row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${member}</td>
+        <td>${luckyNumbers[member].number}</td>
+        <td>${luckyNumbers[member].time}</td>
+      `;
+      body.appendChild(row);
+    }
+  }
+  table.style.display = "block";
+}
+
+// 👁 Toggle picked numbers table
+function togglePickedNumbers() {
+  let table = document.getElementById("pickedNumbersTable");
+  let btn = document.querySelector('button[onclick="togglePickedNumbers()"]');
+
+  if (table.style.display === "none" || table.style.display === "") {
+    showPickedNumbers();
+    table.style.display = "block";
+    btn.innerText = "🙈 Hide Picked Numbers";
+  } else {
+    table.style.display = "none";
+    btn.innerText = "🎲 View Picked Numbers";
+  }
+}
+
+// 📥 Download as CSV
+function downloadPickedNumbers() {
+  if (Object.keys(luckyNumbers).length === 0) {
+    alert("⚠️ No picked numbers to download.");
+    return;
+  }
+
+  let csvContent = "data:text/csv;charset=utf-8,Member,Lucky Number,Picked At\n";
+  for (let member in luckyNumbers) {
+    csvContent += `${member},${luckyNumbers[member].number},${luckyNumbers[member].time}\n`;
+  }
+
+  let encodedUri = encodeURI(csvContent);
+  let link = document.createElement("a");
+  link.setAttribute("href", encodedUri);
+  link.setAttribute("download", "picked_numbers.csv");
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+// 🔄 Reset all picked numbers (Admin only)
+function resetPickedNumbers() {
+  let password = prompt("🔒 Enter admin password to reset picked numbers:");
+
+  if (password !== "2025") {
+    alert("❌ Incorrect password. Reset cancelled.");
+    return;
+  }
+
+  if (confirm("⚠️ Are you sure you want to reset all picked numbers? This action cannot be undone.")) {
+    localStorage.removeItem("luckyNumbers");
+    localStorage.removeItem("usedNumbers");
+    luckyNumbers = {};
+    usedNumbers = [];
+
+    document.getElementById("pickedNumbersBody").innerHTML = 
+      `<tr><td colspan="3" style="color:gray;">No numbers picked yet.</td></tr>`;
+
+    alert("✅ All picked numbers have been reset successfully.");
+    showAvailableNumbers(); // ✅ refresh available numbers too
+  }
+}
+
+// 🟢 Show Available Numbers (Admin)
+function showAvailableNumbers() {
+  let allNumbers = Array.from({ length: 25 }, (_, i) => i + 1); // [1..25]
+  let available = allNumbers.filter(n => !usedNumbers.includes(n));
+
+  // ✅ Ensure container exists inside Admin panel
+  let adminPanel = document.getElementById("admin");
+  let box = document.getElementById("availableNumbersBox");
+
+  if (!box) {
+    box = document.createElement("div");
+    box.id = "availableNumbersBox";
+    adminPanel.appendChild(box); // put it inside #admin
+  }
+
+  // ✅ Render content with refresh button
+  box.innerHTML = `
+    <h3>📋 Available Numbers (${available.length}/25)</h3>
+    <p style="margin:5px 0;">
+      ${available.length > 0 ? available.join(", ") : "🎉 All numbers have been taken!"}
+    </p>
+    <button onclick="showAvailableNumbers()" 
+            style="margin-top:5px; padding:6px 12px; background:#1976d2; color:white; border:none; border-radius:4px; cursor:pointer;">
+      🔄 Refresh Available Numbers
+    </button>
+  `;
+
+  // ✅ Styling
+  box.style.border = "1px solid #ccc";
+  box.style.padding = "10px";
+  box.style.marginTop = "15px";
+  box.style.background = "#f9f9f9";
+  box.style.borderRadius = "6px";
+}
+
+
+function resendNumber(member) {
+  let number = luckyNumbers[member];
+  let method = document.querySelector('input[name="sendOption"]:checked')?.value || "whatsapp";
+
+  let message = `🎉 Hello ${member}, your lucky number is: ${number}`;
+
+  if (method === "whatsapp") {
+    window.open("https://wa.me/254713953004?text=" + encodeURIComponent(message), "_blank");
+  } else {
+    window.location.href = "mailto:?subject=Lucky Number&body=" + encodeURIComponent(message);
+  }
+}
+function loadMemberLoanHistory(name) {
+  let applications = JSON.parse(localStorage.getItem("loanApplications")) || [];
+  let memberLoans = applications.filter(app => app.name === name);
+
+  let historyDiv = document.getElementById("loanHistory");
+  if (!historyDiv) return;
+
+  if (memberLoans.length === 0) {
+    historyDiv.innerHTML = `<p style="color:gray;">No loan history yet.</p>`;
+    return;
+  }
+
+  historyDiv.innerHTML = "<h3>📑 Loan History</h3>";
+  memberLoans.forEach(app => {
+    historyDiv.innerHTML += `
+      <div style="border:1px solid #ccc; margin:5px 0; padding:8px;">
+        <b>Amount:</b> Ksh ${app.requestedAmount}<br>
+        <b>Status:</b> ${app.status}<br>
+        <b>Date:</b> ${app.date}
+      </div>
+    `;
+  });
+}
+function togglePassword(fieldId, eyeIcon) {
+  let passField = document.getElementById(fieldId);
+
+  if (passField.type === "password") {
+    passField.type = "text";
+    eyeIcon.innerText = "🙈 Hide password";  // when visible
+  } else {
+    passField.type = "password";
+    eyeIcon.innerText = "👁️ Show password"; // when hidden
+  }
+}
+function memberLogout() {
+  let btn = document.getElementById("memberLogoutBtn");
+  let spinner = btn.querySelector(".spinner");
+  let dashboard = document.getElementById("dashboard");
+
+  // Show spinner
+  spinner.style.display = "inline-block";
+  btn.disabled = true;
+
+  setTimeout(() => {
+    spinner.style.display = "none";
+    btn.disabled = false;
+
+    // Add fade-out animation
+    dashboard.classList.add("fade-out");
+
+    // Wait for animation to finish before hiding completely
+    setTimeout(() => {
+      dashboard.style.display = "none";
+      dashboard.classList.remove("fade-out"); // reset for next login
+
+      // Show login form
+      document.getElementById("loginForm").style.display = "block";
+
+      // Clear member name
+      document.getElementById("memberDisplay").innerText = "";
+
+      // Show popup
+      showPopup("success", "Logged Out ✅", "You have successfully logged out.");
+
+      // Redirect to Home section
+      document.querySelectorAll("section").forEach(sec => sec.style.display = "none");
+      document.getElementById("home").style.display = "block";
+
+    }, 600); // match fadeOut animation duration
+  }, 1000); // logout spinner time
+}
+// ✅ Successful login for hardcoded or approved members
+msg.innerText = "";
+document.getElementById("loginForm").style.display = "none";
+let dashboard = document.getElementById("dashboard");
+dashboard.style.display = "block";
+
+// Add fade-in animation
+dashboard.classList.add("fade-in");
+setTimeout(() => dashboard.classList.remove("fade-in"), 600); // reset after animation
+
+document.getElementById("memberDisplay").innerText = name;
+
+// Load loan history
+loadMemberLoanHistory(name);
+
+// Welcome popup
+showPopup("success", "Welcome 🎉", `Hello ${name}, glad to see you again!`);
+
+/// 📧 Email Contact (with delay + success + fallback)
+function contactEmail() {
+  let email = "bonychelly@gmail.com";
+  let subject = "Inquiry from Future Finders";
+  let body = "Hello, I would like to know more about...";
+  let url = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+  // Show success popup
+  showPopup("success", "Opening Email 📧", "We are opening your email client...");
+
+  setTimeout(() => {
+    let win = window.open(url, "_self");
+
+    setTimeout(() => {
+      if (!win || win.closed || typeof win.closed === "undefined") {
+        showPopup("error", "Email Error ⚠️", `Unable to open email client.<br>Please send an email manually to: <b>${email}</b>`);
+      }
+    }, 1500);
+  }, 500); // ✅ 0.5s delay before redirect
+}
+
+// 📞 Phone Contact (with delay + success + fallback)
+function contactPhone() {
+  let phone = "0713953004";
+  let url = `tel:${phone}`;
+
+  // Show success popup
+  showPopup("success", "Opening Phone 📞", "We are opening your dialer...");
+
+  setTimeout(() => {
+    let win = window.open(url, "_self");
+
+    setTimeout(() => {
+      if (!win || win.closed || typeof win.closed === "undefined") {
+        showPopup("error", "Phone Error 📞", `Unable to open dialer.<br>Please call manually: <b>${phone}</b>`);
+      }
+    }, 1500);
+  }, 500); // ✅ 0.5s delay
+}
+
+// Open WhatsApp form (popup)
+function contactWhatsApp() {
+  document.getElementById("whatsappOverlay").style.display = "flex";
+
+  let textarea = document.getElementById("whatsappMessage");
+
+  // Restore saved message if exists
+  let savedMsg = localStorage.getItem("whatsappDraft");
+  if (savedMsg) {
+    textarea.value = savedMsg;
+  }
+
+  // ✅ Auto-focus input
+  setTimeout(() => textarea.focus(), 100);
+}
+
+// Close the WhatsApp form
+function closeWhatsAppForm() {
+  document.getElementById("whatsappOverlay").style.display = "none";
+
+  // Save draft before closing
+  let msg = document.getElementById("whatsappMessage").value.trim();
+  if (msg) {
+    localStorage.setItem("whatsappDraft", msg);
+  }
+}
+
+// Send WhatsApp message
+function sendWhatsApp() {
+  let phoneNumber = "254713953004"; // ✅ international format
+  let message = document.getElementById("whatsappMessage").value.trim();
+
+  if (!message) {
+    showPopup("error", "Message Required ⚠️", "Please type your issue before sending.");
+    return;
+  }
+
+  let url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+
+  // Show success popup and redirect
+  showPopup("success", "Opening WhatsApp 💬", "Redirecting you to WhatsApp...");
+  setTimeout(() => {
+    window.open(url, "_blank");
+    closeWhatsAppForm();
+
+    // ✅ Clear draft after successful send
+    localStorage.removeItem("whatsappDraft");
+    document.getElementById("whatsappMessage").value = "";
+  }, 500);
+}
+let formCallback = null; // store function for submit action
+
+// Open universal form popup
+function openFormPopup(title, placeholder, btnText, callback) {
+  document.getElementById("formOverlay").style.display = "flex";
+  document.getElementById("formTitle").innerText = title;
+  document.getElementById("formMessage").placeholder = placeholder;
+  document.getElementById("formSubmitBtn").innerText = btnText;
+
+  // Restore draft if exists
+  let savedMsg = localStorage.getItem("formDraft");
+  if (savedMsg) {
+    document.getElementById("formMessage").value = savedMsg;
+  }
+
+  // Auto-focus textarea
+  setTimeout(() => document.getElementById("formMessage").focus(), 100);
+
+  // Set callback for submit
+  formCallback = callback;
+}
+
+// Close the popup
+function closeFormPopup() {
+  document.getElementById("formOverlay").style.display = "none";
+
+  // Save draft
+  let msg = document.getElementById("formMessage").value.trim();
+  if (msg) {
+    localStorage.setItem("formDraft", msg);
+  }
+}
+
+// Handle submit
+document.getElementById("formSubmitBtn").addEventListener("click", () => {
+  let msg = document.getElementById("formMessage").value.trim();
+
+  if (!msg) {
+    showPopup("error", "Message Required ⚠️", "Please type your message before submitting.");
+    return;
+  }
+
+  if (formCallback) {
+    formCallback(msg); // run custom action
+  }
+
+  // Clear and close after submit
+  localStorage.removeItem("formDraft");
+  document.getElementById("formMessage").value = "";
+  closeFormPopup();
+});
+
+
+// ===========================
+// 🔹 Keyboard Shortcuts
+// ===========================
+
+// Enter = Submit (Shift+Enter = newline)
+document.getElementById("formMessage").addEventListener("keydown", function(event) {
+  if (event.key === "Enter" && !event.shiftKey) {
+    event.preventDefault(); // stop newline
+    document.getElementById("formSubmitBtn").click(); // submit
+  }
+});
+
+// Escape = Close popup
+document.addEventListener("keydown", function(event) {
+  if (event.key === "Escape" && document.getElementById("formOverlay").style.display === "flex") {
+    closeFormPopup();
+  }
+});
+// ===========================
+// 🔹 Keyboard Support for Admin Login
+// ===========================
+document.querySelectorAll("#adminLoginForm input").forEach(input => {
+  input.addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      adminLogin(); // call your admin login function
+    }
+    if (event.key === "Escape") {
+      document.getElementById("adminPass").value = ""; // clear
+    }
+  });
+});
+
+// ✅ Toast Notification
+function showToast(message, color = "#323232") {
+  const toast = document.getElementById("toast");
+  toast.innerText = message;
+  toast.style.background = color;
+  toast.className = "toast show";
+  setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
+}
+
+
+
+function downloadContributionsCSV() {
+    let table = document.querySelector("table");
+    let rows = table.querySelectorAll("tr");
+    let csv = [];
+
+    rows.forEach(row => {
+        let cols = row.querySelectorAll("td, th");
+        let rowData = [];
+        cols.forEach(col => {
+            let input = col.querySelector("input");
+            if (input) {
+                rowData.push(input.value);
+            } else {
+                rowData.push(col.innerText.trim());
+            }
+        });
+        csv.push(rowData.join(","));
+    });
+
+    let csvContent = "data:text/csv;charset=utf-8," + csv.join("\n");
+    let link = document.createElement("a");
+    link.setAttribute("href", encodeURI(csvContent));
+    link.setAttribute("download", "Group_Contributions.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+function downloadContributionsPDF() {
+    const { jsPDF } = window.jspdf;
+    let doc = new jsPDF();
+
+    let table = document.querySelector("table");
+    let rows = [];
+    let headers = [];
+
+    // extract headers
+    table.querySelectorAll("thead th").forEach(th => {
+        headers.push(th.innerText.trim());
+    });
+
+    // extract rows
+    table.querySelectorAll("tbody tr").forEach(tr => {
+        let rowData = [];
+        tr.querySelectorAll("td").forEach(td => {
+            let input = td.querySelector("input");
+            if (input) {
+                rowData.push(input.value);
+            } else {
+                rowData.push(td.innerText.trim());
+            }
+        });
+        rows.push(rowData);
+    });
+
+    doc.autoTable({
+        head: [headers],
+        body: rows
+    });
+
+    doc.save("Group_Contributions.pdf");
+}
+
+
+// Countdown target: every Sunday midnight
+function getNextSundayMidnight() {
+  const now = new Date();
+  const result = new Date();
+
+  // set to Sunday midnight
+  result.setDate(now.getDate() + (7 - now.getDay())); 
+  result.setHours(24, 0, 0, 0); 
+  return result;
+}
+
+let countdownInterval;
+
+
+
+
+</script>
+<script>
+function updateCountdown() {
+  const now = new Date();
+  const countdownBox = document.getElementById("countdown");
+  const progressBar = document.getElementById("progressBar");
+
+  // 🕒 Define Sunday midnight deadline
+  const deadline = new Date(now);
+  const day = now.getDay(); // 0=Sunday, 1=Monday, ... 6=Saturday
+  deadline.setDate(now.getDate() + (7 - day)); // Next Sunday
+  deadline.setHours(23, 59, 59, 999);
+
+  // 🕒 Define Monday 8 AM pause end
+  const monday8am = new Date(deadline);
+  monday8am.setDate(deadline.getDate() + 1); // Monday after deadline
+  monday8am.setHours(8, 0, 0, 0);
+
+  // If we're between Sunday midnight and Monday 8 AM → PAY FINE
+  if (now > deadline && now < monday8am) {
+    countdownBox.innerText =
+      "⚠️ Please pay fine of Ksh 30 before countdown resumes.";
+    countdownBox.className = "red";
+
+    if (progressBar) {
+      progressBar.style.width = "0%";
+      progressBar.innerText = "0%";
+      progressBar.className = "progress-bar progress-red";
+    }
+    return;
+  }
+
+  // If it's already Monday 8 AM or later → roll deadline to next Sunday
+  if (now >= monday8am) {
+    deadline.setDate(deadline.getDate() + 7);
+  }
+
+  // 🕒 Normal countdown
+  const timeDiff = deadline - now;
+  if (timeDiff <= 0) {
+    countdownBox.innerText =
+      "⚠️ The deadline has passed! Late fine of Ksh 30 applies.";
+    countdownBox.className = "red";
+    if (progressBar) {
+      progressBar.style.width = "0%";
+      progressBar.innerText = "0%";
+      progressBar.className = "progress-bar progress-red";
+    }
+    return;
+  }
+
+  const d = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+  const h = Math.floor((timeDiff / (1000 * 60 * 60)) % 24);
+  const m = Math.floor((timeDiff / (1000 * 60)) % 60);
+  const s = Math.floor((timeDiff / 1000) % 60);
+
+  countdownBox.innerText =
+    `Time left: ${d} days, ${h} hours, ${m} minutes, ${s} seconds`;
+
+  // 📊 Progress calculation
+  const weekStart = new Date(now);
+  weekStart.setDate(now.getDate() - (day - 1 < 0 ? 6 : day - 1)); // Monday morning
+  weekStart.setHours(0, 0, 0, 0);
+
+  const weekDuration = deadline - weekStart;
+  const weekPassed = now - weekStart;
+  const percentLeft = Math.max(
+    0,
+    Math.min(100, ((weekDuration - weekPassed) / weekDuration) * 100)
+  );
+
+  if (progressBar) {
+    progressBar.style.width = percentLeft.toFixed(1) + "%";
+    progressBar.innerText = percentLeft.toFixed(1) + "%";
+
+    // 🚦 Color by urgency
+    if (percentLeft > 40) {
+      countdownBox.className = "green";
+      progressBar.className = "progress-bar progress-green";
+    } else if (percentLeft > 20) {
+      countdownBox.className = "yellow";
+      progressBar.className = "progress-bar progress-yellow";
+    } else {
+      countdownBox.className = "red";
+      progressBar.className = "progress-bar progress-red";
+    }
+  }
+}
+
+// Run immediately and update every second
+updateCountdown();
+setInterval(updateCountdown, 1000);
+</script>
+
+<script>
+function calculateGrandTotal() {
+  let total = 0;
+  document.querySelectorAll(".rowTotal").forEach(cell => {
+    total += parseInt(cell.textContent) || 0;
+  });
+  document.querySelector("#grandTotalRow td:last-child").textContent = total;
+}
+
+document.querySelectorAll("table tbody tr").forEach(row => {
+  let inputs = row.querySelectorAll("input[type='number']");
+  if (inputs.length > 0) {
+    inputs.forEach(input => {
+      input.addEventListener("input", () => updateRowTotal(row));
+    });
+    updateRowTotal(row);
+  }
+});
+
+calculateGrandTotal();
+
+
+
+// 🔄 Recalculate row totals & grand total
+function recalcTotals() {
+  const rows = document.querySelectorAll("#dashboard table tbody tr");
+  let grandTotal = 0;
+
+  rows.forEach(row => {
+    const inputs = row.querySelectorAll("td input[type='number']");
+    let rowSum = 0;
+
+    inputs.forEach(input => {
+      rowSum += Number(input.value) || 0;
+    });
+
+    const totalCell = row.querySelector(".rowTotal");
+    if (totalCell) {
+      totalCell.textContent = rowSum;
+      grandTotal += rowSum;
+    }
+  });
+
+  // update GRAND TOTAL row
+  const grandRow = document.getElementById("grandTotalRow");
+  if (grandRow) {
+    grandRow.querySelector("td:last-child").textContent = grandTotal;
+  }
+}
+
+// ✅ Show success popup
+function showSuccessPopup(message = "✅ Download successful!") {
+  const popup = document.getElementById("successPopup");
+  popup.textContent = message;
+  popup.style.display = "block";
+
+  setTimeout(() => {
+    popup.style.display = "none";
+  }, 2500); // hide after 2.5 sec
+}
+
+// 📥 Export Group Contributions Table as CSV
+function downloadTableCSV() {
+  recalcTotals();
+
+  const table = document.querySelector("#dashboard table");
+  let rows = table.querySelectorAll("tr");
+  let csv = [];
+
+  rows.forEach(row => {
+    let cols = row.querySelectorAll("th, td");
+    let rowData = [];
+    cols.forEach(col => {
+      const input = col.querySelector("input");
+      rowData.push('"' + (input ? input.value : col.innerText).replace(/"/g, '""') + '"');
+    });
+    csv.push(rowData.join(","));
+  });
+
+  let csvFile = new Blob([csv.join("\n")], { type: "text/csv" });
+  let downloadLink = document.createElement("a");
+  downloadLink.download = "GroupContributions.csv";
+  downloadLink.href = window.URL.createObjectURL(csvFile);
+  downloadLink.click();
+
+  showSuccessPopup("✅ CSV downloaded successfully!");
+}
+
+// 📥 Export Group Contributions Table as PDF
+function downloadTablePDF() {
+  recalcTotals();
+
+  const { jsPDF } = window.jspdf;
+  let doc = new jsPDF();
+  doc.text("📊 Group Contributions", 14, 14);
+
+  let table = document.querySelector("#dashboard table");
+  let headers = [];
+  table.querySelectorAll("thead th").forEach(th => headers.push(th.innerText));
+
+  let data = [];
+  table.querySelectorAll("tbody tr").forEach(tr => {
+    let rowData = [];
+    tr.querySelectorAll("td").forEach(td => {
+      const input = td.querySelector("input");
+      rowData.push(input ? input.value : td.innerText);
+    });
+    data.push(rowData);
+  });
+
+  doc.autoTable({
+    head: [headers],
+    body: data,
+    startY: 20
+  });
+
+  doc.save("GroupContributions.pdf");
+
+  showSuccessPopup("✅ PDF downloaded successfully!");
+}
+
+// 🔄 Auto-update totals when inputs change
+document.addEventListener("input", function(e) {
+  if (e.target.matches("td input[type='number']")) {
+    recalcTotals();
+  }
+});
+
+// Run once on page load
+window.onload = recalcTotals;
+function downloadLoanPDF(index) {
+  let applications = JSON.parse(localStorage.getItem("loanApplications")) || [];
+  let loan = applications[index];
+  if (!loan) {
+    alert("❌ Loan application not found.");
+    return;
+  }
+
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  doc.setFontSize(16);
+  doc.text("📑 Loan Application Form", 20, 20);
+
+  doc.setFontSize(12);
+  doc.text(`Name: ${loan.name}`, 20, 40);
+  doc.text(`Phone: ${loan.phone}`, 20, 50);
+  doc.text(`ID Number: ${loan.idNumber}`, 20, 60);
+  doc.text(`Qualified Loan: Ksh ${loan.qualifiedAmount}`, 20, 70);
+  doc.text(`Requested Amount: Ksh ${loan.requestedAmount}`, 20, 80);
+  doc.text(`Repayment Period: ${loan.repaymentPeriod}`, 20, 90);
+  doc.text(`Total Repayment: Ksh ${loan.repaymentAmount}`, 20, 100);
+  doc.text(`Monthly Installment: Ksh ${loan.monthlyRepay}`, 20, 110);
+  doc.text(`Date Submitted: ${loan.date}`, 20, 120);
+  doc.text(`Status: ${loan.status}`, 20, 130);
+
+  doc.save(`Loan_Application_${loan.name}_${loan.date}.pdf`);
+}
+function loadMemberLoanHistory(name) {
+  let applications = JSON.parse(localStorage.getItem("loanApplications")) || [];
+  let userLoans = applications.filter(app => app.name === name);
+
+  let loanMessage = document.getElementById("loanMessage");
+  if (userLoans.length === 0) {
+    loanMessage.innerHTML = "📭 No past loan applications found.";
+    return;
+  }
+
+  let html = `<h3>📜 Loan History</h3>
+  <table border="1" style="width:100%; border-collapse:collapse; text-align:center;">
+    <thead style="background:#1976d2; color:white;">
+      <tr>
+        <th>Date</th>
+        <th>Requested</th>
+        <th>Repayment</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>`;
+
+  userLoans.forEach((loan, index) => {
+    html += `
+      <tr>
+        <td>${loan.date}</td>
+        <td>Ksh ${loan.requestedAmount}</td>
+        <td>Ksh ${loan.repaymentAmount} (${loan.repaymentPeriod})</td>
+        <td>${loan.status}</td>
+        <td>
+          <button onclick="downloadLoanPDF(${applications.indexOf(loan)})" 
+            style="padding:5px 10px; background:#1976d2; color:white; border:none; border-radius:4px; cursor:pointer;">
+            ⬇️ Download PDF
+          </button>
+        </td>
+      </tr>`;
+  });
+
+  html += `</tbody></table>`;
+  loanMessage.innerHTML = html;
+}
+
+function toggleNote() {
+  const noteSection = document.getElementById("memberNoteSection");
+  const name = document.getElementById("memberDisplay").innerText;
+  const member = members[name];
+
+  if (!member) {
+    alert("Please log in to view your note.");
+    return;
+  }
+
+  // Toggle visibility
+  if (noteSection.style.display === "none") {
+    document.getElementById("personalNote").innerText = member.note || "No note available yet.";
+    noteSection.style.display = "block";
+  } else {
+    noteSection.style.display = "none";
+  }
+}
+function openNotePopup() {
+  // Get currently logged in user
+  const name = loggedInUser || document.getElementById("memberDisplay").innerText.trim();
+  if (!name) {
+    alert("⚠️ Please log in first.");
+    return;
+  }
+
+  // Check both hardcoded and approved members
+  const approved = JSON.parse(localStorage.getItem("approvedMembers")) || [];
+  let member = members[name] || approved.find(m => m.name === name);
+
+  if (!member) {
+    alert("⚠️ Member record not found. Please contact admin.");
+    return;
+  }
+
+  // Display note
+  const noteText = member.note && member.note.trim() !== "" ? member.note : "No personal note yet. Please check back later.";
+  document.getElementById("noteText").innerText = noteText;
+
+  // Show popup
+  document.getElementById("notePopup").style.display = "flex";
+}
+
+
+function closeNotePopup() {
+  document.getElementById("notePopup").style.display = "none";
+}
+window.onclick = function(event) {
+  const popup = document.getElementById("notePopup");
+  if (event.target === popup) {
+    popup.style.display = "none";
+  }
+};
+
+ 
+
+
+ 
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", loadNotes);
+let editIndex = null;
+
+// 🔔 Popup message helper
+function showPopup(message, color = "#4CAF50") {
+  let popup = document.createElement("div");
+  popup.textContent = message;
+  popup.style.position = "fixed";
+  popup.style.bottom = "20px";
+  popup.style.right = "20px";
+  popup.style.background = color;
+  popup.style.color = "white";
+  popup.style.padding = "10px 18px";
+  popup.style.borderRadius = "6px";
+  popup.style.boxShadow = "0 2px 8px rgba(0,0,0,0.3)";
+  popup.style.zIndex = "9999";
+  popup.style.fontWeight = "bold";
+  popup.style.transition = "opacity 0.5s";
+  document.body.appendChild(popup);
+
+  setTimeout(() => { popup.style.opacity = "0"; }, 2000);
+  setTimeout(() => popup.remove(), 2500);
+}
+
+// 💾 Save or Update Note
+function saveMemberNote() {
+  const name = document.getElementById("noteMemberName").value.trim();
+  const note = document.getElementById("noteText").value.trim();
+  const message = document.getElementById("noteMessage");
+
+  if (!note) {
+    showPopup("⚠️ Please type a note before saving.", "#d32f2f");
+    return;
+  }
+
+  let notes = JSON.parse(localStorage.getItem("membersNotes") || "[]");
+
+  if (editIndex !== null) {
+    // Update existing note
+    notes[editIndex].name = name || "—";
+    notes[editIndex].note = note;
+    notes[editIndex].date = new Date().toLocaleString();
+    editIndex = null;
+    showPopup("✏️ Note updated successfully!", "#1976d2");
+  } else {
+    // Add new note
+    notes.unshift({
+      date: new Date().toLocaleString(),
+      name: name || "—",
+      note
+    });
+    showPopup("✅ Note saved successfully!");
+  }
+
+  localStorage.setItem("membersNotes", JSON.stringify(notes));
+  renderNotes();
+  clearNoteInputs();
+  message.textContent = "";
+}
+
+// 🧹 Clear inputs
+function clearNoteInputs() {
+  document.getElementById("noteMemberName").value = "";
+  document.getElementById("noteText").value = "";
+  editIndex = null;
+}
+
+// 🖋 Render Notes Table
+function renderNotes() {
+  const tbody = document.getElementById("membersNotesBody");
+  const notes = JSON.parse(localStorage.getItem("membersNotes") || "[]");
+
+  if (!tbody) return;
+  if (notes.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="4" style="color:gray; text-align:center;">No notes yet.</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = notes
+    .map(
+      (n, i) => `
+      <tr>
+        <td>${n.date}</td>
+        <td>${n.name}</td>
+        <td>${n.note}</td>
+        <td style="text-align:center;">
+          <button class="note-action-btn note-edit" onclick="editNote(${i})">✏️ Edit</button>
+          <button class="note-action-btn note-delete" onclick="deleteNote(${i})">🗑️ Delete</button>
+        </td>
+      </tr>
+    `
+    )
+    .join("");
+}
+
+// ✏️ Edit an Existing Note
+function editNote(i) {
+  const notes = JSON.parse(localStorage.getItem("membersNotes") || "[]");
+  const n = notes[i];
+  document.getElementById("noteMemberName").value = n.name === "—" ? "" : n.name;
+  document.getElementById("noteText").value = n.note;
+  editIndex = i;
+  showPopup("✏️ Edit mode: make changes and click Save Note.", "#1976d2");
+}
+
+// 🗑 Delete One Note
+function deleteNote(i) {
+  if (!confirm("Are you sure you want to delete this note?")) return;
+  let notes = JSON.parse(localStorage.getItem("membersNotes") || "[]");
+  notes.splice(i, 1);
+  localStorage.setItem("membersNotes", JSON.stringify(notes));
+  renderNotes();
+  showPopup("🗑️ Note deleted.", "#d32f2f");
+}
+
+// 🧹 Clear All Notes
+function clearAllNotes() {
+  if (confirm("⚠️ This will delete ALL notes. Continue?")) {
+    localStorage.removeItem("membersNotes");
+    renderNotes();
+    showPopup("🧹 All notes cleared.", "#d32f2f");
+  }
+}
+
+// ⬇️ Download CSV
+function downloadNotesCSV() {
+  const notes = JSON.parse(localStorage.getItem("membersNotes") || "[]");
+  if (notes.length === 0) {
+    showPopup("No notes to download.", "#d32f2f");
+    return;
+  }
+  let csv = "Date,Member,Note\n" + notes.map(n =>
+    `"${n.date}","${n.name}","${n.note.replace(/"/g, '""')}"`
+  ).join("\n");
+  const blob = new Blob([csv], { type: "text/csv" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "members_notes.csv";
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// 🧠 Load existing notes on startup
+function loadNotes() {
+  renderNotes();
+}
+
+
+
+
+
+// 🧾 Render members table
+function renderMembersTable() {
+  const tbody = document.getElementById("membersTableBody");
+  const totalMembers = Object.keys(members).length;
+  let totalSavings = 0;
+
+  if (totalMembers === 0) {
+    tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:gray;">No members data available.</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = Object.entries(members).map(([name, data]) => {
+    totalSavings += data.savings || 0;
+    const months = (data.monthly || []).join(", ");
+    return `
+      <tr>
+        <td>${name}</td>
+        <td>${data.phone}</td>
+        <td>Ksh ${data.savings.toLocaleString()}</td>
+        <td>${months}</td>
+        <td>${data.note || ""}</td>
+      </tr>
+    `;
+  }).join("");
+
+  // ✅ Update summary
+  document.getElementById("totalMembersCount").textContent = totalMembers;
+  document.getElementById("totalSavingsSum").textContent = totalSavings.toLocaleString();
+}
+
+// 🔍 Search filter
+function filterMembersTable() {
+  const query = document.getElementById("memberSearchInput").value.toLowerCase();
+  const rows = document.querySelectorAll("#membersTableBody tr");
+  rows.forEach(row => {
+    const text = row.textContent.toLowerCase();
+    row.style.display = text.includes(query) ? "" : "none";
+  });
+}
+
+// ⬇️ Export CSV
+function exportMembersCSV() {
+  const rows = [["Name", "Phone", "Total Savings", "Monthly Deposits", "Note"]];
+  Object.entries(members).forEach(([name, data]) => {
+    rows.push([
+      name,
+      data.phone,
+      data.savings,
+      (data.monthly || []).join(" | "),
+      data.note || ""
+    ]);
+  });
+
+  const csv = rows.map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(",")).join("\n");
+  const blob = new Blob([csv], { type: "text/csv" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "members_data.csv";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
+// 🧠 Load members automatically
+document.addEventListener("DOMContentLoaded", renderMembersTable);
+
+
+// =============================
+// 🔽 SORTING FUNCTIONALITY BELOW
+// =============================
+
+let sortDirection = 1; // 1 = ascending, -1 = descending
+let currentSortKey = null;
+
+function sortMembersTable(key) {
+  const entries = Object.entries(members);
+
+  // Toggle sorting direction
+  if (currentSortKey === key) sortDirection *= -1;
+  else {
+    sortDirection = 1;
+    currentSortKey = key;
+  }
+
+  entries.sort((a, b) => {
+    const memberA = a[1];
+    const memberB = b[1];
+
+    switch (key) {
+      case "name":
+        return a[0].localeCompare(b[0]) * sortDirection;
+      case "phone":
+        return (memberA.phone || "").localeCompare(memberB.phone || "") * sortDirection;
+      case "savings":
+        return ((memberA.savings || 0) - (memberB.savings || 0)) * sortDirection;
+      case "note":
+        return (memberA.note || "").localeCompare(memberB.note || "") * sortDirection;
+      default:
+        return 0;
+    }
+  });
+
+  // Render sorted data
+  const sortedMembers = Object.fromEntries(entries);
+  renderSortedMembers(sortedMembers);
+}
+
+function renderSortedMembers(sortedData) {
+  const tbody = document.getElementById("membersTableBody");
+  let totalSavings = 0;
+
+  tbody.innerHTML = Object.entries(sortedData).map(([name, data]) => {
+    totalSavings += data.savings || 0;
+    const months = (data.monthly || []).join(", ");
+    return `
+      <tr>
+        <td>${name}</td>
+        <td>${data.phone}</td>
+        <td>Ksh ${data.savings.toLocaleString()}</td>
+        <td>${months}</td>
+        <td>${data.note || ""}</td>
+      </tr>
+    `;
+  }).join("");
+
+  // ✅ Update summary
+  document.getElementById("totalMembersCount").textContent = Object.keys(sortedData).length;
+  document.getElementById("totalSavingsSum").textContent = totalSavings.toLocaleString();
+}
+
+
+  const tooltipWrappers = document.querySelectorAll('span[style*="position:relative"]');
+  tooltipWrappers.forEach(wrapper => {
+    const tooltip = wrapper.querySelector('span:nth-child(2)');
+    wrapper.addEventListener('mouseenter', () => tooltip.style.visibility = 'visible');
+    wrapper.addEventListener('mouseleave', () => tooltip.style.visibility = 'hidden');
+  });
+
+function showFinePopup(fines) {
+  const finePopup = document.getElementById("finePopup");
+  const fineText = document.getElementById("fineText");
+
+  fineText.innerText = (fines && fines.trim() !== "")
+    ? fines
+    : "No fines recorded.";
+
+  finePopup.style.display = "flex";
+}
+
+function closeFinePopup() {
+  document.getElementById("finePopup").style.display = "none";
+}
+
+
+
+
+</script>
+
+
+</body>
+</html>
