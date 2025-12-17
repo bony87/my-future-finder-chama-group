@@ -2289,11 +2289,14 @@ table th {
 
 
    
+<tr style="font-weight:bold; background:#e0f2f1;">
+  <td colspan="13" style="text-align:right;">GRAND TOTAL</td>
+  <td id="grandTotal">0</td>
+  <td id="totalSaved2025">0</td>
+  <td id="totalReward2025">0</td>
+</tr>
 
-    <tr id="grandTotalRow" style="font-weight:bold; background:#e0f2f1;">
-      <td colspan="13" style="text-align:right;">GRAND TOTAL</td>
-      <td>0</td>
-    </tr>
+
   </tbody>
 </table>
 
@@ -5182,6 +5185,75 @@ calculateSavingsAndRewards();
 document.querySelectorAll("input").forEach(i =>
   i.addEventListener("input", calculateSavingsAndRewards)
 );
+</script>
+
+<script>
+function calculateTotals() {
+  let grandTotal = 0;
+
+  document.querySelectorAll("tbody tr").forEach(row => {
+    const inputs = row.querySelectorAll("input[type='number']");
+    if (inputs.length === 0) return;
+
+    let rowSum = 0;
+    inputs.forEach(input => {
+      rowSum += Number(input.value) || 0;
+    });
+
+    const rowTotalCell = row.querySelector(".rowTotal");
+    const savedCell = row.querySelector(".saved2025");
+    const rewardCell = row.querySelector(".reward2025");
+
+    if (rowTotalCell) rowTotalCell.textContent = rowSum;
+    if (savedCell) savedCell.textContent = rowSum;
+    if (rewardCell) rewardCell.textContent = rowSum;
+
+    grandTotal += rowSum;
+  });
+
+  document.getElementById("grandTotal").textContent = grandTotal;
+  document.getElementById("totalSaved2025").textContent = grandTotal;
+  document.getElementById("totalReward2025").textContent = grandTotal;
+}
+
+// Auto-calc on load
+calculateTotals();
+
+// Auto-calc when any value changes
+document.querySelectorAll("input[type='number']").forEach(input => {
+  input.addEventListener("input", calculateTotals);
+});
+</script>
+<script>
+function calculate2025Totals() {
+  let totalSaved = 0;
+  let totalReward = 0;
+
+  // Sum all saved2025 values
+  document.querySelectorAll('.saved2025').forEach(el => {
+    let val = parseFloat(el.textContent.replace(/[^0-9.]/g, '')) || 0;
+    totalSaved += val;
+  });
+
+  // Sum all reward2025 values
+  document.querySelectorAll('.reward2025').forEach(el => {
+    let val = parseFloat(el.textContent.replace(/[^0-9.]/g, '')) || 0;
+    totalReward += val;
+  });
+
+  // Display totals
+  document.getElementById('totalSaved2025').textContent =
+    'Ksh ' + totalSaved.toLocaleString();
+
+  document.getElementById('totalReward2025').textContent =
+    'Ksh ' + totalReward.toLocaleString();
+}
+
+// Auto-run
+document.addEventListener('DOMContentLoaded', calculate2025Totals);
+
+// Recalculate if data changes later
+setInterval(calculate2025Totals, 3000);
 </script>
 
 
