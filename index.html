@@ -1768,10 +1768,24 @@ table th {
       ✅ <b>Support &amp; Trust:</b> Being a member means supporting one another and upholding transparency within the group.
     </p>
 </div>
-<div class="download-buttons" style="text-align:right; margin-bottom:10px;">
-  <button class="download-btn csv-btn" onclick="downloadTableCSV()">⬇️ Download CSV</button>
-  <button class="download-btn pdf-btn" onclick="downloadTablePDF()">⬇️ Download PDF</button>
-</div>
+<button class="download-btn csv download-disabled">
+  ⬇️ Download CSV
+</button>
+
+<button class="download-btn pdf download-disabled">
+  ⬇️ Download PDF
+</button>
+
+
+<style>
+.download-disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+</style>
+
+
 
 
 <!-- 🗒️ Personal Member Note Section -->
@@ -1973,9 +1987,9 @@ table th {
       <td><input type="number" value="100"/></td>
       <td><input type="number" value="250"/></td>
       <td><input type="number" value="305"/></td>
+      <td><input type="number" value="300"/></td>
       <td><input type="number" value="200"/></td>
-      <td><input type="number" value="200"/></td>
-      <td class="rowTotal">1250</td><td class="saved2025">0</td><td class="reward2025">0</td></tr>
+      <td class="rowTotal">0</td><td class="saved2025">0</td><td class="reward2025">0</td></tr>
 
     <tr><td>JANET NYAKUNDI</td><td>
       <input type="number" value="150"/></td>
@@ -2343,7 +2357,7 @@ const members = {
   "BONIFACE CHELLUGET": {
     "phone": "0713953004",
     "password": "0713953004",
-    "savings": 3000,
+    "savings": 1364,
     "monthly": [300, 300, 300, 300, 300, 300, 300, 300, 300],
     "note": "Consistent saver — eligible for next loan review. Fines: nil as of 17nd Nov 25."
 
@@ -2423,7 +2437,7 @@ const members = {
   "JUDITH OMWOYO": {
     phone: "0741939235",
     password: "0741939235",
-    savings: 1250,
+    savings: 2055,
     monthly: [300,300,300,0,0,0,0,100,250],
     note: "1.Consistent saver, possible for small loan soon. 2.sent 1500 on 20 october as a patial payment for mery-go-round.240-as of 2nd Nov 25, paid 180 not paid 60",
    
@@ -2439,7 +2453,7 @@ const members = {
   "ANASTANCIA OMWOYO": {
     phone: "0748442547",
     password: "0748442547",
-    savings: 1850,
+    savings: 2255,
     monthly: [250,150,200,200,200,150,100,250,200,50],
     note: "fines: 0-as of 2nd nov 25 ",
     
@@ -2855,7 +2869,7 @@ function showCurrentSavings() {
     alert("⚠️ Please log in first.");
     return;
   }
-  alert("💰 Current Savings: KES " + members[loggedInUser].savings);
+  alert("💰 Current Savings for 2025: KES " + members[loggedInUser].savings);
 }
 
 // 📊 Show monthly contributions
@@ -4391,33 +4405,74 @@ function showToast(message, color = "#323232") {
 
 
 
-function downloadContributionsCSV() {
-    let table = document.querySelector("table");
-    let rows = table.querySelectorAll("tr");
-    let csv = [];
 
-    rows.forEach(row => {
-        let cols = row.querySelectorAll("td, th");
-        let rowData = [];
-        cols.forEach(col => {
-            let input = col.querySelector("input");
-            if (input) {
-                rowData.push(input.value);
-            } else {
-                rowData.push(col.innerText.trim());
-            }
-        });
-        csv.push(rowData.join(","));
-    });
 
-    let csvContent = "data:text/csv;charset=utf-8," + csv.join("\n");
-    let link = document.createElement("a");
-    link.setAttribute("href", encodeURI(csvContent));
-    link.setAttribute("download", "Group_Contributions.csv");
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+function downloadContributionsPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF("l", "pt", "a4");
+
+  doc.text("Future Finders Chama – Contributions Report", 40, 40);
+
+  doc.autoTable({
+    html: "#contributionsTable",
+    startY: 60,
+    styles: {
+      fontSize: 9
+    },
+    headStyles: {
+      fillColor: [0, 121, 107]
+    }
+  });
+
+  doc.save("Contributions_Full_Table.pdf");
 }
+
+
+
+
+function downloadContributionsCSV() {
+  if (!downloadsEnabled) {
+    alert("⚠️ Downloads are temporarily disabled by admin.");
+    return;
+  }
+
+  const table = document.getElementById("contributionsTable");
+  let csv = [];
+
+  for (let row of table.rows) {
+    let cols = [];
+    for (let cell of row.cells) {
+      cols.push('"' + cell.innerText.replace(/"/g, '""') + '"');
+    }
+    csv.push(cols.join(","));
+  }
+
+  const blob = new Blob([csv.join("\n")], { type: "text/csv" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "Future_Finders_Contributions.csv";
+  link.click();
+}
+function downloadContributionsPDF() {
+  if (!downloadsEnabled) {
+    alert("⚠️ Downloads are temporarily disabled by admin.");
+    return;
+  }
+
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF("l", "pt", "a4");
+
+  doc.text("Future Finders Chama – Contributions Report", 40, 40);
+  doc.autoTable({
+    html: "#contributionsTable",
+    startY: 60,
+    styles: { fontSize: 9 },
+    headStyles: { fillColor: [0, 121, 107] }
+  });
+
+  doc.save("Future_Finders_Contributions.pdf");
+}
+
 
 function downloadContributionsPDF() {
     const { jsPDF } = window.jspdf;
@@ -5139,122 +5194,67 @@ function closeFinePopup() {
 
 </script>
 
-
-
 <script>
-/*
-EDIT HERE ONLY 👇
-----------------
-60%  → change 0.60
-50%  → change 0.50
-Minimum amounts → change 3000 / 1500
-*/
+function recalcTable() {
+  let grandTotal = 0;
+  let totalSaved2025 = 0;
+  let totalReward2025 = 0;
 
-function calculateSavingsAndRewards() {
   document.querySelectorAll("tbody tr").forEach(row => {
     const inputs = row.querySelectorAll("input[type='number']");
-    const totalCell = row.querySelector(".rowTotal");
-    const savedCell = row.querySelector(".saved2025");
-    const rewardCell = row.querySelector(".reward2025");
+    if (!inputs.length) return;
 
-    if (!totalCell || !savedCell || !rewardCell) return;
+    let totalSavings = 0;
+    let activeMonths = 0;
 
-    let total = 0;
-    let months = 0;
-
-    inputs.forEach(i => {
-      const v = Number(i.value) || 0;
-      total += v;
-      if (v > 0) months++;
+    inputs.forEach(input => {
+      const val = Number(input.value) || 0;
+      totalSavings += val;
+      if (val > 0) activeMonths++;
     });
 
-    let reward = 0;
-    if (months >= 12 && total >= 3000) {
-      reward = total * 0.60;
-    } else if (months >= 6 && total >= 1500) {
-      reward = total * 0.50;
+    // Update row total
+    row.querySelector(".rowTotal").textContent = totalSavings;
+
+    let christmasPayout = 0;
+    let remainingSavings = totalSavings;
+
+    // RULE 1: 12 months + ≥ 1500
+    if (totalSavings >= 1500 && activeMonths >= 12) {
+      christmasPayout = Math.round(totalSavings * 0.60);
+      remainingSavings = Math.round(totalSavings * 0.30);
     }
 
-    totalCell.textContent = total;
-    savedCell.textContent = total;
-    rewardCell.textContent = Math.round(reward);
-  });
-}
+    // RULE 2: ≥ 1200 AND ≥ 6 months
+    else if (totalSavings >= 1200 && activeMonths >= 6) {
+      christmasPayout = Math.round(totalSavings * 0.50);
+      remainingSavings = Math.round(totalSavings * 0.40);
+    }
 
-calculateSavingsAndRewards();
-document.querySelectorAll("input").forEach(i =>
-  i.addEventListener("input", calculateSavingsAndRewards)
-);
-</script>
+    // BALANCE rounding differences
+    const used = christmasPayout + remainingSavings;
+    const diff = totalSavings - used;
+    remainingSavings += diff;
 
-<script>
-function calculateTotals() {
-  let grandTotal = 0;
+    // Update cells
+    row.querySelector(".saved2025").textContent = remainingSavings;
+    row.querySelector(".reward2025").textContent = christmasPayout;
 
-  document.querySelectorAll("tbody tr").forEach(row => {
-    const inputs = row.querySelectorAll("input[type='number']");
-    if (inputs.length === 0) return;
-
-    let rowSum = 0;
-    inputs.forEach(input => {
-      rowSum += Number(input.value) || 0;
-    });
-
-    const rowTotalCell = row.querySelector(".rowTotal");
-    const savedCell = row.querySelector(".saved2025");
-    const rewardCell = row.querySelector(".reward2025");
-
-    if (rowTotalCell) rowTotalCell.textContent = rowSum;
-    if (savedCell) savedCell.textContent = rowSum;
-    if (rewardCell) rewardCell.textContent = rowSum;
-
-    grandTotal += rowSum;
+    grandTotal += totalSavings;
+    totalSaved2025 += remainingSavings;
+    totalReward2025 += christmasPayout;
   });
 
   document.getElementById("grandTotal").textContent = grandTotal;
-  document.getElementById("totalSaved2025").textContent = grandTotal;
-  document.getElementById("totalReward2025").textContent = grandTotal;
+  document.getElementById("totalSaved2025").textContent = totalSaved2025;
+  document.getElementById("totalReward2025").textContent = totalReward2025;
 }
 
-// Auto-calc on load
-calculateTotals();
-
-// Auto-calc when any value changes
-document.querySelectorAll("input[type='number']").forEach(input => {
-  input.addEventListener("input", calculateTotals);
-});
+document.addEventListener("input", recalcTable);
+window.onload = recalcTable;
 </script>
-<script>
-function calculate2025Totals() {
-  let totalSaved = 0;
-  let totalReward = 0;
 
-  // Sum all saved2025 values
-  document.querySelectorAll('.saved2025').forEach(el => {
-    let val = parseFloat(el.textContent.replace(/[^0-9.]/g, '')) || 0;
-    totalSaved += val;
-  });
 
-  // Sum all reward2025 values
-  document.querySelectorAll('.reward2025').forEach(el => {
-    let val = parseFloat(el.textContent.replace(/[^0-9.]/g, '')) || 0;
-    totalReward += val;
-  });
-
-  // Display totals
-  document.getElementById('totalSaved2025').textContent =
-    'Ksh ' + totalSaved.toLocaleString();
-
-  document.getElementById('totalReward2025').textContent =
-    'Ksh ' + totalReward.toLocaleString();
-}
-
-// Auto-run
-document.addEventListener('DOMContentLoaded', calculate2025Totals);
-
-// Recalculate if data changes later
-setInterval(calculate2025Totals, 3000);
-</script>
 
 
 </body>
