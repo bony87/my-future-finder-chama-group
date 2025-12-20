@@ -1799,9 +1799,10 @@ table th {
 
 
 
-<h4>📊 Group Contributions</h4>
+<h4>📊 Group Contributions for 2025</h4>
 
-<table border="1" style="width:100%; border-collapse:collapse; text-align:center;">
+<table id="table2025" border="1" style="width:100%; border-collapse:collapse; text-align:center;">
+
   <thead style="background:#00796b; color:white;">
     <tr>
       <th>NAME</th>
@@ -2305,14 +2306,94 @@ table th {
    
 <tr style="font-weight:bold; background:#e0f2f1;">
   <td colspan="13" style="text-align:right;">GRAND TOTAL</td>
-  <td id="grandTotal">0</td>
-  <td id="totalSaved2025">0</td>
-  <td id="totalReward2025">0</td>
+  <td id="grandTotal_2025">0</td>
+  <td id="savedTotal_2025">0</td>
+  <td id="rewardTotal_2025">0</td>
 </tr>
+
 
 
   </tbody>
 </table>
+
+
+
+
+<h4>📊 Group Contributions for 2026</h4>
+
+<table id="table2026" border="1" style="width:100%; border-collapse:collapse; text-align:center;">
+
+  <thead style="background:#00796b; color:white;">
+    <tr>
+      <th>NAME</th>
+      <th>JAN</th><th>FEB</th><th>MAR</th><th>APR</th><th>MAY</th>
+      <th>JUNE</th><th>JULY</th><th>AUG</th><th>SEPT</th>
+      <th>OCT</th><th>NOV</th><th>DEC</th>
+      <th style="background:#17da48;">TOTAL</th>
+      <th style="background:#ff9800;">SAVED 2026</th>
+      <th style="background:#4caf50;">REWARD BACK</th>
+    </tr>
+  </thead>
+
+  <tbody>
+
+    <!-- TEMPLATE ROW (used for all members) -->
+    <!-- Just duplicate and change the name -->
+
+    <tr>
+      <td>BONIFACE CHELLUGET</td>
+      <td><input type="number" value="0"></td>
+      <td><input type="number" value="0"></td>
+      <td><input type="number" value="0"></td>
+      <td><input type="number" value="0"></td>
+      <td><input type="number" value="0"></td>
+      <td><input type="number" value="0"></td>
+      <td><input type="number" value="0"></td>
+      <td><input type="number" value="0"></td>
+      <td><input type="number" value="0"></td>
+      <td><input type="number" value="0"></td>
+      <td><input type="number" value="0"></td>
+      <td><input type="number" value="0"></td>
+      <td class="rowTotal">0</td>
+      <td class="saved2026">0</td>
+      <td class="reward2026">0</td>
+    </tr>
+
+    <tr><td>HILDA ODERO</td>
+      <td><input type="number" value="0"></td><td><input type="number" value="0"></td>
+      <td><input type="number" value="0"></td><td><input type="number" value="0"></td>
+      <td><input type="number" value="0"></td><td><input type="number" value="0"></td>
+      <td><input type="number" value="0"></td><td><input type="number" value="0"></td>
+      <td><input type="number" value="0"></td><td><input type="number" value="0"></td>
+      <td><input type="number" value="0"></td><td><input type="number" value="0"></td>
+      <td class="rowTotal">0</td><td class="saved2026">0</td><td class="reward2026">0</td>
+    </tr>
+
+    <tr><td>JOEL EGESA</td>
+      <td><input type="number" value="0"></td><td><input type="number" value="0"></td>
+      <td><input type="number" value="0"></td><td><input type="number" value="0"></td>
+      <td><input type="number" value="0"></td><td><input type="number" value="0"></td>
+      <td><input type="number" value="0"></td><td><input type="number" value="0"></td>
+      <td><input type="number" value="0"></td><td><input type="number" value="0"></td>
+      <td><input type="number" value="0"></td><td><input type="number" value="0"></td>
+      <td class="rowTotal">0</td><td class="saved2026">0</td><td class="reward2026">0</td>
+    </tr>
+
+    <!-- 👉 Repeat the same row structure for ALL remaining members -->
+
+   <tr style="font-weight:bold; background:#e0f2f1;">
+  <td colspan="13" style="text-align:right;">GRAND TOTAL</td>
+  <td id="grandTotal_2026">0</td>
+  <td id="savedTotal_2026">0</td>
+  <td id="rewardTotal_2026">0</td>
+</tr>
+
+
+  </tbody>
+</table> 
+
+
+
 
 <!-- Toast -->
 <div class="toast" id="toast"></div>
@@ -5195,66 +5276,131 @@ function closeFinePopup() {
 </script>
 
 <script>
-function recalcTable() {
-  let grandTotal = 0;
-  let totalSaved2025 = 0;
-  let totalReward2025 = 0;
+(function () {
+  const table2025 = document.getElementById("table2025");
+  if (!table2025) return;
 
-  document.querySelectorAll("tbody tr").forEach(row => {
-    const inputs = row.querySelectorAll("input[type='number']");
-    if (!inputs.length) return;
+  function calculate2025() {
+    let grandTotal = 0;
+    let totalSaved = 0;
+    let totalReward = 0;
 
-    let totalSavings = 0;
-    let activeMonths = 0;
+    table2025.querySelectorAll("tbody tr").forEach(row => {
+      const inputs = row.querySelectorAll("input[type='number']");
+      const rowTotalCell = row.querySelector(".rowTotal");
+      const savedCell = row.querySelector(".saved2025");
+      const rewardCell = row.querySelector(".reward2025");
 
-    inputs.forEach(input => {
-      const val = Number(input.value) || 0;
-      totalSavings += val;
-      if (val > 0) activeMonths++;
+      if (!rowTotalCell) return;
+
+      let totalSavings = 0;
+      let activeMonths = 0;
+
+      inputs.forEach(input => {
+        const val = Number(input.value) || 0;
+        totalSavings += val;
+        if (val > 0) activeMonths++;
+      });
+
+      let reward = 0;
+      let saved = totalSavings;
+
+      // RULE 1: 12 months + >=1500
+      if (totalSavings >= 1500 && activeMonths >= 12) {
+        reward = Math.round(totalSavings * 0.60);
+        saved = totalSavings - reward;
+      }
+      // RULE 2: >=1200 + >=6 months
+      else if (totalSavings >= 1200 && activeMonths >= 6) {
+        reward = Math.round(totalSavings * 0.50);
+        saved = totalSavings - reward;
+      }
+
+      rowTotalCell.textContent = totalSavings;
+      savedCell.textContent = saved;
+      rewardCell.textContent = reward;
+
+      grandTotal += totalSavings;
+      totalSaved += saved;
+      totalReward += reward;
     });
 
-    // Update row total
-    row.querySelector(".rowTotal").textContent = totalSavings;
+    document.getElementById("grandTotal_2025").textContent = grandTotal;
+    document.getElementById("savedTotal_2025").textContent = totalSaved;
+    document.getElementById("rewardTotal_2025").textContent = totalReward;
+  }
 
-    let christmasPayout = 0;
-    let remainingSavings = totalSavings;
-
-    // RULE 1: 12 months + ≥ 1500
-    if (totalSavings >= 1500 && activeMonths >= 12) {
-      christmasPayout = Math.round(totalSavings * 0.60);
-      remainingSavings = Math.round(totalSavings * 0.30);
-    }
-
-    // RULE 2: ≥ 1200 AND ≥ 6 months
-    else if (totalSavings >= 1200 && activeMonths >= 6) {
-      christmasPayout = Math.round(totalSavings * 0.50);
-      remainingSavings = Math.round(totalSavings * 0.40);
-    }
-
-    // BALANCE rounding differences
-    const used = christmasPayout + remainingSavings;
-    const diff = totalSavings - used;
-    remainingSavings += diff;
-
-    // Update cells
-    row.querySelector(".saved2025").textContent = remainingSavings;
-    row.querySelector(".reward2025").textContent = christmasPayout;
-
-    grandTotal += totalSavings;
-    totalSaved2025 += remainingSavings;
-    totalReward2025 += christmasPayout;
+  table2025.addEventListener("input", e => {
+    if (e.target.type === "number") calculate2025();
   });
 
-  document.getElementById("grandTotal").textContent = grandTotal;
-  document.getElementById("totalSaved2025").textContent = totalSaved2025;
-  document.getElementById("totalReward2025").textContent = totalReward2025;
-}
-
-document.addEventListener("input", recalcTable);
-window.onload = recalcTable;
+  calculate2025(); // initial load
+})();
 </script>
+<script>
+(function () {
+  const table2026 = document.getElementById("table2026");
+  if (!table2026) return;
 
+  function calculate2026() {
+    let grandTotal = 0;
+    let totalSaved = 0;
+    let totalReward = 0;
 
+    table2026.querySelectorAll("tbody tr").forEach(row => {
+      const inputs = row.querySelectorAll("input[type='number']");
+      const rowTotalCell = row.querySelector(".rowTotal");
+      const savedCell = row.querySelector(".saved2026");
+      const rewardCell = row.querySelector(".reward2026");
+
+      if (!rowTotalCell) return;
+
+      let totalSavings = 0;
+      let activeMonths = 0;
+
+      inputs.forEach(input => {
+        const val = Number(input.value) || 0;
+        totalSavings += val;
+        if (val > 0) activeMonths++;
+      });
+
+      let reward = 0;
+      let saved = totalSavings;
+
+      // RULE 1: 12 months + >=1500
+      if (totalSavings >= 1500 && activeMonths >= 12) {
+        reward = Math.round(totalSavings * 0.60);
+        saved = totalSavings - reward;
+      }
+      // RULE 2: >=1200 + >=6 months
+      else if (totalSavings >= 1200 && activeMonths >= 6) {
+        reward = Math.round(totalSavings * 0.50);
+        saved = totalSavings - reward;
+      }
+
+      rowTotalCell.textContent = totalSavings;
+      if (savedCell) savedCell.textContent = saved;
+      if (rewardCell) rewardCell.textContent = reward;
+
+      grandTotal += totalSavings;
+      totalSaved += saved;
+      totalReward += reward;
+    });
+
+    document.getElementById("grandTotal_2026").textContent = grandTotal;
+    if (document.getElementById("savedTotal_2026")) 
+      document.getElementById("savedTotal_2026").textContent = totalSaved;
+    if (document.getElementById("rewardTotal_2026")) 
+      document.getElementById("rewardTotal_2026").textContent = totalReward;
+  }
+
+  table2026.addEventListener("input", e => {
+    if (e.target.type === "number") calculate2026();
+  });
+
+  calculate2026(); // initial load
+})();
+</script>
 
 
 </body>
