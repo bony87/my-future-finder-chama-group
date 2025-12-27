@@ -2402,7 +2402,7 @@ const members = {
   "BONIFACE CHELLUGET": {
     phone: "0713953004",
     password: "0713953004",
-    savings: 1364,
+    savings: 1500,
   
     monthly: {
       2025: [300, 300, 300, 300, 300, 300, 300, 300, 300],
@@ -2521,7 +2521,7 @@ const members = {
   "SAMUEL OYUGI": {
     phone: "0796860412",
     password: "0796860412",
-    savings: 3900,
+    savings: 2022,
     monthly: [400,300,500,400,400,500,400,500,400,100],
     note: "fines:360-as of 2nd nov 25 paid 0 not paid 360 1.Very active; good candidate for larger loans.",
 
@@ -2933,219 +2933,272 @@ function showMonthlySavings() {
   alert("📊 Monthly Contributions: " + members[loggedInUser].monthly.join(", "));
 }
 
-// 🏦 Loan Eligibility Check
+// ========================= 🏦 Loan Eligibility Check =========================
 function checkLoan() { 
   if (!loggedInUser || !members[loggedInUser]) {
     alert("⚠️ Please log in first.");
     return;
   }
 
-  let totalSavings = members[loggedInUser].savings;
-  let loanResult = document.getElementById("loanMessage");
+  const totalSavings = members[loggedInUser].savings;
+  const loanResult = document.getElementById("loanMessage");
   loanResult.innerHTML = ""; 
 
   let loanAmount = 0, repaymentPeriod = "";
 
-  // Qualification rules
   if (totalSavings < 1500) {
-    loanResult.innerHTML = `❌ Sorry, ${loggedInUser}, you are not yet eligible for a loan. Please keep on saving.`;
+    loanResult.innerHTML = `❌ Sorry, ${loggedInUser}, you are not yet eligible for a loan. Please keep saving.`;
     return;
-  } else if (totalSavings >= 1500 && totalSavings < 2000) {
-    loanAmount = 1200;
-    repaymentPeriod = "2 months";
-  } else if (totalSavings >= 2000 && totalSavings < 3000) {
-    loanAmount = 1800;
-    repaymentPeriod = "2 months";
-  } else if (totalSavings >= 3000 && totalSavings < 4000) {
-    loanAmount = 2800;
-    repaymentPeriod = "2.5 months";
-  } else if (totalSavings >= 4000 && totalSavings < 5000) {
-    loanAmount = 3500;
-    repaymentPeriod = "3 months";
-  } else if (totalSavings >= 5000 && totalSavings < 6500) {
-    loanAmount = 4100;
-    repaymentPeriod = "3.5 months";
-  } else if (totalSavings >= 6500 && totalSavings < 7600) {
-    loanAmount = 5000;
-    repaymentPeriod = "5 months";
-  } else if (totalSavings >= 7600) {
-    let extraSteps = Math.floor((totalSavings - 7600) / 400);
-    loanAmount = 5000 + (extraSteps * 200);
-    repaymentPeriod = "6 months";
+  } 
+  else if (totalSavings < 2000) loanAmount = 1200, repaymentPeriod = "Up to 2 months";
+  else if (totalSavings < 3000) loanAmount = 1800, repaymentPeriod = "Up to 2 months";
+  else if (totalSavings < 4000) loanAmount = 2800, repaymentPeriod = "Up to 3 months";
+  else if (totalSavings < 5000) loanAmount = 3500, repaymentPeriod = "Up to 4 months";
+  else if (totalSavings < 6500) loanAmount = 4100, repaymentPeriod = "Up to 4 months";
+  else if (totalSavings < 7600) loanAmount = 5000, repaymentPeriod = "Up to 4 months";
+  else {
+    const steps = Math.floor((totalSavings - 7600) / 400);
+    loanAmount = 5000 + (steps * 200);
+    repaymentPeriod = "Up to 4 months";
   }
 
-  // Show result + Apply button
   loanResult.innerHTML = `
-    ✅ Congratulations, ${loggedInUser}!<br>
-    You qualify for a loan.<br><br>
-    <b>Maximum Loan You Can Borrow:</b> Ksh ${loanAmount}<br>
-    <b>Repayment Period:</b> ${repaymentPeriod}<br><br>
-    <button onclick="showLoanForm('${loggedInUser}', ${loanAmount}, '${repaymentPeriod}')" 
-      style="padding:10px 15px; background:#1976d2; color:white; border:none; border-radius:5px; cursor:pointer;">
-      👉 Apply Now
-    </button>
+    <div style="padding:15px; background:#e3f2fd; border-radius:10px; box-shadow:0 3px 6px rgba(0,0,0,0.1);">
+      ✅ <b>Congratulations, ${loggedInUser}!</b><br><br>
+      <b>Maximum Loan:</b> Ksh ${loanAmount}<br>
+      <b>Repayment Period:</b> ${repaymentPeriod}<br><br>
+
+      <button onclick="showLoanForm('${loggedInUser}', ${loanAmount})"
+        style="padding:10px 15px; background:#1976d2; color:white; border:none; border-radius:5px; cursor:pointer;">
+        👉 Apply for Loan
+      </button>
+    </div>
   `;
 }
 
-// 📝 Loan Application Form
-function showLoanForm(name, maxAmount, repaymentPeriod) {
-  let phone = members[name].phone;
+// ========================= 📝 Styled Loan Application Form =========================
+function showLoanForm(name, maxAmount) {
+  const phone = members[name].phone;
+  const loanResult = document.getElementById("loanMessage");
 
-  let loanResult = document.getElementById("loanMessage");
   loanResult.innerHTML = `
-   <h3>📝 Loan Application Form</h3>
-<form onsubmit="submitLoan(event, '${name}', ${maxAmount}, '${phone}')">
-  
-  <label><b>Name:</b></label><br>
-  <input type="text" value="${name}" readonly 
-         style="width:90%; padding:8px; margin-bottom:10px;"><br>
-  
-  <label><b>Phone Number:</b></label><br>
-  <input type="text" value="${phone}" readonly 
-         style="width:90%; padding:8px; margin-bottom:10px;"><br>
-  
-  <label><b>Maximum You Can Borrow:</b></label><br>
-  <input type="text" value="Ksh ${maxAmount}" readonly 
-         style="width:90%; padding:8px; margin-bottom:10px;"><br>
+    <div style="background:#ffffff; padding:20px; border-radius:12px; box-shadow:0 4px 8px rgba(0,0,0,0.1); max-width:500px; margin:auto;">
+      <h3 style="color:#1976d2; text-align:center;">📝 Loan Application Form</h3>
 
-  <label><b>Repayment Period:</b></label><br>
-  <select id="repaymentPeriod" onchange="updateLoanSummary(${maxAmount})" 
-          style="width:90%; padding:8px; margin-bottom:10px;">
-    <option value="">-- Select Period --</option>
-    <option value="1">1 Month</option>
-    <option value="2">2 Months</option>
-    <option value="3">3 Months</option>
-    <option value="6">6 Months</option>
-  </select><br>
+      <form onsubmit="submitLoan(event, '${name}', ${maxAmount}, '${phone}')">
 
-  <label><b>Enter Amount You Wish to Apply:</b></label><br>
-  <input type="number" id="applyAmount" min="500" max="${maxAmount}" required 
-         placeholder="Enter amount (min 500, max ${maxAmount})" 
-         oninput="updateLoanSummary(${maxAmount})"
-         style="width:90%; padding:8px; margin-bottom:10px;"><br>
+        <label><b>Name</b></label><br>
+        <input type="text" value="${name}" readonly style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc; margin-bottom:10px;"><br>
 
-  <div id="loanSummary" 
-       style="margin-top:10px; font-weight:bold; color:#00796b;">
-    💳 Total Repayment: Ksh 0 <br>
-    📌 Monthly Installment: Ksh 0
-  </div>
+        <label><b>Phone Number</b></label><br>
+        <input type="text" value="${phone}" readonly style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc; margin-bottom:10px;"><br>
 
-  <label><b>ID Number:</b></label><br>
-  <input type="number" id="loanId" required placeholder="Enter your ID Number" 
-         minlength="7" maxlength="8" 
-         oninput="if(this.value.length > 8) this.value = this.value.slice(0, 8);" 
-         style="width:90%; padding:8px; margin-bottom:10px;"><br>
+        <label><b>Maximum Loan</b></label><br>
+        <input type="text" value="Ksh ${maxAmount}" readonly style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc; margin-bottom:10px;"><br>
 
-  <button type="submit" 
-          style="margin-top:10px; padding:10px; background:#388e3c; color:white; border:none; cursor:pointer;">
-    Submit Application
-  </button>
-</form>
+        <label><b>Repayment Period</b></label><br>
+        <select id="repaymentPeriod" onchange="updateLoanSummary(${maxAmount})"
+          style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc; margin-bottom:10px;">
+          <option value="">-- Select Period --</option>
+          <option value="1">1 Month (12%)</option>
+          <option value="2">2 Months (15%)</option>
+          <option value="3">3 Months (17%)</option>
+          <option value="4">4 Months (20%)</option>
+        </select><br>
 
-  `;
-}
-function updateLoanSummary(maxAmount) {
-  let applyAmount = parseInt(document.getElementById("applyAmount").value);
-  let repaymentPeriod = parseInt(document.getElementById("repaymentPeriod").value);
+        <label><b>Loan Amount</b></label><br>
+        <input type="number" id="applyAmount" min="500" max="${maxAmount}" required
+          placeholder="Enter amount"
+          oninput="updateLoanSummary(${maxAmount})"
+          style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc; margin-bottom:10px;"><br>
 
-  if (isNaN(applyAmount) || applyAmount < 500 || applyAmount > maxAmount) {
-    document.getElementById("loanSummary").innerHTML =
-      "⚠️ Enter a valid loan amount between 500 and " + maxAmount;
-    return;
-  }
+        <label><b>Reason for Borrowing</b></label><br>
+        <textarea id="loanReason" required placeholder="Explain why you are borrowing this loan"
+          style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc; margin-bottom:15px; resize:vertical;" rows="3"></textarea><br>
 
-  let repaymentAmount = Math.round(applyAmount * 1.12); // 12% interest
-  let monthlyRepay = repaymentAmount;
+        <div id="loanSummary" style="font-weight:bold; color:#00796b; margin-bottom:15px;">
+          💳 Total Repayment: Ksh 0 <br>
+          📌 Monthly Installment: Ksh 0
+        </div>
 
-  if (!isNaN(repaymentPeriod) && repaymentPeriod >= 2) {
-    monthlyRepay = Math.round(repaymentAmount / repaymentPeriod);
-  }
+        <label><b>ID Number:</b></label><br>
+        <input type="number" id="loanId" required placeholder="Enter your ID Number" 
+               minlength="7" maxlength="8" 
+               oninput="if(this.value.length > 8) this.value = this.value.slice(0, 8);" 
+               style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc; margin-bottom:20px;"><br>
 
-  document.getElementById("loanSummary").innerHTML = `
-    💳 Total Repayment: Ksh ${repaymentAmount} <br>
-    📌 Monthly Installment: Ksh ${monthlyRepay} (${repaymentPeriod || 1} month${repaymentPeriod > 1 ? "s" : ""})
+        <button type="submit"
+          style="width:100%; padding:12px; background:#388e3c; color:white; border:none; border-radius:8px; font-size:16px; cursor:pointer;">
+          Submit Application
+        </button>
+
+      </form>
+    </div>
   `;
 }
 
-// 📤 Handle Loan Submission + PDF Download
+
+// ========================= 📤 Submit Loan + PDF + Notification =========================
 function submitLoan(event, name, maxAmount, phone) {
   event.preventDefault();
 
-  let applyAmount = parseInt(document.getElementById("applyAmount").value);
-  let idNumber = document.getElementById("loanId").value.trim();
-  let repaymentPeriod = document.getElementById("repaymentPeriod").value;
+  const amount = parseInt(document.getElementById("applyAmount").value);
+  const months = parseInt(document.getElementById("repaymentPeriod").value);
+  const id = document.getElementById("loanId").value.trim();
+  const reason = document.getElementById("loanReason").value.trim();
 
-  // Validation
-  if (isNaN(applyAmount) || applyAmount < 500 || applyAmount > maxAmount) {
-    alert(`❌ Enter a valid loan amount between 500 and ${maxAmount}.`);
-    return;
-  }
-  if (!/^[0-9]{7,8}$/.test(idNumber)) {
-    alert("❌ Enter a valid Kenyan ID Number (7 or 8 digits).");
-    return;
-  }
+  if (isNaN(amount) || amount < 500 || amount > maxAmount) { alert("❌ Enter a valid loan amount."); return; }
+  if (!/^[0-9]{7,8}$/.test(id)) { alert("❌ Enter a valid ID number (7–8 digits)."); return; }
+  if (isNaN(months)) { alert("❌ Please select a repayment period."); return; }
+  if (!reason) { alert("❌ Please provide a reason for borrowing."); return; }
 
-  // Apply 12% interest
-  let repaymentAmount = Math.round(applyAmount * 1.12);
-  let months = parseInt(repaymentPeriod) || 1;
-  let monthlyRepay = Math.round(repaymentAmount / months);
+  let interest = months === 1 ? 0.12 : months === 2 ? 0.15 : months === 3 ? 0.17 : 0.20;
+  const totalRepayment = Math.round(amount * (1 + interest));
+  const monthlyRepayment = Math.round(totalRepayment / months);
+  const applyDate = new Date().toLocaleDateString("en-KE", { year: "numeric", month: "long", day: "numeric" });
 
-  // Get today’s date
-  let today = new Date();
-  let dateStr = today.toLocaleDateString("en-KE", {
-    weekday: "long", year: "numeric", month: "long", day: "numeric"
-  });
-
-  // --- Save loan into localStorage ---
-  let applications = JSON.parse(localStorage.getItem("loanApplications")) || [];
-  let newApp = {
-    name, phone,
-    qualifiedAmount: maxAmount,
-    requestedAmount: applyAmount,
-    idNumber,
-    repaymentPeriod: months + " month(s)",
-    repaymentAmount,
-    monthlyRepay,
-    date: dateStr,
-    status: "Pending"
-  };
-  applications.push(newApp);
-  localStorage.setItem("loanApplications", JSON.stringify(applications));
-
-  // Refresh
-  loadMemberLoanHistory(name);
-  if (document.getElementById("admin").style.display === "block") {
-    loadLoanApplications();
-  }
-
-  // --- Generate PDF Download ---
   const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
+  const doc = new jsPDF("p", "mm", "a4");
+  const logo = new Image();
+  logo.crossOrigin = "anonymous";
+  logo.src = "https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/ChatGPT%20Image%20Sep%2010%2C%202025%2C%2005_43_14%20PM.png";
 
-  doc.setFontSize(16);
-  doc.text("📑 Loan Application Form", 20, 20);
+  logo.onload = function () {
+    // ==================== Background & Decoration ====================
+    doc.setFillColor(240, 248, 255); // light background
+    doc.rect(10, 10, 190, 277, 'F'); // filled rectangle as background
 
-  doc.setFontSize(12);
-  doc.text(`Name: ${name}`, 20, 40);
-  doc.text(`Phone: ${phone}`, 20, 50);
-  doc.text(`ID Number: ${idNumber}`, 20, 60);
-  doc.text(`Qualified Loan: Ksh ${maxAmount}`, 20, 70);
-  doc.text(`Requested Amount: Ksh ${applyAmount}`, 20, 80);
-  doc.text(`Repayment Period: ${months} month(s)`, 20, 90);
-  doc.text(`Total Repayment: Ksh ${repaymentAmount}`, 20, 100);
-  doc.text(`Monthly Installment: Ksh ${monthlyRepay}`, 20, 110);
-  doc.text(`Date Submitted: ${dateStr}`, 20, 120);
-  doc.text(`Status: Pending`, 20, 130);
+    // Logo
+    doc.addImage(logo, "PNG", 80, 10, 50, 30);
 
-  doc.save(`Loan_Application_${name}.pdf`);
+    // Title
+    doc.setFontSize(18); 
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(0, 70, 140);
+    doc.text("LOAN APPLICATION FORM", 105, 50, { align: "center" });
 
-  // --- Notify Admin via WhatsApp (as before) ---
-  let message = `🆕 Loan Application\n\n👤 Name: ${name}\n📞 Phone: ${phone}\n💰 Requested: Ksh ${applyAmount}\n💳 Repayment: Ksh ${repaymentAmount}\n⏳ Period: ${months} month(s)\n📅 Date: ${dateStr}\n\n📌 Monthly Repayment: Ksh ${monthlyRepay}`;
-  let whatsappUrl = "https://wa.me/254713953004?text=" + encodeURIComponent(message);
-  window.open(whatsappUrl, "_blank");
+    // Divider
+    doc.setLineWidth(0.7);
+    doc.setDrawColor(0, 70, 140);
+    doc.line(20, 55, 190, 55);
 
-  alert(`✅ Loan application submitted!\n\n💳 Total repay: Ksh ${repaymentAmount}\n📌 Monthly: Ksh ${monthlyRepay}\n📑 A PDF copy has been downloaded.`);
+    // ==================== Body ====================
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "bold");
+    let y = 70, lineGap = 10;
+
+    doc.setTextColor(0);
+    doc.text("Applicant Details:", 20, y); y += lineGap;
+    doc.setFont("helvetica", "normal");
+    doc.text(`Name: ${name}`, 25, y); y += lineGap;
+    doc.text(`Phone: ${phone}`, 25, y); y += lineGap;
+    doc.text(`ID Number: ${id}`, 25, y); y += lineGap;
+
+    y += lineGap / 2;
+    doc.setFont("helvetica", "bold");
+    doc.text("Loan Details:", 20, y); y += lineGap;
+    doc.setFont("helvetica", "normal");
+    doc.text(`Requested Amount: Ksh ${amount}`, 25, y); y += lineGap;
+    doc.text(`Interest Rate: ${interest*100}%`, 25, y); y += lineGap;
+    doc.text(`Repayment Period: ${months} month(s)`, 25, y); y += lineGap;
+    doc.text(`Monthly Installment: Ksh ${monthlyRepayment}`, 25, y); y += lineGap;
+    doc.text(`Total Repayment: Ksh ${totalRepayment}`, 25, y); y += lineGap;
+
+    y += lineGap / 2;
+    doc.setFont("helvetica", "bold");
+    doc.text("Reason for Borrowing:", 20, y); y += lineGap;
+    doc.setFont("helvetica", "normal");
+    // Wrap long text
+    const splitReason = doc.splitTextToSize(reason, 160);
+    doc.text(splitReason, 25, y); 
+    y += splitReason.length * lineGap;
+
+    doc.text(`Application Date: ${applyDate}`, 25, y); y += lineGap*2;
+
+    // ==================== Signatures ====================
+    const sigY = 240; 
+    doc.setFont("helvetica", "bolditalic");
+    doc.setFontSize(12);
+    doc.text("_________________________", 40, sigY);
+    doc.text("Judith Kemunto", 50, sigY + 6);
+    doc.text("_________________________", 130, sigY);
+    doc.text("Boniface Chelluget", 140, sigY + 6);
+
+    // Footer
+    doc.setFontSize(9);
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(80);
+    doc.text("Future Finders – Empowering our members through savings, merry-go-round and loans", 105, 285, { align: "center" });
+
+    // ==================== Save PDF & Notification ====================
+    doc.save(`Future_Finders_Loan_${name.replaceAll(" ", "_")}.pdf`);
+    showNotification("✅ Your form has been downloaded and sent to admin!");
+  };
 }
+
+
+// ==================== Notification Function ====================
+function showNotification(message) {
+  const notif = document.createElement("div");
+  notif.innerHTML = message;
+  notif.style.position = "fixed";
+  notif.style.bottom = "20px";
+  notif.style.right = "20px";
+  notif.style.background = "#388e3c";
+  notif.style.color = "white";
+  notif.style.padding = "15px 20px";
+  notif.style.borderRadius = "8px";
+  notif.style.boxShadow = "0 3px 6px rgba(0,0,0,0.2)";
+  notif.style.zIndex = 9999;
+  notif.style.fontWeight = "bold";
+  notif.style.opacity = "0";
+  notif.style.transition = "opacity 0.5s";
+
+  document.body.appendChild(notif);
+  setTimeout(()=>notif.style.opacity="1",50);
+  setTimeout(()=>notif.style.opacity="0",4000);
+  setTimeout(()=>notif.remove(),4500);
+}
+
+
+
+
+
+
+
+function updateLoanSummary(maxAmount) {
+
+  let amount = parseInt(document.getElementById("applyAmount").value);
+  let months = parseInt(document.getElementById("repaymentPeriod").value);
+
+  if (isNaN(amount) || amount < 500 || amount > maxAmount) {
+    document.getElementById("loanSummary").innerHTML =
+      "⚠️ Enter amount between 500 and " + maxAmount;
+    return;
+  }
+
+  if (isNaN(months)) {
+    document.getElementById("loanSummary").innerHTML =
+      "⚠️ Select repayment period";
+    return;
+  }
+
+  let interest = 0;
+  if (months === 1) interest = 0.12;
+  else if (months === 2) interest = 0.15;
+  else if (months === 3) interest = 0.17;
+  else if (months === 4) interest = 0.20;
+
+  let total = Math.round(amount * (1 + interest));
+  let monthly = Math.round(total / months);
+
+  document.getElementById("loanSummary").innerHTML = `
+    💳 Total Repayment: Ksh ${total}<br>
+    📌 Monthly Installment: Ksh ${monthly}<br>
+    📈 Interest: ${interest * 100}%
+  `;
+}
+
 
 // =========================
 // 🔄 Contributions Totals
