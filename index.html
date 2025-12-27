@@ -891,6 +891,157 @@ table th {
 
 
 
+/* Login Section */
+#loginForm {
+  max-width: 420px;
+  margin: 60px auto;
+  padding: 30px 25px;
+  background: linear-gradient(135deg, #ffffff, #f1f8f6);
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+  text-align: center;
+  font-family: "Segoe UI", Tahoma, sans-serif;
+}
+
+/* Headings */
+#loginForm h2 {
+  margin-bottom: 5px;
+  color: #00695c;
+  font-size: 22px;
+}
+
+#loginForm h1 {
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: #2e7d32;
+}
+
+/* Labels */
+#loginForm label {
+  display: block;
+  text-align: left;
+  margin-bottom: 6px;
+  font-size: 14px;
+  color: #333;
+}
+
+/* Select & Inputs */
+#loginForm select,
+#loginForm input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  outline: none;
+  transition: 0.3s;
+}
+
+#loginForm select:focus,
+#loginForm input:focus {
+  border-color: #00796b;
+  box-shadow: 0 0 5px rgba(0, 121, 107, 0.4);
+}
+
+/* Password Container */
+.password-container {
+  position: relative;
+  margin-top: 15px;
+}
+
+/* Eye Toggle */
+.toggle-eye {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 13px;
+  cursor: pointer;
+  color: #00796b;
+  user-select: none;
+}
+
+.toggle-eye:hover {
+  text-decoration: underline;
+}
+
+/* Login Button */
+.action-btn {
+  display: block;
+  margin-top: 20px;
+  padding: 14px;
+  background: linear-gradient(135deg, #00796b, #2e7d32);
+  color: white;
+  text-decoration: none;
+  border-radius: 30px;
+  font-weight: bold;
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.3s;
+  position: relative;
+}
+
+.action-btn:hover {
+  background: linear-gradient(135deg, #004d40, #1b5e20);
+  transform: translateY(-2px);
+}
+
+/* Spinner inside button */
+.spinner {
+  display: none;
+  width: 16px;
+  height: 16px;
+  border: 3px solid white;
+  border-top: 3px solid transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-left: 8px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Login Message */
+#loginMessage {
+  margin-top: 15px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* Disabled names styling */
+#loginForm option:disabled {
+  color: #b71c1c;
+  font-style: italic;
+}
+.password-container {
+  position: relative;
+  margin-top: 15px;
+}
+
+.password-container input {
+  width: 100%;
+  padding: 12px 40px 12px 12px; /* space for eye */
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.toggle-eye {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 18px;
+  color: #00796b;
+  user-select: none;
+  transition: 0.2s;
+}
+
+.toggle-eye:hover {
+  color: #004d40;
+}
 
 
   </style>
@@ -1721,7 +1872,9 @@ table th {
 
 <option>FAITH MOKOGI</option>
 <option>SADLER KARAN</option>
-<option>SHARON CHEPTOO</option>
+
+<option disabled>SHARON CHEPTOO (account Suspended)</option>
+
 <option>SHAMIM KAMASH</option>
 <option>CLAUDIA MORAA</option>
 <option>ESTHER OBEGI</option>
@@ -1734,14 +1887,21 @@ table th {
 </select>
 <!-- Member Password -->
 <div class="password-container">
-<input id="memberPass" placeholder="Enter your phone number or password created by you" type="password"/>
-<span class="toggle-eye" onclick="togglePassword('memberPass', this)">👁️ Show password</span>
+  <input id="memberPass" 
+         type="password"
+         placeholder="Enter your correct password" />
+
+  <span class="toggle-eye" onclick="togglePassword('memberPass', this)">
+    👁️
+  </span>
 </div>
+
 <!-- Spinner already inside the button -->
 <a class="action-btn" id="memberLoginBtn" onclick="login()">Login <span class="spinner"></span></a>
 <p id="loginMessage"></p>
 
 </section>
+
 <!-- Dashboard -->
  
 <div id="dashboard">
@@ -1908,7 +2068,10 @@ table th {
       <td><input type="number" value="200"/></td>
       <td><input type="number" value="355"/></td>
       <td><input type="number" value="0"/></td>
-      <td class="rowTotal">1850</td><td class="saved2025">0</td><td class="reward2025">0</td></tr>
+       <td class="rowTotal">3000</td>
+     <td class="saved2025">0</td>
+     <td class="reward2025">0</td>
+     <td class="paymentStatus"></td>
 
     <tr><td>ELVIS KAMASH</td><td>
       <input type="number" value="250"/></td>
@@ -1923,7 +2086,10 @@ table th {
       <td><input type="number" value="150"/></td>
       <td><input type="number" value="105"/></td>
       <td><input type="number" value="0"/></td>
-      <td class="rowTotal">1600</td><td class="saved2025">0</td><td class="reward2025">0</td></tr>
+       <td class="rowTotal">3000</td>
+     <td class="saved2025">0</td>
+     <td class="reward2025">0</td>
+     <td class="paymentStatus"></td>
 
     <tr><td>JULIUS KEBASO</td><td>
       <input type="number" value="450"/></td>
@@ -1938,7 +2104,10 @@ table th {
       <td><input type="number" value="400"/></td>
       <td><input type="number" value="405"/></td>
       <td><input type="number" value="300"/></td>
-      <td class="rowTotal">4050</td><td class="saved2025">0</td><td class="reward2025">0</td></tr>
+       <td class="rowTotal">3000</td>
+     <td class="saved2025">0</td>
+     <td class="reward2025">0</td>
+     <td class="paymentStatus"></td>
 
     <tr><td>CHRISTINE PIUS</td>
       <td><input type="number" value="50"/></td>
@@ -1953,7 +2122,10 @@ table th {
       <td><input type="number" value="700"/></td>
       <td><input type="number" value="205"/></td>
       <td><input type="number" value="150"/></td>
-      <td class="rowTotal">750</td><td class="saved2025">0</td><td class="reward2025">0</td></tr>
+       <td class="rowTotal">3000</td>
+     <td class="saved2025">0</td>
+     <td class="reward2025">0</td>
+     <td class="paymentStatus"></td>
 
     <tr><td>EDNAH NANCY</td><td>
       <input type="number" value="250"/></td>
@@ -1998,7 +2170,10 @@ table th {
       <td><input type="number" value="305"/></td>
       <td><input type="number" value="300"/></td>
       <td><input type="number" value="200"/></td>
-      <td class="rowTotal">0</td><td class="saved2025">0</td><td class="reward2025">0</td></tr>
+       <td class="rowTotal">3000</td>
+     <td class="saved2025">0</td>
+     <td class="reward2025">0</td>
+     <td class="paymentStatus"></td>
 
     <tr><td>JANET NYAKUNDI</td><td>
       <input type="number" value="150"/></td>
@@ -2028,7 +2203,10 @@ table th {
       <td><input type="number" value="200"/></td>
       <td><input type="number" value="205"/></td>
       <td><input type="number" value="150"/></td>
-      <td class="rowTotal">1850</td><td class="saved2025">0</td><td class="reward2025">0</td></tr>
+       <td class="rowTotal">0</td>
+     <td class="saved2025">0</td>
+     <td class="reward2025">0</td>
+     <td class="paymentStatus"></td>
 
     <tr><td>PIUS NYAKUNDI</td><td>
       <input type="number" value="150"/></td>
@@ -2043,7 +2221,10 @@ table th {
       <td><input type="number" value="50"/></td>
       <td><input type="number" value="150"/></td>
       <td><input type="number" value="50"/></td>
-      <td class="rowTotal">0</td><td class="saved2025">0</td><td class="reward2025">0</td></tr>
+      <td class="rowTotal">0</td>
+     <td class="saved2025">0</td>
+     <td class="reward2025">0</td>
+     <td class="paymentStatus"></td>
 
     <tr><td>SAMUEL OYUGI</td><td>
       <input type="number" value="400"/></td>
@@ -2058,8 +2239,12 @@ table th {
       <td><input type="number" value="300"/></td>
       <td><input type="number" value="405"/></td>
       <td><input type="number" value="300"/></td>
-      <td class="rowTotal">0</td><td class="saved2025">0</td><td class="reward2025">0</td></tr>
+      <td class="rowTotal">3000</td>
+     <td class="saved2025">0</td>
+     <td class="reward2025">0</td>
+     <td class="paymentStatus"></td>
 
+      
     
 
     <tr><td>KEFFA MOMANYI</td><td>
@@ -2076,7 +2261,10 @@ table th {
       <td><input type="number" value="200"/></td>
       <td><input type="number" value="200"/></td>
       <td><input type="number" value="150"/></td>
-      <td class="rowTotal">1850</td><td class="saved2025">0</td><td class="reward2025">0</td></tr>
+      <td class="rowTotal">3000</td>
+     <td class="saved2025">0</td>
+     <td class="reward2025">0</td>
+     <td class="paymentStatus"></td>
 
     <tr>
   <td>KENNEDY MUTAYI</td>
@@ -2092,8 +2280,10 @@ table th {
   <td><input type="number" value="600"/></td>   <!-- Oct -->
   <td><input type="number" value="605"/></td>     <!-- Nov -->
   <td><input type="number" value="450"/></td>     <!-- Dec -->
-  <td class="rowTotal">6000</td><td class="saved2025">0</td><td class="reward2025">0</td></tr>
-</tr>
+  <td class="rowTotal">3000</td>
+     <td class="saved2025">0</td>
+     <td class="reward2025">0</td>
+     <td class="paymentStatus"></td>
 
 
     <tr><td>MIKE MORRIS</td><td>
@@ -2124,7 +2314,10 @@ table th {
       <td><input type="number" value="970"/></td>
       <td><input type="number" value="100"/></td>
       <td><input type="number" value="100"/></td>
-      <td class="rowTotal">2300</td><td class="saved2025">0</td><td class="reward2025">0</td></tr>
+      <td class="rowTotal">3000</td>
+     <td class="saved2025">0</td>
+     <td class="reward2025">0</td>
+     <td class="paymentStatus"></td>
 
     <tr><td>SADLER KARAN</td><td>
       <input type="number" value="0"/></td>
@@ -2141,20 +2334,7 @@ table th {
       <td><input type="number" value="0"/></td>
       <td class="rowTotal">600</td><td class="saved2025">0</td><td class="reward2025">0</td></tr>
 
-    <tr><td>SHARON CHEPTOO</td><td>
-      <input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="250"/></td>
-      <td><input type="number" value="150"/></td>
-      <td><input type="number" value="150"/></td>
-      <td><input type="number" value="100"/></td>
-      <td><input type="number" value="150"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td class="rowTotal">800</td><td class="saved2025">0</td><td class="reward2025">0</td></tr>
+    
 
     <tr><td>SHAMIM KAMASH</td><td>
       <input type="number" value="0"/></td>
@@ -2184,7 +2364,10 @@ table th {
       <td><input type="number" value="200"/></td>
       <td><input type="number" value="250"/></td>
       <td><input type="number" value="200"/></td>
-      <td class="rowTotal">0</td><td class="saved2025">0</td><td class="reward2025">0</td></tr>
+     <td class="rowTotal">3000</td>
+     <td class="saved2025">0</td>
+     <td class="reward2025">0</td>
+     <td class="paymentStatus"></td>
 
     <tr><td>ESTHER OBEGI</td>
       <td><input type="number" value="0"/></td>
@@ -2299,6 +2482,48 @@ table th {
 </table>
 
 
+<script>
+const paidMembers = [
+  "BONIFACE CHELLUGET",
+  "JULIUS KEBASO",
+  "KENNEDY MUTAYI",
+  "SAMUEL OYUGI",
+  "EVERLINE MAINA",
+  "JUDITH OMWOYO",
+  "ELVIS KAMASH",
+  "JULIUS KEBASO",
+   "CHRISTINE PIUS",
+   "ANASTANCIA OMWOYO",
+   "PIUS NYAKUNDI",
+  "KEFFA MOMANYI",
+  "FAITH MOKOGI",
+  "CLAUDIA MORAA"
+ 
+   
+  
+  
+ 
+  // ➕ add more names here when paid
+];
+
+document.querySelectorAll("#table2025 tbody tr").forEach(row => {
+  const nameCell = row.querySelector("td");
+  const statusCell = row.querySelector(".paymentStatus");
+
+  if (!nameCell || !statusCell) return;
+
+  const name = nameCell.textContent.trim();
+
+  if (paidMembers.includes(name)) {
+    statusCell.innerHTML = "✅ <b>Paid on 22nd Dec 2025</b>";
+    statusCell.style.color = "green";
+    statusCell.style.fontWeight = "bold";
+  } else {
+    statusCell.innerHTML = "⏳ Not Paid";
+    statusCell.style.color = "#b71c1c";
+  }
+});
+</script>
 
 
 <h4>📊 Group Contributions for 2026</h4>
@@ -2308,12 +2533,13 @@ table th {
   <thead style="background:#00796b; color:white;">
     <tr>
       <th>NAME</th>
-      <th>JAN</th><th>FEB</th><th>MAR</th><th>APR</th><th>MAY</th>
+      <th>Two Last weeks of Dec25/JAN</th><th>FEB</th><th>MAR</th><th>APR</th><th>MAY</th>
       <th>JUNE</th><th>JULY</th><th>AUG</th><th>SEPT</th>
       <th>OCT</th><th>NOV</th><th>DEC</th>
       <th style="background:#17da48;">TOTAL</th>
       <th style="background:#ff9800;">SAVED 2026</th>
       <th style="background:hsl(263, 39%, 49%);">REWARD BACK</th>
+      <th style="background:#2196f3; color:white;">PAYMENT STATUS</th>
     </tr>
   </thead>
 
@@ -2338,8 +2564,334 @@ table th {
       <td><input type="number" value="0"></td>
       <td class="rowTotal">0</td>
       <td class="saved2026">0</td>
-      <td class="reward2026">0</td>
+    <td class="reward2026">0</td>
     </tr>
+    
+
+    
+
+  
+
+    <tr><td>JULIUS KEBASO</td><td>
+      <input type="number" value="100"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+       <td class="rowTotal">0</td>
+     <td class="saved2026">0</td>
+     <td class="reward2026">0</td>
+   
+
+    <tr><td>CHRISTINE PIUS</td>
+      <td><input type="number" value="50"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+       <td class="rowTotal">0</td>
+     <td class="saved2026">0</td>
+     <td class="reward2026">0</td>
+   
+
+    <tr><td>EDNAH NANCY</td><td>
+      <input type="number" value="50"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">0</td><td class="saved2026">0</td><td class="reward2026">0</td></tr>
+
+    <tr><td>JACKIENYARANGI</td><td>
+      <input type="number" value="50"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">0</td><td class="saved2026">0</td><td class="reward2026">0</td></tr>
+
+    
+
+   
+
+    <tr><td>ANASTANCIA OMWOYO</td><td>
+      <input type="number" value="50"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+       <td class="rowTotal">0</td>
+     <td class="saved2025">0</td>
+     <td class="reward2025">0</td>
+     
+
+    <tr><td>PIUS NYAKUNDI</td><td>
+      <input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">0</td>
+     <td class="saved2026">0</td>
+     <td class="reward2026">0</td>
+    
+
+    <tr><td>SAMUEL OYUGI</td><td>
+      <input type="number" value="100"/></td>
+      <td><input type="number" value="0"/>
+      </td><td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">0</td>
+     <td class="saved2026">0</td>
+     <td class="reward2026">0</td>
+     
+      
+    
+
+    <tr><td>KEFFA MOMANYI</td><td>
+      <input type="number" value="50"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">0</td>
+     <td class="saved2026">0</td>
+     <td class="reward2026">0</td>
+     
+
+    <tr>
+  <td>KENNEDY MUTAYI</td>
+  <td><input type="number" value="150"/></td>   <!-- Jan -->
+  <td><input type="number" value="0"/></td>   <!-- Feb -->
+  <td><input type="number" value="0"/></td>   <!-- Mar -->
+  <td><input type="number" value="0"/></td>   <!-- Apr -->
+  <td><input type="number" value="0"/></td>   <!-- May -->
+  <td><input type="number" value="0"/></td>   <!-- Jun -->
+  <td><input type="number" value="0"/></td>   <!-- Jul -->
+  <td><input type="number" value="0"/></td>   <!-- Aug -->
+  <td><input type="number" value="0"/></td>   <!-- Sept -->
+  <td><input type="number" value="0"/></td>   <!-- Oct -->
+  <td><input type="number" value="0"/></td>     <!-- Nov -->
+  <td><input type="number" value="0"/></td>     <!-- Dec -->
+  <td class="rowTotal">00</td>
+     <td class="saved2026">0</td>
+     <td class="reward2026">0</td>
+     
+
+
+    <tr><td>MIKE MORRIS</td><td>
+      <input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">0</td><td class="saved2026">0</td><td class="reward2026">0</td></tr>
+
+    <tr><td>FAITH MOKOGI</td><td>
+      <input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">0</td>
+     <td class="saved2026">0</td>
+     <td class="reward2026">0</td>
+    
+
+   
+    
+
+   
+
+    <tr><td>CLAUDIA MORAA</td><td>
+      <input type="number" value="100"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+     <td class="rowTotal">0</td>
+     <td class="saved2025">0</td>
+     <td class="reward2025">0</td>
+     
+
+    <tr><td>ESTHER OBEGI</td>
+      <td><input type="number" value="50"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">0</td><td class="saved2026">0</td><td class="reward2026">0</td></tr>
+
+    <tr><td>DENNIS KIEYA</td><td>
+      <input type="number" value="50"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">0</td><td class="saved2026">0</td><td class="reward2026">0</td></tr>
+
+   <tr>
+  <td>BRIGIDE NYABERI</td>
+  <td><input type="number" value="0"/></td>   <!-- Jan -->
+  <td><input type="number" value="0"/></td>   <!-- Feb -->
+  <td><input type="number" value="0"/></td>   <!-- Mar -->
+  <td><input type="number" value="0"/></td>   <!-- Apr -->
+  <td><input type="number" value="0"/></td>   <!-- May -->
+  <td><input type="number" value="0"/></td>   <!-- Jun -->
+  <td><input type="number" value="0"/></td>   <!-- Jul -->
+  <td><input type="number" value="0"/></td>   <!-- Aug -->
+  <td><input type="number" value="0"/></td>  <!-- Sep -->
+  <td><input type="number" value="0"/></td>  <!-- Oct -->
+  <td><input type="number" value="0"/></td>   <!-- Nov -->
+  <td><input type="number" value="0"/></td>   <!-- Dec -->
+  <td class="rowTotal">50</td><td class="saved2026">0</td><td class="reward2026">0</td></tr>
+</tr>
+
+
+    <tr><td>VANICE MOMANYI</td><td>
+      <input type="number" value="50"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">200</td><td class="saved2026">0</td><td class="reward2026">0</td></tr>
+     
+     
+      <tr><td>ELIZABETH SHIUNDU</td><td>
+      <input type="number" value="100"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">0</td><td class="saved2026">0</td><td class="reward2026">0</td></tr>
+
+
+      <tr><td>LILIAN KERUBO</td><td>
+      <input type="number" value="100"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value=""/></td>
+      <td class="rowTotal">0</td><td class="saved2025">0</td><td class="reward2025">0</td></tr>
+
+
+
+   
+
 
     
 
@@ -2402,12 +2954,11 @@ const members = {
   "BONIFACE CHELLUGET": {
     phone: "0713953004",
     password: "0713953004",
-    savings: 1500,
+    savings: 1364,
   
-    monthly: {
-      2025: [300, 300, 300, 300, 300, 300, 300, 300, 300],
-      2026: []
-    },
+    monthly:  [300, 300, 300, 300, 300, 300, 300, 300, 300],
+    
+
     note: "Consistent saver — eligible for next loan review. Fines: nil as of 17th Nov 2025."
   
 
@@ -2426,7 +2977,7 @@ const members = {
   "JOEL EGESA": {
     phone: "0768039551",
     password: "0768039551",
-    savings: 1220,
+    savings: 720,
     monthly: [200,0,20,500],
     note: "New member; low savings but improving gradually.",
     
@@ -2450,7 +3001,7 @@ const members = {
   "ELVIS KAMASH": {
     phone: "0798577851",
     password: "0798577851",
-    savings: 1600,
+    savings: 902,
     monthly: [250,150,250,50,200,150,50,250,200,50],
     note: "Slightly irregular, but maintains contributions.",
     fines: ""
@@ -2458,7 +3009,7 @@ const members = {
   "JULIUS KEBASO": {
     phone: "0705296154",
     password: "0705296154",
-    savings: 4050,
+    savings: 2022,
     monthly: [450,300,500,500,400,500,400,500,400,100],
     note: "Very reliable saver — possible leadership candidate.Fines: 30 as of 17nd Nov 25 paid 25",
     fines: ""
@@ -2466,7 +3017,7 @@ const members = {
   "CHRISTINE PIUS": {
     phone: "0115603500",
     password: "0115603500",
-    savings: 750,
+    savings: 877,
     monthly: [50,150,250,150,0,0,0,0,100,50],
     note: "Inconsistent months; encourage steady saving.",
     fines: ""
@@ -2474,14 +3025,14 @@ const members = {
   "EDNAH NANCY": {
     phone: "0717684177",
     password: "0717684177",
-    savings: 600,
+    savings: 1100,
     monthly: [250,100,100,0,0,0,0,0,100,50],
     note: "Low activity; may need reminder of savings goals."
   },
   "JACKIENYARANGI": {
     phone: "0790206224",
     password: "0790206224",
-    savings: 550,
+    savings: 1000,
     monthly: [200,200,0,0,0,0,0,0,100,50],
     note: "Missed several months; check commitment level.",
     fines: ""
@@ -2489,7 +3040,7 @@ const members = {
   "JUDITH OMWOYO": {
     phone: "0741939235",
     password: "0741939235",
-    savings: 2055,
+    savings: 1027,
     monthly: [300,300,300,0,0,0,0,100,250],
     note: "1.Consistent saver, possible for small loan soon. 2.sent 1500 on 20 october as a patial payment for mery-go-round.240-as of 2nd Nov 25, paid 180 not paid 60",
    
@@ -2505,7 +3056,7 @@ const members = {
   "ANASTANCIA OMWOYO": {
     phone: "0748442547",
     password: "0748442547",
-    savings: 2255,
+    savings: 902,
     monthly: [250,150,200,200,200,150,100,250,200,50],
     note: "fines: 0-as of 2nd nov 25 ",
     
@@ -2513,7 +3064,7 @@ const members = {
   "PIUS NYAKUNDI": {
     phone: "0716845165",
     password: "0716845165",
-    savings: 1050,
+    savings: 700,
     monthly: [150,200,200,0,100,100,100,150,150,50],
     note: "fines:120-as of 2nd nov 25 paid 0 not paid 120 on 13 oct requested for no exchange with judy - request approved.",
    
@@ -2525,19 +3076,13 @@ const members = {
     monthly: [400,300,500,400,400,500,400,500,400,100],
     note: "fines:360-as of 2nd nov 25 paid 0 not paid 360 1.Very active; good candidate for larger loans.",
 
-  },
-  "PURITY MOMANYI": {
-    phone: "0103155480",
-    password: "0103155480",
-    savings: 4400,
-    monthly: [200,200,1200,950,800,400,350,100,200],
-    note: "fines: 30-as of 2nd nov 25 paid 30 not paid 0High savings rate — leadership potential.",
+  
    
   },
   "KEFFA MOMANYI": {
     phone: "0759237482",
     password: "0759237482",
-    savings: 1850,
+    savings: 960,
     monthly: [250,200,200,200,200,250,200,150,200,50],
     note: "1. on 4th nov borrowered 300.60-as of 2nd nov 25 paid 0 not paid 60 ",
     fines: ""
@@ -2545,7 +3090,7 @@ const members = {
   "KENNEDY MUTAYI": {
     phone: "0724124735",
     password: "0724124735",
-    savings: 6000,
+    savings: 3002,
     monthly: [750,450,750,600,600,750,600,750,600,150],
     note: " ",
    
@@ -2553,17 +3098,11 @@ const members = {
   "MIKE MORRIS": {
     phone: "0115570301",
     password: "0115570301",
-    savings: 300,
+    savings: 500,
     monthly: [0,0,100,50,0,0,0,150,0],
     note: " fines:150-as of 2nd nov 25 paid 120 not paid 30",
     
-  },
-  "DAVY OMBATI": {
-    phone: "0793547166",
-    password: "0793547166",
-    savings: 250,
-    monthly: [0,0,50,0,0,0,200,0,0],
-    note: "fines:150-as of 2nd nov 25 paid 90 not paid 60 ",
+ 
     
   },
  "FAITH MOKOGI": {
@@ -2583,19 +3122,13 @@ const members = {
     monthly: [0,0,200,200,150,50,0,0,0],
     note: "fines: 240-as of 17th nov 25 paid 120 not paid 150",
    
-  },
-  "SHARON CHEPTOO": {
-    phone: "0768675656",
-    password: "0768675656",
-    savings: 800,
-    monthly: [0,0,0,0,250,150,150,100,150],
-    note: "fines: 90-as of 2nd nov 25 paid 0 not paid 90sharon you are required to clear you debt of 1000 as of 2nd Nov 2025",
+  
     
   },
   "SHAMIM KAMASH": {
     phone: "0725979420",
     password: "0725979420",
-    savings: 900,
+    savings: 1100,
     monthly: [0,0,0,0,200,150,50,250,200,50],
     note: " ",
     
@@ -2603,7 +3136,7 @@ const members = {
   "CLAUDIA MORAA": {
     phone: "0741520782",
     password: "0741520782",
-    savings: 1050,
+    savings: 825,
     monthly: [0,0,0,0,0,100,400,300,200,50],
     note: " ",
  
@@ -2611,7 +3144,7 @@ const members = {
   "ESTHER OBEGI": {
     phone: "0748845363",
     password: "0748845363",
-    savings: 500,
+    savings: 2200,
     monthly: [0,0,0,0,0,0,0,500,0],
     note: " ",
   
@@ -2619,7 +3152,7 @@ const members = {
   "DENNIS KIEYA": {
     phone: "0706150465",
     password: "@dennis12",
-    savings: 150,
+    savings: 650,
     monthly: [0,0,0,0,0,0,0,0,100,50],
     note: " ",
     
@@ -2627,14 +3160,14 @@ const members = {
   "BRIGIDE NYABERI": {
     phone: "0716011603",
     password: "Brigide",
-    savings: 50,
+    savings: 450,
     monthly: [0,0,0,0,0,0,0,0,50],
     note: " "
   },
   "VANICE MOMANYI": {
     phone: "0769552081",
     password: "41362859",
-    savings: 200,
+    savings: 1200,
     monthly: [0,0,0,0,0,0,0,0,100,100],
     note: " "
   },
@@ -2642,14 +3175,14 @@ const members = {
   "ELIZABETH SHIUNDU": {
     phone: "0745078964",
     password: "0745078964",
-    savings: 100,
+    savings: 400,
     monthly: [0,0,0,0,0,0,0,0,100,],
     note: " "
   },
    "LILIAN KERUBO": {
     phone: "0796476808",
     password: "kerubo",
-    savings: 100,
+    savings: 400,
     monthly: [0,0,0,0,0,0,0,0,100,],
     note: " "
   }
@@ -5300,67 +5833,73 @@ function closeFinePopup() {
 </script>
 
 <script>
-(function () {
-  const table2025 = document.getElementById("table2025");
+function calculate2025() { 
+  const table2025 = document.getElementById("table2025"); // make sure your table has id="table2025"
   if (!table2025) return;
 
-  function calculate2025() {
-    let grandTotal = 0;
-    let totalSaved = 0;
-    let totalReward = 0;
+  let grandTotal = 0;
+  let totalSaved = 0;
+  let totalReward = 0;
 
-    table2025.querySelectorAll("tbody tr").forEach(row => {
-      const inputs = row.querySelectorAll("input[type='number']");
-      const rowTotalCell = row.querySelector(".rowTotal");
-      const savedCell = row.querySelector(".saved2025");
-      const rewardCell = row.querySelector(".reward2025");
+  table2025.querySelectorAll("tbody tr").forEach(row => {
+    const inputs = row.querySelectorAll("input[type='number']");
+    const rowTotalCell = row.querySelector(".rowTotal");
+    const savedCell = row.querySelector(".saved2025");
+    const rewardCell = row.querySelector(".reward2025");
 
-      if (!rowTotalCell) return;
+    if (!rowTotalCell) return;
 
-      let totalSavings = 0;
-      let activeMonths = 0;
+    let totalSavings = 0;
+    let activeMonths = 0;
 
-      inputs.forEach(input => {
-        const val = Number(input.value) || 0;
-        totalSavings += val;
-        if (val > 0) activeMonths++;
-      });
-
-      let reward = 0;
-      let saved = totalSavings;
-
-      // RULE 1: 12 months + >=1500
-      if (totalSavings >= 1500 && activeMonths >= 12) {
-        reward = Math.round(totalSavings * 0.60);
-        saved = totalSavings - reward;
-      }
-      // RULE 2: >=1200 + >=6 months
-      else if (totalSavings >= 1200 && activeMonths >= 6) {
-        reward = Math.round(totalSavings * 0.50);
-        saved = totalSavings - reward;
-      }
-
-      rowTotalCell.textContent = totalSavings;
-      savedCell.textContent = saved;
-      rewardCell.textContent = reward;
-
-      grandTotal += totalSavings;
-      totalSaved += saved;
-      totalReward += reward;
+    inputs.forEach(input => {
+      const val = Number(input.value) || 0;
+      totalSavings += val;
+      if (val > 0) activeMonths++;
     });
 
-    document.getElementById("grandTotal_2025").textContent = grandTotal;
-    document.getElementById("savedTotal_2025").textContent = totalSaved;
-    document.getElementById("rewardTotal_2025").textContent = totalReward;
-  }
+    let reward = 0;
+    let saved = totalSavings;
 
+    // RULE 1: 12 months + >=1500
+    if (totalSavings >= 1500 && activeMonths >= 12) {
+      reward = Math.round(totalSavings * 0.60);
+      saved = totalSavings - reward;
+    }
+    // RULE 2: >=1200 + >=6 months
+    else if (totalSavings >= 1200 && activeMonths >= 6) {
+      reward = Math.round(totalSavings * 0.50);
+      saved = totalSavings - reward;
+    }
+
+    rowTotalCell.textContent = totalSavings;
+    savedCell.textContent = saved;
+    rewardCell.textContent = reward;
+
+    grandTotal += totalSavings;
+    totalSaved += saved;
+    totalReward += reward;
+  });
+
+  document.getElementById("grandTotal_2025").textContent = grandTotal;
+  document.getElementById("savedTotal_2025").textContent = totalSaved;
+  document.getElementById("rewardTotal_2025").textContent = totalReward;
+}
+
+// Listen for changes in the table
+const table2025 = document.getElementById("table2025");
+if (table2025) {
   table2025.addEventListener("input", e => {
     if (e.target.type === "number") calculate2025();
   });
+}
 
-  calculate2025(); // initial load
-})();
+// Initial calculation
+calculate2025();
 </script>
+
+
+
 <script>
 (function () {
   const table2026 = document.getElementById("table2026");
@@ -5428,33 +5967,6 @@ function closeFinePopup() {
 
 
 
-<script>
-const paidMembers = [
-  "BONIFACE CHELLUGET",
-  "JULIUS KEBASO",
-  "KENNEDY MUTAYI",
-  "SAMUEL OYUGI"
-  // ➕ add more names here when paid
-];
-
-document.querySelectorAll("#table2025 tbody tr").forEach(row => {
-  const nameCell = row.querySelector("td");
-  const statusCell = row.querySelector(".paymentStatus");
-
-  if (!nameCell || !statusCell) return;
-
-  const name = nameCell.textContent.trim();
-
-  if (paidMembers.includes(name)) {
-    statusCell.innerHTML = "✅ <b>Paid on 22nd Dec 2025</b>";
-    statusCell.style.color = "green";
-    statusCell.style.fontWeight = "bold";
-  } else {
-    statusCell.innerHTML = "⏳ Not Paid";
-    statusCell.style.color = "#b71c1c";
-  }
-});
-</script>
 
 
 </body>
