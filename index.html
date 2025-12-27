@@ -2442,7 +2442,7 @@ const members = {
   "EVERLINE MAINA": {
     phone: "0701360180",
     password: "0701360180",
-    savings: 1850,
+    savings: 1177,
     monthly: [250,150,250,200,200,250,200,100,200,50],
     note: "Active and consistent member — good standing.",
     fines: ""
@@ -2569,7 +2569,7 @@ const members = {
  "FAITH MOKOGI": {
   phone: "0706918919",
   password: "0706918919",
-  savings: 2300,
+  savings:1335,
   monthly: [0,0,500,200,250,50,100,50,350,800],
   note: "fines:90-as of 2nd nov 25 paid 0 not paid 30 1) On 13TH October, borrowed a loan of 1500 (repayment amount 1680, period 7 days).\n2) Loan successfully paid on 24th October (full payment).",
  
@@ -2946,11 +2946,11 @@ function checkLoan() {
 
   let loanAmount = 0, repaymentPeriod = "";
 
-  if (totalSavings < 1500) {
+  if (totalSavings < 1000) {
     loanResult.innerHTML = `❌ Sorry, ${loggedInUser}, you are not yet eligible for a loan. Please keep saving.`;
     return;
   } 
-  else if (totalSavings < 2000) loanAmount = 1200, repaymentPeriod = "Up to 2 months";
+  else if (totalSavings < 2000) loanAmount = 1000, repaymentPeriod = "Up to 2 months";
   else if (totalSavings < 3000) loanAmount = 1800, repaymentPeriod = "Up to 2 months";
   else if (totalSavings < 4000) loanAmount = 2800, repaymentPeriod = "Up to 3 months";
   else if (totalSavings < 5000) loanAmount = 3500, repaymentPeriod = "Up to 4 months";
