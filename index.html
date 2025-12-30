@@ -1492,82 +1492,118 @@ table th {
 </a>
 </div>
 </section>
-<!-- 📰 News & Updates Section with Recurring Popup Reminder -->
+<!-- 📰 News & Updates Section -->
+<!-- 📰 NEWS & UPDATES SECTION -->
 <section id="updates">
   <h2>📰 News & Updates</h2>
-  <div id="newsFeed" style="margin-top:15px;">
-    <div style="background:#e8f5e9; border-left:6px solid #388e3c; padding:15px; border-radius:8px; margin-bottom:15px;">
-      <h3 style="color:#1b5e20;">🗓️ FUTURE FINDERS CHAMA GROUP – MEETING NOTICE</h3>
-      <p><b>Date:</b> Sunday<br>
+
+  <!-- ========================= -->
+  <!-- 🔒 PREVIOUS MEETING -->
+  <!-- ========================= -->
+  <div style="margin-top:15px; padding:15px; background:#fbe9e7; border-left:6px solid #d32f2f; border-radius:8px;">
+    <h3 style="color:#b71c1c;">🗓️ FUTURE FINDERS CHAMA – PREVIOUS MEETING</h3>
+
+    <p>
+      <b>Date:</b> Sunday<br>
       <b>Time:</b> 8:30 PM<br>
-      <b>Platform:</b> WhatsApp Group</p>
-      <p><b>Agenda:</b></p>
-      <ol>
-        <li>🧾 Polishing of Rules & Regulations</li>
-        <li>📈 Chama Progress Discussion</li>
-        <li>💸 Fine of Ksh 30</li>
-      </ol>
-      <p style="font-style:italic; color:#2e7d32;">All members are requested to attend on time.<br>
-      Together we grow — <b>Future Finders, Our Identity, Our Strength.</b></p>
-      <div id="meetingCountdown" style="margin-top:20px; font-weight:bold; font-size:18px; color:#1976d2;"></div>
+      <b>Platform:</b> WhatsApp Group
+    </p>
+
+    <p><b>Agenda Covered:</b></p>
+    <ol>
+      <li>🧾 Polishing of Rules & Regulations</li>
+      <li>📈 Chama Progress Discussion</li>
+      <li>💸 Fine of Ksh 30</li>
+    </ol>
+
+    <div style="margin-top:15px; font-weight:bold; font-size:18px; color:#d32f2f;">
+      🔒 MEETING CLOSED<br>
+      Thank you all for attending 🙏
     </div>
   </div>
 
-  <!-- Global Popup Reminder -->
-  <div id="meetingPopup" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:99999; justify-content:center; align-items:center;">
-    <div style="background:white; padding:25px; border-radius:10px; text-align:center; max-width:350px; box-shadow:0 5px 15px rgba(0,0,0,0.3);">
-      <h2 style="color:#2e7d32;">⏰ Reminder!</h2>
-      <p style="font-size:16px; color:#333;">Your Future Finders Chama meeting is coming soon.<br>Stay ready for <b>Sunday 8:30 PM</b> on WhatsApp.</p>
+  <!-- ========================= -->
+  <!-- ⏳ UPCOMING MEETING -->
+  <!-- ========================= -->
+  <div style="margin-top:25px; padding:15px; background:#e3f2fd; border-left:6px solid #1565c0; border-radius:8px;">
+    <h3 style="color:#0d47a1;">🗓️ FUTURE FINDERS CHAMA – UPCOMING MEETING</h3>
+
+    <p>
+      <b>Date:</b> Tuesday, <b>21st January 2025</b><br>
+      <b>Time:</b> 8:30 PM – 10:00 PM<br>
+      <b>Platform:</b> WhatsApp Group
+    </p>
+
+    <p><b>Agenda:</b></p>
+    <ol>
+      <li>
+        Two Category Chama Discussion –  
+        How the categories will run, especially the <b>Bi-Monthly Chama</b>
+      </li>
+      <li>Update on Rules</li>
+      <li>A.O.B (Any Other Business)</li>
+    </ol>
+
+    <p style="font-style:italic; color:#0d47a1;">
+      All members are kindly requested to attend on time.<br>
+      <b>Together we grow — Future Finders, Our Identity, Our Strength.</b>
+    </p>
+
+    <!-- COUNTDOWN OUTPUT -->
+    <div id="upcomingCountdown"
+         style="margin-top:20px; font-weight:bold; font-size:18px; color:#1565c0;">
+      ⏳ Countdown loading...
     </div>
   </div>
 
-  <script>
-    const countdownElement = document.getElementById('meetingCountdown');
-    const popup = document.getElementById('meetingPopup');
+</section>
 
-    function updateCountdown() {
-      const now = new Date();
-      const dayOfWeek = now.getDay(); // 0=Sunday
-      let meeting = new Date(now);
+<!-- ================================= -->
+<!-- ⏰ JAVASCRIPT FOR UPCOMING MEETING -->
+<!-- ================================= -->
+<script>
+  // UPCOMING MEETING TIMES
+  const upcomingStart = new Date("January 21, 2026 20:30:00"); // 8:30 PM
+  const upcomingEnd   = new Date("January 21, 2026 22:00:00"); // 10:00 PM
 
-      // Set to next Sunday 8:30 PM
-      meeting.setDate(now.getDate() + ((7 - dayOfWeek) % 7));
-      meeting.setHours(20, 30, 0, 0);
+  function updateUpcomingMeeting() {
+    const el = document.getElementById("upcomingCountdown");
+    const now = new Date();
 
-      if (now > meeting) {
-        meeting.setDate(meeting.getDate() + 7);
-      }
+    // BEFORE MEETING
+    if (now < upcomingStart) {
+      const diff = upcomingStart - now;
 
-      const diff = meeting - now;
       const days = Math.floor(diff / (1000 * 60 * 60 * 24));
       const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
       const minutes = Math.floor((diff / (1000 * 60)) % 60);
       const seconds = Math.floor((diff / 1000) % 60);
 
-      countdownElement.textContent = `⏳ Meeting starts in ${days}d ${hours}h ${minutes}m ${seconds}s`;
-
-      if (diff < 0) {
-        countdownElement.textContent = '✅ Meeting is happening now on WhatsApp!';
-        clearInterval(interval);
-      }
+      el.style.color = "#1565c0";
+      el.innerHTML =
+        `⏳ Meeting starts in <b>${days}d ${hours}h ${minutes}m ${seconds}s</b>`;
     }
 
-    // Function to show popup and close after 5s
-    function showPopup() {
-      popup.style.display = 'flex';
-      setTimeout(() => { popup.style.display = 'none'; }, 10000);
+    // MEETING LIVE
+    else if (now >= upcomingStart && now < upcomingEnd) {
+      el.style.color = "#2e7d32";
+      el.innerHTML =
+        "🟢 <b>MEETING IS LIVE</b><br>Join on WhatsApp now";
     }
 
-    // Initial popup show
-    showPopup();
+    // MEETING CLOSED
+    else {
+      el.style.color = "#d32f2f";
+      el.innerHTML =
+        "🔒 <b>MEETING CLOSED</b><br>Thank you all for attending 🙏";
+      clearInterval(upcomingTimer);
+    }
+  }
 
-    // Repeat popup every hour
-    setInterval(showPopup, 60 * 60 * 1000);
+  const upcomingTimer = setInterval(updateUpcomingMeeting, 1000);
+  updateUpcomingMeeting();
+</script>
 
-    // Countdown updater
-    const interval = setInterval(updateCountdown, 1000);
-  </script>
-</section>
 
 <!-- Contact -->
 <section id="contact">
@@ -2973,7 +3009,7 @@ document.querySelectorAll("#table2025 tbody tr").forEach(row => {
 
     <tr>
       <td>BONIFACE CHELLUGET</td>
-      <td><input type="number" value="0"></td>
+      <td><input type="number" value="100"></td>
       <td><input type="number" value="0"></td>
       <td><input type="number" value="0"></td>
       <td><input type="number" value="0"></td>
@@ -2992,11 +3028,24 @@ document.querySelectorAll("#table2025 tbody tr").forEach(row => {
     
 
     
-
+ <tr><td>SHALIK SHIVERENGE</td><td>
+      <input type="number" value="200"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td><input type="number" value="0"/></td>
+      <td class="rowTotal">0</td><td class="saved2026">0</td><td class="reward2026">0</td></tr>
   
 
     <tr><td>JULIUS KEBASO</td><td>
-      <input type="number" value="100"/></td>
+      <input type="number" value="200"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
@@ -3014,7 +3063,7 @@ document.querySelectorAll("#table2025 tbody tr").forEach(row => {
    
 
     <tr><td>CHRISTINE PIUS</td>
-      <td><input type="number" value="50"/></td>
+      <td><input type="number" value="100"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
@@ -3032,7 +3081,7 @@ document.querySelectorAll("#table2025 tbody tr").forEach(row => {
    
 
     <tr><td>EDNAH NANCY</td><td>
-      <input type="number" value="50"/></td>
+      <input type="number" value="100"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
@@ -3047,7 +3096,7 @@ document.querySelectorAll("#table2025 tbody tr").forEach(row => {
       <td class="rowTotal">0</td><td class="saved2026">0</td><td class="reward2026">0</td></tr>
 
     <tr><td>JACKIENYARANGI</td><td>
-      <input type="number" value="50"/></td>
+      <input type="number" value="100"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
@@ -3066,7 +3115,7 @@ document.querySelectorAll("#table2025 tbody tr").forEach(row => {
    
 
     <tr><td>ANASTANCIA OMWOYO</td><td>
-      <input type="number" value="50"/></td>
+      <input type="number" value="100"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
@@ -3102,7 +3151,7 @@ document.querySelectorAll("#table2025 tbody tr").forEach(row => {
     
 
     <tr><td>SAMUEL OYUGI</td><td>
-      <input type="number" value="100"/></td>
+      <input type="number" value="200"/></td>
       <td><input type="number" value="0"/>
       </td><td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
@@ -3122,7 +3171,7 @@ document.querySelectorAll("#table2025 tbody tr").forEach(row => {
     
 
     <tr><td>KEFFA MOMANYI</td><td>
-      <input type="number" value="50"/></td>
+      <input type="number" value="100"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
@@ -3142,7 +3191,7 @@ document.querySelectorAll("#table2025 tbody tr").forEach(row => {
 
     <tr>
   <td>KENNEDY MUTAYI</td>
-  <td><input type="number" value="150"/></td>   <!-- Jan -->
+  <td><input type="number" value="300"/></td>   <!-- Jan -->
   <td><input type="number" value="0"/></td>   <!-- Feb -->
   <td><input type="number" value="0"/></td>   <!-- Mar -->
   <td><input type="number" value="0"/></td>   <!-- Apr -->
@@ -3160,23 +3209,10 @@ document.querySelectorAll("#table2025 tbody tr").forEach(row => {
      
 
 
-    <tr><td>MIKE MORRIS</td><td>
-      <input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td class="rowTotal">0</td><td class="saved2026">0</td><td class="reward2026">0</td></tr>
+   
 
     <tr><td>FAITH MOKOGI</td><td>
-      <input type="number" value="0"/></td>
+      <input type="number" value="50"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
@@ -3217,7 +3253,7 @@ document.querySelectorAll("#table2025 tbody tr").forEach(row => {
      
 
     <tr><td>ESTHER OBEGI</td>
-      <td><input type="number" value="50"/></td>
+      <td><input type="number" value="100"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
@@ -3232,7 +3268,7 @@ document.querySelectorAll("#table2025 tbody tr").forEach(row => {
       <td class="rowTotal">0</td><td class="saved2026">0</td><td class="reward2026">0</td></tr>
 
     <tr><td>DENNIS KIEYA</td><td>
-      <input type="number" value="50"/></td>
+      <input type="number" value="100"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
@@ -3246,26 +3282,11 @@ document.querySelectorAll("#table2025 tbody tr").forEach(row => {
       <td><input type="number" value="0"/></td>
       <td class="rowTotal">0</td><td class="saved2026">0</td><td class="reward2026">0</td></tr>
 
-   <tr>
-  <td>BRIGIDE NYABERI</td>
-  <td><input type="number" value="0"/></td>   <!-- Jan -->
-  <td><input type="number" value="0"/></td>   <!-- Feb -->
-  <td><input type="number" value="0"/></td>   <!-- Mar -->
-  <td><input type="number" value="0"/></td>   <!-- Apr -->
-  <td><input type="number" value="0"/></td>   <!-- May -->
-  <td><input type="number" value="0"/></td>   <!-- Jun -->
-  <td><input type="number" value="0"/></td>   <!-- Jul -->
-  <td><input type="number" value="0"/></td>   <!-- Aug -->
-  <td><input type="number" value="0"/></td>  <!-- Sep -->
-  <td><input type="number" value="0"/></td>  <!-- Oct -->
-  <td><input type="number" value="0"/></td>   <!-- Nov -->
-  <td><input type="number" value="0"/></td>   <!-- Dec -->
-  <td class="rowTotal">50</td><td class="saved2026">0</td><td class="reward2026">0</td></tr>
-</tr>
+   
 
 
     <tr><td>VANICE MOMANYI</td><td>
-      <input type="number" value="50"/></td>
+      <input type="number" value="150"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
@@ -3281,7 +3302,7 @@ document.querySelectorAll("#table2025 tbody tr").forEach(row => {
      
      
       <tr><td>ELIZABETH SHIUNDU</td><td>
-      <input type="number" value="100"/></td>
+      <input type="number" value="200"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
@@ -3297,7 +3318,7 @@ document.querySelectorAll("#table2025 tbody tr").forEach(row => {
 
 
       <tr><td>LILIAN KERUBO</td><td>
-      <input type="number" value="100"/></td>
+      <input type="number" value="200"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
