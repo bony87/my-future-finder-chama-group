@@ -3406,7 +3406,7 @@ const members = {
   "BONIFACE CHELLUGET": {
     phone: "0713953004",
     password: "0713953004",
-    savings: 1364,
+    savings: 50000,
   
     monthly:  [300, 300, 300, 300, 300, 300, 300, 300, 300],
     
@@ -3968,12 +3968,13 @@ function checkLoan() {
   else if (totalSavings < 4000) loanAmount = 2800, repaymentPeriod = "Up to 3 months";
   else if (totalSavings < 5000) loanAmount = 3500, repaymentPeriod = "Up to 4 months";
   else if (totalSavings < 6500) loanAmount = 4100, repaymentPeriod = "Up to 4 months";
-  else if (totalSavings < 7600) loanAmount = 5000, repaymentPeriod = "Up to 4 months";
+  else if (totalSavings < 7600) loanAmount = 6000, repaymentPeriod = "Up to 4 months";
   else {
-    const steps = Math.floor((totalSavings - 7600) / 400);
-    loanAmount = 5000 + (steps * 200);
-    repaymentPeriod = "Up to 4 months";
-  }
+  const steps = Math.floor((totalSavings - 7600) / 400);
+  loanAmount = 6000 + (steps * 200);
+  repaymentPeriod = "Up to 4 months";
+}
+
 
   loanResult.innerHTML = `
     <div style="padding:15px; background:#e3f2fd; border-radius:10px; box-shadow:0 3px 6px rgba(0,0,0,0.1);">
@@ -4051,113 +4052,14 @@ function showLoanForm(name, maxAmount) {
 }
 
 
-// ========================= 📤 Submit Loan + PDF + Notification =========================
-function submitLoan(event, name, maxAmount, phone) {
-  event.preventDefault();
-
-  const amount = parseInt(document.getElementById("applyAmount").value);
-  const months = parseInt(document.getElementById("repaymentPeriod").value);
-  const id = document.getElementById("loanId").value.trim();
-  const reason = document.getElementById("loanReason").value.trim();
-
-  if (isNaN(amount) || amount < 500 || amount > maxAmount) { alert("❌ Enter a valid loan amount."); return; }
-  if (!/^[0-9]{7,8}$/.test(id)) { alert("❌ Enter a valid ID number (7–8 digits)."); return; }
-  if (isNaN(months)) { alert("❌ Please select a repayment period."); return; }
-  if (!reason) { alert("❌ Please provide a reason for borrowing."); return; }
-
-  let interest = months === 1 ? 0.12 : months === 2 ? 0.15 : months === 3 ? 0.17 : 0.20;
-  const totalRepayment = Math.round(amount * (1 + interest));
-  const monthlyRepayment = Math.round(totalRepayment / months);
-  const applyDate = new Date().toLocaleDateString("en-KE", { year: "numeric", month: "long", day: "numeric" });
-
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF("p", "mm", "a4");
-  const logo = new Image();
-  logo.crossOrigin = "anonymous";
-  logo.src = "https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/ChatGPT%20Image%20Sep%2010%2C%202025%2C%2005_43_14%20PM.png";
-
-  logo.onload = function () {
-    // ==================== Background & Decoration ====================
-    doc.setFillColor(240, 248, 255); // light background
-    doc.rect(10, 10, 190, 277, 'F'); // filled rectangle as background
-
-    // Logo
-    doc.addImage(logo, "PNG", 80, 10, 50, 30);
-
-    // Title
-    doc.setFontSize(18); 
-    doc.setFont("helvetica", "bold");
-    doc.setTextColor(0, 70, 140);
-    doc.text("LOAN APPLICATION FORM", 105, 50, { align: "center" });
-
-    // Divider
-    doc.setLineWidth(0.7);
-    doc.setDrawColor(0, 70, 140);
-    doc.line(20, 55, 190, 55);
-
-    // ==================== Body ====================
-    doc.setFontSize(12);
-    doc.setFont("helvetica", "bold");
-    let y = 70, lineGap = 10;
-
-    doc.setTextColor(0);
-    doc.text("Applicant Details:", 20, y); y += lineGap;
-    doc.setFont("helvetica", "normal");
-    doc.text(`Name: ${name}`, 25, y); y += lineGap;
-    doc.text(`Phone: ${phone}`, 25, y); y += lineGap;
-    doc.text(`ID Number: ${id}`, 25, y); y += lineGap;
-
-    y += lineGap / 2;
-    doc.setFont("helvetica", "bold");
-    doc.text("Loan Details:", 20, y); y += lineGap;
-    doc.setFont("helvetica", "normal");
-    doc.text(`Requested Amount: Ksh ${amount}`, 25, y); y += lineGap;
-    doc.text(`Interest Rate: ${interest*100}%`, 25, y); y += lineGap;
-    doc.text(`Repayment Period: ${months} month(s)`, 25, y); y += lineGap;
-    doc.text(`Monthly Installment: Ksh ${monthlyRepayment}`, 25, y); y += lineGap;
-    doc.text(`Total Repayment: Ksh ${totalRepayment}`, 25, y); y += lineGap;
-
-    y += lineGap / 2;
-    doc.setFont("helvetica", "bold");
-    doc.text("Reason for Borrowing:", 20, y); y += lineGap;
-    doc.setFont("helvetica", "normal");
-    // Wrap long text
-    const splitReason = doc.splitTextToSize(reason, 160);
-    doc.text(splitReason, 25, y); 
-    y += splitReason.length * lineGap;
-
-    doc.text(`Application Date: ${applyDate}`, 25, y); y += lineGap*2;
-
-    // ==================== Signatures ====================
-    const sigY = 240; 
-    doc.setFont("helvetica", "bolditalic");
-    doc.setFontSize(12);
-    doc.text("_________________________", 40, sigY);
-    doc.text("Judith Kemunto", 50, sigY + 6);
-    doc.text("_________________________", 130, sigY);
-    doc.text("Boniface Chelluget", 140, sigY + 6);
-
-    // Footer
-    doc.setFontSize(9);
-    doc.setFont("helvetica", "normal");
-    doc.setTextColor(80);
-    doc.text("Future Finders – Empowering our members through savings, merry-go-round and loans", 105, 285, { align: "center" });
-
-    // ==================== Save PDF & Notification ====================
-    doc.save(`Future_Finders_Loan_${name.replaceAll(" ", "_")}.pdf`);
-    showNotification("✅ Your form has been downloaded and sent to admin!");
-  };
-}
-
-
-// ==================== Notification Function ====================
-function showNotification(message) {
+// ==================== 🔔 Notification ====================
+function showNotification(message, color = "#388e3c") {
   const notif = document.createElement("div");
   notif.innerHTML = message;
   notif.style.position = "fixed";
   notif.style.bottom = "20px";
   notif.style.right = "20px";
-  notif.style.background = "#388e3c";
+  notif.style.background = color;
   notif.style.color = "white";
   notif.style.padding = "15px 20px";
   notif.style.borderRadius = "8px";
@@ -4168,12 +4070,173 @@ function showNotification(message) {
   notif.style.transition = "opacity 0.5s";
 
   document.body.appendChild(notif);
-  setTimeout(()=>notif.style.opacity="1",50);
-  setTimeout(()=>notif.style.opacity="0",4000);
-  setTimeout(()=>notif.remove(),4500);
+  setTimeout(() => notif.style.opacity = "1", 50);
+  setTimeout(() => notif.style.opacity = "0", 4000);
+  setTimeout(() => notif.remove(), 4500);
 }
 
 
+// ========================= 📤 Submit Loan + PDF =========================
+function submitLoan(event, name, maxAmount, phone) {
+  event.preventDefault();
+
+  const amount = parseInt(document.getElementById("applyAmount").value);
+  const months = parseInt(document.getElementById("repaymentPeriod").value);
+  const id = document.getElementById("loanId").value.trim();
+  const reason = document.getElementById("loanReason").value.trim();
+
+  if (isNaN(amount) || amount < 500 || amount > maxAmount) {
+    alert("❌ Enter a valid loan amount.");
+    return;
+  }
+  if (!/^[0-9]{7,8}$/.test(id)) {
+    alert("❌ Enter a valid ID number (7–8 digits).");
+    return;
+  }
+  if (isNaN(months)) {
+    alert("❌ Please select a repayment period.");
+    return;
+  }
+  if (!reason) {
+    alert("❌ Please provide a reason for borrowing.");
+    return;
+  }
+
+  // ==================== Calculations ====================
+  let interest = months === 1 ? 0.12 : months === 2 ? 0.15 : months === 3 ? 0.17 : 0.20;
+  const totalRepayment = Math.round(amount * (1 + interest));
+  const monthlyRepayment = Math.round(totalRepayment / months);
+  const applyDate = new Date().toLocaleDateString("en-KE", {
+    year: "numeric", month: "long", day: "numeric"
+  });
+
+  // ==================== Loan Decision ====================
+  const loanStatus = "PENDING";
+  const decisionReason = "Awaiting loan committee approval";
+  const decisionBy = "Loan Committee";
+  const decisionDate = "—";
+
+  // ==================== PDF ====================
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF("p", "mm", "a4");
+
+  // ===== SAFETY ADDITION (NO DESIGN CHANGE) =====
+  const pageHeight = doc.internal.pageSize.height;
+  const bottomLimit = pageHeight - 35;
+  let y;
+
+  function protect(space = 10) {
+    if (y + space > bottomLimit) {
+      doc.addPage();
+      y = 70; // SAME layout start
+    }
+  }
+  // ============================================
+
+  const logo = new Image();
+  logo.crossOrigin = "anonymous";
+  logo.src =
+    "https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/ChatGPT%20Image%20Sep%2010%2C%202025%2C%2005_43_14%20PM.png";
+
+  logo.onload = function () {
+
+    // Background
+    doc.setFillColor(240, 248, 255);
+    doc.rect(10, 10, 190, 277, "F");
+
+    // Logo
+    doc.addImage(logo, "PNG", 80, 12, 50, 28);
+
+    // Title
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(18);
+    doc.setTextColor(0, 70, 140);
+    doc.text("LOAN APPLICATION FORM", 105, 50, { align: "center" });
+
+    doc.setDrawColor(0, 70, 140);
+    doc.line(20, 55, 190, 55);
+
+    y = 70;
+    const gap = 10;
+
+    // Applicant
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(0);
+    doc.text("Applicant Details", 20, y); y += gap;
+
+    doc.setFont("helvetica", "normal");
+    doc.text(`Name: ${name}`, 25, y); y += gap;
+    doc.text(`Phone: ${phone}`, 25, y); y += gap;
+    doc.text(`ID Number: ${id}`, 25, y); y += gap;
+
+    // Loan
+    y += gap / 2;
+    doc.setFont("helvetica", "bold");
+    doc.text("Loan Details", 20, y); y += gap;
+
+    doc.setFont("helvetica", "normal");
+    doc.text(`Amount Requested: Ksh ${amount}`, 25, y); y += gap;
+    doc.text(`Interest Rate: ${interest * 100}%`, 25, y); y += gap;
+    doc.text(`Repayment Period: ${months} month(s)`, 25, y); y += gap;
+    doc.text(`Monthly Installment: Ksh ${monthlyRepayment}`, 25, y); y += gap;
+    doc.text(`Total Repayment: Ksh ${totalRepayment}`, 25, y); y += gap;
+
+    // Reason
+    y += gap / 2;
+    doc.setFont("helvetica", "bold");
+    doc.text("Reason for Borrowing", 20, y); y += gap;
+
+    doc.setFont("helvetica", "normal");
+    const wrappedReason = doc.splitTextToSize(reason, 160);
+    wrappedReason.forEach(line => {
+      protect(gap);
+      doc.text(line, 25, y);
+      y += gap;
+    });
+
+    doc.text(`Application Date: ${applyDate}`, 25, y);
+    y += gap * 2;
+
+    // Decision
+    protect(40);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(loanStatus === "APPROVED" ? 0 : 180, loanStatus === "APPROVED" ? 120 : 0, 0);
+    doc.text("LOAN DECISION", 20, y); y += gap;
+
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(0);
+    doc.text(`Status: ${loanStatus}`, 25, y); y += gap;
+    doc.text(`Reason: ${decisionReason}`, 25, y); y += gap;
+    doc.text(`Reviewed By: ${decisionBy}`, 25, y); y += gap;
+    doc.text(`Decision Date: ${decisionDate}`, 25, y);
+
+    // Signatures (auto-push down, no overlap)
+const sigY = Math.max(y + 15, 240);
+
+doc.setFont("helvetica", "bolditalic");
+doc.text("_________________________", 35, sigY);
+doc.text("Judith Kemunto", 45, sigY + 6);
+
+doc.text("_________________________", 120, sigY);
+doc.text("Boniface Chelluget", 130, sigY + 6);
+
+    // Footer
+    doc.setFontSize(9);
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(80);
+    doc.text(
+      "Future Finders – Empowering members through savings, merry-go-round & loans",
+      105,
+      pageHeight - 10,
+      { align: "center" }
+    );
+
+    // Save
+    doc.save(`Loan_Application_${name}.pdf`);
+    showNotification("✅ Loan application submitted successfully!");
+  };
+}
 
 
 
