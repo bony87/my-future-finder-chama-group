@@ -3406,7 +3406,7 @@ const members = {
   "BONIFACE CHELLUGET": {
     phone: "0713953004",
     password: "0713953004",
-    savings: 50000,
+    savings: 1800,
   
     monthly:  [300, 300, 300, 300, 300, 300, 300, 300, 300],
     
@@ -3946,8 +3946,11 @@ function showMonthlySavings() {
   alert("📊 Monthly Contributions: " + members[loggedInUser].monthly.join(", "));
 }
 
+// 🔒 MAXIMUM LOAN CAP
+const MAX_LOAN = 10000;
+
 // ========================= 🏦 Loan Eligibility Check =========================
-function checkLoan() { 
+function checkLoan() {
   if (!loggedInUser || !members[loggedInUser]) {
     alert("⚠️ Please log in first.");
     return;
@@ -3955,26 +3958,54 @@ function checkLoan() {
 
   const totalSavings = members[loggedInUser].savings;
   const loanResult = document.getElementById("loanMessage");
-  loanResult.innerHTML = ""; 
+  loanResult.innerHTML = "";
 
   let loanAmount = 0, repaymentPeriod = "";
 
-  if (totalSavings < 1000) {
+  if (totalSavings < 1500) {
     loanResult.innerHTML = `❌ Sorry, ${loggedInUser}, you are not yet eligible for a loan. Please keep saving.`;
     return;
-  } 
-  else if (totalSavings < 2000) loanAmount = 1000, repaymentPeriod = "Up to 2 months";
-  else if (totalSavings < 3000) loanAmount = 1800, repaymentPeriod = "Up to 2 months";
-  else if (totalSavings < 4000) loanAmount = 2800, repaymentPeriod = "Up to 3 months";
-  else if (totalSavings < 5000) loanAmount = 3500, repaymentPeriod = "Up to 4 months";
-  else if (totalSavings < 6500) loanAmount = 4100, repaymentPeriod = "Up to 4 months";
-  else if (totalSavings < 7600) loanAmount = 6000, repaymentPeriod = "Up to 4 months";
-  else {
-  const steps = Math.floor((totalSavings - 7600) / 400);
-  loanAmount = 6000 + (steps * 200);
-  repaymentPeriod = "Up to 4 months";
-}
 
+  } else if (totalSavings < 1500) {
+    loanAmount = 800;
+    repaymentPeriod = "Up to 2 months";
+
+  } else if (totalSavings < 2000) {
+    loanAmount = 1500;
+    repaymentPeriod = "Up to 2 months";
+
+  } else if (totalSavings < 2500) {
+    loanAmount = 1800;
+    repaymentPeriod = "Up to 2 months";
+
+  } else if (totalSavings < 3000) {
+    loanAmount = 2200;
+    repaymentPeriod = "Up to 3 months";
+
+  } else if (totalSavings < 4000) {
+    loanAmount = 2800;
+    repaymentPeriod = "Up to 3 months";
+
+  } else if (totalSavings < 5000) {
+    loanAmount = 3500;
+    repaymentPeriod = "Up to 4 months";
+
+  } else if (totalSavings < 6500) {
+    loanAmount = 4100;
+    repaymentPeriod = "Up to 4 months";
+
+  } else if (totalSavings < 7600) {
+    loanAmount = 6000;
+    repaymentPeriod = "Up to 4 months";
+
+  } else {
+    const steps = Math.floor((totalSavings - 7600) / 400);
+    loanAmount = 6000 + (steps * 200);
+    repaymentPeriod = "Up to 4 months";
+  }
+
+  // 🔒 APPLY MAXIMUM LOAN CAP
+  loanAmount = Math.min(loanAmount, MAX_LOAN);
 
   loanResult.innerHTML = `
     <div style="padding:15px; background:#e3f2fd; border-radius:10px; box-shadow:0 3px 6px rgba(0,0,0,0.1);">
@@ -4027,19 +4058,18 @@ function showLoanForm(name, maxAmount) {
           style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc; margin-bottom:10px;"><br>
 
         <label><b>Reason for Borrowing</b></label><br>
-        <textarea id="loanReason" required placeholder="Explain why you are borrowing this loan"
-          style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc; margin-bottom:15px; resize:vertical;" rows="3"></textarea><br>
+        <textarea id="loanReason" required rows="3"
+          style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc; margin-bottom:15px;"></textarea><br>
 
         <div id="loanSummary" style="font-weight:bold; color:#00796b; margin-bottom:15px;">
           💳 Total Repayment: Ksh 0 <br>
           📌 Monthly Installment: Ksh 0
         </div>
 
-        <label><b>ID Number:</b></label><br>
-        <input type="number" id="loanId" required placeholder="Enter your ID Number" 
-               minlength="7" maxlength="8" 
-               oninput="if(this.value.length > 8) this.value = this.value.slice(0, 8);" 
-               style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc; margin-bottom:20px;"><br>
+        <label><b>ID Number</b></label><br>
+        <input type="number" id="loanId" required
+          oninput="if(this.value.length > 8) this.value = this.value.slice(0, 8);"
+          style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc; margin-bottom:20px;"><br>
 
         <button type="submit"
           style="width:100%; padding:12px; background:#388e3c; color:white; border:none; border-radius:8px; font-size:16px; cursor:pointer;">
@@ -4049,30 +4079,6 @@ function showLoanForm(name, maxAmount) {
       </form>
     </div>
   `;
-}
-
-
-// ==================== 🔔 Notification ====================
-function showNotification(message, color = "#388e3c") {
-  const notif = document.createElement("div");
-  notif.innerHTML = message;
-  notif.style.position = "fixed";
-  notif.style.bottom = "20px";
-  notif.style.right = "20px";
-  notif.style.background = color;
-  notif.style.color = "white";
-  notif.style.padding = "15px 20px";
-  notif.style.borderRadius = "8px";
-  notif.style.boxShadow = "0 3px 6px rgba(0,0,0,0.2)";
-  notif.style.zIndex = 9999;
-  notif.style.fontWeight = "bold";
-  notif.style.opacity = "0";
-  notif.style.transition = "opacity 0.5s";
-
-  document.body.appendChild(notif);
-  setTimeout(() => notif.style.opacity = "1", 50);
-  setTimeout(() => notif.style.opacity = "0", 4000);
-  setTimeout(() => notif.remove(), 4500);
 }
 
 
