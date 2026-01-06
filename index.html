@@ -3017,7 +3017,7 @@ document.querySelectorAll("#table2025 tbody tr").forEach(row => {
 
     <tr>
       <td>BONIFACE CHELLUGET</td>
-      <td><input type="number" value="100"></td>
+      <td><input type="number" value="200"></td>
       <td><input type="number" value="0"></td>
       <td><input type="number" value="0"></td>
       <td><input type="number" value="0"></td>
@@ -3053,7 +3053,7 @@ document.querySelectorAll("#table2025 tbody tr").forEach(row => {
   
 
     <tr><td>JULIUS KEBASO</td><td>
-      <input type="number" value="200"/></td>
+      <input type="number" value="300"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
@@ -3071,7 +3071,7 @@ document.querySelectorAll("#table2025 tbody tr").forEach(row => {
    
 
     <tr><td>CHRISTINE PIUS</td>
-      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="150"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
@@ -3089,7 +3089,7 @@ document.querySelectorAll("#table2025 tbody tr").forEach(row => {
    
 
     <tr><td>EDNAH NANCY</td><td>
-      <input type="number" value="100"/></td>
+      <input type="number" value="150"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
@@ -3104,7 +3104,7 @@ document.querySelectorAll("#table2025 tbody tr").forEach(row => {
       <td class="rowTotal">0</td><td class="saved2026">0</td><td class="reward2026">0</td></tr>
 
     <tr><td>JACKIENYARANGI</td><td>
-      <input type="number" value="100"/></td>
+      <input type="number" value="150"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
@@ -3141,7 +3141,7 @@ document.querySelectorAll("#table2025 tbody tr").forEach(row => {
      
 
     <tr><td>PIUS NYAKUNDI</td><td>
-      <input type="number" value="0"/></td>
+      <input type="number" value="50"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
@@ -3179,7 +3179,7 @@ document.querySelectorAll("#table2025 tbody tr").forEach(row => {
     
 
     <tr><td>KEFFA MOMANYI</td><td>
-      <input type="number" value="100"/></td>
+      <input type="number" value="150"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
@@ -3199,7 +3199,7 @@ document.querySelectorAll("#table2025 tbody tr").forEach(row => {
 
     <tr>
   <td>KENNEDY MUTAYI</td>
-  <td><input type="number" value="300"/></td>   <!-- Jan -->
+  <td><input type="number" value="450"/></td>   <!-- Jan -->
   <td><input type="number" value="0"/></td>   <!-- Feb -->
   <td><input type="number" value="0"/></td>   <!-- Mar -->
   <td><input type="number" value="0"/></td>   <!-- Apr -->
@@ -3261,7 +3261,7 @@ document.querySelectorAll("#table2025 tbody tr").forEach(row => {
      
 
     <tr><td>ESTHER OBEGI</td>
-      <td><input type="number" value="100"/></td>
+      <td><input type="number" value="150"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
@@ -3276,7 +3276,7 @@ document.querySelectorAll("#table2025 tbody tr").forEach(row => {
       <td class="rowTotal">0</td><td class="saved2026">0</td><td class="reward2026">0</td></tr>
 
     <tr><td>DENNIS KIEYA</td><td>
-      <input type="number" value="100"/></td>
+      <input type="number" value="150"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
@@ -3294,7 +3294,7 @@ document.querySelectorAll("#table2025 tbody tr").forEach(row => {
 
 
     <tr><td>VANICE MOMANYI</td><td>
-      <input type="number" value="150"/></td>
+      <input type="number" value="200"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
@@ -3310,7 +3310,7 @@ document.querySelectorAll("#table2025 tbody tr").forEach(row => {
      
      
       <tr><td>ELIZABETH SHIUNDU</td><td>
-      <input type="number" value="200"/></td>
+      <input type="number" value="300"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
@@ -3359,7 +3359,6 @@ document.querySelectorAll("#table2025 tbody tr").forEach(row => {
 
   </tbody>
 </table> 
-
 
 
 
@@ -6313,8 +6312,13 @@ function closeFinePopup() {
 
 
 </script>
-
 <script>
+function formatNumber(num) {
+  return num.toLocaleString("en-US"); // e.g. 1,500
+}
+</script>
+
+<script> 
 function calculate2025() { 
   const table2025 = document.getElementById("table2025"); // make sure your table has id="table2025"
   if (!table2025) return;
