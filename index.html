@@ -2368,7 +2368,6 @@ document.getElementById("downloadFormBtn").addEventListener("click", () => {
 <p id="loginMessage"></p>
 
 </section>
-
 <!-- Dashboard -->
  
 <div id="dashboard">
@@ -2377,7 +2376,7 @@ document.getElementById("downloadFormBtn").addEventListener("click", () => {
 <a class="action-btn" onclick="showMonthlySavings()">📊 View Monthly Savings</a>
 <button class="check-loan-btn" onclick="checkLoan()">🔍 Check Loan Eligibility</button>
 <button class="action-btn" onclick="openNotePopup()">🗒️ View Note/fines</button>
-
+<a class="action-btn" onclick="openRegistrationFees()">📝 View Registration Fees</a>
 
 
 
@@ -2388,6 +2387,14 @@ document.getElementById("downloadFormBtn").addEventListener("click", () => {
 </button>
 <div id="loanMessage" style="margin-top:15px; font-weight:bold; color:#004d40;"></div>
 <div id="allContributions" style="margin-top:20px;">
+
+ 
+
+
+
+
+
+
 <!-- Eligibility Info Box -->
 <div style="margin:20px auto; padding:15px; background:#e3f2fd; border-left:6px solid #1976d2; border-radius:8px; max-width:600px;">
 <h3 style="color:#1976d2; margin-bottom:10px;">📌 Membership &amp; Loan Eligibility</h3>
@@ -3396,6 +3403,37 @@ document.querySelectorAll("#table2025 tbody tr").forEach(row => {
 <span class="glow">🌟 FOUNDER: BONIFACE KAISER 🌟</span>
 </div>
 </footer>
+<script>
+const REGISTRATION_FEES_TOTAL = 600; // 👈 update manually
+const FEES_PASSWORD = "2025";
+
+function openRegistrationFees() {
+  const enteredPassword = prompt("🔐 Enter password to view registration fees:");
+
+  if (enteredPassword === null) return; // user cancelled
+
+  if (enteredPassword !== FEES_PASSWORD) {
+    document.getElementById("popupTitle").innerHTML = "❌ Access Denied";
+    document.getElementById("popupMessage").innerHTML =
+      "<b>Incorrect password.</b><br>Please try again.";
+
+    document.getElementById("popup").style.display = "flex";
+    return;
+  }
+
+  // ✅ Correct password → show fees
+  document.getElementById("popupTitle").innerHTML = "📝 Registration Fees";
+  document.getElementById("popupMessage").innerHTML = `
+    <b>Total Registration Fees Collected</b><br><br>
+    <span style="font-size:22px; color:#2e7d32; font-weight:bold;">
+      Ksh ${REGISTRATION_FEES_TOTAL}
+    </span>
+  `;
+
+  document.getElementById("popup").style.display = "flex";
+}
+</script>
+
 <script>
  
 
