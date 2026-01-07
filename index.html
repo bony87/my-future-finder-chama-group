@@ -1146,6 +1146,33 @@ table th {
 @media (min-width: 1024px) {
   section { max-width: 1100px; }
 }
+/* Base button style (keep shape & behavior) */
+.nav-btn {
+  color: white;
+  font-weight: bold;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+.nav-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+/* 🎨 Individual button colors (order matters) */
+#navButtons .nav-btn:nth-child(1) { background: #1976d2; } /* Home – Blue */
+#navButtons .nav-btn:nth-child(2) { background: #0097a7; } /* About – Cyan */
+#navButtons .nav-btn:nth-child(3) { background: #7b1fa2; } /* Membership – Purple */
+#navButtons .nav-btn:nth-child(4) { background: #f57c00; } /* Pick Number – Orange */
+#navButtons .nav-btn:nth-child(5) { background: #388e3c; } /* Services – Green */
+#navButtons .nav-btn:nth-child(6) { background: #d32f2f; } /* News – Red */
+#navButtons .nav-btn:nth-child(7) { background: #5d4037; } /* Member Login – Brown */
+#navButtons .nav-btn:nth-child(8) { background: #455a64; } /* Admin – Blue Grey */
+#navButtons .nav-btn:nth-child(9) { background: #512da8; } /* Rules – Deep Purple */
+#navButtons .nav-btn:nth-child(10){ background: #0288d1; } /* Contact – Sky Blue */
+
+/* Back button (already exists, just enforce) */
+#backBtn {
+  background: #c62828 !important;
+}
 
 </style>
 </head>
