@@ -3775,7 +3775,7 @@ const members = {
  "FAITH MOKOGI": {
   phone: "0706918919",
   password: "0706918919",
-  savings:1335,
+  savings:1500,
   monthly: [0,0,500,200,250,50,100,50,350,800],
   note: "fines:90-as of 2nd nov 25 paid 0 not paid 30 1) On 13TH October, borrowed a loan of 1500 (repayment amount 1680, period 7 days).\n2) Loan successfully paid on 24th October (full payment).",
  
@@ -4175,42 +4175,39 @@ function checkLoan() {
   const loanResult = document.getElementById("loanMessage");
   loanResult.innerHTML = "";
 
-  let loanAmount = 0, repaymentPeriod = "";
+  let loanAmount = 0;
+  let repaymentPeriod = "";
 
   if (totalSavings < 1500) {
     loanResult.innerHTML = `❌ Sorry, ${loggedInUser}, you are not yet eligible for a loan. Please keep saving.`;
     return;
 
-  } else if (totalSavings < 1500) {
-    loanAmount = 800;
+  } else if (totalSavings <= 1999) {
+    loanAmount = 1000;
     repaymentPeriod = "Up to 2 months";
 
-  } else if (totalSavings < 2000) {
+  } else if (totalSavings <= 2499) {
     loanAmount = 1500;
     repaymentPeriod = "Up to 2 months";
 
-  } else if (totalSavings < 2500) {
+  } else if (totalSavings <= 2999) {
     loanAmount = 1800;
     repaymentPeriod = "Up to 2 months";
 
-  } else if (totalSavings < 3000) {
+  } else if (totalSavings <= 3999) {
     loanAmount = 2200;
     repaymentPeriod = "Up to 3 months";
 
-  } else if (totalSavings < 4000) {
+  } else if (totalSavings <= 4999) {
     loanAmount = 2800;
     repaymentPeriod = "Up to 3 months";
 
-  } else if (totalSavings < 5000) {
+  } else if (totalSavings <= 6499) {
     loanAmount = 3500;
     repaymentPeriod = "Up to 4 months";
 
-  } else if (totalSavings < 6500) {
+  } else if (totalSavings <= 7599) {
     loanAmount = 4100;
-    repaymentPeriod = "Up to 4 months";
-
-  } else if (totalSavings < 7600) {
-    loanAmount = 6000;
     repaymentPeriod = "Up to 4 months";
 
   } else {
@@ -4221,6 +4218,9 @@ function checkLoan() {
 
   // 🔒 APPLY MAXIMUM LOAN CAP
   loanAmount = Math.min(loanAmount, MAX_LOAN);
+
+ 
+
 
   loanResult.innerHTML = `
     <div style="padding:15px; background:#e3f2fd; border-radius:10px; box-shadow:0 3px 6px rgba(0,0,0,0.1);">
