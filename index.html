@@ -1166,7 +1166,7 @@ table th {
 #navButtons .nav-btn:nth-child(6) { background: #d32f2f; } /* News – Red */
 #navButtons .nav-btn:nth-child(7) { background: #5d4037; } /* Member Login – Brown */
 #navButtons .nav-btn:nth-child(8) { background: #455a64; } /* Admin – Blue Grey */
-#navButtons .nav-btn:nth-child(9) { background: #512da8; } /* Rules – Deep Purple */
+#navButtons .nav-btn:nth-child(9) { background: #2b2c2c; } /* Rules – Deep Purple */
 #navButtons .nav-btn:nth-child(10){ background: #0288d1; } /* Contact – Sky Blue */
 
 /* Back button (already exists, just enforce) */
@@ -1649,7 +1649,7 @@ table th {
   <!-- ⏳ UPCOMING MEETING -->
   <!-- ========================= -->
  <div style="margin-top:25px; padding:15px; background:#e3f2fd; border-left:6px solid #1565c0; border-radius:8px;"> 
-  <h3 style="color:#0d47a1;">🗓️ FUTURE FINDERS CHAMA – UPCOMING MEETING</h3>
+  <h3 style="color:#0d47a1;">🗓️ FUTURE FINDERS CHAMA – PREVOIUS MEETING</h3>
 
   <p>
     <b>Date:</b> Sunday, <b>18th January 2026</b><br>
@@ -1681,22 +1681,64 @@ table th {
       <b>Together we grow — Future Finders, Our Identity, Our Strength.</b>
     </p>
 
-    <!-- COUNTDOWN OUTPUT -->
-    <div id="upcomingCountdown"
-         style="margin-top:20px; font-weight:bold; font-size:18px; color:#1565c0;">
-      ⏳ Countdown loading...
+    <div style="margin-top:15px; font-weight:bold; font-size:18px; color:#d32f2f;">
+      🔒 MEETING CLOSED<br>
+      Thank you all for attending 🙏
     </div>
   </div>
+  </div>
 
-</section>
+<!-- ========================= -->
+<!-- ⏳ UPCOMING MEETING -->
+<!-- ========================= -->
+<div style="margin-top:25px; padding:15px; background:#e3f2fd; border-left:6px solid #1565c0; border-radius:8px;"> 
+  <h3 style="color:#0d47a1;">🗓️ FUTURE FINDERS CHAMA – UPCOMING MEETING</h3>
+
+  <p>
+    <b>Date:</b> Friday, <b>13th February 2026</b><br>
+    <b>Time:</b> 8:30 PM – 10:00 PM<br>
+    <b>Platform:</b> WhatsApp Group
+  </p>
+
+  <p><b>Agenda:</b></p>
+  <ol>
+    <li>
+      <b>Saving Structure Going Forward</b> –  
+      How members will conduct savings under each Chama category
+    </li>
+    <li>
+      <b>Contribution Process</b> –  
+      Mode of payment, timelines, and confirmation procedure
+    </li>
+    <li>
+      <b>Monthly & Bi-Monthly Chama Alignment</b> –  
+      How savings will be managed without conflicts
+    </li>
+    <li>
+      Final Agreements & Member Commitments
+    </li>
+    <li>A.O.B (Any Other Business)</li>
+  </ol>
+</div>
+
+<p style="font-style:italic; color:#0d47a1;">
+  All members are kindly requested to attend on time.<br>
+  <b>Together we grow — Future Finders, Our Identity, Our Strength.</b>
+</p>
+
+<!-- COUNTDOWN OUTPUT -->
+<div id="upcomingCountdown"
+     style="margin-top:20px; font-weight:bold; font-size:18px; color:#1565c0;">
+  ⏳ Countdown loading...
+</div>
 
 <!-- ================================= -->
 <!-- ⏰ JAVASCRIPT FOR UPCOMING MEETING -->
 <!-- ================================= -->
 <script>
   // UPCOMING MEETING TIMES
-  const upcomingStart = new Date("January 18, 2026 20:30:00"); // 8:30 PM
-  const upcomingEnd   = new Date("January 18, 2026 22:00:00"); // 10:00 PM
+  const upcomingStart = new Date("February 13, 2026 20:30:00"); // 8:30 PM
+  const upcomingEnd   = new Date("February 13, 2026 22:00:00"); // 10:00 PM
 
   function updateUpcomingMeeting() {
     const el = document.getElementById("upcomingCountdown");
@@ -1736,6 +1778,9 @@ table th {
   updateUpcomingMeeting();
 </script>
 
+
+
+</section>
 
 <!-- Contact -->
 <section id="contact">
@@ -4019,19 +4064,19 @@ function checkLoan() {
     repaymentPeriod = "Up to 2 months";
 
   } else if (totalSavings <= 3999) {
-    loanAmount = 2200;
+    loanAmount = 2900;
     repaymentPeriod = "Up to 3 months";
 
   } else if (totalSavings <= 4999) {
-    loanAmount = 2800;
+    loanAmount = 3800;
     repaymentPeriod = "Up to 3 months";
 
   } else if (totalSavings <= 6499) {
-    loanAmount = 3500;
+    loanAmount = 4800;
     repaymentPeriod = "Up to 4 months";
 
   } else if (totalSavings <= 7599) {
-    loanAmount = 4100;
+    loanAmount = 5800;
     repaymentPeriod = "Up to 4 months";
 
   } else {
