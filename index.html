@@ -3,6 +3,123 @@
 <html lang="en">
 
 <head>
+
+<style>
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background:#f4f6f8;
+    margin:0;
+    padding:0;
+}
+
+section, #dashboard{
+    max-width:1200px;
+    margin:30px auto;
+    background:white;
+    padding:25px;
+    border-radius:10px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.08);
+}
+
+h1,h2,h3,h4{
+    text-align:center;
+}
+
+.password-container{
+    position:relative;
+    margin-top:10px;
+}
+
+.password-container input{
+    width:100%;
+    padding:12px;
+    border-radius:6px;
+    border:1px solid #ccc;
+}
+
+.toggle-eye{
+    position:absolute;
+    right:10px;
+    top:50%;
+    transform:translateY(-50%);
+    cursor:pointer;
+}
+
+#memberName{
+    width:100%;
+    padding:10px;
+    border-radius:6px;
+    border:1px solid #ccc;
+}
+
+.action-btn, .check-loan-btn{
+    padding:12px 16px;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+    background:#00796b;
+    color:white;
+    font-weight:bold;
+    transition:0.2s;
+}
+
+.action-btn:hover,.check-loan-btn:hover{
+    background:#004d40;
+}
+
+.dashboard-buttons{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:12px;
+    margin-top:20px;
+}
+
+.table-container{
+    overflow-x:auto;
+    margin-top:20px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:14px;
+}
+
+th,td{
+    padding:8px;
+    border:1px solid #ddd;
+    text-align:center;
+}
+
+thead{
+    position:sticky;
+    top:0;
+    z-index:2;
+}
+
+tr:nth-child(even){
+    background:#f9f9f9;
+}
+
+tr:hover{
+    background:#eef7f6;
+}
+
+.download-btn{
+    padding:10px 14px;
+    border:none;
+    border-radius:6px;
+    margin:5px;
+    background:#1976d2;
+    color:white;
+    cursor:pointer;
+}
+
+footer{
+    font-weight:bold;
+}
+</style>
+
   <meta 
   name="viewport" 
   content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -20,6 +137,71 @@
     });
   }
   </script>
+
+<!-- Modern UI Enhancement -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+body{
+  font-family:'Poppins',sans-serif;
+}
+
+/* Modern header */
+header{
+  background:linear-gradient(135deg,#00695c,#004d40);
+  box-shadow:0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* Navigation grid */
+#navButtons{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:12px;
+  max-width:1100px;
+  margin:20px auto;
+}
+
+.nav-btn{
+  border-radius:10px;
+  padding:14px;
+  font-size:15px;
+  box-shadow:0 6px 12px rgba(0,0,0,0.15);
+}
+
+/* Card layout for sections */
+section{
+  border-radius:14px;
+  padding:25px;
+  margin:20px auto;
+  max-width:1100px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.08);
+}
+
+/* Buttons */
+.action-btn{
+  border-radius:30px;
+}
+
+/* Tables modern look */
+table th{
+  background:#00695c;
+}
+
+/* Footer improvement */
+footer{
+  background:#0f172a;
+}
+
+/* Smooth fade for sections */
+section{
+  animation:fadeInPage 0.5s ease;
+}
+
+@keyframes fadeInPage{
+  from{opacity:0; transform:translateY(10px);}
+  to{opacity:1; transform:translateY(0);}
+}
+</style>
+
 </head>
 
 <style>
@@ -1224,6 +1406,71 @@ table th {
 
 
 </style>
+
+<!-- Modern UI Enhancement -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+body{
+  font-family:'Poppins',sans-serif;
+}
+
+/* Modern header */
+header{
+  background:linear-gradient(135deg,#00695c,#004d40);
+  box-shadow:0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* Navigation grid */
+#navButtons{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:12px;
+  max-width:1100px;
+  margin:20px auto;
+}
+
+.nav-btn{
+  border-radius:10px;
+  padding:14px;
+  font-size:15px;
+  box-shadow:0 6px 12px rgba(0,0,0,0.15);
+}
+
+/* Card layout for sections */
+section{
+  border-radius:14px;
+  padding:25px;
+  margin:20px auto;
+  max-width:1100px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.08);
+}
+
+/* Buttons */
+.action-btn{
+  border-radius:30px;
+}
+
+/* Tables modern look */
+table th{
+  background:#00695c;
+}
+
+/* Footer improvement */
+footer{
+  background:#0f172a;
+}
+
+/* Smooth fade for sections */
+section{
+  animation:fadeInPage 0.5s ease;
+}
+
+@keyframes fadeInPage{
+  from{opacity:0; transform:translateY(10px);}
+  to{opacity:1; transform:translateY(0);}
+}
+</style>
+
 </head>
 <body>
   <!-- SPLASH SCREEN -->
@@ -2023,7 +2270,7 @@ table th {
         <tbody id="membersNotesBody">
           <tr><td colspan="4" style="color:gray; text-align:center;">No notes yet.</td><td class="saved2025">0</td><td class="reward2025">0</td></tr>
         </tbody>
-      </table>
+      </table></div>
     </div>
   </div>
 <!-- 👥 Members Overview Section -->
@@ -2578,6 +2825,7 @@ document.getElementById("downloadFormBtn").addEventListener("click", () => {
  
 <div id="dashboard">
 <h3>Welcome, <span id="memberDisplay"></span>!</h3>
+<div class="dashboard-buttons">
 <a class="action-btn" onclick="showCurrentSavings()">💰 View Current Savings</a>
 <a class="action-btn" onclick="showMonthlySavings()">📊 View Monthly Savings</a>
 <button class="check-loan-btn" onclick="checkLoan()">🔍 Check Loan Eligibility</button>
@@ -2591,6 +2839,7 @@ document.getElementById("downloadFormBtn").addEventListener("click", () => {
   🚪 Logout
   <span class="spinner" style="display:none; margin-left:8px; border:2px solid #f3f3f3; border-top:2px solid white; border-radius:50%; width:14px; height:14px; animation: spin 1s linear infinite; vertical-align:middle;"></span>
 </button>
+</div>
 <div id="loanMessage" style="margin-top:15px; font-weight:bold; color:#004d40;"></div>
 <div id="allContributions" style="margin-top:20px;">
 
@@ -2662,7 +2911,7 @@ document.getElementById("downloadFormBtn").addEventListener("click", () => {
 
 <h4>📊 Group Contributions for 2025</h4>
 
-<table id="table2025" border="1" style="width:100%; border-collapse:collapse; text-align:center;">
+<div class="table-container"><table id="table2025" border="1" style="width:100%; border-collapse:collapse; text-align:center;">
 
   <thead style="background:#00796b; color:white;">
     <tr>
