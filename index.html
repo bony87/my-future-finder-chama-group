@@ -365,31 +365,10 @@ input, select {
   font-size: 18px;
 }
 
-/* Footer */
-footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background: #111;
-  color: white;
-  text-align: center;
-  padding: 12px 0;
-  z-index: 1000;
-  overflow: hidden;
-}
 
-/* Modern marquee effect */
-.footer-marquee {
-  display: inline-block;
-  white-space: nowrap;
-  animation: marquee 12s linear infinite;
-}
 
-@keyframes marquee {
-  from { transform: translateX(100%); }
-  to   { transform: translateX(-100%); }
-}
+
+
 /* Check Loan Eligibility Button */
 .check-loan-btn {
   background: linear-gradient(135deg, #1976d2, #0d47a1);
@@ -1468,6 +1447,67 @@ section{
 @keyframes fadeInPage{
   from{opacity:0; transform:translateY(10px);}
   to{opacity:1; transform:translateY(0);}
+}
+
+/* Main Footer */
+.main-footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: linear-gradient(135deg, #111, #1c1c1c);
+  padding: 12px 0;
+  text-align: center;
+  color: white;
+  z-index: 1000;
+  box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.5);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Marquee Effect */
+.footer-marquee {
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+}
+
+.footer-marquee span {
+  display: inline-block;
+  padding-left: 100%;
+  animation: scrollText 12s linear infinite;
+  font-size: 16px;
+  letter-spacing: 1px;
+}
+
+/* Smooth scrolling animation */
+@keyframes scrollText {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* Glow Effect */
+.glow {
+  color: #00f7ff;
+  text-shadow: 
+    0 0 5px #00f7ff,
+    0 0 10px #00f7ff,
+    0 0 20px #00f7ff,
+    0 0 40px #00f7ff;
+  font-weight: bold;
+}
+
+/* Hover Effect */
+.glow:hover {
+  color: #fff;
+  text-shadow: 
+    0 0 10px #fff,
+    0 0 20px #00f7ff,
+    0 0 30px #00f7ff;
+  transition: 0.3s ease;
 }
 </style>
 
@@ -3337,7 +3377,7 @@ document.querySelectorAll("#table2025 tbody tr").forEach(row => {
 </script>
 
 
-<h4>📊 Group Contributions for 2026* last updated on 11th march 2026-11:00AM</h4>
+<h4>📊 Group Contributions for 2026* last updated on 17th march 2026-4:00PM</h4>
 
 <table id="table2026" border="1" style="width:100%; border-collapse:collapse; text-align:center;">
 
@@ -3505,7 +3545,7 @@ document.querySelectorAll("#table2025 tbody tr").forEach(row => {
     <tr><td>KEFFA MOMANYI</td>
       <td><input type="number" value="960"></td><td>
       <input type="number" value="250"/></td>
-      <td><input type="number" value="500"/></td>
+      <td><input type="number" value="560"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
@@ -3598,7 +3638,7 @@ document.querySelectorAll("#table2025 tbody tr").forEach(row => {
      
      
       <tr><td>ELIZABETH SHIUNDU</td>
-      <td><input type="number" value="0"></td><td>
+      <td><input type="number" value="400"></td><td>
       <input type="number" value="500"/></td>
       <td><input type="number" value="400"/></td>
       <td><input type="number" value="350"/></td>
@@ -3634,7 +3674,7 @@ document.querySelectorAll("#table2025 tbody tr").forEach(row => {
       <td><input type="number" value="0"></td><td>
       <input type="number" value="400"/></td>
       <td><input type="number" value="400"/></td>
-      <td><input type="number" value="200"/></td>
+      <td><input type="number" value="250"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
@@ -3649,7 +3689,7 @@ document.querySelectorAll("#table2025 tbody tr").forEach(row => {
 <tr><td>Nelly Karimi</td>
       <td><input type="number" value="0"></td><td>
       <input type="number" value="120"/></td>
-      <td><input type="number" value="80"/></td>
+      <td><input type="number" value="140"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
@@ -3682,7 +3722,7 @@ document.querySelectorAll("#table2025 tbody tr").forEach(row => {
       <td><input type="number" value="1100"></td><td>
       <input type="number" value="200"/></td>
       <td><input type="number" value="700"/></td>
-      <td><input type="number" value="855"/></td>
+      <td><input type="number" value="930"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
@@ -3698,7 +3738,7 @@ document.querySelectorAll("#table2025 tbody tr").forEach(row => {
       <td><input type="number" value="902"></td><td>
       <input type="number" value="50"/></td>
       <td><input type="number" value="1840"/></td>
-      <td><input type="number" value="350"/></td>
+      <td><input type="number" value="585"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
@@ -3787,11 +3827,7 @@ document.querySelectorAll("#table2025 tbody tr").forEach(row => {
 </div>
 
 
-<footer style="position:fixed; bottom:0; width:100%; background:#111; padding:10px 0; text-align:center; color:white; z-index:1000;">
-<div class="footer-marquee">
-<span class="glow">🌟 FOUNDER: BONIFACE KAISER 🌟</span>
-</div>
-</footer>
+
 <script>
 const REGISTRATION_FEES_TOTAL = 720; // 👈 update manually
 const FEES_PASSWORD = "2025";
@@ -3822,7 +3858,11 @@ function openRegistrationFees() {
   document.getElementById("popup").style.display = "flex";
 }
 </script>
-
+<footer style="position:fixed; bottom:0; width:100%; background:#111; padding:10px 0; text-align:center; color:rgb(205, 28, 28); z-index:1000;">
+<div class="footer-marquee">
+<span class="glow">🌟 FOUNDER: BONIFACE KAISER 🌟</span>
+</div>
+</footer>
 <script>
  
 
