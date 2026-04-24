@@ -3532,7 +3532,85 @@ document.querySelectorAll("#table2025 tbody tr").forEach(row => {
 </script>
 
 
-<h4>📊 Group Contributions for 2026* last updated on 24th APRIL 2026-9:36 AM</h4>
+<!-- ================== STYLE ================== -->
+<style>
+/* 🌈 Glow + Pulse (continuous) */
+@keyframes glowColorPulse {
+  0% {
+    box-shadow: 0 0 6px #1976d2, 0 0 12px #1976d2;
+    transform: scale(1);
+  }
+  33% {
+    box-shadow: 0 0 12px #2e7d32, 0 0 24px #2e7d32;
+    transform: scale(1.03);
+  }
+  66% {
+    box-shadow: 0 0 14px #ffb300, 0 0 28px #ffb300;
+    transform: scale(1.04);
+  }
+  100% {
+    box-shadow: 0 0 6px #1976d2, 0 0 12px #1976d2;
+    transform: scale(1);
+  }
+}
+
+/* Apply glow */
+.animated-header {
+  animation: glowColorPulse 2.5s infinite ease-in-out;
+}
+
+/* ⚡ Flash ONLY when updating */
+@keyframes flashUpdate {
+  0%   { background:#ffeb3b; color:#000; transform:scale(1.08); }
+  50%  { background:#fff176; transform:scale(1.1); }
+  100% { background: linear-gradient(135deg,#1976d2,#0d47a1); color:#fff; transform:scale(1); }
+}
+
+.flash-update {
+  animation: flashUpdate 0.8s ease 3;
+}
+</style>
+
+<!-- ================== HEADER ================== -->
+<h4 id="updateHeader" class="animated-header" style="
+  text-align:center;
+  background: linear-gradient(135deg,#1976d2,#0d47a1);
+  color:#fff;
+  padding:14px 18px;
+  border-radius:10px;
+  font-size:16px;
+  letter-spacing:0.6px;
+  font-weight:600;
+">
+  📊 Group Contributions for 2026  
+  <br>
+  <span id="updateTime" style="font-size:13px; opacity:0.95;">
+    ⏱ Last updated on <b>24th APRIL 2026</b> — 9:36 AM
+  </span>
+</h4>
+
+<!-- ================== SCRIPT ================== -->
+<script>
+function triggerUpdate() {
+  const header = document.getElementById("updateHeader");
+  const timeText = document.getElementById("updateTime");
+
+  // ⏱ Get current time
+  const now = new Date();
+  const formatted = now.toLocaleString();
+
+  // Update text
+  timeText.innerHTML = "⏱ Last updated on <b>" + formatted + "</b>";
+
+  // ⚡ Flash effect
+  header.classList.add("flash-update");
+
+  // Remove after animation
+  setTimeout(() => {
+    header.classList.remove("flash-update");
+  }, 2500);
+}
+</script>
 
 <table id="table2026" border="1" style="width:100%; border-collapse:collapse; text-align:center;">
 
