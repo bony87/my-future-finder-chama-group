@@ -1829,198 +1829,525 @@ style="width:150px; height:150px; border-radius:50%; object-fit:cover; box-shado
 <a class="nav-btn" onclick="simulateAction(this,'loginForm')">🔑 Member Login <span class="spinner"></span></a>
 <a class="nav-btn" onclick="simulateAction(this,'adminLogin')">⚙️ Admin <span class="spinner"></span></a>
 <a class="nav-btn" onclick="simulateAction(this,'rules')">
-  📜 Rules and Regulations <span class="spinner"></span>
+  📜 THE CONSITITUTION <span class="spinner"></span>
 </a>
 <a class="nav-btn" onclick="simulateAction(this,'contact')">📞 Contact <span class="spinner"></span>
 </a>
 <a class="nav-btn" id="backBtn" onclick="showAllButtons()" style="display:none; background:#d32f2f;">⬅️ Back to Menu <span class="spinner"></span></a>
 </div>
-<!-- 📜 Rules & Regulations (Green Theme with Tooltip) -->
+
+<!-- 📜 THE CONSITITUTION -->
 <section id="rules" style="background:#f5fff7; padding:30px; border-radius:12px; box-shadow:0 2px 12px rgba(0,0,0,0.08); font-family:'Poppins', sans-serif; color:#2e3b32;">
   
-  <h2 style="text-align:center; color:#2e7d32; font-size:28px; margin-bottom:10px;">📜 Rules &amp; Regulations</h2>
-  <p style="text-align:center; color:#4e5d50; font-size:16px;">
-    These rules guide how members of <b>Future Finders Chama Group</b> operate, ensuring fairness, transparency, and unity among members.
-  </p>
-
-  <hr style="border:0; height:2px; background:#a5d6a7; margin:25px 0; border-radius:2px;">
-
-  <!-- Membership --> 
-<h3 style="color:#1b5e20;">👥 Membership</h3>
-<ul style="line-height:1.8;">
-  <li>✅ Every member must register and keep their contact details up to date.</li>
-  <li>✅ New members may join only with approval from existing members.</li>
-  <li>✅ Membership becomes official after a minimum of <b>4 months</b> of active participation.</li>
-
-  <li>🆕 Starting <b>January 2026</b>, all new members will be required to register with a one-time fee of <b>Ksh 200</b>. This amount will be used to support logistics in case of any future <b>physical meetings</b>.</li>
-
-  <li>💡 From <b>2026 onwards</b>, the chama will have <b>two categories</b> of participation:
-    <ul style="margin-top:8px; line-height:1.6;">
-      
-      <li>💎 <b>Category A:</b> Weekly contribution of <b>Ksh 200</b> + minimum savings of <b>Ksh 50</b>.
-        <br>📊 Expected savings total for Category A is approximately <b>Ksh 200 per month</b>.
-      </li>
-
-      <li>💼 <b>Category B:</b> Contribution of <b>Ksh 500 twice a month</b> + minimum savings of <b>Ksh 50</b>.
-        <br>📊 Expected savings total for Category B is approximately <b>Ksh 300 per month</b>.
-      </li>
-
-    </ul>
-  </li>
-</ul>
-
- <!-- Savings --> 
-<h3 style="color:#2e7d32;">💰 Savings &amp; Contributions</h3>
-<ul style="line-height:1.8;">
-  <li>✅ Every member must contribute according to their chosen category.</li>
-  <li>✅ Savings above the minimum are encouraged and may increase loan eligibility.</li>
-  <li>✅ All weekly or bi-monthly contributions must be received by the agreed deadlines.</li>
-  <li>⚠️ Failure to pay by the deadline attracts a fine of <b>Ksh 30</b>, added to the member’s account.</li>
-  <li>✅ Savings and contribution records will be transparent and accessible to all members.</li>
-  
-  <li>📌 Members are <b>strongly encouraged to save consistently</b> according to their category. 
-      Consistent saving shows <b>commitment, trust, and seriousness</b> towards the chama.</li>
-
-  <li>⚠️ Any member with <b>zero savings</b> or total savings <b>below Ksh 1,500</b> may <b>not be assisted</b> in case of emergencies or welfare matters.</li>
-
-  <!-- December Savings Rule -->
-  <li>🎄 <b>In December</b>, every member who is <b>still active in the chama</b> will receive <b>80% of their total savings</b>. 
-      The <b>remaining 20%</b> will be retained as <b>group capital</b> and will form part of the <b>opening balance for the next cycle</b>.</li>
-
-  <li>📊 Members who have saved for <b>less than 6 months</b> by December will receive <b>75% of their total savings</b>. 
-      The <b>remaining 25%</b> will be retained as <b>group capital</b> and will form part of the <b>opening balance for the next cycle</b>.</li>
-
-  <li>📢 <b>Note:</b> Any member who <b>leaves the chama completely</b> will receive <b>100% of their total savings</b> after clearing any pending obligations.</li>
-</ul>
-
-
- <!-- Loans --> 
-<h3 style="color:#43a047;">🏦 Loans</h3>
-<ul style="line-height:1.8;">
-  <li>✅ A member qualifies for a loan after saving at least <b>Ksh 1,500</b> and being active for <b>4 months</b>.</li>
-  <li>✅ Loans are given based on savings history and repayment ability.</li>
-  <li>✅ All loans must be approved by the leadership.</li>
-  <li>✅ Repayments must be done within the agreed period, with penalties for late payment.</li>
-  
-  <li>💸 Upon loan repayment, the <b>interest earned</b> will be divided as follows:
-    <span style="position:relative; display:inline-block; cursor:pointer;">
-      <span style="background:#2e7d32; color:white; border-radius:50%; padding:3px 8px; font-size:13px; margin-left:6px;">?</span>
-      <span style="visibility:hidden; width:250px; background-color:#2e7d32; color:#fff; text-align:left; border-radius:8px; padding:8px; position:absolute; z-index:1; bottom:125%; left:50%; margin-left:-125px; opacity:0; transition:opacity 0.3s;">
-        📘 Example: If a member pays Ksh 500 interest — Ksh 125 (25%) goes to their savings, and Ksh 375 (75%) is shared among members.
-      </span>
-    </span>
-
-    <script>
-      const tooltip = document.currentScript.previousElementSibling;
-      const icon = tooltip.querySelector('span');
-      icon.addEventListener('mouseenter', () => tooltip.querySelectorAll('span')[1].style.visibility = 'visible');
-      icon.addEventListener('mouseleave', () => tooltip.querySelectorAll('span')[1].style.visibility = 'hidden');
-    </script>
-
-    <ul style="margin-top:8px; line-height:1.6;">
-      <li>🌿 <b>25%</b> of the interest goes back into the borrower’s <b>savings account</b>.</li>
-      <li>🤝 The remaining <b>75%</b> is shared among all members according to their individual <b>savings ratio</b>.</li>
-    </ul>
-  </li>
-</ul>
-
-  <!-- Example box -->
-<div style="background:#e8f5e9; border-left:5px solid #43a047; padding:12px 15px; border-radius:8px; margin:10px 0 25px;">
-  <p style="margin:0; color:#2e3b32;">
-    📘 <b>Detailed Example:</b> If a member borrows <b>Ksh 5,000</b> and repays with <b>Ksh 500 interest</b> —  
-    <br>✅ <b>Ksh 125 (25%)</b> goes back into their savings.  
-    <br>✅ <b>Ksh 375 (75%)</b> is shared among all members according to their total savings.  
-    <br>➡️ This encourages saving and rewards every member’s participation.
-  </p>
-</div>
-
-  <!-- Conduct -->
-  <h3 style="color:#388e3c;">🤝 Conduct</h3>
-  <ul style="line-height:1.8;">
-    <li>✅ Respect, honesty, and transparency are expected in all group dealings.</li>
-    <li>✅ Members must attend scheduled meetings or provide an apology in advance.</li>
-    <li>✅ Confidentiality of group matters must be maintained.</li>
-  </ul>
-
-<!-- Leadership -->  
-<h3 style="color:#1b5e20;">🧑‍💼 Leadership</h3>
-<ul style="line-height:1.8;">
-  <li>✅ The chama currently has <b>one leader</b> who serves as the <b>Founder and Admin</b>:
-    <ul style="margin-top:8px; line-height:1.6;">
-      <li style="color:#2e7d32; font-weight:bold;">
-        <span style="position:relative; display:inline-block; cursor:pointer;">
-          💰 <b>Founder &amp; Admin:</b>
-          <span style="visibility:hidden; width:230px; background-color:#2e7d32; color:#fff; text-align:left; border-radius:8px; padding:6px 10px; position:absolute; z-index:1; bottom:125%; left:50%; margin-left:-115px; opacity:0; transition:opacity 0.3s;">
-            Founder of the group responsible for overall coordination, financial management, transparency, and system administration.
-          </span>
-        </span> The founder oversees <b>financial matters, fund control, savings records, loan approvals, communication, and overall group coordination</b> to ensure transparency and smooth operation of the chama.
-      </li>
-    </ul>
-  </li>
-
-  <li>✅ Since the chama operates <b>online</b>, leadership is currently kept minimal for efficiency and proper management.</li>
-  <li>✅ The leader ensures proper tracking of <b>contributions, savings, loans, welfare matters, and group records</b>.</li>
-  <li>✅ Additional leaders or officials may be introduced in future as the chama continues to grow.</li>
-  <li>✅ Regular updates on group finances and activities will be shared with all members to maintain accountability and trust.</li>
-</ul>
-
-
-
- <!-- Welfare --> 
-<h3 style="color:#2e7d32;">💞 Member Assistance &amp; Welfare</h3>
-<ul style="line-height:1.8;">
-  <li>🕊️ In the event that a member <b>loses a parent or guardian</b>, every member will be <b>deducted or required to contribute Ksh 150</b> in support of the affected member.</li>
-
-  <li>👶 If a member <b>loses a child</b>, every member will be <b>deducted or required to contribute Ksh 100</b> in support of the affected member.</li>
-
-  <li>🚑 In the event of a personal <b>emergency</b>, a member with total savings of <b>Ksh 1,500 and above</b> may be assisted with up to <b>30%</b> of their savings. When their turn to receive money comes, <b>20%</b> will be deducted to recover part of the assistance. This assistance applies <b>only once per round</b>.</li>
-
-  <li>❤️ Additional support may be provided upon agreement by members, depending on the situation and available funds.</li>
- </ul>
- <li>📢 Members are advised to <b>inform the admin early</b> if they anticipate any financial or personal challenge that may affect their contributions or savings.</li>
-
-<p style="margin-top:10px; color:#33691e; font-style:italic;">
-  💡 <b>Note:</b> Members are encouraged to plan their finances carefully to minimize frequent emergencies and ensure long-term stability within the group.
+<h2 style="text-align:center; color:#1b5e20;">📜 CHAMA CONSTITUTION</h2>
+<p style="text-align:center; font-style:italic; color:#2e7d32;">
+  This Constitution outlines the rules, structure, and operations of the chama and shall guide all members.
 </p>
 
-<h3 style="color:#2e7d32;">🔁 Savings Withdrawal &amp; Exit Policy</h3> 
+<!-- ARTICLE 1 -->
+<h3 style="color:#1b5e20;">👥 Article 1: Membership</h3>
+
 <ul style="line-height:1.8;">
-  <li>🚪 Any member who requests to receive their <b>full savings</b> back shall be considered as a member who is <b>leaving the chama completely</b>.</li>
-  <li>⏳ Full savings withdrawal will be processed and released within a period of <b>up to 7 days</b> after official notification.</li>
-  <li>📩 The member must <b>inform the admin in advance</b> to allow proper planning and smooth processing.</li>
+
+  <!-- GENERAL REGISTRATION -->
+  <li><b>Registration and Records:</b>
+    <ul style="margin-top:8px;">
+      <li>Every member must register officially with the chama and provide accurate personal and contact details.</li>
+      <li>Members are required to update their information whenever changes occur.</li>
+    </ul>
+  </li>
+
+  <!-- ADMISSION -->
+  <li><b>Admission of Members:</b>
+    <ul style="margin-top:8px;">
+      <li>New members may only join after approval by existing members or leadership.</li>
+      <li>This ensures trust, accountability, and harmony within the group.</li>
+    </ul>
+  </li>
+
+  <!-- ACTIVE MEMBERSHIP -->
+  <li><b>Active Membership Requirement:</b>
+    <ul style="margin-top:8px;">
+      <li>Membership shall be confirmed after a minimum of <b>four (4) months</b> of active participation.</li>
+      <li>Active participation includes consistent contributions, engagement in meetings, and compliance with chama rules.</li>
+    </ul>
+  </li>
+
+  <!-- MERRY-GO-ROUND RULE -->
+  <li>🔄 <b>Merry-Go-Round Participation Rule:</b>
+    <ul style="margin-top:8px;">
+      <li>Members are encouraged to participate in the merry-go-round system as part of group financial support.</li>
+      <li>📌 Members who are <b>not participating in the merry-go-round</b> are required to <b>actively contribute to savings</b> without fail.</li>
+      <li>This ensures fairness and guarantees that all members remain eligible for welfare and other chama benefits.</li>
+      <li>Failure to participate in either savings or contributions may affect a member’s active status and benefits.</li>
+    </ul>
+  </li>
+
+  <!-- REGISTRATION FEE -->
+  <li>🆕 <b>Registration Fee (Effective January 2026):</b>
+    <ul style="margin-top:8px;">
+      <li>All new members shall pay a one-time registration fee of <b>Ksh 200</b>.</li>
+      <li>This fee shall be used for administrative and logistical support, especially during physical meetings.</li>
+    </ul>
+  </li>
+
+  <!-- CONTRIBUTION CATEGORIES -->
+  <li>💡 <b>Contribution Categories (From 2026):</b>
+    <ul style="margin-top:8px;">
+      <li>💎 <b>Category A:</b> Weekly contribution of <b>Ksh 200</b> + minimum savings of <b>Ksh 50</b>.  
+      Estimated monthly savings: <b>Ksh 200</b>.</li>
+
+      <li>💼 <b>Category B:</b> Contribution of <b>Ksh 500 twice a month</b> + minimum savings of <b>Ksh 50</b>.  
+      Estimated monthly savings: <b>Ksh 300</b>.</li>
+    </ul>
+  </li>
+
+  <!-- FINAL NOTE -->
+  <li>📌 <b>General Principle:</b>
+    <ul style="margin-top:8px;">
+      <li>All members must remain active through either savings or merry-go-round participation.</li>
+      <li>Consistency, discipline, and commitment define full membership eligibility and benefits.</li>
+    </ul>
+  </li>
+
 </ul>
 
+<!-- ARTICLE 2 -->
+<h3 style="color:#2e7d32;">💰 Article 2: Savings & Contributions</h3>
 
-  <!-- Discipline --> 
-<h3 style="color:#558b2f;">⚖️ Disciplinary Actions</h3>
 <ul style="line-height:1.8;">
-  <li>⚠️ Members who fail to meet obligations, including late payments or failure to save consistently, may face <b>progressive penalties</b> as agreed by members.</li>
 
-  <li>📉 Members who remain <b>inactive</b> (no savings or contributions) for a prolonged period without communication may be <b>suspended</b> until compliance.</li>
+  <!-- GENERAL CONTRIBUTION -->
+  <li><b>Contribution Requirement:</b>
+    <ul style="margin-top:8px;">
+      <li>Every member must contribute according to their chosen category without fail.</li>
+      <li>All contributions must be made consistently to ensure smooth operation of the chama.</li>
+    </ul>
+  </li>
 
-  <li>🗣️ Any form of <b>disrespect, insults, or disruptive behavior</b> towards members or leaders is prohibited and may lead to penalties or suspension.</li>
+  <!-- SAVINGS IMPORTANCE -->
+  <li><b>Importance of Savings:</b>
+    <ul style="margin-top:8px;">
+      <li>Savings above the minimum are highly encouraged as they improve financial stability and increase loan eligibility.</li>
+      <li>Consistent saving reflects discipline, commitment, and trustworthiness within the chama.</li>
+    </ul>
+  </li>
 
-  <li>🔕 Sharing chama information, financial records, or member details with <b>non-members without approval</b> is strictly forbidden.</li>
+  <!-- PAYMENT DEADLINES -->
+  <li>⏰ <b>Payment Deadlines:</b>
+    <ul style="margin-top:8px;">
+      <li>All weekly or bi-monthly contributions must be submitted on or before the agreed deadlines.</li>
+      <li>Timely payments ensure smooth financial planning and group stability.</li>
+    </ul>
+  </li>
 
-  <li>🚫 Any member who provides <b>false information</b>, misleads the group, or attempts to <b>defraud the chama</b> shall face immediate disciplinary action, including possible removal.</li>
+  <!-- PENALTIES -->
+  <li>⚠️ <b>Penalties for Late Payment:</b>
+    <ul style="margin-top:8px;">
+      <li>Failure to pay by the deadline shall attract a fine of <b>Ksh 30</b>.</li>
+      <li>The fine will be added to the member’s account and must be cleared accordingly.</li>
+    </ul>
+  </li>
 
-  <li>⚖️ Before removal or major disciplinary action, the affected member shall be given a <b>fair hearing</b> and an opportunity to explain their case.</li>
+  <!-- TRANSPARENCY -->
+  <li>📊 <b>Transparency and Records:</b>
+    <ul style="margin-top:8px;">
+      <li>All savings and contribution records shall be transparent and accessible to members at any time.</li>
+      <li>Members are encouraged to regularly check their records for accuracy.</li>
+    </ul>
+  </li>
 
-  <li>🧑‍⚖️ In urgent or serious cases, the <b>leadership may take temporary action</b> to protect the chama, subject to later member approval.</li>
+  <!-- WELFARE ELIGIBILITY -->
+  <li>💞 <b>Welfare Eligibility Requirement:</b>
+    <ul style="margin-top:8px;">
+      <li>To qualify for any welfare support, a member must have total savings of at least <b>Ksh 1,500 and above</b>.</li>
+      <li>Members with savings below this threshold shall not be eligible for welfare benefits such as emergency support, wedding, or funeral assistance.</li>
+      <li>This rule ensures fairness and sustainability of the chama welfare fund.</li>
+    </ul>
+  </li>
 
-  <li>❌ Continuous misconduct or serious violations may lead to <b>permanent removal</b> from the group.</li>
+  <!-- ENCOURAGEMENT -->
+  <li>📌 <b>Saving Discipline:</b>
+    <ul style="margin-top:8px;">
+      <li>Members are strongly encouraged to save consistently to strengthen their financial position within the chama.</li>
+    </ul>
+  </li>
 
-  <li>🤝 Disputes shall be resolved through <b>dialogue</b> and, where necessary, a <b>member vote</b>.</li>
+  <!-- DECEMBER RULE -->
+<li>🎄 <b>December Savings Rule:</b>
+  <ul style="margin-top:8px;">
+    <li>Every active member shall receive <b>80% of their total savings</b> in December.</li>
+    <li>The remaining <b>20%</b> shall be retained as group capital and carried forward to the next cycle.</li>
+    <li>📌 The percentage distribution may change at any time depending on the group’s savings performance and financial stability.</li>
+    <li>💞 This retention is necessary to ensure that the chama maintains sufficient funds to support <b>welfare needs and emergency assistance</b> throughout the cycle.</li>
+  </ul>
+</li>
+
+  <!-- SHORT TERM SAVERS -->
+  <li>📊 <b>Short-Term Savings Adjustment:</b>
+    <ul style="margin-top:8px;">
+      <li>Members who have saved for less than <b>6 months</b> by December shall receive <b>75%</b> of their savings.</li>
+      <li>The remaining <b>25%</b> shall be retained as group capital.</li>
+    </ul>
+  </li>
+
+  <!-- EXIT POLICY -->
+  <li>📢 <b>Exit Settlement:</b>
+    <ul style="margin-top:8px;">
+      <li>Any member who exits the chama shall receive <b>100% of their savings</b> after clearing all outstanding obligations.</li>
+    </ul>
+  </li>
+
+</ul>
+<!-- ARTICLE 3 -->
+<h3 style="color:#43a047;">🏦 Article 3: Loans</h3>
+
+<ul style="line-height:1.8;">
+
+  <!-- ELIGIBILITY -->
+  <li><b>Loan Eligibility:</b>
+    <ul style="margin-top:8px;">
+      <li>A member qualifies for a loan after saving at least <b>Ksh 1,500</b>.</li>
+      <li>The member must have been active in the chama for at least <b>four (4) months</b>.</li>
+      <li>Active participation includes consistent savings, contributions, and adherence to chama rules.</li>
+    </ul>
+  </li>
+
+  <!-- ASSESSMENT -->
+  <li><b>Loan Assessment Criteria:</b>
+    <ul style="margin-top:8px;">
+      <li>Loans shall be issued based on the member’s savings history and consistency.</li>
+      <li>Discipline and commitment within the chama shall be considered.</li>
+      <li>The member’s ability to repay within the agreed period will also be assessed.</li>
+    </ul>
+  </li>
+
+  <!-- APPROVAL -->
+  <li>📌 <b>Loan Approval:</b>
+    <ul style="margin-top:8px;">
+      <li>All loan requests must be approved by both the <b>Admin and Chairlady</b>.</li>
+      <li>Approval shall ensure fairness, accountability, and proper fund management.</li>
+      <li>The leadership reserves the right to reject or adjust loan requests based on available funds.</li>
+    </ul>
+  </li>
+
+  <!-- REPAYMENT -->
+  <li>⏳ <b>Loan Repayment Terms:</b>
+    <ul style="margin-top:8px;">
+      <li>All loans must be repaid within the agreed timeframe.</li>
+      <li>Late repayment may attract penalties or restrictions on future borrowing.</li>
+      <li>Repeated default may lead to suspension of loan privileges.</li>
+    </ul>
+  </li>
+
+  <!-- INTEREST DISTRIBUTION -->
+  <li>💸 <b>Interest Distribution Policy:</b>
+    <ul style="margin-top:8px;">
+      <li>Upon loan repayment, the interest earned shall be shared as follows:</li>
+      <li>🌿 <b>25%</b> is credited back to the borrower’s personal savings account.</li>
+      <li>🤝 <b>75%</b> is distributed among all members based on their savings ratio.</li>
+    </ul>
+  </li>
+
+  <!-- FAIRNESS -->
+  <li>📘 <b>Fairness and Sustainability:</b>
+    <ul style="margin-top:8px;">
+      <li>This system ensures fairness among members and rewards consistent savers.</li>
+      <li>It also strengthens the financial stability and growth of the chama.</li>
+      <li>All loan activities shall be recorded transparently for accountability.</li>
+    </ul>
+  </li>
+
+</ul>
+
+<!-- ARTICLE 4 -->
+<h3 style="color:#1b5e20;">🧑‍💼 Article 4: Leadership</h3>
+
+<ul style="line-height:1.8;">
+
+  <li><b>The chama shall have two key leadership roles:</b></li>
+
+  <!-- ADMIN ROLE -->
+  <li>💰 <b>Founder & Admin Roles:</b>
+    <ul style="margin-top:8px;">
+      <li>Oversee all financial management of the chama.</li>
+      <li>Maintain accurate records of savings, contributions, and balances.</li>
+      <li>Control and safeguard all group funds.</li>
+      <li>Approve and process loan requests together with the Chairlady.</li>
+      <li>Track loan repayments and ensure compliance with terms.</li>
+      <li>Communicate important updates, deadlines, and announcements.</li>
+      <li>Prepare and present financial reports to members.</li>
+      <li>Ensure transparency and accountability in all financial matters.</li>
+      <li>Coordinate overall operations of the chama.</li>
+    </ul>
+  </li>
+
+  <!-- CHAIRLADY ROLE -->
+  <li>👩‍💼 <b>Chairlady Roles:</b>
+    <ul style="margin-top:8px;">
+      <li>Represent the interests and welfare of all members.</li>
+      <li>Coordinate group activities, meetings, and discussions.</li>
+      <li>Work closely with the Admin to ensure smooth operations.</li>
+      <li>Assist in approval of loans and welfare requests.</li>
+      <li>Ensure discipline, unity, and fairness among members.</li>
+      <li>Handle member concerns, conflicts, and feedback.</li>
+      <li>Mobilize members for meetings and participation.</li>
+      <li>Support enforcement of the constitution and rules.</li>
+    </ul>
+  </li>
+
+  <!-- GENERAL LEADERSHIP RULES -->
+  <li><b>General Leadership Provisions:</b>
+    <ul style="margin-top:8px;">
+      <li>The Chairlady shall be elected by members.</li>
+      <li>The term of service shall be <b>one (1) year</b>.</li>
+      <li>Members may re-elect or extend the term based on performance.</li>
+      <li>The Admin and Chairlady shall work together to ensure transparency, fairness, and unity.</li>
+      <li>Leadership must ensure proper tracking of contributions, savings, loans, and welfare matters.</li>
+      <li>Regular updates on finances and chama activities shall be shared with all members.</li>
+    </ul>
+  </li>
+
+</ul>
+
+<!-- ARTICLE 5 -->
+<h3 style="color:#2e7d32;">💞 Article 5: Welfare</h3>
+
+<ul style="line-height:1.8;">
+
+  <!-- DEATH BENEFIT -->
+  <li>🕊️ <b>Bereavement Support (Funeral Assistance)</b>
+    <ul style="margin-top:8px;">
+      <li>In the event of death (parent, guardian, spouse, or immediate family), the chama shall provide <b>Ksh 3,000</b> from group savings.</li>
+      <li>Members must notify the <b>Chairlady or Admin at least one (1) week before the burial</b> to allow proper arrangements and group participation.</li>
+    </ul>
+  </li>
+
+  <!-- WEDDING -->
+  <li>💍 <b>Wedding Support:</b>
+    <ul style="margin-top:8px;">
+      <li>In the event of a wedding, the chama shall provide <b>Ksh 2,500</b> from group savings.</li>
+      <li>The member must notify the <b>Chairlady or Admin at least three (3) months before the wedding date</b> for proper planning and support coordination.</li>
+    </ul>
+  </li>
+
+  <!-- NEWBORN -->
+  <li>👶 <b>Newborn Baby Support:</b>
+    <ul style="margin-top:8px;">
+      <li>In the event of a newborn baby, the chama shall provide <b>Ksh 2,000</b> from group savings.</li>
+      <li>The member must notify the <b>Chairlady or Admin at least three (3) months in advance</b> (or as early as pregnancy confirmation allows) for proper planning and support.</li>
+    </ul>
+  </li>
+
+  <!-- EMERGENCY -->
+  <li>🚑 <b>Emergency Assistance:</b>
+    <ul style="margin-top:8px;">
+      <li>In case of an emergency, a member with savings of at least <b>Ksh 1,500</b> may receive up to <b>30%</b> of their savings as assistance.</li>
+      <li>Recovery shall be done by deducting <b>20%</b> from the member’s payout when their turn arrives.</li>
+      <li>This assistance is granted only once per cycle and must be approved by the Admin and Chairlady.</li>
+    </ul>
+  </li>
+
+  <!-- MERRY-GO-ROUND RULE -->
+  <li>📌 <b>Merry-Go-Round Participation:</b>
+    <ul style="margin-top:8px;">
+      <li>Members who are <b>not participating in the merry-go-round</b> are required to <b>actively contribute to savings</b>.</li>
+      <li>This ensures they remain eligible for welfare benefits and other chama support systems.</li>
+    </ul>
+  </li>
+
+  <!-- ADDITIONAL SUPPORT -->
+  <li>🤝 <b>Additional Support:</b>
+    <ul style="margin-top:8px;">
+      <li>Additional assistance may be provided depending on agreement among members and availability of funds.</li>
+      <li>Each case shall be handled fairly and transparently by the leadership.</li>
+    </ul>
+  </li>
+
+  <!-- NOTIFICATION RULE -->
+  <li>📢 <b>Notification Requirement:</b>
+    <ul style="margin-top:8px;">
+      <li>Members must notify leadership early in advance for all planned welfare-related events.</li>
+      <li>This ensures proper budgeting, coordination, and participation from the chama.</li>
+    </ul>
+  </li>
+
+</ul>
+
+<!-- ARTICLE 6 -->
+<h3 style="color:#388e3c;">🤝 Article 6: Conduct</h3>
+
+<ul style="line-height:1.8;">
+
+  <!-- GENERAL PRINCIPLE -->
+  <li><b>General Code of Conduct:</b>
+    <ul style="margin-top:8px;">
+      <li>All members shall uphold respect, honesty, integrity, and transparency in all chama activities.</li>
+      <li>Members shall act in good faith and prioritize the unity and growth of the chama.</li>
+    </ul>
+  </li>
+
+  <!-- RESPECT & RELATIONSHIPS -->
+  <li>🤝 <b>Respect and Interpersonal Relations:</b>
+    <ul style="margin-top:8px;">
+      <li>Members shall treat one another with respect, dignity, and fairness at all times.</li>
+      <li>Abusive language, harassment, or discrimination of any kind shall not be tolerated.</li>
+      <li>Members shall resolve disagreements peacefully and professionally.</li>
+    </ul>
+  </li>
+
+  <!-- PARTICIPATION -->
+  <li>📅 <b>Participation and Meetings:</b>
+    <ul style="margin-top:8px;">
+      <li>Members are expected to attend all scheduled meetings and group activities.</li>
+      <li>In case of absence, members must communicate in advance to the leadership.</li>
+      <li>Active participation in discussions and decisions is encouraged.</li>
+    </ul>
+  </li>
+
+  <!-- COMMUNICATION -->
+  <li>📢 <b>Communication:</b>
+    <ul style="margin-top:8px;">
+      <li>Members shall communicate clearly, honestly, and respectfully in all group platforms.</li>
+      <li>Official communication channels of the chama must be used for updates and announcements.</li>
+      <li>Misleading or false information shall not be shared.</li>
+    </ul>
+  </li>
+
+  <!-- CONFIDENTIALITY -->
+  <li>🔒 <b>Confidentiality:</b>
+    <ul style="margin-top:8px;">
+      <li>All group matters, including financial records and member information, shall remain confidential.</li>
+      <li>Members shall not disclose internal chama information to outsiders without approval.</li>
+    </ul>
+  </li>
+
+  <!-- RESPONSIBILITY -->
+  <li>📌 <b>Member Responsibility:</b>
+    <ul style="margin-top:8px;">
+      <li>Members shall take responsibility for their financial commitments and obligations.</li>
+      <li>Members shall comply with all rules outlined in this constitution.</li>
+      <li>Any issues or concerns shall be reported promptly to the leadership.</li>
+    </ul>
+  </li>
+
+</ul>
+
+<!-- ARTICLE 7 -->
+<h3 style="color:#558b2f;">⚖️ Article 7: Discipline</h3>
+
+<ul style="line-height:1.8;">
+
+  <!-- GENERAL RULE -->
+  <li><b>General Principle:</b>
+    <ul style="margin-top:8px;">
+      <li>All members are expected to uphold discipline, responsibility, and commitment to the chama.</li>
+      <li>Failure to follow the constitution and agreed rules shall attract appropriate action.</li>
+    </ul>
+  </li>
+
+  <!-- FAILURE TO MEET OBLIGATIONS -->
+  <li>📌 <b>Failure to Meet Obligations:</b>
+    <ul style="margin-top:8px;">
+      <li>Late or missed contributions shall attract penalties as defined in Article 2.</li>
+      <li>Repeated failure to contribute may lead to warnings and possible suspension.</li>
+      <li>Members with continuous default may lose eligibility for loans and welfare benefits.</li>
+    </ul>
+  </li>
+
+  <!-- INACTIVITY -->
+  <li>⏳ <b>Inactive Members:</b>
+    <ul style="margin-top:8px;">
+      <li>Members who remain inactive without communication may be issued a warning.</li>
+      <li>Continued inactivity may lead to temporary suspension.</li>
+      <li>Prolonged inactivity may result in removal from the chama.</li>
+    </ul>
+  </li>
+
+  <!-- MISCONDUCT -->
+  <li>⚠️ <b>Misconduct and Behavior:</b>
+    <ul style="margin-top:8px;">
+      <li>Any form of disrespect, dishonesty, or conflict among members is prohibited.</li>
+      <li>Fraud, misuse of funds, or intentional misinformation shall lead to strict disciplinary action.</li>
+      <li>Actions that damage the reputation or unity of the chama shall not be tolerated.</li>
+    </ul>
+  </li>
+
+  <!-- DISCIPLINARY ACTION -->
+  <li>🚫 <b>Disciplinary Measures:</b>
+    <ul style="margin-top:8px;">
+      <li>Verbal or written warning.</li>
+      <li>Fines or penalties.</li>
+      <li>Suspension from group activities or benefits.</li>
+      <li>Permanent removal from the chama.</li>
+    </ul>
+  </li>
+
+  <!-- FAIR HEARING -->
+  <li>⚖️ <b>Right to Fair Hearing:</b>
+    <ul style="margin-top:8px;">
+      <li>Every member shall be given an opportunity to explain themselves before any major action is taken.</li>
+      <li>Decisions shall be made fairly by the Admin and Chairlady, with member consultation where necessary.</li>
+    </ul>
+  </li>
+
+</ul>
+
+<!-- ARTICLE 8 -->
+<h3 style="color:#2e7d32;">🔁 Article 8: Exit Policy</h3>
+
+<ul style="line-height:1.8;">
+
+  <!-- GENERAL RULE -->
+  <li><b>Definition of Exit:</b>
+    <ul style="margin-top:8px;">
+      <li>A member shall be considered to have exited the chama upon full withdrawal of their savings.</li>
+      <li>Exit may be voluntary or as a result of disciplinary action.</li>
+    </ul>
+  </li>
+
+  <!-- NOTICE -->
+  <li>📢 <b>Notice Requirement:</b>
+    <ul style="margin-top:8px;">
+      <li>Members intending to exit must notify the Admin in advance.</li>
+      <li>Notice should be given at least <b>7 days</b> before the intended withdrawal date.</li>
+      <li>This allows proper financial planning and record updates.</li>
+    </ul>
+  </li>
+
+  <!-- CLEARANCE -->
+  <li>📋 <b>Clearance of Obligations:</b>
+    <ul style="margin-top:8px;">
+      <li>All outstanding loans must be fully repaid before exit.</li>
+      <li>Any pending fines or penalties must be cleared.</li>
+      <li>The member must settle all obligations with the chama before payment is processed.</li>
+    </ul>
+  </li>
+
+  <!-- PAYOUT -->
+  <li>💰 <b>Processing of Payments:</b>
+    <ul style="margin-top:8px;">
+      <li>All payments shall be processed within <b>7 days</b> after official notification and clearance.</li>
+      <li>The exiting member shall receive <b>100% of their savings</b> after deductions (if any).</li>
+      <li>Payments shall be recorded and confirmed by both the Admin and Chairlady.</li>
+    </ul>
+  </li>
+
+  <!-- LIMITATIONS -->
+  <li>⚠️ <b>Limitations:</b>
+    <ul style="margin-top:8px;">
+      <li>An exited member shall lose access to all chama benefits, including loans and welfare support.</li>
+      <li>Rejoining the chama shall be treated as a new membership and subject to approval.</li>
+    </ul>
+  </li>
+
 </ul>
 
 <hr style="border:0; height:2px; background:#a5d6a7; margin:25px 0; border-radius:2px;">
 
-<p style="text-align:center; color:#1b5e20; font-style:italic;">
-  ⚠️ <b>Please adhere to all the above rules and regulations.</b><br>
-  For any questions or concerns, kindly reach out to the <b>Chairperson</b> through the 
-  <a href="#contact" style="color:#2e7d32; text-decoration:none; font-weight:bold;">Contact Section</a>.
+<p style="text-align:center; color:#1b5e20; font-weight:bold;">
+  ✔️ This Constitution is binding to all members upon approval.
 </p>
-
   <!-- Back Button -->
   <div style="text-align:center; margin-top:25px;">
     <a class="action-btn" onclick="simulateAction(this,'home')" 
