@@ -4296,8 +4296,8 @@ function triggerUpdate() {
       <td><input type="number" value="700"/></td>
       <td><input type="number" value="1215"/></td>
       <td><input type="number" value="505"/></td>
-      <td><input type="number" value="180"/></td>
-      <td><input type="number" value="2800"/></td>
+      <td><input type="number" value="2980"/></td>
+      <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
@@ -4401,7 +4401,7 @@ function triggerUpdate() {
 
 
 <script>
-const REGISTRATION_FEES_TOTAL = 720; // 👈 update manually
+const REGISTRATION_FEES_TOTAL = 600; // 👈 update manually
 const FEES_PASSWORD = "2025";
 
 function openRegistrationFees() {
@@ -4836,7 +4836,7 @@ function login() {
     let member = approved.find(m => m.name === name);
 
     if (!member) {
-      msg.innerText = "❌ You are not approved yet. Please wait for admin approval.";
+      msg.innerText = "❌ wrong password try again.";
       return;
     }
 
@@ -5100,7 +5100,7 @@ function submitLoan(event, name, maxAmount, phone) {
   // ==================== Loan Decision ====================
   const loanStatus = "PENDING";
   const decisionReason = "Awaiting loan committee approval";
-  const decisionBy = "Loan Committee";
+  const decisionBy = "Admin and chairlady";
   const decisionDate = "—";
 
   // ==================== PDF ====================
@@ -5203,7 +5203,7 @@ const sigY = Math.max(y + 15, 240);
 
 doc.setFont("helvetica", "bolditalic");
 doc.text("_________________________", 120, sigY);
-doc.text("Boniface Chelluget", 130, sigY + 6);
+doc.text("Boniface Chelluget and Faith Kwamboka", 130, sigY + 6);
 
     // Footer
     doc.setFontSize(9);
@@ -7397,12 +7397,12 @@ calculate2025();
 
       // RULE 1: 12 months + >=1500
       if (totalSavings >= 1500 && activeMonths >= 12) {
-        reward = Math.round(totalSavings * 0.60);
+        reward = Math.round(totalSavings * 0.80);
         saved = totalSavings - reward;
       }
       // RULE 2: >=1200 + >=6 months
-      else if (totalSavings >= 1200 && activeMonths >= 6) {
-        reward = Math.round(totalSavings * 0.50);
+      else if (totalSavings >= 1500 && activeMonths >= 6) {
+        reward = Math.round(totalSavings * 0.75);
         saved = totalSavings - reward;
       }
 
