@@ -7396,8 +7396,8 @@ calculate2025();
         reward = Math.round(totalSavings * 0.80);
         saved = totalSavings - reward;
       }
-      // RULE 2: >=1200 + >=6 months
-      else if (totalSavings >= 1500 && activeMonths >= 6) {
+      // RULE 2: >=1500 + <=6 months
+      else if (totalSavings >= 1500 && activeMonths <= 6) {
         reward = Math.round(totalSavings * 0.75);
         saved = totalSavings - reward;
       }
