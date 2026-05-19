@@ -3373,176 +3373,6 @@ document.getElementById("downloadFormBtn").addEventListener("click", () => {
 </div>
 
 
- <!-- =========================
-   DASHBOARD
-========================= -->
-
-<div class="dashboard-cards">
-
-  <div class="dashboard-card">
-    <div class="dashboard-icon">👥</div>
-    <h2 id="totalMembers">0</h2>
-    <p>Total Members</p>
-  </div>
-
-  <div class="dashboard-card">
-    <div class="dashboard-icon">💰</div>
-    <h2 id="totalSavings">0</h2>
-    <p>Total Savings</p>
-  </div>
-
-  <div class="dashboard-card">
-    <div class="dashboard-icon">🏦</div>
-    <h2 id="loanIssued">0</h2>
-    <p>Loans Issued</p>
-  </div>
-
-  <div class="dashboard-card">
-    <div class="dashboard-icon">✅</div>
-    <h2 id="qualifiedMembers">0</h2>
-    <p>Qualified loan members</p>
-  </div>
-
-  <div class="dashboard-card">
-    <div class="dashboard-icon">🥇</div>
-
-    <button class="topSaverBtn" onclick="showTopSavers()">
-      View Top Savers
-    </button>
-
-  </div>
-
-</div>
-
-
-<!-- =========================
-   TOP SAVERS POPUP
-========================= -->
-
-<div id="topSaverPopup">
-
-  <div class="popup-header">
-    🏆 Top 3 Highest Savers
-  </div>
-
-  <div class="popup-body" id="topSaverList">
-  </div>
-
-  <div style="text-align:center; padding-bottom:15px;">
-    <button class="closePopup" onclick="closeTopSavers()">
-      Close
-    </button>
-  </div>
-
-</div>
-
-
-<!-- =========================
-   SCRIPT
-========================= -->
-
-<script>
-
-let topSaversData = [];
-
-function updateDashboard(){
-
-  const rows = document.querySelectorAll("#table2026 tbody tr");
-
-  let totalMembers = 0;
-  let totalSavings = 0;
-  let qualifiedMembers = 0;
-
-  topSaversData = [];
-
-  rows.forEach(row => {
-
-    if(row.querySelector("#grandTotal_2026")) return;
-
-    const nameCell = row.querySelector("td");
-
-    if(!nameCell) return;
-
-    totalMembers++;
-
-    const inputs = row.querySelectorAll("input");
-
-    let memberTotal = 0;
-
-    inputs.forEach(input => {
-      memberTotal += Number(input.value) || 0;
-    });
-
-    totalSavings += memberTotal;
-
-    if(memberTotal >= 1500){
-      qualifiedMembers++;
-    }
-
-    topSaversData.push({
-      name:nameCell.textContent,
-      total:memberTotal
-    });
-
-  });
-
-  // SORT DESCENDING
-  topSaversData.sort((a,b)=>b.total-a.total);
-
-  // UPDATE CARDS
-  document.getElementById("totalMembers").innerHTML =
-    totalMembers;
-
-  document.getElementById("totalSavings").innerHTML =
-    "Ksh " + totalSavings.toLocaleString();
-
-  document.getElementById("loanIssued").innerHTML =
-    "Coming Soon";
-
-  document.getElementById("qualifiedMembers").innerHTML =
-    qualifiedMembers;
-
-}
-
-
-// SHOW POPUP
-function showTopSavers(){
-
-  const popup = document.getElementById("topSaverPopup");
-  const list = document.getElementById("topSaverList");
-
-  list.innerHTML = "";
-
-  const top3 = topSaversData.slice(0,3);
-
-  top3.forEach((member,index)=>{
-
-    const medals = ["🥇","🥈","🥉"];
-
-    list.innerHTML += `
-      <div>
-        <b>${medals[index]} ${member.name}</b><br>
-        Ksh ${member.total.toLocaleString()}
-      </div>
-    `;
-
-  });
-
-  popup.style.display = "block";
-}
-
-
-// CLOSE POPUP
-function closeTopSavers(){
-  document.getElementById("topSaverPopup").style.display = "none";
-}
-
-
-// RUN
-updateDashboard();
-
-</script>
-
 
 
 
@@ -4557,6 +4387,7 @@ document.querySelectorAll("#table2026 tbody tr").forEach(row => {
 
 });
 </script>
+
 <!-- =========================
    SMALL DASHBOARD CARDS
 ========================= -->
@@ -4662,8 +4493,177 @@ document.querySelectorAll("#table2026 tbody tr").forEach(row => {
 
 </style>
 
+ <!-- =========================
+   DASHBOARD
+========================= -->
+
+<div class="dashboard-cards">
+
+  <div class="dashboard-card">
+    <div class="dashboard-icon">👥</div>
+    <h2 id="totalMembers">0</h2>
+    <p>Total Members</p>
+  </div>
+
+  <div class="dashboard-card">
+    <div class="dashboard-icon">💰</div>
+    <h2 id="totalSavings">0</h2>
+    <p>Total Savings</p>
+  </div>
+
+  <div class="dashboard-card">
+    <div class="dashboard-icon">🏦</div>
+    <h2 id="loanIssued">0</h2>
+    <p>Loans Issued</p>
+  </div>
+
+  <div class="dashboard-card">
+    <div class="dashboard-icon">✅</div>
+    <h2 id="qualifiedMembers">0</h2>
+    <p>Qualified loan members</p>
+  </div>
+
+  <div class="dashboard-card">
+    <div class="dashboard-icon">🥇</div>
+
+    <button class="topSaverBtn" onclick="showTopSavers()">
+      View Top Savers
+    </button>
+
+  </div>
+
+</div>
 
 
+
+
+<!-- =========================
+   TOP SAVERS POPUP
+========================= -->
+
+<div id="topSaverPopup">
+
+  <div class="popup-header">
+    🏆 Top 3 Highest Savers
+  </div>
+
+  <div class="popup-body" id="topSaverList">
+  </div>
+
+  <div style="text-align:center; padding-bottom:15px;">
+    <button class="closePopup" onclick="closeTopSavers()">
+      Close
+    </button>
+  </div>
+
+</div>
+
+
+<!-- =========================
+   SCRIPT
+========================= -->
+
+<script>
+
+let topSaversData = [];
+
+function updateDashboard(){
+
+  const rows = document.querySelectorAll("#table2026 tbody tr");
+
+  let totalMembers = 0;
+  let totalSavings = 0;
+  let qualifiedMembers = 0;
+
+  topSaversData = [];
+
+  rows.forEach(row => {
+
+    if(row.querySelector("#grandTotal_2026")) return;
+
+    const nameCell = row.querySelector("td");
+
+    if(!nameCell) return;
+
+    totalMembers++;
+
+    const inputs = row.querySelectorAll("input");
+
+    let memberTotal = 0;
+
+    inputs.forEach(input => {
+      memberTotal += Number(input.value) || 0;
+    });
+
+    totalSavings += memberTotal;
+
+    if(memberTotal >= 1500){
+      qualifiedMembers++;
+    }
+
+    topSaversData.push({
+      name:nameCell.textContent,
+      total:memberTotal
+    });
+
+  });
+
+  // SORT DESCENDING
+  topSaversData.sort((a,b)=>b.total-a.total);
+
+  // UPDATE CARDS
+  document.getElementById("totalMembers").innerHTML =
+    totalMembers;
+
+  document.getElementById("totalSavings").innerHTML =
+    "Ksh " + totalSavings.toLocaleString();
+
+  document.getElementById("loanIssued").innerHTML =
+    "Coming Soon";
+
+  document.getElementById("qualifiedMembers").innerHTML =
+    qualifiedMembers;
+
+}
+
+
+// SHOW POPUP
+function showTopSavers(){
+
+  const popup = document.getElementById("topSaverPopup");
+  const list = document.getElementById("topSaverList");
+
+  list.innerHTML = "";
+
+  const top3 = topSaversData.slice(0,3);
+
+  top3.forEach((member,index)=>{
+
+    const medals = ["🥇","🥈","🥉"];
+
+    list.innerHTML += `
+      <div>
+        <b>${medals[index]} ${member.name}</b><br>
+        Ksh ${member.total.toLocaleString()}
+      </div>
+    `;
+
+  });
+
+  popup.style.display = "block";
+}
+
+
+// CLOSE POPUP
+function closeTopSavers(){
+  document.getElementById("topSaverPopup").style.display = "none";
+}
+
+
+// RUN
+updateDashboard();
+
+</script>
 
 </script>
 <!-- Toast -->
