@@ -3371,10 +3371,177 @@ document.getElementById("downloadFormBtn").addEventListener("click", () => {
   <span class="spinner" style="display:none; margin-left:8px; border:2px solid #f3f3f3; border-top:2px solid white; border-radius:50%; width:14px; height:14px; animation: spin 1s linear infinite; vertical-align:middle;"></span>
 </button>
 </div>
-<div id="loanMessage" style="margin-top:15px; font-weight:bold; color:#004d40;"></div>
-<div id="allContributions" style="margin-top:20px;">
 
- 
+
+ <!-- =========================
+   DASHBOARD
+========================= -->
+
+<div class="dashboard-cards">
+
+  <div class="dashboard-card">
+    <div class="dashboard-icon">👥</div>
+    <h2 id="totalMembers">0</h2>
+    <p>Total Members</p>
+  </div>
+
+  <div class="dashboard-card">
+    <div class="dashboard-icon">💰</div>
+    <h2 id="totalSavings">0</h2>
+    <p>Total Savings</p>
+  </div>
+
+  <div class="dashboard-card">
+    <div class="dashboard-icon">🏦</div>
+    <h2 id="loanIssued">0</h2>
+    <p>Loans Issued</p>
+  </div>
+
+  <div class="dashboard-card">
+    <div class="dashboard-icon">✅</div>
+    <h2 id="qualifiedMembers">0</h2>
+    <p>Qualified loan members</p>
+  </div>
+
+  <div class="dashboard-card">
+    <div class="dashboard-icon">🥇</div>
+
+    <button class="topSaverBtn" onclick="showTopSavers()">
+      View Top Savers
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+   TOP SAVERS POPUP
+========================= -->
+
+<div id="topSaverPopup">
+
+  <div class="popup-header">
+    🏆 Top 3 Highest Savers
+  </div>
+
+  <div class="popup-body" id="topSaverList">
+  </div>
+
+  <div style="text-align:center; padding-bottom:15px;">
+    <button class="closePopup" onclick="closeTopSavers()">
+      Close
+    </button>
+  </div>
+
+</div>
+
+
+<!-- =========================
+   SCRIPT
+========================= -->
+
+<script>
+
+let topSaversData = [];
+
+function updateDashboard(){
+
+  const rows = document.querySelectorAll("#table2026 tbody tr");
+
+  let totalMembers = 0;
+  let totalSavings = 0;
+  let qualifiedMembers = 0;
+
+  topSaversData = [];
+
+  rows.forEach(row => {
+
+    if(row.querySelector("#grandTotal_2026")) return;
+
+    const nameCell = row.querySelector("td");
+
+    if(!nameCell) return;
+
+    totalMembers++;
+
+    const inputs = row.querySelectorAll("input");
+
+    let memberTotal = 0;
+
+    inputs.forEach(input => {
+      memberTotal += Number(input.value) || 0;
+    });
+
+    totalSavings += memberTotal;
+
+    if(memberTotal >= 1500){
+      qualifiedMembers++;
+    }
+
+    topSaversData.push({
+      name:nameCell.textContent,
+      total:memberTotal
+    });
+
+  });
+
+  // SORT DESCENDING
+  topSaversData.sort((a,b)=>b.total-a.total);
+
+  // UPDATE CARDS
+  document.getElementById("totalMembers").innerHTML =
+    totalMembers;
+
+  document.getElementById("totalSavings").innerHTML =
+    "Ksh " + totalSavings.toLocaleString();
+
+  document.getElementById("loanIssued").innerHTML =
+    "Coming Soon";
+
+  document.getElementById("qualifiedMembers").innerHTML =
+    qualifiedMembers;
+
+}
+
+
+// SHOW POPUP
+function showTopSavers(){
+
+  const popup = document.getElementById("topSaverPopup");
+  const list = document.getElementById("topSaverList");
+
+  list.innerHTML = "";
+
+  const top3 = topSaversData.slice(0,3);
+
+  top3.forEach((member,index)=>{
+
+    const medals = ["🥇","🥈","🥉"];
+
+    list.innerHTML += `
+      <div>
+        <b>${medals[index]} ${member.name}</b><br>
+        Ksh ${member.total.toLocaleString()}
+      </div>
+    `;
+
+  });
+
+  popup.style.display = "block";
+}
+
+
+// CLOSE POPUP
+function closeTopSavers(){
+  document.getElementById("topSaverPopup").style.display = "none";
+}
+
+
+// RUN
+updateDashboard();
+
+</script>
 
 
 
@@ -3921,7 +4088,7 @@ document.querySelectorAll("#table2025 tbody tr").forEach(row => {
   📊 Group Contributions for 2026  
   <br>
   <span id="updateTime" style="font-size:13px; opacity:0.95;">
-    ⏱ Last updated on <b>18TH MAY 2026</b> — 16:40PM
+    ⏱ Last updated on <b>19TH MAY 2026</b> — 16:44PM
   </span>
 </h4>
 
@@ -4287,7 +4454,7 @@ function triggerUpdate() {
       <td><input type="number" value="215"/></td>
       <td><input type="number" value="8855"/></td>
       <td><input type="number" value="7930"/></td>
-      <td><input type="number" value="3010"/></td>
+      <td><input type="number" value="8010"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
       <td><input type="number" value="0"/></td>
@@ -4327,8 +4494,178 @@ function triggerUpdate() {
   </tbody>
 </table> 
 
+<script>
+/* =========================
+   PAYMENT STATUS ONLY - 2026
+   (WITHOUT AFFECTING TOTALS)
+========================= */
+
+const paidMembers2026 = [
+  "BONIFACE CHELLUGET",
+  "FAITH MOKOGI",
+  "JULIUS KEBASO",
+  "JACKIENYARANGI",
+  "SAMUEL OYUGI",
+  "KEFFA MOMANYI",
+  "CLAUDIA MORAA",
+  "ELIZABETH SHIUNDU",
+  "DEE",
+  "SHAMIM ISIJI",
+  "ELVIS KAMASH",
+  "JAPHET MULI"
+];
+
+document.querySelectorAll("#table2026 tbody tr").forEach(row => {
+
+  // Skip GRAND TOTAL row
+  if (row.querySelector("#grandTotal_2026")) return;
+
+  const nameCell = row.querySelector("td");
+
+  // Skip empty rows
+  if (!nameCell) return;
+
+  // Find existing payment status cell
+  let statusCell = row.querySelector(".paymentStatus");
+
+  // Create ONLY if missing
+  if (!statusCell) {
+    statusCell = document.createElement("td");
+    statusCell.className = "paymentStatus";
+    row.appendChild(statusCell);
+  }
+
+  const name = nameCell.textContent.trim().toUpperCase();
+
+  // PAYMENT CHECK
+  if (paidMembers2026.includes(name)) {
+
+    statusCell.innerHTML =
+      "✅ <b>to receive cash before 17th December 2026</b>";
+
+    statusCell.style.color = "green";
+    statusCell.style.fontWeight = "bold";
+
+  } else {
+
+    statusCell.innerHTML =
+      "⏳ Not yet qualified keep saving";
+
+    statusCell.style.color = "#b71c1c";
+    statusCell.style.fontWeight = "bold";
+  }
+
+});
+</script>
+<!-- =========================
+   SMALL DASHBOARD CARDS
+========================= -->
+
+<style>
+
+.dashboard-cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:12px;
+  margin:20px 0;
+}
+
+.dashboard-card{
+  background:linear-gradient(135deg,#00796b,#004d40);
+  color:white;
+  padding:12px;
+  border-radius:12px;
+  box-shadow:0 3px 8px rgba(0,0,0,0.15);
+  text-align:center;
+  transition:0.3s;
+}
+
+.dashboard-card:hover{
+  transform:translateY(-3px);
+}
+
+.dashboard-icon{
+  font-size:22px;
+}
+
+.dashboard-card h2{
+  font-size:18px;
+  margin:6px 0;
+}
+
+.dashboard-card p{
+  font-size:12px;
+  margin:0;
+}
+
+/* BUTTON */
+.topSaverBtn{
+  background:#ff9800;
+  border:none;
+  color:white;
+  padding:8px 12px;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:12px;
+  font-weight:bold;
+  margin-top:6px;
+}
+
+.topSaverBtn:hover{
+  background:#f57c00;
+}
+
+/* POPUP */
+#topSaverPopup{
+  display:none;
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  background:white;
+  width:320px;
+  max-width:90%;
+  border-radius:14px;
+  box-shadow:0 8px 25px rgba(0,0,0,0.3);
+  z-index:9999;
+  overflow:hidden;
+}
+
+.popup-header{
+  background:#00796b;
+  color:white;
+  padding:12px;
+  font-weight:bold;
+  text-align:center;
+}
+
+.popup-body{
+  padding:15px;
+  max-height:350px;
+  overflow:auto;
+}
+
+.popup-body div{
+  padding:10px;
+  border-bottom:1px solid #ddd;
+}
+
+.closePopup{
+  background:#d32f2f;
+  color:white;
+  border:none;
+  padding:8px 14px;
+  border-radius:8px;
+  cursor:pointer;
+  margin-top:10px;
+}
+
+</style>
 
 
+
+
+</script>
 <!-- Toast -->
 <div class="toast" id="toast"></div>
 <!-- Loan Applications History -->
@@ -4356,6 +4693,9 @@ function triggerUpdate() {
 </div>
 </div>
 </div>
+
+
+
 
 
 
