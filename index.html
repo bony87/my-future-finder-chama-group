@@ -3334,7 +3334,7 @@ document.getElementById("downloadFormBtn").addEventListener("click", () => {
 <option>SHARON ONDIEKI</option>
 <option>CANZEDENA ANYANGO</option>
 <option>JAPHETH MULI</option>
-<option>DEFTERS PHOBIUS</option>
+<option>DEFTERS PHOLIUS</option>
 </select>
 <!-- Member Password -->
 <div class="password-container">
@@ -3371,6 +3371,10 @@ document.getElementById("downloadFormBtn").addEventListener("click", () => {
   <span class="spinner" style="display:none; margin-left:8px; border:2px solid #f3f3f3; border-top:2px solid white; border-radius:50%; width:14px; height:14px; animation: spin 1s linear infinite; vertical-align:middle;"></span>
 </button>
 </div>
+<div id="loanMessage" style="margin-top:15px; font-weight:bold; color:#004d40;"></div>
+<div id="allContributions" style="margin-top:20px;">
+
+
 
 
 
@@ -4389,73 +4393,131 @@ document.querySelectorAll("#table2026 tbody tr").forEach(row => {
 </script>
 
 <!-- =========================
-   SMALL DASHBOARD CARDS
+   SMALL DASHBOARD BELOW LOGOUT
+========================= -->
+
+<div class="mini-dashboard">
+
+  <div class="mini-card">
+    <div>👥</div>
+    <h4 id="totalMembers">0</h4>
+    <small>Members</small>
+  </div>
+
+  <div class="mini-card">
+    <div>💰</div>
+    <h4 id="totalSavings">0</h4>
+    <small>Savings</small>
+  </div>
+
+  <div class="mini-card">
+    <div>✅</div>
+    <h4 id="qualifiedMembers">0</h4>
+    <small>Qualified</small>
+  </div>
+
+  <div class="mini-card">
+
+    <button class="topSaverBtn"
+            onclick="showTopSavers()">
+      🥇 Top Savers
+    </button>
+
+  </div>
+
+</div>
+
+</div>
+</div>
+
+
+
+<!-- =========================
+   TOP SAVERS POPUP
+========================= -->
+
+<div id="topSaverPopup">
+
+  <div class="popup-header">
+    🏆 Top 3 Highest Savers
+  </div>
+
+  <div class="popup-body"
+       id="topSaverList">
+  </div>
+
+  <div style="text-align:center; padding-bottom:15px;">
+
+    <button class="closePopup"
+            onclick="closeTopSavers()">
+      Close
+    </button>
+
+  </div>
+
+</div>
+
+
+
+<!-- =========================
+   STYLE
 ========================= -->
 
 <style>
 
-.dashboard-cards{
+.mini-dashboard{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-  gap:12px;
-  margin:20px 0;
+  grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+  gap:10px;
+  margin-top:18px;
 }
 
-.dashboard-card{
+.mini-card{
   background:linear-gradient(135deg,#00796b,#004d40);
   color:white;
-  padding:12px;
-  border-radius:12px;
-  box-shadow:0 3px 8px rgba(0,0,0,0.15);
+  border-radius:10px;
+  padding:10px;
   text-align:center;
-  transition:0.3s;
+  box-shadow:0 2px 6px rgba(0,0,0,0.15);
 }
 
-.dashboard-card:hover{
-  transform:translateY(-3px);
+.mini-card h4{
+  margin:5px 0;
+  font-size:15px;
 }
 
-.dashboard-icon{
-  font-size:22px;
+.mini-card small{
+  font-size:11px;
 }
 
-.dashboard-card h2{
-  font-size:18px;
-  margin:6px 0;
-}
-
-.dashboard-card p{
-  font-size:12px;
-  margin:0;
-}
-
-/* BUTTON */
 .topSaverBtn{
   background:#ff9800;
   border:none;
   color:white;
-  padding:8px 12px;
+  padding:7px 10px;
   border-radius:8px;
   cursor:pointer;
-  font-size:12px;
+  font-size:11px;
   font-weight:bold;
-  margin-top:6px;
+  width:100%;
 }
 
 .topSaverBtn:hover{
   background:#f57c00;
 }
 
+
 /* POPUP */
+
 #topSaverPopup{
   display:none;
   position:fixed;
   top:50%;
   left:50%;
   transform:translate(-50%,-50%);
-  background:white;
   width:320px;
   max-width:90%;
+  background:white;
   border-radius:14px;
   box-shadow:0 8px 25px rgba(0,0,0,0.3);
   z-index:9999;
@@ -4466,14 +4528,12 @@ document.querySelectorAll("#table2026 tbody tr").forEach(row => {
   background:#00796b;
   color:white;
   padding:12px;
-  font-weight:bold;
   text-align:center;
+  font-weight:bold;
 }
 
 .popup-body{
   padding:15px;
-  max-height:350px;
-  overflow:auto;
 }
 
 .popup-body div{
@@ -4488,75 +4548,10 @@ document.querySelectorAll("#table2026 tbody tr").forEach(row => {
   padding:8px 14px;
   border-radius:8px;
   cursor:pointer;
-  margin-top:10px;
 }
 
 </style>
 
- <!-- =========================
-   DASHBOARD
-========================= -->
-
-<div class="dashboard-cards">
-
-  <div class="dashboard-card">
-    <div class="dashboard-icon">👥</div>
-    <h2 id="totalMembers">0</h2>
-    <p>Total Members</p>
-  </div>
-
-  <div class="dashboard-card">
-    <div class="dashboard-icon">💰</div>
-    <h2 id="totalSavings">0</h2>
-    <p>Total Savings</p>
-  </div>
-
-  <div class="dashboard-card">
-    <div class="dashboard-icon">🏦</div>
-    <h2 id="loanIssued">0</h2>
-    <p>Loans Issued</p>
-  </div>
-
-  <div class="dashboard-card">
-    <div class="dashboard-icon">✅</div>
-    <h2 id="qualifiedMembers">0</h2>
-    <p>Qualified loan members</p>
-  </div>
-
-  <div class="dashboard-card">
-    <div class="dashboard-icon">🥇</div>
-
-    <button class="topSaverBtn" onclick="showTopSavers()">
-      View Top Savers
-    </button>
-
-  </div>
-
-</div>
-
-
-
-
-<!-- =========================
-   TOP SAVERS POPUP
-========================= -->
-
-<div id="topSaverPopup">
-
-  <div class="popup-header">
-    🏆 Top 3 Highest Savers
-  </div>
-
-  <div class="popup-body" id="topSaverList">
-  </div>
-
-  <div style="text-align:center; padding-bottom:15px;">
-    <button class="closePopup" onclick="closeTopSavers()">
-      Close
-    </button>
-  </div>
-
-</div>
 
 
 <!-- =========================
@@ -4569,7 +4564,8 @@ let topSaversData = [];
 
 function updateDashboard(){
 
-  const rows = document.querySelectorAll("#table2026 tbody tr");
+  const rows =
+    document.querySelectorAll("#table2026 tbody tr");
 
   let totalMembers = 0;
   let totalSavings = 0;
@@ -4608,30 +4604,30 @@ function updateDashboard(){
 
   });
 
-  // SORT DESCENDING
+  // SORT
   topSaversData.sort((a,b)=>b.total-a.total);
 
-  // UPDATE CARDS
+  // UPDATE
   document.getElementById("totalMembers").innerHTML =
     totalMembers;
 
   document.getElementById("totalSavings").innerHTML =
     "Ksh " + totalSavings.toLocaleString();
 
-  document.getElementById("loanIssued").innerHTML =
-    "Coming Soon";
-
   document.getElementById("qualifiedMembers").innerHTML =
     qualifiedMembers;
-
 }
 
 
-// SHOW POPUP
+
+// SHOW TOP SAVERS
 function showTopSavers(){
 
-  const popup = document.getElementById("topSaverPopup");
-  const list = document.getElementById("topSaverList");
+  const popup =
+    document.getElementById("topSaverPopup");
+
+  const list =
+    document.getElementById("topSaverList");
 
   list.innerHTML = "";
 
@@ -4656,16 +4652,16 @@ function showTopSavers(){
 
 // CLOSE POPUP
 function closeTopSavers(){
-  document.getElementById("topSaverPopup").style.display = "none";
+  document.getElementById("topSaverPopup").style.display =
+    "none";
 }
 
 
 // RUN
 updateDashboard();
-
 </script>
 
-</script>
+
 <!-- Toast -->
 <div class="toast" id="toast"></div>
 <!-- Loan Applications History -->
