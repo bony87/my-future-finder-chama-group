@@ -3382,23 +3382,7 @@ document.getElementById("downloadFormBtn").addEventListener("click", () => {
 
 
 
-<!-- Eligibility Info Box -->
-<div style="margin:20px auto; padding:15px; background:#e3f2fd; border-left:6px solid #1976d2; border-radius:8px; max-width:600px;">
-<h3 style="color:#1976d2; margin-bottom:10px;">📌 Membership &amp; Loan Eligibility</h3>
-<p style="line-height:1.6; color:#333;">
-      ✅ <b>Loan Qualification:</b> A member must have saved at least <b>Ksh 1,500</b>.<br/><br/>
-      ✅ <b>Official Membership:</b> To become an official member, you must be active for a minimum of <b>4 months</b> in the chama.<br/><br/>
-      ✅ <b>Commitment:</b> Members are expected to contribute consistently and maintain good financial discipline.<br/><br/>
-      ✅ <b>Support &amp; Trust:</b> Being a member means supporting one another and upholding transparency within the group.
-    </p>
-</div>
-<button class="download-btn csv download-disabled">
-  ⬇️ Download CSV
-</button>
 
-<button class="download-btn pdf download-disabled">
-  ⬇️ Download PDF
-</button>
 
 
 <style>
@@ -3437,11 +3421,71 @@ document.getElementById("downloadFormBtn").addEventListener("click", () => {
     Welcome! Your note will appear here after login.
   </p>
 </div>
+<!-- Eligibility Info Box -->
+<div style="margin:20px auto; padding:15px; background:#e3f2fd; border-left:6px solid #1976d2; border-radius:8px; max-width:600px;">
+<h3 style="color:#1976d2; margin-bottom:10px;">📌 Membership &amp; Loan Eligibility</h3>
+<p style="line-height:1.6; color:#333;">
+      ✅ <b>Loan Qualification:</b> A member must have saved at least <b>Ksh 1,500</b>.<br/><br/>
+      ✅ <b>Official Membership:</b> To become an official member, you must be active for a minimum of <b>4 months</b> in the chama.<br/><br/>
+      ✅ <b>Commitment:</b> Members are expected to contribute consistently and maintain good financial discipline.<br/><br/>
+      ✅ <b>Support &amp; Trust:</b> Being a member means supporting one another and upholding transparency within the group.
+    </p>
+</div>
+<button class="download-btn csv download-disabled">
+  ⬇️ Download CSV
+</button>
+
+<button class="download-btn pdf download-disabled">
+  ⬇️ Download PDF
+</button>
+<!-- =========================
+   BUTTON TO OPEN TABLE
+========================= -->
+
+<button onclick="open2025Popup()" 
+style="
+background:#00796b;
+color:white;
+border:none;
+padding:10px 18px;
+border-radius:8px;
+cursor:pointer;
+font-weight:bold;
+margin:10px 0;
+">
+📊 View 2025 Contributions
+</button>
 
 
 
+<!-- =========================
+   POPUP CONTAINER
+========================= -->
 
-<h4>📊 Group Contributions for 2025</h4>
+<div id="popup2025" class="popup2025">
+
+  <div class="popup2025-content">
+
+    <!-- CLOSE BUTTON -->
+    <span class="close2025" onclick="close2025Popup()">
+      &times;
+    </span>
+
+    <!-- YOUR TABLE TITLE -->
+    <h4>📊 Group Contributions for 2025</h4>
+
+    <!-- TABLE -->
+    <div class="table-container">
+
+      <!-- PASTE YOUR ENTIRE TABLE HERE -->
+      <!-- START -->
+      
+      <table id="table2025"
+             border="1"
+             style="width:100%; border-collapse:collapse; text-align:center;">
+
+      <!-- YOUR FULL TABLE CONTENT -->
+       <h4>📊 Group Contributions for 2025</h4>
 
 <div class="table-container"><table id="table2025" border="1" style="width:100%; border-collapse:collapse; text-align:center;">
 
@@ -3825,6 +3869,103 @@ document.getElementById("downloadFormBtn").addEventListener("click", () => {
 </table>
 
 
+      </table>
+
+      <!-- END -->
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<!-- =========================
+   STYLE
+========================= -->
+
+<style>
+
+.popup2025{
+  display:none;
+  position:fixed;
+  z-index:9999;
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.6);
+}
+
+.popup2025-content{
+  background:white;
+  margin:3% auto;
+  padding:20px;
+  width:95%;
+  max-height:90vh;
+  overflow:auto;
+  border-radius:12px;
+  position:relative;
+}
+
+.close2025{
+  position:absolute;
+  right:15px;
+  top:10px;
+  font-size:28px;
+  cursor:pointer;
+  color:red;
+  font-weight:bold;
+}
+
+.table-container{
+  overflow-x:auto;
+}
+
+</style>
+
+
+
+<!-- =========================
+   SCRIPT
+========================= -->
+
+<script>
+
+function open2025Popup(){
+
+  document.getElementById("popup2025").style.display =
+    "block";
+
+}
+
+function close2025Popup(){
+
+  document.getElementById("popup2025").style.display =
+    "none";
+
+}
+
+
+// CLOSE WHEN CLICKING OUTSIDE
+window.onclick = function(event){
+
+  const popup = document.getElementById("popup2025");
+
+  if(event.target == popup){
+
+    popup.style.display = "none";
+
+  }
+
+}
+
+</script>
+
+
+
+
 <script>
 const paidMembers = [
   "BONIFACE CHELLUGET",
@@ -3867,9 +4008,54 @@ document.querySelectorAll("#table2025 tbody tr").forEach(row => {
   }
 });
 </script>
+<!-- =========================
+   BUTTON TO OPEN 2026 TABLE
+========================= -->
+
+<button onclick="open2026Popup()" 
+style="
+background:#1565c0;
+color:white;
+border:none;
+padding:10px 18px;
+border-radius:8px;
+cursor:pointer;
+font-weight:bold;
+margin:10px 0;
+">
+📊 View 2026 Contributions
+</button>
 
 
-<!-- ================== STYLE ================== -->
+
+<!-- =========================
+   POPUP CONTAINER
+========================= -->
+
+<div id="popup2026" class="popup2026">
+
+  <div class="popup2026-content">
+
+    <!-- CLOSE BUTTON -->
+    <span class="close2026" onclick="close2026Popup()">
+      &times;
+    </span>
+
+    <!-- TITLE -->
+    <h4>📊 Group Contributions for 2026</h4>
+
+    <!-- TABLE CONTAINER -->
+    <div class="table-container">
+
+      <!-- PASTE YOUR 2026 TABLE HERE -->
+      <!-- START -->
+
+      <table id="table2026"
+             border="1"
+             style="width:100%; border-collapse:collapse; text-align:center;">
+
+      <!-- YOUR FULL 2026 TABLE CONTENT -->
+       <!-- ================== STYLE ================== -->
 <style>
 /* 🌈 Glow + Pulse (continuous) */
 @keyframes glowColorPulse {
@@ -4328,6 +4514,102 @@ function triggerUpdate() {
   </tbody>
 </table> 
 
+      </table>
+
+      <!-- END -->
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<!-- =========================
+   STYLE
+========================= -->
+
+<style>
+
+.popup2026{
+  display:none;
+  position:fixed;
+  z-index:9999;
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.6);
+}
+
+.popup2026-content{
+  background:white;
+  margin:2% auto;
+  padding:20px;
+  width:96%;
+  max-height:92vh;
+  overflow:auto;
+  border-radius:12px;
+  position:relative;
+}
+
+.close2026{
+  position:absolute;
+  right:15px;
+  top:10px;
+  font-size:30px;
+  cursor:pointer;
+  color:red;
+  font-weight:bold;
+}
+
+.table-container{
+  overflow-x:auto;
+}
+
+</style>
+
+
+
+<!-- =========================
+   SCRIPT
+========================= -->
+
+<script>
+
+function open2026Popup(){
+
+  document.getElementById("popup2026").style.display =
+    "block";
+
+}
+
+function close2026Popup(){
+
+  document.getElementById("popup2026").style.display =
+    "none";
+
+}
+
+
+// CLOSE WHEN CLICKING OUTSIDE
+window.onclick = function(event){
+
+  const popup = document.getElementById("popup2026");
+
+  if(event.target == popup){
+
+    popup.style.display = "none";
+
+  }
+
+}
+
+</script>
+
+
+
 <script>
 /* =========================
    PAYMENT STATUS ONLY - 2026
@@ -4393,29 +4675,33 @@ document.querySelectorAll("#table2026 tbody tr").forEach(row => {
 </script>
 
 <!-- =========================
-   SMALL DASHBOARD BELOW LOGOUT
+   MINI DASHBOARD
 ========================= -->
 
 <div class="mini-dashboard">
 
+  <!-- MEMBERS -->
   <div class="mini-card">
     <div>👥</div>
     <h4 id="totalMembers">0</h4>
     <small>Members</small>
   </div>
 
+  <!-- SAVINGS -->
   <div class="mini-card">
     <div>💰</div>
     <h4 id="totalSavings">0</h4>
     <small>Savings</small>
   </div>
 
+  <!-- QUALIFIED -->
   <div class="mini-card">
     <div>✅</div>
     <h4 id="qualifiedMembers">0</h4>
     <small>Qualified</small>
   </div>
 
+  <!-- TOP SAVERS BUTTON -->
   <div class="mini-card">
 
     <button class="topSaverBtn"
@@ -4425,9 +4711,6 @@ document.querySelectorAll("#table2026 tbody tr").forEach(row => {
 
   </div>
 
-</div>
-
-</div>
 </div>
 
 
@@ -4446,7 +4729,7 @@ document.querySelectorAll("#table2026 tbody tr").forEach(row => {
        id="topSaverList">
   </div>
 
-  <div style="text-align:center; padding-bottom:15px;">
+  <div style="text-align:center; padding-bottom:10px;">
 
     <button class="closePopup"
             onclick="closeTopSavers()">
@@ -4465,39 +4748,44 @@ document.querySelectorAll("#table2026 tbody tr").forEach(row => {
 
 <style>
 
+/* DASHBOARD */
+
 .mini-dashboard{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
-  gap:10px;
-  margin-top:18px;
+  grid-template-columns:repeat(auto-fit,minmax(85px,1fr));
+  gap:6px;
+  margin-top:10px;
 }
 
 .mini-card{
   background:linear-gradient(135deg,#00796b,#004d40);
   color:white;
-  border-radius:10px;
-  padding:10px;
+  border-radius:8px;
+  padding:6px;
   text-align:center;
-  box-shadow:0 2px 6px rgba(0,0,0,0.15);
+  box-shadow:0 1px 4px rgba(0,0,0,0.15);
 }
 
 .mini-card h4{
-  margin:5px 0;
-  font-size:15px;
+  margin:3px 0;
+  font-size:12px;
 }
 
 .mini-card small{
-  font-size:11px;
+  font-size:9px;
 }
+
+
+/* TOP SAVER BUTTON */
 
 .topSaverBtn{
   background:#ff9800;
   border:none;
   color:white;
-  padding:7px 10px;
-  border-radius:8px;
+  padding:5px 7px;
+  border-radius:6px;
   cursor:pointer;
-  font-size:11px;
+  font-size:9px;
   font-weight:bold;
   width:100%;
 }
@@ -4515,11 +4803,11 @@ document.querySelectorAll("#table2026 tbody tr").forEach(row => {
   top:50%;
   left:50%;
   transform:translate(-50%,-50%);
-  width:320px;
-  max-width:90%;
+  width:250px;
+  max-width:85%;
   background:white;
-  border-radius:14px;
-  box-shadow:0 8px 25px rgba(0,0,0,0.3);
+  border-radius:10px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.25);
   z-index:9999;
   overflow:hidden;
 }
@@ -4527,27 +4815,33 @@ document.querySelectorAll("#table2026 tbody tr").forEach(row => {
 .popup-header{
   background:#00796b;
   color:white;
-  padding:12px;
+  padding:8px;
   text-align:center;
   font-weight:bold;
+  font-size:12px;
 }
 
 .popup-body{
-  padding:15px;
+  padding:10px;
+  font-size:11px;
 }
 
 .popup-body div{
-  padding:10px;
+  padding:7px;
   border-bottom:1px solid #ddd;
 }
+
+
+/* CLOSE BUTTON */
 
 .closePopup{
   background:#d32f2f;
   color:white;
   border:none;
-  padding:8px 14px;
-  border-radius:8px;
+  padding:5px 10px;
+  border-radius:6px;
   cursor:pointer;
+  font-size:10px;
 }
 
 </style>
@@ -4575,6 +4869,7 @@ function updateDashboard(){
 
   rows.forEach(row => {
 
+    // Skip total row
     if(row.querySelector("#grandTotal_2026")) return;
 
     const nameCell = row.querySelector("td");
@@ -4588,26 +4883,34 @@ function updateDashboard(){
     let memberTotal = 0;
 
     inputs.forEach(input => {
+
       memberTotal += Number(input.value) || 0;
+
     });
 
     totalSavings += memberTotal;
 
+    // Qualification
     if(memberTotal >= 1500){
+
       qualifiedMembers++;
+
     }
 
+    // Save member totals
     topSaversData.push({
+
       name:nameCell.textContent,
       total:memberTotal
+
     });
 
   });
 
-  // SORT
+  // SORT DESCENDING
   topSaversData.sort((a,b)=>b.total-a.total);
 
-  // UPDATE
+  // UPDATE DASHBOARD
   document.getElementById("totalMembers").innerHTML =
     totalMembers;
 
@@ -4616,11 +4919,13 @@ function updateDashboard(){
 
   document.getElementById("qualifiedMembers").innerHTML =
     qualifiedMembers;
+
 }
 
 
 
 // SHOW TOP SAVERS
+
 function showTopSavers(){
 
   const popup =
@@ -4631,67 +4936,55 @@ function showTopSavers(){
 
   list.innerHTML = "";
 
-  const top3 = topSaversData.slice(0,3);
+  const top3 =
+    topSaversData.slice(0,3);
 
   top3.forEach((member,index)=>{
 
-    const medals = ["🥇","🥈","🥉"];
+    const medals =
+      ["🥇","🥈","🥉"];
 
     list.innerHTML += `
+
       <div>
-        <b>${medals[index]} ${member.name}</b><br>
+
+        <b>
+          ${medals[index]}
+          ${member.name}
+        </b>
+
+        <br>
+
         Ksh ${member.total.toLocaleString()}
+
       </div>
+
     `;
 
   });
 
   popup.style.display = "block";
+
 }
+
 
 
 // CLOSE POPUP
+
 function closeTopSavers(){
-  document.getElementById("topSaverPopup").style.display =
-    "none";
+
+  document.getElementById("topSaverPopup")
+    .style.display = "none";
+
 }
 
 
+
 // RUN
+
 updateDashboard();
+
 </script>
-
-
-<!-- Toast -->
-<div class="toast" id="toast"></div>
-<!-- Loan Applications History -->
-<div id="loanHistory" style="margin-top:30px;">
-<h3>📜 Loan Applications History</h3>
-<table border="1" style="width:100%; border-collapse:collapse; text-align:center;">
-<thead style="background:#00796b; color:white;">
-<tr>
-<th>Name</th>
-<th>Phone</th>
-<th>Qualified Loan</th>
-<th>Requested Amount</th>
-<th>ID Number</th>
-<th>Date</th>
-<th>Status</th>
-<th>Receipt</th> <!-- ✅ Added -->
-</tr>
-</thead>
-<tbody id="loanHistoryBody">
-
-<!-- Default row if no applications -->
-<tr><td colspan="8" style="color:gray;">No loan applications yet.</td><td class="saved2025">0</td><td class="reward2025">0</td></tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-
-
-
 
 
 
