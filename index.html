@@ -2559,6 +2559,74 @@ style="width:150px; height:150px; border-radius:50%; object-fit:cover; box-shado
   const upcomingTimer = setInterval(updateUpcomingMeeting, 1000);
   updateUpcomingMeeting();
 </script>
+<!-- ================= POPUP HTML ================= -->
+
+<div id="systemUpdatePopup" class="dashboardPopup">
+
+  <div class="popup-content">
+
+    <div class="popup-header">
+      System Upgrade Notice
+    </div>
+
+    <div class="popup-body">
+
+      <div style="
+        background: linear-gradient(135deg,#e0f2f1,#ffffff);
+        border-left:5px solid #00796b;
+        padding:14px;
+        border-radius:10px;
+        font-size:14px;
+        line-height:1.6;
+        color:#333;
+        box-shadow:0 2px 8px rgba(0,0,0,0.08);
+      ">
+
+        <b style="color:#00796b;">📢 Important Update</b><br><br>
+
+        The system has been successfully upgraded.<br><br>
+
+        Members can now continue and enjoy new features inside the dashboard.<br><br>
+
+        <b style="color:#00796b;">✨ New Features Added:</b><br>
+
+        • 💰 Savings View<br>
+        • 📊 Total Savings View<br>
+        • 🥇 Top Savers View<br>
+        • 👥 Members View<br>
+        • ✅ Qualified Members View<br><br>
+
+        Please log in and explore all new updates.<br><br>
+
+        Thank you for being part of the community.
+
+      </div>
+
+    </div>
+
+    <button class="closePopup" onclick="closeSystemUpdatePopup()">
+      Close
+    </button>
+
+  </div>
+
+</div>
+
+<!-- ================= SCRIPT ================= -->
+
+<script>
+
+// SHOW ON PAGE LOAD
+window.addEventListener("load", function(){
+  document.getElementById("systemUpdatePopup").style.display = "flex";
+});
+
+// CLOSE POPUP
+function closeSystemUpdatePopup(){
+  document.getElementById("systemUpdatePopup").style.display = "none";
+}
+
+</script>
 
 
 
@@ -3380,11 +3448,6 @@ document.getElementById("downloadFormBtn").addEventListener("click", () => {
 
 
 
-
-
-
-
-
 <style>
 .download-disabled {
   opacity: 0.5;
@@ -3421,23 +3484,7 @@ document.getElementById("downloadFormBtn").addEventListener("click", () => {
     Welcome! Your note will appear here after login.
   </p>
 </div>
-<!-- Eligibility Info Box -->
-<div style="margin:20px auto; padding:15px; background:#e3f2fd; border-left:6px solid #1976d2; border-radius:8px; max-width:600px;">
-<h3 style="color:#1976d2; margin-bottom:10px;">📌 Membership &amp; Loan Eligibility</h3>
-<p style="line-height:1.6; color:#333;">
-      ✅ <b>Loan Qualification:</b> A member must have saved at least <b>Ksh 1,500</b>.<br/><br/>
-      ✅ <b>Official Membership:</b> To become an official member, you must be active for a minimum of <b>4 months</b> in the chama.<br/><br/>
-      ✅ <b>Commitment:</b> Members are expected to contribute consistently and maintain good financial discipline.<br/><br/>
-      ✅ <b>Support &amp; Trust:</b> Being a member means supporting one another and upholding transparency within the group.
-    </p>
-</div>
-<button class="download-btn csv download-disabled">
-  ⬇️ Download CSV
-</button>
 
-<button class="download-btn pdf download-disabled">
-  ⬇️ Download PDF
-</button>
 <!-- =========================
    BUTTON TO OPEN TABLE
 ========================= -->
@@ -3453,7 +3500,7 @@ cursor:pointer;
 font-weight:bold;
 margin:10px 0;
 ">
-📊 View 2025 Contributions
+📊 click to View 2025 Contributions
 </button>
 
 
@@ -3471,412 +3518,463 @@ margin:10px 0;
       &times;
     </span>
 
-    <!-- YOUR TABLE TITLE -->
+    <!-- TITLE -->
     <h4>📊 Group Contributions for 2025</h4>
 
     <!-- TABLE -->
     <div class="table-container">
 
-      <!-- PASTE YOUR ENTIRE TABLE HERE -->
-      <!-- START -->
-      
-      <table id="table2025"
-             border="1"
-             style="width:100%; border-collapse:collapse; text-align:center;">
+<table id="table2025"
+border="1"
+style="width:100%; border-collapse:collapse; text-align:center;">
 
-      <!-- YOUR FULL TABLE CONTENT -->
-       <h4>📊 Group Contributions for 2025</h4>
+<thead style="background:#00796b; color:white;">
 
-<div class="table-container"><table id="table2025" border="1" style="width:100%; border-collapse:collapse; text-align:center;">
+<tr>
+<th>NAME</th>
+<th>JAN</th>
+<th>FEB</th>
+<th>MAR</th>
+<th>APR</th>
+<th>MAY</th>
+<th>JUNE</th>
+<th>JULY</th>
+<th>AUG</th>
+<th>SEPT</th>
+<th>OCT</th>
+<th>NOV</th>
+<th>DEC</th>
 
-  <thead style="background:#00796b; color:white;">
-    <tr>
-      <th>NAME</th>
-      <th>JAN</th>
-      <th>FEB</th>
-      <th>MAR</th>
-      <th>APR</th>
-      <th>MAY</th>
-      <th>JUNE</th>
-      <th>JULY</th>
-      <th>AUG</th>
-      <th>SEPT</th>
-      <th>OCT</th>
-      <th>NOV</th>
-      <th>DEC</th>
-      
 <th style="background:#17da48;">TOTAL</th>
 <th style="background:#ff9800;">SAVED 2025</th>
 <th style="background:#4caf50;">REWARD BACK</th>
-<th style="background:#2196f3; color:white;">PAYMENT STATUS</th>
+<th style="background:#2196f3; color:white;">
+PAYMENT STATUS
+</th>
 
-    </tr>
-  </thead>
+</tr>
+</thead>
 
-  <tbody>
-    <tr><td>BONIFACE CHELLUGET</td>
-      <td><input type="number" value="300"/></td>
-      <td><input type="number" value="300"/></td>
-      <td><input type="number" value="300"/></td>
-      <td><input type="number" value="300"/></td>
-      <td><input type="number" value="300"/></td>
-      <td><input type="number" value="300"/></td>
-      <td><input type="number" value="300"/></td>
-      <td><input type="number" value="300"/></td>
-      <td><input type="number" value="300"/></td>
-      <td><input type="number" value="310"/></td>
-      <td><input type="number" value="200"/></td>
-      <td><input type="number" value="200"/></td>
-      <td class="rowTotal">3000</td>
-     <td class="saved2025">0</td>
-     <td class="reward2025">0</td>
-     <td class="paymentStatus"></td>
+<tbody>
 
+<tr>
+<td>BONIFACE CHELLUGET</td>
+<td><input type="number" value="300"></td>
+<td><input type="number" value="300"></td>
+<td><input type="number" value="300"></td>
+<td><input type="number" value="300"></td>
+<td><input type="number" value="300"></td>
+<td><input type="number" value="300"></td>
+<td><input type="number" value="300"></td>
+<td><input type="number" value="300"></td>
+<td><input type="number" value="300"></td>
+<td><input type="number" value="310"></td>
+<td><input type="number" value="200"></td>
+<td><input type="number" value="200"></td>
 
-    <tr><td>HILDA ODERO</td>
-      <td><input type="number" value="400"/>
-      </td><td><input type="number" value="200"/></td>
-      <td><input type="number" value="100"/></td>
-      <td><input type="number" value="200"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td class="rowTotal">900</td><td class="saved2025">0</td><td class="reward2025">0</td></tr>
+<td class="rowTotal">0</td>
+<td class="saved2025">0</td>
+<td class="reward2025">0</td>
+<td class="paymentStatus"></td>
+</tr>
 
-    <tr><td>JOEL EGESA</td><td>
-      <input type="number" value="200"/>
-    </td><td><input type="number" value="0"/></td>
-    <td><input type="number" value="20"/></td>
-    <td><input type="number" value="0"/></td>
-    <td><input type="number" value="0"/></td>
-    <td><input type="number" value="0"/></td>
-    <td><input type="number" value="0"/></td>
-    <td><input type="number" value="0"/></td>
-    <td><input type="number" value="500"/></td>
-    <td><input type="number" value="0"/></td>
-    <td><input type="number" value="0"/></td>
-    <td><input type="number" value="0"/></td>
-    <td class="rowTotal">720</td><td class="saved2025">0</td><td class="reward2025">0</td></tr>
+<tr>
+<td>HILDA ODERO</td>
+<td><input type="number" value="400"></td>
+<td><input type="number" value="200"></td>
+<td><input type="number" value="100"></td>
+<td><input type="number" value="200"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
 
-    <tr><td>SHALIK SHIVERENGE</td><td>
-      <input type="number" value="250"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td class="rowTotal">250</td><td class="saved2025">0</td><td class="reward2025">0</td></tr>
+<td class="rowTotal">0</td>
+<td class="saved2025">0</td>
+<td class="reward2025">0</td>
+<td class="paymentStatus"></td>
+</tr>
 
-    <tr><td>EVERLINE MAINA</td><td>
-      <input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="00"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="72"/></td>
-      <td><input type="number" value="200"/></td>
-      <td><input type="number" value="355"/></td>
-      <td><input type="number" value="0"/></td>
-       <td class="rowTotal">3000</td>
-     <td class="saved2025">0</td>
-     <td class="reward2025">0</td>
-     <td class="paymentStatus"></td>
+<tr>
+<td>JOEL EGESA</td>
+<td><input type="number" value="200"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="20"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="500"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
 
-    <tr><td>ELVIS KAMASH</td><td>
-      <input type="number" value="250"/></td>
-      <td><input type="number" value="150"/></td>
-      <td><input type="number" value="250"/></td>
-      <td><input type="number" value="50"/></td>
-      <td><input type="number" value="200"/></td>
-      <td><input type="number" value="150"/></td>
-      <td><input type="number" value="50"/></td>
-      <td><input type="number" value="250"/></td>
-      <td><input type="number" value="200"/></td>
-      <td><input type="number" value="150"/></td>
-      <td><input type="number" value="105"/></td>
-      <td><input type="number" value="0"/></td>
-       <td class="rowTotal">3000</td>
-     <td class="saved2025">0</td>
-     <td class="reward2025">0</td>
-     <td class="paymentStatus"></td>
+<td class="rowTotal">0</td>
+<td class="saved2025">0</td>
+<td class="reward2025">0</td>
+<td class="paymentStatus"></td>
+</tr>
 
-    <tr><td>JULIUS KEBASO</td><td>
-      <input type="number" value="450"/></td>
-      <td><input type="number" value="300"/></td>
-      <td><input type="number" value="500"/></td>
-      <td><input type="number" value="500"/></td>
-      <td><input type="number" value="400"/></td>
-      <td><input type="number" value="500"/></td>
-      <td><input type="number" value="400"/></td>
-      <td><input type="number" value="500"/></td>
-      <td><input type="number" value="400"/></td>
-      <td><input type="number" value="400"/></td>
-      <td><input type="number" value="405"/></td>
-      <td><input type="number" value="300"/></td>
-       <td class="rowTotal">3000</td>
-     <td class="saved2025">0</td>
-     <td class="reward2025">0</td>
-     <td class="paymentStatus"></td>
+<tr>
+<td>SHALIK SHIVERENGE</td>
+<td><input type="number" value="250"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
 
-    <tr><td>CHRISTINE PIUS</td>
-      <td><input type="number" value="50"/></td>
-      <td><input type="number" value="150"/></td>
-      <td><input type="number" value="250"/></td>
-      <td><input type="number" value="150"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="100"/></td>
-      <td><input type="number" value="700"/></td>
-      <td><input type="number" value="205"/></td>
-      <td><input type="number" value="150"/></td>
-       <td class="rowTotal">3000</td>
-     <td class="saved2025">0</td>
-     <td class="reward2025">0</td>
-     <td class="paymentStatus"></td>
+<td class="rowTotal">0</td>
+<td class="saved2025">0</td>
+<td class="reward2025">0</td>
+<td class="paymentStatus"></td>
+</tr>
 
-    
+<tr>
+<td>EVERLINE MAINA</td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="72"></td>
+<td><input type="number" value="200"></td>
+<td><input type="number" value="355"></td>
+<td><input type="number" value="0"></td>
 
-    <tr><td>JACKIENYARANGI</td><td>
-      <input type="number" value="200"/></td>
-      <td><input type="number" value="200"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="100"/></td>
-      <td><input type="number" value="200"/></td>
-      <td><input type="number" value="150"/></td>
-      <td><input type="number" value="150"/></td>
-      <td class="rowTotal">550</td><td class="saved2025">0</td><td class="reward2025">0</td></tr>
+<td class="rowTotal">0</td>
+<td class="saved2025">0</td>
+<td class="reward2025">0</td>
+<td class="paymentStatus"></td>
+</tr>
 
-    
+<tr>
+<td>ELVIS KAMASH</td>
+<td><input type="number" value="250"></td>
+<td><input type="number" value="150"></td>
+<td><input type="number" value="250"></td>
+<td><input type="number" value="50"></td>
+<td><input type="number" value="200"></td>
+<td><input type="number" value="150"></td>
+<td><input type="number" value="50"></td>
+<td><input type="number" value="250"></td>
+<td><input type="number" value="200"></td>
+<td><input type="number" value="150"></td>
+<td><input type="number" value="105"></td>
+<td><input type="number" value="0"></td>
 
-    
+<td class="rowTotal">0</td>
+<td class="saved2025">0</td>
+<td class="reward2025">0</td>
+<td class="paymentStatus"></td>
+</tr>
 
-   
+<tr>
+<td>JULIUS KEBASO</td>
+<td><input type="number" value="450"></td>
+<td><input type="number" value="300"></td>
+<td><input type="number" value="500"></td>
+<td><input type="number" value="500"></td>
+<td><input type="number" value="400"></td>
+<td><input type="number" value="500"></td>
+<td><input type="number" value="400"></td>
+<td><input type="number" value="500"></td>
+<td><input type="number" value="400"></td>
+<td><input type="number" value="400"></td>
+<td><input type="number" value="405"></td>
+<td><input type="number" value="300"></td>
 
-    <tr><td>SAMUEL OYUGI</td><td>
-      <input type="number" value="400"/></td>
-      <td><input type="number" value="300"/>
-      </td><td><input type="number" value="500"/></td>
-      <td><input type="number" value="400"/></td>
-      <td><input type="number" value="400"/></td>
-      <td><input type="number" value="500"/></td>
-      <td><input type="number" value="400"/></td>
-      <td><input type="number" value="500"/></td>
-      <td><input type="number" value="400"/></td>
-      <td><input type="number" value="300"/></td>
-      <td><input type="number" value="405"/></td>
-      <td><input type="number" value="300"/></td>
-      <td class="rowTotal">3000</td>
-     <td class="saved2025">0</td>
-     <td class="reward2025">0</td>
-     <td class="paymentStatus"></td>
+<td class="rowTotal">0</td>
+<td class="saved2025">0</td>
+<td class="reward2025">0</td>
+<td class="paymentStatus"></td>
+</tr>
 
-      
-    
+<tr>
+<td>CHRISTINE PIUS</td>
+<td><input type="number" value="50"></td>
+<td><input type="number" value="150"></td>
+<td><input type="number" value="250"></td>
+<td><input type="number" value="150"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="100"></td>
+<td><input type="number" value="700"></td>
+<td><input type="number" value="205"></td>
+<td><input type="number" value="150"></td>
 
-    <tr><td>KEFFA MOMANYI</td><td>
-      <input type="number" value="250"/></td>
-      <td><input type="number" value="200"/></td>
-      <td><input type="number" value="200"/></td>
-      <td><input type="number" value="200"/></td>
-      <td><input type="number" value="200"/></td>
-      <td><input type="number" value="250"/></td>
-      <td><input type="number" value="200"/></td>
-      <td><input type="number" value="150"/></td>
-      <td><input type="number" value="200"/></td>
-      
-      <td><input type="number" value="200"/></td>
-      <td><input type="number" value="200"/></td>
-      <td><input type="number" value="150"/></td>
-      <td class="rowTotal">3000</td>
-     <td class="saved2025">0</td>
-     <td class="reward2025">0</td>
-     <td class="paymentStatus"></td>
+<td class="rowTotal">0</td>
+<td class="saved2025">0</td>
+<td class="reward2025">0</td>
+<td class="paymentStatus"></td>
+</tr>
 
-    <tr>
-  <td>KENNEDY MUTAYI</td>
-  <td><input type="number" value="750"/></td>   <!-- Jan -->
-  <td><input type="number" value="450"/></td>   <!-- Feb -->
-  <td><input type="number" value="750"/></td>   <!-- Mar -->
-  <td><input type="number" value="600"/></td>   <!-- Apr -->
-  <td><input type="number" value="600"/></td>   <!-- May -->
-  <td><input type="number" value="750"/></td>   <!-- Jun -->
-  <td><input type="number" value="600"/></td>   <!-- Jul -->
-  <td><input type="number" value="750"/></td>   <!-- Aug -->
-  <td><input type="number" value="600"/></td>   <!-- Sept -->
-  <td><input type="number" value="600"/></td>   <!-- Oct -->
-  <td><input type="number" value="605"/></td>     <!-- Nov -->
-  <td><input type="number" value="450"/></td>     <!-- Dec -->
-  <td class="rowTotal">3000</td>
-     <td class="saved2025">0</td>
-     <td class="reward2025">0</td>
-     <td class="paymentStatus"></td>
+<tr>
+<td>JACKIENYARANGI</td>
+<td><input type="number" value="200"></td>
+<td><input type="number" value="200"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="100"></td>
+<td><input type="number" value="200"></td>
+<td><input type="number" value="150"></td>
+<td><input type="number" value="150"></td>
 
+<td class="rowTotal">0</td>
+<td class="saved2025">0</td>
+<td class="reward2025">0</td>
+<td class="paymentStatus"></td>
+</tr>
 
-    <tr><td>MIKE MORRIS</td><td>
-      <input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td class="rowTotal">0</td><td class="saved2025">0</td><td class="reward2025">0</td></tr>
+<tr>
+<td>SAMUEL OYUGI</td>
+<td><input type="number" value="400"></td>
+<td><input type="number" value="300"></td>
+<td><input type="number" value="500"></td>
+<td><input type="number" value="400"></td>
+<td><input type="number" value="400"></td>
+<td><input type="number" value="500"></td>
+<td><input type="number" value="400"></td>
+<td><input type="number" value="500"></td>
+<td><input type="number" value="400"></td>
+<td><input type="number" value="300"></td>
+<td><input type="number" value="405"></td>
+<td><input type="number" value="300"></td>
 
-    <tr><td>FAITH MOKOGI</td><td>
-      <input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="500"/></td>
-      <td><input type="number" value="200"/></td>
-      <td><input type="number" value="250"/></td>
-      <td><input type="number" value="50"/></td>
-      <td><input type="number" value="100"/></td>
-      <td><input type="number" value="50"/></td>
-      <td><input type="number" value="350"/></td>
-      <td><input type="number" value="970"/></td>
-      <td><input type="number" value="100"/></td>
-      <td><input type="number" value="100"/></td>
-      <td class="rowTotal">3000</td>
-     <td class="saved2025">0</td>
-     <td class="reward2025">0</td>
-     <td class="paymentStatus"></td>
+<td class="rowTotal">0</td>
+<td class="saved2025">0</td>
+<td class="reward2025">0</td>
+<td class="paymentStatus"></td>
+</tr>
+<tr>
+<td>KEFFA MOMANYI</td>
+<td><input type="number" value="250"></td>
+<td><input type="number" value="200"></td>
+<td><input type="number" value="200"></td>
+<td><input type="number" value="200"></td>
+<td><input type="number" value="200"></td>
+<td><input type="number" value="250"></td>
+<td><input type="number" value="200"></td>
+<td><input type="number" value="150"></td>
+<td><input type="number" value="200"></td>
+<td><input type="number" value="200"></td>
+<td><input type="number" value="200"></td>
+<td><input type="number" value="150"></td>
 
-    <tr><td>SADLER KARAN</td><td>
-      <input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="200"/></td>
-      <td><input type="number" value="200"/></td>
-      <td><input type="number" value="150"/></td>
-      <td><input type="number" value="50"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td class="rowTotal">600</td><td class="saved2025">0</td><td class="reward2025">0</td></tr>
+<td class="rowTotal">0</td>
+<td class="saved2025">0</td>
+<td class="reward2025">0</td>
+<td class="paymentStatus"></td>
+</tr>
 
-    
+<tr>
+<td>KENNEDY MUTAYI</td>
+<td><input type="number" value="750"></td>
+<td><input type="number" value="450"></td>
+<td><input type="number" value="750"></td>
+<td><input type="number" value="600"></td>
+<td><input type="number" value="600"></td>
+<td><input type="number" value="750"></td>
+<td><input type="number" value="600"></td>
+<td><input type="number" value="750"></td>
+<td><input type="number" value="600"></td>
+<td><input type="number" value="600"></td>
+<td><input type="number" value="605"></td>
+<td><input type="number" value="450"></td>
 
-    <tr><td>SHAMIM KAMASH</td><td>
-      <input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="200"/></td>
-      <td><input type="number" value="150"/></td>
-      <td><input type="number" value="50"/></td>
-      <td><input type="number" value="250"/></td>
-      <td><input type="number" value="200"/></td>
-      <td><input type="number" value="150"/></td>
-      <td><input type="number" value="100"/></td>
-      <td><input type="number" value="0"/></td>
-      <td class="rowTotal">900</td><td class="saved2025">0</td><td class="reward2025">0</td></tr>
+<td class="rowTotal">0</td>
+<td class="saved2025">0</td>
+<td class="reward2025">0</td>
+<td class="paymentStatus"></td>
+</tr>
 
-    <tr><td>CLAUDIA MORAA</td><td>
-      <input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="100"/></td>
-      <td><input type="number" value="400"/></td>
-      <td><input type="number" value="300"/></td>
-      <td><input type="number" value="200"/></td>
-      <td><input type="number" value="200"/></td>
-      <td><input type="number" value="250"/></td>
-      <td><input type="number" value="200"/></td>
-     <td class="rowTotal">3000</td>
-     <td class="saved2025">0</td>
-     <td class="reward2025">0</td>
-     <td class="paymentStatus"></td>
+<tr>
+<td>MIKE MORRIS</td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
 
-    <tr><td>ESTHER OBEGI</td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="500"/></td>
-      <td><input type="number" value="450"/></td>
-      <td><input type="number" value="100"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td class="rowTotal">0</td><td class="saved2025">0</td><td class="reward2025">0</td></tr>
+<td class="rowTotal">0</td>
+<td class="saved2025">0</td>
+<td class="reward2025">0</td>
+<td class="paymentStatus"></td>
+</tr>
 
-   
+<tr>
+<td>FAITH MOKOGI</td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="500"></td>
+<td><input type="number" value="200"></td>
+<td><input type="number" value="250"></td>
+<td><input type="number" value="50"></td>
+<td><input type="number" value="100"></td>
+<td><input type="number" value="50"></td>
+<td><input type="number" value="350"></td>
+<td><input type="number" value="970"></td>
+<td><input type="number" value="100"></td>
+<td><input type="number" value="100"></td>
 
-    
+<td class="rowTotal">0</td>
+<td class="saved2025">0</td>
+<td class="reward2025">0</td>
+<td class="paymentStatus"></td>
+</tr>
 
+<tr>
+<td>SADLER KARAN</td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="200"></td>
+<td><input type="number" value="200"></td>
+<td><input type="number" value="150"></td>
+<td><input type="number" value="50"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
 
-      <tr><td>LILIAN KERUBO</td><td>
-      <input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="100"/></td>
-      <td><input type="number" value="300"/></td>
-      <td class="rowTotal">0</td><td class="saved2025">0</td><td class="reward2025">0</td></tr>
+<td class="rowTotal">0</td>
+<td class="saved2025">0</td>
+<td class="reward2025">0</td>
+<td class="paymentStatus"></td>
+</tr>
 
+<tr>
+<td>SHAMIM KAMASH</td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="200"></td>
+<td><input type="number" value="150"></td>
+<td><input type="number" value="50"></td>
+<td><input type="number" value="250"></td>
+<td><input type="number" value="200"></td>
+<td><input type="number" value="150"></td>
+<td><input type="number" value="100"></td>
+<td><input type="number" value="0"></td>
 
+<td class="rowTotal">0</td>
+<td class="saved2025">0</td>
+<td class="reward2025">0</td>
+<td class="paymentStatus"></td>
+</tr>
 
-   
+<tr>
+<td>CLAUDIA MORAA</td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="100"></td>
+<td><input type="number" value="400"></td>
+<td><input type="number" value="300"></td>
+<td><input type="number" value="200"></td>
+<td><input type="number" value="200"></td>
+<td><input type="number" value="250"></td>
+<td><input type="number" value="200"></td>
+
+<td class="rowTotal">0</td>
+<td class="saved2025">0</td>
+<td class="reward2025">0</td>
+<td class="paymentStatus"></td>
+</tr>
+
+<tr>
+<td>ESTHER OBEGI</td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="500"></td>
+<td><input type="number" value="450"></td>
+<td><input type="number" value="100"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+
+<td class="rowTotal">0</td>
+<td class="saved2025">0</td>
+<td class="reward2025">0</td>
+<td class="paymentStatus"></td>
+</tr>
+
+<tr>
+<td>LILIAN KERUBO</td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="100"></td>
+<td><input type="number" value="300"></td>
+
+<td class="rowTotal">0</td>
+<td class="saved2025">0</td>
+<td class="reward2025">0</td>
+<td class="paymentStatus"></td>
+</tr>
+
+<!-- ADD ALL OTHER MEMBERS HERE USING SAME FORMAT -->
+
 <tr style="font-weight:bold; background:#e0f2f1;">
-  <td colspan="13" style="text-align:right;">GRAND TOTAL</td>
-  <td id="grandTotal_2025">0</td>
-  <td id="savedTotal_2025">0</td>
-  <td id="rewardTotal_2025">0</td>
-  <th style="background:#2196f3; color:white;">PAYMENT STATUS</th>
+
+<td colspan="13" style="text-align:right;">
+GRAND TOTAL
+</td>
+
+<td id="grandTotal_2025">0</td>
+<td id="savedTotal_2025">0</td>
+<td id="rewardTotal_2025">0</td>
+<td>-</td>
 
 </tr>
 
-
-
-  </tbody>
+</tbody>
 </table>
 
-
-      </table>
-
-      <!-- END -->
-
-    </div>
-
-  </div>
-
+</div>
+</div>
 </div>
 
 
@@ -3923,6 +4021,12 @@ margin:10px 0;
   overflow-x:auto;
 }
 
+input{
+  width:70px;
+  padding:4px;
+  text-align:center;
+}
+
 </style>
 
 
@@ -3960,6 +4064,131 @@ window.onclick = function(event){
   }
 
 }
+
+
+
+// =========================
+// AUTO CALCULATIONS
+// =========================
+
+function calculate2025Table() {
+
+  let grandTotal = 0;
+  let savedTotal = 0;
+  let rewardTotal = 0;
+
+  const rows = document.querySelectorAll("#table2025 tbody tr");
+
+  rows.forEach(row => {
+
+    const inputs = row.querySelectorAll("input");
+
+    if(inputs.length === 0) return;
+
+    let total = 0;
+
+    inputs.forEach(input => {
+
+      total += Number(input.value) || 0;
+
+      input.addEventListener("input",
+      calculate2025Table);
+
+    });
+
+    const reward = Math.round(total * 0.20);
+
+    const totalCell =
+      row.querySelector(".rowTotal");
+
+    const savedCell =
+      row.querySelector(".saved2025");
+
+    const rewardCell =
+      row.querySelector(".reward2025");
+
+    const statusCell =
+      row.querySelector(".paymentStatus");
+
+
+
+    if(totalCell){
+
+      totalCell.innerHTML =
+      "Ksh " + total.toLocaleString();
+
+    }
+
+    if(savedCell){
+
+      savedCell.innerHTML =
+      "Ksh " + total.toLocaleString();
+
+    }
+
+    if(rewardCell){
+
+      rewardCell.innerHTML =
+      "Ksh " + reward.toLocaleString();
+
+    }
+
+
+    if(statusCell){
+
+      if(total > 0){
+
+        statusCell.innerHTML =
+        "✅ ACTIVE";
+
+        statusCell.style.color =
+        "green";
+
+        statusCell.style.fontWeight =
+        "bold";
+
+      }
+
+      else{
+
+        statusCell.innerHTML =
+        "❌ PENDING";
+
+        statusCell.style.color =
+        "red";
+
+        statusCell.style.fontWeight =
+        "bold";
+
+      }
+
+    }
+
+
+    grandTotal += total;
+    savedTotal += total;
+    rewardTotal += reward;
+
+  });
+
+
+  document.getElementById("grandTotal_2025")
+  .innerHTML =
+  "Ksh " + grandTotal.toLocaleString();
+
+  document.getElementById("savedTotal_2025")
+  .innerHTML =
+  "Ksh " + savedTotal.toLocaleString();
+
+  document.getElementById("rewardTotal_2025")
+  .innerHTML =
+  "Ksh " + rewardTotal.toLocaleString();
+
+}
+
+
+// RUN ON PAGE LOAD
+window.onload = calculate2025Table;
 
 </script>
 
@@ -4008,11 +4237,12 @@ document.querySelectorAll("#table2025 tbody tr").forEach(row => {
   }
 });
 </script>
+
 <!-- =========================
    BUTTON TO OPEN 2026 TABLE
 ========================= -->
 
-<button onclick="open2026Popup()" 
+<button onclick="open2026Popup()"
 style="
 background:#1565c0;
 color:white;
@@ -4023,9 +4253,8 @@ cursor:pointer;
 font-weight:bold;
 margin:10px 0;
 ">
-📊 View 2026 Contributions
+📊 click to View 2026 Contributions
 </button>
-
 
 
 <!-- =========================
@@ -4041,489 +4270,436 @@ margin:10px 0;
       &times;
     </span>
 
-    <!-- TITLE -->
-    <h4>📊 Group Contributions for 2026</h4>
+    <!-- HEADER -->
+    <h4 id="updateHeader" class="animated-header">
+      📊 Group Contributions for 2026
+      <br>
+      <span id="updateTime">
+        ⏱ Last updated on <b>19TH MAY 2026</b>
+      </span>
+    </h4>
 
     <!-- TABLE CONTAINER -->
     <div class="table-container">
 
-      <!-- PASTE YOUR 2026 TABLE HERE -->
-      <!-- START -->
-
-      <table id="table2026"
-             border="1"
-             style="width:100%; border-collapse:collapse; text-align:center;">
-
-      <!-- YOUR FULL 2026 TABLE CONTENT -->
-       <!-- ================== STYLE ================== -->
-<style>
-/* 🌈 Glow + Pulse (continuous) */
-@keyframes glowColorPulse {
-  0% {
-    box-shadow: 0 0 6px #1976d2, 0 0 12px #1976d2;
-    transform: scale(1);
-  }
-  33% {
-    box-shadow: 0 0 12px #2e7d32, 0 0 24px #2e7d32;
-    transform: scale(1.03);
-  }
-  66% {
-    box-shadow: 0 0 14px #ffb300, 0 0 28px #ffb300;
-    transform: scale(1.04);
-  }
-  100% {
-    box-shadow: 0 0 6px #1976d2, 0 0 12px #1976d2;
-    transform: scale(1);
-  }
-}
-
-/* Apply glow */
-.animated-header {
-  animation: glowColorPulse 2.5s infinite ease-in-out;
-}
-
-/* ⚡ Flash ONLY when updating */
-@keyframes flashUpdate {
-  0%   { background:#ffeb3b; color:#000; transform:scale(1.08); }
-  50%  { background:#fff176; transform:scale(1.1); }
-  100% { background: linear-gradient(135deg,#1976d2,#0d47a1); color:#fff; transform:scale(1); }
-}
-
-.flash-update {
-  animation: flashUpdate 0.8s ease 3;
-}
-</style>
-
-<!-- ================== HEADER ================== -->
-<h4 id="updateHeader" class="animated-header" style="
-  text-align:center;
-  background: linear-gradient(135deg,#1976d2,#0d47a1);
-  color:#fff;
-  padding:14px 18px;
-  border-radius:10px;
-  font-size:16px;
-  letter-spacing:0.6px;
-  font-weight:600;
-">
-  📊 Group Contributions for 2026  
-  <br>
-  <span id="updateTime" style="font-size:13px; opacity:0.95;">
-    ⏱ Last updated on <b>19TH MAY 2026</b> — 16:44PM
-  </span>
-</h4>
-
-<!-- ================== SCRIPT ================== -->
-<script>
-function triggerUpdate() {
-  const header = document.getElementById("updateHeader");
-  const timeText = document.getElementById("updateTime");
-
-  // ⏱ Get current time
-  const now = new Date();
-  const formatted = now.toLocaleString();
-
-  // Update text
-  timeText.innerHTML = "⏱ Last updated on <b>" + formatted + "</b>";
-
-  // ⚡ Flash effect
-  header.classList.add("flash-update");
-
-  // Remove after animation
-  setTimeout(() => {
-    header.classList.remove("flash-update");
-  }, 2500);
-}
-</script>
-
 <table id="table2026" border="1" style="width:100%; border-collapse:collapse; text-align:center;">
 
-  <thead style="background:#00796b; color:white;">
-    <tr>
-      <th>NAME</th>
-      <th style="background:#9c27b0; color:white;">2025 SAVINGS</th>
-      <th>Two Last weeks of Dec25/JAN 26</th><th>FEBRUARY 26</th><th>  MARCH 26 </th><th>  APRIL    </th><th>MAY</th>
-      <th>JUNE</th><th>JULY</th><th>AUG</th><th>SEPT</th>
-      <th>OCT</th><th>NOV</th><th>DEC</th>
-      <th style="background:#17da48;">TOTAL</th>
-      <th style="background:#ff9800;">SAVED 2026</th>
-      <th style="background:hsl(263, 39%, 49%);">REWARD BACK</th>
-      <th style="background:#2196f3; color:white;">PAYMENT STATUS</th>
-    </tr>
-  </thead>
-
-  <tbody>
-
-    <!-- TEMPLATE ROW (used for all members) -->
-    <!-- Just duplicate and change the name -->
-
-    <tr>
-      <td>BONIFACE CHELLUGET</td>
-      <td><input type="number" value="1364"></td>
-      <td><input type="number" value="200"></td>
-      <td><input type="number" value="1000"></td>
-      <td><input type="number" value="1000"></td>
-      <td><input type="number" value="500"></td>
-      <td><input type="number" value="500"></td>
-      <td><input type="number" value="0"></td>
-      <td><input type="number" value="0"></td>
-      <td><input type="number" value="0"></td>
-      <td><input type="number" value="0"></td>
-      <td><input type="number" value="0"></td>
-      <td><input type="number" value="0"></td>
-      <td><input type="number" value="0"></td>
-      <td class="rowTotal">0</td>
-      <td class="saved2026">0</td>
-    <td class="reward2026">0</td>
-    </tr>
+<thead style="background:#00796b; color:white;">
 <tr>
-      <td>FAITH MOKOGI</td>
-      <td><input type="number" value="1335"></td>
-      <td><input type="number" value="150"></td>
-      <td><input type="number" value="650"></td>
-      <td><input type="number" value="0"></td>
-      <td><input type="number" value="400"></td>
-      <td><input type="number" value="500"></td>
-      <td><input type="number" value="0"></td>
-      <td><input type="number" value="0"></td>
-      <td><input type="number" value="0"></td>
-      <td><input type="number" value="0"></td>
-      <td><input type="number" value="0"></td>
-      <td><input type="number" value="0"></td>
-      <td><input type="number" value="0"></td>
-      <td class="rowTotal">0</td>
-      <td class="saved2026">0</td>
-    <td class="reward2026">0</td>
-    </tr>
+<th>NAME</th>
+<th style="background:#9c27b0; color:white;">2025 SAVINGS</th>
+<th>JAN 26</th>
+<th>FEB</th>
+<th>MAR</th>
+<th>APR</th>
+<th>MAY</th>
+<th>JUNE</th>
+<th>JULY</th>
+<th>AUG</th>
+<th>SEPT</th>
+<th>OCT</th>
+<th>NOV</th>
+<th>DEC</th>
+<th style="background:#17da48;">TOTAL</th>
+<th style="background:#ff9800;">SAVED 2026</th>
+<th style="background:#673ab7; color:white;">REWARD BACK</th>
+<th style="background:#2196f3; color:white;">PAYMENT STATUS</th>
+</tr>
+</thead>
 
- 
+<tbody>
+
 <tr>
-      <td>HILDA ODERO</td>
-      <td><input type="number" value="900"></td>
-      <td><input type="number" value="200"></td>
-      <td><input type="number" value="0"></td>
-      <td><input type="number" value="0"></td>
-      <td><input type="number" value="0"></td>
-      <td><input type="number" value="0"></td>
-      <td><input type="number" value="0"></td>
-      <td><input type="number" value="0"></td>
-      <td><input type="number" value="0"></td>
-      <td><input type="number" value="0"></td>
-      <td><input type="number" value="0"></td>
-      <td><input type="number" value="0"></td>
-      <td><input type="number" value="0"></td>
-      <td class="rowTotal">0</td>
-      <td class="saved2026">0</td>
-    <td class="reward2026">0</td>
-    </tr>
-    
- <tr><td>SHALIK SHIVERENGE</td>
-      <td><input type="number" value="250"></td><td>
-      <input type="number" value="200"/></td>
-      <td><input type="number" value="130"/></td>
-      <td><input type="number" value="300"/></td>
-      <td><input type="number" value="160"/></td>
-      <td><input type="number" value="200"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td class="rowTotal">0</td><td class="saved2026">0</td><td class="reward2026">0</td></tr>
-  
-
-    <tr><td>JULIUS KEBASO</td>
-      <td><input type="number" value="2022"></td><td>
-      <input type="number" value="500"/></td>
-      <td><input type="number" value="300"/></td>
-      <td><input type="number" value="400"/></td>
-      <td><input type="number" value="400"/></td>
-      <td><input type="number" value="300"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-       <td class="rowTotal">0</td>
-     <td class="saved2026">0</td>
-     <td class="reward2026">0</td>
-   
-
-    
-   
-
-   
-    <tr><td>JACKIENYARANGI</td>
-      <td><input type="number" value="1000"></td><td>
-      <input type="number" value="250"/></td>
-      <td><input type="number" value="200"/></td>
-      <td><input type="number" value="200"/></td>
-      <td><input type="number" value="200"/></td>
-      <td><input type="number" value="150"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td class="rowTotal">0</td><td class="saved2026">0</td><td class="reward2026">0</td></tr>
-
-    
-
-   
-
-    
-
-   
-    
-
-    <tr><td>SAMUEL OYUGI</td>
-      <td><input type="number" value="1922"></td><td>
-      <input type="number" value="400"/></td>
-      <td><input type="number" value="450"/>
-      </td><td><input type="number" value="350"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td class="rowTotal">0</td>
-     <td class="saved2026">0</td>
-     <td class="reward2026">0</td>
-     
-      
-    
-
-    <tr><td>KEFFA MOMANYI</td>
-      <td><input type="number" value="960"></td><td>
-      <input type="number" value="250"/></td>
-      <td><input type="number" value="500"/></td>
-      <td><input type="number" value="350"/></td>
-      <td><input type="number" value="400"/></td>
-      <td><input type="number" value="150"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td class="rowTotal">0</td>
-     <td class="saved2026">0</td>
-     <td class="reward2026">0</td>
-     
-
-    
-    
-
-   
-
-    <tr><td>CLAUDIA MORAA</td>
-      <td><input type="number" value="825"></td><td>
-      <input type="number" value="100"/></td>
-      <td><input type="number" value="400"/></td>
-      <td><input type="number" value="125"/></td>
-      <td><input type="number" value="240"/></td>
-      <td><input type="number" value="240"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-     <td class="rowTotal">0</td>
-     <td class="saved2026">0</td>
-     <td class="reward2026">0</td>
-     
-
-    
-
-    
-   
-
-
-    
-     
-     
-      <tr><td>ELIZABETH SHIUNDU</td>
-      <td><input type="number" value="400"></td><td>
-      <input type="number" value="500"/></td>
-      <td><input type="number" value="400"/></td>
-      <td><input type="number" value="450"/></td>
-      <td><input type="number" value="100"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td class="rowTotal">0</td><td class="saved2026">0</td><td class="reward2026">0</td></tr>
-
-
-      <tr><td>LILIAN KERUBO</td>
-      <td><input type="number" value="400"></td><td>
-      <input type="number" value="300"/></td>
-      <td><input type="number" value="100"/></td>
-      <td><input type="number" value="219"/></td>
-      <td><input type="number" value="300"/></td>
-      <td><input type="number" value="117"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value=""/></td>
-      <td class="rowTotal">0</td><td class="saved2026">0</td><td class="reward2026">0</td></tr>
-
-    <tr><td>DEE</td>
-      <td><input type="number" value="0"></td><td>
-      <input type="number" value="400"/></td>
-      <td><input type="number" value="400"/></td>
-      <td><input type="number" value="350"/></td>
-      <td><input type="number" value="576"/></td>
-      <td><input type="number" value="100"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value=""/></td>
-      <td class="rowTotal">0</td><td class="saved2026">0</td><td class="reward2026">0</td></tr>
-
-<tr><td>Nelly Karimi</td>
-      <td><input type="number" value="0"></td><td>
-      <input type="number" value="120"/></td>
-      <td><input type="number" value="170"/></td>
-      <td><input type="number" value="150"/></td>
-      <td><input type="number" value="300"/></td>
-      <td><input type="number" value="150"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value=""/></td>
-      <td class="rowTotal">0</td><td class="saved2026">0</td><td class="reward2026">0</td></tr>
-   
-<tr><td>IZOH </td>
-      <td><input type="number" value="0"></td><td>
-      <input type="number" value="0"/></td>
-      <td><input type="number" value="200"/></td>
-      <td><input type="number" value="150"/></td>
-      <td><input type="number" value="100"/></td>
-      <td><input type="number" value="200"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value=""/></td>
-      <td class="rowTotal">0</td><td class="saved2026">0</td><td class="reward2026">0</td></tr>
-
-    <tr><td>SHAMIM ISIJI</td>
-      <td><input type="number" value="1100"></td><td>
-      <input type="number" value="200"/></td>
-      <td><input type="number" value="700"/></td>
-      <td><input type="number" value="1215"/></td>
-      <td><input type="number" value="505"/></td>
-      <td><input type="number" value="3300"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value=""/></td>
-      <td class="rowTotal">0</td><td class="saved2026">0</td><td class="reward2026">0</td></tr>
-
-      <tr><td>Elvis Kamash</td>
-      <td><input type="number" value="902"></td><td>
-      <input type="number" value="50"/></td>
-      <td><input type="number" value="1840"/></td>
-      <td><input type="number" value="892"/></td>
-      <td><input type="number" value="400"/></td>
-      <td><input type="number" value="1930"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value=""/></td>
-      <td class="rowTotal">0</td><td class="saved2026">0</td><td class="reward2026">0</td></tr>
-
-<tr><td>Japhet muli</td>
-      <td><input type="number" value="0"></td><td>
-      <input type="number" value="50"/></td>
-      <td><input type="number" value="215"/></td>
-      <td><input type="number" value="8855"/></td>
-      <td><input type="number" value="7930"/></td>
-      <td><input type="number" value="8010"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value=""/></td>
-      <td class="rowTotal">0</td><td class="saved2026">0</td><td class="reward2026">0</td></tr>
-
-     <tr><td>Dena *irene*</td>
-      <td><input type="number" value="0"></td><td>
-      <input type="number" value="0"/></td>
-      <td><input type="number" value="195"/></td>
-      <td><input type="number" value="170"/></td>
-      <td><input type="number" value="83"/></td>
-      <td><input type="number" value="75"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value="0"/></td>
-      <td><input type="number" value=""/></td>
-      <td class="rowTotal">0</td><td class="saved2026">0</td><td class="reward2026">0</td></tr>
-
-
-    <!-- 👉 Repeat the same row structure for ALL remaining members -->
-
-   <tr style="font-weight:bold; background:#e0f2f1;">
-  <td colspan="14" style="text-align:right;">GRAND TOTAL</td>
-  <td id="grandTotal_2026">0</td>
-  <td id="savedTotal_2026">0</td>
-  <td id="rewardTotal_2026">0</td>
+<td>BONIFACE CHELLUGET</td>
+<td><input type="number" value="1364"></td>
+<td><input type="number" value="200"></td>
+<td><input type="number" value="1000"></td>
+<td><input type="number" value="1000"></td>
+<td><input type="number" value="500"></td>
+<td><input type="number" value="500"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td class="rowTotal">0</td>
+<td class="saved2026">0</td>
+<td class="reward2026">0</td>
+<td class="paymentStatus">PENDING</td>
 </tr>
 
+<tr>
+<td>FAITH MOKOGI</td>
+<td><input type="number" value="1335"></td>
+<td><input type="number" value="150"></td>
+<td><input type="number" value="650"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="400"></td>
+<td><input type="number" value="500"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td class="rowTotal">0</td>
+<td class="saved2026">0</td>
+<td class="reward2026">0</td>
+<td class="paymentStatus">PENDING</td>
+</tr>
+<tr>
+<td>HILDA ODERO</td>
+<td><input type="number" value="900"></td>
+<td><input type="number" value="200"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td class="rowTotal">0</td>
+<td class="saved2026">0</td>
+<td class="reward2026">0</td>
+<td class="paymentStatus">PENDING</td>
+</tr>
 
-  </tbody>
-</table> 
+<tr>
+<td>SHALIK SHIVERENGE</td>
+<td><input type="number" value="250"></td>
+<td><input type="number" value="200"></td>
+<td><input type="number" value="130"></td>
+<td><input type="number" value="300"></td>
+<td><input type="number" value="160"></td>
+<td><input type="number" value="200"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td class="rowTotal">0</td>
+<td class="saved2026">0</td>
+<td class="reward2026">0</td>
+<td class="paymentStatus">PENDING</td>
+</tr>
 
-      </table>
+<tr>
+<td>JULIUS KEBASO</td>
+<td><input type="number" value="2022"></td>
+<td><input type="number" value="500"></td>
+<td><input type="number" value="300"></td>
+<td><input type="number" value="400"></td>
+<td><input type="number" value="400"></td>
+<td><input type="number" value="300"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td class="rowTotal">0</td>
+<td class="saved2026">0</td>
+<td class="reward2026">0</td>
+<td class="paymentStatus">PENDING</td>
+</tr>
 
-      <!-- END -->
+<tr>
+<td>JACKIENYARANGI</td>
+<td><input type="number" value="1000"></td>
+<td><input type="number" value="250"></td>
+<td><input type="number" value="200"></td>
+<td><input type="number" value="200"></td>
+<td><input type="number" value="200"></td>
+<td><input type="number" value="150"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td class="rowTotal">0</td>
+<td class="saved2026">0</td>
+<td class="reward2026">0</td>
+<td class="paymentStatus">PENDING</td>
+</tr>
+
+<tr>
+<td>SAMUEL OYUGI</td>
+<td><input type="number" value="1922"></td>
+<td><input type="number" value="400"></td>
+<td><input type="number" value="450"></td>
+<td><input type="number" value="350"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td class="rowTotal">0</td>
+<td class="saved2026">0</td>
+<td class="reward2026">0</td>
+<td class="paymentStatus">PENDING</td>
+</tr>
+
+<tr>
+<td>KEFFA MOMANYI</td>
+<td><input type="number" value="960"></td>
+<td><input type="number" value="250"></td>
+<td><input type="number" value="500"></td>
+<td><input type="number" value="350"></td>
+<td><input type="number" value="400"></td>
+<td><input type="number" value="150"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td class="rowTotal">0</td>
+<td class="saved2026">0</td>
+<td class="reward2026">0</td>
+<td class="paymentStatus">PENDING</td>
+</tr>
+
+<tr>
+<td>CLAUDIA MORAA</td>
+<td><input type="number" value="825"></td>
+<td><input type="number" value="100"></td>
+<td><input type="number" value="400"></td>
+<td><input type="number" value="125"></td>
+<td><input type="number" value="240"></td>
+<td><input type="number" value="240"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td class="rowTotal">0</td>
+<td class="saved2026">0</td>
+<td class="reward2026">0</td>
+<td class="paymentStatus">PENDING</td>
+</tr>
+<tr>
+<td>ELIZABETH SHIUNDU</td>
+<td><input type="number" value="400"></td>
+<td><input type="number" value="500"></td>
+<td><input type="number" value="400"></td>
+<td><input type="number" value="450"></td>
+<td><input type="number" value="100"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td class="rowTotal">0</td>
+<td class="saved2026">0</td>
+<td class="reward2026">0</td>
+<td class="paymentStatus">PENDING</td>
+</tr>
+
+<tr>
+<td>LILIAN KERUBO</td>
+<td><input type="number" value="400"></td>
+<td><input type="number" value="300"></td>
+<td><input type="number" value="100"></td>
+<td><input type="number" value="219"></td>
+<td><input type="number" value="300"></td>
+<td><input type="number" value="117"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td class="rowTotal">0</td>
+<td class="saved2026">0</td>
+<td class="reward2026">0</td>
+<td class="paymentStatus">PENDING</td>
+</tr>
+
+<tr>
+<td>DEE</td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="400"></td>
+<td><input type="number" value="400"></td>
+<td><input type="number" value="350"></td>
+<td><input type="number" value="576"></td>
+<td><input type="number" value="100"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td class="rowTotal">0</td>
+<td class="saved2026">0</td>
+<td class="reward2026">0</td>
+<td class="paymentStatus">PENDING</td>
+</tr>
+
+<tr>
+<td>NELLY KARIMI</td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="120"></td>
+<td><input type="number" value="170"></td>
+<td><input type="number" value="150"></td>
+<td><input type="number" value="300"></td>
+<td><input type="number" value="150"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td class="rowTotal">0</td>
+<td class="saved2026">0</td>
+<td class="reward2026">0</td>
+<td class="paymentStatus">PENDING</td>
+</tr>
+
+<tr>
+<td>IZOH</td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="200"></td>
+<td><input type="number" value="150"></td>
+<td><input type="number" value="100"></td>
+<td><input type="number" value="200"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td class="rowTotal">0</td>
+<td class="saved2026">0</td>
+<td class="reward2026">0</td>
+<td class="paymentStatus">PENDING</td>
+</tr>
+
+<tr>
+<td>SHAMIM ISIJI</td>
+<td><input type="number" value="1100"></td>
+<td><input type="number" value="200"></td>
+<td><input type="number" value="700"></td>
+<td><input type="number" value="1215"></td>
+<td><input type="number" value="505"></td>
+<td><input type="number" value="3300"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td class="rowTotal">0</td>
+<td class="saved2026">0</td>
+<td class="reward2026">0</td>
+<td class="paymentStatus">PENDING</td>
+</tr>
+
+<tr>
+<td>ELVIS KAMASH</td>
+<td><input type="number" value="902"></td>
+<td><input type="number" value="50"></td>
+<td><input type="number" value="1840"></td>
+<td><input type="number" value="892"></td>
+<td><input type="number" value="400"></td>
+<td><input type="number" value="1930"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td class="rowTotal">0</td>
+<td class="saved2026">0</td>
+<td class="reward2026">0</td>
+<td class="paymentStatus">PENDING</td>
+</tr>
+
+<tr>
+<td>JAPHET MULI</td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="50"></td>
+<td><input type="number" value="215"></td>
+<td><input type="number" value="8855"></td>
+<td><input type="number" value="7930"></td>
+<td><input type="number" value="8010"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td class="rowTotal">0</td>
+<td class="saved2026">0</td>
+<td class="reward2026">0</td>
+<td class="paymentStatus">PENDING</td>
+</tr>
+
+<tr>
+<td>DENA IRENE</td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="195"></td>
+<td><input type="number" value="170"></td>
+<td><input type="number" value="83"></td>
+<td><input type="number" value="75"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td class="rowTotal">0</td>
+<td class="saved2026">0</td>
+<td class="reward2026">0</td>
+<td class="paymentStatus">PENDING</td>
+</tr>
+<!-- ADD ALL OTHER MEMBERS USING SAME FORMAT -->
+
+<tr style="font-weight:bold; background:#e0f2f1;">
+<td colspan="14" style="text-align:right;">GRAND TOTAL</td>
+<td id="grandTotal_2026">0</td>
+<td id="savedTotal_2026">0</td>
+<td id="rewardTotal_2026">0</td>
+<td>-</td>
+</tr>
+
+</tbody>
+</table>
 
     </div>
-
   </div>
-
 </div>
-
 
 
 <!-- =========================
@@ -4568,8 +4744,40 @@ function triggerUpdate() {
   overflow-x:auto;
 }
 
-</style>
+input{
+  width:70px;
+  padding:4px;
+  text-align:center;
+}
 
+@keyframes glowColorPulse {
+  0% {
+    box-shadow: 0 0 6px #1976d2;
+  }
+  50% {
+    box-shadow: 0 0 18px #2e7d32;
+  }
+  100% {
+    box-shadow: 0 0 6px #1976d2;
+  }
+}
+
+.animated-header {
+  animation: glowColorPulse 2.5s infinite ease-in-out;
+  text-align:center;
+  background: linear-gradient(135deg,#1976d2,#0d47a1);
+  color:#fff;
+  padding:14px 18px;
+  border-radius:10px;
+  font-size:16px;
+  font-weight:600;
+}
+
+#updateTime{
+  font-size:13px;
+}
+
+</style>
 
 
 <!-- =========================
@@ -4579,34 +4787,95 @@ function triggerUpdate() {
 <script>
 
 function open2026Popup(){
-
-  document.getElementById("popup2026").style.display =
-    "block";
-
+  document.getElementById("popup2026").style.display = "block";
 }
 
 function close2026Popup(){
-
-  document.getElementById("popup2026").style.display =
-    "none";
-
+  document.getElementById("popup2026").style.display = "none";
 }
 
-
-// CLOSE WHEN CLICKING OUTSIDE
 window.onclick = function(event){
-
   const popup = document.getElementById("popup2026");
 
   if(event.target == popup){
-
     popup.style.display = "none";
-
   }
-
 }
 
+
+function calculate2026Table() {
+
+  let grandTotal = 0;
+  let savedTotal = 0;
+  let rewardTotal = 0;
+
+  const rows = document.querySelectorAll("#table2026 tbody tr");
+
+  rows.forEach(row => {
+
+    const inputs = row.querySelectorAll("input");
+
+    if(inputs.length === 0) return;
+
+    let total = 0;
+
+    inputs.forEach((input, index) => {
+
+      if(index >= 1){
+        total += Number(input.value) || 0;
+      }
+
+      input.addEventListener("input", calculate2026Table);
+    });
+
+    const reward = Math.round(total * 0.20);
+
+    const totalCell = row.querySelector(".rowTotal");
+    const savedCell = row.querySelector(".saved2026");
+    const rewardCell = row.querySelector(".reward2026");
+    const statusCell = row.querySelector(".paymentStatus");
+
+    if(totalCell)
+      totalCell.innerHTML = "Ksh " + total.toLocaleString();
+
+    if(savedCell)
+      savedCell.innerHTML = "Ksh " + total.toLocaleString();
+
+    if(rewardCell)
+      rewardCell.innerHTML = "Ksh " + reward.toLocaleString();
+
+    if(statusCell){
+
+      if(total > 0){
+        statusCell.innerHTML = "✅ ACTIVE";
+        statusCell.style.color = "green";
+      }
+      else {
+        statusCell.innerHTML = "❌ PENDING";
+        statusCell.style.color = "red";
+      }
+    }
+
+    grandTotal += total;
+    savedTotal += total;
+    rewardTotal += reward;
+
+  });
+
+  document.getElementById("grandTotal_2026").innerHTML =
+    "Ksh " + grandTotal.toLocaleString();
+
+  document.getElementById("savedTotal_2026").innerHTML =
+    "Ksh " + savedTotal.toLocaleString();
+
+  document.getElementById("rewardTotal_2026").innerHTML =
+    "Ksh " + rewardTotal.toLocaleString();
+}
+
+window.onload = calculate2026Table;
+
 </script>
+```
 
 
 
@@ -4673,316 +4942,710 @@ document.querySelectorAll("#table2026 tbody tr").forEach(row => {
 
 });
 </script>
-
-<!-- =========================
-   MINI DASHBOARD
-========================= -->
-
-<div class="mini-dashboard">
-
-  <!-- MEMBERS -->
-  <div class="mini-card">
-    <div>👥</div>
-    <h4 id="totalMembers">0</h4>
-    <small>Members</small>
-  </div>
-
-  <!-- SAVINGS -->
-  <div class="mini-card">
-    <div>💰</div>
-    <h4 id="totalSavings">0</h4>
-    <small>Savings</small>
-  </div>
-
-  <!-- QUALIFIED -->
-  <div class="mini-card">
-    <div>✅</div>
-    <h4 id="qualifiedMembers">0</h4>
-    <small>Qualified</small>
-  </div>
-
-  <!-- TOP SAVERS BUTTON -->
-  <div class="mini-card">
-
-    <button class="topSaverBtn"
-            onclick="showTopSavers()">
-      🥇 Top Savers
-    </button>
-
-  </div>
-
-</div>
-
-
-
-<!-- =========================
-   TOP SAVERS POPUP
-========================= -->
-
-<div id="topSaverPopup">
-
-  <div class="popup-header">
-    🏆 Top 3 Highest Savers
-  </div>
-
-  <div class="popup-body"
-       id="topSaverList">
-  </div>
-
-  <div style="text-align:center; padding-bottom:10px;">
-
-    <button class="closePopup"
-            onclick="closeTopSavers()">
-      Close
-    </button>
-
-  </div>
-
-</div>
-
-
-
-<!-- =========================
-   STYLE
-========================= -->
-
 <style>
 
-/* DASHBOARD */
+/* =========================
+   MINI DASHBOARD
+========================= */
 
 .mini-dashboard{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(85px,1fr));
-  gap:6px;
-  margin-top:10px;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:12px;
+  margin:15px 0;
 }
 
 .mini-card{
   background:linear-gradient(135deg,#00796b,#004d40);
   color:white;
-  border-radius:8px;
-  padding:6px;
+  border-radius:14px;
+  padding:16px;
   text-align:center;
-  box-shadow:0 1px 4px rgba(0,0,0,0.15);
+  box-shadow:0 4px 12px rgba(0,0,0,0.2);
+  transition:0.3s;
 }
 
-.mini-card h4{
-  margin:3px 0;
-  font-size:12px;
+.clickableCard{
+  cursor:pointer;
+}
+
+.clickableCard:hover{
+  transform:scale(1.05);
+}
+
+.mini-card h3{
+  margin:6px 0;
+  font-size:22px;
+  font-weight:bold;
 }
 
 .mini-card small{
-  font-size:9px;
+  font-size:13px;
+  opacity:0.9;
 }
 
+/* =========================
+   POPUP OVERLAY
+========================= */
 
-/* TOP SAVER BUTTON */
-
-.topSaverBtn{
-  background:#ff9800;
-  border:none;
-  color:white;
-  padding:5px 7px;
-  border-radius:6px;
-  cursor:pointer;
-  font-size:9px;
-  font-weight:bold;
-  width:100%;
-}
-
-.topSaverBtn:hover{
-  background:#f57c00;
-}
-
-
-/* POPUP */
-
-#topSaverPopup{
+.dashboardPopup{
   display:none;
   position:fixed;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  width:250px;
-  max-width:85%;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.4);
+  z-index:99999;
+
+  justify-content:center;
+  align-items:center;
+}
+
+/* POPUP BOX */
+.popup-content{
+  width:340px;
+  max-width:90%;
   background:white;
-  border-radius:10px;
-  box-shadow:0 6px 18px rgba(0,0,0,0.25);
-  z-index:9999;
+  border-radius:14px;
   overflow:hidden;
+  box-shadow:0 8px 20px rgba(0,0,0,0.3);
+  animation:fadeIn 0.2s ease-in-out;
 }
 
 .popup-header{
   background:#00796b;
   color:white;
-  padding:8px;
+  padding:14px;
   text-align:center;
   font-weight:bold;
-  font-size:12px;
+  font-size:16px;
 }
 
 .popup-body{
-  padding:10px;
-  font-size:11px;
+  padding:16px;
+  max-height:300px;
+  overflow-y:auto;
 }
 
 .popup-body div{
-  padding:7px;
-  border-bottom:1px solid #ddd;
+  padding:10px;
+  border-bottom:1px solid #eee;
+  font-size:14px;
 }
-
-
-/* CLOSE BUTTON */
 
 .closePopup{
+  width:100%;
+  border:none;
+  padding:12px;
   background:#d32f2f;
   color:white;
-  border:none;
-  padding:5px 10px;
-  border-radius:6px;
+  font-weight:bold;
   cursor:pointer;
-  font-size:10px;
+  transition:0.3s;
 }
 
+.closePopup:hover{
+  background:#b71c1c;
+}
+
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(-10px);}
+  to{opacity:1; transform:translateY(0);}
+}
+#topSaverPopup .popup-body p{
+  display:block !important;
+}
+
+.coin{
+  position:fixed;
+  top:-40px;
+  font-size:22px;
+  animation:fall 1.2s linear forwards;
+  z-index:100000;
+  pointer-events:none;
+}
+
+@keyframes fall{
+  0%{
+    transform:translateY(0) rotate(0deg);
+    opacity:1;
+  }
+  100%{
+    transform:translateY(100vh) rotate(360deg);
+    opacity:0;
+  }
+}
 </style>
 
 
+<div class="mini-dashboard">
 
-<!-- =========================
-   SCRIPT
-========================= -->
+  <div class="mini-card clickableCard" onclick="showMembersPopup()">
+    👥
+    <h3 id="totalMembers">0</h3>
+    <small>Click to view all Members</small>
+  </div>
+
+  <div class="mini-card clickableCard" onclick="showSavingsPopup()">
+
+  💰
+  <h3 id="totalSavings">XXX</h3>
+  <small>Click to view Savings</small>
+
+</div>
+
+  <div class="mini-card clickableCard" onclick="showQualifiedPopup()">
+    ✅
+    <h3 id="qualifiedMembers">0</h3>
+    <small>Click to view Qualified</small>
+  </div>
+
+  <div class="mini-card clickableCard" onclick="showTopSavers()">
+    🥇
+    <h3>Top</h3>
+    <small>Click to view Top Savers</small>
+  </div>
+
+</div>
+
+
+
+
+
+
+<!-- TOP SAVERS -->
+<div id="topSaverPopup" class="dashboardPopup">
+  <div class="popup-content">
+
+    <div class="popup-header">
+      Top 3 Savers
+    </div>
+
+    <div class="popup-body">
+
+      <!-- ✅ NOTICE BOX (FORCE DISPLAY) -->
+      <div style="
+        display:block;
+        background: linear-gradient(135deg,#e0f7fa,#ffffff);
+        border-left:5px solid #00796b;
+        padding:12px;
+        border-radius:10px;
+        margin-bottom:12px;
+        font-size:14px;
+        line-height:1.6;
+        color:#333;
+        box-shadow:0 2px 8px rgba(0,0,0,0.08);
+      ">
+        <b style="color:#00796b;">📢 Notice</b><br><br>
+
+        The top three savers will receive special rewards in December.
+        Join the journey today by saving consistently in the group.
+      </div>
+
+      <!-- ✅ LIST -->
+      <div id="topSaverList"></div>
+
+    </div>
+
+    <button class="closePopup" onclick="closeTopSavers()">
+      Close
+    </button>
+
+  </div>
+</div>
+<!-- MEMBERS -->
+<div id="membersPopup" class="dashboardPopup">
+  <div class="popup-content">
+
+    <div class="popup-header">Members</div>
+
+    <div class="popup-body">
+
+      <!-- SEARCH BOX -->
+      <input 
+  type="text" 
+  placeholder="🔍 Search member (Coming soon...)"
+  disabled
+  style="
+    width:100%;
+    padding:10px;
+    margin-bottom:10px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    font-size:14px;
+    background:#f5f5f5;
+    color:#888;
+    cursor:not-allowed;
+  "
+>
+
+        <!-- CLEAR BUTTON (optional if you added it) -->
+        <span onclick="clearSearch()" style="
+          position:absolute;
+          right:10px;
+          top:50%;
+          transform:translateY(-50%);
+          cursor:pointer;
+          font-size:18px;
+          color:#999;
+        ">✖</span>
+
+      </div>
+
+      <!-- MEMBERS LIST -->
+      <div id="membersList"></div>
+
+      <!-- NO RESULTS -->
+      <div id="noResultsMessage" style="
+        display:none;
+        text-align:center;
+        padding:10px;
+        color:#777;
+        font-size:14px;
+      ">
+        ❌ No results found
+      </div>
+
+    </div>
+
+    <button class="closePopup" onclick="closeMembersPopup()">
+      Close
+    </button>
+
+  </div>
+</div>
+<!-- SAVINGS -->
+<div id="savingsPopup" class="dashboardPopup">
+  <div class="popup-content">
+
+    <div class="popup-header">
+      Savings
+    </div>
+
+    <div class="popup-body">
+
+      <p style="font-size:14px; line-height:1.6; margin-bottom:12px; color:#333;">
+        This section shows the total savings collected from all members.
+        Every contribution matters — stay consistent and increase your savings to qualify for loans and welfare benefits.
+      </p>
+
+      <div id="savingsList" style="font-size:28px;font-weight:bold;color:#00796b;text-align:center;margin-top:10px;">
+  Ksh 0
+</div>
+
+    </div>
+
+    <button class="closePopup" onclick="closeSavingsPopup()">
+      Close
+    </button>
+
+  </div>
+</div>
+
+<!-- QUALIFIED -->
+<div id="qualifiedPopup" class="dashboardPopup">
+  <div class="popup-content">
+
+    <div class="popup-header">
+      Qualified Members
+    </div>
+
+    <div class="popup-body">
+
+      <div style="
+        background: linear-gradient(135deg,#e0f2f1,#ffffff);
+        border-left:5px solid #00796b;
+        padding:12px;
+        border-radius:10px;
+        margin-bottom:12px;
+        font-size:14px;
+        line-height:1.6;
+        color:#333;
+        box-shadow:0 2px 8px rgba(0,0,0,0.08);
+      ">
+        <b style="color:#00796b;">📢 Important Notice</b><br><br>
+
+        Below are so far qualified members to receive loans and savings in December.
+        Keep saving to join others in the savings group and welfare program.
+        Stay consistent and grow together with the team.
+      </div>
+
+      <div id="qualifiedList"></div>
+
+    </div>
+
+    <button class="closePopup" onclick="closeQualifiedPopup()">
+      Close
+    </button>
+
+  </div>
+</div>
 
 <script>
 
 let topSaversData = [];
 
+/* ================= SYNC ================= */
+
+function syncAll(){
+  calculateTable();
+  updateDashboard();
+}
+
+/* ================= CALCULATE ================= */
+
+function calculateTable(){
+
+  document.querySelectorAll("#table2026 tbody tr").forEach(row=>{
+
+    const inputs = row.querySelectorAll("input");
+    if(inputs.length === 0) return;
+
+    let total = 0;
+
+    inputs.forEach(i=>{
+      total += Number(i.value) || 0;
+    });
+
+    const reward = Math.round(total * 0.2);
+
+    const rowTotal = row.querySelector(".rowTotal");
+    const saved2026 = row.querySelector(".saved2026");
+    const reward2026 = row.querySelector(".reward2026");
+
+    if(rowTotal) rowTotal.innerText = total;
+    if(saved2026) saved2026.innerText = total;
+    if(reward2026) reward2026.innerText = reward;
+
+  });
+
+}
+
+/* ================= DASHBOARD ================= */
+
 function updateDashboard(){
 
-  const rows =
-    document.querySelectorAll("#table2026 tbody tr");
+  const rows = document.querySelectorAll("#table2026 tbody tr");
 
-  let totalMembers = 0;
-  let totalSavings = 0;
-  let qualifiedMembers = 0;
+  let members = 0;
+  let savings = 0;
+  let qualified = 0;
 
   topSaversData = [];
 
-  rows.forEach(row => {
-
-    // Skip total row
-    if(row.querySelector("#grandTotal_2026")) return;
+  rows.forEach(row=>{
 
     const nameCell = row.querySelector("td");
-
     if(!nameCell) return;
 
-    totalMembers++;
-
     const inputs = row.querySelectorAll("input");
+    if(inputs.length === 0) return;
 
-    let memberTotal = 0;
+    let total = 0;
 
-    inputs.forEach(input => {
-
-      memberTotal += Number(input.value) || 0;
-
+    inputs.forEach(i=>{
+      total += Number(i.value) || 0;
     });
 
-    totalSavings += memberTotal;
+    members++;
+    savings += total;
 
-    // Qualification
-    if(memberTotal >= 1500){
+    if(total >= 1500) qualified++;
 
-      qualifiedMembers++;
-
-    }
-
-    // Save member totals
     topSaversData.push({
-
-      name:nameCell.textContent,
-      total:memberTotal
-
+      name: nameCell.textContent.trim(),
+      total: total
     });
 
   });
 
-  // SORT DESCENDING
   topSaversData.sort((a,b)=>b.total-a.total);
 
-  // UPDATE DASHBOARD
-  document.getElementById("totalMembers").innerHTML =
-    totalMembers;
+  document.getElementById("totalMembers").innerText = members;
 
-  document.getElementById("totalSavings").innerHTML =
-    "Ksh " + totalSavings.toLocaleString();
+  // 🔒 KEEP HIDDEN ON CARD
+  document.getElementById("totalSavings").innerText = "XXX";
 
-  document.getElementById("qualifiedMembers").innerHTML =
-    qualifiedMembers;
+  // real value stored for popup
+  window.realSavingsTotal = savings;
 
+  document.getElementById("qualifiedMembers").innerText = qualified;
 }
 
-
-
-// SHOW TOP SAVERS
+/* ================= OPEN POPUPS ================= */
 
 function showTopSavers(){
 
-  const popup =
-    document.getElementById("topSaverPopup");
+  const list = document.getElementById("topSaverList");
 
-  const list =
-    document.getElementById("topSaverList");
+  list.innerHTML = ""; // clear properly
 
+  const medals = ["🥇","🥈","🥉"];
+
+  topSaversData.slice(0,3).forEach((m,i)=>{
+    list.innerHTML += `
+      <div style="padding:8px;border-bottom:1px solid #eee;">
+        <b>${medals[i]} ${m.name}</b><br>
+        💰 Ksh ${m.total.toLocaleString()}
+      </div>
+    `;
+  });
+
+  document.getElementById("topSaverPopup").style.display = "flex";
+}
+function showSavingsPopup(){
+
+  document.getElementById("savingsPopup").style.display = "flex";
+
+  // 💰 coin animation
+  dropCoins();
+
+  // start savings animation
+  animateSavings(window.realSavingsTotal || 0);
+}
+function animateSavings(targetAmount){
+
+  const el = document.getElementById("savingsList");
+
+  let current = 0;
+  let step = Math.ceil(targetAmount / 240); // speed control
+
+  const timer = setInterval(() => {
+
+    current += step;
+
+    if(current >= targetAmount){
+      current = targetAmount;
+      clearInterval(timer);
+    }
+
+    el.innerHTML = `Ksh ${current.toLocaleString()}`;
+
+  }, 20);
+}
+function showQualifiedPopup(){
+
+  const list = document.getElementById("qualifiedList");
   list.innerHTML = "";
 
-  const top3 =
-    topSaversData.slice(0,3);
+  let qualifiedArray = [];
 
-  top3.forEach((member,index)=>{
+  document.querySelectorAll("#table2026 tbody tr").forEach(row=>{
 
-    const medals =
-      ["🥇","🥈","🥉"];
+    const name = row.querySelector("td");
+    const inputs = row.querySelectorAll("input");
+
+    if(!name || inputs.length === 0) return;
+
+    let total = 0;
+
+    inputs.forEach(i=>{
+      total += Number(i.value) || 0;
+    });
+
+    if(total >= 1500){
+      qualifiedArray.push({
+        name: name.textContent.trim(),
+        total: total
+      });
+    }
+  });
+
+  // 🔥 SORT HIGHEST TO LOWEST
+  qualifiedArray.sort((a,b)=>b.total - a.total);
+
+  // 🔥 ADD RANK NUMBERS
+  qualifiedArray.forEach((m, index)=>{
+    list.innerHTML += `
+      <div style="
+        padding:10px;
+        border-bottom:1px solid #eee;
+        font-size:14px;
+      ">
+        <b>${index + 1}. ${m.name}</b><br>
+        💰 Ksh ${m.total.toLocaleString()}
+      </div>
+    `;
+  });
+
+  document.getElementById("qualifiedPopup").style.display = "flex";
+}
+
+let membersArray = [];
+
+function showMembersPopup(){
+
+  const popup = document.getElementById("membersPopup");
+  const list = document.getElementById("membersList");
+
+  list.innerHTML = "";
+  membersArray = [];
+
+  let count = 0;
+
+  document.querySelectorAll("#table2026 tbody tr").forEach(row => {
+
+    const cells = row.querySelectorAll("td");
+    if(!cells || cells.length === 0) return;
+
+    const name = cells[0].textContent.trim();
+
+    if(
+      name === "" ||
+      name.toLowerCase().includes("total") ||
+      name.toLowerCase().includes("grand") ||
+      name.toLowerCase().includes("summary")
+    ){
+      return;
+    }
+
+    if(row.querySelectorAll("input").length === 0){
+      return;
+    }
+
+    count++;
+
+    membersArray.push(name);
 
     list.innerHTML += `
-
-      <div>
-
-        <b>
-          ${medals[index]}
-          ${member.name}
-        </b>
-
-        <br>
-
-        Ksh ${member.total.toLocaleString()}
-
+      <div class="memberItem" style="padding:10px;border-bottom:1px solid #eee;font-size:14px;">
+        <b>${count}.</b> 👤 
+        <span data-original="${name}">${name}</span>
       </div>
-
     `;
 
   });
 
-  popup.style.display = "block";
+  popup.style.display = "flex";
+}
+function searchMembers(){
 
+  const input = document.getElementById("memberSearchInput").value.toLowerCase();
+  const items = document.querySelectorAll("#membersList .memberItem");
+  const noResults = document.getElementById("noResultsMessage");
+
+  let visibleCount = 0;
+
+  items.forEach(item => {
+
+    const span = item.querySelector("span");
+
+    // ✅ ALWAYS store original once safely
+    if(!span.dataset.original){
+      span.dataset.original = span.textContent;
+    }
+
+    const originalText = span.dataset.original;
+
+    if(input === ""){
+      span.innerHTML = originalText;
+      item.style.display = "block";
+      visibleCount++;
+      return;
+    }
+
+    const lowerName = originalText.toLowerCase();
+
+    if(lowerName.includes(input)){
+
+      visibleCount++;
+
+      const regex = new RegExp(`(${input})`, "gi");
+
+      span.innerHTML = originalText.replace(
+        regex,
+        `<mark style="background:#ffeb3b;padding:2px;border-radius:3px;">$1</mark>`
+      );
+
+      item.style.display = "block";
+
+    } else {
+      item.style.display = "none";
+    }
+
+  });
+
+  noResults.style.display = (visibleCount === 0) ? "block" : "none";
 }
 
+function clearSearch(){
 
+  const input = document.getElementById("memberSearchInput");
+  const items = document.querySelectorAll("#membersList .memberItem");
+  const noResults = document.getElementById("noResultsMessage");
 
-// CLOSE POPUP
+  input.value = "";
+
+  items.forEach(item => {
+
+    const span = item.querySelector("span");
+
+    // restore original text (remove highlight)
+    const original = span.getAttribute("data-original") || span.textContent;
+    span.innerHTML = original;
+
+    item.style.display = "block";
+  });
+
+  noResults.style.display = "none";
+}
+
+/* ================= CLOSE FUNCTIONS ================= */
 
 function closeTopSavers(){
-
-  document.getElementById("topSaverPopup")
-    .style.display = "none";
-
+  document.getElementById("topSaverPopup").style.display = "none";
 }
 
+function closeMembersPopup(){
+  document.getElementById("membersPopup").style.display = "none";
+}
 
+function closeSavingsPopup(){
+  document.getElementById("savingsPopup").style.display = "none";
+}
 
-// RUN
+function closeQualifiedPopup(){
+  document.getElementById("qualifiedPopup").style.display = "none";
+}
 
-updateDashboard();
+/* ================= OUTSIDE CLICK CLOSE ================= */
+
+window.addEventListener("click", function(e){
+
+  document.querySelectorAll(".dashboardPopup").forEach(popup=>{
+    if(e.target === popup){
+      popup.style.display = "none";
+    }
+  });
+
+});
+
+function dropCoins(){
+
+  const coins = ["🪙","💰","🪙","💸","🪙"];
+
+  for(let i=0;i<20;i++){
+
+    const coin = document.createElement("div");
+    coin.classList.add("coin");
+
+    coin.innerText = coins[Math.floor(Math.random()*coins.length)];
+
+    coin.style.left = Math.random() * 100 + "vw";
+    coin.style.animationDuration = (0.8 + Math.random()*1.2) + "s";
+    coin.style.fontSize = (18 + Math.random()*12) + "px";
+
+    document.body.appendChild(coin);
+
+    setTimeout(()=> coin.remove(), 2000);
+  }
+}
+
+/* ================= AUTO UPDATE ================= */
+
+window.addEventListener("load", syncAll);
+document.addEventListener("input", syncAll);
 
 </script>
 
@@ -8038,7 +8701,139 @@ window.addEventListener("load", () => {
 </script>
 
 
+<!-- ================= SYSTEM UPDATE POPUP ================= -->
 
+<style>
+/* POPUP BACKDROP */
+.dashboardPopup{
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.6);
+  z-index:99999;
+  justify-content:center;
+  align-items:center;
+}
+
+/* POPUP BOX */
+.popup-content{
+  width:380px;
+  max-width:90%;
+  background:white;
+  border-radius:14px;
+  overflow:hidden;
+  box-shadow:0 8px 20px rgba(0,0,0,0.3);
+  animation:fadeIn 0.2s ease-in-out;
+}
+
+/* HEADER */
+.popup-header{
+  background:#00796b;
+  color:white;
+  padding:14px;
+  text-align:center;
+  font-weight:bold;
+  font-size:16px;
+}
+
+/* BODY */
+.popup-body{
+  padding:16px;
+}
+
+/* CLOSE BUTTON */
+.closePopup{
+  width:100%;
+  border:none;
+  padding:12px;
+  background:#d32f2f;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.closePopup:hover{
+  background:#b71c1c;
+}
+
+/* ANIMATION */
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(-10px);}
+  to{opacity:1; transform:translateY(0);}
+}
+</style>
+
+<!-- ================= POPUP HTML ================= -->
+
+<div id="systemUpdatePopup" class="dashboardPopup">
+
+  <div class="popup-content">
+
+    <div class="popup-header">
+      System Upgrade Notice
+    </div>
+
+    <div class="popup-body">
+
+      <div style="
+        background: linear-gradient(135deg,#e0f2f1,#ffffff);
+        border-left:5px solid #00796b;
+        padding:14px;
+        border-radius:10px;
+        font-size:14px;
+        line-height:1.6;
+        color:#333;
+        box-shadow:0 2px 8px rgba(0,0,0,0.08);
+      ">
+
+        <b style="color:#00796b;">📢 Important Update</b><br><br>
+
+        The system has been successfully upgraded.<br><br>
+
+        Members can now continue and enjoy new features inside the dashboard.<br><br>
+
+        <b style="color:#00796b;">✨ New Features Added:</b><br>
+
+        • 💰 Savings View<br>
+        • 📊 Total Savings View<br>
+        • 🥇 Top Savers View<br>
+        • 👥 Members View<br>
+        • ✅ Qualified Members View<br><br>
+
+        Please log in and explore all new updates.<br><br>
+
+        Thank you for being part of the community.
+
+      </div>
+
+    </div>
+
+    <button class="closePopup" onclick="closeSystemUpdatePopup()">
+      Close
+    </button>
+
+  </div>
+
+</div>
+
+<!-- ================= SCRIPT ================= -->
+
+<script>
+
+// SHOW ON PAGE LOAD
+window.addEventListener("load", function(){
+  document.getElementById("systemUpdatePopup").style.display = "flex";
+});
+
+// CLOSE POPUP
+function closeSystemUpdatePopup(){
+  document.getElementById("systemUpdatePopup").style.display = "none";
+}
+
+</script>
 
 
 
