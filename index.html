@@ -4065,40 +4065,54 @@ window.onclick = function(event){
 
 }
 
+</script>
 
 
-// =========================
-// AUTO CALCULATIONS
-// =========================
 
-function calculate2025Table() {
+<script>
+/* =========================================
+   PAID MEMBERS LIST
+========================================= */
+
+const paidMembers = [
+  "BONIFACE CHELLUGET",
+  "JULIUS KEBASO",
+  "KENNEDY MUTAYI",
+  "SAMUEL OYUGI",
+  "EVERLINE MAINA",
+  "JUDITH OMWOYO",
+  "ELVIS KAMASH",
+  "CHRISTINE PIUS",
+  "ANASTANCIA OMWOYO",
+  "PIUS NYAKUNDI",
+  "KEFFA MOMANYI",
+  "FAITH MOKOGI",
+  "CLAUDIA MORAA"
+];
+
+
+/* =========================================
+   2025 CALCULATIONS + PAYMENT STATUS
+========================================= */
+
+function calculate2025() {
+
+  const table2025 =
+    document.getElementById("table2025");
+
+  if (!table2025) return;
 
   let grandTotal = 0;
-  let savedTotal = 0;
-  let rewardTotal = 0;
+  let totalSaved = 0;
+  let totalReward = 0;
 
-  const rows = document.querySelectorAll("#table2025 tbody tr");
+  table2025.querySelectorAll("tbody tr")
+  .forEach(row => {
 
-  rows.forEach(row => {
+    const inputs =
+      row.querySelectorAll("input[type='number']");
 
-    const inputs = row.querySelectorAll("input");
-
-    if(inputs.length === 0) return;
-
-    let total = 0;
-
-    inputs.forEach(input => {
-
-      total += Number(input.value) || 0;
-
-      input.addEventListener("input",
-      calculate2025Table);
-
-    });
-
-    const reward = Math.round(total * 0.20);
-
-    const totalCell =
+    const rowTotalCell =
       row.querySelector(".rowTotal");
 
     const savedCell =
@@ -4110,134 +4124,165 @@ function calculate2025Table() {
     const statusCell =
       row.querySelector(".paymentStatus");
 
+    const nameCell =
+      row.querySelector("td");
 
+    // Skip total row
+    if (!rowTotalCell || !nameCell) return;
 
-    if(totalCell){
+    const memberName =
+      nameCell.textContent.trim();
 
-      totalCell.innerHTML =
-      "Ksh " + total.toLocaleString();
+    let totalSavings = 0;
+    let activeMonths = 0;
 
+    inputs.forEach(input => {
+
+      const val =
+        Number(input.value) || 0;
+
+      totalSavings += val;
+
+      if (val > 0){
+        activeMonths++;
+      }
+
+    });
+
+    let reward = 0;
+    let saved = totalSavings;
+
+    /* =========================
+       ORIGINAL 2025 RULES
+    ========================= */
+
+    // RULE 1:
+    // 12 months + >=1500
+    if (
+      totalSavings >= 1500 &&
+      activeMonths >= 12
+    ) {
+
+      reward =
+        Math.round(totalSavings * 0.60);
+
+      saved =
+        totalSavings - reward;
     }
+
+    // RULE 2:
+    // >=1200 + >=6 months
+    else if (
+      totalSavings >= 1200 &&
+      activeMonths >= 6
+    ) {
+
+      reward =
+        Math.round(totalSavings * 0.50);
+
+      saved =
+        totalSavings - reward;
+    }
+
+    /* =========================
+       UPDATE TABLE VALUES
+    ========================= */
+
+    rowTotalCell.textContent =
+      "Ksh " + totalSavings.toLocaleString();
 
     if(savedCell){
 
-      savedCell.innerHTML =
-      "Ksh " + total.toLocaleString();
-
+      savedCell.textContent =
+        "Ksh " + saved.toLocaleString();
     }
 
     if(rewardCell){
 
-      rewardCell.innerHTML =
-      "Ksh " + reward.toLocaleString();
-
+      rewardCell.textContent =
+        "Ksh " + reward.toLocaleString();
     }
 
+    /* =========================
+       PAYMENT STATUS
+    ========================= */
 
     if(statusCell){
 
-      if(total > 0){
+      if (paidMembers.includes(memberName)) {
 
         statusCell.innerHTML =
-        "✅ ACTIVE";
+          "✅ <b>Paid on 22nd Dec 2025</b>";
 
         statusCell.style.color =
-        "green";
+          "green";
 
-        statusCell.style.fontWeight =
-        "bold";
-
-      }
-
-      else{
+      } else {
 
         statusCell.innerHTML =
-        "❌ PENDING";
+          "⏳ Not Paid";
 
         statusCell.style.color =
-        "red";
-
-        statusCell.style.fontWeight =
-        "bold";
-
+          "#b71c1c";
       }
 
+      statusCell.style.fontWeight =
+        "bold";
     }
 
+    /* =========================
+       GRAND TOTALS
+    ========================= */
 
-    grandTotal += total;
-    savedTotal += total;
-    rewardTotal += reward;
+    grandTotal += totalSavings;
+    totalSaved += saved;
+    totalReward += reward;
 
   });
 
-
   document.getElementById("grandTotal_2025")
-  .innerHTML =
-  "Ksh " + grandTotal.toLocaleString();
+  .textContent =
+    "Ksh " + grandTotal.toLocaleString();
 
   document.getElementById("savedTotal_2025")
-  .innerHTML =
-  "Ksh " + savedTotal.toLocaleString();
+  .textContent =
+    "Ksh " + totalSaved.toLocaleString();
 
   document.getElementById("rewardTotal_2025")
-  .innerHTML =
-  "Ksh " + rewardTotal.toLocaleString();
+  .textContent =
+    "Ksh " + totalReward.toLocaleString();
+}
+
+
+/* =========================================
+   AUTO UPDATE ON INPUT CHANGE
+========================================= */
+
+const table2025 =
+  document.getElementById("table2025");
+
+if (table2025) {
+
+  table2025.addEventListener("input", e => {
+
+    if (e.target.type === "number") {
+
+      calculate2025();
+
+    }
+
+  });
 
 }
 
 
-// RUN ON PAGE LOAD
-window.onload = calculate2025Table;
+/* =========================================
+   INITIAL LOAD
+========================================= */
+
+calculate2025();
 
 </script>
-
-
-
-
-<script>
-const paidMembers = [
-  "BONIFACE CHELLUGET",
-  "JULIUS KEBASO",
-  "KENNEDY MUTAYI",
-  "SAMUEL OYUGI",
-  "EVERLINE MAINA",
-  "JUDITH OMWOYO",
-  "ELVIS KAMASH",
-  "JULIUS KEBASO",
-   "CHRISTINE PIUS",
-   "ANASTANCIA OMWOYO",
-   "PIUS NYAKUNDI",
-  "KEFFA MOMANYI",
-  "FAITH MOKOGI",
-  "CLAUDIA MORAA"
- 
-   
-  
-  
- 
-  // ➕ add more names here when paid
-];
-
-document.querySelectorAll("#table2025 tbody tr").forEach(row => {
-  const nameCell = row.querySelector("td");
-  const statusCell = row.querySelector(".paymentStatus");
-
-  if (!nameCell || !statusCell) return;
-
-  const name = nameCell.textContent.trim();
-
-  if (paidMembers.includes(name)) {
-    statusCell.innerHTML = "✅ <b>Paid on 22nd Dec 2025</b>";
-    statusCell.style.color = "green";
-    statusCell.style.fontWeight = "bold";
-  } else {
-    statusCell.innerHTML = "⏳ Not Paid";
-    statusCell.style.color = "#b71c1c";
-  }
-});
-</script>
-
 <!-- =========================
    BUTTON TO OPEN 2026 TABLE
 ========================= -->
@@ -4779,169 +4824,130 @@ input{
 
 </style>
 
-
-<!-- =========================
-   SCRIPT
-========================= -->
-
 <script>
 
-function open2026Popup(){
+/* =========================
+   POPUP CONTROLS
+========================= */
+
+function open2026Popup() {
   document.getElementById("popup2026").style.display = "block";
 }
 
-function close2026Popup(){
+function close2026Popup() {
   document.getElementById("popup2026").style.display = "none";
 }
 
-window.onclick = function(event){
+// close when clicking outside
+window.onclick = function(event) {
   const popup = document.getElementById("popup2026");
-
-  if(event.target == popup){
+  if (event.target == popup) {
     popup.style.display = "none";
   }
-}
+};
 
 
-function calculate2026Table() {
+/* =========================
+   MAIN CALCULATION 2026
+========================= */
+
+function calculate2026() {
+
+  const table = document.getElementById("table2026");
+  if (!table) return;
 
   let grandTotal = 0;
-  let savedTotal = 0;
-  let rewardTotal = 0;
+  let totalSaved = 0;
+  let totalReward = 0;
 
-  const rows = document.querySelectorAll("#table2026 tbody tr");
+  table.querySelectorAll("tbody tr").forEach(row => {
 
-  rows.forEach(row => {
-
-    const inputs = row.querySelectorAll("input");
-
-    if(inputs.length === 0) return;
-
-    let total = 0;
-
-    inputs.forEach((input, index) => {
-
-      if(index >= 1){
-        total += Number(input.value) || 0;
-      }
-
-      input.addEventListener("input", calculate2026Table);
-    });
-
-    const reward = Math.round(total * 0.20);
-
-    const totalCell = row.querySelector(".rowTotal");
+    const inputs = row.querySelectorAll("input[type='number']");
+    const rowTotalCell = row.querySelector(".rowTotal");
     const savedCell = row.querySelector(".saved2026");
     const rewardCell = row.querySelector(".reward2026");
     const statusCell = row.querySelector(".paymentStatus");
 
-    if(totalCell)
-      totalCell.innerHTML = "Ksh " + total.toLocaleString();
+    if (!rowTotalCell || inputs.length === 0) return;
 
-    if(savedCell)
-      savedCell.innerHTML = "Ksh " + total.toLocaleString();
+    const previousSavings = Number(inputs[0].value) || 0;
 
-    if(rewardCell)
-      rewardCell.innerHTML = "Ksh " + reward.toLocaleString();
+    let currentSavings = 0;
+    let activeMonths = 0;
 
-    if(statusCell){
-
-      if(total > 0){
-        statusCell.innerHTML = "✅ ACTIVE";
-        statusCell.style.color = "green";
-      }
-      else {
-        statusCell.innerHTML = "❌ PENDING";
-        statusCell.style.color = "red";
-      }
+    for (let i = 1; i < inputs.length; i++) {
+      const val = Number(inputs[i].value) || 0;
+      currentSavings += val;
+      if (val > 0) activeMonths++;
     }
 
-    grandTotal += total;
-    savedTotal += total;
-    rewardTotal += reward;
+    const totalSavings = previousSavings + currentSavings;
 
+    let rewardRate = 0;
+
+    if (totalSavings >= 1500 && activeMonths >= 10) {
+      rewardRate = 0.799;
+    } 
+    else if (totalSavings >= 1500 && activeMonths >= 6) {
+      rewardRate = 0.7499;
+    } 
+    else if (totalSavings >= 1000) {
+      rewardRate = 0.30;
+    }
+
+    const reward = Math.round(totalSavings * rewardRate);
+    const saved = totalSavings - reward;
+
+    rowTotalCell.textContent = "Ksh " + totalSavings.toLocaleString();
+    savedCell.textContent = "Ksh " + saved.toLocaleString();
+    rewardCell.textContent = "Ksh " + reward.toLocaleString();
+
+    if (statusCell) {
+      statusCell.innerHTML =
+        totalSavings >= 1500
+          ? "🟢 ELIGIBLE"
+          : "🔴 NOT YET ELIGIBLE";
+    }
+
+    grandTotal += totalSavings;
+    totalSaved += saved;
+    totalReward += reward;
   });
 
-  document.getElementById("grandTotal_2026").innerHTML =
+  document.getElementById("grandTotal_2026").textContent =
     "Ksh " + grandTotal.toLocaleString();
 
-  document.getElementById("savedTotal_2026").innerHTML =
-    "Ksh " + savedTotal.toLocaleString();
+  document.getElementById("savedTotal_2026").textContent =
+    "Ksh " + totalSaved.toLocaleString();
 
-  document.getElementById("rewardTotal_2026").innerHTML =
-    "Ksh " + rewardTotal.toLocaleString();
+ document.getElementById("rewardTotal_2026").textContent =
+"Ksh " + totalReward.toLocaleString();
+
+updateSavingsCard();
+updateMembersCount();
+
 }
-
-window.onload = calculate2026Table;
-
-</script>
-```
-
-
-
-<script>
 /* =========================
-   PAYMENT STATUS ONLY - 2026
-   (WITHOUT AFFECTING TOTALS)
+   AUTO RECALCULATE
 ========================= */
 
-const paidMembers2026 = [
-  "BONIFACE CHELLUGET",
-  "FAITH MOKOGI",
-  "JULIUS KEBASO",
-  "JACKIENYARANGI",
-  "SAMUEL OYUGI",
-  "KEFFA MOMANYI",
-  "CLAUDIA MORAA",
-  "ELIZABETH SHIUNDU",
-  "DEE",
-  "SHAMIM ISIJI",
-  "ELVIS KAMASH",
-  "JAPHET MULI"
-];
-
-document.querySelectorAll("#table2026 tbody tr").forEach(row => {
-
-  // Skip GRAND TOTAL row
-  if (row.querySelector("#grandTotal_2026")) return;
-
-  const nameCell = row.querySelector("td");
-
-  // Skip empty rows
-  if (!nameCell) return;
-
-  // Find existing payment status cell
-  let statusCell = row.querySelector(".paymentStatus");
-
-  // Create ONLY if missing
-  if (!statusCell) {
-    statusCell = document.createElement("td");
-    statusCell.className = "paymentStatus";
-    row.appendChild(statusCell);
+document.addEventListener("input", function(e) {
+  if (e.target.type === "number") {
+    calculate2026();
   }
-
-  const name = nameCell.textContent.trim().toUpperCase();
-
-  // PAYMENT CHECK
-  if (paidMembers2026.includes(name)) {
-
-    statusCell.innerHTML =
-      "✅ <b>to receive cash before 17th December 2026</b>";
-
-    statusCell.style.color = "green";
-    statusCell.style.fontWeight = "bold";
-
-  } else {
-
-    statusCell.innerHTML =
-      "⏳ Not yet qualified keep saving";
-
-    statusCell.style.color = "#b71c1c";
-    statusCell.style.fontWeight = "bold";
-  }
-
 });
+
+
+/* =========================
+   INITIAL LOAD
+========================= */
+
+calculate2026();
+updateSavingsCard();
+updateMembersCount();
+
 </script>
+
 <style>
 
 /* =========================
@@ -5083,21 +5089,19 @@ document.querySelectorAll("#table2026 tbody tr").forEach(row => {
 
   <div class="mini-card clickableCard" onclick="showMembersPopup()">
     👥
-    <h3 id="totalMembers">0</h3>
+    <h3 id="totalMembers">XXX</h3>
     <small>Click to view all Members</small>
-  </div>
+</div>
 
   <div class="mini-card clickableCard" onclick="showSavingsPopup()">
-
-  💰
-  <h3 id="totalSavings">XXX</h3>
-  <small>Click to view Savings</small>
-
+    💰
+    <h3 id="totalSavings">XXX</h3>
+    <small>Click to View Savings</small>
 </div>
 
   <div class="mini-card clickableCard" onclick="showQualifiedPopup()">
     ✅
-    <h3 id="qualifiedMembers">0</h3>
+    <h3 id="qualifiedMembers">XXX</h3>
     <small>Click to view Qualified</small>
   </div>
 
@@ -5163,24 +5167,23 @@ document.querySelectorAll("#table2026 tbody tr").forEach(row => {
     <div class="popup-body">
 
       <!-- SEARCH BOX -->
-      <input 
-  type="text" 
-  placeholder="🔍 Search member (Coming soon...)"
-  disabled
-  style="
-    width:100%;
-    padding:10px;
-    margin-bottom:10px;
-    border:1px solid #ccc;
-    border-radius:8px;
-    font-size:14px;
-    background:#f5f5f5;
-    color:#888;
-    cursor:not-allowed;
-  "
->
+      <div style="position:relative;">
 
-        <!-- CLEAR BUTTON (optional if you added it) -->
+        <input 
+          id="memberSearchInput"
+          type="text"
+          placeholder="🔍 Search member..."
+          oninput="searchMembers()"
+          style="
+            width:100%;
+            padding:10px;
+            margin-bottom:10px;
+            border:1px solid #ccc;
+            border-radius:8px;
+            font-size:14px;
+          "
+        >
+
         <span onclick="clearSearch()" style="
           position:absolute;
           right:10px;
@@ -5215,29 +5218,114 @@ document.querySelectorAll("#table2026 tbody tr").forEach(row => {
 
   </div>
 </div>
-<!-- SAVINGS -->
+    
+<!-- SAVINGS POPUP -->
 <div id="savingsPopup" class="dashboardPopup">
-  <div class="popup-content">
 
-    <div class="popup-header">
-      Savings
+  <div class="popup-content" style="border-radius:18px; overflow:hidden;">
+
+    <!-- HEADER -->
+    <div style="
+      background: linear-gradient(135deg,#00796b,#004d40);
+      color:white;
+      padding:18px;
+      text-align:center;
+      font-size:18px;
+      font-weight:bold;
+      letter-spacing:1px;
+    ">
+      💰 Savings Dashboard 2026
     </div>
 
-    <div class="popup-body">
+    <!-- BODY -->
+    <div class="popup-body" style="padding:20px;">
 
-      <p style="font-size:14px; line-height:1.6; margin-bottom:12px; color:#333;">
-        This section shows the total savings collected from all members.
-        Every contribution matters — stay consistent and increase your savings to qualify for loans and welfare benefits.
-      </p>
+      <!-- OVERVIEW PARAGRAPH -->
+      <div style="
+        background:#f5f5f5;
+        padding:12px 14px;
+        border-radius:12px;
+        font-size:13.5px;
+        line-height:1.6;
+        color:#444;
+        margin-bottom:15px;
+        border-left:4px solid #00796b;
+      ">
+        <b>📊 Our 2026 Savings Overview</b><br><br>
 
-      <div id="savingsList" style="font-size:28px;font-weight:bold;color:#00796b;text-align:center;margin-top:10px;">
-  Ksh 0
-</div>
+        This dashboard shows a clear summary of all members’ savings for the year 2026. 
+        It helps track total contributions, individual progress, and overall group growth. 
+        Stay consistent in saving to maximize rewards, eligibility, and financial benefits by the end of the year.
+      </div>
+
+      <!-- MAIN SAVINGS DISPLAY -->
+      <div style="
+        background: linear-gradient(135deg,#e0f7fa,#ffffff);
+        border-radius:16px;
+        padding:25px;
+        text-align:center;
+        box-shadow:0 6px 18px rgba(0,0,0,0.12);
+        margin-bottom:15px;
+      ">
+
+        <div style="font-size:14px; color:#555;">
+          Total Savings
+        </div>
+
+        <div id="savingsList" style="
+          font-size:26px;
+          font-weight:bold;
+          color:#00796b;
+          margin-top:10px;
+        ">
+          💰 Ksh XXX
+        </div>
+
+      </div>
+
+      <!-- MINI STATS -->
+      <div style="
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:10px;
+      ">
+
+        <div style="
+          background:#f1f8e9;
+          padding:12px;
+          border-radius:12px;
+          text-align:center;
+        ">
+          <div style="font-size:12px;color:#666;">Status</div>
+          <div style="font-weight:bold;color:#2e7d32;">Active</div>
+        </div>
+
+        <div style="
+          background:#e3f2fd;
+          padding:12px;
+          border-radius:12px;
+          text-align:center;
+        ">
+          <div style="font-size:12px;color:#666;">Growth</div>
+          <div style="font-weight:bold;color:#1565c0;">↗ Tracking</div>
+        </div>
+
+      </div>
 
     </div>
 
-    <button class="closePopup" onclick="closeSavingsPopup()">
-      Close
+    <!-- FOOTER BUTTON -->
+    <button class="closePopup" onclick="closeSavingsPopup()" style="
+      width:100%;
+      border:none;
+      padding:14px;
+      font-size:15px;
+      font-weight:bold;
+      color:white;
+      background:linear-gradient(135deg,#d32f2f,#b71c1c);
+      cursor:pointer;
+    ">
+      Close Dashboard
     </button>
 
   </div>
@@ -5286,194 +5374,526 @@ document.querySelectorAll("#table2026 tbody tr").forEach(row => {
 
 let topSaversData = [];
 
-/* ================= SYNC ================= */
-
-function syncAll(){
-  calculateTable();
-  updateDashboard();
-}
-
-/* ================= CALCULATE ================= */
-
-function calculateTable(){
-
-  document.querySelectorAll("#table2026 tbody tr").forEach(row=>{
-
-    const inputs = row.querySelectorAll("input");
-    if(inputs.length === 0) return;
-
-    let total = 0;
-
-    inputs.forEach(i=>{
-      total += Number(i.value) || 0;
-    });
-
-    const reward = Math.round(total * 0.2);
-
-    const rowTotal = row.querySelector(".rowTotal");
-    const saved2026 = row.querySelector(".saved2026");
-    const reward2026 = row.querySelector(".reward2026");
-
-    if(rowTotal) rowTotal.innerText = total;
-    if(saved2026) saved2026.innerText = total;
-    if(reward2026) reward2026.innerText = reward;
-
-  });
-
-}
-
-/* ================= DASHBOARD ================= */
-
-function updateDashboard(){
+/* =========================
+   BUILD DATA (SAFE FUNCTION)
+========================= */
+function buildTopSavers(){
 
   const rows = document.querySelectorAll("#table2026 tbody tr");
 
-  let members = 0;
-  let savings = 0;
-  let qualified = 0;
-
   topSaversData = [];
 
-  rows.forEach(row=>{
+  rows.forEach(row => {
 
     const nameCell = row.querySelector("td");
-    if(!nameCell) return;
+    const totalCell = row.querySelector(".rowTotal");
 
-    const inputs = row.querySelectorAll("input");
-    if(inputs.length === 0) return;
+    if (!nameCell || !totalCell) return;
 
+    const name = nameCell.textContent.trim();
+
+    // skip totals row
+    if (
+      name.toLowerCase().includes("total") ||
+      name.toLowerCase().includes("grand")
+    ) return;
+
+    // get numeric value safely
     let total = 0;
 
-    inputs.forEach(i=>{
-      total += Number(i.value) || 0;
-    });
-
-    members++;
-    savings += total;
-
-    if(total >= 1500) qualified++;
+    // BEST FIX: if your calculate2026 writes "Ksh 1,200"
+    const raw = totalCell.textContent.replace(/[^0-9]/g, "");
+    total = Number(raw) || 0;
 
     topSaversData.push({
-      name: nameCell.textContent.trim(),
-      total: total
+      name,
+      total
     });
-
   });
 
-  topSaversData.sort((a,b)=>b.total-a.total);
-
-  document.getElementById("totalMembers").innerText = members;
-
-  // 🔒 KEEP HIDDEN ON CARD
-  document.getElementById("totalSavings").innerText = "XXX";
-
-  // real value stored for popup
-  window.realSavingsTotal = savings;
-
-  document.getElementById("qualifiedMembers").innerText = qualified;
+  // sort highest first
+  topSaversData.sort((a, b) => b.total - a.total);
 }
 
-/* ================= OPEN POPUPS ================= */
-
+/* =========================
+   SHOW TOP 3
+========================= */
 function showTopSavers(){
 
+  // 🔥 ALWAYS refresh before showing
+  buildTopSavers();
+
   const list = document.getElementById("topSaverList");
-
-  list.innerHTML = ""; // clear properly
-
-  const medals = ["🥇","🥈","🥉"];
-
-  topSaversData.slice(0,3).forEach((m,i)=>{
-    list.innerHTML += `
-      <div style="padding:8px;border-bottom:1px solid #eee;">
-        <b>${medals[i]} ${m.name}</b><br>
-        💰 Ksh ${m.total.toLocaleString()}
-      </div>
-    `;
-  });
-
-  document.getElementById("topSaverPopup").style.display = "flex";
-}
-function showSavingsPopup(){
-
-  document.getElementById("savingsPopup").style.display = "flex";
-
-  // 💰 coin animation
-  dropCoins();
-
-  // start savings animation
-  animateSavings(window.realSavingsTotal || 0);
-}
-function animateSavings(targetAmount){
-
-  const el = document.getElementById("savingsList");
-
-  let current = 0;
-  let step = Math.ceil(targetAmount / 240); // speed control
-
-  const timer = setInterval(() => {
-
-    current += step;
-
-    if(current >= targetAmount){
-      current = targetAmount;
-      clearInterval(timer);
-    }
-
-    el.innerHTML = `Ksh ${current.toLocaleString()}`;
-
-  }, 20);
-}
-function showQualifiedPopup(){
-
-  const list = document.getElementById("qualifiedList");
   list.innerHTML = "";
 
-  let qualifiedArray = [];
+  const medals = ["🥇", "🥈", "🥉"];
 
-  document.querySelectorAll("#table2026 tbody tr").forEach(row=>{
+  const top3 = topSaversData.slice(0, 3);
 
-    const name = row.querySelector("td");
-    const inputs = row.querySelectorAll("input");
+  if (top3.length === 0) {
+    list.innerHTML = "<p>No data available</p>";
+  }
 
-    if(!name || inputs.length === 0) return;
+  top3.forEach((member, i) => {
 
-    let total = 0;
-
-    inputs.forEach(i=>{
-      total += Number(i.value) || 0;
-    });
-
-    if(total >= 1500){
-      qualifiedArray.push({
-        name: name.textContent.trim(),
-        total: total
-      });
-    }
-  });
-
-  // 🔥 SORT HIGHEST TO LOWEST
-  qualifiedArray.sort((a,b)=>b.total - a.total);
-
-  // 🔥 ADD RANK NUMBERS
-  qualifiedArray.forEach((m, index)=>{
     list.innerHTML += `
       <div style="
         padding:10px;
         border-bottom:1px solid #eee;
         font-size:14px;
       ">
-        <b>${index + 1}. ${m.name}</b><br>
-        💰 Ksh ${m.total.toLocaleString()}
+        <b>${medals[i]} ${member.name}</b><br>
+        💰 Ksh ${member.total.toLocaleString()}
       </div>
     `;
   });
 
+  document.getElementById("topSaverPopup").style.display = "flex";
+}
+
+/* =========================
+   CLOSE POPUP
+========================= */
+function closeTopSavers(){
+  document.getElementById("topSaverPopup").style.display = "none";
+}
+
+
+
+/* =========================
+   TOTAL SAVINGS CALCULATOR
+========================= */
+
+function getTotalSavings() {
+
+    let total = 0;
+
+    document.querySelectorAll("#table2026 tbody tr").forEach(row => {
+
+        const totalCell = row.querySelector(".rowTotal");
+
+        if (!totalCell) return;
+
+        const amount =
+            Number(
+                totalCell.textContent.replace(/[^0-9]/g, "")
+            ) || 0;
+
+        total += amount;
+    });
+
+    return total;
+}
+
+/* =========================
+   UPDATE SAVINGS CARD
+========================= */
+
+function updateSavingsCard() {
+
+    const total = getTotalSavings();
+
+    document.getElementById("totalSavings").textContent =
+        "Ksh " + total.toLocaleString();
+}
+
+/* =========================
+   SHOW SAVINGS POPUP
+========================= */
+
+/* =========================
+   SHOW SAVINGS POPUP
+========================= */
+
+/* =========================
+   LOAD AVAILABLE VOICES
+========================= */
+
+window.speechSynthesis.onvoiceschanged = () => {
+
+    const voices = speechSynthesis.getVoices();
+
+    voices.forEach((voice, index) => {
+        console.log(
+            index + ": " +
+            voice.name +
+            " | " +
+            voice.lang
+        );
+    });
+
+};
+
+/* =========================
+   SHOW SAVINGS POPUP
+========================= */
+
+/* =========================
+   LOAD AVAILABLE VOICES
+========================= */
+
+window.speechSynthesis.onvoiceschanged = () => {
+
+    const voices = speechSynthesis.getVoices();
+
+    voices.forEach((voice, index) => {
+        console.log(
+            index + ": " +
+            voice.name +
+            " | " +
+            voice.lang
+        );
+    });
+
+};
+
+/* =========================
+   SHOW SAVINGS POPUP
+========================= */
+
+function showSavingsPopup() {
+
+    document.getElementById("savingsPopup").style.display = "flex";
+
+    // 🗣 Stop previous speech
+    speechSynthesis.cancel();
+
+    // 🗣 Savings announcement
+    const speech = new SpeechSynthesisUtterance(
+        "Dear member, your total savings are now being calculated."
+    );
+
+    speech.rate = 0.95;
+    speech.pitch = 1.2;
+    speech.volume = 1;
+
+    // Prefer female voices
+    const voices = speechSynthesis.getVoices();
+
+    speech.voice =
+        voices.find(v => v.name.includes("Female")) ||
+        voices.find(v => v.name.includes("Jenny")) ||
+        voices.find(v => v.name.includes("Zira")) ||
+        voices.find(v => v.name.includes("Samantha")) ||
+        voices.find(v => v.name.includes("Karen")) ||
+        voices.find(v => v.name.includes("Moira")) ||
+        voices.find(v => v.name.includes("Tessa")) ||
+        voices[0];
+
+    speechSynthesis.speak(speech);
+
+    // 💥 Money explosion
+    moneyBoom();
+
+    // 💰 Start counting
+    const total = getTotalSavings();
+
+    animateSavings(total);
+}
+
+/* =========================
+   MONEY EXPLOSION
+========================= */
+
+function moneyBoom(){
+
+    const items = ["💰","💵","💸","🪙","💷","💶","💴"];
+
+    for(let i = 0; i < 60; i++){
+
+        const money = document.createElement("div");
+
+        money.innerHTML =
+            items[Math.floor(Math.random() * items.length)];
+
+        money.style.position = "fixed";
+        money.style.left = "50%";
+        money.style.top = "50%";
+        money.style.fontSize =
+            (18 + Math.random() * 22) + "px";
+
+        money.style.zIndex = "100000";
+        money.style.pointerEvents = "none";
+
+        document.body.appendChild(money);
+
+        const angle = Math.random() * 360;
+        const distance = 150 + Math.random() * 350;
+
+        const x =
+            Math.cos(angle * Math.PI / 180) * distance;
+
+        const y =
+            Math.sin(angle * Math.PI / 180) * distance;
+
+        money.animate(
+        [
+          {
+            transform:"translate(0,0) scale(1)",
+            opacity:1
+          },
+          {
+            transform:`translate(${x}px,${y}px) rotate(${Math.random()*720}deg) scale(1.5)`,
+            opacity:0
+          }
+        ],
+        {
+          duration:4000,
+          easing:"ease-out"
+        });
+
+        setTimeout(()=>{
+            money.remove();
+        },2000);
+    }
+}
+/* =========================
+   MONEY EXPLOSION
+========================= */
+
+function moneyBoom(){
+
+    const items = ["💰","💵","💸","🪙","💷","💶","💴"];
+
+    for(let i = 0; i < 60; i++){
+
+        const money = document.createElement("div");
+
+        money.innerHTML = items[Math.floor(Math.random() * items.length)];
+
+        money.style.position = "fixed";
+        money.style.left = "50%";
+        money.style.top = "50%";
+        money.style.fontSize = (18 + Math.random() * 22) + "px";
+        money.style.zIndex = "100000";
+        money.style.pointerEvents = "none";
+
+        document.body.appendChild(money);
+
+        const angle = Math.random() * 360;
+        const distance = 150 + Math.random() * 350;
+
+        const x = Math.cos(angle * Math.PI / 180) * distance;
+        const y = Math.sin(angle * Math.PI / 180) * distance;
+
+        money.animate(
+        [
+          { transform:"translate(0,0) scale(1)", opacity:1 },
+          { transform:`translate(${x}px,${y}px) rotate(${Math.random()*720}deg) scale(1.5)`, opacity:0 }
+        ],
+        {
+          duration:2000,
+          easing:"ease-out"
+        });
+
+        setTimeout(()=> money.remove(), 2000);
+    }
+}
+/* =========================
+   COUNTING ANIMATION
+========================= */
+
+function animateSavings(target) {
+
+    const display = document.getElementById("savingsList");
+
+    let current = 0;
+
+    const duration = 4000;
+    const step = Math.max(1, Math.ceil(target / 80));
+
+    const timer = setInterval(() => {
+
+        current += step;
+
+        // coin burst effect
+        if(current % 500 === 0){
+            createMoneyEffect();
+        }
+
+        if(current >= target){
+            current = target;
+            clearInterval(timer);
+        }
+
+        display.innerHTML = "💰 Ksh " + current.toLocaleString();
+
+    }, duration / 60);
+}
+function createMoneyEffect(){
+
+    for(let i = 0; i < 8; i++){
+
+        const money = document.createElement("div");
+
+        money.innerHTML = "💸";
+
+        money.style.position = "fixed";
+        money.style.left = Math.random() * 100 + "vw";
+        money.style.top = "-30px";
+        money.style.fontSize = "24px";
+        money.style.zIndex = "99999";
+        money.style.pointerEvents = "none";
+        money.style.transition = "2s linear";
+
+        document.body.appendChild(money);
+
+        setTimeout(() => {
+            money.style.top = "100vh";
+        }, 50);
+
+        setTimeout(() => {
+            money.remove();
+        }, 2000);
+    }
+}
+/* =========================
+   CLOSE SAVINGS POPUP
+========================= */
+
+function closeSavingsPopup() {
+
+    document.getElementById("savingsPopup").style.display = "none";
+
+    document.getElementById("savingsList").innerHTML =
+        "💰 Ksh XXX";
+}
+function showQualifiedPopup(){
+
+  const list = document.getElementById("qualifiedList");
+  list.innerHTML = "";
+
+  // 🗣 Voice announcement
+  speechSynthesis.cancel();
+
+  const speech = new SpeechSynthesisUtterance(
+    "Congratulations. Displaying qualified members."
+  );
+
+  speech.rate = 0.95;
+  speech.pitch = 1.2;
+
+  const voices = speechSynthesis.getVoices();
+
+  speech.voice =
+      voices.find(v => v.name.includes("Female")) ||
+      voices.find(v => v.name.includes("Jenny")) ||
+      voices.find(v => v.name.includes("Zira")) ||
+      voices.find(v => v.name.includes("Samantha")) ||
+      voices[0];
+
+  speechSynthesis.speak(speech);
+
+  // 🎉 Celebration
+  celebrateQualified();
+
+  let qualifiedArray = [];
+
+  document.querySelectorAll("#table2026 tbody tr").forEach(row => {
+
+    const nameCell = row.querySelector("td");
+    const inputs = row.querySelectorAll("input[type='number']");
+
+    if(!nameCell || inputs.length === 0) return;
+
+    let total = 0;
+
+    inputs.forEach(input => {
+      total += Number(input.value) || 0;
+    });
+
+    if(total >= 1500){
+      qualifiedArray.push({
+        name: nameCell.textContent.trim(),
+        total: total
+      });
+    }
+
+  });
+
+  // Highest first
+  qualifiedArray.sort((a,b)=>b.total-a.total);
+
+  if(qualifiedArray.length === 0){
+
+    list.innerHTML = `
+      <div style="
+        text-align:center;
+        padding:20px;
+        color:#d32f2f;
+        font-weight:bold;">
+        No qualified members yet.
+      </div>
+    `;
+
+  } else {
+
+    list.innerHTML = `
+      <div style="
+        background:#e8f5e9;
+        padding:10px;
+        border-radius:10px;
+        margin-bottom:10px;
+        text-align:center;
+        font-weight:bold;">
+        ✅ Qualified Members: ${qualifiedArray.length}
+      </div>
+    `;
+
+    qualifiedArray.forEach((m,index)=>{
+
+      list.innerHTML += `
+        <div style="
+          padding:10px;
+          border-bottom:1px solid #eee;
+          font-size:14px;">
+          🏆 <b>${index + 1}. ${m.name}</b><br>
+          💰 Ksh ${m.total.toLocaleString()}
+        </div>
+      `;
+    });
+  }
+
   document.getElementById("qualifiedPopup").style.display = "flex";
 }
 
-let membersArray = [];
 
+function celebrateQualified(){
+
+  const icons = ["🎉","✨","🏆","⭐","🎊","🥳"];
+
+  for(let i=0;i<40;i++){
+
+    const item = document.createElement("div");
+
+    item.innerHTML =
+      icons[Math.floor(Math.random()*icons.length)];
+
+    item.style.position = "fixed";
+    item.style.left = Math.random()*100 + "vw";
+    item.style.top = "-40px";
+    item.style.fontSize = (20 + Math.random()*15) + "px";
+    item.style.zIndex = "100000";
+    item.style.pointerEvents = "none";
+
+    document.body.appendChild(item);
+
+    item.animate(
+      [
+        { transform:"translateY(0)", opacity:1 },
+        { transform:"translateY(100vh)", opacity:0 }
+      ],
+      {
+        duration:2500,
+        easing:"linear"
+      }
+    );
+
+    setTimeout(()=>{
+      item.remove();
+    },2500);
+  }
+}
 function showMembersPopup(){
 
   const popup = document.getElementById("membersPopup");
@@ -5505,23 +5925,49 @@ function showMembersPopup(){
     }
 
     count++;
-
     membersArray.push(name);
 
+    // ✅ NUMBERED MEMBERS LIST
     list.innerHTML += `
-      <div class="memberItem" style="padding:10px;border-bottom:1px solid #eee;font-size:14px;">
-        <b>${count}.</b> 👤 
-        <span data-original="${name}">${name}</span>
+      <div class="memberItem" style="padding:10px;border-bottom:1px solid #eee;">
+        <b>${count}.</b> 👤 <span>${name}</span>
       </div>
     `;
-
   });
+
+  // update dashboard counter
+  document.getElementById("totalMembers").textContent = count;
 
   popup.style.display = "flex";
 }
+function updateMembersCount() {
+
+  let count = 0;
+
+  document.querySelectorAll("#table2026 tbody tr").forEach(row => {
+
+    const nameCell = row.querySelector("td");
+    if (!nameCell) return;
+
+    const name = nameCell.textContent.trim();
+
+    if (
+      name === "" ||
+      name.toLowerCase().includes("total") ||
+      name.toLowerCase().includes("grand") ||
+      name.toLowerCase().includes("summary")
+    ) return;
+
+    if (row.querySelectorAll("input").length === 0) return;
+
+    count++;
+  });
+
+  document.getElementById("totalMembers").textContent = count;
+}
 function searchMembers(){
 
-  const input = document.getElementById("memberSearchInput").value.toLowerCase();
+  const input = document.getElementById("memberSearchInput").value.toLowerCase().trim();
   const items = document.querySelectorAll("#membersList .memberItem");
   const noResults = document.getElementById("noResultsMessage");
 
@@ -5529,127 +5975,57 @@ function searchMembers(){
 
   items.forEach(item => {
 
-    const span = item.querySelector("span");
-
-    // ✅ ALWAYS store original once safely
-    if(!span.dataset.original){
-      span.dataset.original = span.textContent;
-    }
-
-    const originalText = span.dataset.original;
+    const text = item.textContent.toLowerCase(); 
+    // 👆 important: use full text (not span only)
 
     if(input === ""){
-      span.innerHTML = originalText;
       item.style.display = "block";
       visibleCount++;
       return;
     }
 
-    const lowerName = originalText.toLowerCase();
-
-    if(lowerName.includes(input)){
-
-      visibleCount++;
-
-      const regex = new RegExp(`(${input})`, "gi");
-
-      span.innerHTML = originalText.replace(
-        regex,
-        `<mark style="background:#ffeb3b;padding:2px;border-radius:3px;">$1</mark>`
-      );
-
+    if(text.includes(input)){
       item.style.display = "block";
-
+      visibleCount++;
     } else {
       item.style.display = "none";
     }
 
   });
 
-  noResults.style.display = (visibleCount === 0) ? "block" : "none";
+  noResults.style.display = visibleCount === 0 ? "block" : "none";
 }
-
 function clearSearch(){
 
-  const input = document.getElementById("memberSearchInput");
-  const items = document.querySelectorAll("#membersList .memberItem");
-  const noResults = document.getElementById("noResultsMessage");
+  document.getElementById("memberSearchInput").value = "";
 
-  input.value = "";
+  const items = document.querySelectorAll("#membersList .memberItem");
 
   items.forEach(item => {
-
-    const span = item.querySelector("span");
-
-    // restore original text (remove highlight)
-    const original = span.getAttribute("data-original") || span.textContent;
-    span.innerHTML = original;
-
     item.style.display = "block";
   });
 
-  noResults.style.display = "none";
+  document.getElementById("noResultsMessage").style.display = "none";
 }
 
-/* ================= CLOSE FUNCTIONS ================= */
-
-function closeTopSavers(){
-  document.getElementById("topSaverPopup").style.display = "none";
-}
 
 function closeMembersPopup(){
-  document.getElementById("membersPopup").style.display = "none";
-}
+  const popup = document.getElementById("membersPopup");
+  popup.style.opacity = "0";
+  popup.style.transform = "scale(0.9)";
 
-function closeSavingsPopup(){
-  document.getElementById("savingsPopup").style.display = "none";
+  setTimeout(() => {
+    popup.style.display = "none";
+    popup.style.opacity = "1";
+    popup.style.transform = "scale(1)";
+  }, 200);
 }
 
 function closeQualifiedPopup(){
   document.getElementById("qualifiedPopup").style.display = "none";
 }
 
-/* ================= OUTSIDE CLICK CLOSE ================= */
-
-window.addEventListener("click", function(e){
-
-  document.querySelectorAll(".dashboardPopup").forEach(popup=>{
-    if(e.target === popup){
-      popup.style.display = "none";
-    }
-  });
-
-});
-
-function dropCoins(){
-
-  const coins = ["🪙","💰","🪙","💸","🪙"];
-
-  for(let i=0;i<20;i++){
-
-    const coin = document.createElement("div");
-    coin.classList.add("coin");
-
-    coin.innerText = coins[Math.floor(Math.random()*coins.length)];
-
-    coin.style.left = Math.random() * 100 + "vw";
-    coin.style.animationDuration = (0.8 + Math.random()*1.2) + "s";
-    coin.style.fontSize = (18 + Math.random()*12) + "px";
-
-    document.body.appendChild(coin);
-
-    setTimeout(()=> coin.remove(), 2000);
-  }
-}
-
-/* ================= AUTO UPDATE ================= */
-
-window.addEventListener("load", syncAll);
-document.addEventListener("input", syncAll);
-
 </script>
-
-
 
 <script>
 const REGISTRATION_FEES_TOTAL = 600; // 👈 update manually
@@ -8525,138 +8901,11 @@ function formatNumber(num) {
 }
 </script>
 
-<script> 
-function calculate2025() { 
-  const table2025 = document.getElementById("table2025"); // make sure your table has id="table2025"
-  if (!table2025) return;
-
-  let grandTotal = 0;
-  let totalSaved = 0;
-  let totalReward = 0;
-
-  table2025.querySelectorAll("tbody tr").forEach(row => {
-    const inputs = row.querySelectorAll("input[type='number']");
-    const rowTotalCell = row.querySelector(".rowTotal");
-    const savedCell = row.querySelector(".saved2025");
-    const rewardCell = row.querySelector(".reward2025");
-
-    if (!rowTotalCell) return;
-
-    let totalSavings = 0;
-    let activeMonths = 0;
-
-    inputs.forEach(input => {
-      const val = Number(input.value) || 0;
-      totalSavings += val;
-      if (val > 0) activeMonths++;
-    });
-
-    let reward = 0;
-    let saved = totalSavings;
-
-    // RULE 1: 12 months + >=1500
-    if (totalSavings >= 1500 && activeMonths >= 12) {
-      reward = Math.round(totalSavings * 0.60);
-      saved = totalSavings - reward;
-    }
-    // RULE 2: >=1200 + >=6 months
-    else if (totalSavings >= 1200 && activeMonths >= 6) {
-      reward = Math.round(totalSavings * 0.50);
-      saved = totalSavings - reward;
-    }
-
-    rowTotalCell.textContent = totalSavings;
-    savedCell.textContent = saved;
-    rewardCell.textContent = reward;
-
-    grandTotal += totalSavings;
-    totalSaved += saved;
-    totalReward += reward;
-  });
-
-  document.getElementById("grandTotal_2025").textContent = grandTotal;
-  document.getElementById("savedTotal_2025").textContent = totalSaved;
-  document.getElementById("rewardTotal_2025").textContent = totalReward;
-}
-
-// Listen for changes in the table
-const table2025 = document.getElementById("table2025");
-if (table2025) {
-  table2025.addEventListener("input", e => {
-    if (e.target.type === "number") calculate2025();
-  });
-}
-
-// Initial calculation
-calculate2025();
-</script>
 
 
 
-<script>
-(function () {
-  const table2026 = document.getElementById("table2026");
-  if (!table2026) return;
 
-  function calculate2026() {
-    let grandTotal = 0;
-    let totalSaved = 0;
-    let totalReward = 0;
 
-    table2026.querySelectorAll("tbody tr").forEach(row => {
-      const inputs = row.querySelectorAll("input[type='number']");
-      const rowTotalCell = row.querySelector(".rowTotal");
-      const savedCell = row.querySelector(".saved2026");
-      const rewardCell = row.querySelector(".reward2026");
-
-      if (!rowTotalCell) return;
-
-      let totalSavings = 0;
-      let activeMonths = 0;
-
-      inputs.forEach(input => {
-        const val = Number(input.value) || 0;
-        totalSavings += val;
-        if (val > 0) activeMonths++;
-      });
-
-      let reward = 0;
-      let saved = totalSavings;
-
-      // RULE 1: 12 months + >=1500
-      if (totalSavings >= 1500 && activeMonths >= 12) {
-        reward = Math.round(totalSavings * 0.80);
-        saved = totalSavings - reward;
-      }
-      // RULE 2: >=1500 + <=6 months
-      else if (totalSavings >= 1500 && activeMonths <= 6) {
-        reward = Math.round(totalSavings * 0.75);
-        saved = totalSavings - reward;
-      }
-
-      rowTotalCell.textContent = totalSavings;
-      if (savedCell) savedCell.textContent = saved;
-      if (rewardCell) rewardCell.textContent = reward;
-
-      grandTotal += totalSavings;
-      totalSaved += saved;
-      totalReward += reward;
-    });
-
-    document.getElementById("grandTotal_2026").textContent = grandTotal;
-    if (document.getElementById("savedTotal_2026")) 
-      document.getElementById("savedTotal_2026").textContent = totalSaved;
-    if (document.getElementById("rewardTotal_2026")) 
-      document.getElementById("rewardTotal_2026").textContent = totalReward;
-  }
-
-  table2026.addEventListener("input", e => {
-    if (e.target.type === "number") calculate2026();
-  });
-
-  calculate2026(); // initial load
-})();
-</script>
 
 <script>
   window.addEventListener("load", function () {
