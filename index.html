@@ -3400,19 +3400,17 @@ document.getElementById("downloadFormBtn").addEventListener("click", () => {
 
 <option>SAMUEL OYUGI</option>
 <option>KEFFA MOMANYI</option>
-<option>KENNEDY MUTAYI</option>
-<option>MIKE MORRIS</option>
+
 <option>FAITH MOKOGI</option>
 <option>SADLER KARAN</option>
 <option>SHAMIM KAMASH</option>
 <option>CLAUDIA MORAA</option>
-<option>ESTHER OBEGI</option>
-<option>DENNIS KIEYA</option>
+
 
 <option>ELIZABETH SHIUNDU</option>
 <option>LILIAN KERUBO</option>
 <option>NELLY KARIMI</option>
-<option>SHARON ONDIEKI</option>
+
 <option>CANZEDENA ANYANGO</option>
 <option>JAPHETH MULI</option>
 <option>DEFTERS PHOLIUS</option>
@@ -4723,7 +4721,7 @@ margin:10px 0;
 </tr>
 
 <tr>
-<td>DENA IRENE</td>
+<td>CANZEDENA ANYANGO</td>
 <td><input type="number" value="0"></td>
 <td><input type="number" value="0"></td>
 <td><input type="number" value="195"></td>
@@ -5510,9 +5508,6 @@ function updateSavingsCard() {
         "Ksh " + total.toLocaleString();
 }
 
-/* =========================
-   SHOW SAVINGS POPUP
-========================= */
 
 /* =========================
    SHOW SAVINGS POPUP
@@ -5604,62 +5599,7 @@ function showSavingsPopup() {
     animateSavings(total);
 }
 
-/* =========================
-   MONEY EXPLOSION
-========================= */
 
-function moneyBoom(){
-
-    const items = ["💰","💵","💸","🪙","💷","💶","💴"];
-
-    for(let i = 0; i < 60; i++){
-
-        const money = document.createElement("div");
-
-        money.innerHTML =
-            items[Math.floor(Math.random() * items.length)];
-
-        money.style.position = "fixed";
-        money.style.left = "50%";
-        money.style.top = "50%";
-        money.style.fontSize =
-            (18 + Math.random() * 22) + "px";
-
-        money.style.zIndex = "100000";
-        money.style.pointerEvents = "none";
-
-        document.body.appendChild(money);
-
-        const angle = Math.random() * 360;
-        const distance = 150 + Math.random() * 350;
-
-        const x =
-            Math.cos(angle * Math.PI / 180) * distance;
-
-        const y =
-            Math.sin(angle * Math.PI / 180) * distance;
-
-        money.animate(
-        [
-          {
-            transform:"translate(0,0) scale(1)",
-            opacity:1
-          },
-          {
-            transform:`translate(${x}px,${y}px) rotate(${Math.random()*720}deg) scale(1.5)`,
-            opacity:0
-          }
-        ],
-        {
-          duration:4000,
-          easing:"ease-out"
-        });
-
-        setTimeout(()=>{
-            money.remove();
-        },2000);
-    }
-}
 /* =========================
    MONEY EXPLOSION
 ========================= */
