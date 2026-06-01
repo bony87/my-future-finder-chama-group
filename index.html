@@ -4899,13 +4899,13 @@ function calculate2026() {
     let rewardRate = 0;
 
     if (totalSavings >= 1500 && activeMonths >= 10) {
-      rewardRate = 0.798;
+      rewardRate = 0.797;
     } 
     else if (totalSavings >= 1500 && activeMonths >= 6) {
-      rewardRate = 0.748;
+      rewardRate = 0.747;
     } 
     else if (totalSavings >= 1000) {
-      rewardRate = 0.29;
+      rewardRate = 0.28;
     }
 
     const reward = Math.round(totalSavings * rewardRate);
