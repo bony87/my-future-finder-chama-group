@@ -4917,11 +4917,23 @@ function calculate2026() {
     rewardCell.textContent = "Ksh " + reward.toLocaleString();
 
     if (statusCell) {
-      statusCell.innerHTML =
-        totalSavings >= 1500
-          ? "🟢 YOU ARE ELIGIBLE"
-          : "🔴 NOT YET ELIGIBLE";
-    }
+
+  if (totalSavings >= 1500) {
+    statusCell.innerHTML = "🟢 YOU ARE ELIGIBLE";
+  } 
+  
+  else if (totalSavings >= 1000 && totalSavings <= 1499) {
+    statusCell.innerHTML = "🟡 YOU ARE PARTIALLY ELIGIBLE";
+  } 
+  
+  else if (totalSavings >= 1 && totalSavings <= 999) {
+    statusCell.innerHTML = "🔴 YOU ARE NOT ELIGIBLE";
+  } 
+  
+  else {
+    statusCell.innerHTML = "⚪ NO SAVINGS YET";
+  }
+}
 
     grandTotal += totalSavings;
     totalSaved += saved;
