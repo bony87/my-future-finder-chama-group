@@ -1006,49 +1006,276 @@ table th {
 }
 
 
+/* =========================
+   COUNTDOWN BOX
+========================= */
+
+/* =========================
+   BEAUTIFUL SPLASH SCREEN
+========================= */
+
+#splash {
+  position: fixed;
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  background: linear-gradient(
+    270deg,
+    #ff0000,
+    #ff9800,
+    #ffee00,
+    #00c853,
+    #00b0ff,
+    #7b1fa2,
+    #ff4081
+  );
+
+  background-size: 1400% 1400%;
+  animation: rainbowBG 12s ease infinite;
+
+  z-index: 9999;
+  overflow: hidden;
+
+  border: 15px solid white;
+  border-radius: 35px;
+
+  box-shadow:
+    0 0 20px white,
+    0 0 40px #ff00ff,
+    0 0 60px #00ffff;
+}
+
+/* TOP DECORATION */
+#splash::before {
+  content: "🌸 🌹 💐 🌺 💵 💰 🌸 🌹 💐 🌺 💵 💰";
+
+  position: absolute;
+  top: 10px;
+  left: 0;
+  width: 100%;
+
+  text-align: center;
+  font-size: 30px;
+  letter-spacing: 12px;
+
+  animation: moveTop 8s linear infinite;
+}
+
+/* BOTTOM DECORATION */
+#splash::after {
+  content: "💰 💵 🌺 💐 🌹 🌸 💰 💵 🌺 💐 🌹 🌸";
+
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  width: 100%;
+
+  text-align: center;
+  font-size: 30px;
+  letter-spacing: 12px;
+
+  animation: moveBottom 8s linear infinite;
+}
+
+/* LEFT SIDE */
+.left-decor {
+  position: absolute;
+  left: 10px;
+  top: 0;
+  height: 100%;
+
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+
+  font-size: 28px;
+
+  animation: floatLeft 10s linear infinite;
+}
+
+/* RIGHT SIDE */
+.right-decor {
+  position: absolute;
+  right: 10px;
+  top: 0;
+  height: 100%;
+
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+
+  font-size: 28px;
+
+  animation: floatRight 10s linear infinite;
+}
+
+/* =========================
+   COUNTDOWN
+========================= */
+
 #countdown {
-      font-size: 1.5em;
-      font-weight: bold;
-      padding: 15px;
-      border: 2px solid;
-      display: inline-block;
-      border-radius: 8px;
-      margin-bottom: 20px;
-    }
-    .green { background: #e8f5e9; border-color: #4caf50; color: #2e7d32; }
-    .yellow { background: #fffde7; border-color: #ffeb3b; color: #f57f17; }
-    .red { background: #ffebee; border-color: #f44336; color: #b71c1c; }
+  font-size: 1.5em;
+  font-weight: bold;
 
-    /* Progress Bar */
-    .progress-container {
-      width: 80%;
-      background: #ddd;
-      border-radius: 10px;
-      margin: 0 auto;
-      height: 20px;
-      overflow: hidden;
-    }
-    .progress-bar {
-      height: 100%;
-      text-align: center;
-      line-height: 20px;
-      color: white;
-      width: 100%;
-      transition: width 1s linear;
-    }
-    .progress-green { background: #4caf50; }
-    .progress-yellow { background: #ff9800; }
-    .progress-red { background: #f44336; }
+  padding: 15px 25px;
 
+  border: 3px solid;
+  border-radius: 12px;
+
+  display: inline-block;
+
+  margin-bottom: 20px;
+
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+
+  animation: pulse 2s infinite;
+}
+
+/* GREEN */
+.green {
+  background: linear-gradient(135deg, #d4fc79, #96e6a1);
+  border-color: #2e7d32;
+  color: #1b5e20;
+}
+
+/* YELLOW */
+.yellow {
+  background: linear-gradient(135deg, #fff9c4, #ffe082);
+  border-color: #f9a825;
+  color: #e65100;
+}
+
+/* RED */
+.red {
+  background: linear-gradient(135deg, #ffcdd2, #ef5350);
+  border-color: #c62828;
+  color: white;
+}
+
+/* =========================
+   PROGRESS BAR
+========================= */
+
+.progress-container {
+  width: 80%;
+  height: 28px;
+
+  background: #fff8dc;
+
+  border-radius: 20px;
+
+  margin: 0 auto;
+
+  overflow: hidden;
+
+  border: 2px solid #f5d76e;
+
+  box-shadow:
+    inset 0 2px 6px rgba(0,0,0,0.15),
+    0 2px 8px rgba(0,0,0,0.12);
+}
+
+.progress-bar {
+  height: 100%;
+  width: 100%;
+
+  text-align: center;
+  line-height: 28px;
+
+  color: #5d4037;
+
+  font-weight: bold;
+  font-size: 14px;
+
+  border-radius: 20px;
+
+  transition: width 1s linear;
+
+  background: linear-gradient(
+    270deg,
+    #fff9c4,
+    #ffe082,
+    #ffecb3,
+    #ffd54f,
+    #fff9c4
+  );
+
+  background-size: 300% 300%;
+
+  animation: creamMove 6s ease infinite;
+}
+
+/* LABEL */
 #countdownBar > span:first-child {
   font-weight: 700;
   font-size: 1.1rem;
-  padding: 6px 12px;
-  border-radius: 6px;
-  background: linear-gradient(135deg, #1976d2, #0d47a1);
-  color: #fff;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  letter-spacing: 0.5px;
+
+  padding: 8px 14px;
+
+  border-radius: 10px;
+
+  background: linear-gradient(
+    135deg,
+    #1976d2,
+    #0d47a1,
+    #42a5f5
+  );
+
+  color: white;
+
+  box-shadow:
+    0 3px 8px rgba(0,0,0,0.25),
+    0 0 10px rgba(33,150,243,0.4);
+
+  letter-spacing: 0.6px;
+}
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+@keyframes rainbowBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes creamMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes moveTop {
+  0% { transform: translateX(-20px); }
+  50% { transform: translateX(20px); }
+  100% { transform: translateX(-20px); }
+}
+
+@keyframes moveBottom {
+  0% { transform: translateX(20px); }
+  50% { transform: translateX(-20px); }
+  100% { transform: translateX(20px); }
+}
+
+@keyframes floatLeft {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(20px); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes floatRight {
+  0% { transform: translateY(20px); }
+  50% { transform: translateY(0); }
+  100% { transform: translateY(20px); }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+  100% { transform: scale(1); }
 }
 
 
@@ -1542,17 +1769,181 @@ section{
 
 <style>
 
-/* SCREEN */
+/* =========================
+   BEAUTIFUL SPLASH SCREEN
+========================= */
+
 #splash {
   position: fixed;
   inset: 0;
-  background: linear-gradient(135deg,#00695c,#00897b);
+
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
+
+  /* MULTI-COLOR BACKGROUND */
+  background: linear-gradient(
+    270deg,
+    #ff0000,
+    #ff9800,
+    #ffee00,
+    #00c853,
+    #00b0ff,
+    #7b1fa2,
+    #ff4081
+  );
+
+  background-size: 1400% 1400%;
+  animation: rainbowBG 12s ease infinite;
+
   z-index: 9999;
+  overflow: hidden;
+
+  /* MAIN BORDER */
+  border: 15px solid white;
+  border-radius: 35px;
+
+  /* GLOW */
+  box-shadow:
+    0 0 20px white,
+    0 0 40px #ff00ff,
+    0 0 60px #00ffff;
 }
 
+/* TOP DECORATION */
+#splash::before {
+  content: "🌸 🌹 💐 🌺 💵 💰 🌸 🌹 💐 🌺 💵 💰 🌸 🌹 💐";
+  
+  position: absolute;
+  top: 10px;
+  left: 0;
+  width: 100%;
+
+  text-align: center;
+  font-size: 30px;
+  letter-spacing: 12px;
+
+  animation: moveTop 8s linear infinite;
+}
+
+/* BOTTOM DECORATION */
+#splash::after {
+  content: "💰 💵 🌺 💐 🌹 🌸 💰 💵 🌺 💐 🌹 🌸 💰 💵";
+  
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  width: 100%;
+
+  text-align: center;
+  font-size: 30px;
+  letter-spacing: 12px;
+
+  animation: moveBottom 8s linear infinite;
+}
+
+/* LEFT BORDER DECORATION */
+.left-decor {
+  position: absolute;
+  left: 10px;
+  top: 0;
+  height: 100%;
+
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+
+  font-size: 28px;
+  animation: floatLeft 10s linear infinite;
+}
+
+/* RIGHT BORDER DECORATION */
+.right-decor {
+  position: absolute;
+  right: 10px;
+  top: 0;
+  height: 100%;
+
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+
+  font-size: 28px;
+  animation: floatRight 10s linear infinite;
+}
+
+/* BACKGROUND ANIMATION */
+@keyframes rainbowBG {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* TOP MOVEMENT */
+@keyframes moveTop {
+  0% {
+    transform: translateX(-20px);
+  }
+
+  50% {
+    transform: translateX(20px);
+  }
+
+  100% {
+    transform: translateX(-20px);
+  }
+}
+
+/* BOTTOM MOVEMENT */
+@keyframes moveBottom {
+  0% {
+    transform: translateX(20px);
+  }
+
+  50% {
+    transform: translateX(-20px);
+  }
+
+  100% {
+    transform: translateX(20px);
+  }
+}
+
+/* SIDE FLOAT */
+@keyframes floatLeft {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(20px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes floatRight {
+  0% {
+    transform: translateY(20px);
+  }
+
+  50% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(20px);
+  }
+}
 /* CONTENT */
 .splash-content {
   text-align: center;
