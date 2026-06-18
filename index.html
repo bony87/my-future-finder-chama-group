@@ -2419,11 +2419,13 @@ style="width:150px; height:150px; border-radius:50%; object-fit:cover; box-shado
 
 
 <!-- ARTICLE 3 -->
+
 <h3 style="color:#43a047;">🏦 Article 3: Loans</h3>
 
 <ul style="line-height:1.8;">
 
   <!-- ELIGIBILITY -->
+
   <li><b>Loan Eligibility:</b>
     <ul style="margin-top:8px;">
       <li>A member qualifies for a loan after saving at least <b>Ksh 1,500</b>.</li>
@@ -2433,6 +2435,7 @@ style="width:150px; height:150px; border-radius:50%; object-fit:cover; box-shado
   </li>
 
   <!-- ASSESSMENT -->
+
   <li><b>Loan Assessment Criteria:</b>
     <ul style="margin-top:8px;">
       <li>Loans shall be issued based on the member’s savings history and consistency.</li>
@@ -2442,6 +2445,7 @@ style="width:150px; height:150px; border-radius:50%; object-fit:cover; box-shado
   </li>
 
   <!-- APPROVAL -->
+
   <li>📌 <b>Loan Approval:</b>
     <ul style="margin-top:8px;">
       <li>All loan requests must be approved by both the <b>Admin and Chairlady</b>.</li>
@@ -2451,15 +2455,20 @@ style="width:150px; height:150px; border-radius:50%; object-fit:cover; box-shado
   </li>
 
   <!-- REPAYMENT -->
+
   <li>⏳ <b>Loan Repayment Terms:</b>
     <ul style="margin-top:8px;">
       <li>All loans must be repaid within the agreed timeframe.</li>
-      <li>Late repayment may attract penalties or restrictions on future borrowing.</li>
+      <li>Any member who fails to repay a loan within the required period shall be charged a penalty of <b>Ksh 10 per day</b> until the loan is fully repaid.</li>
+      <li>Loans above <b>Ksh 5,000</b> with a repayment period of <b>one (1) month or two (2) months</b> may be granted a <b>one-week extension period</b> upon approval by the Admin and Chairlady.</li>
+      <li>Once the extension period expires, the daily penalty of <b>Ksh 10</b> shall immediately apply until full repayment is made.</li>
+      <li>Late repayment may attract restrictions on future borrowing.</li>
       <li>Repeated default may lead to suspension of loan privileges.</li>
     </ul>
   </li>
 
   <!-- INTEREST DISTRIBUTION -->
+
   <li>💸 <b>Interest Distribution Policy:</b>
     <ul style="margin-top:8px;">
       <li>Upon loan repayment, the interest earned shall be shared as follows:</li>
@@ -2469,6 +2478,7 @@ style="width:150px; height:150px; border-radius:50%; object-fit:cover; box-shado
   </li>
 
   <!-- FAIRNESS -->
+
   <li>📘 <b>Fairness and Sustainability:</b>
     <ul style="margin-top:8px;">
       <li>This system ensures fairness among members and rewards consistent savers.</li>
@@ -6969,53 +6979,204 @@ function showLoanForm(name, maxAmount) {
   const loanResult = document.getElementById("loanMessage");
 
   loanResult.innerHTML = `
-    <div style="background:#ffffff; padding:20px; border-radius:12px; box-shadow:0 4px 8px rgba(0,0,0,0.1); max-width:500px; margin:auto;">
-      <h3 style="color:#1976d2; text-align:center;">📝 Loan Application Form</h3>
+    <div style="
+      background:#ffffff;
+      padding:20px;
+      border-radius:12px;
+      box-shadow:0 4px 8px rgba(0,0,0,0.1);
+      max-width:700px;
+      margin:auto;
+    ">
+
+      <h2 style="color:#1976d2;text-align:center;">
+        📝 Future Finders Loan Application Form
+      </h2>
 
       <form onsubmit="submitLoan(event, '${name}', ${maxAmount}, '${phone}')">
 
-        <label><b>Name</b></label><br>
-        <input type="text" value="${name}" readonly style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc; margin-bottom:10px;"><br>
+        <!-- MEMBER DETAILS -->
+        <h3 style="color:#1976d2;border-bottom:2px solid #1976d2;padding-bottom:5px;">
+          👤 Member Details
+        </h3>
+
+        <label><b>Full Name</b></label><br>
+        <input type="text" value="${name}" readonly
+        style="width:100%;padding:10px;border:1px solid #ccc;border-radius:5px;margin-bottom:10px;"><br>
 
         <label><b>Phone Number</b></label><br>
-        <input type="text" value="${phone}" readonly style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc; margin-bottom:10px;"><br>
+        <input type="text" value="${phone}" readonly
+        style="width:100%;padding:10px;border:1px solid #ccc;border-radius:5px;margin-bottom:10px;"><br>
 
-        <label><b>Maximum Loan</b></label><br>
-        <input type="text" value="Ksh ${maxAmount}" readonly style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc; margin-bottom:10px;"><br>
+        <label><b>ID Number</b></label><br>
+        <input type="number" id="loanId" required
+        placeholder="Enter ID Number"
+        style="width:100%;padding:10px;border:1px solid #ccc;border-radius:5px;margin-bottom:10px;"><br>
+
+        <label><b>Gender</b></label><br>
+        <select id="gender" required
+        style="width:100%;padding:10px;border:1px solid #ccc;border-radius:5px;margin-bottom:10px;">
+          <option value="">Select Gender</option>
+          <option>Male</option>
+          <option>Female</option>
+        </select><br>
+
+        <label><b>Date of Birth</b></label><br>
+        <input type="date" id="dob" required
+        style="width:100%;padding:10px;border:1px solid #ccc;border-radius:5px;margin-bottom:10px;"><br>
+
+        <label><b>Occupation</b></label><br>
+        <input type="text" id="occupation" required
+        placeholder="Enter Occupation"
+        style="width:100%;padding:10px;border:1px solid #ccc;border-radius:5px;margin-bottom:10px;"><br>
+
+        <label><b>Physical Address</b></label><br>
+        <input type="text" id="address" required
+        placeholder="Enter Address"
+        style="width:100%;padding:10px;border:1px solid #ccc;border-radius:5px;margin-bottom:20px;"><br>
+
+
+        <!-- NEXT OF KIN -->
+        <h3 style="color:#1976d2;border-bottom:2px solid #1976d2;padding-bottom:5px;">
+          👨‍👩‍👧 Next of Kin Details
+        </h3>
+
+        <label><b>Full Name</b></label><br>
+        <input type="text" id="kinName" required
+        placeholder="Next of Kin Name"
+        style="width:100%;padding:10px;border:1px solid #ccc;border-radius:5px;margin-bottom:10px;"><br>
+
+        <label><b>Relationship</b></label><br>
+        <input type="text" id="kinRelationship" required
+        placeholder="Relationship"
+        style="width:100%;padding:10px;border:1px solid #ccc;border-radius:5px;margin-bottom:10px;"><br>
+
+        <label><b>Phone Number</b></label><br>
+        <input type="tel" id="kinPhone" required
+        placeholder="07XXXXXXXX"
+        style="width:100%;padding:10px;border:1px solid #ccc;border-radius:5px;margin-bottom:20px;"><br>
+
+
+        <!-- GUARANTORS -->
+        <h3 style="color:#1976d2;border-bottom:2px solid #1976d2;padding-bottom:5px;">
+          🤝 Guarantor Details
+        </h3>
+
+        <label><b>Guarantor 1 Name</b></label><br>
+        <input type="text" id="guarantor1" required
+        style="width:100%;padding:10px;border:1px solid #ccc;border-radius:5px;margin-bottom:10px;"><br>
+
+        <label><b>Guarantor 1 Phone</b></label><br>
+        <input type="tel" id="guarantor1Phone" required
+        placeholder="07XXXXXXXX"
+        style="width:100%;padding:10px;border:1px solid #ccc;border-radius:5px;margin-bottom:15px;"><br>
+
+        <label><b>Guarantor 2 Name</b></label><br>
+        <input type="text" id="guarantor2" required
+        style="width:100%;padding:10px;border:1px solid #ccc;border-radius:5px;margin-bottom:10px;"><br>
+
+        <label><b>Guarantor 2 Phone</b></label><br>
+        <input type="tel" id="guarantor2Phone" required
+        placeholder="07XXXXXXXX"
+        style="width:100%;padding:10px;border:1px solid #ccc;border-radius:5px;margin-bottom:20px;"><br>
+
+
+        <!-- LOAN DETAILS -->
+        <h3 style="color:#1976d2;border-bottom:2px solid #1976d2;padding-bottom:5px;">
+          💰 Loan Details
+        </h3>
+
+        <label><b>Maximum Loan Eligible</b></label><br>
+        <input type="text" value="Ksh ${maxAmount}" readonly
+        style="width:100%;padding:10px;border:1px solid #ccc;border-radius:5px;margin-bottom:10px;"><br>
+
+        <label><b>Loan Amount</b></label><br>
+        <input type="number"
+          id="applyAmount"
+          min="500"
+          max="${maxAmount}"
+          required
+          oninput="updateLoanSummary(${maxAmount})"
+          placeholder="Enter Loan Amount"
+          style="width:100%;padding:10px;border:1px solid #ccc;border-radius:5px;margin-bottom:10px;"><br>
 
         <label><b>Repayment Period</b></label><br>
-        <select id="repaymentPeriod" onchange="updateLoanSummary(${maxAmount})"
-          style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc; margin-bottom:10px;">
-          <option value="">-- Select Period --</option>
+        <select id="repaymentPeriod"
+          onchange="updateLoanSummary(${maxAmount})"
+          required
+          style="width:100%;padding:10px;border:1px solid #ccc;border-radius:5px;margin-bottom:10px;">
+          <option value="">Select Period</option>
           <option value="1">1 Month (12%)</option>
           <option value="2">2 Months (15%)</option>
           <option value="3">3 Months (17%)</option>
           <option value="4">4 Months (20%)</option>
         </select><br>
 
-        <label><b>Loan Amount</b></label><br>
-        <input type="number" id="applyAmount" min="500" max="${maxAmount}" required
-          placeholder="Enter amount"
-          oninput="updateLoanSummary(${maxAmount})"
-          style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc; margin-bottom:10px;"><br>
-
         <label><b>Reason for Borrowing</b></label><br>
-        <textarea id="loanReason" required rows="3"
-          style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc; margin-bottom:15px;"></textarea><br>
+        <textarea id="loanReason"
+          rows="4"
+          required
+          placeholder="Explain why you need the loan"
+          style="width:100%;padding:10px;border:1px solid #ccc;border-radius:5px;margin-bottom:10px;"></textarea><br>
 
-        <div id="loanSummary" style="font-weight:bold; color:#00796b; margin-bottom:15px;">
-          💳 Total Repayment: Ksh 0 <br>
+        <label><b>Preferred Payment Method</b></label><br>
+        <select id="paymentMethod" required
+        style="width:100%;padding:10px;border:1px solid #ccc;border-radius:5px;margin-bottom:15px;">
+          <option value="">Select Payment Method</option>
+          <option value="Mpesa">M-Pesa</option>
+          <option value="Bank Transfer">Bank Transfer</option>
+          <option value="Cash">Cash</option>
+        </select><br>
+
+        <!-- SUMMARY -->
+        <div id="loanSummary"
+          style="
+          background:#f1f8e9;
+          padding:15px;
+          border-left:5px solid #4caf50;
+          border-radius:6px;
+          margin-bottom:15px;
+          font-weight:bold;
+          color:#00695c;">
+          💳 Total Repayment: Ksh 0<br>
           📌 Monthly Installment: Ksh 0
         </div>
 
-        <label><b>ID Number</b></label><br>
-        <input type="number" id="loanId" required
-          oninput="if(this.value.length > 8) this.value = this.value.slice(0, 8);"
-          style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc; margin-bottom:20px;"><br>
+        <!-- RULES -->
+        <div style="
+          background:#fff8e1;
+          padding:15px;
+          border-left:5px solid orange;
+          border-radius:6px;
+          margin-bottom:15px;
+          font-size:14px;">
+          <b>📋 Loan Rules</b><br><br>
 
+          ✅ Loans above Ksh 5,000 qualify for a 1-week extension.<br>
+          ✅ Late payment attracts a penalty of Ksh 10 per day.<br>
+          ✅ Guarantors may be contacted in case of default.<br>
+          ✅ Loan approval is subject to committee review.<br>
+          ✅ False information may lead to rejection.
+        </div>
+
+        <!-- DECLARATION -->
+        <label style="display:block;margin-bottom:20px;">
+          <input type="checkbox" id="loanDeclaration" required>
+          I declare that the information provided is true and I agree to abide by Future Finders loan rules.
+        </label>
+
+        <!-- SUBMIT -->
         <button type="submit"
-          style="width:100%; padding:12px; background:#388e3c; color:white; border:none; border-radius:8px; font-size:16px; cursor:pointer;">
-          Submit Application
+          style="
+          width:100%;
+          padding:14px;
+          background:#388e3c;
+          color:white;
+          border:none;
+          border-radius:8px;
+          font-size:16px;
+          font-weight:bold;
+          cursor:pointer;">
+          ✅ Submit Loan Application
         </button>
 
       </form>
@@ -7024,167 +7185,276 @@ function showLoanForm(name, maxAmount) {
 }
 
 
-// ========================= 📤 Submit Loan + PDF =========================
 function submitLoan(event, name, maxAmount, phone) {
-  event.preventDefault();
+event.preventDefault();
 
-  const amount = parseInt(document.getElementById("applyAmount").value);
-  const months = parseInt(document.getElementById("repaymentPeriod").value);
-  const id = document.getElementById("loanId").value.trim();
-  const reason = document.getElementById("loanReason").value.trim();
+// =========================
+// LOAN DETAILS
+// =========================
+const amount = parseInt(document.getElementById("applyAmount").value);
+const months = parseInt(document.getElementById("repaymentPeriod").value);
+const id = document.getElementById("loanId").value.trim();
+const reason = document.getElementById("loanReason").value.trim();
 
-  if (isNaN(amount) || amount < 500 || amount > maxAmount) {
-    alert("❌ Enter a valid loan amount.");
-    return;
-  }
-  if (!/^[0-9]{7,8}$/.test(id)) {
-    alert("❌ Enter a valid ID number (7–8 digits).");
-    return;
-  }
-  if (isNaN(months)) {
-    alert("❌ Please select a repayment period.");
-    return;
-  }
-  if (!reason) {
-    alert("❌ Please provide a reason for borrowing.");
-    return;
-  }
+// =========================
+// PERSONAL DETAILS
+// =========================
+const gender = document.getElementById("gender").value;
+const dob = document.getElementById("dob").value;
+const occupation = document.getElementById("occupation").value.trim();
+const address = document.getElementById("address").value.trim();
 
-  // ==================== Calculations ====================
-  let interest = months === 1 ? 0.12 : months === 2 ? 0.15 : months === 3 ? 0.17 : 0.20;
-  const totalRepayment = Math.round(amount * (1 + interest));
-  const monthlyRepayment = Math.round(totalRepayment / months);
-  const applyDate = new Date().toLocaleDateString("en-KE", {
-    year: "numeric", month: "long", day: "numeric"
-  });
+// =========================
+// NEXT OF KIN
+// =========================
+const kinName = document.getElementById("kinName").value.trim();
+const kinRelationship = document.getElementById("kinRelationship").value.trim();
+const kinPhone = document.getElementById("kinPhone").value.trim();
 
-  // ==================== Loan Decision ====================
-  const loanStatus = "PENDING";
-  const decisionReason = "Awaiting loan committee approval";
-  const decisionBy = "Admin and chairlady";
-  const decisionDate = "—";
+// =========================
+// GUARANTORS
+// =========================
+const guarantor1 = document.getElementById("guarantor1").value.trim();
+const guarantor1Phone = document.getElementById("guarantor1Phone").value.trim();
 
-  // ==================== PDF ====================
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF("p", "mm", "a4");
+const guarantor2 = document.getElementById("guarantor2").value.trim();
+const guarantor2Phone = document.getElementById("guarantor2Phone").value.trim();
 
-  // ===== SAFETY ADDITION (NO DESIGN CHANGE) =====
-  const pageHeight = doc.internal.pageSize.height;
-  const bottomLimit = pageHeight - 35;
-  let y;
+// =========================
+// PAYMENT METHOD
+// =========================
+const paymentMethod = document.getElementById("paymentMethod").value;
 
-  function protect(space = 10) {
-    if (y + space > bottomLimit) {
-      doc.addPage();
-      y = 70; // SAME layout start
-    }
-  }
-  // ============================================
+// =========================
+// DECLARATION
+// =========================
+const declaration = document.getElementById("loanDeclaration").checked;
 
-  const logo = new Image();
-  logo.crossOrigin = "anonymous";
-  logo.src =
-    "https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/ChatGPT%20Image%20Sep%2010%2C%202025%2C%2005_43_14%20PM.png";
-
-  logo.onload = function () {
-
-    // Background
-    doc.setFillColor(240, 248, 255);
-    doc.rect(10, 10, 190, 277, "F");
-
-    // Logo
-    doc.addImage(logo, "PNG", 80, 12, 50, 28);
-
-    // Title
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(18);
-    doc.setTextColor(0, 70, 140);
-    doc.text("LOAN APPLICATION FORM", 105, 50, { align: "center" });
-
-    doc.setDrawColor(0, 70, 140);
-    doc.line(20, 55, 190, 55);
-
-    y = 70;
-    const gap = 10;
-
-    // Applicant
-    doc.setFontSize(12);
-    doc.setFont("helvetica", "bold");
-    doc.setTextColor(0);
-    doc.text("Applicant Details", 20, y); y += gap;
-
-    doc.setFont("helvetica", "normal");
-    doc.text(`Name: ${name}`, 25, y); y += gap;
-    doc.text(`Phone: ${phone}`, 25, y); y += gap;
-    doc.text(`ID Number: ${id}`, 25, y); y += gap;
-
-    // Loan
-    y += gap / 2;
-    doc.setFont("helvetica", "bold");
-    doc.text("Loan Details", 20, y); y += gap;
-
-    doc.setFont("helvetica", "normal");
-    doc.text(`Amount Requested: Ksh ${amount}`, 25, y); y += gap;
-    doc.text(`Interest Rate: ${interest * 100}%`, 25, y); y += gap;
-    doc.text(`Repayment Period: ${months} month(s)`, 25, y); y += gap;
-    doc.text(`Monthly Installment: Ksh ${monthlyRepayment}`, 25, y); y += gap;
-    doc.text(`Total Repayment: Ksh ${totalRepayment}`, 25, y); y += gap;
-
-    // Reason
-    y += gap / 2;
-    doc.setFont("helvetica", "bold");
-    doc.text("Reason for Borrowing", 20, y); y += gap;
-
-    doc.setFont("helvetica", "normal");
-    const wrappedReason = doc.splitTextToSize(reason, 160);
-    wrappedReason.forEach(line => {
-      protect(gap);
-      doc.text(line, 25, y);
-      y += gap;
-    });
-
-    doc.text(`Application Date: ${applyDate}`, 25, y);
-    y += gap * 2;
-
-    // Decision
-    protect(40);
-    doc.setFont("helvetica", "bold");
-    doc.setTextColor(loanStatus === "APPROVED" ? 0 : 180, loanStatus === "APPROVED" ? 120 : 0, 0);
-    doc.text("LOAN DECISION", 20, y); y += gap;
-
-    doc.setFont("helvetica", "normal");
-    doc.setTextColor(0);
-    doc.text(`Status: ${loanStatus}`, 25, y); y += gap;
-    doc.text(`Reason: ${decisionReason}`, 25, y); y += gap;
-    doc.text(`Reviewed By: ${decisionBy}`, 25, y); y += gap;
-    doc.text(`Decision Date: ${decisionDate}`, 25, y);
-
-    // Signatures (auto-push down, no overlap)
-const sigY = Math.max(y + 15, 240);
-
-doc.setFont("helvetica", "bolditalic");
-doc.text("_________________________", 120, sigY);
-doc.text("Boniface Chelluget and Faith Kwamboka", 130, sigY + 6);
-
-    // Footer
-    doc.setFontSize(9);
-    doc.setFont("helvetica", "normal");
-    doc.setTextColor(80);
-    doc.text(
-      "Future Finders – Empowering members through savings, merry-go-round & loans",
-      105,
-      pageHeight - 10,
-      { align: "center" }
-    );
-
-    // Save
-    doc.save(`Loan_Application_${name}.pdf`);
-    showNotification("✅ Loan application submitted successfully!");
-  };
+// =========================
+// VALIDATION
+// =========================
+if (isNaN(amount) || amount < 500 || amount > maxAmount) {
+alert("❌ Enter a valid loan amount.");
+return;
 }
 
+if (isNaN(months)) {
+alert("❌ Please select repayment period.");
+return;
+}
 
+if (!reason) {
+alert("❌ Enter reason for borrowing.");
+return;
+}
 
+if (!/^[0-9]{7,8}$/.test(id)) {
+alert("❌ Enter valid ID number.");
+return;
+}
+
+if (!gender) {
+alert("❌ Select gender.");
+return;
+}
+
+if (!dob) {
+alert("❌ Select DOB.");
+return;
+}
+
+if (!occupation) {
+alert("❌ Enter occupation.");
+return;
+}
+
+if (!address) {
+alert("❌ Enter address.");
+return;
+}
+
+if (!kinName || !kinRelationship) {
+alert("❌ Fill next of kin details.");
+return;
+}
+
+if (!/^0\d{9}$/.test(kinPhone)) {
+alert("❌ Invalid next of kin phone.");
+return;
+}
+
+if (!guarantor1 || !guarantor2) {
+alert("❌ Fill guarantor details.");
+return;
+}
+
+if (!/^0\d{9}$/.test(guarantor1Phone)) {
+alert("❌ Invalid guarantor 1 phone.");
+return;
+}
+
+if (!/^0\d{9}$/.test(guarantor2Phone)) {
+alert("❌ Invalid guarantor 2 phone.");
+return;
+}
+
+if (!paymentMethod) {
+alert("❌ Select payment method.");
+return;
+}
+
+if (!declaration) {
+alert("❌ You must accept declaration.");
+return;
+}
+
+// =========================
+// CALCULATIONS
+// =========================
+let interest =
+months === 1 ? 0.12 :
+months === 2 ? 0.15 :
+months === 3 ? 0.17 :
+0.20;
+
+const totalRepayment = Math.round(amount * (1 + interest));
+const monthlyRepayment = Math.round(totalRepayment / months);
+
+const dailyPenalty = 10;
+const graceExtension = amount > 5000 ? "1 Week Allowed" : "Not Eligible";
+
+const applyDate = new Date().toLocaleDateString("en-KE", {
+year: "numeric",
+month: "long",
+day: "numeric"
+});
+
+// =========================
+// LOAN DECISION
+// =========================
+const loanStatus = "PENDING";
+const decisionReason = "Awaiting committee approval";
+const decisionBy = "Admin & Chairlady";
+const decisionDate = "—";
+
+// =========================
+// PDF GENERATION (FIXED)
+// =========================
+const { jsPDF } = window.jspdf;
+const doc = new jsPDF("p", "mm", "a4");
+
+const pageHeight = doc.internal.pageSize.height;
+const bottomLimit = pageHeight - 35;
+let y;
+
+function protect(space = 10) {
+if (y + space > bottomLimit) {
+doc.addPage();
+y = 70;
+}
+}
+
+const logo = new Image();
+logo.crossOrigin = "anonymous";
+logo.src =
+"https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/ChatGPT%20Image%20Sep%2010%2C%202025%2C%2005_43_14%20PM.png";
+
+logo.onload = function () {
+
+doc.setFillColor(240, 248, 255);
+doc.rect(10, 10, 190, 277, "F");
+
+doc.addImage(logo, "PNG", 80, 12, 50, 28);
+
+doc.setFont("helvetica", "bold");
+doc.setFontSize(18);
+doc.setTextColor(0, 70, 140);
+doc.text("LOAN APPLICATION FORM", 105, 50, { align: "center" });
+
+doc.line(20, 55, 190, 55);
+
+y = 70;
+const gap = 9;
+
+// MEMBER
+doc.setFont("helvetica", "bold");
+doc.text("Member Details", 20, y); y += gap;
+
+doc.setFont("helvetica", "normal");
+doc.text(`Name: ${name}`, 25, y); y += gap;
+doc.text(`Phone: ${phone}`, 25, y); y += gap;
+doc.text(`ID: ${id}`, 25, y); y += gap;
+doc.text(`Gender: ${gender}`, 25, y); y += gap;
+doc.text(`DOB: ${dob}`, 25, y); y += gap;
+doc.text(`Occupation: ${occupation}`, 25, y); y += gap;
+doc.text(`Address: ${address}`, 25, y); y += gap;
+
+// NEXT OF KIN
+doc.setFont("helvetica", "bold");
+doc.text("Next of Kin", 20, y); y += gap;
+
+doc.setFont("helvetica", "normal");
+doc.text(`Name: ${kinName}`, 25, y); y += gap;
+doc.text(`Relationship: ${kinRelationship}`, 25, y); y += gap;
+doc.text(`Phone: ${kinPhone}`, 25, y); y += gap;
+
+// GUARANTORS
+doc.setFont("helvetica", "bold");
+doc.text("Guarantors", 20, y); y += gap;
+
+doc.text(`1: ${guarantor1} - ${guarantor1Phone}`, 25, y); y += gap;
+doc.text(`2: ${guarantor2} - ${guarantor2Phone}`, 25, y); y += gap;
+
+// LOAN
+doc.setFont("helvetica", "bold");
+doc.text("Loan Details", 20, y); y += gap;
+
+doc.setFont("normal");
+doc.text(`Amount: Ksh ${amount}`, 25, y); y += gap;
+doc.text(`Interest: ${interest * 100}%`, 25, y); y += gap;
+doc.text(`Period: ${months} months`, 25, y); y += gap;
+doc.text(`Monthly: Ksh ${monthlyRepayment}`, 25, y); y += gap;
+doc.text(`Total: Ksh ${totalRepayment}`, 25, y); y += gap;
+
+doc.text(`Payment: ${paymentMethod}`, 25, y); y += gap;
+doc.text(`Penalty: Ksh ${dailyPenalty}/day`, 25, y); y += gap;
+doc.text(`Grace: ${graceExtension}`, 25, y); y += gap;
+
+// REASON
+doc.setFont("bold");
+doc.text("Reason", 20, y); y += gap;
+
+doc.setFont("normal");
+const lines = doc.splitTextToSize(reason, 160);
+lines.forEach(l => {
+protect(gap);
+doc.text(l, 25, y);
+y += gap;
+});
+
+doc.text(`Date: ${applyDate}`, 25, y);
+y += 10;
+
+// DECISION
+doc.setFont("bold");
+doc.setTextColor(180, 0, 0);
+doc.text("LOAN STATUS", 20, y); y += gap;
+
+doc.setTextColor(0);
+doc.text(`Status: ${loanStatus}`, 25, y); y += gap;
+doc.text(`By: ${decisionBy}`, 25, y); y += gap;
+
+// SIGNATURE
+const sigY = Math.max(y + 20, 240);
+doc.text("____________________", 120, sigY);
+doc.text("Chairlady/Admin", 135, sigY + 6);
+
+// SAVE
+doc.save(`Loan_${name}.pdf`);
+showNotification("✅ Loan submitted successfully!");
+};
+
+}
 
 
 function updateLoanSummary(maxAmount) {
