@@ -3818,6 +3818,7 @@ document.getElementById("downloadFormBtn").addEventListener("click", () => {
 <option>CANZEDENA ANYANGO</option>
 <option>JAPHETH MULI</option>
 <option>DEFTERS PHOLIUS</option>
+<option>BENSON NYATUKA</option>
 </select>
 <!-- Member Password -->
 <div class="password-container">
@@ -5144,6 +5145,26 @@ margin:10px 0;
 <td class="reward2026">0</td>
 <td class="paymentStatus">PENDING</td>
 </tr>
+<tr>
+<td>BENSON NYATUKA</td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
+<td class="rowTotal">0</td>
+<td class="saved2026">0</td>
+<td class="reward2026">0</td>
+<td class="paymentStatus">PENDING</td>
+</tr>
 <!-- ADD ALL OTHER MEMBERS USING SAME FORMAT -->
 
 <tr style="font-weight:bold; background:#e0f2f1;">
@@ -5301,13 +5322,13 @@ function calculate2026() {
     let rewardRate = 0;
 
     if (totalSavings >= 1500 && activeMonths >= 10) {
-      rewardRate = 0.797;
+      rewardRate = 0.7979;
     } 
     else if (totalSavings >= 1500 && activeMonths >= 6) {
-      rewardRate = 0.747;
+      rewardRate = 0.7479;
     } 
     else if (totalSavings >= 1000) {
-      rewardRate = 0.27;
+      rewardRate = 0.279;
     }
 
     const reward = Math.round(totalSavings * rewardRate);
@@ -5516,19 +5537,19 @@ updateMembersCount();
 
   <div class="mini-card clickableCard" onclick="showMembersPopup()">
     👥
-    <h3 id="totalMembers">XXX</h3>
+    <h3 id="totalMembers">..</h3>
     <small>Click to view all Members</small>
 </div>
 
   <div class="mini-card clickableCard" onclick="showSavingsPopup()">
     💰
-    <h3 id="totalSavings">XXX</h3>
+    <h3 id="totalSavings">..</h3>
     <small>Click to View Savings</small>
 </div>
 
   <div class="mini-card clickableCard" onclick="showQualifiedPopup()">
     ✅
-    <h3 id="qualifiedMembers">XXX</h3>
+    <h3 id="qualifiedMembers">..</h3>
     <small>Click to view Qualified</small>
   </div>
 
@@ -6619,6 +6640,13 @@ const members = {
     password: "2026",
     savings: 1826,
     monthly: [0,50,0,0,0,0,0,0,0,],
+    note: " "
+  },
+  "BENSON NYATUKA": {
+    phone: "0788927292",
+    password: "Yv6ugs0",
+    savings: 0,
+    monthly: [0,0,0,0,0,0,0,0,0,],
     note: " "
   },
 };
