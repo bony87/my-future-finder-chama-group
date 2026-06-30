@@ -3,7 +3,6 @@
 <html lang="en">
 
 <head>
-
 <style>
 body{
     font-family: Arial, Helvetica, sans-serif;
@@ -2007,7 +2006,6 @@ section{
 }
 
 </style>
-
 <script>
 
 /* ROTATING TEXT (STAYS ACTIVE) */
@@ -2094,20 +2092,27 @@ let progressInterval = setInterval(()=>{
     ">Close</button>
   </div>
 </div>
-<!-- 🎉 Happy New Year Popup -->
-<div class="popup-overlay" id="newYearPopup">
-  <div class="popup-box popup-success">
-    <h3 class="glow-title">🎉 Happy New Year 2026! 🎆</h3>
 
-    <p>
-      Wishing all <b>Future Finders Chama</b> members a prosperous year filled with
-      growth, savings, and success 💰🌱
-    </p>
-    <button class="popup-btn" onclick="closeNewYearPopup()">🎊 Thank You</button>
-  </div>
+
+<div id="disabledPopup" class="popup-overlay">
+
+    <div class="popup-box popup-red">
+
+        <h2>🚫 CURRENTLY DISABLED</h2>
+
+        <p>
+            <strong>Pick Number</strong> is currently disabled.
+            <br><br>
+            Please check back later.
+        </p>
+
+        <button class="popup-btn" onclick="closeDisabledPopup()">
+            OK
+        </button>
+
+    </div>
+
 </div>
-
-
 
 
 
@@ -2210,7 +2215,10 @@ style="width:150px; height:150px; border-radius:50%; object-fit:cover; box-shado
 <a class="nav-btn" onclick="simulateAction(this,'home')">🏠 Home <span class="spinner"></span></a>
 <a class="nav-btn" onclick="simulateAction(this,'about')">ℹ️ About Us <span class="spinner"></span></a>
 <a class="nav-btn" onclick="simulateAction(this,'membership')">👥 Membership <span class="spinner"></span></a>
-<a class="nav-btn" onclick="simulateAction(this,'picker')">🎲 Pick Number <span class="spinner"></span></a>
+<a class="nav-btn" onclick="simulateLoanThenDisable(this)">
+    🎲 Pick Number
+    <span class="spinner"></span>
+</a>
 <a class="nav-btn" onclick="simulateAction(this,'services')">💼 Services <span class="spinner"></span></a>
 <a class="nav-btn" onclick="simulateAction(this,'updates')">
   📰 News 
@@ -2897,94 +2905,230 @@ style="width:150px; height:150px; border-radius:50%; object-fit:cover; box-shado
   </div>
   </div>
 
-<!-- ========================= -->
-<!-- ⏳ UPCOMING MEETING -->
-<!-- ========================= -->
-<div style="margin-top:25px; padding:15px; background:#e3f2fd; border-left:6px solid #1565c0; border-radius:8px;"> 
-  <h3 style="color:#0d47a1;">🗓️ FUTURE FINDERS CHAMA – UPCOMING MEETING</h3>
+<!-- ====================================== -->
+<!-- ⏳ FUTURE FINDERS MID-YEAR MEETING -->
+<!-- ====================================== -->
 
-  <p>
-    <b>Date:</b> Friday, <b>13th February 2026</b><br>
-    <b>Time:</b> 8:30 PM – 10:00 PM<br>
-    <b>Platform:</b> WhatsApp Group
-  </p>
+<!-- COUNTDOWN (DISPLAY THIS FIRST) -->
+<div id="meetingCountdown"
+style="
+margin-bottom:20px;
+padding:20px;
+text-align:center;
+font-size:22px;
+font-weight:bold;
+border-radius:12px;
+background:linear-gradient(135deg,#1565c0,#0d47a1);
+color:#fff;
+box-shadow:0 6px 15px rgba(0,0,0,.25);">
 
-  <p><b>Agenda:</b></p>
-  <ol>
-    <li>
-      <b>Saving Structure Going Forward</b> –  
-      How members will conduct savings under each Chama category
-    </li>
-    <li>
-      <b>Contribution Process</b> –  
-      Mode of payment, timelines, and confirmation procedure
-    </li>
-    <li>
-      <b>Monthly & Bi-Monthly Chama Alignment</b> –  
-      How savings will be managed without conflicts
-    </li>
-    <li>
-      Final Agreements & Member Commitments
-    </li>
-    <li>A.O.B (Any Other Business)</li>
-  </ol>
+⏳ Loading Meeting Countdown...
+
 </div>
 
-<p style="font-style:italic; color:#0d47a1;">
-  All members are kindly requested to attend on time.<br>
-  <b>Together we grow — Future Finders, Our Identity, Our Strength.</b>
+<!-- ========================= -->
+<!-- 📢 MEETING NOTICE -->
+<!-- ========================= -->
+
+<div style="
+padding:20px;
+background:#fff8e1;
+border-left:8px solid #f57c00;
+border-radius:10px;
+box-shadow:0 5px 15px rgba(0,0,0,.12);">
+
+<h2 style="text-align:center;color:#e65100;">
+📢 FUTURE FINDERS CHAMA GROUP
+</h2>
+
+<h3 style="text-align:center;color:#1565c0;">
+MID-YEAR MEETING NOTICE
+</h3>
+
+<p>
+Dear <b>Future Finders Members</b>,
+<br><br>
+
+You are hereby invited to attend our
+<b>Mid-Year Meeting</b> scheduled as follows:
 </p>
 
-<!-- COUNTDOWN OUTPUT -->
-<div id="upcomingCountdown"
-     style="margin-top:20px; font-weight:bold; font-size:18px; color:#1565c0;">
-  ⏳ Countdown loading...
+<p style="line-height:1.8;">
+📅 <b>Date:</b> Sunday, <b>5th July 2026</b><br>
+🕓 <b>Time:</b> Exactly <b>4:45 PM</b><br>
+📱 <b>Platform:</b> WhatsApp Meeting
+</p>
+
+<h3 style="color:#2e7d32;">📋 Meeting Agenda</h3>
+
+<ol style="line-height:1.9;">
+
+<li>
+<b>Welfare Support Amount Agreement</b><br>
+Finalization of the welfare support amount.
+</li>
+
+<li>
+<b>Savings Progress Review</b><br>
+Review members' savings performance and financial progress.
+</li>
+
+<li>
+<b>Loans Working Update</b><br>
+Loan issuance, repayments and general loan operations.
+</li>
+
+<li>
+<b>Any Other Business (A.O.B.)</b>
+</li>
+
+</ol>
+
+<div style="
+margin-top:15px;
+padding:12px;
+background:#ffebee;
+border-left:5px solid #d32f2f;
+border-radius:8px;">
+
+<b style="color:#c62828;">
+⚠ Kindly make arrangements to attend and be punctual.
+</b>
+
+<p style="margin-top:8px;">
+Failure to attend may result in missing important discussions,
+decisions and updates affecting the group's operations and future plans.
+</p>
+
 </div>
 
-<!-- ================================= -->
-<!-- ⏰ JAVASCRIPT FOR UPCOMING MEETING -->
-<!-- ================================= -->
-<script>
-  // UPCOMING MEETING TIMES
-  const upcomingStart = new Date("February 13, 2026 20:30:00"); // 8:30 PM
-  const upcomingEnd   = new Date("February 13, 2026 22:00:00"); // 10:00 PM
+<p style="
+margin-top:15px;
+color:#1565c0;
+font-weight:bold;">
 
-  function updateUpcomingMeeting() {
-    const el = document.getElementById("upcomingCountdown");
+💬 Every member is encouraged to actively participate and freely share their views during the meeting.
+
+</p>
+
+<hr>
+
+<div style="text-align:center;">
+
+<b>Issued By</b><br><br>
+
+👨‍💼 <b>Admin Boniface</b><br>
+👩‍💼 <b>Chairlady Faith</b>
+
+<br><br>
+
+<span style="
+font-size:18px;
+font-weight:bold;
+color:#00695c;">
+
+Future Finders Leadership Team
+
+</span>
+
+</div>
+
+</div>
+
+<!-- ========================= -->
+<!-- COUNTDOWN SCRIPT -->
+<!-- ========================= -->
+
+<script>
+
+const meetingStart = new Date("July 5, 2026 16:45:00");
+const meetingEnd   = new Date("July 5, 2026 18:30:00");
+
+function updateMeetingCountdown(){
+
+    const box = document.getElementById("meetingCountdown");
     const now = new Date();
 
-    // BEFORE MEETING
-    if (now < upcomingStart) {
-      const diff = upcomingStart - now;
+    if(now < meetingStart){
 
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const minutes = Math.floor((diff / (1000 * 60)) % 60);
-      const seconds = Math.floor((diff / 1000) % 60);
+        const diff = meetingStart - now;
 
-      el.style.color = "#1565c0";
-      el.innerHTML =
-        `⏳ Meeting starts in <b>${days}d ${hours}h ${minutes}m ${seconds}s</b>`;
+        const days = Math.floor(diff/(1000*60*60*24));
+        const hours = Math.floor((diff/(1000*60*60))%24);
+        const minutes = Math.floor((diff/(1000*60))%60);
+        const seconds = Math.floor((diff/1000)%60);
+
+        box.style.background="linear-gradient(135deg,#1565c0,#0d47a1)";
+        box.style.color="#fff";
+
+        box.innerHTML=`
+        <div style="font-size:28px;">⏳</div>
+
+        <div style="font-size:24px;font-weight:bold;">
+            MID-YEAR MEETING STARTS IN
+        </div>
+
+        <div style="
+        margin-top:12px;
+        font-size:30px;
+        color:#ffeb3b;">
+
+        ${days}D :
+        ${hours}H :
+        ${minutes}M :
+        ${seconds}S
+
+        </div>
+        `;
+
     }
 
-    // MEETING LIVE
-    else if (now >= upcomingStart && now < upcomingEnd) {
-      el.style.color = "#2e7d32";
-      el.innerHTML =
-        "🟢 <b>MEETING IS LIVE</b><br>Join on WhatsApp now";
+    else if(now >= meetingStart && now < meetingEnd){
+
+        box.style.background="linear-gradient(135deg,#2e7d32,#1b5e20)";
+
+        box.innerHTML=`
+        <div style="font-size:32px;">🟢</div>
+
+        <h2 style="margin:10px 0;">
+        MEETING IS LIVE
+        </h2>
+
+        <div>
+        Join the WhatsApp Meeting Now
+        </div>
+        `;
+
     }
 
-    // MEETING CLOSED
-    else {
-      el.style.color = "#d32f2f";
-      el.innerHTML =
-        "🔒 <b>MEETING CLOSED</b><br>Thank you all for attending 🙏";
-      clearInterval(upcomingTimer);
-    }
-  }
+    else{
 
-  const upcomingTimer = setInterval(updateUpcomingMeeting, 1000);
-  updateUpcomingMeeting();
+        box.style.background="linear-gradient(135deg,#c62828,#8e0000)";
+
+        box.innerHTML=`
+        <div style="font-size:32px;">🔒</div>
+
+        <h2 style="margin:10px 0;">
+        MEETING CLOSED
+        </h2>
+
+        <div>
+        Thank you for attending.<br>
+        See you in the next meeting.
+        </div>
+        `;
+
+        clearInterval(timer);
+
+    }
+
+}
+
+const timer = setInterval(updateMeetingCountdown,1000);
+
+updateMeetingCountdown();
+
+</script>
 </script>
 <!-- ================= POPUP HTML ================= -->
 
@@ -9746,7 +9890,26 @@ window.addEventListener("load", function(){
 function closeSystemUpdatePopup(){
   document.getElementById("systemUpdatePopup").style.display = "none";
 }
+// ================================
+// Pick Number - Simulate Loan First
+// ================================
+function simulateLoanThenDisable(button) {
 
+    const spinner = button.querySelector(".spinner");
+    if (spinner) spinner.style.display = "inline-block";
+
+    setTimeout(() => {
+
+        if (spinner) spinner.style.display = "none";
+
+        document.getElementById("disabledPopup").style.display = "flex";
+
+    }, 2000);
+}
+
+function closeDisabledPopup() {
+    document.getElementById("disabledPopup").style.display = "none";
+}
 </script>
 
 
