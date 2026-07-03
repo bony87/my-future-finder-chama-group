@@ -8303,67 +8303,19 @@ const pageHeight = doc.internal.pageSize.height;
 const bottomLimit = pageHeight - 35;
 let y;
 
+function drawPageHeader() {
 
-
-
-// ================= PAGE BREAK FUNCTION =================
-
-function protect(space = 10) {
-
-    if (y + space > bottomLimit) {
-
-        doc.addPage();
-
-        // PAGE BACKGROUND
-        doc.setFillColor(255,255,255);
-        doc.rect(0,0,210,297,"F");
-
-        // LOGO
-       doc.addImage(logo, "PNG", 85, 8, 25, 25);
-
-        // COMPANY NAME
-        doc.setFont("helvetica","bold");
-        doc.setFontSize(18);
-        doc.setTextColor(0,70,140);
-        doc.text("FUTURE FINDERS CHAMA",105,38,{align:"center"});
-
-        doc.setFontSize(13);
-        doc.text("LOAN APPLICATION FORM",105,45,{align:"center"});
-
-        // HEADER LINE
-        doc.setDrawColor(21,101,192);
-        doc.setLineWidth(0.6);
-        doc.line(15,50,195,50);
-
-        // APPLICATION INFO
-        doc.setFont("helvetica","normal");
-        doc.setFontSize(10);
-        doc.setTextColor(70);
-
-        doc.text(`Application No: ${applicationNo}`,15,58);
-        doc.text(`Date: ${applyDate}`,195,58,{align:"right"});
-
-        // Start writing below header
-        y = 68;
-    }
-}
-
-
-// ================= LOGO =================
-
-const logo = new Image();
-logo.crossOrigin = "anonymous";
-logo.src = "https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/cropped_circle_image.png";
-logo.onload = function () {
-
-    // PAGE BACKGROUND
+    // White Background
     doc.setFillColor(255,255,255);
     doc.rect(0,0,210,297,"F");
 
-    // LOGO
-   doc.addImage(logo, "PNG", 85, 8, 25, 25);
+    // Watermark
+    addWatermark();
 
-    // COMPANY NAME
+    // Logo
+    doc.addImage(logo, "PNG", 85, 8, 25, 25);
+
+    // Title
     doc.setFont("helvetica","bold");
     doc.setFontSize(18);
     doc.setTextColor(0,70,140);
@@ -8372,12 +8324,12 @@ logo.onload = function () {
     doc.setFontSize(13);
     doc.text("LOAN APPLICATION FORM",105,45,{align:"center"});
 
-    // HEADER LINE
+    // Header line
     doc.setDrawColor(21,101,192);
     doc.setLineWidth(0.6);
     doc.line(15,50,195,50);
 
-    // APPLICATION INFO
+    // Application Details
     doc.setFont("helvetica","normal");
     doc.setFontSize(10);
     doc.setTextColor(70);
@@ -8385,9 +8337,89 @@ logo.onload = function () {
     doc.text(`Application No: ${applicationNo}`,15,58);
     doc.text(`Date: ${applyDate}`,195,58,{align:"right"});
 
-    // START POSITION
+    // ================= FOOTER =================
+doc.setDrawColor(180);
+doc.line(15, 285, 195, 285);
+
+doc.setFont("helvetica","italic");
+doc.setFontSize(8);
+doc.setTextColor(120);
+
+doc.text(
+    "This loan application form was generated electronically by the Future Finders Loan Management System.",
+    105,
+    290,
+    { align: "center" }
+);
+}
+// ================= PAGE BREAK FUNCTION =================
+
+function protect(space = 10){
+
+    if(y + space > bottomLimit){
+
+        doc.addPage();
+
+        drawPageHeader();
+
+        y = 68;
+
+    }
+
+}
+// ================= WATERMARK =================
+function addWatermark() {
+
+    doc.saveGraphicsState();
+
+    doc.setTextColor(235); // Very light grey
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(42);
+
+    doc.text(
+        "FUTURE FINDERS",
+        105,
+        150,
+        {
+            align: "center",
+            angle: 45
+        }
+    );
+
+    doc.setFontSize(26);
+
+    doc.text(
+        "LOAN APPLICATION",
+        105,
+        175,
+        {
+            align: "center",
+            angle: 45
+        }
+    );
+
+    doc.restoreGraphicsState();
+    doc.setTextColor(0);
+
+}
+
+// ================= LOGO =================
+
+const logo = new Image();
+logo.crossOrigin = "anonymous";
+logo.src = "https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/cropped_circle_image.png";
+logo.onload = function () {
+
+    drawPageHeader();
+
     y = 68;
     const gap = 6;
+
+   
+
+  
+  
+   
 
    
 // ================= MEMBER DETAILS =================
@@ -8829,6 +8861,7 @@ doc.text("Administrator", 140, y);
 doc.text("(Boniface Kaiser)", 140, y + 5);
 
 y += 18;
+
 // ================= SAVE PDF =================
 
 const fileName = `Future_Finders_Loan_Application_${name.replace(/\s+/g, "_")}.pdf`;
