@@ -7865,54 +7865,80 @@ Next →
 
 <div class="loanStep" id="step5" style="display:none;">
 
-<h3 style="color:#1565c0;">
-✅ Review & Submit Application
+<h3 style="color:#1565c0;text-align:center;">
+📝 Final Declaration & Loan Agreement
 </h3>
 
 <div style="
-background:#fff8e1;
-border-left:5px solid orange;
-padding:18px;
+background:#e8f5e9;
+border-left:6px solid #2e7d32;
+padding:15px;
 border-radius:8px;
 margin-bottom:20px;">
 
-<h4 style="margin-top:0;">
-📋 Loan Terms & Conditions
+<h4 style="margin-top:0;color:#2e7d32;">
+Applicant Confirmation
 </h4>
 
-<p>✔ Loan approval is subject to committee review.</p>
-
-<p>✔ Late repayment attracts a penalty according to Future Finders rules.</p>
-
-<p>✔ False information may lead to automatic rejection.</p>
-
-<p>✔ Guarantors will be contacted if necessary.</p>
-
-<p>✔ By submitting this application, you agree to abide by all Future Finders loan policies.</p>
+<p style="margin:8px 0;">
+Before submitting your application, kindly read the following terms carefully.
+</p>
 
 </div>
 
+<div style="
+background:#ffffff;
+border:1px solid #dcdcdc;
+border-radius:10px;
+padding:20px;
+margin-bottom:20px;">
+
+<h4 style="margin-top:0;color:#1565c0;">
+📋 Future Finders Loan Terms & Conditions
+</h4>
+
+<ol style="padding-left:20px;line-height:1.8;">
+
+<li>Loan approval is subject to review and approval by the Future Finders Loan Committee.</li>
+
+<li>All approved loans must be repaid within the agreed repayment period.</li>
+
+<li>Late repayment attracts a penalty of <b>KSh 10 per day</b>.</li>
+
+<li>Loans of <b>KSh 5,000 and above</b> qualify for a maximum repayment extension of <b>two (2) weeks</b> upon committee approval.</li>
+
+<li>Providing false or misleading information may result in immediate rejection of the application.</li>
+
+<li>The applicant authorizes Future Finders to contact the listed guarantors whenever necessary.</li>
+
+<li>The applicant agrees to comply with all Future Finders loan policies and future amendments.</li>
+
+</ol>
+
+</div>
 
 <div style="
 background:#f5f5f5;
 padding:18px;
 border-radius:10px;
+border:1px solid #ddd;
 margin-bottom:20px;">
 
 <h4 style="margin-top:0;color:#1565c0;">
 Applicant Declaration
 </h4>
 
-<label style="display:flex;align-items:center;gap:10px;">
+<label style="display:flex;align-items:flex-start;gap:12px;">
 
 <input
 type="checkbox"
 id="loanDeclaration"
-required>
+required
+style="margin-top:4px;">
 
-<span>
+<span style="line-height:1.7;">
 
-I declare that the information provided is true and correct.
+I certify that all information provided in this application is true and correct to the best of my knowledge. I understand that providing false information may lead to rejection of my application. I also agree to abide by all Future Finders loan rules, regulations and repayment policies.
 
 </span>
 
@@ -7920,19 +7946,18 @@ I declare that the information provided is true and correct.
 
 </div>
 
-
-<label><b>Applicant Signature</b></label>
+<label><b>Applicant Full Name (Digital Signature)</b></label>
 
 <input
 type="text"
 id="applicantSignature"
-placeholder="Type your full name"
+placeholder="Type your full official name"
 required
 style="
 width:100%;
 padding:12px;
-margin-bottom:20px;">
-
+margin-top:8px;
+margin-bottom:18px;">
 
 <label><b>Application Date</b></label>
 
@@ -7944,15 +7969,13 @@ style="
 width:100%;
 padding:12px;
 background:#f5f5f5;
-margin-bottom:20px;">
-
+margin-top:8px;
+margin-bottom:25px;">
 
 <div style="
 display:flex;
 justify-content:space-between;
-align-items:center;
-gap:10px;
-">
+gap:10px;">
 
 <button
 type="button"
@@ -7996,11 +8019,14 @@ font-size:15px;
 font-weight:bold;
 cursor:pointer;">
 
-✅ Submit Loan Application
+✅ Submit Application
 
 </button>
 
 </div>
+
+</div>
+
 
 </form>
 
@@ -8179,11 +8205,15 @@ year: "numeric",
 month: "long",
 day: "numeric"
 });
-const applicationNo =
-"FF-" +
-new Date().getFullYear() +
-"-" +
-Math.floor(100000 + Math.random() * 900000);
+const cleanPhone = phone.replace(/\D/g, "");
+const today = new Date();
+
+const dateCode =
+today.getFullYear().toString().slice(2) +
+String(today.getMonth() + 1).padStart(2, "0") +
+String(today.getDate()).padStart(2, "0");
+
+const applicationNo = `FF-${cleanPhone}-${dateCode}`;
 // =========================
 // LOAN DECISION
 // =========================
@@ -8215,8 +8245,15 @@ logo.src = "https://raw.githubusercontent.com/bony87/my-future-finder-chama-grou
 
 logo.onload = function () {
 
-const applicationNo = "FF-" + new Date().getFullYear() + "-" +
-Math.floor(100000 + Math.random() * 900000);
+const cleanPhone = phone.replace(/\D/g, "");
+const today = new Date();
+
+const dateCode =
+today.getFullYear().toString().slice(2) +
+String(today.getMonth() + 1).padStart(2, "0") +
+String(today.getDate()).padStart(2, "0");
+
+const applicationNo = `FF-${cleanPhone}-${dateCode}`;
 
 // ================= PAGE BACKGROUND =================
 
@@ -8509,31 +8546,67 @@ doc.line(45,y,185,y);
 
 y += 10;
 
+// ================= TERMS & CONDITIONS =================
 
-// ================= SIGNATURES =================
+doc.setFillColor(21,101,192);
+doc.roundedRect(15,y-5,180,8,2,2,"F");
+
+doc.setTextColor(255);
+doc.setFont("helvetica","bold");
+doc.setFontSize(11);
+doc.text("LOAN TERMS & CONDITIONS",20,y);
+
+y += 10;
+
+doc.setDrawColor(180);
+doc.rect(15,y-5,180,42);
+
+doc.setTextColor(0);
+doc.setFont("helvetica","normal");
+doc.setFontSize(9);
+
+const rules = [
+"1. Loan approval is subject to Future Finders Committee review.",
+"2. Late repayment attracts a penalty of KSh 10 per day.",
+"3. Loans of KSh 5,000 and above qualify for a two-week repayment extension only.",
+"4. False or misleading information may lead to automatic rejection.",
+"5. Guarantors may be contacted during the approval process.",
+"6. By signing this form, the applicant agrees to abide by all Future Finders loan policies."
+];
+
+rules.forEach(rule => {
+    doc.text(rule,20,y);
+    y += 6;
+});
+
+y += 5;
+// ================= APPLICANT DECLARATION =================
 
 doc.setFont("helvetica","bold");
 doc.setFontSize(10);
 
-doc.text("Applicant",25,y);
-doc.text("Chairlady",85,y);
-doc.text("Administrator",145,y);
+doc.text(
+"I declare that the information provided above is true and correct.",
+20,
+y
+);
 
-y += 3;
+y += 12;
 
-doc.line(20,y+10,65,y+10);
-doc.line(80,y+10,125,y+10);
-doc.line(140,y+10,185,y+10);
+// Signature lines
+
+doc.line(20,y,70,y);
+doc.line(80,y,130,y);
+doc.line(140,y,190,y);
 
 doc.setFont("helvetica","normal");
 doc.setFontSize(9);
 
-doc.text("Signature",33,y+16);
-doc.text("Signature",93,y+16);
-doc.text("Signature",153,y+16);
+doc.text("Applicant Signature",20,y+5);
+doc.text("Chairlady",90,y+5);
+doc.text("Administrator",145,y+5);
 
-y += 28;
-
+y += 18;
 doc.setDrawColor(180);
 doc.line(15,285,195,285);
 
@@ -8547,15 +8620,27 @@ doc.text(
 {align:"center"}
 );
 
-// ================= SAVE =================
+// ================= PREVIEW PDF =================
 
-doc.save(`Future_Finders_${applicationNo}.pdf`);
+// Create PDF as a Blob
+const pdfBlob = doc.output("blob");
 
-showNotification("✅ Loan application submitted successfully!");
+// Create a temporary URL
+const pdfURL = URL.createObjectURL(pdfBlob);
+
+// Open PDF in a new browser tab
+window.open(pdfURL, "_blank");
+
+// Show success notification
+showNotification("✅ Loan application submitted successfully! A new tab has opened for you to review and download the application.");
+
+// Optional: Free memory after 30 seconds
+setTimeout(() => {
+    URL.revokeObjectURL(pdfURL);
+}, 30000);
 
 };
 }
-
 function updateLoanSummary(maxAmount) {
 
     let amount = parseFloat(document.getElementById("applyAmount").value) || 0;
