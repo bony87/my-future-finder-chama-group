@@ -8205,15 +8205,41 @@ year: "numeric",
 month: "long",
 day: "numeric"
 });
+
+// ================= APPLICATION NUMBER =================
+
 const cleanPhone = phone.replace(/\D/g, "");
 const today = new Date();
 
 const dateCode =
-today.getFullYear().toString().slice(2) +
-String(today.getMonth() + 1).padStart(2, "0") +
-String(today.getDate()).padStart(2, "0");
+    today.getFullYear().toString().slice(2) +
+    String(today.getMonth() + 1).padStart(2, "0") +
+    String(today.getDate()).padStart(2, "0");
 
 const applicationNo = `FF-${cleanPhone}-${dateCode}`;
+// =========================
+// REPAYMENT SCHEDULE
+// =========================
+
+const repaymentSchedule = [];
+
+for (let i = 1; i <= months; i++) {
+
+    const dueDate = new Date(today);
+
+    dueDate.setMonth(dueDate.getMonth() + i);
+
+    repaymentSchedule.push({
+        installment: i,
+        dueDate: dueDate.toLocaleDateString("en-KE", {
+            day: "2-digit",
+            month: "long",
+            year: "numeric"
+        }),
+        amount: monthlyRepayment
+    });
+
+}
 // =========================
 // LOAN DECISION
 // =========================
@@ -8232,67 +8258,93 @@ const pageHeight = doc.internal.pageSize.height;
 const bottomLimit = pageHeight - 35;
 let y;
 
+
+
+
+// ================= PAGE BREAK FUNCTION =================
+
 function protect(space = 10) {
-if (y + space > bottomLimit) {
-doc.addPage();
-y = 70;
+
+    if (y + space > bottomLimit) {
+
+        doc.addPage();
+
+        // PAGE BACKGROUND
+        doc.setFillColor(255,255,255);
+        doc.rect(0,0,210,297,"F");
+
+        // LOGO
+        doc.addImage(logo,"PNG",85,8,40,22);
+
+        // COMPANY NAME
+        doc.setFont("helvetica","bold");
+        doc.setFontSize(18);
+        doc.setTextColor(0,70,140);
+        doc.text("FUTURE FINDERS CHAMA",105,38,{align:"center"});
+
+        doc.setFontSize(13);
+        doc.text("LOAN APPLICATION FORM",105,45,{align:"center"});
+
+        // HEADER LINE
+        doc.setDrawColor(21,101,192);
+        doc.setLineWidth(0.6);
+        doc.line(15,50,195,50);
+
+        // APPLICATION INFO
+        doc.setFont("helvetica","normal");
+        doc.setFontSize(10);
+        doc.setTextColor(70);
+
+        doc.text(`Application No: ${applicationNo}`,15,58);
+        doc.text(`Date: ${applyDate}`,195,58,{align:"right"});
+
+        // Start writing below header
+        y = 68;
+    }
 }
-}
 
-const logo = new Image();
-logo.crossOrigin = "anonymous";
-logo.src = "https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/ChatGPT%20Image%20Sep%2010%2C%202025%2C%2005_43_14%20PM.png";
-
-logo.onload = function () {
-
-const cleanPhone = phone.replace(/\D/g, "");
-const today = new Date();
-
-const dateCode =
-today.getFullYear().toString().slice(2) +
-String(today.getMonth() + 1).padStart(2, "0") +
-String(today.getDate()).padStart(2, "0");
-
-const applicationNo = `FF-${cleanPhone}-${dateCode}`;
-
-// ================= PAGE BACKGROUND =================
-
-doc.setFillColor(255,255,255);
-doc.rect(0,0,210,297,"F");
 
 // ================= LOGO =================
 
-doc.addImage(logo,"PNG",85,8,40,22);
+const logo = new Image();
+logo.crossOrigin = "anonymous";
+logo.src = "https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/cropped_circle_image.png";
+logo.onload = function () {
 
-// ================= COMPANY NAME =================
+    // PAGE BACKGROUND
+    doc.setFillColor(255,255,255);
+    doc.rect(0,0,210,297,"F");
 
-doc.setFont("helvetica","bold");
-doc.setFontSize(18);
-doc.setTextColor(0,70,140);
-doc.text("FUTURE FINDERS CHAMA",105,38,{align:"center"});
+    // LOGO
+   doc.addImage(logo, "PNG", 85, 8, 25, 25);
 
-doc.setFontSize(13);
-doc.text("LOAN APPLICATION FORM",105,45,{align:"center"});
+    // COMPANY NAME
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(18);
+    doc.setTextColor(0,70,140);
+    doc.text("FUTURE FINDERS CHAMA",105,38,{align:"center"});
 
-// ================= HEADER LINE =================
+    doc.setFontSize(13);
+    doc.text("LOAN APPLICATION FORM",105,45,{align:"center"});
 
-doc.setDrawColor(21,101,192);
-doc.setLineWidth(0.6);
-doc.line(15,50,195,50);
+    // HEADER LINE
+    doc.setDrawColor(21,101,192);
+    doc.setLineWidth(0.6);
+    doc.line(15,50,195,50);
 
-// ================= APPLICATION INFO =================
+    // APPLICATION INFO
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(10);
+    doc.setTextColor(70);
 
-doc.setFont("helvetica","normal");
-doc.setFontSize(10);
-doc.setTextColor(70);
+    doc.text(`Application No: ${applicationNo}`,15,58);
+    doc.text(`Date: ${applyDate}`,195,58,{align:"right"});
 
-doc.text(`Application No: ${applicationNo}`,15,58);
-doc.text(`Date: ${applyDate}`,195,58,{align:"right"});
+    // START POSITION
+    y = 68;
+    const gap = 6;
 
-// Start Position
-
-y = 68;
-const gap = 6;
+   
 // ================= MEMBER DETAILS =================
 
 doc.setFillColor(21,101,192);
@@ -8498,7 +8550,79 @@ const purposeLines = doc.splitTextToSize(reason,170).slice(0,3);
 doc.text(purposeLines,20,y);
 
 y += 28;
+// ================= REPAYMENT SCHEDULE =================
 
+doc.setFillColor(21,101,192);
+doc.roundedRect(15, y-5, 180, 8, 2, 2, "F");
+
+doc.setTextColor(255);
+doc.setFont("helvetica","bold");
+doc.setFontSize(11);
+doc.text("REPAYMENT SCHEDULE",20,y);
+
+y += 10;
+
+// Header
+doc.setFillColor(230,240,255);
+doc.rect(15,y-5,180,8,"F");
+
+doc.setTextColor(0);
+doc.setFont("helvetica","bold");
+doc.setFontSize(10);
+
+doc.text("Installment",20,y);
+doc.text("Due Date (On or Before)",80,y);
+doc.text("Amount",170,y,{align:"right"});
+
+y += 8;
+
+// Rows
+doc.setFont("helvetica","normal");
+doc.setFontSize(10);
+
+repaymentSchedule.forEach((payment,index)=>{
+
+    protect(8);
+
+    doc.rect(15,y-5,180,8);
+
+    let installmentName;
+
+    if(months === 1){
+
+        installmentName = "Full Payment";
+
+    }else if(index === months-1){
+
+        installmentName = "Final Payment";
+
+    }else{
+
+        installmentName =
+        payment.installment +
+        (payment.installment==1?"st":
+        payment.installment==2?"nd":
+        payment.installment==3?"rd":"th")
+        + " Payment";
+
+    }
+
+    doc.text(installmentName,20,y);
+
+    doc.text(payment.dueDate,80,y);
+
+    doc.text(
+        "KSh " + payment.amount.toLocaleString(),
+        170,
+        y,
+        {align:"right"}
+    );
+
+    y += 8;
+
+});
+
+y += 10;
 // ================= COMMITTEE USE ONLY =================
 
 doc.setFillColor(21,101,192);
@@ -8603,8 +8727,8 @@ doc.setFont("helvetica","normal");
 doc.setFontSize(9);
 
 doc.text("Applicant Signature",20,y+5);
-doc.text("Chairlady",90,y+5);
-doc.text("Administrator",145,y+5);
+doc.text("Chairlady(Faith Kwamboka)",90,y+5);
+doc.text("Administrator(Boniface Kaiser)",145,y+5);
 
 y += 18;
 doc.setDrawColor(180);
