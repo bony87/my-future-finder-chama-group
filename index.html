@@ -7456,9 +7456,13 @@ style="width:100%;padding:12px;margin-bottom:15px;">
 <label>ID Number</label>
 
 <input
-type="number"
+type="text"
 id="loanId"
 required
+maxlength="9"
+inputmode="numeric"
+placeholder="Enter 8 or 9 digit ID Number"
+oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,9);"
 style="width:100%;padding:12px;margin-bottom:15px;">
 
 <label>Gender</label>
@@ -7488,6 +7492,7 @@ style="width:100%;padding:12px;margin-bottom:15px;">
 type="text"
 id="occupation"
 required
+placeholder="e.g. Teacher, Farmer, Business Owner, Nurse"
 style="width:100%;padding:12px;margin-bottom:15px;">
 
 <label>Physical Address</label>
@@ -7496,10 +7501,10 @@ style="width:100%;padding:12px;margin-bottom:15px;">
 type="text"
 id="address"
 required
+placeholder="e.g. Kebirigo, Kisii County"
 style="width:100%;padding:12px;margin-bottom:25px;">
 
 <div style="text-align:right;">
-
 <button
 type="button"
 onclick="nextStep(2)"
@@ -7551,13 +7556,20 @@ style="width:100%;padding:12px;margin-bottom:15px;">
 type="tel"
 id="kinPhone"
 required
-placeholder="07XXXXXXXX"
+maxlength="12"
+placeholder="07XXXXXXXX, 01XXXXXXXX or 2547XXXXXXXX"
+oninput="
+this.value=this.value.replace(/[^0-9]/g,'');
+if(this.value.startsWith('254')){
+    this.value=this.value.slice(0,12);
+}else{
+    this.value=this.value.slice(0,10);
+}"
 style="width:100%;padding:12px;margin-bottom:25px;">
 
 <div style="
 display:flex;
-justify-content:space-between;
-">
+justify-content:space-between;">
 
 <button
 type="button"
@@ -7628,7 +7640,15 @@ style="width:100%;padding:12px;margin-bottom:15px;">
 type="tel"
 id="guarantor1Phone"
 required
-placeholder="07XXXXXXXX"
+maxlength="12"
+placeholder="07XXXXXXXX, 01XXXXXXXX or 2547XXXXXXXX"
+oninput="
+this.value=this.value.replace(/[^0-9]/g,'');
+if(this.value.startsWith('254')){
+    this.value=this.value.slice(0,12);
+}else{
+    this.value=this.value.slice(0,10);
+}"
 style="width:100%;padding:12px;margin-bottom:20px;">
 
 <hr style="margin:25px 0;">
@@ -7648,13 +7668,20 @@ style="width:100%;padding:12px;margin-bottom:15px;">
 type="tel"
 id="guarantor2Phone"
 required
-placeholder="07XXXXXXXX"
+maxlength="12"
+placeholder="07XXXXXXXX, 01XXXXXXXX or 2547XXXXXXXX"
+oninput="
+this.value=this.value.replace(/[^0-9]/g,'');
+if(this.value.startsWith('254')){
+    this.value=this.value.slice(0,12);
+}else{
+    this.value=this.value.slice(0,10);
+}"
 style="width:100%;padding:12px;margin-bottom:25px;">
 
 <div style="
 display:flex;
-justify-content:space-between;
-">
+justify-content:space-between;">
 
 <button
 type="button"
@@ -7689,7 +7716,6 @@ Next →
 </div>
 
 </div>
-
 <!-- ================= STEP 4 ================= -->
 
 <div class="loanStep" id="step4" style="display:none;">
@@ -7737,16 +7763,18 @@ margin-bottom:15px;">
 
 <label>Repayment Period</label>
 
-<input
-type="text"
+<label>Repayment Period</label>
+
+<select
 id="repaymentPeriod"
-value="${repaymentPeriod}"
-readonly
+required
+onchange="updateLoanSummary(${maxAmount})"
 style="
 width:100%;
 padding:12px;
-background:#f5f5f5;
 margin-bottom:15px;">
+${getRepaymentOptions(repaymentPeriod)}
+</select>
 
 <label>Reason For Borrowing</label>
 
@@ -7901,17 +7929,29 @@ margin-bottom:20px;">
 
 <li>Loan approval is subject to review and approval by the Future Finders Loan Committee.</li>
 
-<li>All approved loans must be repaid within the agreed repayment period.</li>
+<li>Approval is based on the applicant's savings history, loan eligibility, guarantors and compliance with Future Finders policies.</li>
 
-<li>Late repayment attracts a penalty of <b>KSh 10 per day</b>.</li>
+<li>The approved loan amount shall not exceed the member's maximum loan eligibility.</li>
 
-<li>Loans of <b>KSh 5,000 and above</b> qualify for a maximum repayment extension of <b>two (2) weeks</b> upon committee approval.</li>
+<li>The borrower may choose a repayment period up to their maximum eligible repayment period. Choosing a shorter repayment period may reduce the total interest payable.</li>
 
-<li>Providing false or misleading information may result in immediate rejection of the application.</li>
+<li>All approved loans must be repaid on or before the agreed repayment due date.</li>
 
-<li>The applicant authorizes Future Finders to contact the listed guarantors whenever necessary.</li>
+<li>Late repayment attracts a penalty of <b>KSh 10 per day</b> until the outstanding balance is fully cleared.</li>
 
-<li>The applicant agrees to comply with all Future Finders loan policies and future amendments.</li>
+<li>Loans of <b>KSh 5,000 and above</b> may qualify for a maximum repayment extension of <b>two (2) weeks</b>, subject to committee approval before the due date.</li>
+
+<li>The borrower shall not transfer the loan responsibility to another member without written approval from the committee.</li>
+
+<li>Guarantors may be contacted and may be required to assist in loan recovery if the borrower defaults.</li>
+
+<li>Future Finders reserves the right to recover outstanding loans from the member's savings, dividends or any other benefits due to the member where permitted by the group rules.</li>
+
+<li>Providing false, incomplete or misleading information may result in rejection of the application, cancellation of the loan or disciplinary action.</li>
+
+<li>Submitting this application does not guarantee loan approval.</li>
+
+<li>The applicant agrees to comply with all current and future Future Finders loan policies, regulations and committee decisions.</li>
 
 </ol>
 
@@ -8095,7 +8135,9 @@ const paymentMethod = document.getElementById("paymentMethod").value;
 // DECLARATION
 // =========================
 const declaration = document.getElementById("loanDeclaration").checked;
-
+const applicantSignature = document
+    .getElementById("applicantSignature")
+    .value.trim();
 // =========================
 // VALIDATION
 // =========================
@@ -8114,9 +8156,9 @@ alert("❌ Enter reason for borrowing.");
 return;
 }
 
-if (!/^[0-9]{7,8}$/.test(id)) {
-alert("❌ Enter valid ID number.");
-return;
+if (!/^\d{8,9}$/.test(id)) {
+    alert("❌ ID Number must contain 8 or 9 digits.");
+    return;
 }
 
 if (!gender) {
@@ -8144,9 +8186,9 @@ alert("❌ Fill next of kin details.");
 return;
 }
 
-if (!/^0\d{9}$/.test(kinPhone)) {
-alert("❌ Invalid next of kin phone.");
-return;
+if (!/^(07\d{8}|01\d{8}|2547\d{8}|2541\d{8})$/.test(kinPhone)) {
+    alert("❌ Enter a valid phone number starting with 07, 01 or 254.");
+    return;
 }
 
 if (!guarantor1 || !guarantor2) {
@@ -8154,14 +8196,14 @@ alert("❌ Fill guarantor details.");
 return;
 }
 
-if (!/^0\d{9}$/.test(guarantor1Phone)) {
-alert("❌ Invalid guarantor 1 phone.");
-return;
+if (!/^(07\d{8}|01\d{8}|2547\d{8}|2541\d{8})$/.test(guarantor1Phone)) {
+    alert("❌ Invalid Guarantor 1 phone number.");
+    return;
 }
 
-if (!/^0\d{9}$/.test(guarantor2Phone)) {
-alert("❌ Invalid guarantor 2 phone.");
-return;
+if (!/^(07\d{8}|01\d{8}|2547\d{8}|2541\d{8})$/.test(guarantor2Phone)) {
+    alert("❌ Invalid Guarantor 2 phone number.");
+    return;
 }
 
 if (!paymentMethod) {
@@ -8173,7 +8215,10 @@ if (!declaration) {
 alert("❌ You must accept declaration.");
 return;
 }
-
+if (!applicantSignature) {
+    alert("❌ Please type your full name as your digital signature.");
+    return;
+}
 // =========================
 // CALCULATIONS
 // =========================
@@ -8274,7 +8319,7 @@ function protect(space = 10) {
         doc.rect(0,0,210,297,"F");
 
         // LOGO
-        doc.addImage(logo,"PNG",85,8,40,22);
+       doc.addImage(logo, "PNG", 85, 8, 25, 25);
 
         // COMPANY NAME
         doc.setFont("helvetica","bold");
@@ -8673,7 +8718,7 @@ y += 10;
 // ================= TERMS & CONDITIONS =================
 
 doc.setFillColor(21,101,192);
-doc.roundedRect(15,y-5,180,8,2,2,"F");
+doc.roundedRect(15, y-5, 180, 8, 2, 2, "F");
 
 doc.setTextColor(255);
 doc.setFont("helvetica","bold");
@@ -8682,32 +8727,65 @@ doc.text("LOAN TERMS & CONDITIONS",20,y);
 
 y += 10;
 
-doc.setDrawColor(180);
-doc.rect(15,y-5,180,42);
-
 doc.setTextColor(0);
 doc.setFont("helvetica","normal");
 doc.setFontSize(9);
 
 const rules = [
-"1. Loan approval is subject to Future Finders Committee review.",
-"2. Late repayment attracts a penalty of KSh 10 per day.",
-"3. Loans of KSh 5,000 and above qualify for a two-week repayment extension only.",
-"4. False or misleading information may lead to automatic rejection.",
-"5. Guarantors may be contacted during the approval process.",
-"6. By signing this form, the applicant agrees to abide by all Future Finders loan policies."
+"1. Loan approval is subject to review and approval by the Future Finders Loan Committee.",
+"2. Loan approval is based on the member's savings history, loan eligibility, guarantors and compliance with Future Finders policies.",
+"3. The approved loan amount shall not exceed the member's maximum eligible loan limit.",
+"4. The borrower may choose any repayment period up to their maximum eligible repayment period.",
+"5. Choosing a shorter repayment period may reduce the total interest payable.",
+"6. All approved loans must be repaid on or before the agreed repayment due date.",
+"7. Late repayment attracts a penalty of KSh 10 per day until the loan is fully cleared.",
+"8. Loans of KSh 5,000 and above may qualify for a maximum repayment extension of two (2) weeks subject to committee approval before the due date.",
+"9. The borrower shall not transfer responsibility for the loan to another member without written approval from the committee.",
+"10. Guarantors may be contacted and may be required to assist in loan recovery if the borrower defaults.",
+"11. Future Finders reserves the right to recover outstanding loans from the member's savings, dividends or any other benefits due to the member where permitted by the group rules.",
+"12.False, incomplete or misleading information may result in rejection, cancellation of the loan or disciplinary action.",
+"13. Submission of this application does not guarantee loan approval.",
+"14. By signing this application, the applicant agrees to comply with all current and future Future Finders loan policies, regulations and committee decisions."
 ];
 
+doc.setDrawColor(180);
+
+let boxTop = y - 5;
+let boxStartY = y;
+
 rules.forEach(rule => {
-    doc.text(rule,20,y);
-    y += 6;
+
+    const lines = doc.splitTextToSize(rule, 168);
+    const neededHeight = (lines.length * 5) + 3;
+
+    // Not enough space? Close current box and start a new one.
+    if (y + neededHeight > bottomLimit) {
+
+        // Finish current page box
+        doc.rect(15, boxTop, 180, y - boxTop);
+
+        // Create new page
+        protect(neededHeight);
+
+        // Start new box
+        boxTop = y - 5;
+    }
+
+    doc.text(lines,20,y);
+
+    y += neededHeight;
+
 });
+
+// Finish the final box
+doc.rect(15, boxTop, 180, y - boxTop);
 
 y += 5;
 // ================= APPLICANT DECLARATION =================
 
 doc.setFont("helvetica","bold");
 doc.setFontSize(10);
+doc.setTextColor(0);
 
 doc.text(
 "I declare that the information provided above is true and correct.",
@@ -8717,33 +8795,40 @@ y
 
 y += 12;
 
+// Applicant's digital signature
+doc.setFont("courier","italic");
+doc.setFontSize(14);
+doc.setTextColor(0,70,140);
+doc.text(applicantSignature, 20, y);
+
+y += 3;
+
 // Signature lines
+doc.setDrawColor(0);
 
-doc.line(20,y,70,y);
-doc.line(80,y,130,y);
-doc.line(140,y,190,y);
+doc.line(20, y, 70, y);      // Applicant
+doc.line(80, y, 130, y);     // Chairlady
+doc.line(140, y, 190, y);    // Administrator
 
+y += 5;
+
+// Labels
 doc.setFont("helvetica","normal");
 doc.setFontSize(9);
+doc.setTextColor(0);
 
-doc.text("Applicant Signature",20,y+5);
-doc.text("Chairlady(Faith Kwamboka)",90,y+5);
-doc.text("Administrator(Boniface Kaiser)",145,y+5);
+// Applicant
+doc.text("Applicant Signature", 20, y);
+
+// Chairlady
+doc.text("Chairlady", 80, y);
+doc.text("(Faith Kwamboka)", 80, y + 5);
+
+// Administrator
+doc.text("Administrator", 140, y);
+doc.text("(Boniface Kaiser)", 140, y + 5);
 
 y += 18;
-doc.setDrawColor(180);
-doc.line(15,285,195,285);
-
-doc.setFontSize(8);
-doc.setTextColor(120);
-
-doc.text(
-"Future Finders Chama | Confidential Loan Application Form | Generated electronically",
-105,
-290,
-{align:"center"}
-);
-
 // ================= SAVE PDF =================
 
 const fileName = `Future_Finders_Loan_Application_${name.replace(/\s+/g, "_")}.pdf`;
@@ -8860,6 +8945,42 @@ function updateLoanSummary(maxAmount) {
         </table>
 
     `;
+}
+function getRepaymentOptions(maxPeriod){
+
+    let options = "";
+
+    if(maxPeriod.includes("1")){
+
+        options += `<option value="1 Month">1 Month</option>`;
+
+    }else if(maxPeriod.includes("2")){
+
+        options += `
+        <option value="1 Month">1 Month</option>
+        <option value="2 Months" selected>2 Months</option>
+        `;
+
+    }else if(maxPeriod.includes("3")){
+
+        options += `
+        <option value="1 Month">1 Month</option>
+        <option value="2 Months">2 Months</option>
+        <option value="3 Months" selected>3 Months</option>
+        `;
+
+    }else{
+
+        options += `
+        <option value="1 Month">1 Month</option>
+        <option value="2 Months">2 Months</option>
+        <option value="3 Months">3 Months</option>
+        <option value="4 Months" selected>4 Months</option>
+        `;
+    }
+
+    return options;
+
 }
 // =========================
 // 🔄 Contributions Totals
