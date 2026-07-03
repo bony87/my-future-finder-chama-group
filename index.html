@@ -8620,27 +8620,25 @@ doc.text(
 {align:"center"}
 );
 
-// ================= PREVIEW PDF =================
+// ================= SAVE PDF =================
 
-// Create PDF as a Blob
-const pdfBlob = doc.output("blob");
+const fileName = `Future_Finders_Loan_Application_${name.replace(/\s+/g, "_")}.pdf`;
 
-// Create a temporary URL
-const pdfURL = URL.createObjectURL(pdfBlob);
+doc.save(fileName);
 
-// Open PDF in a new browser tab
-window.open(pdfURL, "_blank");
+showNotification("✅ Loan application submitted successfully!");
 
-// Show success notification
-showNotification("✅ Loan application submitted successfully! A new tab has opened for you to review and download the application.");
-
-// Optional: Free memory after 30 seconds
-setTimeout(() => {
-    URL.revokeObjectURL(pdfURL);
-}, 30000);
-
+// Close logo.onload function
 };
+
+// Handle logo loading error
+logo.onerror = function () {
+    alert("Unable to load the Future Finders logo. Please check your internet connection or logo URL.");
+};
+
+// Close submitLoan() function
 }
+
 function updateLoanSummary(maxAmount) {
 
     let amount = parseFloat(document.getElementById("applyAmount").value) || 0;
