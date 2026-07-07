@@ -5876,44 +5876,54 @@ eventBox.innerHTML = eventSummary;
 function submitWelfareApplication(){
 
 // Generate Reference Number
-
 const today = new Date();
 
 const y = today.getFullYear();
-
 const m = String(today.getMonth()+1).padStart(2,'0');
-
 const d = String(today.getDate()).padStart(2,'0');
 
 const reference =
 "FFC-WF-"+y+m+d+"-"+Math.floor(Math.random()*900+100);
 
 // Collect data
+const application = {
 
-const application={
+reference,
 
-reference:reference,
+name: document.getElementById("wfName").value,
+memberNo: document.getElementById("wfMemberNo").value,
+id: document.getElementById("wfId").value,
+phone: document.getElementById("wfPhone").value,
+county: document.getElementById("wfCounty").value,
+subCounty: document.getElementById("wfSubCounty").value,
+ward: document.getElementById("wfWard").value,
 
-name:document.getElementById("wfName").value,
+type: document.querySelector('input[name="welfareType"]:checked')?.value || "",
 
-memberNo:document.getElementById("wfMemberNo").value,
+babyName: document.getElementById("babyName")?.value || "",
+babyDob: document.getElementById("babyDob")?.value || "",
+babyHospital: document.getElementById("babyHospital")?.value || "",
+babyRelationship: document.getElementById("babyRelationship")?.value || "",
 
-id:document.getElementById("wfId").value,
+weddingDate: document.getElementById("weddingDate")?.value || "",
+weddingVenue: document.getElementById("weddingVenue")?.value || "",
+spouseName: document.getElementById("spouseName")?.value || "",
 
-phone:document.getElementById("wfPhone").value,
+deceasedName: document.getElementById("deceasedName")?.value || "",
+relationshipDeceased: document.getElementById("relationshipDeceased")?.value || "",
+deathDate: document.getElementById("deathDate")?.value || "",
+burialDate: document.getElementById("burialDate")?.value || "",
+burialLocation: document.getElementById("burialLocation")?.value || "",
 
-county:document.getElementById("wfCounty").value,
-
-type:document.querySelector('input[name="welfareType"]:checked')?.value || "",
+signature: document.getElementById("welfareSignature").value,
+place: document.getElementById("signingPlace").value,
 
 status:"Pending Verification",
-
 date:new Date().toLocaleDateString("en-KE")
 
 };
 
-// Save Application
-
+// Save
 let welfareApplications =
 JSON.parse(localStorage.getItem("welfareApplications")) || [];
 
@@ -5925,15 +5935,374 @@ JSON.stringify(welfareApplications)
 );
 
 // Generate PDF
-
 generateWelfarePDF(application);
+
+// Show Success
+showWelfareSuccess(reference);
+
+}
 
 function generateWelfarePDF(application){
 
-// PDF code will go here
+const { jsPDF } = window.jspdf;
+
+const doc = new jsPDF({
+    orientation:"portrait",
+    unit:"mm",
+    format:"a4"
+});
+const logo =
+"https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/cropped_circle_image.png";
+const pageWidth = doc.internal.pageSize.getWidth();
+
+const left = 15;
+const width = 180;
+
+let y = 20;
+const pageHeight = doc.internal.pageSize.getHeight();
+
+function checkPage(requiredSpace = 20){
+
+    if(y + requiredSpace > pageHeight - 20){
+
+        doc.addPage();
+
+        y = 20;
+
+    }
 
 }
-// Success Message
+
+// ================= HEADER =================
+
+doc.addImage(logo,"PNG",15,6,20,20);
+
+doc.setFillColor(21,101,192);
+doc.rect(40,5,155,22,"F");
+
+doc.setFont("helvetica","bold");
+doc.setFontSize(18);
+doc.setTextColor(255,255,255);
+
+doc.text("FUTURE FINDERS CHAMA",117,15,{align:"center"});
+
+doc.setFontSize(11);
+
+doc.text(
+"WELFARE SUPPORT APPLICATION FORM",
+117,
+22,
+{align:"center"}
+);
+
+y = 35;
+
+// ================= APPLICATION DETAILS =================
+
+doc.setDrawColor(21,101,192);
+doc.roundedRect(left,y,width,28,2,2);
+
+doc.setTextColor(0,0,0);
+doc.setFont("helvetica","bold");
+doc.setFontSize(11);
+
+doc.text("Reference No",20,y+8);
+doc.text(":",60,y+8);
+doc.text(application.reference,65,y+8);
+
+doc.text("Application Date",20,y+16);
+doc.text(":",60,y+16);
+doc.text(application.date,65,y+16);
+
+doc.text("Status",110,y+8);
+doc.text(":",135,y+8);
+doc.text(application.status,140,y+8);
+
+y += 68;
+
+checkPage(40);
+// ================= MEMBER INFORMATION =================
+
+doc.text("Full Name",20,y+8);
+doc.text(":",60,y+8);
+doc.text(application.name || "-",65,y+8);
+
+doc.text("Membership Number",20,y+18);
+doc.text(":",60,y+18);
+doc.text(application.memberNo || "-",65,y+18);
+
+doc.text("National ID Number",20,y+28);
+doc.text(":",60,y+28);
+doc.text(application.id || "-",65,y+28);
+
+doc.text("Phone Number",20,y+38);
+doc.text(":",60,y+38);
+doc.text(application.phone || "-",65,y+38);
+
+doc.text("County",20,y+48);
+doc.text(":",60,y+48);
+doc.text(application.county || "-",65,y+48);
+
+doc.text("Sub-County",20,y+58);
+doc.text(":",60,y+58);
+doc.text(application.subCounty || "-",65,y+58);
+
+doc.text("Ward",20,y+68);
+doc.text(":",60,y+68);
+doc.text(application.ward || "-",65,y+68);
+
+// ================= WELFARE SUPPORT DETAILS =================
+
+y += 88;
+
+checkPage(40);
+
+doc.setFillColor(21,101,192);
+doc.rect(left,y,width,8,"F");
+
+doc.setTextColor(255,255,255);
+doc.setFont("helvetica","bold");
+
+doc.text("SECTION B : WELFARE SUPPORT DETAILS",20,y+5.5);
+
+y += 10;
+
+doc.setDrawColor(180);
+doc.roundedRect(left,y,width,70,2,2);
+
+doc.setTextColor(0,0,0);
+doc.setFont("helvetica","normal");
+
+doc.text("Support Type",20,y+8);
+doc.text(":",60,y+8);
+doc.text(application.type || "-",65,y+8);
+
+// ================= NEWBORN =================
+
+if(application.type==="Newborn Baby"){
+
+doc.text("Baby Name",20,y+20);
+doc.text(":",60,y+20);
+doc.text(application.babyName || "-",65,y+20);
+
+doc.text("Date of Birth",20,y+30);
+doc.text(":",60,y+30);
+doc.text(application.babyDob || "-",65,y+30);
+
+doc.text("Hospital",20,y+40);
+doc.text(":",60,y+40);
+doc.text(application.babyHospital || "-",65,y+40);
+
+doc.text("Relationship",20,y+50);
+doc.text(":",60,y+50);
+doc.text(application.babyRelationship || "-",65,y+50);
+
+}
+
+// ================= WEDDING =================
+
+else if(application.type==="Wedding"){
+
+doc.text("Wedding Date",20,y+20);
+doc.text(":",60,y+20);
+doc.text(application.weddingDate || "-",65,y+20);
+
+doc.text("Venue",20,y+30);
+doc.text(":",60,y+30);
+doc.text(application.weddingVenue || "-",65,y+30);
+
+doc.text("Spouse Name",20,y+40);
+doc.text(":",60,y+40);
+doc.text(application.spouseName || "-",65,y+40);
+
+}
+
+// ================= BURIAL =================
+
+else if(application.type==="Burial"){
+
+doc.text("Deceased",20,y+20);
+doc.text(":",60,y+20);
+doc.text(application.deceasedName || "-",65,y+20);
+
+doc.text("Relationship",20,y+30);
+doc.text(":",60,y+30);
+doc.text(application.relationshipDeceased || "-",65,y+30);
+
+doc.text("Date of Death",20,y+40);
+doc.text(":",60,y+40);
+doc.text(application.deathDate || "-",65,y+40);
+
+doc.text("Burial Date",20,y+50);
+doc.text(":",60,y+50);
+doc.text(application.burialDate || "-",65,y+50);
+
+doc.text("Burial Location",20,y+60);
+doc.text(":",60,y+60);
+doc.text(application.burialLocation || "-",65,y+60);
+
+}
+// ================= SECTION C : MEMBER DECLARATION =================
+
+y += 68;
+
+checkPage(40);
+
+doc.setFillColor(21,101,192);
+doc.rect(left,y,width,8,"F");
+
+doc.setTextColor(255,255,255);
+doc.setFont("helvetica","bold");
+doc.setFontSize(11);
+
+doc.text("SECTION C : MEMBER DECLARATION",20,y+5.5);
+
+y += 10;
+
+doc.setDrawColor(180);
+doc.roundedRect(left,y,width,65,2,2);
+
+doc.setTextColor(0,0,0);
+doc.setFont("helvetica","normal");
+doc.setFontSize(10);
+
+const declaration = [
+"I hereby declare that the information provided in this",
+"application is true and correct to the best of my",
+"knowledge. I understand that submission of false",
+"information or forged documents may lead to rejection",
+"of my application and disciplinary action under the",
+"Future Finders Chama Constitution and Welfare Rules."
+];
+
+let textY = y + 8;
+
+declaration.forEach(line=>{
+    doc.text(line,20,textY);
+    textY += 7;
+});
+
+// Signature
+
+doc.setFont("helvetica","bold");
+
+doc.text("Digital Signature",20,y+55);
+
+doc.setFont("helvetica","normal");
+
+doc.text(application.signature || "-",65,y+55);
+
+// Place
+
+doc.setFont("helvetica","bold");
+
+doc.text("Place",20,y+63);
+
+doc.setFont("helvetica","normal");
+
+doc.text(application.place || "-",65,y+63);
+
+// Date
+
+doc.setFont("helvetica","bold");
+
+doc.text("Date",120,y+63);
+
+doc.setFont("helvetica","normal");
+
+doc.text(application.date || "-",135,y+63);
+// ================= SECTION D : OFFICIAL USE ONLY =================
+
+y += 68;
+
+checkPage(40);
+
+checkPage(40);
+
+// Check if enough space remains on the page
+if(y > 220){
+    doc.addPage();
+    y = 20;
+}
+
+doc.setFillColor(21,101,192);
+doc.rect(left,y,width,8,"F");
+
+doc.setTextColor(255,255,255);
+doc.setFont("helvetica","bold");
+doc.setFontSize(11);
+
+doc.text("SECTION D : OFFICIAL USE ONLY",20,y+5.5);
+
+y += 10;
+
+doc.setDrawColor(180);
+doc.roundedRect(left,y,width,105,2,2);
+
+doc.setTextColor(0,0,0);
+doc.setFont("helvetica","normal");
+doc.setFontSize(10);
+
+// Reference
+
+doc.text("Application Reference",20,y+10);
+doc.text(":",70,y+10);
+doc.text(application.reference,75,y+10);
+
+// Date Received
+
+doc.text("Date Received",20,y+22);
+doc.text(":",70,y+22);
+doc.line(75,y+22,140,y+22);
+
+// Verified By
+
+doc.text("Verified By",20,y+34);
+doc.text(":",70,y+34);
+doc.line(75,y+34,170,y+34);
+
+// Recommendation
+
+doc.text("Committee Recommendation",20,y+48);
+
+doc.rect(85,y+42,6,6);
+doc.text("Approve",95,y+47);
+
+doc.rect(130,y+42,6,6);
+doc.text("Reject",140,y+47);
+
+// Chairlady Signature
+
+doc.text("Chairlady Signature",20,y+62);
+doc.line(75,y+62,170,y+62);
+
+// Admin Signature
+
+doc.text("Admin Signature",20,y+74);
+doc.line(75,y+74,170,y+74);
+
+// Remarks
+
+doc.text("Remarks",20,y+88);
+
+doc.rect(20,y+92,160,18);
+
+// Official Stamp
+
+doc.circle(170,y+55,12);
+
+doc.setFontSize(8);
+doc.text("OFFICIAL",162,y+53);
+doc.text("STAMP",164,y+57);
+
+
+// ================= SAVE =================
+
+doc.save(application.reference + ".pdf");
+
+}
+
+function showWelfareSuccess(reference){
 
 document.getElementById("loanMessage").innerHTML=`
 
@@ -5946,18 +6315,14 @@ border-radius:15px;
 box-shadow:0 10px 25px rgba(0,0,0,.15);
 text-align:center;">
 
-<div style="font-size:70px;">
-✅
-</div>
+<div style="font-size:70px;">✅</div>
 
 <h2 style="color:#2e7d32;">
 Application Submitted Successfully
 </h2>
 
 <p>
-
 Your Welfare Support Application has been received successfully.
-
 </p>
 
 <div style="
@@ -5969,9 +6334,7 @@ margin:25px 0;">
 <b>Application Reference</b>
 
 <h2 style="color:#1565c0;">
-
 ${reference}
-
 </h2>
 
 </div>
@@ -5989,11 +6352,11 @@ text-align:left;">
 
 <li>📱 Send your National ID and supporting documents to <b>0713 953 004</b>.</li>
 
-<li>Include your <b>Application Reference Number</b> in the WhatsApp message.</li>
+<li>📄 Include your <b>Application Reference Number</b> in your WhatsApp message.</li>
 
-<li>Your application will be verified by the Chairlady and Admin.</li>
+<li>✅ Attach the downloaded PDF application.</li>
 
-<li>You will receive feedback after members' approval.</li>
+<li>👥 Your application will be verified by the Chairlady and Admin before being presented to members.</li>
 
 </ul>
 
@@ -6002,7 +6365,7 @@ text-align:left;">
 <div style="margin-top:25px;">
 
 <button
-onclick="closeLoanForm()"
+onclick="closeWelfareForm()"
 style="
 background:#2e7d32;
 color:white;
