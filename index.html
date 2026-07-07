@@ -2094,7 +2094,27 @@ box-shadow:0 5px 15px rgba(0,0,0,.2);
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
+.stepError{
+background:#ffebee;
+border-left:5px solid #d32f2f;
+color:#b71c1c;
+padding:15px;
+border-radius:8px;
+margin-bottom:20px;
+font-weight:bold;
+display:none;
+animation:shake .3s;
+}
 
+@keyframes shake{
+
+0%{transform:translateX(0);}
+25%{transform:translateX(-5px);}
+50%{transform:translateX(5px);}
+75%{transform:translateX(-5px);}
+100%{transform:translateX(0);}
+
+}
 </style>
 <script>
 
@@ -2710,6 +2730,85 @@ style="width:150px; height:150px; border-radius:50%; object-fit:cover; box-shado
     </ul>
   </li>
 
+  <!-- IDENTIFICATION -->
+  <li>🪪 <b>Member Identification:</b>
+    <ul style="margin-top:8px;">
+      <li>Every member applying for welfare support shall provide a clear copy of their <b>National Identity Card (ID)</b> or any other government-issued identification document.</li>
+      <li>The identification document shall be submitted together with the required supporting documents.</li>
+      <li>The Admin shall keep all identification documents confidential and use them only for verification and record-keeping purposes.</li>
+    </ul>
+  </li>
+
+  <!-- VERIFICATION -->
+  <li>🔍 <b>Verification of Welfare Requests:</b>
+    <ul style="margin-top:8px;">
+      <li>Every welfare request shall be supported by appropriate documents before approval.</li>
+
+      <li><b>👶 Newborn Baby Support:</b>
+        <ul>
+          <li>Copy of the member's National ID.</li>
+          <li>Birth Notification issued by a health facility; or</li>
+          <li>Birth Certificate (if available); or</li>
+          <li>Hospital discharge documents confirming the birth.</li>
+        </ul>
+      </li>
+
+      <li><b>💍 Wedding Support:</b>
+        <ul>
+          <li>Copy of the member's National ID.</li>
+          <li>Wedding invitation card; or</li>
+          <li>Marriage Certificate (if available); or</li>
+          <li>Confirmation letter from the church, mosque, registrar, or officiating authority.</li>
+        </ul>
+      </li>
+
+      <li><b>🕊️ Burial Support:</b>
+        <ul>
+          <li>Copy of the member's National ID.</li>
+          <li>Burial Permit; or</li>
+          <li>Death Notification from a hospital or relevant authority; or</li>
+          <li>Funeral Programme; or</li>
+          <li>Obituary or funeral announcement; or</li>
+          <li>Any other acceptable document approved by the members.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+
+  <!-- VERIFICATION COMMITTEE -->
+  <li>👥 <b>Verification Committee:</b>
+    <ul style="margin-top:8px;">
+      <li>The Chairlady and the Admin shall verify every welfare request before it is presented to members for approval.</li>
+      <li>Where necessary, they may contact family members, religious leaders, local administrators, hospitals, or other reliable persons to confirm the information provided.</li>
+    </ul>
+  </li>
+
+  <!-- APPROVAL -->
+  <li>🗳️ <b>Approval Procedure:</b>
+    <ul style="margin-top:8px;">
+      <li>The welfare request shall first be verified by the Chairlady and Admin.</li>
+      <li>The verified request shall then be presented to members through an official meeting or the group's approved communication platform.</li>
+      
+      <li>The approval and supporting documents shall be recorded by the Admin for accountability.</li>
+    </ul>
+  </li>
+
+  <!-- FALSE INFORMATION -->
+  <li>⚠️ <b>False Information:</b>
+    <ul style="margin-top:8px;">
+      <li>Any member found to have knowingly submitted false information or forged documents to obtain welfare support shall not receive the welfare support.</li>
+      <li>Such a member shall lose eligibility for welfare benefits for <b>twelve (6) months</b>.</li>
+      <li>The member may also face disciplinary action, including suspension or expulsion, in accordance with this Constitution.</li>
+    </ul>
+  </li>
+
+  <!-- RECORD KEEPING -->
+  <li>📁 <b>Record Keeping:</b>
+    <ul style="margin-top:8px;">
+      <li>The Admin shall securely maintain records of all welfare applications, supporting documents, approvals, payments, and verification reports for future reference and auditing.</li>
+    </ul>
+  </li>
+
   <!-- NOTIFICATION -->
   <li>📢 <b>Notification Requirement:</b>
     <ul style="margin-top:8px;">
@@ -2733,7 +2832,6 @@ style="width:150px; height:150px; border-radius:50%; object-fit:cover; box-shado
   </li>
 
 </ul>
-
 <!-- ARTICLE 6 -->
 <h3 style="color:#388e3c;">🤝 Article 6: Conduct</h3>
 
@@ -4052,6 +4150,1951 @@ document.getElementById("downloadFormBtn").addEventListener("click", () => {
     }, 300);
   };
 });
+
+
+
+// ========================= 💞 Welfare Support Application =========================
+
+function showWelfareApplication() {
+
+const welfareContainer = document.getElementById("loanMessage");
+
+welfareContainer.innerHTML = `
+
+<div style="
+max-width:650px;
+width:95%;
+margin:25px auto;
+background:#ffffff;
+border-radius:16px;
+box-shadow:0 10px 30px rgba(0,0,0,.15);
+overflow:hidden;
+font-family:Arial,sans-serif;
+">
+
+<!-- ================= HEADER ================= -->
+
+<div style="
+background:linear-gradient(135deg,#1565c0,#42a5f5);
+padding:20px;
+color:white;
+text-align:center;
+">
+
+<img
+src="https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/cropped_circle_image.png"
+alt="Future Finders Chama Logo"
+style="
+width:90px;
+height:90px;
+border-radius:50%;
+background:white;
+padding:5px;
+margin-bottom:12px;
+box-shadow:0 3px 10px rgba(0,0,0,.25);">
+
+<h2 style="
+margin:0;
+font-size:26px;
+font-weight:bold;">
+
+Future Finders Welfare Support
+
+</h2>
+
+<p style="
+margin-top:8px;
+font-size:14px;">
+
+Complete all the required steps to submit your Welfare Support Application.
+
+</p>
+
+<!-- STEP INDICATOR -->
+
+<div style="margin-top:20px;">
+
+<div style="
+display:flex;
+justify-content:center;
+align-items:center;
+gap:15px;">
+
+<div class="stepCircle active" id="wCircle1">1</div>
+
+<div class="stepCircle" id="wCircle2">2</div>
+
+<div class="stepCircle" id="wCircle3">3</div>
+
+<div class="stepCircle" id="wCircle4">4</div>
+
+<div class="stepCircle" id="wCircle5">5</div>
+
+<div class="stepCircle" id="wCircle6">6</div>
+
+</div>
+
+<p id="welfareStepText"
+style="
+margin-top:12px;
+font-weight:bold;
+color:white;">
+
+Step 1 of 6
+
+</p>
+
+</div>
+
+</div>
+
+<!-- ================= FORM ================= -->
+
+<div style="padding:25px;">
+
+<form id="welfareForm">
+
+<!-- STEP 1 -->
+
+<div class="welfareStep" id="welfareStep1">
+
+<h3 style="color:#1565c0;">
+👤 Member Information
+</h3>
+<div class="stepError" id="welfareError1">
+⚠ Please fill in all the required fields before proceeding.
+</div>
+<p style="
+background:#e3f2fd;
+padding:12px;
+border-left:4px solid #1565c0;
+border-radius:8px;
+line-height:1.6;
+margin-bottom:20px;">
+
+Please enter your personal details exactly as registered in Future Finders Chama.
+
+</p>
+
+<label>Full Name</label>
+
+<input
+type="text"
+id="wfName"
+required
+placeholder="Enter full name"
+style="
+width:100%;
+padding:12px;
+margin-bottom:15px;">
+
+<label>Membership Number</label>
+
+<input
+type="text"
+id="wfMemberNo"
+required
+placeholder="FFC001"
+style="
+width:100%;
+padding:12px;
+margin-bottom:15px;">
+
+<label>National ID Number</label>
+
+<input
+type="text"
+id="wfId"
+required
+maxlength="9"
+placeholder="Enter ID Number"
+style="
+width:100%;
+padding:12px;
+margin-bottom:15px;">
+
+<label>Phone Number</label>
+
+<input
+type="tel"
+id="wfPhone"
+required
+placeholder="07XXXXXXXX"
+style="
+width:100%;
+padding:12px;
+margin-bottom:15px;">
+
+<label>County</label>
+
+<input
+type="text"
+id="wfCounty"
+required
+placeholder="Enter County"
+style="
+width:100%;
+padding:12px;
+margin-bottom:25px;">
+
+
+<label>Sub-County</label>
+
+<input
+type="text"
+id="wfSubCounty"
+required
+placeholder="Enter Sub-County"
+style="
+width:100%;
+padding:12px;
+margin-bottom:15px;">
+
+<label>Ward</label>
+
+<input
+type="text"
+id="wfWard"
+required
+placeholder="Enter Ward"
+style="
+width:100%;
+padding:12px;
+margin-bottom:25px;">
+<div style="text-align:right;">
+<button
+type="button"
+onclick="if(validateCurrentStep(1)) nextWelfareStep(2)"
+style="
+background:#1565c0;
+color:white;
+padding:12px 28px;
+border:none;
+border-radius:8px;
+font-weight:bold;
+cursor:pointer;">
+
+Next →
+
+</button>
+
+</div>
+
+</div>
+<!-- ================= STEP 2 ================= -->
+
+<div class="welfareStep" id="welfareStep2" style="display:none;">
+
+<h3 style="color:#1565c0;">
+💞 Select Welfare Support
+</h3>
+<div class="stepError" id="welfareError2">
+⚠ Please complete this step before proceeding.
+</div>
+<p style="
+background:#e8f5e9;
+padding:15px;
+border-left:5px solid #2e7d32;
+border-radius:8px;
+margin-bottom:20px;
+line-height:1.8;">
+
+<b>Instructions</b><br>
+
+• Select <b>one</b> welfare support category below.<br>
+
+• Ensure you meet the eligibility requirements before proceeding.<br>
+
+• Supporting documents will be submitted via WhatsApp after completing the application.
+
+</p>
+
+<div style="
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+gap:18px;
+margin-bottom:25px;">
+
+<!-- NEWBORN -->
+
+<label style="
+cursor:pointer;
+border:2px solid #ddd;
+border-radius:12px;
+padding:20px;
+text-align:center;
+transition:.3s;">
+
+<input
+type="radio"
+name="welfareType"
+value="Newborn Baby"
+required
+style="margin-bottom:12px;">
+
+<div style="font-size:50px;">👶</div>
+
+<h4 style="margin:10px 0;color:#1565c0;">
+Newborn Baby
+</h4>
+
+<small>Support for the birth of a child.</small>
+
+<div style="
+margin-top:12px;
+font-size:18px;
+font-weight:bold;
+color:#2e7d32;">
+
+KSh 8,000
+
+</div>
+
+</label>
+
+<!-- WEDDING -->
+
+<label style="
+cursor:pointer;
+border:2px solid #ddd;
+border-radius:12px;
+padding:20px;
+text-align:center;
+transition:.3s;">
+
+<input
+type="radio"
+name="welfareType"
+value="Wedding"
+style="margin-bottom:12px;">
+
+<div style="font-size:50px;">💍</div>
+
+<h4 style="margin:10px 0;color:#1565c0;">
+Wedding
+</h4>
+
+<small>Support for a member's wedding.</small>
+
+<div style="
+margin-top:12px;
+font-size:18px;
+font-weight:bold;
+color:#2e7d32;">
+
+KSh 8,000
+
+</div>
+
+</label>
+
+<!-- BURIAL -->
+
+<label style="
+cursor:pointer;
+border:2px solid #ddd;
+border-radius:12px;
+padding:20px;
+text-align:center;
+transition:.3s;">
+
+<input
+type="radio"
+name="welfareType"
+value="Burial"
+style="margin-bottom:12px;">
+
+<div style="font-size:50px;">🕊️</div>
+
+<h4 style="margin:10px 0;color:#1565c0;">
+Burial
+</h4>
+
+<small>Support during bereavement.</small>
+
+<div style="
+margin-top:12px;
+font-size:18px;
+font-weight:bold;
+color:#2e7d32;">
+
+KSh 8,000
+
+</div>
+
+</label>
+
+</div>
+
+<div style="
+background:#fff3cd;
+border-left:5px solid #ff9800;
+padding:15px;
+border-radius:8px;
+margin-bottom:20px;
+line-height:1.8;">
+
+<b>📌 Eligibility Reminder</b>
+
+<ul style="margin-top:10px;">
+
+<li>You must be an <b>active Future Finders Chama member</b>.</li>
+
+<li>You must have minimum savings of <b>KSh 1,500</b>.</li>
+
+<li>Your application will be verified before approval.</li>
+
+<li>False information or forged documents may lead to rejection and disciplinary action.</li>
+
+</ul>
+
+</div>
+
+<label style="
+display:flex;
+align-items:flex-start;
+gap:10px;
+margin-bottom:25px;">
+
+<input
+type="checkbox"
+id="eligibilityAgree"
+required
+style="margin-top:5px;">
+
+<span style="line-height:1.7;">
+
+I confirm that I have read and understood the Future Finders Welfare Support Rules, I meet the eligibility requirements, and I understand that this application is subject to verification and approval.
+
+</span>
+
+</label>
+
+<div style="
+display:flex;
+justify-content:space-between;">
+
+<button
+type="button"
+onclick="previousWelfareStep(1)"
+style="
+background:#757575;
+color:white;
+padding:12px 25px;
+border:none;
+border-radius:8px;
+cursor:pointer;">
+
+← Previous
+
+</button>
+
+<button
+type="button"
+onclick="if(validateCurrentStep(2)) nextWelfareStep(3)"
+style="
+background:#1565c0;
+color:white;
+padding:12px 25px;
+border:none;
+border-radius:8px;
+font-weight:bold;
+cursor:pointer;">
+
+Next →
+
+</button>
+
+</div>
+
+</div>
+<!-- ================= STEP 3 ================= -->
+
+<div class="welfareStep" id="welfareStep3" style="display:none;">
+
+<h3 style="color:#1565c0;">
+📋 Welfare Event Details
+</h3>
+<div class="stepError" id="welfareError3">
+⚠ Please complete all required event details.
+</div>
+<p style="
+background:#fff8e1;
+padding:15px;
+border-left:5px solid #f9a825;
+border-radius:8px;
+margin-bottom:20px;
+line-height:1.8;">
+
+<b>Event Details</b><br>
+
+Please provide accurate information about the welfare event. All information must match the supporting documents that you will send to the Future Finders Chama WhatsApp number for verification.
+
+</p>
+
+<!-- ================= NEWBORN ================= -->
+
+<div id="newbornFields" style="display:none;">
+
+<h4 style="color:#2e7d32;">👶 Newborn Baby Details</h4>
+
+<label>Baby's Name (Optional)</label>
+
+<input
+type="text"
+id="babyName"
+placeholder="Enter baby's name"
+style="width:100%;padding:12px;margin-bottom:15px;">
+
+<label>Date of Birth</label>
+
+<input
+type="date"
+id="babyDob"
+style="width:100%;padding:12px;margin-bottom:15px;">
+
+<label>Hospital / Health Facility</label>
+
+<input
+type="text"
+id="babyHospital"
+placeholder="Hospital where baby was born"
+style="width:100%;padding:12px;margin-bottom:15px;">
+
+<label>Relationship to Child</label>
+
+<select
+id="babyRelationship"
+style="width:100%;padding:12px;margin-bottom:15px;">
+
+<option value="">Select</option>
+<option>Father</option>
+<option>Mother</option>
+
+</select>
+
+<label>Gender of Baby</label>
+
+<select
+id="babyGender"
+style="width:100%;padding:12px;margin-bottom:15px;">
+
+<option value="">Select Gender</option>
+<option>Male</option>
+<option>Female</option>
+
+</select>
+
+<label>County of Birth</label>
+
+<input
+type="text"
+id="babyCounty"
+placeholder="Enter County"
+style="width:100%;padding:12px;margin-bottom:15px;">
+
+<label>Additional Information (Optional)</label>
+
+<textarea
+id="babyRemarks"
+rows="4"
+placeholder="Any additional information..."
+style="width:100%;padding:12px;margin-bottom:25px;"></textarea>
+
+</div>
+
+<!-- ================= WEDDING ================= -->
+
+<div id="weddingFields" style="display:none;">
+
+<h4 style="color:#2e7d32;">💍 Wedding Details</h4>
+
+<label>Wedding Date</label>
+
+<input
+type="date"
+id="weddingDate"
+style="width:100%;padding:12px;margin-bottom:15px;">
+
+<label>Wedding Venue</label>
+
+<input
+type="text"
+id="weddingVenue"
+placeholder="Wedding Venue"
+style="width:100%;padding:12px;margin-bottom:15px;">
+
+<label>Spouse Full Name</label>
+
+<input
+type="text"
+id="spouseName"
+placeholder="Enter spouse's full name"
+style="width:100%;padding:12px;margin-bottom:15px;">
+
+<label>Type of Wedding</label>
+
+<select
+id="weddingType"
+style="width:100%;padding:12px;margin-bottom:15px;">
+
+<option value="">Select</option>
+<option>Church Wedding</option>
+<option>Civil Wedding</option>
+<option>Traditional Wedding</option>
+
+</select>
+
+<label>County</label>
+
+<input
+type="text"
+id="weddingCounty"
+placeholder="Wedding County"
+style="width:100%;padding:12px;margin-bottom:15px;">
+
+<label>Additional Information (Optional)</label>
+
+<textarea
+id="weddingRemarks"
+rows="4"
+placeholder="Any additional information..."
+style="width:100%;padding:12px;margin-bottom:25px;"></textarea>
+
+</div>
+
+<!-- ================= BURIAL ================= -->
+
+<div id="burialFields" style="display:none;">
+
+<h4 style="color:#2e7d32;">🕊️ Burial Details</h4>
+
+<label>Name of Deceased</label>
+
+<input
+type="text"
+id="deceasedName"
+placeholder="Full Name"
+style="width:100%;padding:12px;margin-bottom:15px;">
+
+<label>Relationship to Deceased</label>
+
+<select
+id="relationshipDeceased"
+style="width:100%;padding:12px;margin-bottom:15px;">
+
+<option value="">Select Relationship</option>
+
+<option>Parent</option>
+<option>Guardian</option>
+<option>Son</option>
+<option>Daughter</option>
+<option>Brother</option>
+<option>Sister</option>
+
+</select>
+
+<label>Date of Death</label>
+
+<input
+type="date"
+id="deathDate"
+style="width:100%;padding:12px;margin-bottom:15px;">
+
+<label>Burial Date</label>
+
+<input
+type="date"
+id="burialDate"
+style="width:100%;padding:12px;margin-bottom:15px;">
+
+<label>Burial Location</label>
+
+<input
+type="text"
+id="burialLocation"
+placeholder="Village / Town"
+style="width:100%;padding:12px;margin-bottom:15px;">
+
+<label>County of Burial</label>
+
+<input
+type="text"
+id="burialCounty"
+placeholder="Enter County"
+style="width:100%;padding:12px;margin-bottom:15px;">
+
+<label>Was the deceased living with you?</label>
+
+<select
+id="livingTogether"
+style="width:100%;padding:12px;margin-bottom:15px;">
+
+<option value="">Select</option>
+<option>Yes</option>
+<option>No</option>
+
+</select>
+
+<label>Additional Information (Optional)</label>
+
+<textarea
+id="burialRemarks"
+rows="4"
+placeholder="Any additional information..."
+style="width:100%;padding:12px;margin-bottom:25px;"></textarea>
+
+</div>
+
+<div style="display:flex;justify-content:space-between;">
+
+<button
+type="button"
+onclick="previousWelfareStep(2)"
+style="
+background:#757575;
+color:white;
+padding:12px 25px;
+border:none;
+border-radius:8px;
+cursor:pointer;">
+
+← Previous
+
+</button>
+
+<button
+type="button"
+onclick="if(validateCurrentStep(3)) nextWelfareStep(4)"
+style="
+background:#1565c0;
+color:white;
+padding:12px 25px;
+border:none;
+border-radius:8px;
+font-weight:bold;
+cursor:pointer;">
+
+Next →
+
+</button>
+
+</div>
+
+</div>
+<!-- ================= STEP 4 ================= -->
+
+<div class="welfareStep" id="welfareStep4" style="display:none;">
+
+<h3 style="color:#1565c0;">
+📎 Supporting Documents & Verification
+</h3>
+<div class="stepError" id="welfareError4">
+⚠ Please confirm the document submission requirements.
+</div>
+<div style="
+background:#e8f5e9;
+border-left:5px solid #2e7d32;
+padding:18px;
+border-radius:8px;
+margin-bottom:20px;">
+
+<h4 style="margin-top:0;color:#2e7d32;">
+📄 Document Submission
+</h4>
+
+<p style="line-height:1.8;">
+
+Thank you for completing your Welfare Support Application.
+
+<br><br>
+
+To enable verification of your application, kindly send the required supporting documents together with your <b>Application Reference Number</b> via the official Future Finders Chama WhatsApp number below.
+
+</p>
+
+<div style="
+text-align:center;
+font-size:30px;
+font-weight:bold;
+color:#2e7d32;
+margin:20px 0;">
+
+📱 0713 953 004
+
+</div>
+
+</div>
+
+<!-- REQUIRED DOCUMENTS -->
+
+<div style="
+background:#ffffff;
+border:1px solid #ddd;
+border-radius:8px;
+padding:18px;
+margin-bottom:20px;">
+
+<h4 style="margin-top:0;color:#1565c0;">
+📑 Required Supporting Documents
+</h4>
+
+<ul style="line-height:2;">
+
+<li>🪪 Clear copy of your National ID.</li>
+
+<li>👶 Birth Notification / Birth Certificate / Hospital Discharge Summary (Newborn Support).</li>
+
+<li>💍 Wedding Invitation Card / Marriage Certificate / Church Letter / Registrar's Certificate (Wedding Support).</li>
+
+<li>🕊️ Burial Permit / Death Notification / Funeral Programme / Obituary (Burial Support).</li>
+
+</ul>
+
+</div>
+
+<!-- VERIFICATION PROCESS -->
+
+<div style="
+background:#e3f2fd;
+border-left:5px solid #1565c0;
+padding:18px;
+border-radius:8px;
+margin-bottom:20px;">
+
+<h4 style="margin-top:0;color:#1565c0;">
+⏳ Verification Process
+</h4>
+
+<ol style="line-height:1.9;">
+
+<li>Complete and submit this application.</li>
+
+<li>Send all required documents via WhatsApp.</li>
+
+<li>The Chairlady and Admin will verify your application and supporting documents.</li>
+
+<li>Your application will be presented during a members' meeting for approval.</li>
+
+<li>You will be notified of the final decision after verification and approval.</li>
+
+</ol>
+
+</div>
+
+<!-- WHATSAPP INSTRUCTIONS -->
+
+<div style="
+background:#f3e5f5;
+border-left:5px solid #8e24aa;
+padding:18px;
+border-radius:8px;
+margin-bottom:20px;">
+
+<h4 style="margin-top:0;color:#8e24aa;">
+📱 WhatsApp Submission Instructions
+</h4>
+
+<p style="line-height:1.8;">
+
+When sending your documents, kindly include the following information:
+
+</p>
+
+<ul style="line-height:2;">
+
+<li>👤 Full Name</li>
+
+<li>🆔 Membership Number</li>
+
+<li>📄 Application Reference Number</li>
+
+<li>💞 Welfare Support Category</li>
+
+</ul>
+
+</div>
+
+<!-- PRIVACY -->
+
+<div style="
+background:#fafafa;
+border-left:5px solid #616161;
+padding:18px;
+border-radius:8px;
+margin-bottom:20px;">
+
+<h4 style="margin-top:0;color:#424242;">
+🔒 Privacy & Confidentiality
+</h4>
+
+<p style="line-height:1.8;">
+
+All personal information and supporting documents submitted shall be treated as confidential and used solely for verification and processing of your Welfare Support Application in accordance with the Future Finders Chama Constitution and Rules.
+
+</p>
+
+</div>
+
+<!-- IMPORTANT NOTICE -->
+
+<div style="
+background:#fff3cd;
+border-left:5px solid #ffc107;
+padding:18px;
+border-radius:8px;
+margin-bottom:20px;">
+
+<h4 style="margin-top:0;color:#ff6f00;">
+⚠ Important Notice
+</h4>
+
+<ul style="line-height:2;">
+
+<li>Your application will only be processed after the required documents have been received.</li>
+
+<li>All submitted documents must be genuine and clearly readable.</li>
+
+<li>False information or forged documents may result in rejection of the application and disciplinary action.</li>
+
+</ul>
+
+</div>
+
+<!-- MEMBER CONFIRMATION -->
+
+<label style="
+display:flex;
+align-items:flex-start;
+gap:12px;
+margin-bottom:25px;">
+
+<input
+type="checkbox"
+id="documentsAgreement"
+required
+style="margin-top:5px;">
+
+<span style="line-height:1.8;">
+
+I confirm that I will send genuine and clear supporting documents through the official Future Finders Chama WhatsApp number. I understand that my application will only be considered after successful verification of the submitted documents.
+
+</span>
+
+</label>
+
+<div style="display:flex;justify-content:space-between;">
+
+<button
+type="button"
+onclick="previousWelfareStep(3)"
+style="
+background:#757575;
+color:white;
+padding:12px 25px;
+border:none;
+border-radius:8px;
+cursor:pointer;">
+
+← Previous
+
+</button>
+
+<button
+type="button"
+onclick="if(validateCurrentStep(4)) nextWelfareStep(5)"
+style="
+background:#1565c0;
+color:white;
+padding:12px 25px;
+border:none;
+border-radius:8px;
+font-weight:bold;
+cursor:pointer;">
+
+Next →
+
+</button>
+
+</div>
+
+</div>
+
+<!-- ================= STEP 5 ================= -->
+
+<div class="welfareStep" id="welfareStep5" style="display:none;">
+
+<h3 style="color:#1565c0;text-align:center;">
+📝 Member Declaration & Agreement
+</h3>
+<div class="stepError" id="welfareError5">
+⚠ Please complete the declaration before proceeding.
+</div>
+<div style="
+background:#e8f5e9;
+border-left:6px solid #2e7d32;
+padding:18px;
+border-radius:8px;
+margin-bottom:20px;">
+
+<h4 style="margin-top:0;color:#2e7d32;">
+📖 Declaration
+</h4>
+
+<p style="line-height:1.8;">
+
+Please read the following declaration carefully before proceeding. By completing this section, you confirm that all information provided in your Welfare Support Application is true and that you understand the Future Finders Chama Welfare Rules.
+
+</p>
+
+</div>
+
+<!-- AGREEMENT -->
+
+<div style="
+background:#ffffff;
+border:1px solid #ddd;
+border-radius:10px;
+padding:20px;
+margin-bottom:20px;">
+
+<h4 style="margin-top:0;color:#1565c0;">
+📋 Welfare Support Agreement
+</h4>
+
+<ol style="padding-left:22px;line-height:2;">
+
+<li>I confirm that I am an active registered member of Future Finders Chama.</li>
+
+<li>I confirm that I meet the minimum welfare eligibility requirements.</li>
+
+<li>I understand that this application will only be considered after successful verification of my information and supporting documents.</li>
+
+<li>I agree to submit all required supporting documents through the official Future Finders Chama WhatsApp number.</li>
+
+<li>I understand that submission of this application does not automatically guarantee approval of welfare support.</li>
+
+<li>I understand that my application shall first be verified by the Chairlady, Admin and Welfare Committee before being presented to members where applicable.</li>
+
+<li>I understand that all welfare applications are subject to the Future Finders Chama Constitution and Rules.</li>
+
+<li>I agree to cooperate with any verification process required by the Chama.</li>
+
+</ol>
+
+</div>
+
+<!-- IMPORTANT NOTICE -->
+
+<div style="
+background:#fff3cd;
+border-left:5px solid #ff9800;
+padding:18px;
+border-radius:8px;
+margin-bottom:20px;">
+
+<h4 style="margin-top:0;color:#ff6f00;">
+📌 Important Notice
+</h4>
+
+<ul style="line-height:2;">
+
+<li>The Welfare Committee may contact you for additional clarification where necessary.</li>
+
+<li>The Chama reserves the right to verify all submitted information before approval.</li>
+
+<li>Incomplete applications may delay processing.</li>
+
+<li>Approval shall be guided by the Constitution, Welfare Rules and members' resolutions where applicable.</li>
+
+</ul>
+
+</div>
+
+<!-- FRAUD -->
+
+<div style="
+background:#fdecea;
+border-left:5px solid #d32f2f;
+padding:18px;
+border-radius:8px;
+margin-bottom:20px;">
+
+<h4 style="margin-top:0;color:#c62828;">
+⚖️ Fraud & Misrepresentation
+</h4>
+
+<p style="line-height:1.8;">
+
+I understand that submitting false information, forged documents or attempting to obtain Welfare Support fraudulently may lead to immediate rejection of my application and disciplinary action in accordance with the Future Finders Chama Constitution.
+
+</p>
+
+</div>
+
+<!-- VERIFICATION CONSENT -->
+
+<div style="
+background:#e3f2fd;
+border-left:5px solid #1565c0;
+padding:18px;
+border-radius:8px;
+margin-bottom:20px;">
+
+<h4 style="margin-top:0;color:#1565c0;">
+🔐 Consent to Verification
+</h4>
+
+<p style="line-height:1.8;">
+
+I authorize the Chairlady, Admin and Welfare Committee of Future Finders Chama to verify the information and supporting documents submitted for the purpose of processing this application.
+
+</p>
+
+</div>
+
+<!-- MAIN DECLARATION -->
+
+<div style="
+background:#f5f5f5;
+padding:18px;
+border-radius:10px;
+border:1px solid #ddd;
+margin-bottom:20px;">
+
+<label style="
+display:flex;
+align-items:flex-start;
+gap:12px;">
+
+<input
+type="checkbox"
+id="welfareDeclaration"
+required
+style="margin-top:5px;">
+
+<span style="line-height:1.8;">
+
+I declare that all the information provided in this application is true, complete and accurate to the best of my knowledge. I understand that any false declaration may result in rejection of my application and disciplinary action.
+
+</span>
+
+</label>
+
+</div>
+
+<!-- COMMUNICATION CONSENT -->
+
+<div style="
+background:#f5f5f5;
+padding:18px;
+border-radius:10px;
+border:1px solid #ddd;
+margin-bottom:25px;">
+
+<label style="
+display:flex;
+align-items:flex-start;
+gap:12px;">
+
+<input
+type="checkbox"
+id="communicationConsent"
+required
+style="margin-top:5px;">
+
+<span style="line-height:1.8;">
+
+I consent to Future Finders Chama contacting me through phone call, SMS or WhatsApp regarding this Welfare Support Application.
+
+</span>
+
+</label>
+
+</div>
+
+<!-- DIGITAL SIGNATURE -->
+
+<label><b>Applicant Full Name (Digital Signature)</b></label>
+
+<input
+type="text"
+id="welfareSignature"
+required
+placeholder="Type your full legal name exactly as it appears on your National ID"
+style="
+width:100%;
+padding:12px;
+margin-top:8px;
+margin-bottom:18px;">
+
+<label><b>Place of Signing</b></label>
+
+<input
+type="text"
+id="signingPlace"
+required
+placeholder="Town / County"
+style="
+width:100%;
+padding:12px;
+margin-top:8px;
+margin-bottom:18px;">
+
+<label><b>Application Date</b></label>
+
+<input
+type="text"
+readonly
+value="${new Date().toLocaleDateString('en-KE')}"
+style="
+width:100%;
+padding:12px;
+background:#f5f5f5;
+margin-top:8px;
+margin-bottom:25px;">
+
+<div style="
+display:flex;
+justify-content:space-between;">
+
+<button
+type="button"
+onclick="previousWelfareStep(4)"
+style="
+background:#757575;
+color:white;
+padding:12px 25px;
+border:none;
+border-radius:8px;
+cursor:pointer;">
+
+← Previous
+
+</button>
+
+<button
+type="button"
+onclick="if(validateCurrentStep(5)) nextWelfareStep(6)"
+style="
+background:#1565c0;
+color:white;
+padding:12px 25px;
+border:none;
+border-radius:8px;
+font-weight:bold;
+cursor:pointer;">
+
+Next →
+
+</button>
+
+</div>
+
+</div>
+<!-- ================= STEP 6 ================= -->
+
+<div class="welfareStep" id="welfareStep6" style="display:none;">
+
+<h3 style="color:#1565c0;text-align:center;">
+✅ Review & Submit Application
+</h3>
+
+<div class="stepError" id="welfareError6">
+⚠ Please review your application before submitting.
+</div>
+
+<div style="
+background:#e8f5e9;
+padding:18px;
+border-left:6px solid #2e7d32;
+border-radius:8px;
+margin-bottom:20px;">
+
+<h4 style="margin-top:0;color:#2e7d32;">
+📋 Application Summary
+</h4>
+
+<p style="line-height:1.8;">
+
+Please review all the information below carefully before submitting your Welfare Support Application. Ensure every detail is correct, as changes cannot be made after submission without contacting the Admin.
+
+</p>
+
+</div>
+
+<!-- APPLICATION SUMMARY -->
+
+<div style="
+background:#fafafa;
+border:1px solid #ddd;
+border-radius:10px;
+padding:20px;
+margin-bottom:20px;">
+
+<table style="width:100%;line-height:2;">
+
+<tr>
+<td><b>Applicant Name</b></td>
+<td id="reviewName">-</td>
+</tr>
+
+<tr>
+<td><b>Membership Number</b></td>
+<td id="reviewMemberNo">-</td>
+</tr>
+
+<tr>
+<td><b>National ID</b></td>
+<td id="reviewId">-</td>
+</tr>
+
+<tr>
+<td><b>Phone Number</b></td>
+<td id="reviewPhone">-</td>
+</tr>
+
+<tr>
+<td><b>County</b></td>
+<td id="reviewCounty">-</td>
+</tr>
+
+<tr>
+<td><b>Sub-County</b></td>
+<td id="reviewSubCounty">-</td>
+</tr>
+
+<tr>
+<td><b>Ward</b></td>
+<td id="reviewWard">-</td>
+</tr>
+
+<tr>
+<td><b>Welfare Support</b></td>
+<td id="reviewType">-</td>
+</tr>
+
+<tr>
+<td><b>Application Date</b></td>
+<td id="reviewDate">-</td>
+</tr>
+
+<tr>
+<td><b>Status</b></td>
+<td style="color:#f57c00;font-weight:bold;">
+Pending Verification
+</td>
+</tr>
+
+</table>
+
+</div>
+
+<!-- WELFARE EVENT SUMMARY -->
+
+<div style="
+background:#ffffff;
+border:1px solid #ddd;
+border-radius:10px;
+padding:20px;
+margin-bottom:20px;">
+
+<h4 style="color:#1565c0;margin-top:0;">
+📋 Welfare Event Summary
+</h4>
+
+<p style="
+color:#555;
+line-height:1.7;
+margin-bottom:15px;">
+
+Below are the details of the welfare event you are applying for. Kindly confirm that all the information is correct before submitting your application.
+
+</p>
+
+<div id="reviewEventDetails"
+style="
+line-height:2;
+background:#f8f9fa;
+padding:15px;
+border-radius:8px;
+border-left:4px solid #1565c0;">
+
+-
+
+</div>
+
+</div>
+
+<!-- FINAL CHECKLIST -->
+
+<div style="
+background:#e3f2fd;
+border-left:5px solid #1565c0;
+padding:18px;
+border-radius:8px;
+margin-bottom:20px;">
+
+<h4 style="margin-top:0;color:#1565c0;">
+✔ Final Checklist
+</h4>
+
+<ul style="line-height:2;">
+
+<li>☑ My personal information is correct.</li>
+
+<li>☑ My welfare event details are accurate.</li>
+
+<li>☑ I have read and accepted the declaration.</li>
+
+<li>☑ I will send all supporting documents through WhatsApp.</li>
+
+<li>☑ I understand that approval is subject to verification and the Future Finders Chama Constitution.</li>
+
+</ul>
+
+</div>
+
+<!-- FINAL NOTICE -->
+
+<div style="
+background:#fce4ec;
+border-left:5px solid #c2185b;
+padding:18px;
+border-radius:8px;
+margin-bottom:20px;">
+
+<h4 style="margin-top:0;color:#c2185b;">
+📢 Final Notice
+</h4>
+
+<p style="line-height:1.8;">
+
+After clicking <b>Submit & Download PDF</b>, your Welfare Support Application will be:
+
+</p>
+
+<ul style="line-height:2;">
+
+<li>✅ Saved into the Future Finders Welfare System.</li>
+
+<li>📄 Converted into a professional PDF.</li>
+
+<li>⬇ Automatically downloaded to your device.</li>
+
+<li>📱 Ready for sharing with the official Chama WhatsApp number together with the required supporting documents.</li>
+
+</ul>
+
+</div>
+
+<!-- REMINDER -->
+
+<div style="
+background:#fff3cd;
+border-left:5px solid #ff9800;
+padding:18px;
+border-radius:8px;
+margin-bottom:25px;">
+
+<h4 style="margin-top:0;color:#ef6c00;">
+📱 Reminder
+</h4>
+
+<ul style="line-height:2;">
+
+<li>📱 Send the downloaded PDF together with your National ID and supporting documents.</li>
+
+<li>📄 Include your Application Reference Number when sending the documents.</li>
+
+<li>📞 Official WhatsApp Number: <b>0713 953 004</b>.</li>
+
+<li>⏳ Your application will only be processed after successful verification.</li>
+
+<li>👥 The Chairlady, Admin and Welfare Committee shall verify your application before approval.</li>
+
+</ul>
+
+</div>
+
+<div style="
+display:flex;
+justify-content:space-between;
+gap:12px;">
+
+<button
+type="button"
+onclick="previousWelfareStep(5)"
+style="
+background:#757575;
+color:white;
+padding:12px 25px;
+border:none;
+border-radius:8px;
+font-weight:bold;
+cursor:pointer;">
+
+← Previous
+
+</button>
+
+<button
+type="button"
+onclick="closeWelfareForm()"
+style="
+background:#e53935;
+color:white;
+padding:12px 25px;
+border:none;
+border-radius:8px;
+font-weight:bold;
+cursor:pointer;">
+
+❌ Cancel
+
+</button>
+
+<button
+type="button"
+onclick="if(validateCurrentStep(6)) submitWelfareApplication()"
+style="
+background:#2e7d32;
+color:white;
+padding:12px 30px;
+border:none;
+border-radius:8px;
+font-size:16px;
+font-weight:bold;
+box-shadow:0 4px 12px rgba(46,125,50,.3);
+cursor:pointer;">
+
+📥 Submit & Download PDF
+
+</button>
+
+</div>
+
+</div>
+
+</form>
+
+</div>
+
+</div>
+
+`;
+
+}
+
+
+// ================= Welfare Steps =================
+
+let currentWelfareStep = 1;
+
+function nextWelfareStep(step){
+
+// Hide current step
+document.getElementById("welfareStep"+currentWelfareStep).style.display="none";
+
+// Show next step
+document.getElementById("welfareStep"+step).style.display="block";
+
+// Update current step
+currentWelfareStep = step;
+
+// Load dynamic fields when opening Step 3
+  loadWelfareFields();
+    if(step===6){
+    loadWelfareReview();
+}
+
+// Update progress
+updateWelfareProgress();
+
+}
+function previousWelfareStep(step){
+
+document.getElementById("welfareStep"+currentWelfareStep).style.display="none";
+
+document.getElementById("welfareStep"+step).style.display="block";
+
+currentWelfareStep = step;
+
+updateWelfareProgress();
+
+}
+function updateWelfareProgress(){
+
+document.getElementById("welfareStepText").innerHTML =
+"Step "+currentWelfareStep+" of 6";
+
+for(let i=1;i<=6;i++){
+
+document.getElementById("wCircle"+i).classList.remove("active");
+
+if(i<=currentWelfareStep){
+
+document.getElementById("wCircle"+i).classList.add("active");
+
+}
+
+}
+
+}
+function loadWelfareFields(){
+
+document.getElementById("newbornFields").style.display="none";
+document.getElementById("weddingFields").style.display="none";
+document.getElementById("burialFields").style.display="none";
+
+const selected=document.querySelector('input[name="welfareType"]:checked');
+
+if(!selected) return;
+
+if(selected.value==="Newborn Baby"){
+
+document.getElementById("newbornFields").style.display="block";
+
+}
+
+if(selected.value==="Wedding"){
+
+document.getElementById("weddingFields").style.display="block";
+
+}
+
+if(selected.value==="Burial"){
+
+document.getElementById("burialFields").style.display="block";
+
+}
+
+}
+
+function loadWelfareReview(){
+
+// ================= MEMBER DETAILS =================
+
+document.getElementById("reviewName").innerHTML =
+document.getElementById("wfName").value || "-";
+
+document.getElementById("reviewMemberNo").innerHTML =
+document.getElementById("wfMemberNo").value || "-";
+
+document.getElementById("reviewId").innerHTML =
+document.getElementById("wfId").value || "-";
+
+document.getElementById("reviewPhone").innerHTML =
+document.getElementById("wfPhone").value || "-";
+
+document.getElementById("reviewCounty").innerHTML =
+document.getElementById("wfCounty").value || "-";
+
+document.getElementById("reviewSubCounty").innerHTML =
+document.getElementById("wfSubCounty").value || "-";
+
+document.getElementById("reviewWard").innerHTML =
+document.getElementById("wfWard").value || "-";
+
+// ================= WELFARE TYPE =================
+
+const type = document.querySelector('input[name="welfareType"]:checked');
+
+if(type){
+
+document.getElementById("reviewType").innerHTML = type.value;
+
+}else{
+
+document.getElementById("reviewType").innerHTML = "-";
+
+}
+
+// ================= APPLICATION DATE =================
+
+document.getElementById("reviewDate").innerHTML =
+new Date().toLocaleDateString("en-KE");
+
+// ================= EVENT SUMMARY =================
+
+let eventSummary = "";
+
+if(type){
+
+switch(type.value){
+
+case "Newborn Baby":
+
+eventSummary = `
+<b>Baby's Name:</b> ${document.getElementById("babyName").value || "-"}<br>
+<b>Date of Birth:</b> ${document.getElementById("babyDob").value || "-"}<br>
+<b>Hospital:</b> ${document.getElementById("babyHospital").value || "-"}<br>
+<b>Relationship:</b> ${document.getElementById("babyRelationship").value || "-"}<br>
+<b>Gender:</b> ${document.getElementById("babyGender").value || "-"}<br>
+<b>County of Birth:</b> ${document.getElementById("babyCounty").value || "-"}
+`;
+break;
+
+case "Wedding":
+
+eventSummary = `
+<b>Wedding Date:</b> ${document.getElementById("weddingDate").value || "-"}<br>
+<b>Venue:</b> ${document.getElementById("weddingVenue").value || "-"}<br>
+<b>Spouse:</b> ${document.getElementById("spouseName").value || "-"}<br>
+<b>Wedding Type:</b> ${document.getElementById("weddingType").value || "-"}<br>
+<b>County:</b> ${document.getElementById("weddingCounty").value || "-"}
+`;
+break;
+
+case "Burial":
+
+eventSummary = `
+<b>Deceased:</b> ${document.getElementById("deceasedName").value || "-"}<br>
+<b>Relationship:</b> ${document.getElementById("relationshipDeceased").value || "-"}<br>
+<b>Date of Death:</b> ${document.getElementById("deathDate").value || "-"}<br>
+<b>Burial Date:</b> ${document.getElementById("burialDate").value || "-"}<br>
+<b>Burial Location:</b> ${document.getElementById("burialLocation").value || "-"}<br>
+<b>County:</b> ${document.getElementById("burialCounty").value || "-"}
+`;
+break;
+
+}
+
+}
+
+const eventBox = document.getElementById("reviewEventDetails");
+
+if(eventBox){
+
+eventBox.innerHTML = eventSummary;
+
+}
+
+}
+// ================= Submit Welfare Application =================
+
+function submitWelfareApplication(){
+
+// Generate Reference Number
+
+const today = new Date();
+
+const y = today.getFullYear();
+
+const m = String(today.getMonth()+1).padStart(2,'0');
+
+const d = String(today.getDate()).padStart(2,'0');
+
+const reference =
+"FFC-WF-"+y+m+d+"-"+Math.floor(Math.random()*900+100);
+
+// Collect data
+
+const application={
+
+reference:reference,
+
+name:document.getElementById("wfName").value,
+
+memberNo:document.getElementById("wfMemberNo").value,
+
+id:document.getElementById("wfId").value,
+
+phone:document.getElementById("wfPhone").value,
+
+county:document.getElementById("wfCounty").value,
+
+type:document.querySelector('input[name="welfareType"]:checked')?.value || "",
+
+status:"Pending Verification",
+
+date:new Date().toLocaleDateString("en-KE")
+
+};
+
+// Save Application
+
+let welfareApplications =
+JSON.parse(localStorage.getItem("welfareApplications")) || [];
+
+welfareApplications.push(application);
+
+localStorage.setItem(
+"welfareApplications",
+JSON.stringify(welfareApplications)
+);
+
+// Generate PDF
+
+generateWelfarePDF(application);
+
+function generateWelfarePDF(application){
+
+// PDF code will go here
+
+}
+// Success Message
+
+document.getElementById("loanMessage").innerHTML=`
+
+<div style="
+max-width:650px;
+margin:30px auto;
+background:white;
+padding:35px;
+border-radius:15px;
+box-shadow:0 10px 25px rgba(0,0,0,.15);
+text-align:center;">
+
+<div style="font-size:70px;">
+✅
+</div>
+
+<h2 style="color:#2e7d32;">
+Application Submitted Successfully
+</h2>
+
+<p>
+
+Your Welfare Support Application has been received successfully.
+
+</p>
+
+<div style="
+background:#f5f5f5;
+padding:18px;
+border-radius:10px;
+margin:25px 0;">
+
+<b>Application Reference</b>
+
+<h2 style="color:#1565c0;">
+
+${reference}
+
+</h2>
+
+</div>
+
+<div style="
+background:#e8f5e9;
+padding:18px;
+border-left:5px solid #2e7d32;
+border-radius:8px;
+text-align:left;">
+
+<b>Next Step</b>
+
+<ul style="line-height:2;">
+
+<li>📱 Send your National ID and supporting documents to <b>0713 953 004</b>.</li>
+
+<li>Include your <b>Application Reference Number</b> in the WhatsApp message.</li>
+
+<li>Your application will be verified by the Chairlady and Admin.</li>
+
+<li>You will receive feedback after members' approval.</li>
+
+</ul>
+
+</div>
+
+<div style="margin-top:25px;">
+
+<button
+onclick="closeLoanForm()"
+style="
+background:#2e7d32;
+color:white;
+padding:14px 28px;
+border:none;
+border-radius:8px;
+font-weight:bold;
+cursor:pointer;">
+
+Finish
+
+</button>
+
+</div>
+
+</div>
+
+`;
+
+}
+function closeWelfareForm(){
+
+document.getElementById("loanMessage").innerHTML="";
+
+}
+function validateCurrentStep(step){
+
+const currentStep=document.getElementById("welfareStep"+step);
+
+const requiredFields=currentStep.querySelectorAll("[required]");
+
+let valid=true;
+
+requiredFields.forEach(field=>{
+
+if(field.type==="radio"){
+
+const checked=currentStep.querySelector('input[name="'+field.name+'"]:checked');
+
+if(!checked){
+
+valid=false;
+
+}
+
+}
+
+else if(field.type==="checkbox"){
+
+if(!field.checked){
+
+valid=false;
+
+field.style.outline="2px solid red";
+
+}else{
+
+field.style.outline="";
+
+}
+
+}
+
+else{
+
+if(field.value.trim()===""){
+
+valid=false;
+
+field.style.border="2px solid red";
+
+}else{
+
+field.style.border="1px solid #ccc";
+
+}
+
+}
+
+});
+
+const error=document.getElementById("welfareError"+step);
+
+if(error){
+
+error.style.display=valid?"none":"block";
+
+}
+
+return valid;
+
+}
 </script>
 
 
@@ -4117,12 +6160,22 @@ document.getElementById("downloadFormBtn").addEventListener("click", () => {
  
 <div id="dashboard">
 <h3>Welcome, <span id="memberDisplay"></span>!</h3>
+
 <div class="dashboard-buttons">
+
 <a class="action-btn" onclick="showCurrentSavings()">💰 View Current Savings</a>
+
 <a class="action-btn" onclick="showMonthlySavings()">📊 View Monthly Savings</a>
+
 <button class="check-loan-btn" onclick="checkLoan()">🔍 Check Loan Eligibility</button>
-<button class="action-btn" onclick="openNotePopup()">🗒️ View Note/fines</button>
-<a class="action-btn" onclick="openRegistrationFees()">📝 View Registration Fees </a>
+
+<button class="action-btn" onclick="showWelfareApplication()">
+💞 Apply for Welfare Support
+</button>
+
+<button class="action-btn" onclick="openNotePopup()">🗒️ View Notes/Fines</button>
+
+<a class="action-btn" onclick="openRegistrationFees()">📝 View Registration Fees</a>
 
 
 
