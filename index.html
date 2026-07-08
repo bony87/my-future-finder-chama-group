@@ -4294,7 +4294,7 @@ margin-bottom:15px;">
 type="text"
 id="wfMemberNo"
 required
-placeholder="FFC001"
+placeholder="FFC/your phone number"
 style="
 width:100%;
 padding:12px;
@@ -4338,25 +4338,13 @@ padding:12px;
 margin-bottom:25px;">
 
 
-<label>Sub-County</label>
+<label>Current Place of Stay</label>
 
 <input
 type="text"
-id="wfSubCounty"
+id="wfCurrentPlace"
 required
-placeholder="Enter Sub-County"
-style="
-width:100%;
-padding:12px;
-margin-bottom:15px;">
-
-<label>Ward</label>
-
-<input
-type="text"
-id="wfWard"
-required
-placeholder="Enter Ward"
+placeholder="Enter your current place of stay"
 style="
 width:100%;
 padding:12px;
@@ -4673,6 +4661,14 @@ style="width:100%;padding:12px;margin-bottom:15px;">
 
 </select>
 
+<label>Name of Father / Mother</label>
+
+<input
+type="text"
+id="babyParentName"
+placeholder="Enter the name of the Father or Mother"
+style="width:100%;padding:12px;margin-bottom:15px;">
+
 <label>Gender of Baby</label>
 
 <select
@@ -4745,12 +4741,12 @@ style="width:100%;padding:12px;margin-bottom:15px;">
 
 </select>
 
-<label>County</label>
+<label>Place of Wedding</label>
 
 <input
 type="text"
-id="weddingCounty"
-placeholder="Wedding County"
+id="weddingPlace"
+placeholder="Enter Place of Wedding"
 style="width:100%;padding:12px;margin-bottom:15px;">
 
 <label>Additional Information (Optional)</label>
@@ -5460,13 +5456,8 @@ margin-bottom:20px;">
 </tr>
 
 <tr>
-<td><b>Sub-County</b></td>
-<td id="reviewSubCounty">-</td>
-</tr>
-
-<tr>
-<td><b>Ward</b></td>
-<td id="reviewWard">-</td>
+<td><b>Current Place of Stay</b></td>
+<td id="reviewCurrentPlace">-</td>
 </tr>
 
 <tr>
@@ -5687,778 +5678,1073 @@ cursor:pointer;">
 }
 
 
-// ================= Welfare Steps =================
+// =========================
+// 💞 FUTURE FINDERS WELFARE APPLICATION LOGIC
+// =========================
 
+// =========================
+// GLOBAL STATE
+// =========================
 let currentWelfareStep = 1;
 
-function nextWelfareStep(step){
+// =========================
+// SHOW WELFARE FORM
+// =========================
+// Your existing showWelfareApplication() stays as it is.
+// After it renders, we initialize listeners.
+const originalShowWelfareApplication = typeof showWelfareApplication === "function" ? showWelfareApplication : null;
 
-// Hide current step
-document.getElementById("welfareStep"+currentWelfareStep).style.display="none";
-
-// Show next step
-document.getElementById("welfareStep"+step).style.display="block";
-
-// Update current step
-currentWelfareStep = step;
-
-// Load dynamic fields when opening Step 3
-  loadWelfareFields();
-    if(step===6){
-    loadWelfareReview();
+if (originalShowWelfareApplication) {
+  const _oldShowWelfareApplication = showWelfareApplication;
+  showWelfareApplication = function () {
+    _oldShowWelfareApplication();
+    setTimeout(initWelfareForm, 100);
+  };
 }
 
-// Update progress
-updateWelfareProgress();
+// =========================
+// INITIALIZE FORM
+// =========================
+function initWelfareForm() {
+  currentWelfareStep = 1;
+  updateWelfareStepUI(1);
+  setupWelfareTypeListener();
+  hideAllWelfareErrors();
 
-}
-function previousWelfareStep(step){
-
-document.getElementById("welfareStep"+currentWelfareStep).style.display="none";
-
-document.getElementById("welfareStep"+step).style.display="block";
-
-currentWelfareStep = step;
-
-updateWelfareProgress();
-
-}
-function updateWelfareProgress(){
-
-document.getElementById("welfareStepText").innerHTML =
-"Step "+currentWelfareStep+" of 6";
-
-for(let i=1;i<=6;i++){
-
-document.getElementById("wCircle"+i).classList.remove("active");
-
-if(i<=currentWelfareStep){
-
-document.getElementById("wCircle"+i).classList.add("active");
-
+  // Auto-fill today's date in review if needed later
+  const reviewDate = document.getElementById("reviewDate");
+  if (reviewDate) reviewDate.textContent = new Date().toLocaleDateString("en-KE");
 }
 
+// =========================
+// CLOSE FORM
+// =========================
+function closeWelfareForm() {
+  const welfareContainer = document.getElementById("loanMessage");
+  if (welfareContainer) welfareContainer.innerHTML = "";
 }
 
-}
-function loadWelfareFields(){
+// =========================
+// STEP NAVIGATION
+// =========================
+function nextWelfareStep(step) {
+  document.querySelectorAll(".welfareStep").forEach(el => el.style.display = "none");
+  const target = document.getElementById("welfareStep" + step);
+  if (target) target.style.display = "block";
 
-document.getElementById("newbornFields").style.display="none";
-document.getElementById("weddingFields").style.display="none";
-document.getElementById("burialFields").style.display="none";
+  currentWelfareStep = step;
+  updateWelfareStepUI(step);
 
-const selected=document.querySelector('input[name="welfareType"]:checked');
+  if (step === 3) {
+    renderWelfareTypeFields();
+  }
 
-if(!selected) return;
+  if (step === 6) {
+    populateWelfareReview();
+  }
 
-if(selected.value==="Newborn Baby"){
-
-document.getElementById("newbornFields").style.display="block";
-
-}
-
-if(selected.value==="Wedding"){
-
-document.getElementById("weddingFields").style.display="block";
-
-}
-
-if(selected.value==="Burial"){
-
-document.getElementById("burialFields").style.display="block";
-
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
+function previousWelfareStep(step) {
+  document.querySelectorAll(".welfareStep").forEach(el => el.style.display = "none");
+  const target = document.getElementById("welfareStep" + step);
+  if (target) target.style.display = "block";
+
+  currentWelfareStep = step;
+  updateWelfareStepUI(step);
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-function loadWelfareReview(){
+function updateWelfareStepUI(step) {
+  const text = document.getElementById("welfareStepText");
+  if (text) text.textContent = `Step ${step} of 6`;
 
-// ================= MEMBER DETAILS =================
+  for (let i = 1; i <= 6; i++) {
+    const circle = document.getElementById("wCircle" + i);
+    if (!circle) continue;
 
-document.getElementById("reviewName").innerHTML =
-document.getElementById("wfName").value || "-";
+    circle.classList.remove("active", "done");
 
-document.getElementById("reviewMemberNo").innerHTML =
-document.getElementById("wfMemberNo").value || "-";
-
-document.getElementById("reviewId").innerHTML =
-document.getElementById("wfId").value || "-";
-
-document.getElementById("reviewPhone").innerHTML =
-document.getElementById("wfPhone").value || "-";
-
-document.getElementById("reviewCounty").innerHTML =
-document.getElementById("wfCounty").value || "-";
-
-document.getElementById("reviewSubCounty").innerHTML =
-document.getElementById("wfSubCounty").value || "-";
-
-document.getElementById("reviewWard").innerHTML =
-document.getElementById("wfWard").value || "-";
-
-// ================= WELFARE TYPE =================
-
-const type = document.querySelector('input[name="welfareType"]:checked');
-
-if(type){
-
-document.getElementById("reviewType").innerHTML = type.value;
-
-}else{
-
-document.getElementById("reviewType").innerHTML = "-";
-
+    if (i < step) {
+      circle.classList.add("done");
+      circle.innerHTML = "✓";
+    } else if (i === step) {
+      circle.classList.add("active");
+      circle.innerHTML = i;
+    } else {
+      circle.innerHTML = i;
+    }
+  }
 }
 
-// ================= APPLICATION DATE =================
-
-document.getElementById("reviewDate").innerHTML =
-new Date().toLocaleDateString("en-KE");
-
-// ================= EVENT SUMMARY =================
-
-let eventSummary = "";
-
-if(type){
-
-switch(type.value){
-
-case "Newborn Baby":
-
-eventSummary = `
-<b>Baby's Name:</b> ${document.getElementById("babyName").value || "-"}<br>
-<b>Date of Birth:</b> ${document.getElementById("babyDob").value || "-"}<br>
-<b>Hospital:</b> ${document.getElementById("babyHospital").value || "-"}<br>
-<b>Relationship:</b> ${document.getElementById("babyRelationship").value || "-"}<br>
-<b>Gender:</b> ${document.getElementById("babyGender").value || "-"}<br>
-<b>County of Birth:</b> ${document.getElementById("babyCounty").value || "-"}
-`;
-break;
-
-case "Wedding":
-
-eventSummary = `
-<b>Wedding Date:</b> ${document.getElementById("weddingDate").value || "-"}<br>
-<b>Venue:</b> ${document.getElementById("weddingVenue").value || "-"}<br>
-<b>Spouse:</b> ${document.getElementById("spouseName").value || "-"}<br>
-<b>Wedding Type:</b> ${document.getElementById("weddingType").value || "-"}<br>
-<b>County:</b> ${document.getElementById("weddingCounty").value || "-"}
-`;
-break;
-
-case "Burial":
-
-eventSummary = `
-<b>Deceased:</b> ${document.getElementById("deceasedName").value || "-"}<br>
-<b>Relationship:</b> ${document.getElementById("relationshipDeceased").value || "-"}<br>
-<b>Date of Death:</b> ${document.getElementById("deathDate").value || "-"}<br>
-<b>Burial Date:</b> ${document.getElementById("burialDate").value || "-"}<br>
-<b>Burial Location:</b> ${document.getElementById("burialLocation").value || "-"}<br>
-<b>County:</b> ${document.getElementById("burialCounty").value || "-"}
-`;
-break;
-
+// =========================
+// ERROR HELPERS
+// =========================
+function hideAllWelfareErrors() {
+  document.querySelectorAll(".stepError").forEach(el => {
+    el.style.display = "none";
+  });
 }
 
+function showWelfareError(step, msg = "") {
+  const errorBox = document.getElementById("welfareError" + step);
+  if (!errorBox) return;
+  if (msg) errorBox.innerHTML = "⚠ " + msg;
+  errorBox.style.display = "block";
 }
 
-const eventBox = document.getElementById("reviewEventDetails");
-
-if(eventBox){
-
-eventBox.innerHTML = eventSummary;
-
+function hideWelfareError(step) {
+  const errorBox = document.getElementById("welfareError" + step);
+  if (errorBox) errorBox.style.display = "none";
 }
 
-}
-// ================= Submit Welfare Application =================
-
-function submitWelfareApplication(){
-
-// Generate Reference Number
-const today = new Date();
-
-const y = today.getFullYear();
-const m = String(today.getMonth()+1).padStart(2,'0');
-const d = String(today.getDate()).padStart(2,'0');
-
-const reference =
-"FFC-WF-"+y+m+d+"-"+Math.floor(Math.random()*900+100);
-
-// Collect data
-const application = {
-
-reference,
-
-name: document.getElementById("wfName").value,
-memberNo: document.getElementById("wfMemberNo").value,
-id: document.getElementById("wfId").value,
-phone: document.getElementById("wfPhone").value,
-county: document.getElementById("wfCounty").value,
-subCounty: document.getElementById("wfSubCounty").value,
-ward: document.getElementById("wfWard").value,
-
-type: document.querySelector('input[name="welfareType"]:checked')?.value || "",
-
-babyName: document.getElementById("babyName")?.value || "",
-babyDob: document.getElementById("babyDob")?.value || "",
-babyHospital: document.getElementById("babyHospital")?.value || "",
-babyRelationship: document.getElementById("babyRelationship")?.value || "",
-
-weddingDate: document.getElementById("weddingDate")?.value || "",
-weddingVenue: document.getElementById("weddingVenue")?.value || "",
-spouseName: document.getElementById("spouseName")?.value || "",
-
-deceasedName: document.getElementById("deceasedName")?.value || "",
-relationshipDeceased: document.getElementById("relationshipDeceased")?.value || "",
-deathDate: document.getElementById("deathDate")?.value || "",
-burialDate: document.getElementById("burialDate")?.value || "",
-burialLocation: document.getElementById("burialLocation")?.value || "",
-
-signature: document.getElementById("welfareSignature").value,
-place: document.getElementById("signingPlace").value,
-
-status:"Pending Verification",
-date:new Date().toLocaleDateString("en-KE")
-
-};
-
-// Save
-let welfareApplications =
-JSON.parse(localStorage.getItem("welfareApplications")) || [];
-
-welfareApplications.push(application);
-
-localStorage.setItem(
-"welfareApplications",
-JSON.stringify(welfareApplications)
-);
-
-// Generate PDF
-generateWelfarePDF(application);
-
-// Show Success
-showWelfareSuccess(reference);
-
+// =========================
+// GET SELECTED WELFARE TYPE
+// =========================
+function getSelectedWelfareType() {
+  const selected = document.querySelector('input[name="welfareType"]:checked');
+  return selected ? selected.value : "";
 }
 
-function generateWelfarePDF(application){
+// =========================
+// TYPE LISTENER
+// =========================
+function setupWelfareTypeListener() {
+  const radios = document.querySelectorAll('input[name="welfareType"]');
+  radios.forEach(radio => {
+    radio.addEventListener("change", () => {
+      renderWelfareTypeFields();
+      highlightSelectedWelfareCard();
+    });
+  });
 
-const { jsPDF } = window.jspdf;
+  highlightSelectedWelfareCard();
+}
 
-const doc = new jsPDF({
-    orientation:"portrait",
-    unit:"mm",
-    format:"a4"
-});
-const logo =
-"https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/cropped_circle_image.png";
-const pageWidth = doc.internal.pageSize.getWidth();
+function highlightSelectedWelfareCard() {
+  const radios = document.querySelectorAll('input[name="welfareType"]');
+  radios.forEach(radio => {
+    const card = radio.closest("label");
+    if (!card) return;
+    if (radio.checked) {
+      card.style.border = "2px solid #1565c0";
+      card.style.boxShadow = "0 6px 18px rgba(21,101,192,.18)";
+      card.style.background = "#f5f9ff";
+    } else {
+      card.style.border = "2px solid #ddd";
+      card.style.boxShadow = "none";
+      card.style.background = "#fff";
+    }
+  });
+}
 
-const left = 15;
-const width = 180;
+// =========================
+// SHOW CORRECT STEP 3 FIELDS
+// =========================
+function renderWelfareTypeFields() {
+  const type = getSelectedWelfareType();
 
-let y = 20;
-const pageHeight = doc.internal.pageSize.getHeight();
+  const newborn = document.getElementById("newbornFields");
+  const wedding = document.getElementById("weddingFields");
+  const burial = document.getElementById("burialFields");
 
-function checkPage(requiredSpace = 20){
+  if (newborn) newborn.style.display = "none";
+  if (wedding) wedding.style.display = "none";
+  if (burial) burial.style.display = "none";
 
-    if(y + requiredSpace > pageHeight - 20){
+  if (type === "Newborn Baby" && newborn) newborn.style.display = "block";
+  if (type === "Wedding" && wedding) wedding.style.display = "block";
+  if (type === "Burial" && burial) burial.style.display = "block";
+}
 
-        doc.addPage();
+// =========================
+// VALIDATION
+// =========================
+function validateCurrentStep(step) {
+  hideWelfareError(step);
 
-        y = 20;
+  if (step === 1) return validateWelfareStep1();
+  if (step === 2) return validateWelfareStep2();
+  if (step === 3) return validateWelfareStep3();
+  if (step === 4) return validateWelfareStep4();
+  if (step === 5) return validateWelfareStep5();
+  if (step === 6) return validateWelfareStep6();
 
+  return true;
+}
+
+// =========================
+// STEP 1 VALIDATION
+// =========================
+function validateWelfareStep1() {
+  const name = getVal("wfName");
+  const memberNo = getVal("wfMemberNo");
+  const idNo = getVal("wfId");
+  const phone = getVal("wfPhone");
+  const county = getVal("wfCounty");
+  const currentPlace = getVal("wfCurrentPlace");
+
+  if (!name || !memberNo || !idNo || !phone || !county || !currentPlace) {
+    showWelfareError(1, "Please fill in all the required fields before proceeding.");
+    return false;
+  }
+
+  if (idNo.length < 6) {
+    showWelfareError(1, "Please enter a valid National ID Number.");
+    return false;
+  }
+
+  if (!/^0\d{9}$/.test(phone) && !/^254\d{9}$/.test(phone)) {
+    showWelfareError(1, "Please enter a valid phone number e.g. 07XXXXXXXX.");
+    return false;
+  }
+
+  return true;
+}
+
+// =========================
+// STEP 2 VALIDATION
+// =========================
+function validateWelfareStep2() {
+  const type = getSelectedWelfareType();
+  const agree = document.getElementById("eligibilityAgree")?.checked;
+
+  if (!type) {
+    showWelfareError(2, "Please select one welfare support category.");
+    return false;
+  }
+
+  if (!agree) {
+    showWelfareError(2, "Please confirm the eligibility declaration before proceeding.");
+    return false;
+  }
+
+  return true;
+}
+
+// =========================
+// STEP 3 VALIDATION
+// =========================
+function validateWelfareStep3() {
+  const type = getSelectedWelfareType();
+
+  if (!type) {
+    showWelfareError(3, "Please select a welfare support type first.");
+    return false;
+  }
+
+  if (type === "Newborn Baby") {
+    const dob = getVal("babyDob");
+    const hospital = getVal("babyHospital");
+    const relationship = getVal("babyRelationship");
+    const parentName = getVal("babyParentName");
+    const gender = getVal("babyGender");
+    const county = getVal("babyCounty");
+
+    if (!dob || !hospital || !relationship || !parentName || !gender || !county) {
+      showWelfareError(3, "Please complete all required Newborn Baby details.");
+      return false;
+    }
+  }
+
+  if (type === "Wedding") {
+    const weddingDate = getVal("weddingDate");
+    const venue = getVal("weddingVenue");
+    const spouse = getVal("spouseName");
+    const weddingType = getVal("weddingType");
+    const place = getVal("weddingPlace");
+
+    if (!weddingDate || !venue || !spouse || !weddingType || !place) {
+      showWelfareError(3, "Please complete all required Wedding details.");
+      return false;
+    }
+  }
+
+  if (type === "Burial") {
+    const deceased = getVal("deceasedName");
+    const relation = getVal("relationshipDeceased");
+    const deathDate = getVal("deathDate");
+    const burialDate = getVal("burialDate");
+    const location = getVal("burialLocation");
+    const county = getVal("burialCounty");
+    const living = getVal("livingTogether");
+
+    if (!deceased || !relation || !deathDate || !burialDate || !location || !county || !living) {
+      showWelfareError(3, "Please complete all required Burial details.");
+      return false;
+    }
+  }
+
+  return true;
+}
+
+// =========================
+// STEP 4 VALIDATION
+// =========================
+function validateWelfareStep4() {
+  const agree = document.getElementById("documentsAgreement")?.checked;
+  if (!agree) {
+    showWelfareError(4, "Please confirm the document submission requirements.");
+    return false;
+  }
+  return true;
+}
+
+// =========================
+// STEP 5 VALIDATION
+// =========================
+function validateWelfareStep5() {
+  const declaration = document.getElementById("welfareDeclaration")?.checked;
+  const consent = document.getElementById("communicationConsent")?.checked;
+  const signature = getVal("welfareSignature");
+  const signingPlace = getVal("signingPlace");
+
+  if (!declaration || !consent || !signature || !signingPlace) {
+    showWelfareError(5, "Please complete the declaration, consent and digital signature.");
+    return false;
+  }
+
+  return true;
+}
+
+// =========================
+// STEP 6 VALIDATION
+// =========================
+function validateWelfareStep6() {
+  return true;
+}
+
+// =========================
+// HELPER TO GET INPUT VALUE
+// =========================
+function getVal(id) {
+  const el = document.getElementById(id);
+  return el ? el.value.trim() : "";
+}
+
+// =========================
+// GENERATE APPLICATION REF
+// =========================
+function generateWelfareReference() {
+  const d = new Date();
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth() + 1).padStart(2, "0");
+  const dd = String(d.getDate()).padStart(2, "0");
+  const rand = Math.floor(1000 + Math.random() * 9000);
+  return `FFW-${yyyy}${mm}${dd}-${rand}`;
+}
+
+// =========================
+// REVIEW PAGE POPULATION
+// =========================
+function populateWelfareReview() {
+  document.getElementById("reviewName").textContent = getVal("wfName") || "-";
+  document.getElementById("reviewMemberNo").textContent = getVal("wfMemberNo") || "-";
+  document.getElementById("reviewId").textContent = getVal("wfId") || "-";
+  document.getElementById("reviewPhone").textContent = getVal("wfPhone") || "-";
+  document.getElementById("reviewCounty").textContent = getVal("wfCounty") || "-";
+  document.getElementById("reviewCurrentPlace").textContent = getVal("wfCurrentPlace") || "-";
+  document.getElementById("reviewType").textContent = getSelectedWelfareType() || "-";
+  document.getElementById("reviewDate").textContent = new Date().toLocaleDateString("en-KE");
+
+  document.getElementById("reviewEventDetails").innerHTML = buildWelfareEventReviewHTML();
+}
+
+function buildWelfareEventReviewHTML() {
+  const type = getSelectedWelfareType();
+
+  if (type === "Newborn Baby") {
+    return `
+      <b>Support Type:</b> Newborn Baby<br>
+      <b>Baby's Name:</b> ${safe(getVal("babyName") || "Not provided")}<br>
+      <b>Date of Birth:</b> ${safe(getVal("babyDob"))}<br>
+      <b>Hospital / Health Facility:</b> ${safe(getVal("babyHospital"))}<br>
+      <b>Relationship to Child:</b> ${safe(getVal("babyRelationship"))}<br>
+      <b>Parent Name:</b> ${safe(getVal("babyParentName"))}<br>
+      <b>Gender:</b> ${safe(getVal("babyGender"))}<br>
+      <b>County of Birth:</b> ${safe(getVal("babyCounty"))}<br>
+      <b>Additional Information:</b> ${safe(getVal("babyRemarks") || "None")}
+    `;
+  }
+
+  if (type === "Wedding") {
+    return `
+      <b>Support Type:</b> Wedding<br>
+      <b>Wedding Date:</b> ${safe(getVal("weddingDate"))}<br>
+      <b>Wedding Venue:</b> ${safe(getVal("weddingVenue"))}<br>
+      <b>Spouse Full Name:</b> ${safe(getVal("spouseName"))}<br>
+      <b>Type of Wedding:</b> ${safe(getVal("weddingType"))}<br>
+      <b>Place of Wedding:</b> ${safe(getVal("weddingPlace"))}<br>
+      <b>Additional Information:</b> ${safe(getVal("weddingRemarks") || "None")}
+    `;
+  }
+
+  if (type === "Burial") {
+    return `
+      <b>Support Type:</b> Burial<br>
+      <b>Name of Deceased:</b> ${safe(getVal("deceasedName"))}<br>
+      <b>Relationship to Deceased:</b> ${safe(getVal("relationshipDeceased"))}<br>
+      <b>Date of Death:</b> ${safe(getVal("deathDate"))}<br>
+      <b>Burial Date:</b> ${safe(getVal("burialDate"))}<br>
+      <b>Burial Location:</b> ${safe(getVal("burialLocation"))}<br>
+      <b>County of Burial:</b> ${safe(getVal("burialCounty"))}<br>
+      <b>Was Deceased Living With You:</b> ${safe(getVal("livingTogether"))}<br>
+      <b>Additional Information:</b> ${safe(getVal("burialRemarks") || "None")}
+    `;
+  }
+
+  return "No event details available.";
+}
+
+function safe(val) {
+  return val ? String(val) : "-";
+}
+
+// =========================
+// COLLECT FULL APPLICATION DATA
+// =========================
+function collectWelfareData() {
+  return {
+    refNo: generateWelfareReference(),
+    applicationDate: new Date().toLocaleDateString("en-KE"),
+
+    applicant: {
+      fullName: getVal("wfName"),
+      memberNo: getVal("wfMemberNo"),
+      idNo: getVal("wfId"),
+      phone: getVal("wfPhone"),
+      county: getVal("wfCounty"),
+      currentPlace: getVal("wfCurrentPlace")
+    },
+
+    welfareType: getSelectedWelfareType(),
+
+    newborn: {
+      babyName: getVal("babyName"),
+      babyDob: getVal("babyDob"),
+      babyHospital: getVal("babyHospital"),
+      babyRelationship: getVal("babyRelationship"),
+      babyParentName: getVal("babyParentName"),
+      babyGender: getVal("babyGender"),
+      babyCounty: getVal("babyCounty"),
+      babyRemarks: getVal("babyRemarks")
+    },
+
+    wedding: {
+      weddingDate: getVal("weddingDate"),
+      weddingVenue: getVal("weddingVenue"),
+      spouseName: getVal("spouseName"),
+      weddingType: getVal("weddingType"),
+      weddingPlace: getVal("weddingPlace"),
+      weddingRemarks: getVal("weddingRemarks")
+    },
+
+    burial: {
+      deceasedName: getVal("deceasedName"),
+      relationshipDeceased: getVal("relationshipDeceased"),
+      deathDate: getVal("deathDate"),
+      burialDate: getVal("burialDate"),
+      burialLocation: getVal("burialLocation"),
+      burialCounty: getVal("burialCounty"),
+      livingTogether: getVal("livingTogether"),
+      burialRemarks: getVal("burialRemarks")
+    },
+
+    declarations: {
+      eligibilityAgree: document.getElementById("eligibilityAgree")?.checked ? "Yes" : "No",
+      documentsAgreement: document.getElementById("documentsAgreement")?.checked ? "Yes" : "No",
+      welfareDeclaration: document.getElementById("welfareDeclaration")?.checked ? "Yes" : "No",
+      communicationConsent: document.getElementById("communicationConsent")?.checked ? "Yes" : "No",
+      signature: getVal("welfareSignature"),
+      signingPlace: getVal("signingPlace")
+    },
+
+    status: "Pending Verification"
+  };
+}
+
+// =========================
+// SAVE TO LOCAL STORAGE
+// =========================
+function saveWelfareApplication(data) {
+  let welfareApps = [];
+  try {
+    welfareApps = JSON.parse(localStorage.getItem("futureFindersWelfareApplications")) || [];
+  } catch (e) {
+    welfareApps = [];
+  }
+
+  welfareApps.push(data);
+  localStorage.setItem("futureFindersWelfareApplications", JSON.stringify(welfareApps));
+}
+
+// =========================
+// SUBMIT APPLICATION
+// =========================
+async function submitWelfareApplication() {
+  if (!validateCurrentStep(6)) return;
+
+  const data = collectWelfareData();
+  saveWelfareApplication(data);
+
+  await generateWelfarePDF(data);
+
+  const welfareContainer = document.getElementById("loanMessage");
+  if (welfareContainer) {
+    welfareContainer.innerHTML = `
+      <div style="
+        max-width:700px;
+        margin:30px auto;
+        background:#ffffff;
+        border-radius:16px;
+        box-shadow:0 10px 30px rgba(0,0,0,.15);
+        overflow:hidden;
+        font-family:Arial,sans-serif;
+      ">
+        <div style="background:linear-gradient(135deg,#2e7d32,#66bb6a);padding:25px;color:white;text-align:center;">
+          <div style="font-size:60px;">✅</div>
+          <h2 style="margin:10px 0 0;">Application Submitted Successfully</h2>
+          <p style="margin-top:10px;font-size:15px;">
+            Your Welfare Support Application has been saved and the PDF has been downloaded.
+          </p>
+        </div>
+
+        <div style="padding:25px;">
+          <div style="background:#e8f5e9;border-left:5px solid #2e7d32;padding:16px;border-radius:10px;margin-bottom:20px;">
+            <h3 style="margin-top:0;color:#2e7d32;">Application Details</h3>
+            <p style="line-height:1.9;margin:0;">
+              <b>Applicant:</b> ${data.applicant.fullName}<br>
+              <b>Membership No:</b> ${data.applicant.memberNo}<br>
+              <b>Welfare Support:</b> ${data.welfareType}<br>
+              <b>Reference Number:</b> ${data.refNo}<br>
+              <b>Status:</b> ${data.status}
+            </p>
+          </div>
+
+          <div style="background:#fff3cd;border-left:5px solid #ff9800;padding:16px;border-radius:10px;margin-bottom:20px;">
+            <h3 style="margin-top:0;color:#ef6c00;">Next Step</h3>
+            <p style="line-height:1.8;margin:0;">
+              Kindly send the downloaded PDF together with your National ID and supporting documents
+              to the official Future Finders Chama WhatsApp number:
+              <br><br>
+              <b style="font-size:18px;">0713 953 004</b>
+            </p>
+          </div>
+
+          <div style="text-align:center;">
+            <button onclick="closeWelfareForm()" style="
+              background:#1565c0;
+              color:white;
+              padding:12px 28px;
+              border:none;
+              border-radius:8px;
+              font-weight:bold;
+              cursor:pointer;
+            ">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+}
+
+// =========================
+// PDF GENERATION - FINAL PROFESSIONAL VERSION
+// =========================
+async function generateWelfarePDF(data) {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF("p", "mm", "a4");
+
+  const pageWidth = 210;
+  const pageHeight = 297;
+  const margin = 12;
+  const contentWidth = pageWidth - margin * 2;
+  let y = 18;
+
+  // =========================
+  // LOGO
+  // =========================
+  const logoUrl = "https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/cropped_circle_image.png";
+
+  const loadImageAsBase64 = (url) =>
+    new Promise((resolve, reject) => {
+      const img = new Image();
+      img.crossOrigin = "Anonymous";
+      img.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0);
+        resolve(canvas.toDataURL("image/png"));
+      };
+      img.onerror = reject;
+      img.src = url;
+    });
+
+  let logoBase64 = null;
+  try {
+    logoBase64 = await loadImageAsBase64(logoUrl);
+  } catch (e) {
+    console.warn("Logo failed to load:", e);
+  }
+
+  // =========================
+  // PDF HELPERS
+  // =========================
+  function drawPageBorder() {
+    doc.setDrawColor(21, 101, 192);
+    doc.setLineWidth(0.8);
+    doc.roundedRect(6, 6, 198, 285, 4, 4);
+  }
+
+  function ensureSpace(required = 20) {
+    if (y + required > 270) {
+      doc.addPage();
+      drawPageBorder();
+      y = 18;
+      addMiniHeader();
+    }
+  }
+
+  function addMiniHeader() {
+    doc.setFillColor(245, 248, 255);
+    doc.roundedRect(margin, 10, contentWidth, 12, 2, 2, "F");
+
+    if (logoBase64) {
+      doc.addImage(logoBase64, "PNG", margin + 2, 11, 8, 8);
     }
 
-}
+    doc.setTextColor(21, 101, 192);
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(10);
+    doc.text("FUTURE FINDERS CHAMA - WELFARE SUPPORT APPLICATION", margin + 14, 18);
 
-// ================= HEADER =================
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(8);
+    doc.setTextColor(90);
+    doc.text(`Ref: ${data.refNo}`, 165, 18);
 
-doc.addImage(logo,"PNG",15,6,20,20);
+    y = 28;
+  }
 
-doc.setFillColor(21,101,192);
-doc.rect(40,5,155,22,"F");
+  function addMainHeader() {
+    // top blue band
+    doc.setFillColor(21, 101, 192);
+    doc.roundedRect(margin, y, contentWidth, 34, 4, 4, "F");
 
-doc.setFont("helvetica","bold");
-doc.setFontSize(18);
-doc.setTextColor(255,255,255);
+    // logo
+    if (logoBase64) {
+      doc.setFillColor(255, 255, 255);
+      doc.circle(margin + 18, y + 17, 11, "F");
+      doc.addImage(logoBase64, "PNG", margin + 9, y + 8, 18, 18);
+    }
 
-doc.text("FUTURE FINDERS CHAMA",117,15,{align:"center"});
+    // title
+    doc.setTextColor(255, 255, 255);
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(16);
+    doc.text("FUTURE FINDERS CHAMA", 110, y + 10, { align: "center" });
 
-doc.setFontSize(11);
+    doc.setFontSize(13);
+    doc.text("WELFARE SUPPORT APPLICATION FORM", 110, y + 18, { align: "center" });
 
-doc.text(
-"WELFARE SUPPORT APPLICATION FORM",
-117,
-22,
-{align:"center"}
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(9.5);
+    doc.text(`Application Ref: ${data.refNo}`, 110, y + 26, { align: "center" });
+    doc.text(`Application Date: ${data.applicationDate}`, 110, y + 31, { align: "center" });
+
+    y += 42;
+
+    // intro card
+    doc.setFillColor(245, 248, 255);
+    doc.setDrawColor(210, 220, 240);
+    doc.roundedRect(margin, y, contentWidth, 18, 3, 3, "FD");
+
+    doc.setTextColor(60);
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(9.5);
+    const intro = doc.splitTextToSize(
+      "This form is generated by the Future Finders Chama Welfare Management System for official application, verification and approval of welfare support.",
+      175
+    );
+    doc.text(intro, margin + 4, y + 7);
+    y += 24;
+  }
+
+  function section(title) {
+    ensureSpace(18);
+
+    doc.setFillColor(227, 242, 253);
+    doc.setDrawColor(180, 210, 240);
+    doc.roundedRect(margin, y, contentWidth, 10, 2, 2, "FD");
+
+    doc.setTextColor(21, 101, 192);
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(11);
+    doc.text(title, margin + 4, y + 6.7);
+
+    y += 14;
+  }
+
+  function infoBox(rows) {
+    let startY = y;
+    let boxHeight = 0;
+
+    rows.forEach(r => {
+      const lines = doc.splitTextToSize(String(r.value || "-"), 105);
+      boxHeight += Math.max(8, lines.length * 5 + 2);
+    });
+
+    ensureSpace(boxHeight + 8);
+
+    doc.setFillColor(252, 252, 252);
+    doc.setDrawColor(220);
+    doc.roundedRect(margin, y - 2, contentWidth, boxHeight + 4, 2, 2, "FD");
+
+    rows.forEach(r => {
+      const lines = doc.splitTextToSize(String(r.value || "-"), 105);
+
+      doc.setTextColor(40);
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(9.5);
+      doc.text(`${r.label}:`, margin + 4, y + 4);
+
+      doc.setFont("helvetica", "normal");
+      doc.text(lines, margin + 62, y + 4);
+
+      y += Math.max(8, lines.length * 5 + 2);
+    });
+
+    y += 4;
+  }
+
+  function paragraphBox(text, color = [250, 250, 250], border = [220, 220, 220]) {
+    const lines = doc.splitTextToSize(text, 172);
+    const h = lines.length * 5 + 8;
+    ensureSpace(h + 6);
+
+    doc.setFillColor(...color);
+    doc.setDrawColor(...border);
+    doc.roundedRect(margin, y, contentWidth, h, 2, 2, "FD");
+
+    doc.setTextColor(50);
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(9.5);
+    doc.text(lines, margin + 4, y + 6);
+
+    y += h + 6;
+  }
+
+  function drawCheckbox(x, yPos, label) {
+    doc.setDrawColor(120);
+    doc.rect(x, yPos - 3.5, 4, 4);
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(9.5);
+    doc.setTextColor(40);
+    doc.text(label, x + 7, yPos);
+  }
+
+  function addFooter() {
+    const totalPages = doc.getNumberOfPages();
+    for (let i = 1; i <= totalPages; i++) {
+      doc.setPage(i);
+
+      doc.setDrawColor(220);
+      doc.line(12, 283, 198, 283);
+
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(8);
+      doc.setTextColor(120);
+      doc.text(
+        `Future Finders Chama Welfare Application | Page ${i} of ${totalPages}`,
+        105,
+        288,
+        { align: "center" }
+      );
+    }
+  }
+
+  // =========================
+  // START PDF
+  // =========================
+  drawPageBorder();
+  addMainHeader();
+
+  // =========================
+  // 1. APPLICANT INFORMATION
+  // =========================
+  section("1. Applicant Information");
+  infoBox([
+    { label: "Full Name", value: data.applicant.fullName },
+    { label: "Membership Number", value: data.applicant.memberNo },
+    { label: "National ID Number", value: data.applicant.idNo },
+    { label: "Phone Number", value: data.applicant.phone },
+    { label: "County", value: data.applicant.county },
+    { label: "Current Place of Stay", value: data.applicant.currentPlace }
+  ]);
+
+  // =========================
+  // 2. WELFARE SUPPORT REQUESTED
+  // =========================
+  section("2. Welfare Support Requested");
+  infoBox([
+    { label: "Welfare Support Category", value: data.welfareType },
+    { label: "Application Status", value: data.status || "Pending Verification" }
+  ]);
+
+  // =========================
+  // 3. EVENT DETAILS
+  // =========================
+  section("3. Welfare Event Details");
+
+  if (data.welfareType === "Newborn Baby") {
+    infoBox([
+      { label: "Baby's Name", value: data.newborn.babyName || "Not provided" },
+      { label: "Date of Birth", value: data.newborn.babyDob },
+      { label: "Hospital / Health Facility", value: data.newborn.babyHospital },
+      { label: "Relationship to Child", value: data.newborn.babyRelationship },
+      { label: "Name of Father / Mother", value: data.newborn.babyParentName },
+      { label: "Gender of Baby", value: data.newborn.babyGender },
+      { label: "County of Birth", value: data.newborn.babyCounty },
+      { label: "Additional Information", value: data.newborn.babyRemarks || "None" }
+    ]);
+  }
+
+  if (data.welfareType === "Wedding") {
+    infoBox([
+      { label: "Wedding Date", value: data.wedding.weddingDate },
+      { label: "Wedding Venue", value: data.wedding.weddingVenue },
+      { label: "Spouse Full Name", value: data.wedding.spouseName },
+      { label: "Type of Wedding", value: data.wedding.weddingType },
+      { label: "Place of Wedding", value: data.wedding.weddingPlace },
+      { label: "Additional Information", value: data.wedding.weddingRemarks || "None" }
+    ]);
+  }
+
+  if (data.welfareType === "Burial") {
+    infoBox([
+      { label: "Name of Deceased", value: data.burial.deceasedName },
+      { label: "Relationship to Deceased", value: data.burial.relationshipDeceased },
+      { label: "Date of Death", value: data.burial.deathDate },
+      { label: "Burial Date", value: data.burial.burialDate },
+      { label: "Burial Location", value: data.burial.burialLocation },
+      { label: "County of Burial", value: data.burial.burialCounty },
+      { label: "Was the deceased living with applicant", value: data.burial.livingTogether },
+      { label: "Additional Information", value: data.burial.burialRemarks || "None" }
+    ]);
+  }
+
+  // =========================
+  // 4. MEMBER DECLARATION & CONSENT
+  // =========================
+  section("4. Member Declaration & Consent");
+  infoBox([
+    { label: "Eligibility Agreement", value: data.declarations.eligibilityAgree },
+    { label: "Documents Agreement", value: data.declarations.documentsAgreement },
+    { label: "Welfare Declaration", value: data.declarations.welfareDeclaration },
+    { label: "Communication Consent", value: data.declarations.communicationConsent },
+    { label: "Digital Signature", value: data.declarations.signature },
+    { label: "Place of Signing", value: data.declarations.signingPlace }
+  ]);
+
+  // =========================
+  // 5. REQUIRED SUPPORTING DOCUMENTS
+  // =========================
+  section("5. Required Supporting Documents");
+
+  paragraphBox(
+    "The applicant is required to send this downloaded PDF together with a clear copy of the National ID and the relevant supporting documents through the official Future Finders Chama WhatsApp number 0713 953 004 for verification.",
+    [255, 252, 235],
+    [245, 204, 99]
+  );
+
+  if (data.welfareType === "Newborn Baby") {
+    paragraphBox(
+      "Required documents may include Birth Notification, Birth Certificate, or Hospital Discharge Summary.",
+      [248, 255, 248],
+      [170, 220, 170]
+    );
+  }
+
+  if (data.welfareType === "Wedding") {
+    paragraphBox(
+      "Required documents may include Wedding Invitation Card, Marriage Certificate, Church Letter, or Registrar's Certificate.",
+      [248, 255, 248],
+      [170, 220, 170]
+    );
+  }
+
+  if (data.welfareType === "Burial") {
+    paragraphBox(
+      "Required documents may include Burial Permit, Death Notification, Funeral Programme, or Obituary.",
+      [248, 255, 248],
+      [170, 220, 170]
+    );
+  }
+
+  // =========================
+  // 6. OFFICIAL NOTICE
+  // =========================
+  section("6. Official Notice");
+
+  paragraphBox(
+    "This application remains pending until all supporting documents are submitted and verified by the Future Finders Chama Admin, Chairlady and Welfare Committee. Submission of this form does not automatically guarantee approval.",
+    [245, 248, 255],
+    [190, 210, 240]
+  );
+
+  paragraphBox(
+    "Applicant should quote the Application Reference Number whenever sending supporting documents or making inquiries.",
+    [245, 248, 255],
+    [190, 210, 240]
+  );
+
+  // =========================
+  // 7. APPROVAL / SIGNATURE / OFFICIAL STAMP SECTION
+  // =========================
+  section("7. Welfare Committee Decision & Approval");
+
+  paragraphBox(
+    "This section is reserved for official review, verification and approval by Future Finders Chama leadership after the applicant has submitted all required supporting documents.",
+    [250, 250, 250],
+    [220, 220, 220]
+  );
+
+  ensureSpace(60);
+
+  // Decision row
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(10);
+  doc.setTextColor(40);
+  doc.text("Application Decision:", margin + 2, y);
+
+  drawCheckbox(margin + 55, y, "Approved");
+  drawCheckbox(margin + 95, y, "Rejected");
+  drawCheckbox(margin + 135, y, "Pending Review");
+
+  y += 12;
+
+  // Remarks box
+  doc.setFont("helvetica", "bold");
+  doc.text("Committee Remarks:", margin + 2, y);
+  y += 4;
+
+  doc.setDrawColor(170);
+  doc.setFillColor(255, 255, 255);
+  doc.roundedRect(margin, y, contentWidth, 28, 2, 2, "FD");
+
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(9);
+  doc.setTextColor(120);
+  doc.text("....................................................................................................................", margin + 4, y + 8);
+  doc.text("....................................................................................................................", margin + 4, y + 15);
+  doc.text("....................................................................................................................", margin + 4, y + 22);
+
+  y += 36;
+
+  // Approval date
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(10);
+  doc.setTextColor(40);
+  doc.text("Approval / Review Date:", margin + 2, y);
+  doc.line(margin + 48, y, margin + 110, y);
+
+  y += 18;
+
+  // Signature boxes
+  ensureSpace(45);
+
+  doc.setFillColor(252, 252, 252);
+  doc.setDrawColor(220);
+  doc.roundedRect(margin, y, 84, 32, 2, 2, "FD");
+  doc.roundedRect(114, y, 84, 32, 2, 2, "FD");
+
+  // Admin
+  doc.setDrawColor(180);
+  doc.line(margin + 6, y + 18, margin + 78, y + 18);
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(10);
+  doc.text("Admin Signature", margin + 6, y + 24);
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(9);
+  doc.text("Name: Boniface Chelluget", margin + 6, y + 29);
+
+  // Chairlady
+  doc.setDrawColor(180);
+  doc.line(120, y + 18, 192, y + 18);
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(10);
+  doc.text("Chairlady Signature", 120, y + 24);
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(9);
+  doc.text("Name: Faith", 120, y + 29);
+
+  y += 42;
+
+  // =========================
+// DIGITAL OFFICE STAMP
+// =========================
+ensureSpace(42);
+
+doc.setFont("helvetica", "italic");
+doc.setFontSize(9);
+doc.setTextColor(70);
+doc.text("Official Chama Office Stamp", margin + 2, y + 8);
+
+const stampX = 155;
+const stampY = y + 10;
+const stampRadius = 24;
+
+// outer circles
+doc.setDrawColor(180, 0, 0);
+doc.setLineWidth(1.1);
+doc.circle(stampX, stampY, stampRadius);
+doc.circle(stampX, stampY, stampRadius - 4);
+
+// top text
+doc.setTextColor(180, 0, 0);
+doc.setFont("helvetica", "bold");
+doc.setFontSize(9);
+doc.text("FUTURE FINDERS", stampX, stampY - 8, { align: "center" });
+doc.text("CHAMA", stampX, stampY - 2, { align: "center" });
+
+// date line inside stamp
+doc.setFont("helvetica", "normal");
+doc.setFontSize(7.5);
+doc.text("DATE ................", stampX, stampY + 6, { align: "center" });
+
+// approval writing line
+doc.setFont("helvetica", "bold");
+doc.setFontSize(7.5);
+doc.text("--------------------", stampX, stampY + 12, { align: "center" });
+
+doc.setFont("helvetica", "normal");
+doc.setFontSize(6.8);
+doc.text("APPROVED / REJECTED", stampX, stampY + 17, { align: "center" });
+
+y += 38;
+  // =========================
+  // FINAL SYSTEM NOTE
+  // =========================
+  paragraphBox(
+  "This welfare application form is digitally generated by the Future Finders Chama Welfare Management System and is intended for official member welfare processing, verification and approval.",
+  [248, 248, 248],
+  [220, 220, 220]
 );
 
-y = 35;
-
-// ================= APPLICATION DETAILS =================
-
-doc.setDrawColor(21,101,192);
-doc.roundedRect(left,y,width,28,2,2);
-
-doc.setTextColor(0,0,0);
-doc.setFont("helvetica","bold");
-doc.setFontSize(11);
-
-doc.text("Reference No",20,y+8);
-doc.text(":",60,y+8);
-doc.text(application.reference,65,y+8);
-
-doc.text("Application Date",20,y+16);
-doc.text(":",60,y+16);
-doc.text(application.date,65,y+16);
-
-doc.text("Status",110,y+8);
-doc.text(":",135,y+8);
-doc.text(application.status,140,y+8);
-
-y += 68;
-
-checkPage(40);
-// ================= MEMBER INFORMATION =================
-
-doc.text("Full Name",20,y+8);
-doc.text(":",60,y+8);
-doc.text(application.name || "-",65,y+8);
-
-doc.text("Membership Number",20,y+18);
-doc.text(":",60,y+18);
-doc.text(application.memberNo || "-",65,y+18);
-
-doc.text("National ID Number",20,y+28);
-doc.text(":",60,y+28);
-doc.text(application.id || "-",65,y+28);
-
-doc.text("Phone Number",20,y+38);
-doc.text(":",60,y+38);
-doc.text(application.phone || "-",65,y+38);
-
-doc.text("County",20,y+48);
-doc.text(":",60,y+48);
-doc.text(application.county || "-",65,y+48);
-
-doc.text("Sub-County",20,y+58);
-doc.text(":",60,y+58);
-doc.text(application.subCounty || "-",65,y+58);
-
-doc.text("Ward",20,y+68);
-doc.text(":",60,y+68);
-doc.text(application.ward || "-",65,y+68);
-
-// ================= WELFARE SUPPORT DETAILS =================
-
-y += 88;
-
-checkPage(40);
-
-doc.setFillColor(21,101,192);
-doc.rect(left,y,width,8,"F");
-
-doc.setTextColor(255,255,255);
-doc.setFont("helvetica","bold");
-
-doc.text("SECTION B : WELFARE SUPPORT DETAILS",20,y+5.5);
-
-y += 10;
-
-doc.setDrawColor(180);
-doc.roundedRect(left,y,width,70,2,2);
-
-doc.setTextColor(0,0,0);
-doc.setFont("helvetica","normal");
-
-doc.text("Support Type",20,y+8);
-doc.text(":",60,y+8);
-doc.text(application.type || "-",65,y+8);
-
-// ================= NEWBORN =================
-
-if(application.type==="Newborn Baby"){
-
-doc.text("Baby Name",20,y+20);
-doc.text(":",60,y+20);
-doc.text(application.babyName || "-",65,y+20);
-
-doc.text("Date of Birth",20,y+30);
-doc.text(":",60,y+30);
-doc.text(application.babyDob || "-",65,y+30);
-
-doc.text("Hospital",20,y+40);
-doc.text(":",60,y+40);
-doc.text(application.babyHospital || "-",65,y+40);
-
-doc.text("Relationship",20,y+50);
-doc.text(":",60,y+50);
-doc.text(application.babyRelationship || "-",65,y+50);
-
-}
-
-// ================= WEDDING =================
-
-else if(application.type==="Wedding"){
-
-doc.text("Wedding Date",20,y+20);
-doc.text(":",60,y+20);
-doc.text(application.weddingDate || "-",65,y+20);
-
-doc.text("Venue",20,y+30);
-doc.text(":",60,y+30);
-doc.text(application.weddingVenue || "-",65,y+30);
-
-doc.text("Spouse Name",20,y+40);
-doc.text(":",60,y+40);
-doc.text(application.spouseName || "-",65,y+40);
-
-}
-
-// ================= BURIAL =================
-
-else if(application.type==="Burial"){
-
-doc.text("Deceased",20,y+20);
-doc.text(":",60,y+20);
-doc.text(application.deceasedName || "-",65,y+20);
-
-doc.text("Relationship",20,y+30);
-doc.text(":",60,y+30);
-doc.text(application.relationshipDeceased || "-",65,y+30);
-
-doc.text("Date of Death",20,y+40);
-doc.text(":",60,y+40);
-doc.text(application.deathDate || "-",65,y+40);
-
-doc.text("Burial Date",20,y+50);
-doc.text(":",60,y+50);
-doc.text(application.burialDate || "-",65,y+50);
-
-doc.text("Burial Location",20,y+60);
-doc.text(":",60,y+60);
-doc.text(application.burialLocation || "-",65,y+60);
-
-}
-// ================= SECTION C : MEMBER DECLARATION =================
-
-y += 68;
-
-checkPage(40);
-
-doc.setFillColor(21,101,192);
-doc.rect(left,y,width,8,"F");
-
-doc.setTextColor(255,255,255);
-doc.setFont("helvetica","bold");
-doc.setFontSize(11);
-
-doc.text("SECTION C : MEMBER DECLARATION",20,y+5.5);
-
-y += 10;
-
-doc.setDrawColor(180);
-doc.roundedRect(left,y,width,65,2,2);
-
-doc.setTextColor(0,0,0);
-doc.setFont("helvetica","normal");
-doc.setFontSize(10);
-
-const declaration = [
-"I hereby declare that the information provided in this",
-"application is true and correct to the best of my",
-"knowledge. I understand that submission of false",
-"information or forged documents may lead to rejection",
-"of my application and disciplinary action under the",
-"Future Finders Chama Constitution and Welfare Rules."
-];
-
-let textY = y + 8;
-
-declaration.forEach(line=>{
-    doc.text(line,20,textY);
-    textY += 7;
-});
-
-// Signature
-
-doc.setFont("helvetica","bold");
-
-doc.text("Digital Signature",20,y+55);
-
-doc.setFont("helvetica","normal");
-
-doc.text(application.signature || "-",65,y+55);
-
-// Place
-
-doc.setFont("helvetica","bold");
-
-doc.text("Place",20,y+63);
-
-doc.setFont("helvetica","normal");
-
-doc.text(application.place || "-",65,y+63);
-
-// Date
-
-doc.setFont("helvetica","bold");
-
-doc.text("Date",120,y+63);
-
-doc.setFont("helvetica","normal");
-
-doc.text(application.date || "-",135,y+63);
-// ================= SECTION D : OFFICIAL USE ONLY =================
-
-y += 68;
-
-checkPage(40);
-
-checkPage(40);
-
-// Check if enough space remains on the page
-if(y > 220){
-    doc.addPage();
-    y = 20;
-}
-
-doc.setFillColor(21,101,192);
-doc.rect(left,y,width,8,"F");
-
-doc.setTextColor(255,255,255);
-doc.setFont("helvetica","bold");
-doc.setFontSize(11);
-
-doc.text("SECTION D : OFFICIAL USE ONLY",20,y+5.5);
-
-y += 10;
-
-doc.setDrawColor(180);
-doc.roundedRect(left,y,width,105,2,2);
-
-doc.setTextColor(0,0,0);
-doc.setFont("helvetica","normal");
-doc.setFontSize(10);
-
-// Reference
-
-doc.text("Application Reference",20,y+10);
-doc.text(":",70,y+10);
-doc.text(application.reference,75,y+10);
-
-// Date Received
-
-doc.text("Date Received",20,y+22);
-doc.text(":",70,y+22);
-doc.line(75,y+22,140,y+22);
-
-// Verified By
-
-doc.text("Verified By",20,y+34);
-doc.text(":",70,y+34);
-doc.line(75,y+34,170,y+34);
-
-// Recommendation
-
-doc.text("Committee Recommendation",20,y+48);
-
-doc.rect(85,y+42,6,6);
-doc.text("Approve",95,y+47);
-
-doc.rect(130,y+42,6,6);
-doc.text("Reject",140,y+47);
-
-// Chairlady Signature
-
-doc.text("Chairlady Signature",20,y+62);
-doc.line(75,y+62,170,y+62);
-
-// Admin Signature
-
-doc.text("Admin Signature",20,y+74);
-doc.line(75,y+74,170,y+74);
-
-// Remarks
-
-doc.text("Remarks",20,y+88);
-
-doc.rect(20,y+92,160,18);
-
-// Official Stamp
-
-doc.circle(170,y+55,12);
-
-doc.setFontSize(8);
-doc.text("OFFICIAL",162,y+53);
-doc.text("STAMP",164,y+57);
-
-
-// ================= SAVE =================
-
-doc.save(application.reference + ".pdf");
-
-}
-
-function showWelfareSuccess(reference){
-
-document.getElementById("loanMessage").innerHTML=`
-
-<div style="
-max-width:650px;
-margin:30px auto;
-background:white;
-padding:35px;
-border-radius:15px;
-box-shadow:0 10px 25px rgba(0,0,0,.15);
-text-align:center;">
-
-<div style="font-size:70px;">✅</div>
-
-<h2 style="color:#2e7d32;">
-Application Submitted Successfully
-</h2>
-
-<p>
-Your Welfare Support Application has been received successfully.
-</p>
-
-<div style="
-background:#f5f5f5;
-padding:18px;
-border-radius:10px;
-margin:25px 0;">
-
-<b>Application Reference</b>
-
-<h2 style="color:#1565c0;">
-${reference}
-</h2>
-
-</div>
-
-<div style="
-background:#e8f5e9;
-padding:18px;
-border-left:5px solid #2e7d32;
-border-radius:8px;
-text-align:left;">
-
-<b>Next Step</b>
-
-<ul style="line-height:2;">
-
-<li>📱 Send your National ID and supporting documents to <b>0713 953 004</b>.</li>
-
-<li>📄 Include your <b>Application Reference Number</b> in your WhatsApp message.</li>
-
-<li>✅ Attach the downloaded PDF application.</li>
-
-<li>👥 Your application will be verified by the Chairlady and Admin before being presented to members.</li>
-
-</ul>
-
-</div>
-
-<div style="margin-top:25px;">
-
-<button
-onclick="closeWelfareForm()"
-style="
-background:#2e7d32;
-color:white;
-padding:14px 28px;
-border:none;
-border-radius:8px;
-font-weight:bold;
-cursor:pointer;">
-
-Finish
-
-</button>
-
-</div>
-
-</div>
-
-`;
-
-}
-function closeWelfareForm(){
-
-document.getElementById("loanMessage").innerHTML="";
-
-}
-function validateCurrentStep(step){
-
-const currentStep=document.getElementById("welfareStep"+step);
-
-const requiredFields=currentStep.querySelectorAll("[required]");
-
-let valid=true;
-
-requiredFields.forEach(field=>{
-
-if(field.type==="radio"){
-
-const checked=currentStep.querySelector('input[name="'+field.name+'"]:checked');
-
-if(!checked){
-
-valid=false;
-
-}
-
-}
-
-else if(field.type==="checkbox"){
-
-if(!field.checked){
-
-valid=false;
-
-field.style.outline="2px solid red";
-
-}else{
-
-field.style.outline="";
-
-}
-
-}
-
-else{
-
-if(field.value.trim()===""){
-
-valid=false;
-
-field.style.border="2px solid red";
-
-}else{
-
-field.style.border="1px solid #ccc";
-
-}
-
-}
-
-});
-
-const error=document.getElementById("welfareError"+step);
-
-if(error){
-
-error.style.display=valid?"none":"block";
-
-}
-
-return valid;
-
+  // footer
+  addFooter();
+
+  // save
+  const safeName = (data.applicant.fullName || "Applicant").replace(/[^\w\s-]/g, "");
+  doc.save(`${safeName}_Welfare_Application_${data.refNo}.pdf`);
 }
 </script>
+
 
 
 
