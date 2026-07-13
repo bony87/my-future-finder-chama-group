@@ -8301,13 +8301,13 @@ function calculate2026() {
     let rewardRate = 0;
 
     if (totalSavings >= 1500 && activeMonths >= 10) {
-      rewardRate = 0.7979;
+      rewardRate = 0.79;
     } 
     else if (totalSavings >= 1500 && activeMonths >= 6) {
-      rewardRate = 0.7479;
+      rewardRate = 0.74;
     } 
     else if (totalSavings >= 1000) {
-      rewardRate = 0.279;
+      rewardRate = 0.27;
     }
 
     const reward = Math.round(totalSavings * rewardRate);
