@@ -7715,7 +7715,7 @@ margin:10px 0;
       📊 Group Contributions for 2026
       <br>
       <span id="updateTime">
-        ⏱ Last updated on <b>16TH THUR JULY 2026 AT 14:01PM</b>
+        ⏱ Last updated on <b>24TH FRI JULY 2026 AT 10:40AM</b>
       </span>
     </h4>
 
@@ -8013,6 +8013,7 @@ margin:10px 0;
 <td><input type="number" value="0"></td>
 <td><input type="number" value="0"></td>
 <td><input type="number" value="0"></td>
+<td><input type="number" value="0"></td>
 <td class="rowTotal">0</td>
 <td class="saved2026">0</td>
 <td class="reward2026">0</td>
@@ -8284,60 +8285,114 @@ function calculate2026() {
 
     if (!rowTotalCell || inputs.length === 0) return;
 
-    const previousSavings = Number(inputs[0].value) || 0;
+    // ======================================
+    // 2025 TOTAL SAVINGS
+    // ======================================
+
+    const savings2025 = Number(inputs[0].value) || 0;
+
+    // Carry forward only 20% of 2025 into 2026
+    const carriedForward2025 = Math.round(savings2025 * 0.20);
+
+    // ======================================
+    // 2026 SAVINGS
+    // ======================================
 
     let currentSavings = 0;
     let activeMonths = 0;
 
     for (let i = 1; i < inputs.length; i++) {
+
       const val = Number(inputs[i].value) || 0;
+
       currentSavings += val;
-      if (val > 0) activeMonths++;
+
+      if (val > 0) {
+        activeMonths++;
+      }
     }
 
-    const totalSavings = previousSavings + currentSavings;
+    // ======================================
+    // DISPLAY TOTAL
+    // (100% 2025 + 100% 2026)
+    // ======================================
+
+    const totalSavings = savings2025 + currentSavings;
+
+    // ======================================
+    // REWARD CALCULATION
+    // (20% 2025 + ALL 2026)
+    // ======================================
+
+    const rewardBase = carriedForward2025 + currentSavings;
+
+    // ======================================
+    // KEEP YOUR CURRENT RULES
+    // ======================================
 
     let rewardRate = 0;
 
-    if (totalSavings >= 1500 && activeMonths >= 10) {
+    if (rewardBase >= 1500 && activeMonths >= 10) {
       rewardRate = 0.79;
-    } 
-    else if (totalSavings >= 1500 && activeMonths >= 6) {
+    }
+    else if (rewardBase >= 1500 && activeMonths >= 6) {
       rewardRate = 0.74;
-    } 
-    else if (totalSavings >= 1000) {
+    }
+    else if (rewardBase >= 1000) {
       rewardRate = 0.27;
     }
 
-    const reward = Math.round(totalSavings * rewardRate);
-    const saved = totalSavings - reward;
+    // ======================================
+    // CALCULATIONS
+    // ======================================
+
+    const reward = Math.round(rewardBase * rewardRate);
+
+    // 80% that was paid out from 2025
+const paidOut2025 = Math.round(savings2025 * 0.80);
+
+// Remaining after 2026 reward
+const remaining2026 = rewardBase - reward;
+
+// Saved 2026 = 80% of 2025 + Remaining 2026
+const saved = paidOut2025 + remaining2026;
+
+    // ======================================
+    // DISPLAY
+    // ======================================
 
     rowTotalCell.textContent = "Ksh " + totalSavings.toLocaleString();
     savedCell.textContent = "Ksh " + saved.toLocaleString();
     rewardCell.textContent = "Ksh " + reward.toLocaleString();
 
+    // ======================================
+    // STATUS
+    // ======================================
+
     if (statusCell) {
 
-  if (totalSavings >= 1500) {
-    statusCell.innerHTML = "🟢 YOU ARE ELIGIBLE";
-  } 
-  
-  else if (totalSavings >= 1000 && totalSavings <= 1499) {
-    statusCell.innerHTML = "🟡 YOU ARE PARTIALLY ELIGIBLE";
-  } 
-  
-  else if (totalSavings >= 1 && totalSavings <= 999) {
-    statusCell.innerHTML = "🔴 YOU ARE NOT ELIGIBLE";
-  } 
-  
-  else {
-    statusCell.innerHTML = "⚪ NO SAVINGS YET";
-  }
-}
+      if (rewardBase >= 1500) {
+        statusCell.innerHTML = "🟢 YOU ARE ELIGIBLE";
+      }
+      else if (rewardBase >= 1000 && rewardBase <= 1499) {
+        statusCell.innerHTML = "🟡 YOU ARE PARTIALLY ELIGIBLE";
+      }
+      else if (rewardBase >= 1 && rewardBase <= 999) {
+        statusCell.innerHTML = "🔴 YOU ARE NOT ELIGIBLE";
+      }
+      else {
+        statusCell.innerHTML = "⚪ NO SAVINGS YET";
+      }
+    }
+
+    // ======================================
+    // GRAND TOTALS
+    // ======================================
 
     grandTotal += totalSavings;
-    totalSaved += saved;
     totalReward += reward;
+    totalSaved += saved;
+
   });
 
   document.getElementById("grandTotal_2026").textContent =
@@ -8346,13 +8401,13 @@ function calculate2026() {
   document.getElementById("savedTotal_2026").textContent =
     "Ksh " + totalSaved.toLocaleString();
 
- document.getElementById("rewardTotal_2026").textContent =
-"Ksh " + totalReward.toLocaleString();
+  document.getElementById("rewardTotal_2026").textContent =
+    "Ksh " + totalReward.toLocaleString();
 
-updateSavingsCard();
-updateMembersCount();
-
+  updateSavingsCard();
+  updateMembersCount();
 }
+
 /* =========================
    AUTO RECALCULATE
 ========================= */
@@ -8362,7 +8417,6 @@ document.addEventListener("input", function(e) {
     calculate2026();
   }
 });
-
 
 /* =========================
    INITIAL LOAD
