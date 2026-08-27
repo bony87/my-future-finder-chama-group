@@ -11007,7 +11007,7 @@ currentStep = 1;
 updateProgress();
 }
 
-function submitLoan(event, name, maxAmount, phone) {
+async function submitLoan(event, name, maxAmount, phone) {
 
     event.preventDefault();
 
@@ -11341,206 +11341,80 @@ const decisionBy = "Admin & Chairlady";
 const decisionDate = "—";
 
 // =========================
-// PDF GENERATION (FIXED)
+// PDF GENERATION - FINAL FIXED VERSION
 // =========================
+
 const { jsPDF } = window.jspdf;
+
 const doc = new jsPDF("p", "mm", "a4");
 
-const pageHeight = doc.internal.pageSize.height;
+const pageWidth = doc.internal.pageSize.getWidth();
+const pageHeight = doc.internal.pageSize.getHeight();
+
 const bottomLimit = pageHeight - 35;
-let y;
 
-function drawPageHeader() {
+let y = 86;
 
-    // =========================
-    // PAGE BACKGROUND
-    // =========================
-
-    doc.setFillColor(255, 255, 255);
-    doc.rect(0, 0, 210, 297, "F");
-
-
-    // =========================
-    // WATERMARK
-    // =========================
-
-    addWatermark();
-
-
-    // =========================
-    // TOP BLUE STRIP
-    // =========================
-
-    doc.setFillColor(21, 101, 192);
-    doc.rect(0, 0, 210, 3, "F");
-
-
-    // =========================
-    // LOGO
-    // =========================
-
-    // =========================
-// LOGO
 // =========================
-if (logo && logo.complete && logo.naturalWidth > 0) {
-    doc.addImage(
-        logo,
-        "PNG",
-        87.5,
-        8,
-        35,
-        35
-    );
+// FUTURE FINDERS LOGO
+// =========================
+
+const logo = new Image();
+logo.crossOrigin = "anonymous";
+logo.src =
+    "https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/cropped_circle_image.png";
+
+// =========================
+// FUTURE FINDERS OFFICIAL STAMP
+// =========================
+
+const officialStamp = new Image();
+officialStamp.crossOrigin = "anonymous";
+officialStamp.src =
+    "https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/WhatsApp%20Image%202026-08-27%20at%204.37.32%20PM.jpeg";
+
+// =========================
+// WAIT FOR IMAGES SAFELY
+// =========================
+
+function waitForImage(image) {
+    return new Promise((resolve) => {
+
+        if (
+            image &&
+            image.complete &&
+            image.naturalWidth > 0
+        ) {
+            resolve(image);
+            return;
+        }
+
+        image.onload = () => resolve(image);
+
+        image.onerror = () => {
+            // Do NOT stop PDF generation
+            resolve(null);
+        };
+
+        // Safety timeout
+        setTimeout(() => {
+            resolve(null);
+        }, 5000);
+    });
 }
 
+// =========================
+// WATERMARK
+// =========================
 
-    // =========================
-    // MAIN TITLE
-    // =========================
-
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(18);
-    doc.setTextColor(0, 70, 140);
-
-    doc.text(
-        "FUTURE FINDERS CHAMA",
-        105,
-        50,
-        { align: "center" }
-    );
-
-
-    // =========================
-    // FORM TITLE
-    // =========================
-
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(13);
-    doc.setTextColor(60, 60, 60);
-
-    doc.text(
-        "LOAN APPLICATION FORM",
-        105,
-        58,
-        { align: "center" }
-    );
-
-
-    // =========================
-    // BLUE DIVIDER
-    // =========================
-
-    doc.setDrawColor(21, 101, 192);
-    doc.setLineWidth(0.8);
-
-    doc.line(
-        15,
-        64,
-        195,
-        64
-    );
-
-
-    // =========================
-    // CENTER ACCENT
-    // =========================
-
-    doc.setFillColor(21, 101, 192);
-
-    doc.roundedRect(
-        92,
-        62,
-        26,
-        4,
-        2,
-        2,
-        "F"
-    );
-
-
-    // =========================
-    // APPLICATION DETAILS
-    // =========================
-
-    doc.setFont("helvetica", "normal");
-    doc.setFontSize(9.5);
-    doc.setTextColor(70, 70, 70);
-
-    doc.text(
-        `Application No: ${applicationNo}`,
-        15,
-        73
-    );
-
-    doc.text(
-        `Date: ${applyDate}`,
-        195,
-        73,
-        { align: "right" }
-    );
-
-
-    // =========================
-    // DETAILS DIVIDER
-    // =========================
-
-    doc.setDrawColor(210, 210, 210);
-    doc.setLineWidth(0.3);
-
-    doc.line(
-        15,
-        78,
-        195,
-        78
-    );
-
-
-    // =========================
-    // FOOTER
-    // =========================
-
-    doc.setDrawColor(180, 180, 180);
-
-    doc.line(
-        15,
-        285,
-        195,
-        285
-    );
-
-    doc.setFont("helvetica", "italic");
-    doc.setFontSize(8);
-    doc.setTextColor(120, 120, 120);
-
-    doc.text(
-        "This loan application form was generated electronically by the Future Finders Loan Management System.",
-        105,
-        290,
-        { align: "center" }
-    );
-}
-// ================= PAGE BREAK FUNCTION =================
-
-function protect(space = 10){
-
-    if(y + space > bottomLimit){
-
-        doc.addPage();
-
-        drawPageHeader();
-
-        y = 68;
-
-    }
-
-}
-// ================= WATERMARK =================
 function addWatermark() {
 
     doc.saveGraphicsState();
 
-    doc.setTextColor(235); // Very light grey
+    doc.setTextColor(235, 235, 235);
+
     doc.setFont("helvetica", "bold");
+
     doc.setFontSize(42);
 
     doc.text(
@@ -11566,43 +11440,311 @@ function addWatermark() {
     );
 
     doc.restoreGraphicsState();
-    doc.setTextColor(0);
 
+    doc.setTextColor(0, 0, 0);
 }
 
-// ================= LOGO =================
+// =========================
+// PAGE HEADER
+// =========================
+
+function drawPageHeader() {
+
+    // =========================
+    // PAGE BACKGROUND
+    // =========================
+
+    doc.setFillColor(255, 255, 255);
+
+    doc.rect(
+        0,
+        0,
+        pageWidth,
+        pageHeight,
+        "F"
+    );
+
+    // =========================
+    // WATERMARK
+    // =========================
+
+    addWatermark();
+
+    // =========================
+    // TOP BLUE STRIP
+    // =========================
+
+    doc.setFillColor(21, 101, 192);
+
+    doc.rect(
+        0,
+        0,
+        pageWidth,
+        3,
+        "F"
+    );
+
+    // =========================
+    // LOGO
+    // =========================
+
+    if (
+        logo &&
+        logo.complete &&
+        logo.naturalWidth > 0
+    ) {
+
+        try {
+
+            doc.addImage(
+                logo,
+                "PNG",
+                87.5,
+                7,
+                35,
+                35
+            );
+
+        } catch (error) {
+
+            console.warn(
+                "Logo could not be added:",
+                error
+            );
+
+        }
+    }
+
+    // =========================
+    // MAIN TITLE
+    // =========================
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.setFontSize(18);
+
+    doc.setTextColor(
+        0,
+        70,
+        140
+    );
+
+    doc.text(
+        "FUTURE FINDERS CHAMA",
+        105,
+        50,
+        {
+            align: "center"
+        }
+    );
+
+    // =========================
+    // FORM TITLE
+    // =========================
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.setFontSize(13);
+
+    doc.setTextColor(
+        60,
+        60,
+        60
+    );
+
+    doc.text(
+        "LOAN APPLICATION FORM",
+        105,
+        58,
+        {
+            align: "center"
+        }
+    );
+
+    // =========================
+    // BLUE DIVIDER
+    // =========================
+
+    doc.setDrawColor(
+        21,
+        101,
+        192
+    );
+
+    doc.setLineWidth(0.8);
+
+    doc.line(
+        15,
+        64,
+        195,
+        64
+    );
+
+    // =========================
+    // CENTER ACCENT
+    // =========================
+
+    doc.setFillColor(
+        21,
+        101,
+        192
+    );
+
+    doc.roundedRect(
+        92,
+        62,
+        26,
+        4,
+        2,
+        2,
+        "F"
+    );
+
+    // =========================
+    // APPLICATION DETAILS
+    // =========================
+
+    doc.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    doc.setFontSize(9.5);
+
+    doc.setTextColor(
+        70,
+        70,
+        70
+    );
+
+    doc.text(
+        `Application No: ${applicationNo || "-"}`,
+        15,
+        73
+    );
+
+    doc.text(
+        `Date: ${applyDate || "-"}`,
+        195,
+        73,
+        {
+            align: "right"
+        }
+    );
+
+    // =========================
+    // DETAILS DIVIDER
+    // =========================
+
+    doc.setDrawColor(
+        210,
+        210,
+        210
+    );
+
+    doc.setLineWidth(0.3);
+
+    doc.line(
+        15,
+        78,
+        195,
+        78
+    );
+
+    // =========================
+    // FOOTER
+    // =========================
+
+    doc.setDrawColor(
+        180,
+        180,
+        180
+    );
+
+    doc.line(
+        15,
+        285,
+        195,
+        285
+    );
+
+    doc.setFont(
+        "helvetica",
+        "italic"
+    );
+
+    doc.setFontSize(8);
+
+    doc.setTextColor(
+        120,
+        120,
+        120
+    );
+
+    doc.text(
+        "This loan application form was generated electronically by the Future Finders Loan Management System.",
+        105,
+        290,
+        {
+            align: "center"
+        }
+    );
+}
 
 // =========================
-// LOGO LOADING
+// PAGE BREAK FUNCTION
 // =========================
-const logo = new Image();
 
-logo.crossOrigin = "anonymous";
+function protect(space = 10) {
 
-logo.src =
-    "https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/cropped_circle_image.png";
+    if (
+        y + space >
+        bottomLimit
+    ) {
 
-// Logo loading is no longer required before generating the PDF.
-// The PDF will generate even if the remote logo is unavailable.
+        doc.addPage();
 
+        drawPageHeader();
 
-    drawPageHeader();
+        y = 86;
+    }
+}
 
-    y = 86;
-    const gap = 6;
+// =========================
+// LOAD IMAGES SAFELY
+// =========================
 
-   
+await Promise.all([
+    waitForImage(logo),
+    waitForImage(officialStamp)
+]);
 
-  
-  
-   
+// =========================
+// DRAW FIRST PAGE HEADER
+// =========================
 
-   
+drawPageHeader();
+
+y = 86;
+
 // =========================
 // 👤 MEMBER DETAILS
 // =========================
 
-doc.setFillColor(21, 101, 192);
+protect(45);
+
+doc.setFillColor(
+    21,
+    101,
+    192
+);
+
 doc.roundedRect(
     15,
     y - 5,
@@ -11613,8 +11755,17 @@ doc.roundedRect(
     "F"
 );
 
-doc.setTextColor(255, 255, 255);
-doc.setFont("helvetica", "bold");
+doc.setTextColor(
+    255,
+    255,
+    255
+);
+
+doc.setFont(
+    "helvetica",
+    "bold"
+);
+
 doc.setFontSize(11);
 
 doc.text(
@@ -11625,15 +11776,23 @@ doc.text(
 
 y += 11;
 
-
 // =========================
 // MEMBER INFORMATION BOX
 // =========================
 
-doc.setDrawColor(190, 190, 190);
+doc.setDrawColor(
+    190,
+    190,
+    190
+);
+
 doc.setLineWidth(0.4);
 
-doc.setFillColor(250, 252, 255);
+doc.setFillColor(
+    250,
+    252,
+    255
+);
 
 doc.roundedRect(
     15,
@@ -11645,81 +11804,187 @@ doc.roundedRect(
     "FD"
 );
 
-
 // =========================
 // TEXT SETTINGS
 // =========================
 
-doc.setTextColor(0, 0, 0);
-doc.setFont("helvetica", "normal");
-doc.setFontSize(9.5);
+doc.setTextColor(
+    0,
+    0,
+    0
+);
 
+doc.setFontSize(9.5);
 
 // =========================
 // ROW 1
 // =========================
 
-doc.setFont("helvetica", "bold");
-doc.text("Name:", 20, y);
+doc.setFont(
+    "helvetica",
+    "bold"
+);
 
-doc.setFont("helvetica", "normal");
-doc.text(name || "-", 45, y);
+doc.text(
+    "Name:",
+    20,
+    y
+);
 
-doc.setFont("helvetica", "bold");
-doc.text("Phone:", 110, y);
+doc.setFont(
+    "helvetica",
+    "normal"
+);
 
-doc.setFont("helvetica", "normal");
-doc.text(phone || "-", 135, y);
+doc.text(
+    name || "-",
+    45,
+    y
+);
+
+doc.setFont(
+    "helvetica",
+    "bold"
+);
+
+doc.text(
+    "Phone:",
+    110,
+    y
+);
+
+doc.setFont(
+    "helvetica",
+    "normal"
+);
+
+doc.text(
+    phone || "-",
+    135,
+    y
+);
 
 y += 7;
-
 
 // =========================
 // ROW 2
 // =========================
 
-doc.setFont("helvetica", "bold");
-doc.text("ID No:", 20, y);
+doc.setFont(
+    "helvetica",
+    "bold"
+);
 
-doc.setFont("helvetica", "normal");
-doc.text(id || "-", 45, y);
+doc.text(
+    "ID No:",
+    20,
+    y
+);
 
-doc.setFont("helvetica", "bold");
-doc.text("Gender:", 110, y);
+doc.setFont(
+    "helvetica",
+    "normal"
+);
 
-doc.setFont("helvetica", "normal");
-doc.text(gender || "-", 135, y);
+doc.text(
+    id || "-",
+    45,
+    y
+);
+
+doc.setFont(
+    "helvetica",
+    "bold"
+);
+
+doc.text(
+    "Gender:",
+    110,
+    y
+);
+
+doc.setFont(
+    "helvetica",
+    "normal"
+);
+
+doc.text(
+    gender || "-",
+    135,
+    y
+);
 
 y += 7;
-
 
 // =========================
 // ROW 3
 // =========================
 
-doc.setFont("helvetica", "bold");
-doc.text("DOB:", 20, y);
+doc.setFont(
+    "helvetica",
+    "bold"
+);
 
-doc.setFont("helvetica", "normal");
-doc.text(dob || "-", 45, y);
+doc.text(
+    "DOB:",
+    20,
+    y
+);
 
-doc.setFont("helvetica", "bold");
-doc.text("Occupation:", 110, y);
+doc.setFont(
+    "helvetica",
+    "normal"
+);
 
-doc.setFont("helvetica", "normal");
-doc.text(occupation || "-", 140, y);
+doc.text(
+    dob || "-",
+    45,
+    y
+);
+
+doc.setFont(
+    "helvetica",
+    "bold"
+);
+
+doc.text(
+    "Occupation:",
+    110,
+    y
+);
+
+doc.setFont(
+    "helvetica",
+    "normal"
+);
+
+doc.text(
+    occupation || "-",
+    140,
+    y
+);
 
 y += 7;
-
 
 // =========================
 // ROW 4 — ADDRESS
 // =========================
 
-doc.setFont("helvetica", "bold");
-doc.text("Address:", 20, y);
+doc.setFont(
+    "helvetica",
+    "bold"
+);
 
-doc.setFont("helvetica", "normal");
+doc.text(
+    "Address:",
+    20,
+    y
+);
+
+doc.setFont(
+    "helvetica",
+    "normal"
+);
 
 const addressText =
     doc.splitTextToSize(
@@ -11733,17 +11998,10 @@ doc.text(
     y
 );
 
-
-// Move below the section
 y += Math.max(
     12,
     addressText.length * 5 + 5
 );
-
-
-// =========================
-// SECTION SPACING
-// =========================
 
 y += 3;
 
@@ -11751,7 +12009,14 @@ y += 3;
 // 👨‍👩‍👧 NEXT OF KIN
 // =========================
 
-doc.setFillColor(21, 101, 192);
+protect(40);
+
+doc.setFillColor(
+    21,
+    101,
+    192
+);
+
 doc.roundedRect(
     15,
     y - 5,
@@ -11762,8 +12027,17 @@ doc.roundedRect(
     "F"
 );
 
-doc.setTextColor(255, 255, 255);
-doc.setFont("helvetica", "bold");
+doc.setTextColor(
+    255,
+    255,
+    255
+);
+
+doc.setFont(
+    "helvetica",
+    "bold"
+);
+
 doc.setFontSize(11);
 
 doc.text(
@@ -11774,15 +12048,21 @@ doc.text(
 
 y += 11;
 
-
 // =========================
 // NEXT OF KIN BOX
 // =========================
 
-doc.setDrawColor(190, 190, 190);
-doc.setLineWidth(0.4);
+doc.setDrawColor(
+    190,
+    190,
+    190
+);
 
-doc.setFillColor(250, 252, 255);
+doc.setFillColor(
+    250,
+    252,
+    255
+);
 
 doc.roundedRect(
     15,
@@ -11794,33 +12074,56 @@ doc.roundedRect(
     "FD"
 );
 
+doc.setTextColor(
+    0,
+    0,
+    0
+);
 
-// =========================
-// TEXT SETTINGS
-// =========================
-
-doc.setTextColor(0, 0, 0);
 doc.setFontSize(9.5);
-
 
 // =========================
 // ROW 1
 // =========================
 
-doc.setFont("helvetica", "bold");
-doc.text("Name:", 20, y);
+doc.setFont(
+    "helvetica",
+    "bold"
+);
 
-doc.setFont("helvetica", "normal");
+doc.text(
+    "Name:",
+    20,
+    y
+);
+
+doc.setFont(
+    "helvetica",
+    "normal"
+);
+
 doc.text(
     kinName || "-",
     45,
     y
 );
 
-doc.setFont("helvetica", "bold");
-doc.text("Relationship:", 110, y);
+doc.setFont(
+    "helvetica",
+    "bold"
+);
 
-doc.setFont("helvetica", "normal");
+doc.text(
+    "Relationship:",
+    110,
+    y
+);
+
+doc.setFont(
+    "helvetica",
+    "normal"
+);
+
 doc.text(
     kinRelationship || "-",
     145,
@@ -11829,29 +12132,45 @@ doc.text(
 
 y += 8;
 
-
 // =========================
 // ROW 2
 // =========================
 
-doc.setFont("helvetica", "bold");
-doc.text("Phone:", 20, y);
+doc.setFont(
+    "helvetica",
+    "bold"
+);
 
-doc.setFont("helvetica", "normal");
+doc.text(
+    "Phone:",
+    20,
+    y
+);
+
+doc.setFont(
+    "helvetica",
+    "normal"
+);
+
 doc.text(
     kinPhone || "-",
     45,
     y
 );
 
-
-// Move below the section
 y += 15;
+
 // =========================
 // 🤝 GUARANTORS
 // =========================
 
-doc.setFillColor(21, 101, 192);
+protect(45);
+
+doc.setFillColor(
+    21,
+    101,
+    192
+);
 
 doc.roundedRect(
     15,
@@ -11863,8 +12182,17 @@ doc.roundedRect(
     "F"
 );
 
-doc.setTextColor(255, 255, 255);
-doc.setFont("helvetica", "bold");
+doc.setTextColor(
+    255,
+    255,
+    255
+);
+
+doc.setFont(
+    "helvetica",
+    "bold"
+);
+
 doc.setFontSize(11);
 
 doc.text(
@@ -11875,15 +12203,21 @@ doc.text(
 
 y += 11;
 
-
 // =========================
 // GUARANTORS BOX
 // =========================
 
-doc.setDrawColor(190, 190, 190);
-doc.setLineWidth(0.4);
+doc.setDrawColor(
+    190,
+    190,
+    190
+);
 
-doc.setFillColor(250, 252, 255);
+doc.setFillColor(
+    250,
+    252,
+    255
+);
 
 doc.roundedRect(
     15,
@@ -11895,21 +12229,22 @@ doc.roundedRect(
     "FD"
 );
 
+doc.setTextColor(
+    0,
+    0,
+    0
+);
 
-// =========================
-// TEXT SETTINGS
-// =========================
-
-doc.setTextColor(0, 0, 0);
-doc.setFont("helvetica", "normal");
 doc.setFontSize(9.5);
-
 
 // =========================
 // GUARANTOR 1
 // =========================
 
-doc.setFont("helvetica", "bold");
+doc.setFont(
+    "helvetica",
+    "bold"
+);
 
 doc.text(
     "Guarantor 1:",
@@ -11917,7 +12252,10 @@ doc.text(
     y
 );
 
-doc.setFont("helvetica", "normal");
+doc.setFont(
+    "helvetica",
+    "normal"
+);
 
 doc.text(
     guarantor1 || "-",
@@ -11925,7 +12263,10 @@ doc.text(
     y
 );
 
-doc.setFont("helvetica", "bold");
+doc.setFont(
+    "helvetica",
+    "bold"
+);
 
 doc.text(
     "Phone:",
@@ -11933,7 +12274,10 @@ doc.text(
     y
 );
 
-doc.setFont("helvetica", "normal");
+doc.setFont(
+    "helvetica",
+    "normal"
+);
 
 doc.text(
     guarantor1Phone || "-",
@@ -11943,12 +12287,14 @@ doc.text(
 
 y += 8;
 
-
 // =========================
 // GUARANTOR 2
 // =========================
 
-doc.setFont("helvetica", "bold");
+doc.setFont(
+    "helvetica",
+    "bold"
+);
 
 doc.text(
     "Guarantor 2:",
@@ -11956,7 +12302,10 @@ doc.text(
     y
 );
 
-doc.setFont("helvetica", "normal");
+doc.setFont(
+    "helvetica",
+    "normal"
+);
 
 doc.text(
     guarantor2 || "-",
@@ -11964,7 +12313,10 @@ doc.text(
     y
 );
 
-doc.setFont("helvetica", "bold");
+doc.setFont(
+    "helvetica",
+    "bold"
+);
 
 doc.text(
     "Phone:",
@@ -11972,7 +12324,10 @@ doc.text(
     y
 );
 
-doc.setFont("helvetica", "normal");
+doc.setFont(
+    "helvetica",
+    "normal"
+);
 
 doc.text(
     guarantor2Phone || "-",
@@ -11980,17 +12335,19 @@ doc.text(
     y
 );
 
-
-// =========================
-// MOVE TO NEXT SECTION
-// =========================
-
 y += 17;
+
 // =========================
 // 💰 LOAN DETAILS
 // =========================
 
-doc.setFillColor(21, 101, 192);
+protect(50);
+
+doc.setFillColor(
+    21,
+    101,
+    192
+);
 
 doc.roundedRect(
     15,
@@ -12002,8 +12359,17 @@ doc.roundedRect(
     "F"
 );
 
-doc.setTextColor(255, 255, 255);
-doc.setFont("helvetica", "bold");
+doc.setTextColor(
+    255,
+    255,
+    255
+);
+
+doc.setFont(
+    "helvetica",
+    "bold"
+);
+
 doc.setFontSize(11);
 
 doc.text(
@@ -12014,15 +12380,21 @@ doc.text(
 
 y += 11;
 
-
 // =========================
 // LOAN DETAILS BOX
 // =========================
 
-doc.setDrawColor(190, 190, 190);
-doc.setLineWidth(0.4);
+doc.setDrawColor(
+    190,
+    190,
+    190
+);
 
-doc.setFillColor(250, 252, 255);
+doc.setFillColor(
+    250,
+    252,
+    255
+);
 
 doc.roundedRect(
     15,
@@ -12034,38 +12406,42 @@ doc.roundedRect(
     "FD"
 );
 
+doc.setTextColor(
+    0,
+    0,
+    0
+);
 
-// =========================
-// TEXT SETTINGS
-// =========================
-
-doc.setTextColor(0, 0, 0);
-doc.setFont("helvetica", "normal");
 doc.setFontSize(9.5);
 
-
 // =========================
-// REPAYMENT PERIOD DISPLAY
+// REPAYMENT PERIOD
 // =========================
 
 let repaymentDisplay;
 
-if (typeof isShortTermLoan !== "undefined" && isShortTermLoan) {
+if (
+    typeof isShortTermLoan !== "undefined" &&
+    isShortTermLoan
+) {
 
-    repaymentDisplay = "14 Days";
+    repaymentDisplay =
+        "14 Days";
 
 } else {
 
-    repaymentDisplay = `${months} Month(s)`;
-
+    repaymentDisplay =
+        `${months || 0} Month(s)`;
 }
-
 
 // =========================
 // ROW 1
 // =========================
 
-doc.setFont("helvetica", "bold");
+doc.setFont(
+    "helvetica",
+    "bold"
+);
 
 doc.text(
     "Loan Amount:",
@@ -12073,16 +12449,21 @@ doc.text(
     y
 );
 
-doc.setFont("helvetica", "normal");
+doc.setFont(
+    "helvetica",
+    "normal"
+);
 
 doc.text(
-    `KSh ${amount.toLocaleString()}`,
+    `KSh ${Number(amount || 0).toLocaleString()}`,
     60,
     y
 );
 
-
-doc.setFont("helvetica", "bold");
+doc.setFont(
+    "helvetica",
+    "bold"
+);
 
 doc.text(
     "Interest:",
@@ -12090,22 +12471,27 @@ doc.text(
     y
 );
 
-doc.setFont("helvetica", "normal");
+doc.setFont(
+    "helvetica",
+    "normal"
+);
 
 doc.text(
-    `${(interest * 100).toFixed(0)}%`,
+    `${(Number(interest || 0) * 100).toFixed(0)}%`,
     145,
     y
 );
 
 y += 8;
 
-
 // =========================
 // ROW 2
 // =========================
 
-doc.setFont("helvetica", "bold");
+doc.setFont(
+    "helvetica",
+    "bold"
+);
 
 doc.text(
     "Period:",
@@ -12113,7 +12499,10 @@ doc.text(
     y
 );
 
-doc.setFont("helvetica", "normal");
+doc.setFont(
+    "helvetica",
+    "normal"
+);
 
 doc.text(
     repaymentDisplay,
@@ -12121,31 +12510,43 @@ doc.text(
     y
 );
 
-
-doc.setFont("helvetica", "bold");
+doc.setFont(
+    "helvetica",
+    "bold"
+);
 
 doc.text(
-    isShortTermLoan ? "Repayment:" : "Installment:",
+    (
+        typeof isShortTermLoan !== "undefined" &&
+        isShortTermLoan
+    )
+        ? "Repayment:"
+        : "Installment:",
     110,
     y
 );
 
-doc.setFont("helvetica", "normal");
+doc.setFont(
+    "helvetica",
+    "normal"
+);
 
 doc.text(
-    `KSh ${monthlyRepayment.toLocaleString()}`,
+    `KSh ${Number(monthlyRepayment || 0).toLocaleString()}`,
     145,
     y
 );
 
 y += 8;
 
-
 // =========================
 // ROW 3
 // =========================
 
-doc.setFont("helvetica", "bold");
+doc.setFont(
+    "helvetica",
+    "bold"
+);
 
 doc.text(
     "Total Repayment:",
@@ -12153,16 +12554,21 @@ doc.text(
     y
 );
 
-doc.setFont("helvetica", "normal");
+doc.setFont(
+    "helvetica",
+    "normal"
+);
 
 doc.text(
-    `KSh ${totalRepayment.toLocaleString()}`,
+    `KSh ${Number(totalRepayment || 0).toLocaleString()}`,
     60,
     y
 );
 
-
-doc.setFont("helvetica", "bold");
+doc.setFont(
+    "helvetica",
+    "bold"
+);
 
 doc.text(
     "Payment:",
@@ -12170,7 +12576,10 @@ doc.text(
     y
 );
 
-doc.setFont("helvetica", "normal");
+doc.setFont(
+    "helvetica",
+    "normal"
+);
 
 doc.text(
     paymentMethod || "-",
@@ -12180,12 +12589,14 @@ doc.text(
 
 y += 8;
 
-
 // =========================
 // ROW 4 — STATUS
 // =========================
 
-doc.setFont("helvetica", "bold");
+doc.setFont(
+    "helvetica",
+    "bold"
+);
 
 doc.text(
     "Application Status:",
@@ -12193,8 +12604,11 @@ doc.text(
     y
 );
 
-doc.setTextColor(220, 0, 0);
-doc.setFont("helvetica", "bold");
+doc.setTextColor(
+    220,
+    0,
+    0
+);
 
 doc.text(
     loanStatus || "Pending",
@@ -12202,22 +12616,25 @@ doc.text(
     y
 );
 
-
-// Reset text colour
-doc.setTextColor(0, 0, 0);
-doc.setFont("helvetica", "normal");
-
-
-// =========================
-// MOVE TO NEXT SECTION
-// =========================
+doc.setTextColor(
+    0,
+    0,
+    0
+);
 
 y += 15;
+
 // =========================
 // 📝 PURPOSE OF LOAN
 // =========================
 
-doc.setFillColor(21, 101, 192);
+protect(40);
+
+doc.setFillColor(
+    21,
+    101,
+    192
+);
 
 doc.roundedRect(
     15,
@@ -12229,8 +12646,17 @@ doc.roundedRect(
     "F"
 );
 
-doc.setTextColor(255, 255, 255);
-doc.setFont("helvetica", "bold");
+doc.setTextColor(
+    255,
+    255,
+    255
+);
+
+doc.setFont(
+    "helvetica",
+    "bold"
+);
+
 doc.setFontSize(11);
 
 doc.text(
@@ -12241,15 +12667,21 @@ doc.text(
 
 y += 11;
 
-
 // =========================
 // PURPOSE BOX
 // =========================
 
-doc.setDrawColor(190, 190, 190);
-doc.setLineWidth(0.4);
+doc.setDrawColor(
+    190,
+    190,
+    190
+);
 
-doc.setFillColor(250, 252, 255);
+doc.setFillColor(
+    250,
+    252,
+    255
+);
 
 doc.roundedRect(
     15,
@@ -12261,58 +12693,59 @@ doc.roundedRect(
     "FD"
 );
 
-
 // =========================
 // PURPOSE TEXT
 // =========================
 
-doc.setTextColor(0, 0, 0);
-doc.setFont("helvetica", "normal");
+doc.setTextColor(
+    0,
+    0,
+    0
+);
+
+doc.setFont(
+    "helvetica",
+    "normal"
+);
+
 doc.setFontSize(9.5);
 
+const purposeLines =
+    doc
+        .splitTextToSize(
+            reason || "Not provided",
+            168
+        )
+        .slice(0, 3);
 
-// Limit purpose to 3 lines
-const purposeLines = doc
-    .splitTextToSize(
-        reason || "Not provided",
-        168
-    )
-    .slice(0, 3);
-
-
-// Display purpose
 doc.text(
     purposeLines,
     20,
     y
 );
 
-
-// =========================
-// MOVE TO NEXT SECTION
-// =========================
-
-// Allow enough space depending on
-// number of purpose lines
 y += Math.max(
     18,
     purposeLines.length * 5 + 10
 );
 
 y += 3;
+
 // =========================
 // 📅 REPAYMENT SCHEDULE
 // =========================
 
-// Make sure the section starts on a safe area
 protect(45);
-
 
 // =========================
 // SECTION TITLE
 // =========================
 
-doc.setFillColor(21, 101, 192);
+doc.setFillColor(
+    21,
+    101,
+    192
+);
 
 doc.roundedRect(
     15,
@@ -12324,8 +12757,17 @@ doc.roundedRect(
     "F"
 );
 
-doc.setTextColor(255, 255, 255);
-doc.setFont("helvetica", "bold");
+doc.setTextColor(
+    255,
+    255,
+    255
+);
+
+doc.setFont(
+    "helvetica",
+    "bold"
+);
+
 doc.setFontSize(11);
 
 doc.text(
@@ -12336,13 +12778,21 @@ doc.text(
 
 y += 11;
 
-
 // =========================
 // PERIOD INFORMATION
 // =========================
 
-doc.setFillColor(235, 243, 255);
-doc.setDrawColor(190, 190, 190);
+doc.setFillColor(
+    235,
+    243,
+    255
+);
+
+doc.setDrawColor(
+    190,
+    190,
+    190
+);
 
 doc.roundedRect(
     15,
@@ -12354,14 +12804,26 @@ doc.roundedRect(
     "FD"
 );
 
-doc.setTextColor(40, 40, 40);
-doc.setFont("helvetica", "bold");
+doc.setTextColor(
+    40,
+    40,
+    40
+);
+
+doc.setFont(
+    "helvetica",
+    "bold"
+);
+
 doc.setFontSize(9);
 
 const schedulePeriod =
-    (typeof isShortTermLoan !== "undefined" && isShortTermLoan)
+    (
+        typeof isShortTermLoan !== "undefined" &&
+        isShortTermLoan
+    )
         ? "14 Days"
-        : `${months} Month(s)`;
+        : `${months || 0} Month(s)`;
 
 doc.text(
     `Repayment Period: ${schedulePeriod}`,
@@ -12370,21 +12832,31 @@ doc.text(
 );
 
 doc.text(
-    `Total Repayment: KSh ${totalRepayment.toLocaleString()}`,
+    `Total Repayment: KSh ${Number(totalRepayment || 0).toLocaleString()}`,
     190,
     y + 1,
-    { align: "right" }
+    {
+        align: "right"
+    }
 );
 
 y += 13;
-
 
 // =========================
 // TABLE HEADER
 // =========================
 
-doc.setFillColor(21, 101, 192);
-doc.setDrawColor(21, 101, 192);
+doc.setFillColor(
+    21,
+    101,
+    192
+);
+
+doc.setDrawColor(
+    21,
+    101,
+    192
+);
 
 doc.rect(
     15,
@@ -12394,8 +12866,17 @@ doc.rect(
     "F"
 );
 
-doc.setTextColor(255, 255, 255);
-doc.setFont("helvetica", "bold");
+doc.setTextColor(
+    255,
+    255,
+    255
+);
+
+doc.setFont(
+    "helvetica",
+    "bold"
+);
+
 doc.setFontSize(9);
 
 doc.text(
@@ -12414,132 +12895,187 @@ doc.text(
     "Amount",
     190,
     y + 1,
-    { align: "right" }
+    {
+        align: "right"
+    }
 );
 
 y += 9;
-
 
 // =========================
 // TABLE ROWS
 // =========================
 
-doc.setFont("helvetica", "normal");
+doc.setFont(
+    "helvetica",
+    "normal"
+);
+
 doc.setFontSize(9);
-doc.setTextColor(0, 0, 0);
 
-repaymentSchedule.forEach((payment, index) => {
+doc.setTextColor(
+    0,
+    0,
+    0
+);
 
-    // Protect the table from running
-    // into the footer
-    protect(9);
+const safeSchedule =
+    Array.isArray(repaymentSchedule)
+        ? repaymentSchedule
+        : [];
 
-    // Alternate row background
-    if (index % 2 === 0) {
+safeSchedule.forEach(
+    (payment, index) => {
 
-        doc.setFillColor(248, 250, 253);
+        protect(9);
+
+        // Alternate background
+        if (
+            index % 2 === 0
+        ) {
+
+            doc.setFillColor(
+                248,
+                250,
+                253
+            );
+
+            doc.rect(
+                15,
+                y - 5,
+                180,
+                9,
+                "F"
+            );
+        }
+
+        // Row border
+        doc.setDrawColor(
+            190,
+            190,
+            190
+        );
 
         doc.rect(
             15,
             y - 5,
             180,
-            9,
-            "F"
+            9
         );
-    }
 
+        // =========================
+        // INSTALLMENT NAME
+        // =========================
 
-    // Row border
-    doc.setDrawColor(190, 190, 190);
+        let installmentName;
 
-    doc.rect(
-        15,
-        y - 5,
-        180,
-        9
-    );
+        if (
+            typeof isShortTermLoan !== "undefined" &&
+            isShortTermLoan
+        ) {
 
+            installmentName =
+                "Full Payment";
 
-    // =========================
-    // INSTALLMENT NAME
-    // =========================
+        } else if (
+            Number(months) === 1
+        ) {
 
-    let installmentName;
+            installmentName =
+                "Full Payment";
 
-    if (
-        typeof isShortTermLoan !== "undefined" &&
-        isShortTermLoan
-    ) {
+        } else if (
+            index ===
+            Number(months) - 1
+        ) {
 
-        installmentName = "Full Payment";
+            installmentName =
+                "Final Payment";
 
-    } else if (months === 1) {
+        } else {
 
-        installmentName = "Full Payment";
+            const installmentNumber =
+                Number(
+                    payment.installment ||
+                    index + 1
+                );
 
-    } else if (index === months - 1) {
+            let suffix = "th";
 
-        installmentName = "Final Payment";
+            if (
+                installmentNumber === 1
+            ) {
+                suffix = "st";
+            } else if (
+                installmentNumber === 2
+            ) {
+                suffix = "nd";
+            } else if (
+                installmentNumber === 3
+            ) {
+                suffix = "rd";
+            }
 
-    } else {
-
-        const installmentNumber =
-            payment.installment;
-
-        let suffix = "th";
-
-        if (installmentNumber === 1) {
-            suffix = "st";
-        } else if (installmentNumber === 2) {
-            suffix = "nd";
-        } else if (installmentNumber === 3) {
-            suffix = "rd";
+            installmentName =
+                `${installmentNumber}${suffix} Payment`;
         }
 
-        installmentName =
-            `${installmentNumber}${suffix} Payment`;
+        // =========================
+        // ROW DATA
+        // =========================
+
+        doc.setTextColor(
+            0,
+            0,
+            0
+        );
+
+        doc.text(
+            installmentName,
+            20,
+            y + 1
+        );
+
+        doc.text(
+            payment.dueDate || "-",
+            80,
+            y + 1
+        );
+
+        doc.text(
+            `KSh ${Number(
+                payment.amount || 0
+            ).toLocaleString()}`,
+            190,
+            y + 1,
+            {
+                align: "right"
+            }
+        );
+
+        y += 9;
     }
-
-
-    // =========================
-    // ROW DATA
-    // =========================
-
-    doc.text(
-        installmentName,
-        20,
-        y + 1
-    );
-
-    doc.text(
-        payment.dueDate,
-        80,
-        y + 1
-    );
-
-    doc.text(
-        `KSh ${payment.amount.toLocaleString()}`,
-        190,
-        y + 1,
-        {
-            align: "right"
-        }
-    );
-
-
-    y += 9;
-
-});
-
+);
 
 // =========================
 // SCHEDULE SUMMARY
 // =========================
 
+protect(18);
+
 y += 4;
 
-doc.setFillColor(235, 243, 255);
-doc.setDrawColor(21, 101, 192);
+doc.setFillColor(
+    235,
+    243,
+    255
+);
+
+doc.setDrawColor(
+    21,
+    101,
+    192
+);
 
 doc.roundedRect(
     15,
@@ -12551,8 +13087,17 @@ doc.roundedRect(
     "FD"
 );
 
-doc.setTextColor(21, 70, 120);
-doc.setFont("helvetica", "bold");
+doc.setTextColor(
+    21,
+    70,
+    120
+);
+
+doc.setFont(
+    "helvetica",
+    "bold"
+);
+
 doc.setFontSize(9);
 
 doc.text(
@@ -12562,7 +13107,9 @@ doc.text(
 );
 
 doc.text(
-    `KSh ${totalRepayment.toLocaleString()}`,
+    `KSh ${Number(
+        totalRepayment || 0
+    ).toLocaleString()}`,
     190,
     y + 1,
     {
@@ -12572,22 +13119,23 @@ doc.text(
 
 y += 16;
 
+doc.setTextColor(
+    0,
+    0,
+    0
+);
 
-// Reset text settings
-doc.setTextColor(0, 0, 0);
-doc.setFont("helvetica", "normal");
 // =========================
 // 🏛️ COMMITTEE USE ONLY
 // =========================
 
 protect(55);
 
-
-// =========================
-// SECTION TITLE
-// =========================
-
-doc.setFillColor(21, 101, 192);
+doc.setFillColor(
+    21,
+    101,
+    192
+);
 
 doc.roundedRect(
     15,
@@ -12599,8 +13147,17 @@ doc.roundedRect(
     "F"
 );
 
-doc.setTextColor(255, 255, 255);
-doc.setFont("helvetica", "bold");
+doc.setTextColor(
+    255,
+    255,
+    255
+);
+
+doc.setFont(
+    "helvetica",
+    "bold"
+);
+
 doc.setFontSize(11);
 
 doc.text(
@@ -12611,15 +13168,21 @@ doc.text(
 
 y += 11;
 
-
 // =========================
 // COMMITTEE BOX
 // =========================
 
-doc.setDrawColor(190, 190, 190);
-doc.setLineWidth(0.4);
+doc.setDrawColor(
+    190,
+    190,
+    190
+);
 
-doc.setFillColor(250, 252, 255);
+doc.setFillColor(
+    250,
+    252,
+    255
+);
 
 doc.roundedRect(
     15,
@@ -12631,21 +13194,22 @@ doc.roundedRect(
     "FD"
 );
 
+doc.setTextColor(
+    0,
+    0,
+    0
+);
 
-// =========================
-// TEXT SETTINGS
-// =========================
-
-doc.setTextColor(0, 0, 0);
-doc.setFont("helvetica", "normal");
 doc.setFontSize(9.5);
-
 
 // =========================
 // APPLICATION STATUS
 // =========================
 
-doc.setFont("helvetica", "bold");
+doc.setFont(
+    "helvetica",
+    "bold"
+);
 
 doc.text(
     "Status:",
@@ -12653,10 +13217,12 @@ doc.text(
     y
 );
 
-doc.setFont("helvetica", "normal");
+doc.setFont(
+    "helvetica",
+    "normal"
+);
 
-
-// Approved checkbox
+// Approved
 doc.rect(
     45,
     y - 4,
@@ -12670,8 +13236,7 @@ doc.text(
     y
 );
 
-
-// Pending checkbox
+// Pending
 doc.rect(
     82,
     y - 4,
@@ -12685,8 +13250,7 @@ doc.text(
     y
 );
 
-
-// Rejected checkbox
+// Rejected
 doc.rect(
     118,
     y - 4,
@@ -12702,12 +13266,14 @@ doc.text(
 
 y += 10;
 
-
 // =========================
 // APPROVED AMOUNT & DATE
 // =========================
 
-doc.setFont("helvetica", "bold");
+doc.setFont(
+    "helvetica",
+    "bold"
+);
 
 doc.text(
     "Approved Amount:",
@@ -12715,7 +13281,11 @@ doc.text(
     y
 );
 
-doc.setDrawColor(100, 100, 100);
+doc.setDrawColor(
+    100,
+    100,
+    100
+);
 
 doc.line(
     60,
@@ -12723,9 +13293,6 @@ doc.line(
     105,
     y
 );
-
-
-doc.setFont("helvetica", "bold");
 
 doc.text(
     "Date:",
@@ -12742,20 +13309,15 @@ doc.line(
 
 y += 10;
 
-
 // =========================
 // REMARKS
 // =========================
-
-doc.setFont("helvetica", "bold");
 
 doc.text(
     "Remarks:",
     20,
     y
 );
-
-doc.setDrawColor(100, 100, 100);
 
 doc.line(
     45,
@@ -12773,17 +13335,7 @@ doc.line(
     y
 );
 
-
-// =========================
-// MOVE TO NEXT SECTION
-// =========================
-
 y += 13;
-
-
-// Reset settings
-doc.setTextColor(0, 0, 0);
-doc.setFont("helvetica", "normal");
 
 // =========================
 // 📋 LOAN TERMS & CONDITIONS
@@ -12791,12 +13343,11 @@ doc.setFont("helvetica", "normal");
 
 protect(35);
 
-
-// =========================
-// SECTION TITLE
-// =========================
-
-doc.setFillColor(21, 101, 192);
+doc.setFillColor(
+    21,
+    101,
+    192
+);
 
 doc.roundedRect(
     15,
@@ -12808,8 +13359,17 @@ doc.roundedRect(
     "F"
 );
 
-doc.setTextColor(255, 255, 255);
-doc.setFont("helvetica", "bold");
+doc.setTextColor(
+    255,
+    255,
+    255
+);
+
+doc.setFont(
+    "helvetica",
+    "bold"
+);
+
 doc.setFontSize(11);
 
 doc.text(
@@ -12820,18 +13380,26 @@ doc.text(
 
 y += 11;
 
+doc.setTextColor(
+    0,
+    0,
+    0
+);
 
-// =========================
-// TERMS BOX
-// =========================
+doc.setFont(
+    "helvetica",
+    "normal"
+);
 
-doc.setTextColor(0, 0, 0);
-doc.setFont("helvetica", "normal");
 doc.setFontSize(8.5);
 
-doc.setDrawColor(190, 190, 190);
-doc.setLineWidth(0.4);
+doc.setDrawColor(
+    190,
+    190,
+    190
+);
 
+doc.setLineWidth(0.4);
 
 // =========================
 // TERMS
@@ -12893,121 +13461,146 @@ const rules = [
 
 ];
 
-
 // =========================
-// DRAW TERMS WITH PAGE BREAK
+// DRAW TERMS WITH PAGE BREAKS
 // =========================
 
 let boxTop = y - 5;
 
-rules.forEach((rule, index) => {
+rules.forEach(
+    (rule, index) => {
 
-    const lines = doc.splitTextToSize(
-        rule,
-        168
-    );
+        const lines =
+            doc.splitTextToSize(
+                rule,
+                168
+            );
 
-    const lineHeight = 4.5;
+        const lineHeight = 4.5;
 
-    const neededHeight =
-        (lines.length * lineHeight) + 3;
+        const neededHeight =
+            (lines.length * lineHeight) + 3;
 
+        // =========================
+        // PAGE BREAK
+        // =========================
 
-    // =========================
-    // PAGE BREAK
-    // =========================
+        if (
+            y + neededHeight >
+            bottomLimit
+        ) {
 
-    if (y + neededHeight > bottomLimit) {
+            // Close current terms box
+            doc.rect(
+                15,
+                boxTop,
+                180,
+                y - boxTop
+            );
 
-        // Close current terms box
-        doc.rect(
-            15,
-            boxTop,
-            180,
-            y - boxTop
+            // New page
+            doc.addPage();
+
+            drawPageHeader();
+
+            y = 86;
+
+            // Continuation title
+            doc.setFillColor(
+                21,
+                101,
+                192
+            );
+
+            doc.roundedRect(
+                15,
+                y - 5,
+                180,
+                9,
+                2,
+                2,
+                "F"
+            );
+
+            doc.setTextColor(
+                255,
+                255,
+                255
+            );
+
+            doc.setFont(
+                "helvetica",
+                "bold"
+            );
+
+            doc.setFontSize(11);
+
+            doc.text(
+                "LOAN TERMS & CONDITIONS — CONTINUED",
+                20,
+                y + 1
+            );
+
+            y += 11;
+
+            doc.setTextColor(
+                0,
+                0,
+                0
+            );
+
+            doc.setFont(
+                "helvetica",
+                "normal"
+            );
+
+            doc.setFontSize(8.5);
+
+            boxTop = y - 5;
+        }
+
+        // =========================
+        // RULE BACKGROUND
+        // =========================
+
+        if (
+            index % 2 === 0
+        ) {
+
+            doc.setFillColor(
+                248,
+                250,
+                253
+            );
+
+            doc.rect(
+                15,
+                y - 3,
+                180,
+                neededHeight,
+                "F"
+            );
+        }
+
+        // =========================
+        // RULE TEXT
+        // =========================
+
+        doc.setTextColor(
+            0,
+            0,
+            0
         );
-
-
-        // New page
-        doc.addPage();
-
-        drawPageHeader();
-
-        y = 86;
-
-
-        // New page terms continuation title
-        doc.setFillColor(21, 101, 192);
-
-        doc.roundedRect(
-            15,
-            y - 5,
-            180,
-            9,
-            2,
-            2,
-            "F"
-        );
-
-        doc.setTextColor(255, 255, 255);
-        doc.setFont("helvetica", "bold");
-        doc.setFontSize(11);
 
         doc.text(
-            "LOAN TERMS & CONDITIONS — CONTINUED",
+            lines,
             20,
-            y + 1
+            y
         );
 
-        y += 11;
-
-        doc.setTextColor(0, 0, 0);
-        doc.setFont("helvetica", "normal");
-        doc.setFontSize(8.5);
-
-        boxTop = y - 5;
+        y += neededHeight;
     }
-
-
-    // =========================
-    // RULE BACKGROUND
-    // =========================
-
-    if (index % 2 === 0) {
-
-        doc.setFillColor(
-            248,
-            250,
-            253
-        );
-
-        doc.rect(
-            15,
-            y - 3,
-            180,
-            neededHeight,
-            "F"
-        );
-    }
-
-
-    // =========================
-    // RULE TEXT
-    // =========================
-
-    doc.setTextColor(0, 0, 0);
-
-    doc.text(
-        lines,
-        20,
-        y
-    );
-
-
-    y += neededHeight;
-
-});
-
+);
 
 // =========================
 // CLOSE FINAL TERMS BOX
@@ -13022,26 +13615,34 @@ doc.rect(
 
 y += 7;
 
-
 // =========================
 // RESET TEXT SETTINGS
 // =========================
 
-doc.setTextColor(0, 0, 0);
-doc.setFont("helvetica", "normal");
+doc.setTextColor(
+    0,
+    0,
+    0
+);
+
+doc.setFont(
+    "helvetica",
+    "normal"
+);
+
 doc.setFontSize(9);
+
 // =========================
 // ✍️ APPLICANT DECLARATION
 // =========================
 
 protect(45);
 
-
-// =========================
-// SECTION TITLE
-// =========================
-
-doc.setFillColor(21, 101, 192);
+doc.setFillColor(
+    21,
+    101,
+    192
+);
 
 doc.roundedRect(
     15,
@@ -13053,8 +13654,17 @@ doc.roundedRect(
     "F"
 );
 
-doc.setTextColor(255, 255, 255);
-doc.setFont("helvetica", "bold");
+doc.setTextColor(
+    255,
+    255,
+    255
+);
+
+doc.setFont(
+    "helvetica",
+    "bold"
+);
+
 doc.setFontSize(11);
 
 doc.text(
@@ -13065,15 +13675,21 @@ doc.text(
 
 y += 12;
 
-
 // =========================
 // DECLARATION BOX
 // =========================
 
-doc.setDrawColor(190, 190, 190);
-doc.setLineWidth(0.4);
+doc.setDrawColor(
+    190,
+    190,
+    190
+);
 
-doc.setFillColor(250, 252, 255);
+doc.setFillColor(
+    250,
+    252,
+    255
+);
 
 doc.roundedRect(
     15,
@@ -13085,13 +13701,21 @@ doc.roundedRect(
     "FD"
 );
 
-
 // =========================
 // DECLARATION TEXT
 // =========================
 
-doc.setTextColor(0, 0, 0);
-doc.setFont("helvetica", "normal");
+doc.setTextColor(
+    0,
+    0,
+    0
+);
+
+doc.setFont(
+    "helvetica",
+    "normal"
+);
+
 doc.setFontSize(9.5);
 
 const declarationText =
@@ -13111,12 +13735,15 @@ doc.text(
 
 y += 27;
 
-
 // =========================
 // SIGNATURE AREA
 // =========================
 
-doc.setFont("helvetica", "bold");
+doc.setFont(
+    "helvetica",
+    "bold"
+);
+
 doc.setFontSize(9.5);
 
 doc.text(
@@ -13127,21 +13754,33 @@ doc.text(
 
 y += 9;
 
-
 // =========================
 // APPLICANT DIGITAL SIGNATURE
 // =========================
 
-doc.setFont("courier", "italic");
-doc.setFontSize(13);
-doc.setTextColor(0, 70, 140);
-
-doc.text(
-    applicantSignature || "",
-    20,
-    y
+doc.setFont(
+    "courier",
+    "italic"
 );
 
+doc.setFontSize(13);
+
+doc.setTextColor(
+    0,
+    70,
+    140
+);
+
+if (
+    applicantSignature
+) {
+
+    doc.text(
+        String(applicantSignature),
+        20,
+        y
+    );
+}
 
 // =========================
 // SIGNATURE LINES
@@ -13149,7 +13788,12 @@ doc.text(
 
 y += 5;
 
-doc.setDrawColor(80, 80, 80);
+doc.setDrawColor(
+    80,
+    80,
+    80
+);
+
 doc.setLineWidth(0.4);
 
 doc.line(
@@ -13175,15 +13819,22 @@ doc.line(
 
 y += 6;
 
-
 // =========================
 // SIGNATURE LABELS
 // =========================
 
-doc.setFont("helvetica", "normal");
-doc.setFontSize(8.5);
-doc.setTextColor(0, 0, 0);
+doc.setFont(
+    "helvetica",
+    "normal"
+);
 
+doc.setFontSize(8.5);
+
+doc.setTextColor(
+    0,
+    0,
+    0
+);
 
 // Applicant
 doc.text(
@@ -13191,7 +13842,6 @@ doc.text(
     20,
     y
 );
-
 
 // Chairlady
 doc.text(
@@ -13206,7 +13856,6 @@ doc.text(
     y + 5
 );
 
-
 // Administrator
 doc.text(
     "Administrator",
@@ -13219,24 +13868,28 @@ doc.text(
     140,
     y + 5
 );
-
-
+// Make sure there is enough space for the complete stamp
+if (y + 42 > bottomLimit) {
+    doc.addPage();
+    drawPageHeader();
+    y = 86;
+}
 // =========================
-// DATE / OFFICIAL STAMP
+// OFFICIAL STAMP - FULLY VISIBLE
 // =========================
-
-y += 16;
 
 doc.setFont("helvetica", "bold");
 doc.setFontSize(9);
+doc.setTextColor(0, 0, 0);
 
+// Date
 doc.text(
     "Date:",
     20,
     y
 );
 
-doc.setFont("helvetica", "normal");
+doc.setDrawColor(80, 80, 80);
 
 doc.line(
     35,
@@ -13245,127 +13898,222 @@ doc.line(
     y
 );
 
-
+// Stamp label
 doc.setFont("helvetica", "bold");
 
 doc.text(
     "Official Stamp:",
-    110,
+    120,
     y
 );
 
-doc.setDrawColor(100, 100, 100);
+// =========================
+// STAMP IMAGE
+// =========================
 
-doc.rect(
-    145,
-    y - 8,
-    45,
-    15
+if (
+    officialStamp &&
+    officialStamp.complete &&
+    officialStamp.naturalWidth > 0
+) {
+
+    try {
+
+        // Original image dimensions
+        const stampWidth = officialStamp.naturalWidth;
+        const stampHeight = officialStamp.naturalHeight;
+
+        // Maximum allowed size
+        const maxStampWidth = 35;
+        const maxStampHeight = 35;
+
+        // Keep original proportions
+        const ratio = Math.min(
+            maxStampWidth / stampWidth,
+            maxStampHeight / stampHeight
+        );
+
+        const finalStampWidth =
+            stampWidth * ratio;
+
+        const finalStampHeight =
+            stampHeight * ratio;
+
+        // Center stamp under the label
+        const stampX =
+            165 - (finalStampWidth / 2);
+
+        // Place stamp safely below label
+        const stampY =
+            y + 3;
+
+        // Add complete stamp
+        doc.addImage(
+            officialStamp,
+            "JPEG",
+            stampX,
+            stampY,
+            finalStampWidth,
+            finalStampHeight
+        );
+
+    } catch (error) {
+
+        console.warn(
+            "Stamp could not be added:",
+            error
+        );
+
+    }
+}
+
+// =========================
+// FINAL NOTICE — FIXED AT BOTTOM
+// =========================
+
+// Final notice position
+const noticeX = 15;
+const noticeY = 267;
+const noticeWidth = 180;
+const noticeHeight = 13;
+
+// =========================
+// FINAL NOTICE BOX
+// =========================
+
+doc.setFillColor(
+    235,
+    243,
+    255
 );
 
+doc.setDrawColor(
+    21,
+    101,
+    192
+);
 
-// =========================
-// FINAL NOTICE
-// =========================
-
-y += 18;
-
-doc.setFillColor(235, 243, 255);
-doc.setDrawColor(21, 101, 192);
+doc.setLineWidth(0.4);
 
 doc.roundedRect(
-    15,
-    y - 5,
-    180,
-    13,
+    noticeX,
+    noticeY,
+    noticeWidth,
+    noticeHeight,
     2,
     2,
     "FD"
 );
 
-doc.setTextColor(21, 70, 120);
-doc.setFont("helvetica", "bold");
+// =========================
+// FINAL NOTICE TITLE
+// =========================
+
+doc.setTextColor(
+    21,
+    70,
+    120
+);
+
+doc.setFont(
+    "helvetica",
+    "bold"
+);
+
 doc.setFontSize(8.5);
 
 doc.text(
     "Future Finders Chama — Loan Application",
     105,
-    y + 1,
+    noticeY + 6,
     {
         align: "center"
     }
 );
 
-doc.setFont("helvetica", "normal");
+// =========================
+// FINAL NOTICE MESSAGE
+// =========================
+
+doc.setFont(
+    "helvetica",
+    "normal"
+);
+
 doc.setFontSize(8);
 
 doc.text(
     "Please retain this document for your records.",
     105,
-    y + 6,
+    noticeY + 10.5,
     {
         align: "center"
     }
 );
 
-
 // =========================
-// RESET SETTINGS
-// =========================
-
-doc.setTextColor(0, 0, 0);
-doc.setFont("helvetica", "normal");
-doc.setFontSize(9);
-// =========================
-// 💾 FINAL PDF SAVE
+// FINAL FOOTER
 // =========================
 
-// Make sure the PDF has a clean final position
-y += 5;
+const footerLineY = 285;
+const footerTextY = 290;
 
+// Footer line
+doc.setDrawColor(
+    180,
+    180,
+    180
+);
 
-// =========================
-// FINAL FOOTER LINE
-// =========================
-
-doc.setDrawColor(180, 180, 180);
 doc.setLineWidth(0.3);
 
 doc.line(
     15,
-    285,
+    footerLineY,
     195,
-    285
+    footerLineY
 );
 
+// Footer text
+doc.setFont(
+    "helvetica",
+    "italic"
+);
 
-// =========================
-// FINAL FOOTER TEXT
-// =========================
-
-doc.setFont("helvetica", "italic");
 doc.setFontSize(8);
-doc.setTextColor(120, 120, 120);
+
+doc.setTextColor(
+    120,
+    120,
+    120
+);
 
 doc.text(
     "Future Finders Chama • Loan Management System",
     105,
-    290,
+    footerTextY,
     {
         align: "center"
     }
 );
-
 
 // =========================
 // SAFE FILE NAME
 // =========================
 
-const safeName = String(name || "Member")
-    .trim()
-    .replace(/[<>:"/\\|?*]+/g, "")
-    .replace(/\s+/g, "_");
-
+const safeName =
+    String(
+        name || "Member"
+    )
+        .trim()
+        .replace(
+            /[<>:"/\\|?*]+/g,
+            ""
+        )
+        .replace(
+            /\s+/g,
+            "_"
+        );
 
 // =========================
 // PDF FILE NAME
@@ -13373,7 +14121,6 @@ const safeName = String(name || "Member")
 
 const fileName =
     `Future_Finders_Loan_Application_${safeName}.pdf`;
-
 
 // =========================
 // SAVE PDF
@@ -13383,17 +14130,58 @@ doc.save(fileName);
 
 
 // =========================
-// SUCCESS MESSAGE
+// SAVE / DOWNLOAD PDF
 // =========================
 
-showNotification(
-    "✅ Loan application submitted successfully!"
-);
-// PDF generation continues even when the logo cannot be loaded.
+try {
 
-// Close submitLoan() function
+    doc.save(fileName);
+
+    // Extra browser-safe download trigger
+    setTimeout(() => {
+
+        try {
+
+            showNotification(
+                "✅ Loan application submitted successfully! PDF downloaded."
+            );
+
+        } catch (notificationError) {
+
+            console.log(
+                "Loan application PDF downloaded successfully."
+            );
+
+        }
+
+    }, 300);
+
+} catch (error) {
+
+    console.error(
+        "PDF download error:",
+        error
+    );
+
+    try {
+
+        showNotification(
+            "❌ PDF could not be downloaded. Please try again."
+        );
+
+    } catch (notificationError) {
+
+        alert(
+            "PDF could not be downloaded. Please try again."
+        );
+    }
 }
 
+// =========================
+// END SUBMIT LOAN
+// =========================
+
+}
 function updateLoanSummary(maxAmount) {
 
     const amountInput = document.getElementById("applyAmount");
