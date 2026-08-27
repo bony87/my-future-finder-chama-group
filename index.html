@@ -9493,7 +9493,7 @@ const members = {
   "BONIFACE CHELLUGET": {
     phone: "0713953004",
     password: "2030",
-    savings: 8000,
+    savings: 1000,
   
     monthly:  [1364,200,1000,1000,500,1000,500],
     
@@ -9965,21 +9965,33 @@ function checkLoan() {
   let loanAmount = 0;
   let repaymentPeriod = "";
 
-  if (totalSavings < 1500) {
-    loanResult.innerHTML = `❌ Sorry, ${loggedInUser}, you are not yet eligible for a loan. Please keep saving.`;
+  // ❌ Below Ksh 550 = Not eligible
+  if (totalSavings < 550) {
+    loanResult.innerHTML = `
+      <div style="padding:15px; background:#ffebee; border-radius:10px;
+                  box-shadow:0 3px 6px rgba(0,0,0,0.1);">
+        ❌ Sorry, <b>${loggedInUser}</b>, you are not yet eligible for a loan.<br><br>
+        Please save at least <b>Ksh 550</b> to qualify.
+      </div>
+    `;
     return;
+
+  // 💰 Ksh 550 - 1499 = Small Emergency Loan
+  } else if (totalSavings < 1500) {
+    loanAmount = 500;
+    repaymentPeriod = "14 days";
 
   } else if (totalSavings <= 1999) {
     loanAmount = 1300;
-    repaymentPeriod = "Up to 1 months";
+    repaymentPeriod = "Up to 1 month";
 
   } else if (totalSavings <= 2499) {
     loanAmount = 1500;
-    repaymentPeriod = "Up to 1 months";
+    repaymentPeriod = "Up to 1 month";
 
   } else if (totalSavings <= 2999) {
     loanAmount = 1800;
-    repaymentPeriod = "Up to 1 months";
+    repaymentPeriod = "Up to 1 month";
 
   } else if (totalSavings <= 3999) {
     loanAmount = 2900;
@@ -10006,17 +10018,25 @@ function checkLoan() {
   // 🔒 APPLY MAXIMUM LOAN CAP
   loanAmount = Math.min(loanAmount, MAX_LOAN);
 
- 
-
+  // 📌 Special message for the Ksh 500 emergency loan
+  const loanNote = (totalSavings >= 550 && totalSavings < 1500)
+    ? `<br><small>💡 Emergency loan: Save more to qualify for a higher loan amount.</small>`
+    : "";
 
   loanResult.innerHTML = `
-    <div style="padding:15px; background:#e3f2fd; border-radius:10px; box-shadow:0 3px 6px rgba(0,0,0,0.1);">
+    <div style="padding:15px; background:#e3f2fd; border-radius:10px;
+                box-shadow:0 3px 6px rgba(0,0,0,0.1);">
+
       ✅ <b>Congratulations, ${loggedInUser}!</b><br><br>
-      <b>Maximum Loan:</b> Ksh ${loanAmount}<br>
-      <b>Repayment Period:</b> ${repaymentPeriod}<br><br>
+
+      <b>Maximum Loan:</b> Ksh ${loanAmount.toLocaleString()}<br>
+      <b>Repayment Period:</b> ${repaymentPeriod}
+      ${loanNote}
+      <br><br>
 
       <button onclick="showLoanForm('${loggedInUser}', ${loanAmount}, '${repaymentPeriod}')"
-        style="padding:10px 15px; background:#1976d2; color:white; border:none; border-radius:5px; cursor:pointer;">
+        style="padding:10px 15px; background:#1976d2; color:white;
+               border:none; border-radius:5px; cursor:pointer;">
         👉 Apply for Loan
       </button>
     </div>
@@ -10539,7 +10559,7 @@ width:100%;
 padding:12px;
 margin-bottom:15px;">
 
-<label>Repayment Period</label>
+
 
 <label>Repayment Period</label>
 
@@ -10594,16 +10614,12 @@ border-radius:10px;
 padding:18px;
 margin-bottom:25px;">
 
-<h4 style="
-margin-top:0;
-color:#2e7d32;">
 
 
 
-<h4 style="margin-top:0;color:#2e7d32;">
+<h4 style="margin-top:0;color:#2e7d32;"> 
 📊 Loan Summary
 </h4>
-
 <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
     <span>Loan Amount</span>
     <b>KSh 0</b>
@@ -10700,39 +10716,174 @@ padding:20px;
 margin-bottom:20px;">
 
 <h4 style="margin-top:0;color:#1565c0;">
-📋 Future Finders Loan Terms & Conditions
+    📋 Future Finders Loan Terms & Conditions
 </h4>
 
 <ol style="padding-left:20px;line-height:1.8;">
 
-<li>Loan approval is subject to review and approval by the Future Finders Loan Committee.</li>
+    <li>
+        Loan approval is subject to review and approval by the
+        <b>Future Finders Loan Committee</b>.
+    </li>
 
-<li>Approval is based on the applicant's savings history, loan eligibility, guarantors and compliance with Future Finders policies.</li>
+    <li>
+        Approval is based on the applicant's savings history, loan
+        eligibility, guarantors and compliance with Future Finders
+        policies.
+    </li>
 
-<li>The approved loan amount shall not exceed the member's maximum loan eligibility.</li>
+    <li>
+        The approved loan amount shall not exceed the member's
+        <b>maximum loan eligibility</b>.
+    </li>
 
-<li>The borrower may choose a repayment period up to their maximum eligible repayment period. Choosing a shorter repayment period may reduce the total interest payable.</li>
+    <li>
+        The borrower may choose a repayment period up to their
+        maximum eligible repayment period. Choosing a shorter
+        repayment period may reduce the total interest payable.
+    </li>
 
-<li>All approved loans must be repaid on or before the agreed repayment due date.</li>
+    <li>
+        All approved loans must be repaid on or before the agreed
+        repayment due date.
+    </li>
 
-<li>Late repayment attracts a penalty of <b>KSh 10 per day</b> until the outstanding balance is fully cleared.</li>
+    <li>
+        Late repayment attracts a penalty of
+        <b>KSh 10 per day</b> until the outstanding balance is
+        fully cleared.
+    </li>
 
-<li>Loans of <b>KSh 5,000 and above</b> may qualify for a maximum repayment extension of <b>two (2) weeks</b>, subject to committee approval before the due date.</li>
+    <li>
+        Loans of <b>KSh 5,000 and above</b> may qualify for a maximum
+        repayment extension of <b>two (2) weeks</b>, subject to
+        prior approval by the Loan Committee. The extension is not
+        automatic and must be requested before the original
+        repayment due date.
+    </li>
 
-<li>The borrower shall not transfer the loan responsibility to another member without written approval from the committee.</li>
+    <li>
+        The borrower shall not transfer the loan responsibility to
+        another member without written approval from the Committee.
+    </li>
 
-<li>Guarantors may be contacted and may be required to assist in loan recovery if the borrower defaults.</li>
+    <li>
+        Guarantors may be contacted and may be required to assist
+        in loan recovery if the borrower defaults.
+    </li>
 
-<li>Future Finders reserves the right to recover outstanding loans from the member's savings, dividends or any other benefits due to the member where permitted by the group rules.</li>
+    <li>
+        Future Finders reserves the right to recover outstanding
+        loans from the member's savings, dividends or any other
+        benefits due to the member where permitted by the group rules.
+    </li>
 
-<li>Providing false, incomplete or misleading information may result in rejection of the application, cancellation of the loan or disciplinary action.</li>
+    <li>
+        Providing false, incomplete or misleading information may
+        result in rejection of the application, cancellation of the
+        loan or disciplinary action.
+    </li>
 
-<li>Submitting this application does not guarantee loan approval.</li>
+    <li>
+        Submitting this application does not guarantee loan approval.
+    </li>
 
-<li>The applicant agrees to comply with all current and future Future Finders loan policies, regulations and committee decisions.</li>
+    <li>
+        The applicant agrees to comply with all current and future
+        Future Finders loan policies, regulations and Committee
+        decisions.
+    </li>
+
+
+    <!-- ========================= -->
+    <!-- 🔵 SPECIAL 14-DAY LOAN -->
+    <!-- ========================= -->
+
+    <li>
+        <b>Special 14-Day Loan:</b> Members whose savings are between
+        <b>KSh 550 and KSh 1,499</b> may qualify for a maximum loan of
+        <b>KSh 500</b>, subject to approval by the Loan Committee.
+    </li>
+
+    <li>
+        The special 14-day loan attracts an interest rate of
+        <b>10%</b>. For example, a KSh 500 loan attracts KSh 50
+        interest, making the total repayment <b>KSh 550</b>.
+    </li>
+
+    <li>
+        The special 14-day loan shall be repaid as a
+        <b>single payment</b> on or before the 14-day due date and
+        shall not be treated as a monthly installment loan.
+    </li>
+
+    <li>
+        The <b>14-day loan is not eligible for a repayment extension</b>
+        unless the Loan Committee expressly approves an exception.
+    </li>
+
+    <li>
+        Interest shall be calculated based on the
+        <b>approved loan principal</b> and the applicable interest
+        rate for the selected repayment period.
+    </li>
+
+    <li>
+        A member with an <b>outstanding or overdue loan</b> may not
+        qualify for another loan until the existing loan and any
+        applicable penalties have been fully cleared, unless otherwise
+        approved by the Loan Committee.
+    </li>
+
+    <li>
+        The Loan Committee reserves the right to
+        <b>approve, reduce, defer or decline</b> any loan application
+        after reviewing the member's savings, repayment history,
+        guarantors and other applicable requirements.
+    </li>
+
+    <li>
+        The borrower is responsible for ensuring that all information
+        provided in the loan application is
+        <b>true, accurate and complete</b>.
+    </li>
+
+    <li>
+        All loan repayments must be properly recorded and acknowledged
+        through the official Future Finders loan records or approved
+        payment channels.
+    </li>
+
+    <li>
+        Any outstanding balance, including applicable interest and
+        penalties, shall remain the responsibility of the borrower
+        until fully settled.
+    </li>
+
+    <li>
+        Future Finders may review and amend its loan limits, interest
+        rates, repayment periods, penalties and eligibility
+        requirements from time to time in accordance with approved
+        group policies.
+    </li>
 
 </ol>
 
+<div style="
+    margin-top:15px;
+    padding:12px;
+    background:#e3f2fd;
+    border-left:4px solid #1565c0;
+    border-radius:6px;
+    font-size:14px;
+    line-height:1.6;
+">
+    <b>📌 Important:</b>
+    By submitting this loan application, the applicant confirms that
+    they have read, understood and agreed to the Future Finders Loan
+    Terms & Conditions and accept responsibility for repayment of
+    the approved loan, applicable interest and any penalties arising
+    from late payment.
 </div>
 
 <div style="
@@ -10856,30 +11007,70 @@ currentStep = 1;
 updateProgress();
 }
 
-
 function submitLoan(event, name, maxAmount, phone) {
-event.preventDefault();
 
+    event.preventDefault();
+
+    // =========================
+    // LOAN DETAILS
+    // =========================
+
+    const amount = parseInt(document.getElementById("applyAmount").value);
+    const repaymentPeriod = document.getElementById("repaymentPeriod").value;
+
+    // =========================
+// REPAYMENT PERIOD
 // =========================
-// LOAN DETAILS
-// =========================
-const amount = parseInt(document.getElementById("applyAmount").value);
 
-const repaymentPeriod = document.getElementById("repaymentPeriod").value;
+let months = 0;
+let days = 0;
+let isShortTermLoan = false;
 
-let months = 1;
+const selectedPeriod = repaymentPeriod.toLowerCase().trim();
 
-if (repaymentPeriod.includes("2")) {
+// 🔵 14 DAYS - 10% INTEREST
+if (selectedPeriod.includes("14")) {
+
+    days = 14;
+    months = 0;
+    isShortTermLoan = true;
+
+// 🟢 1 MONTH - 12% INTEREST
+} else if (selectedPeriod.includes("1 month")) {
+
+    months = 1;
+    days = 0;
+    isShortTermLoan = false;
+
+// 🟢 2 MONTHS - 15% INTEREST
+} else if (selectedPeriod.includes("2 month")) {
+
     months = 2;
-} else if (repaymentPeriod.includes("3")) {
+    days = 0;
+    isShortTermLoan = false;
+
+// 🟢 3 MONTHS - 17% INTEREST
+} else if (selectedPeriod.includes("3 month")) {
+
     months = 3;
-} else if (repaymentPeriod.includes("4")) {
+    days = 0;
+    isShortTermLoan = false;
+
+// 🟢 4 MONTHS - 20% INTEREST
+} else if (selectedPeriod.includes("4 month")) {
+
     months = 4;
+    days = 0;
+    isShortTermLoan = false;
+
+} else {
+
+    alert("⚠️ Please select a valid repayment period.");
+    return;
 }
 
 const id = document.getElementById("loanId").value.trim();
 const reason = document.getElementById("loanReason").value.trim();
-
 // =========================
 // PERSONAL DETAILS
 // =========================
@@ -11000,34 +11191,89 @@ if (!applicantSignature) {
 // =========================
 // CALCULATIONS
 // =========================
+
 let interest = 0.12;
 
-switch (months) {
-    case 1:
-        interest = 0.12;
-        break;
-    case 2:
-        interest = 0.15;
-        break;
-    case 3:
-        interest = 0.17;
-        break;
-    case 4:
-        interest = 0.20;
-        break;
+// 🔵 SPECIAL 14-DAY LOAN
+// Ksh 500 loan = 10% interest
+if (isShortTermLoan) {
+
+    interest = 0.10;
+
+} else {
+
+    switch (months) {
+
+        case 1:
+            interest = 0.12;
+            break;
+
+        case 2:
+            interest = 0.15;
+            break;
+
+        case 3:
+            interest = 0.17;
+            break;
+
+        case 4:
+            interest = 0.20;
+            break;
+
+        default:
+            interest = 0.12;
+    }
 }
 
-const totalRepayment = Math.round(amount * (1 + interest));
-const monthlyRepayment = Math.round(totalRepayment / months);
+// =========================
+// TOTAL REPAYMENT
+// =========================
+
+const totalRepayment = Math.round(
+    amount * (1 + interest)
+);
+
+// =========================
+// REPAYMENT INSTALLMENT
+// =========================
+
+let monthlyRepayment;
+
+if (isShortTermLoan) {
+
+    // 14-day loan is paid as one amount
+    monthlyRepayment = totalRepayment;
+
+} else {
+
+    monthlyRepayment = Math.round(
+        totalRepayment / months
+    );
+}
+
+// =========================
+// PENALTY & GRACE PERIOD
+// =========================
 
 const dailyPenalty = 10;
-const graceExtension = amount > 5000 ? "1 Week Allowed" : "Not Eligible";
 
-const applyDate = new Date().toLocaleDateString("en-KE", {
-year: "numeric",
-month: "long",
-day: "numeric"
-});
+const graceExtension =
+    amount > 5000
+        ? "1 Week Allowed"
+        : "Not Eligible";
+
+// =========================
+// APPLICATION DATE
+// =========================
+
+const applyDate = new Date().toLocaleDateString(
+    "en-KE",
+    {
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+    }
+);
 
 // ================= APPLICATION NUMBER =================
 
@@ -11046,22 +11292,45 @@ const applicationNo = `FF-${cleanPhone}-${dateCode}`;
 
 const repaymentSchedule = [];
 
-for (let i = 1; i <= months; i++) {
+if (isShortTermLoan) {
 
+    // Special 14-day loan: one full payment
     const dueDate = new Date(today);
-
-    dueDate.setMonth(dueDate.getMonth() + i);
+    dueDate.setDate(dueDate.getDate() + 14);
 
     repaymentSchedule.push({
-        installment: i,
+        installment: 1,
         dueDate: dueDate.toLocaleDateString("en-KE", {
             day: "2-digit",
             month: "long",
             year: "numeric"
         }),
-        amount: monthlyRepayment
+        amount: totalRepayment
     });
 
+} else {
+
+    // Normal monthly loans
+    for (let i = 1; i <= months; i++) {
+
+        const dueDate = new Date(today);
+        dueDate.setMonth(dueDate.getMonth() + i);
+
+        const paymentAmount =
+            i === months
+                ? totalRepayment - (monthlyRepayment * (months - 1))
+                : monthlyRepayment;
+
+        repaymentSchedule.push({
+            installment: i,
+            dueDate: dueDate.toLocaleDateString("en-KE", {
+                day: "2-digit",
+                month: "long",
+                year: "numeric"
+            }),
+            amount: paymentAmount
+        });
+    }
 }
 // =========================
 // LOAN DECISION
@@ -11083,52 +11352,172 @@ let y;
 
 function drawPageHeader() {
 
-    // White Background
-    doc.setFillColor(255,255,255);
-    doc.rect(0,0,210,297,"F");
+    // =========================
+    // PAGE BACKGROUND
+    // =========================
 
-    // Watermark
+    doc.setFillColor(255, 255, 255);
+    doc.rect(0, 0, 210, 297, "F");
+
+
+    // =========================
+    // WATERMARK
+    // =========================
+
     addWatermark();
 
-    // Logo
-    doc.addImage(logo, "PNG", 85, 8, 25, 25);
 
-    // Title
-    doc.setFont("helvetica","bold");
+    // =========================
+    // TOP BLUE STRIP
+    // =========================
+
+    doc.setFillColor(21, 101, 192);
+    doc.rect(0, 0, 210, 3, "F");
+
+
+    // =========================
+    // LOGO
+    // =========================
+
+    // =========================
+// LOGO
+// =========================
+if (logo && logo.complete && logo.naturalWidth > 0) {
+    doc.addImage(
+        logo,
+        "PNG",
+        87.5,
+        8,
+        35,
+        35
+    );
+}
+
+
+    // =========================
+    // MAIN TITLE
+    // =========================
+
+    doc.setFont("helvetica", "bold");
     doc.setFontSize(18);
-    doc.setTextColor(0,70,140);
-    doc.text("FUTURE FINDERS CHAMA",105,38,{align:"center"});
+    doc.setTextColor(0, 70, 140);
 
+    doc.text(
+        "FUTURE FINDERS CHAMA",
+        105,
+        50,
+        { align: "center" }
+    );
+
+
+    // =========================
+    // FORM TITLE
+    // =========================
+
+    doc.setFont("helvetica", "bold");
     doc.setFontSize(13);
-    doc.text("LOAN APPLICATION FORM",105,45,{align:"center"});
+    doc.setTextColor(60, 60, 60);
 
-    // Header line
-    doc.setDrawColor(21,101,192);
-    doc.setLineWidth(0.6);
-    doc.line(15,50,195,50);
+    doc.text(
+        "LOAN APPLICATION FORM",
+        105,
+        58,
+        { align: "center" }
+    );
 
-    // Application Details
-    doc.setFont("helvetica","normal");
-    doc.setFontSize(10);
-    doc.setTextColor(70);
 
-    doc.text(`Application No: ${applicationNo}`,15,58);
-    doc.text(`Date: ${applyDate}`,195,58,{align:"right"});
+    // =========================
+    // BLUE DIVIDER
+    // =========================
 
-    // ================= FOOTER =================
-doc.setDrawColor(180);
-doc.line(15, 285, 195, 285);
+    doc.setDrawColor(21, 101, 192);
+    doc.setLineWidth(0.8);
 
-doc.setFont("helvetica","italic");
-doc.setFontSize(8);
-doc.setTextColor(120);
+    doc.line(
+        15,
+        64,
+        195,
+        64
+    );
 
-doc.text(
-    "This loan application form was generated electronically by the Future Finders Loan Management System.",
-    105,
-    290,
-    { align: "center" }
-);
+
+    // =========================
+    // CENTER ACCENT
+    // =========================
+
+    doc.setFillColor(21, 101, 192);
+
+    doc.roundedRect(
+        92,
+        62,
+        26,
+        4,
+        2,
+        2,
+        "F"
+    );
+
+
+    // =========================
+    // APPLICATION DETAILS
+    // =========================
+
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(9.5);
+    doc.setTextColor(70, 70, 70);
+
+    doc.text(
+        `Application No: ${applicationNo}`,
+        15,
+        73
+    );
+
+    doc.text(
+        `Date: ${applyDate}`,
+        195,
+        73,
+        { align: "right" }
+    );
+
+
+    // =========================
+    // DETAILS DIVIDER
+    // =========================
+
+    doc.setDrawColor(210, 210, 210);
+    doc.setLineWidth(0.3);
+
+    doc.line(
+        15,
+        78,
+        195,
+        78
+    );
+
+
+    // =========================
+    // FOOTER
+    // =========================
+
+    doc.setDrawColor(180, 180, 180);
+
+    doc.line(
+        15,
+        285,
+        195,
+        285
+    );
+
+    doc.setFont("helvetica", "italic");
+    doc.setFontSize(8);
+    doc.setTextColor(120, 120, 120);
+
+    doc.text(
+        "This loan application form was generated electronically by the Future Finders Loan Management System.",
+        105,
+        290,
+        { align: "center" }
+    );
 }
 // ================= PAGE BREAK FUNCTION =================
 
@@ -11183,14 +11572,23 @@ function addWatermark() {
 
 // ================= LOGO =================
 
+// =========================
+// LOGO LOADING
+// =========================
 const logo = new Image();
+
 logo.crossOrigin = "anonymous";
-logo.src = "https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/cropped_circle_image.png";
-logo.onload = function () {
+
+logo.src =
+    "https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/cropped_circle_image.png";
+
+// Logo loading is no longer required before generating the PDF.
+// The PDF will generate even if the remote logo is unavailable.
+
 
     drawPageHeader();
 
-    y = 68;
+    y = 86;
     const gap = 6;
 
    
@@ -11200,524 +11598,1949 @@ logo.onload = function () {
    
 
    
-// ================= MEMBER DETAILS =================
+// =========================
+// 👤 MEMBER DETAILS
+// =========================
 
-doc.setFillColor(21,101,192);
-doc.roundedRect(15, y-5, 180, 8, 2, 2, "F");
+doc.setFillColor(21, 101, 192);
+doc.roundedRect(
+    15,
+    y - 5,
+    180,
+    9,
+    2,
+    2,
+    "F"
+);
 
-doc.setTextColor(255);
-doc.setFont("helvetica","bold");
+doc.setTextColor(255, 255, 255);
+doc.setFont("helvetica", "bold");
 doc.setFontSize(11);
-doc.text("MEMBER DETAILS",20,y);
 
-y += 10;
+doc.text(
+    "MEMBER DETAILS",
+    20,
+    y + 1
+);
 
-doc.setTextColor(0);
-doc.setFont("helvetica","normal");
-doc.setFontSize(10);
+y += 11;
 
-// Draw the information box
-doc.setDrawColor(180);
-doc.rect(15, y-5, 180, 30);
 
-// Row 1
-doc.text("Name:",20,y);
-doc.text(name,45,y);
+// =========================
+// MEMBER INFORMATION BOX
+// =========================
 
-doc.text("Phone:",110,y);
-doc.text(phone,135,y);
+doc.setDrawColor(190, 190, 190);
+doc.setLineWidth(0.4);
+
+doc.setFillColor(250, 252, 255);
+
+doc.roundedRect(
+    15,
+    y - 5,
+    180,
+    34,
+    2,
+    2,
+    "FD"
+);
+
+
+// =========================
+// TEXT SETTINGS
+// =========================
+
+doc.setTextColor(0, 0, 0);
+doc.setFont("helvetica", "normal");
+doc.setFontSize(9.5);
+
+
+// =========================
+// ROW 1
+// =========================
+
+doc.setFont("helvetica", "bold");
+doc.text("Name:", 20, y);
+
+doc.setFont("helvetica", "normal");
+doc.text(name || "-", 45, y);
+
+doc.setFont("helvetica", "bold");
+doc.text("Phone:", 110, y);
+
+doc.setFont("helvetica", "normal");
+doc.text(phone || "-", 135, y);
 
 y += 7;
 
-// Row 2
-doc.text("ID No:",20,y);
-doc.text(id,45,y);
 
-doc.text("Gender:",110,y);
-doc.text(gender,135,y);
+// =========================
+// ROW 2
+// =========================
+
+doc.setFont("helvetica", "bold");
+doc.text("ID No:", 20, y);
+
+doc.setFont("helvetica", "normal");
+doc.text(id || "-", 45, y);
+
+doc.setFont("helvetica", "bold");
+doc.text("Gender:", 110, y);
+
+doc.setFont("helvetica", "normal");
+doc.text(gender || "-", 135, y);
 
 y += 7;
 
-// Row 3
-doc.text("DOB:",20,y);
-doc.text(dob,45,y);
 
-doc.text("Occupation:",110,y);
-doc.text(occupation,135,y);
+// =========================
+// ROW 3
+// =========================
+
+doc.setFont("helvetica", "bold");
+doc.text("DOB:", 20, y);
+
+doc.setFont("helvetica", "normal");
+doc.text(dob || "-", 45, y);
+
+doc.setFont("helvetica", "bold");
+doc.text("Occupation:", 110, y);
+
+doc.setFont("helvetica", "normal");
+doc.text(occupation || "-", 140, y);
 
 y += 7;
 
-// Row 4
-doc.text("Address:",20,y);
 
-const addressText = doc.splitTextToSize(address,135);
-doc.text(addressText,45,y);
+// =========================
+// ROW 4 — ADDRESS
+// =========================
 
-y += 12;
+doc.setFont("helvetica", "bold");
+doc.text("Address:", 20, y);
+
+doc.setFont("helvetica", "normal");
+
+const addressText =
+    doc.splitTextToSize(
+        address || "-",
+        135
+    );
+
+doc.text(
+    addressText,
+    45,
+    y
+);
 
 
-// ================= NEXT OF KIN =================
+// Move below the section
+y += Math.max(
+    12,
+    addressText.length * 5 + 5
+);
 
-doc.setFillColor(21,101,192);
-doc.roundedRect(15, y-5, 180, 8, 2, 2, "F");
 
-doc.setTextColor(255);
-doc.setFont("helvetica","bold");
+// =========================
+// SECTION SPACING
+// =========================
+
+y += 3;
+
+// =========================
+// 👨‍👩‍👧 NEXT OF KIN
+// =========================
+
+doc.setFillColor(21, 101, 192);
+doc.roundedRect(
+    15,
+    y - 5,
+    180,
+    9,
+    2,
+    2,
+    "F"
+);
+
+doc.setTextColor(255, 255, 255);
+doc.setFont("helvetica", "bold");
 doc.setFontSize(11);
-doc.text("NEXT OF KIN",20,y);
 
-y += 10;
+doc.text(
+    "NEXT OF KIN",
+    20,
+    y + 1
+);
 
-doc.setTextColor(0);
-doc.setFont("helvetica","normal");
-doc.setFontSize(10);
+y += 11;
 
-doc.setDrawColor(180);
-doc.rect(15,y-5,180,22);
 
-doc.text("Name:",20,y);
-doc.text(kinName,45,y);
+// =========================
+// NEXT OF KIN BOX
+// =========================
 
-doc.text("Relationship:",110,y);
-doc.text(kinRelationship,145,y);
+doc.setDrawColor(190, 190, 190);
+doc.setLineWidth(0.4);
+
+doc.setFillColor(250, 252, 255);
+
+doc.roundedRect(
+    15,
+    y - 5,
+    180,
+    23,
+    2,
+    2,
+    "FD"
+);
+
+
+// =========================
+// TEXT SETTINGS
+// =========================
+
+doc.setTextColor(0, 0, 0);
+doc.setFontSize(9.5);
+
+
+// =========================
+// ROW 1
+// =========================
+
+doc.setFont("helvetica", "bold");
+doc.text("Name:", 20, y);
+
+doc.setFont("helvetica", "normal");
+doc.text(
+    kinName || "-",
+    45,
+    y
+);
+
+doc.setFont("helvetica", "bold");
+doc.text("Relationship:", 110, y);
+
+doc.setFont("helvetica", "normal");
+doc.text(
+    kinRelationship || "-",
+    145,
+    y
+);
 
 y += 8;
 
-doc.text("Phone:",20,y);
-doc.text(kinPhone,45,y);
 
-y += 12;
+// =========================
+// ROW 2
+// =========================
 
-// ================= GUARANTORS =================
+doc.setFont("helvetica", "bold");
+doc.text("Phone:", 20, y);
 
-doc.setFillColor(21,101,192);
-doc.roundedRect(15, y-5, 180, 8, 2, 2, "F");
+doc.setFont("helvetica", "normal");
+doc.text(
+    kinPhone || "-",
+    45,
+    y
+);
 
-doc.setTextColor(255);
-doc.setFont("helvetica","bold");
+
+// Move below the section
+y += 15;
+// =========================
+// 🤝 GUARANTORS
+// =========================
+
+doc.setFillColor(21, 101, 192);
+
+doc.roundedRect(
+    15,
+    y - 5,
+    180,
+    9,
+    2,
+    2,
+    "F"
+);
+
+doc.setTextColor(255, 255, 255);
+doc.setFont("helvetica", "bold");
 doc.setFontSize(11);
-doc.text("GUARANTORS",20,y);
 
-y += 10;
+doc.text(
+    "GUARANTORS",
+    20,
+    y + 1
+);
 
-doc.setTextColor(0);
-doc.setFont("helvetica","normal");
-doc.setFontSize(10);
+y += 11;
 
-doc.setDrawColor(180);
-doc.rect(15,y-5,180,30);
 
-// Guarantor 1
-doc.text("Guarantor 1:",20,y);
-doc.text(guarantor1,50,y);
+// =========================
+// GUARANTORS BOX
+// =========================
 
-doc.text("Phone:",120,y);
-doc.text(guarantor1Phone,140,y);
+doc.setDrawColor(190, 190, 190);
+doc.setLineWidth(0.4);
+
+doc.setFillColor(250, 252, 255);
+
+doc.roundedRect(
+    15,
+    y - 5,
+    180,
+    30,
+    2,
+    2,
+    "FD"
+);
+
+
+// =========================
+// TEXT SETTINGS
+// =========================
+
+doc.setTextColor(0, 0, 0);
+doc.setFont("helvetica", "normal");
+doc.setFontSize(9.5);
+
+
+// =========================
+// GUARANTOR 1
+// =========================
+
+doc.setFont("helvetica", "bold");
+
+doc.text(
+    "Guarantor 1:",
+    20,
+    y
+);
+
+doc.setFont("helvetica", "normal");
+
+doc.text(
+    guarantor1 || "-",
+    50,
+    y
+);
+
+doc.setFont("helvetica", "bold");
+
+doc.text(
+    "Phone:",
+    120,
+    y
+);
+
+doc.setFont("helvetica", "normal");
+
+doc.text(
+    guarantor1Phone || "-",
+    140,
+    y
+);
 
 y += 8;
 
-// Guarantor 2
-doc.text("Guarantor 2:",20,y);
-doc.text(guarantor2,50,y);
 
-doc.text("Phone:",120,y);
-doc.text(guarantor2Phone,140,y);
+// =========================
+// GUARANTOR 2
+// =========================
 
-y += 14;
+doc.setFont("helvetica", "bold");
 
-// ================= LOAN DETAILS =================
+doc.text(
+    "Guarantor 2:",
+    20,
+    y
+);
 
-doc.setFillColor(21,101,192);
-doc.roundedRect(15, y-5, 180, 8, 2, 2, "F");
+doc.setFont("helvetica", "normal");
 
-doc.setTextColor(255);
-doc.setFont("helvetica","bold");
+doc.text(
+    guarantor2 || "-",
+    50,
+    y
+);
+
+doc.setFont("helvetica", "bold");
+
+doc.text(
+    "Phone:",
+    120,
+    y
+);
+
+doc.setFont("helvetica", "normal");
+
+doc.text(
+    guarantor2Phone || "-",
+    140,
+    y
+);
+
+
+// =========================
+// MOVE TO NEXT SECTION
+// =========================
+
+y += 17;
+// =========================
+// 💰 LOAN DETAILS
+// =========================
+
+doc.setFillColor(21, 101, 192);
+
+doc.roundedRect(
+    15,
+    y - 5,
+    180,
+    9,
+    2,
+    2,
+    "F"
+);
+
+doc.setTextColor(255, 255, 255);
+doc.setFont("helvetica", "bold");
 doc.setFontSize(11);
-doc.text("LOAN DETAILS",20,y);
 
-y += 10;
+doc.text(
+    "LOAN DETAILS",
+    20,
+    y + 1
+);
 
-doc.setDrawColor(180);
-doc.rect(15,y-5,180,38);
+y += 11;
 
-doc.setFont("helvetica","normal");
-doc.setFontSize(10);
-doc.setTextColor(0);
 
-// Left Column
-doc.text("Loan Amount",20,y);
-doc.text(`KSh ${amount.toLocaleString()}`,60,y);
+// =========================
+// LOAN DETAILS BOX
+// =========================
 
-doc.text("Interest",110,y);
-doc.text(`${(interest*100).toFixed(0)}%`,145,y);
+doc.setDrawColor(190, 190, 190);
+doc.setLineWidth(0.4);
+
+doc.setFillColor(250, 252, 255);
+
+doc.roundedRect(
+    15,
+    y - 5,
+    180,
+    38,
+    2,
+    2,
+    "FD"
+);
+
+
+// =========================
+// TEXT SETTINGS
+// =========================
+
+doc.setTextColor(0, 0, 0);
+doc.setFont("helvetica", "normal");
+doc.setFontSize(9.5);
+
+
+// =========================
+// REPAYMENT PERIOD DISPLAY
+// =========================
+
+let repaymentDisplay;
+
+if (typeof isShortTermLoan !== "undefined" && isShortTermLoan) {
+
+    repaymentDisplay = "14 Days";
+
+} else {
+
+    repaymentDisplay = `${months} Month(s)`;
+
+}
+
+
+// =========================
+// ROW 1
+// =========================
+
+doc.setFont("helvetica", "bold");
+
+doc.text(
+    "Loan Amount:",
+    20,
+    y
+);
+
+doc.setFont("helvetica", "normal");
+
+doc.text(
+    `KSh ${amount.toLocaleString()}`,
+    60,
+    y
+);
+
+
+doc.setFont("helvetica", "bold");
+
+doc.text(
+    "Interest:",
+    110,
+    y
+);
+
+doc.setFont("helvetica", "normal");
+
+doc.text(
+    `${(interest * 100).toFixed(0)}%`,
+    145,
+    y
+);
 
 y += 8;
 
-doc.text("Period",20,y);
-doc.text(`${months} Month(s)`,60,y);
 
-doc.text("Monthly",110,y);
-doc.text(`KSh ${monthlyRepayment.toLocaleString()}`,145,y);
+// =========================
+// ROW 2
+// =========================
+
+doc.setFont("helvetica", "bold");
+
+doc.text(
+    "Period:",
+    20,
+    y
+);
+
+doc.setFont("helvetica", "normal");
+
+doc.text(
+    repaymentDisplay,
+    60,
+    y
+);
+
+
+doc.setFont("helvetica", "bold");
+
+doc.text(
+    isShortTermLoan ? "Repayment:" : "Installment:",
+    110,
+    y
+);
+
+doc.setFont("helvetica", "normal");
+
+doc.text(
+    `KSh ${monthlyRepayment.toLocaleString()}`,
+    145,
+    y
+);
 
 y += 8;
 
-doc.text("Total Repayment",20,y);
-doc.text(`KSh ${totalRepayment.toLocaleString()}`,60,y);
 
-doc.text("Payment",110,y);
-doc.text(paymentMethod,145,y);
+// =========================
+// ROW 3
+// =========================
+
+doc.setFont("helvetica", "bold");
+
+doc.text(
+    "Total Repayment:",
+    20,
+    y
+);
+
+doc.setFont("helvetica", "normal");
+
+doc.text(
+    `KSh ${totalRepayment.toLocaleString()}`,
+    60,
+    y
+);
+
+
+doc.setFont("helvetica", "bold");
+
+doc.text(
+    "Payment:",
+    110,
+    y
+);
+
+doc.setFont("helvetica", "normal");
+
+doc.text(
+    paymentMethod || "-",
+    145,
+    y
+);
 
 y += 8;
 
-doc.text("Application Status",20,y);
 
-doc.setTextColor(220,0,0);
-doc.setFont("helvetica","bold");
-doc.text(loanStatus,60,y);
+// =========================
+// ROW 4 — STATUS
+// =========================
 
-doc.setTextColor(0);
-doc.setFont("helvetica","normal");
+doc.setFont("helvetica", "bold");
+
+doc.text(
+    "Application Status:",
+    20,
+    y
+);
+
+doc.setTextColor(220, 0, 0);
+doc.setFont("helvetica", "bold");
+
+doc.text(
+    loanStatus || "Pending",
+    60,
+    y
+);
+
+
+// Reset text colour
+doc.setTextColor(0, 0, 0);
+doc.setFont("helvetica", "normal");
+
+
+// =========================
+// MOVE TO NEXT SECTION
+// =========================
 
 y += 15;
+// =========================
+// 📝 PURPOSE OF LOAN
+// =========================
 
-// ================= PURPOSE OF LOAN =================
+doc.setFillColor(21, 101, 192);
 
-doc.setFillColor(21,101,192);
-doc.roundedRect(15,y-5,180,8,2,2,"F");
+doc.roundedRect(
+    15,
+    y - 5,
+    180,
+    9,
+    2,
+    2,
+    "F"
+);
 
-doc.setTextColor(255);
-doc.setFont("helvetica","bold");
+doc.setTextColor(255, 255, 255);
+doc.setFont("helvetica", "bold");
 doc.setFontSize(11);
-doc.text("PURPOSE OF LOAN",20,y);
 
-y += 10;
+doc.text(
+    "PURPOSE OF LOAN",
+    20,
+    y + 1
+);
 
-doc.setDrawColor(180);
-doc.rect(15,y-5,180,22);
+y += 11;
 
-doc.setTextColor(0);
-doc.setFont("helvetica","normal");
-doc.setFontSize(10);
 
-// Limit to 3 lines so it always fits on one page
-const purposeLines = doc.splitTextToSize(reason,170).slice(0,3);
+// =========================
+// PURPOSE BOX
+// =========================
 
-doc.text(purposeLines,20,y);
+doc.setDrawColor(190, 190, 190);
+doc.setLineWidth(0.4);
 
-y += 28;
-// ================= REPAYMENT SCHEDULE =================
+doc.setFillColor(250, 252, 255);
 
-doc.setFillColor(21,101,192);
-doc.roundedRect(15, y-5, 180, 8, 2, 2, "F");
+doc.roundedRect(
+    15,
+    y - 5,
+    180,
+    25,
+    2,
+    2,
+    "FD"
+);
 
-doc.setTextColor(255);
-doc.setFont("helvetica","bold");
+
+// =========================
+// PURPOSE TEXT
+// =========================
+
+doc.setTextColor(0, 0, 0);
+doc.setFont("helvetica", "normal");
+doc.setFontSize(9.5);
+
+
+// Limit purpose to 3 lines
+const purposeLines = doc
+    .splitTextToSize(
+        reason || "Not provided",
+        168
+    )
+    .slice(0, 3);
+
+
+// Display purpose
+doc.text(
+    purposeLines,
+    20,
+    y
+);
+
+
+// =========================
+// MOVE TO NEXT SECTION
+// =========================
+
+// Allow enough space depending on
+// number of purpose lines
+y += Math.max(
+    18,
+    purposeLines.length * 5 + 10
+);
+
+y += 3;
+// =========================
+// 📅 REPAYMENT SCHEDULE
+// =========================
+
+// Make sure the section starts on a safe area
+protect(45);
+
+
+// =========================
+// SECTION TITLE
+// =========================
+
+doc.setFillColor(21, 101, 192);
+
+doc.roundedRect(
+    15,
+    y - 5,
+    180,
+    9,
+    2,
+    2,
+    "F"
+);
+
+doc.setTextColor(255, 255, 255);
+doc.setFont("helvetica", "bold");
 doc.setFontSize(11);
-doc.text("REPAYMENT SCHEDULE",20,y);
 
-y += 10;
+doc.text(
+    "REPAYMENT SCHEDULE",
+    20,
+    y + 1
+);
 
-// Header
-doc.setFillColor(230,240,255);
-doc.rect(15,y-5,180,8,"F");
+y += 11;
 
-doc.setTextColor(0);
-doc.setFont("helvetica","bold");
-doc.setFontSize(10);
 
-doc.text("Installment",20,y);
-doc.text("Due Date (On or Before)",80,y);
-doc.text("Amount",170,y,{align:"right"});
+// =========================
+// PERIOD INFORMATION
+// =========================
 
-y += 8;
+doc.setFillColor(235, 243, 255);
+doc.setDrawColor(190, 190, 190);
 
-// Rows
-doc.setFont("helvetica","normal");
-doc.setFontSize(10);
+doc.roundedRect(
+    15,
+    y - 5,
+    180,
+    9,
+    2,
+    2,
+    "FD"
+);
 
-repaymentSchedule.forEach((payment,index)=>{
+doc.setTextColor(40, 40, 40);
+doc.setFont("helvetica", "bold");
+doc.setFontSize(9);
 
-    protect(8);
+const schedulePeriod =
+    (typeof isShortTermLoan !== "undefined" && isShortTermLoan)
+        ? "14 Days"
+        : `${months} Month(s)`;
 
-    doc.rect(15,y-5,180,8);
+doc.text(
+    `Repayment Period: ${schedulePeriod}`,
+    20,
+    y + 1
+);
+
+doc.text(
+    `Total Repayment: KSh ${totalRepayment.toLocaleString()}`,
+    190,
+    y + 1,
+    { align: "right" }
+);
+
+y += 13;
+
+
+// =========================
+// TABLE HEADER
+// =========================
+
+doc.setFillColor(21, 101, 192);
+doc.setDrawColor(21, 101, 192);
+
+doc.rect(
+    15,
+    y - 5,
+    180,
+    9,
+    "F"
+);
+
+doc.setTextColor(255, 255, 255);
+doc.setFont("helvetica", "bold");
+doc.setFontSize(9);
+
+doc.text(
+    "Installment",
+    20,
+    y + 1
+);
+
+doc.text(
+    "Due Date (On or Before)",
+    80,
+    y + 1
+);
+
+doc.text(
+    "Amount",
+    190,
+    y + 1,
+    { align: "right" }
+);
+
+y += 9;
+
+
+// =========================
+// TABLE ROWS
+// =========================
+
+doc.setFont("helvetica", "normal");
+doc.setFontSize(9);
+doc.setTextColor(0, 0, 0);
+
+repaymentSchedule.forEach((payment, index) => {
+
+    // Protect the table from running
+    // into the footer
+    protect(9);
+
+    // Alternate row background
+    if (index % 2 === 0) {
+
+        doc.setFillColor(248, 250, 253);
+
+        doc.rect(
+            15,
+            y - 5,
+            180,
+            9,
+            "F"
+        );
+    }
+
+
+    // Row border
+    doc.setDrawColor(190, 190, 190);
+
+    doc.rect(
+        15,
+        y - 5,
+        180,
+        9
+    );
+
+
+    // =========================
+    // INSTALLMENT NAME
+    // =========================
 
     let installmentName;
 
-    if(months === 1){
+    if (
+        typeof isShortTermLoan !== "undefined" &&
+        isShortTermLoan
+    ) {
 
         installmentName = "Full Payment";
 
-    }else if(index === months-1){
+    } else if (months === 1) {
+
+        installmentName = "Full Payment";
+
+    } else if (index === months - 1) {
 
         installmentName = "Final Payment";
 
-    }else{
+    } else {
+
+        const installmentNumber =
+            payment.installment;
+
+        let suffix = "th";
+
+        if (installmentNumber === 1) {
+            suffix = "st";
+        } else if (installmentNumber === 2) {
+            suffix = "nd";
+        } else if (installmentNumber === 3) {
+            suffix = "rd";
+        }
 
         installmentName =
-        payment.installment +
-        (payment.installment==1?"st":
-        payment.installment==2?"nd":
-        payment.installment==3?"rd":"th")
-        + " Payment";
-
+            `${installmentNumber}${suffix} Payment`;
     }
 
-    doc.text(installmentName,20,y);
 
-    doc.text(payment.dueDate,80,y);
+    // =========================
+    // ROW DATA
+    // =========================
 
     doc.text(
-        "KSh " + payment.amount.toLocaleString(),
-        170,
-        y,
-        {align:"right"}
+        installmentName,
+        20,
+        y + 1
     );
 
-    y += 8;
+    doc.text(
+        payment.dueDate,
+        80,
+        y + 1
+    );
+
+    doc.text(
+        `KSh ${payment.amount.toLocaleString()}`,
+        190,
+        y + 1,
+        {
+            align: "right"
+        }
+    );
+
+
+    y += 9;
 
 });
 
-y += 10;
-// ================= COMMITTEE USE ONLY =================
 
-doc.setFillColor(21,101,192);
-doc.roundedRect(15,y-5,180,8,2,2,"F");
+// =========================
+// SCHEDULE SUMMARY
+// =========================
 
-doc.setTextColor(255);
-doc.setFont("helvetica","bold");
-doc.setFontSize(11);
-doc.text("COMMITTEE USE ONLY",20,y);
+y += 4;
 
-y += 10;
+doc.setFillColor(235, 243, 255);
+doc.setDrawColor(21, 101, 192);
 
-doc.setDrawColor(180);
-doc.rect(15,y-5,180,38);
+doc.roundedRect(
+    15,
+    y - 5,
+    180,
+    10,
+    2,
+    2,
+    "FD"
+);
 
-doc.setTextColor(0);
-doc.setFont("helvetica","normal");
-doc.setFontSize(10);
-
-doc.text("Status:",20,y);
-doc.rect(45,y-4,4,4);
-doc.text("Approved",52,y);
-
-doc.rect(82,y-4,4,4);
-doc.text("Pending",89,y);
-
-doc.rect(118,y-4,4,4);
-doc.text("Rejected",125,y);
-
-y += 10;
-
-doc.text("Approved Amount:",20,y);
-doc.line(60,y,105,y);
-
-doc.text("Date:",120,y);
-doc.line(135,y,185,y);
-
-y += 10;
-
-doc.text("Remarks:",20,y);
-doc.line(45,y,185,y);
-
-y += 8;
-doc.line(45,y,185,y);
-
-y += 10;
-
-// ================= TERMS & CONDITIONS =================
-
-doc.setFillColor(21,101,192);
-doc.roundedRect(15, y-5, 180, 8, 2, 2, "F");
-
-doc.setTextColor(255);
-doc.setFont("helvetica","bold");
-doc.setFontSize(11);
-doc.text("LOAN TERMS & CONDITIONS",20,y);
-
-y += 10;
-
-doc.setTextColor(0);
-doc.setFont("helvetica","normal");
+doc.setTextColor(21, 70, 120);
+doc.setFont("helvetica", "bold");
 doc.setFontSize(9);
 
+doc.text(
+    "Amount Payable:",
+    20,
+    y + 1
+);
+
+doc.text(
+    `KSh ${totalRepayment.toLocaleString()}`,
+    190,
+    y + 1,
+    {
+        align: "right"
+    }
+);
+
+y += 16;
+
+
+// Reset text settings
+doc.setTextColor(0, 0, 0);
+doc.setFont("helvetica", "normal");
+// =========================
+// 🏛️ COMMITTEE USE ONLY
+// =========================
+
+protect(55);
+
+
+// =========================
+// SECTION TITLE
+// =========================
+
+doc.setFillColor(21, 101, 192);
+
+doc.roundedRect(
+    15,
+    y - 5,
+    180,
+    9,
+    2,
+    2,
+    "F"
+);
+
+doc.setTextColor(255, 255, 255);
+doc.setFont("helvetica", "bold");
+doc.setFontSize(11);
+
+doc.text(
+    "COMMITTEE USE ONLY",
+    20,
+    y + 1
+);
+
+y += 11;
+
+
+// =========================
+// COMMITTEE BOX
+// =========================
+
+doc.setDrawColor(190, 190, 190);
+doc.setLineWidth(0.4);
+
+doc.setFillColor(250, 252, 255);
+
+doc.roundedRect(
+    15,
+    y - 5,
+    180,
+    42,
+    2,
+    2,
+    "FD"
+);
+
+
+// =========================
+// TEXT SETTINGS
+// =========================
+
+doc.setTextColor(0, 0, 0);
+doc.setFont("helvetica", "normal");
+doc.setFontSize(9.5);
+
+
+// =========================
+// APPLICATION STATUS
+// =========================
+
+doc.setFont("helvetica", "bold");
+
+doc.text(
+    "Status:",
+    20,
+    y
+);
+
+doc.setFont("helvetica", "normal");
+
+
+// Approved checkbox
+doc.rect(
+    45,
+    y - 4,
+    4,
+    4
+);
+
+doc.text(
+    "Approved",
+    52,
+    y
+);
+
+
+// Pending checkbox
+doc.rect(
+    82,
+    y - 4,
+    4,
+    4
+);
+
+doc.text(
+    "Pending",
+    89,
+    y
+);
+
+
+// Rejected checkbox
+doc.rect(
+    118,
+    y - 4,
+    4,
+    4
+);
+
+doc.text(
+    "Rejected",
+    125,
+    y
+);
+
+y += 10;
+
+
+// =========================
+// APPROVED AMOUNT & DATE
+// =========================
+
+doc.setFont("helvetica", "bold");
+
+doc.text(
+    "Approved Amount:",
+    20,
+    y
+);
+
+doc.setDrawColor(100, 100, 100);
+
+doc.line(
+    60,
+    y,
+    105,
+    y
+);
+
+
+doc.setFont("helvetica", "bold");
+
+doc.text(
+    "Date:",
+    120,
+    y
+);
+
+doc.line(
+    135,
+    y,
+    185,
+    y
+);
+
+y += 10;
+
+
+// =========================
+// REMARKS
+// =========================
+
+doc.setFont("helvetica", "bold");
+
+doc.text(
+    "Remarks:",
+    20,
+    y
+);
+
+doc.setDrawColor(100, 100, 100);
+
+doc.line(
+    45,
+    y,
+    185,
+    y
+);
+
+y += 9;
+
+doc.line(
+    45,
+    y,
+    185,
+    y
+);
+
+
+// =========================
+// MOVE TO NEXT SECTION
+// =========================
+
+y += 13;
+
+
+// Reset settings
+doc.setTextColor(0, 0, 0);
+doc.setFont("helvetica", "normal");
+
+// =========================
+// 📋 LOAN TERMS & CONDITIONS
+// =========================
+
+protect(35);
+
+
+// =========================
+// SECTION TITLE
+// =========================
+
+doc.setFillColor(21, 101, 192);
+
+doc.roundedRect(
+    15,
+    y - 5,
+    180,
+    9,
+    2,
+    2,
+    "F"
+);
+
+doc.setTextColor(255, 255, 255);
+doc.setFont("helvetica", "bold");
+doc.setFontSize(11);
+
+doc.text(
+    "LOAN TERMS & CONDITIONS",
+    20,
+    y + 1
+);
+
+y += 11;
+
+
+// =========================
+// TERMS BOX
+// =========================
+
+doc.setTextColor(0, 0, 0);
+doc.setFont("helvetica", "normal");
+doc.setFontSize(8.5);
+
+doc.setDrawColor(190, 190, 190);
+doc.setLineWidth(0.4);
+
+
+// =========================
+// TERMS
+// =========================
+
 const rules = [
-"1. Loan approval is subject to review and approval by the Future Finders Loan Committee.",
-"2. Loan approval is based on the member's savings history, loan eligibility, guarantors and compliance with Future Finders policies.",
-"3. The approved loan amount shall not exceed the member's maximum eligible loan limit.",
-"4. The borrower may choose any repayment period up to their maximum eligible repayment period.",
-"5. Choosing a shorter repayment period may reduce the total interest payable.",
-"6. All approved loans must be repaid on or before the agreed repayment due date.",
-"7. Late repayment attracts a penalty of KSh 10 per day until the loan is fully cleared.",
-"8. Loans of KSh 5,000 and above may qualify for a maximum repayment extension of two (2) weeks subject to committee approval before the due date.",
-"9. The borrower shall not transfer responsibility for the loan to another member without written approval from the committee.",
-"10. Guarantors may be contacted and may be required to assist in loan recovery if the borrower defaults.",
-"11. Future Finders reserves the right to recover outstanding loans from the member's savings, dividends or any other benefits due to the member where permitted by the group rules.",
-"12.False, incomplete or misleading information may result in rejection, cancellation of the loan or disciplinary action.",
-"13. Submission of this application does not guarantee loan approval.",
-"14. By signing this application, the applicant agrees to comply with all current and future Future Finders loan policies, regulations and committee decisions."
+
+    "1. Loan approval is subject to review and approval by the Future Finders Loan Committee.",
+
+    "2. Loan approval is based on the member's savings history, loan eligibility, guarantors and compliance with Future Finders policies.",
+
+    "3. The approved loan amount shall not exceed the member's maximum eligible loan limit.",
+
+    "4. The borrower may choose any repayment period up to their maximum eligible repayment period.",
+
+    "5. Choosing a shorter repayment period may reduce the total interest payable.",
+
+    "6. All approved loans must be repaid on or before the agreed repayment due date.",
+
+    "7. Late repayment attracts a penalty of KSh 10 per day until the loan is fully cleared.",
+
+    "8. Loans of KSh 5,000 and above may qualify for a maximum repayment extension of two (2) weeks, subject to prior approval by the Loan Committee before the original due date. The extension is not automatic.",
+
+    "9. The borrower shall not transfer responsibility for the loan to another member without written approval from the Loan Committee.",
+
+    "10. Guarantors may be contacted and may be required to assist in loan recovery if the borrower defaults.",
+
+    "11. Future Finders reserves the right to recover outstanding loans from the member's savings, dividends or any other benefits due to the member where permitted by the group rules.",
+
+    "12. Providing false, incomplete or misleading information may result in rejection of the application, cancellation of the loan or disciplinary action.",
+
+    "13. Submission of this application does not guarantee loan approval.",
+
+    "14. By signing this application, the applicant agrees to comply with all current and future Future Finders loan policies, regulations and Loan Committee decisions.",
+
+    "15. Members whose savings are between KSh 550 and KSh 1,499 may qualify for a maximum special loan of KSh 500, subject to approval by the Loan Committee.",
+
+    "16. The special KSh 500 loan attracts an interest rate of 10%. Therefore, a KSh 500 loan attracts KSh 50 interest, making the total repayment KSh 550.",
+
+    "17. The special 14-day loan must be repaid as a single payment within 14 days from the date of disbursement or the agreed loan date.",
+
+    "18. The special 14-day loan is not eligible for the normal monthly repayment arrangement.",
+
+    "19. The special 14-day loan is not eligible for a repayment extension unless the Loan Committee expressly approves an exception.",
+
+    "20. Interest shall be calculated based on the approved loan principal and the applicable interest rate for the selected repayment period.",
+
+    "21. A member with an outstanding or overdue loan may not qualify for another loan until the existing loan and any applicable penalties have been fully cleared, unless otherwise approved by the Loan Committee.",
+
+    "22. The Loan Committee reserves the right to approve, reduce, defer or decline any loan application after reviewing the member's savings, repayment history, guarantors and other applicable requirements.",
+
+    "23. The borrower is responsible for ensuring that all information provided in the loan application is true, accurate and complete.",
+
+    "24. All loan repayments must be properly recorded through the official Future Finders loan records or approved payment channels.",
+
+    "25. Any outstanding balance, including applicable interest and penalties, remains the responsibility of the borrower until fully settled.",
+
+    "26. Future Finders may review and amend its loan limits, interest rates, repayment periods, penalties and eligibility requirements from time to time in accordance with approved group policies."
+
 ];
 
-doc.setDrawColor(180);
+
+// =========================
+// DRAW TERMS WITH PAGE BREAK
+// =========================
 
 let boxTop = y - 5;
-let boxStartY = y;
 
-rules.forEach(rule => {
+rules.forEach((rule, index) => {
 
-    const lines = doc.splitTextToSize(rule, 168);
-    const neededHeight = (lines.length * 5) + 3;
+    const lines = doc.splitTextToSize(
+        rule,
+        168
+    );
 
-    // Not enough space? Close current box and start a new one.
+    const lineHeight = 4.5;
+
+    const neededHeight =
+        (lines.length * lineHeight) + 3;
+
+
+    // =========================
+    // PAGE BREAK
+    // =========================
+
     if (y + neededHeight > bottomLimit) {
 
-        // Finish current page box
-        doc.rect(15, boxTop, 180, y - boxTop);
+        // Close current terms box
+        doc.rect(
+            15,
+            boxTop,
+            180,
+            y - boxTop
+        );
 
-        // Create new page
-        protect(neededHeight);
 
-        // Start new box
+        // New page
+        doc.addPage();
+
+        drawPageHeader();
+
+        y = 86;
+
+
+        // New page terms continuation title
+        doc.setFillColor(21, 101, 192);
+
+        doc.roundedRect(
+            15,
+            y - 5,
+            180,
+            9,
+            2,
+            2,
+            "F"
+        );
+
+        doc.setTextColor(255, 255, 255);
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(11);
+
+        doc.text(
+            "LOAN TERMS & CONDITIONS — CONTINUED",
+            20,
+            y + 1
+        );
+
+        y += 11;
+
+        doc.setTextColor(0, 0, 0);
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(8.5);
+
         boxTop = y - 5;
     }
 
-    doc.text(lines,20,y);
+
+    // =========================
+    // RULE BACKGROUND
+    // =========================
+
+    if (index % 2 === 0) {
+
+        doc.setFillColor(
+            248,
+            250,
+            253
+        );
+
+        doc.rect(
+            15,
+            y - 3,
+            180,
+            neededHeight,
+            "F"
+        );
+    }
+
+
+    // =========================
+    // RULE TEXT
+    // =========================
+
+    doc.setTextColor(0, 0, 0);
+
+    doc.text(
+        lines,
+        20,
+        y
+    );
+
 
     y += neededHeight;
 
 });
 
-// Finish the final box
-doc.rect(15, boxTop, 180, y - boxTop);
 
-y += 5;
-// ================= APPLICANT DECLARATION =================
+// =========================
+// CLOSE FINAL TERMS BOX
+// =========================
 
-doc.setFont("helvetica","bold");
-doc.setFontSize(10);
-doc.setTextColor(0);
+doc.rect(
+    15,
+    boxTop,
+    180,
+    y - boxTop
+);
+
+y += 7;
+
+
+// =========================
+// RESET TEXT SETTINGS
+// =========================
+
+doc.setTextColor(0, 0, 0);
+doc.setFont("helvetica", "normal");
+doc.setFontSize(9);
+// =========================
+// ✍️ APPLICANT DECLARATION
+// =========================
+
+protect(45);
+
+
+// =========================
+// SECTION TITLE
+// =========================
+
+doc.setFillColor(21, 101, 192);
+
+doc.roundedRect(
+    15,
+    y - 5,
+    180,
+    9,
+    2,
+    2,
+    "F"
+);
+
+doc.setTextColor(255, 255, 255);
+doc.setFont("helvetica", "bold");
+doc.setFontSize(11);
 
 doc.text(
-"I declare that the information provided above is true and correct.",
-20,
-y
+    "APPLICANT DECLARATION",
+    20,
+    y + 1
 );
 
 y += 12;
 
-// Applicant's digital signature
-doc.setFont("courier","italic");
-doc.setFontSize(14);
-doc.setTextColor(0,70,140);
-doc.text(applicantSignature, 20, y);
 
-y += 3;
+// =========================
+// DECLARATION BOX
+// =========================
 
-// Signature lines
-doc.setDrawColor(0);
+doc.setDrawColor(190, 190, 190);
+doc.setLineWidth(0.4);
 
-doc.line(20, y, 70, y);      // Applicant
-doc.line(80, y, 130, y);     // Chairlady
-doc.line(140, y, 190, y);    // Administrator
+doc.setFillColor(250, 252, 255);
+
+doc.roundedRect(
+    15,
+    y - 5,
+    180,
+    22,
+    2,
+    2,
+    "FD"
+);
+
+
+// =========================
+// DECLARATION TEXT
+// =========================
+
+doc.setTextColor(0, 0, 0);
+doc.setFont("helvetica", "normal");
+doc.setFontSize(9.5);
+
+const declarationText =
+    "I declare that the information provided in this loan application is true and correct. I confirm that I have read, understood and agreed to the Future Finders Loan Terms & Conditions.";
+
+const declarationLines =
+    doc.splitTextToSize(
+        declarationText,
+        168
+    );
+
+doc.text(
+    declarationLines,
+    20,
+    y + 2
+);
+
+y += 27;
+
+
+// =========================
+// SIGNATURE AREA
+// =========================
+
+doc.setFont("helvetica", "bold");
+doc.setFontSize(9.5);
+
+doc.text(
+    "SIGNATURES",
+    20,
+    y
+);
+
+y += 9;
+
+
+// =========================
+// APPLICANT DIGITAL SIGNATURE
+// =========================
+
+doc.setFont("courier", "italic");
+doc.setFontSize(13);
+doc.setTextColor(0, 70, 140);
+
+doc.text(
+    applicantSignature || "",
+    20,
+    y
+);
+
+
+// =========================
+// SIGNATURE LINES
+// =========================
 
 y += 5;
 
-// Labels
-doc.setFont("helvetica","normal");
-doc.setFontSize(9);
-doc.setTextColor(0);
+doc.setDrawColor(80, 80, 80);
+doc.setLineWidth(0.4);
+
+doc.line(
+    20,
+    y,
+    70,
+    y
+);
+
+doc.line(
+    80,
+    y,
+    130,
+    y
+);
+
+doc.line(
+    140,
+    y,
+    190,
+    y
+);
+
+y += 6;
+
+
+// =========================
+// SIGNATURE LABELS
+// =========================
+
+doc.setFont("helvetica", "normal");
+doc.setFontSize(8.5);
+doc.setTextColor(0, 0, 0);
+
 
 // Applicant
-doc.text("Applicant Signature", 20, y);
+doc.text(
+    "Applicant Signature",
+    20,
+    y
+);
+
 
 // Chairlady
-doc.text("Chairlady", 80, y);
-doc.text("(Faith Kwamboka)", 80, y + 5);
+doc.text(
+    "Chairlady",
+    80,
+    y
+);
+
+doc.text(
+    "(Faith Kwamboka)",
+    80,
+    y + 5
+);
+
 
 // Administrator
-doc.text("Administrator", 140, y);
-doc.text("(Boniface Kaiser)", 140, y + 5);
+doc.text(
+    "Administrator",
+    140,
+    y
+);
+
+doc.text(
+    "(Boniface Kaiser)",
+    140,
+    y + 5
+);
+
+
+// =========================
+// DATE / OFFICIAL STAMP
+// =========================
+
+y += 16;
+
+doc.setFont("helvetica", "bold");
+doc.setFontSize(9);
+
+doc.text(
+    "Date:",
+    20,
+    y
+);
+
+doc.setFont("helvetica", "normal");
+
+doc.line(
+    35,
+    y,
+    80,
+    y
+);
+
+
+doc.setFont("helvetica", "bold");
+
+doc.text(
+    "Official Stamp:",
+    110,
+    y
+);
+
+doc.setDrawColor(100, 100, 100);
+
+doc.rect(
+    145,
+    y - 8,
+    45,
+    15
+);
+
+
+// =========================
+// FINAL NOTICE
+// =========================
 
 y += 18;
 
-// ================= SAVE PDF =================
+doc.setFillColor(235, 243, 255);
+doc.setDrawColor(21, 101, 192);
 
-const fileName = `Future_Finders_Loan_Application_${name.replace(/\s+/g, "_")}.pdf`;
+doc.roundedRect(
+    15,
+    y - 5,
+    180,
+    13,
+    2,
+    2,
+    "FD"
+);
+
+doc.setTextColor(21, 70, 120);
+doc.setFont("helvetica", "bold");
+doc.setFontSize(8.5);
+
+doc.text(
+    "Future Finders Chama — Loan Application",
+    105,
+    y + 1,
+    {
+        align: "center"
+    }
+);
+
+doc.setFont("helvetica", "normal");
+doc.setFontSize(8);
+
+doc.text(
+    "Please retain this document for your records.",
+    105,
+    y + 6,
+    {
+        align: "center"
+    }
+);
+
+
+// =========================
+// RESET SETTINGS
+// =========================
+
+doc.setTextColor(0, 0, 0);
+doc.setFont("helvetica", "normal");
+doc.setFontSize(9);
+// =========================
+// 💾 FINAL PDF SAVE
+// =========================
+
+// Make sure the PDF has a clean final position
+y += 5;
+
+
+// =========================
+// FINAL FOOTER LINE
+// =========================
+
+doc.setDrawColor(180, 180, 180);
+doc.setLineWidth(0.3);
+
+doc.line(
+    15,
+    285,
+    195,
+    285
+);
+
+
+// =========================
+// FINAL FOOTER TEXT
+// =========================
+
+doc.setFont("helvetica", "italic");
+doc.setFontSize(8);
+doc.setTextColor(120, 120, 120);
+
+doc.text(
+    "Future Finders Chama • Loan Management System",
+    105,
+    290,
+    {
+        align: "center"
+    }
+);
+
+
+// =========================
+// SAFE FILE NAME
+// =========================
+
+const safeName = String(name || "Member")
+    .trim()
+    .replace(/[<>:"/\\|?*]+/g, "")
+    .replace(/\s+/g, "_");
+
+
+// =========================
+// PDF FILE NAME
+// =========================
+
+const fileName =
+    `Future_Finders_Loan_Application_${safeName}.pdf`;
+
+
+// =========================
+// SAVE PDF
+// =========================
 
 doc.save(fileName);
 
-showNotification("✅ Loan application submitted successfully!");
 
-// Close logo.onload function
-};
+// =========================
+// SUCCESS MESSAGE
+// =========================
 
-// Handle logo loading error
-logo.onerror = function () {
-    alert("Unable to load the Future Finders logo. Please check your internet connection or logo URL.");
-};
+showNotification(
+    "✅ Loan application submitted successfully!"
+);
+// PDF generation continues even when the logo cannot be loaded.
 
 // Close submitLoan() function
 }
 
 function updateLoanSummary(maxAmount) {
 
-    let amount = parseFloat(document.getElementById("applyAmount").value) || 0;
-    const period = document.getElementById("repaymentPeriod").value;
+    const amountInput = document.getElementById("applyAmount");
+    const periodSelect = document.getElementById("repaymentPeriod");
+    const summary = document.getElementById("loanSummary");
+
+    let amount = parseFloat(amountInput.value) || 0;
+    const period = periodSelect.value.toLowerCase();
+
+    // =========================
+    // REPAYMENT SETTINGS
+    // =========================
 
     let months = 1;
+    let days = 0;
     let interest = 12;
+    let isShortTermLoan = false;
 
-    if (period.includes("2")) {
+    // 🔵 14 DAYS - 10% INTEREST
+    if (period.includes("14")) {
+
+        days = 14;
+        months = 0;
+        interest = 10;
+        isShortTermLoan = true;
+
+    // 🟢 1 MONTH - 12%
+    } else if (period.includes("1 month")) {
+
+        months = 1;
+        interest = 12;
+
+    // 🟢 2 MONTHS - 15%
+    } else if (period.includes("2 month")) {
+
         months = 2;
         interest = 15;
-    } else if (period.includes("3")) {
+
+    // 🟢 3 MONTHS - 17%
+    } else if (period.includes("3 month")) {
+
         months = 3;
         interest = 17;
-    } else if (period.includes("4")) {
+
+    // 🟢 4 MONTHS - 20%
+    } else if (period.includes("4 month")) {
+
         months = 4;
         interest = 20;
     }
 
+    // =========================
+    // CHECK MAXIMUM LOAN
+    // =========================
+
     if (amount > maxAmount) {
-        alert("Loan amount exceeds your maximum eligible loan.");
-        document.getElementById("applyAmount").value = "";
+
+        alert(
+            `❌ Loan amount exceeds your maximum eligible loan of KSh ${maxAmount.toLocaleString()}.`
+        );
+
+        amountInput.value = "";
         amount = 0;
     }
 
+    // =========================
+    // EMPTY SUMMARY
+    // =========================
+
     if (amount <= 0) {
-        document.getElementById("loanSummary").innerHTML = `
-            <h4 style="color:#2e7d32;margin-top:0;">📊 Loan Summary</h4>
 
-            <table style="width:100%;">
+        summary.innerHTML = `
+            <h4 style="color:#2e7d32;margin-top:0;">
+                📊 Loan Summary
+            </h4>
+
+            <table style="width:100%;font-size:15px;">
+
                 <tr>
-                    <td>Loan Amount</td>
-                    <td style="text-align:right;"><b>KSh 0</b></td>
+                    <td>💵 Loan Amount</td>
+                    <td style="text-align:right;">
+                        <b>KSh 0</b>
+                    </td>
                 </tr>
 
                 <tr>
-                    <td>Interest</td>
-                    <td style="text-align:right;"><b>KSh 0</b></td>
+                    <td>📈 Interest</td>
+                    <td style="text-align:right;">
+                        <b>KSh 0</b>
+                    </td>
                 </tr>
 
                 <tr>
-                    <td>Total Repayment</td>
-                    <td style="text-align:right;"><b>KSh 0</b></td>
+                    <td>💳 Total Repayment</td>
+                    <td style="text-align:right;">
+                        <b>KSh 0</b>
+                    </td>
                 </tr>
 
                 <tr>
-                    <td>Monthly Installment</td>
-                    <td style="text-align:right;"><b>KSh 0</b></td>
+                    <td>📅 Repayment</td>
+                    <td style="text-align:right;">
+                        <b>—</b>
+                    </td>
                 </tr>
+
             </table>
         `;
+
         return;
     }
 
-    const interestAmount = amount * (interest / 100);
-    const totalRepayment = amount + interestAmount;
-    const monthlyInstallment = totalRepayment / months;
+    // =========================
+    // CALCULATE INTEREST
+    // =========================
 
-    document.getElementById("loanSummary").innerHTML = `
+    const interestAmount =
+        amount * (interest / 100);
+
+    const totalRepayment =
+        amount + interestAmount;
+
+    // =========================
+    // REPAYMENT AMOUNT
+    // =========================
+
+    let repaymentLabel;
+    let repaymentAmount;
+
+    if (isShortTermLoan) {
+
+        // 🔵 14-day loan is paid once
+        repaymentLabel = "Amount Due After 14 Days";
+        repaymentAmount = totalRepayment;
+
+    } else {
+
+        // 🟢 Normal monthly loans
+        repaymentLabel = "Monthly Installment";
+        repaymentAmount = totalRepayment / months;
+    }
+
+    // =========================
+    // DISPLAY SUMMARY
+    // =========================
+
+    summary.innerHTML = `
 
         <h4 style="margin-top:0;color:#2e7d32;">
             📊 Loan Summary
@@ -11727,128 +13550,351 @@ function updateLoanSummary(maxAmount) {
 
             <tr>
                 <td>💵 Loan Amount</td>
+
                 <td style="text-align:right;">
-                    <b>KSh ${amount.toLocaleString()}</b>
+                    <b>
+                        KSh ${amount.toLocaleString(undefined,{
+                            minimumFractionDigits: 2
+                        })}
+                    </b>
                 </td>
             </tr>
 
             <tr>
-                <td>📈 Interest (${interest}%)</td>
+                <td>
+                    📈 Interest (${interest}%)
+                </td>
+
                 <td style="text-align:right;">
-                    <b>KSh ${interestAmount.toLocaleString(undefined,{minimumFractionDigits:2})}</b>
+                    <b>
+                        KSh ${interestAmount.toLocaleString(undefined,{
+                            minimumFractionDigits: 2
+                        })}
+                    </b>
                 </td>
             </tr>
 
             <tr>
                 <td>💳 Total Repayment</td>
+
                 <td style="text-align:right;">
-                    <b>KSh ${totalRepayment.toLocaleString(undefined,{minimumFractionDigits:2})}</b>
+                    <b>
+                        KSh ${totalRepayment.toLocaleString(undefined,{
+                            minimumFractionDigits: 2
+                        })}
+                    </b>
                 </td>
             </tr>
 
             <tr>
-                <td>📅 Monthly Installment</td>
+                <td>📅 ${repaymentLabel}</td>
+
                 <td style="text-align:right;">
-                    <b>KSh ${monthlyInstallment.toLocaleString(undefined,{minimumFractionDigits:2})}</b>
+                    <b>
+                        KSh ${repaymentAmount.toLocaleString(undefined,{
+                            minimumFractionDigits: 2
+                        })}
+                    </b>
                 </td>
             </tr>
+
+            ${
+                isShortTermLoan
+                ? `
+                    <tr>
+                        <td>⏳ Repayment Period</td>
+
+                        <td style="text-align:right;">
+                            <b>14 Days</b>
+                        </td>
+                    </tr>
+                `
+                : `
+                    <tr>
+                        <td>📆 Repayment Period</td>
+
+                        <td style="text-align:right;">
+                            <b>${months} Month${months > 1 ? "s" : ""}</b>
+                        </td>
+                    </tr>
+                `
+            }
 
         </table>
 
     `;
 }
-function getRepaymentOptions(maxPeriod){
+
+
+// =========================
+// 🔄 UPDATE SUMMARY WHEN
+// AMOUNT OR PERIOD CHANGES
+// =========================
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const amountInput =
+        document.getElementById("applyAmount");
+
+    const periodSelect =
+        document.getElementById("repaymentPeriod");
+
+    if (amountInput) {
+
+        amountInput.addEventListener("input", function () {
+
+            if (typeof currentMaxLoan !== "undefined") {
+                updateLoanSummary(currentMaxLoan);
+            }
+
+        });
+    }
+
+    if (periodSelect) {
+
+        periodSelect.addEventListener("change", function () {
+
+            if (typeof currentMaxLoan !== "undefined") {
+                updateLoanSummary(currentMaxLoan);
+            }
+
+        });
+    }
+
+});
+// 💰 REPAYMENT OPTIONS
+// =========================
+function getRepaymentOptions(maxPeriod) {
 
     let options = "";
 
-    if(maxPeriod.includes("1")){
+    const period = String(maxPeriod).toLowerCase();
 
-        options += `<option value="1 Month">1 Month</option>`;
-
-    }else if(maxPeriod.includes("2")){
+    // 🔵 SPECIAL 14-DAY LOAN
+    // Used for members qualifying for Ksh 500 loan
+    if (
+        period.includes("14") ||
+        period.includes("day") ||
+        period.includes("500")
+    ) {
 
         options += `
-        <option value="1 Month">1 Month</option>
-        <option value="2 Months" selected>2 Months</option>
+            <option value="14 Days - 10% Interest" selected>
+                14 Days - 10% Interest
+            </option>
         `;
 
-    }else if(maxPeriod.includes("3")){
+        return options;
+    }
+
+    // 🟢 UP TO 1 MONTH
+    if (period.includes("1")) {
 
         options += `
-        <option value="1 Month">1 Month</option>
-        <option value="2 Months">2 Months</option>
-        <option value="3 Months" selected>3 Months</option>
+            <option value="1 Month - 12% Interest" selected>
+                1 Month - 12% Interest
+            </option>
         `;
 
-    }else{
+    // 🟢 UP TO 2 MONTHS
+    } else if (period.includes("2")) {
 
         options += `
-        <option value="1 Month">1 Month</option>
-        <option value="2 Months">2 Months</option>
-        <option value="3 Months">3 Months</option>
-        <option value="4 Months" selected>4 Months</option>
+            <option value="1 Month - 12% Interest">
+                1 Month - 12% Interest
+            </option>
+
+            <option value="2 Months - 15% Interest" selected>
+                2 Months - 15% Interest
+            </option>
+        `;
+
+    // 🟢 UP TO 3 MONTHS
+    } else if (period.includes("3")) {
+
+        options += `
+            <option value="1 Month - 12% Interest">
+                1 Month - 12% Interest
+            </option>
+
+            <option value="2 Months - 15% Interest">
+                2 Months - 15% Interest
+            </option>
+
+            <option value="3 Months - 17% Interest" selected>
+                3 Months - 17% Interest
+            </option>
+        `;
+
+    // 🟢 UP TO 4 MONTHS
+    } else {
+
+        options += `
+            <option value="1 Month - 12% Interest">
+                1 Month - 12% Interest
+            </option>
+
+            <option value="2 Months - 15% Interest">
+                2 Months - 15% Interest
+            </option>
+
+            <option value="3 Months - 17% Interest">
+                3 Months - 17% Interest
+            </option>
+
+            <option value="4 Months - 20% Interest" selected>
+                4 Months - 20% Interest
+            </option>
         `;
     }
 
     return options;
+}
 
-}
+
 // =========================
-// 🔄 Contributions Totals
+// 🔄 CONTRIBUTIONS TOTALS
 // =========================
+
 function updateRowTotal(row) {
-  let inputs = row.querySelectorAll("input[type='number']");
-  let sum = 0;
-  inputs.forEach(input => sum += parseInt(input.value) || 0);
-  row.querySelector(".rowTotal").textContent = sum;
-  calculateGrandTotal();
+
+    let inputs = row.querySelectorAll("input[type='number']");
+    let sum = 0;
+
+    inputs.forEach(input => {
+        sum += parseInt(input.value) || 0;
+    });
+
+    row.querySelector(".rowTotal").textContent =
+        sum.toLocaleString();
+
+    calculateGrandTotal();
 }
+
 
 function calculateGrandTotal() {
-  let total = 0;
-  document.querySelectorAll(".rowTotal").forEach(cell => {
-    total += parseInt(cell.textContent) || 0;
-  });
-  document.querySelector("#grandTotalRow td:last-child").textContent = total;
+
+    let total = 0;
+
+    document.querySelectorAll(".rowTotal").forEach(cell => {
+
+        total += parseInt(
+            cell.textContent.replace(/,/g, "")
+        ) || 0;
+
+    });
+
+    const grandTotalCell =
+        document.querySelector("#grandTotalRow td:last-child");
+
+    if (grandTotalCell) {
+
+        grandTotalCell.textContent =
+            total.toLocaleString();
+    }
 }
 
 
-// 🔑 Admin Login with Spinner
+// =========================
+// 🔑 ADMIN LOGIN WITH SPINNER
+// =========================
+
 function adminLogin() {
-  let usernameInput = document.getElementById("adminUser");
-  let passwordInput = document.getElementById("adminPass");
-  let username = usernameInput.value.trim().toLowerCase();
-  let password = passwordInput.value.trim();
-  let message = document.getElementById("adminLoginMessage");
-  let loginBtn = document.getElementById("adminBtn");
-  let spinner = loginBtn.querySelector(".spinner");
 
-  spinner.style.display = "inline-block";
-  message.innerHTML = "";
-  loginBtn.style.pointerEvents = "none";
+    let usernameInput =
+        document.getElementById("adminUser");
 
-  setTimeout(() => {
-    spinner.style.display = "none";
-    loginBtn.style.pointerEvents = "auto";
+    let passwordInput =
+        document.getElementById("adminPass");
 
-    if (username === "bony" && password === "2025") {
-      // ✅ Success
-      message.style.color = "green";
-      message.innerHTML = "✅ Login successful! Welcome, Admin.";
+    let username =
+        usernameInput.value.trim().toLowerCase();
 
-      document.getElementById("adminLogin").style.display = "none";
-      document.getElementById("admin").style.display = "block";
+    let password =
+        passwordInput.value.trim();
 
-      localStorage.setItem("adminLoggedIn", "true");
+    let message =
+        document.getElementById("adminLoginMessage");
 
-      // Load loan applications immediately
-      loadLoanApplications();
-    } else {
-      // ❌ Fail
-      message.style.color = "red";
-      message.innerHTML = "❌ Incorrect username or password!";
-    }
-  }, 2000);
+    let loginBtn =
+        document.getElementById("adminBtn");
+
+    let spinner =
+        loginBtn.querySelector(".spinner");
+
+
+    // 🔄 SHOW SPINNER
+
+    spinner.style.display = "inline-block";
+
+    message.innerHTML = "";
+
+    loginBtn.style.pointerEvents = "none";
+    loginBtn.disabled = true;
+
+
+    setTimeout(() => {
+
+        spinner.style.display = "none";
+
+        loginBtn.style.pointerEvents = "auto";
+        loginBtn.disabled = false;
+
+
+        // =========================
+        // ✅ SUCCESSFUL LOGIN
+        // =========================
+
+        if (
+            username === "bony" &&
+            password === "2025"
+        ) {
+
+            message.style.color = "green";
+
+            message.innerHTML =
+                "✅ Login successful! Welcome, Admin.";
+
+
+            document.getElementById(
+                "adminLogin"
+            ).style.display = "none";
+
+
+            document.getElementById(
+                "admin"
+            ).style.display = "block";
+
+
+            localStorage.setItem(
+                "adminLoggedIn",
+                "true"
+            );
+
+
+            // 📋 LOAD LOAN APPLICATIONS
+
+            if (
+                typeof loadLoanApplications === "function"
+            ) {
+
+                loadLoanApplications();
+            }
+
+
+        } else {
+
+            // =========================
+            // ❌ FAILED LOGIN
+            // =========================
+
+            message.style.color = "red";
+
+            message.innerHTML =
+                "❌ Incorrect username or password!";
+        }
+
+    }, 2000);
 }
 
 
