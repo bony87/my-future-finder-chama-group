@@ -6816,7 +6816,437 @@ y += 38;
 
 <a class="action-btn" onclick="showMonthlySavings()">📊 View Monthly Savings</a>
 
-<button class="check-loan-btn" onclick="checkLoan()">🔍 Check Loan Eligibility</button>
+<!-- ==========================================
+     LOAN AVAILABILITY SETTING
+     
+     false = Loans NOT available
+     true  = Loans AVAILABLE
+     ========================================== -->
+
+<script>
+const LOANS_AVAILABLE = true;
+</script>
+
+
+<!-- CHECK LOAN BUTTON -->
+<button type="button"
+        class="check-loan-btn"
+        onclick="handleLoanCheck()">
+
+    🔍 Check Loan Eligibility
+
+</button>
+
+
+<!-- ==========================================
+     LOAN UNAVAILABLE POPUP
+     ========================================== -->
+
+<div id="loanUnavailablePopup"
+     class="loan-popup-overlay">
+
+    <div class="loan-popup"
+         onclick="event.stopPropagation()">
+
+        <div class="loan-popup-header">
+
+            <div class="loan-popup-icon">
+                💰
+            </div>
+
+            <h2>Loans Not Available</h2>
+
+        </div>
+
+        <div class="loan-popup-body">
+
+            <p>
+                Loans are not available at the moment.
+            </p>
+
+            <p>
+                <strong>Please check again later.</strong>
+            </p>
+
+        </div>
+
+        <button type="button"
+                class="loan-popup-close"
+                onclick="hideLoanUnavailablePopup()">
+
+            ✓ Okay, Thank You
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<style>
+
+/* ==========================================
+   LOAN POPUP OVERLAY
+   ========================================== */
+
+.loan-popup-overlay {
+
+    display: none;
+
+    position: fixed;
+
+    z-index: 999999;
+
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background: rgba(0, 45, 35, 0.60);
+
+    backdrop-filter: blur(5px);
+
+    -webkit-backdrop-filter: blur(5px);
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    box-sizing: border-box;
+}
+
+
+/* ==========================================
+   POPUP BOX
+   ========================================== */
+
+.loan-popup {
+
+    width: 100%;
+
+    max-width: 430px;
+
+    background: #ffffff;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.30);
+
+    text-align: center;
+
+    animation: loanPopupShow 0.30s ease-out;
+}
+
+
+/* ==========================================
+   HEADER
+   ========================================== */
+
+.loan-popup-header {
+
+    background:
+        linear-gradient(
+            135deg,
+            #087f5b,
+            #1565c0
+        );
+
+    color: #ffffff;
+
+    padding: 30px 20px 25px;
+}
+
+
+/* ==========================================
+   ICON
+   ========================================== */
+
+.loan-popup-icon {
+
+    width: 70px;
+
+    height: 70px;
+
+    margin: 0 auto 15px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255, 255, 255, 0.18);
+
+    border:
+        2px solid rgba(255, 255, 255, 0.50);
+
+    font-size: 34px;
+}
+
+
+/* ==========================================
+   TITLE
+   ========================================== */
+
+.loan-popup-header h2 {
+
+    margin: 0;
+
+    font-size: 23px;
+
+    font-weight: 700;
+}
+
+
+/* ==========================================
+   MESSAGE
+   ========================================== */
+
+.loan-popup-body {
+
+    padding: 28px 25px 20px;
+
+    color: #444;
+}
+
+
+.loan-popup-body p {
+
+    margin: 5px 0;
+
+    font-size: 16px;
+
+    line-height: 1.6;
+}
+
+
+.loan-popup-body strong {
+
+    color: #087f5b;
+}
+
+
+/* ==========================================
+   CLOSE BUTTON
+   ========================================== */
+
+.loan-popup-close {
+
+    display: block;
+
+    width: calc(100% - 50px);
+
+    margin: 0 25px 25px;
+
+    padding: 14px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #087f5b,
+            #1565c0
+        );
+
+    color: #ffffff;
+
+    font-size: 16px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+
+.loan-popup-close:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 5px 15px
+        rgba(21, 101, 192, 0.30);
+}
+
+
+.loan-popup-close:active {
+
+    transform: scale(0.98);
+}
+
+
+/* ==========================================
+   POPUP ANIMATION
+   ========================================== */
+
+@keyframes loanPopupShow {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(-25px)
+            scale(0.90);
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+</style>
+
+
+<script>
+
+/* ==========================================
+   CHECK LOAN BUTTON
+   ========================================== */
+
+function handleLoanCheck() {
+
+    /*
+       IF LOANS ARE CLOSED
+       SHOW THE POPUP
+    */
+
+    if (!LOANS_AVAILABLE) {
+
+        showLoanUnavailablePopup();
+
+        return;
+    }
+
+
+    /*
+       IF LOANS ARE OPEN
+       RUN YOUR EXISTING LOAN ELIGIBILITY
+       FUNCTION
+    */
+
+    if (typeof checkLoan === "function") {
+
+        checkLoan();
+
+    } else {
+
+        console.error(
+            "Loan eligibility function 'checkLoan()' was not found."
+        );
+
+    }
+
+}
+
+
+/* ==========================================
+   SHOW UNAVAILABLE POPUP
+   ========================================== */
+
+function showLoanUnavailablePopup() {
+
+    const popup =
+        document.getElementById(
+            "loanUnavailablePopup"
+        );
+
+    if (popup) {
+
+        popup.style.display = "flex";
+
+        document.body.style.overflow = "hidden";
+
+    }
+
+}
+
+
+/* ==========================================
+   CLOSE POPUP
+   ========================================== */
+
+function hideLoanUnavailablePopup() {
+
+    const popup =
+        document.getElementById(
+            "loanUnavailablePopup"
+        );
+
+    if (popup) {
+
+        popup.style.display = "none";
+
+        document.body.style.overflow = "";
+
+    }
+
+}
+
+
+/* ==========================================
+   CLICK OUTSIDE TO CLOSE
+   ========================================== */
+
+document.addEventListener(
+    "click",
+    function(event) {
+
+        const popup =
+            document.getElementById(
+                "loanUnavailablePopup"
+            );
+
+        if (
+            popup &&
+            event.target === popup
+        ) {
+
+            hideLoanUnavailablePopup();
+
+        }
+
+    }
+);
+
+
+/* ==========================================
+   ESC KEY TO CLOSE
+   ========================================== */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (event.key === "Escape") {
+
+            hideLoanUnavailablePopup();
+
+        }
+
+    }
+);
+
+</script>
 
 <button class="action-btn" onclick="showWelfareApplication()">
 💞 Apply for Welfare Support
