@@ -10701,7 +10701,7 @@ margin:10px 0;
       📊 Group Contributions for 2026
       <br>
       <span id="updateTime">
-        ⏱ Last updated on <b>4TH  OCTOBER 2026 AT 07 30 AM</b>
+        ⏱ Last updated on <b>16TH  OCTOBER 2026 AT 17:30 PM</b>
       </span>
     </h4>
 
@@ -10809,7 +10809,7 @@ margin:10px 0;
 <td><input type="number" value="100"></td>
 <td><input type="number" value="480"></td>
 <td><input type="number" value="250"></td>
-<td><input type="number" value="450"></td>
+<td><input type="number" value="600"></td>
 <td><input type="number" value="0"></td>
 <td><input type="number" value="0"></td>
 <td class="rowTotal">0</td>
@@ -11141,7 +11141,7 @@ margin:10px 0;
 <td><input type="number" value="0"></td>
 <td><input type="number" value="0"></td>
 <td><input type="number" value="200"></td>
-<td><input type="number" value="0"></td>
+<td><input type="number" value="50"></td>
 <td><input type="number" value="0"></td>
 <td><input type="number" value="0"></td>
 <td class="rowTotal">0</td>
@@ -11201,6 +11201,19 @@ margin:10px 0;
 </table>
 
     </div>
+
+    <!-- SUMMARY TOTALS SHOWN BELOW THE TABLE -->
+    <div id="contributionTotalsSummary" class="contribution-totals-summary" aria-live="polite">
+      <h3>2026 Contributions — Group Totals</h3>
+      <div class="contribution-total-grid">
+        <div class="contribution-total-card"><span>2025 Savings Total</span><strong id="summaryTotal2025">Ksh 0</strong></div>
+        <div class="contribution-total-card"><span>2026 Contributions Total</span><strong id="summaryTotal2026">Ksh 0</strong></div>
+        <div class="contribution-total-card total-highlight"><span>Total Savings (2025 + 2026)</span><strong id="summaryGrandTotal">Ksh 0</strong></div>
+        <div class="contribution-total-card saved-highlight"><span>Saved 2026 After Reward</span><strong id="summarySavedTotal">Ksh 0</strong></div>
+        <div class="contribution-total-card reward-highlight"><span>Total Reward Back</span><strong id="summaryRewardTotal">Ksh 0</strong></div>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -11210,6 +11223,59 @@ margin:10px 0;
 ========================= -->
 
 <style>
+
+.contribution-totals-summary {
+  margin: 18px 0 4px;
+  padding: 18px;
+  border: 2px solid #00796b;
+  border-radius: 12px;
+  background: #f4fbf9;
+  box-sizing: border-box;
+}
+.contribution-totals-summary h3 {
+  margin: 0 0 8px;
+  color: #00695c;
+}
+.contribution-totals-summary .summary-note {
+  margin: 0 0 14px;
+  color: #555;
+  text-align: center;
+  font-size: 13px;
+}
+.contribution-total-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+}
+.contribution-total-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  min-height: 76px;
+  padding: 13px;
+  border-radius: 9px;
+  background: #ffffff;
+  border: 1px solid #d7e5e2;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+.contribution-total-card span {
+  font-size: 13px;
+  color: #374151;
+}
+.contribution-total-card strong {
+  color: #00695c;
+  font-size: 20px;
+}
+.contribution-total-card.total-highlight { border-color: #17a34a; background: #effcf3; }
+.contribution-total-card.saved-highlight { border-color: #f59e0b; background: #fffbeb; }
+.contribution-total-card.reward-highlight { border-color: #7c3aed; background: #f5f3ff; }
+@media (max-width: 600px) {
+  .contribution-totals-summary { padding: 12px; }
+  .contribution-total-grid { grid-template-columns: 1fr; }
+  .contribution-total-card strong { font-size: 18px; }
+}
 
 .popup2026{
   display:none;
@@ -11305,158 +11371,121 @@ window.onclick = function(event) {
 };
 
 
+
 /* =========================
    MAIN CALCULATION 2026
 ========================= */
 
 function calculate2026() {
-
   const table = document.getElementById("table2026");
   if (!table) return;
 
+  let grandTotal2025 = 0;
+  let grandTotal2026 = 0;
   let grandTotal = 0;
   let totalSaved = 0;
   let totalReward = 0;
 
-  table.querySelectorAll("tbody tr").forEach(row => {
+  const money = amount => "Ksh " + Math.round(amount).toLocaleString("en-KE");
 
+  table.querySelectorAll("tbody tr").forEach(row => {
     const inputs = row.querySelectorAll("input[type='number']");
+    const nameCell = row.cells[0];
     const rowTotalCell = row.querySelector(".rowTotal");
     const savedCell = row.querySelector(".saved2026");
     const rewardCell = row.querySelector(".reward2026");
     const statusCell = row.querySelector(".paymentStatus");
 
-    if (!rowTotalCell || inputs.length === 0) return;
+    // Skip headings, totals, and malformed/non-member rows safely.
+    if (!nameCell || !rowTotalCell || inputs.length < 2) return;
 
-    // ======================================
-    // 2025 TOTAL SAVINGS
-    // ======================================
+    const memberName = nameCell.textContent.trim().replace(/\s+/g, " ").toUpperCase();
+    const isBoniface = memberName === "BONIFACE CHELLUGET";
 
-    const savings2025 = Number(inputs[0].value) || 0;
-
-    // Carry forward only 20% of 2025 into 2026
+    // 2025 savings
+    const savings2025 = Math.max(0, Number(inputs[0].value) || 0);
     const carriedForward2025 = Math.round(savings2025 * 0.199);
 
-    // ======================================
-    // 2026 SAVINGS
-    // ======================================
-
+    // 2026 monthly savings (inputs 1–12)
     let currentSavings = 0;
     let activeMonths = 0;
-
     for (let i = 1; i < inputs.length; i++) {
-
-      const val = Number(inputs[i].value) || 0;
-
-      currentSavings += val;
-
-      if (val > 0) {
-        activeMonths++;
-      }
+      const value = Math.max(0, Number(inputs[i].value) || 0);
+      currentSavings += value;
+      if (value > 0) activeMonths++;
     }
-
-    // ======================================
-    // DISPLAY TOTAL
-    // (100% 2025 + 100% 2026)
-    // ======================================
 
     const totalSavings = savings2025 + currentSavings;
-
-    // ======================================
-    // REWARD CALCULATION
-    // (20% 2025 + ALL 2026)
-    // ======================================
-
     const rewardBase = carriedForward2025 + currentSavings;
 
-    // ======================================
-    // KEEP YOUR CURRENT RULES
-    // ======================================
-
+    // Reward rules retained from the existing page
     let rewardRate = 0;
-
     if (rewardBase >= 1500 && activeMonths >= 10) {
       rewardRate = 0.77;
-    }
-    else if (rewardBase >= 1500 && activeMonths >= 6) {
+    } else if (rewardBase >= 1500 && activeMonths >= 6) {
       rewardRate = 0.70;
-    }
-    else if (rewardBase >= 1000) {
+    } else if (rewardBase >= 1000) {
       rewardRate = 0.27;
     }
 
-    // ======================================
-    // CALCULATIONS
-    // ======================================
-
     const reward = Math.round(rewardBase * rewardRate);
+    const paidOut2025 = Math.round(savings2025 * 0.80);
+    const remaining2026 = rewardBase - reward;
+    const saved = paidOut2025 + remaining2026;
 
-    // 80% that was paid out from 2025
-const paidOut2025 = Math.round(savings2025 * 0.80);
-
-// Remaining after 2026 reward
-const remaining2026 = rewardBase - reward;
-
-// Saved 2026 = 80% of 2025 + Remaining 2026
-const saved = paidOut2025 + remaining2026;
-
-    // ======================================
-    // DISPLAY
-    // ======================================
-
-    rowTotalCell.textContent = "Ksh " + totalSavings.toLocaleString();
-    savedCell.textContent = "Ksh " + saved.toLocaleString();
-    rewardCell.textContent = "Ksh " + reward.toLocaleString();
-
-    // ======================================
-    // STATUS
-    // ======================================
+    // Individual member values always include Boniface
+    rowTotalCell.textContent = money(totalSavings);
+    if (savedCell) savedCell.textContent = money(saved);
+    if (rewardCell) rewardCell.textContent = money(reward);
 
     if (statusCell) {
-
       if (rewardBase >= 1500) {
-        statusCell.innerHTML = "🟢 YOU ARE ELIGIBLE";
-      }
-      else if (rewardBase >= 1000 && rewardBase <= 1499) {
-        statusCell.innerHTML = "🟡 YOU ARE PARTIALLY ELIGIBLE";
-      }
-      else if (rewardBase >= 1 && rewardBase <= 999) {
-        statusCell.innerHTML = "🔴 YOU ARE NOT ELIGIBLE";
-      }
-      else {
-        statusCell.innerHTML = "⚪ NO SAVINGS YET";
+        statusCell.textContent = "🟢 YOU ARE ELIGIBLE";
+      } else if (rewardBase >= 1000) {
+        statusCell.textContent = "🟡 YOU ARE PARTIALLY ELIGIBLE";
+      } else if (rewardBase >= 1) {
+        statusCell.textContent = "🔴 YOU ARE NOT ELIGIBLE";
+      } else {
+        statusCell.textContent = "⚪ NO SAVINGS YET";
       }
     }
 
-    // ======================================
-    // GRAND TOTALS
-    // ======================================
-
-    grandTotal += totalSavings;
-    totalReward += reward;
-    totalSaved += saved;
-
+    // Exclude Boniface from every group monetary total, but not his row.
+    if (!isBoniface) {
+      grandTotal2025 += savings2025;
+      grandTotal2026 += currentSavings;
+      grandTotal += totalSavings;
+      totalSaved += saved;
+      totalReward += reward;
+    }
   });
 
-  document.getElementById("grandTotal_2026").textContent =
-    "Ksh " + grandTotal.toLocaleString();
+  // Values in the original GRAND TOTAL row
+  const setText = (id, value) => {
+    const element = document.getElementById(id);
+    if (element) element.textContent = money(value);
+  };
+  setText("grandTotal_2026", grandTotal);
+  setText("savedTotal_2026", totalSaved);
+  setText("rewardTotal_2026", totalReward);
 
-  document.getElementById("savedTotal_2026").textContent =
-    "Ksh " + totalSaved.toLocaleString();
+  // Extra summary below the table: every aggregate is visible without scrolling sideways.
+  setText("summaryTotal2025", grandTotal2025);
+  setText("summaryTotal2026", grandTotal2026);
+  setText("summaryGrandTotal", grandTotal);
+  setText("summarySavedTotal", totalSaved);
+  setText("summaryRewardTotal", totalReward);
 
-  document.getElementById("rewardTotal_2026").textContent =
-    "Ksh " + totalReward.toLocaleString();
-
-  updateSavingsCard();
-  updateMembersCount();
+  if (typeof updateSavingsCard === "function") updateSavingsCard();
+  if (typeof updateMembersCount === "function") updateMembersCount();
 }
 
 /* =========================
    AUTO RECALCULATE
 ========================= */
 
-document.addEventListener("input", function(e) {
-  if (e.target.type === "number") {
+document.addEventListener("input", function(event) {
+  if (event.target.matches("#table2026 input[type='number']")) {
     calculate2026();
   }
 });
@@ -11466,9 +11495,6 @@ document.addEventListener("input", function(e) {
 ========================= */
 
 calculate2026();
-updateSavingsCard();
-updateMembersCount();
-
 </script>
 
 <style>
@@ -11994,8 +12020,12 @@ function getTotalSavings() {
     document.querySelectorAll("#table2026 tbody tr").forEach(row => {
 
         const totalCell = row.querySelector(".rowTotal");
+        const nameCell = row.cells[0];
 
-        if (!totalCell) return;
+        if (!totalCell || !nameCell) return;
+
+        const memberName = nameCell.textContent.trim().replace(/\s+/g, " ").toUpperCase();
+        if (memberName === "BONIFACE CHELLUGET") return;
 
         const amount =
             Number(
