@@ -10468,8 +10468,27 @@ const paidMembers = [
   "PIUS NYAKUNDI",
   "KEFFA MOMANYI",
   "FAITH MOKOGI",
-  "CLAUDIA MORAA"
+  "CLAUDIA MORAA",
+  "MIKE MORRIS",
+  "SADLER KARAN",
+  "ESTHER OBEGI"
 ];
+
+// Only these members' amounts are excluded from the grand totals.
+const grandTotalExcludedMembers = [
+  "EVERLINE MAINA",
+  "CHRISTINE PIUS",
+  "KENNEDY MUTAYI",
+  "MIKE MORRIS",
+  "SADLER KARAN",
+  "ESTHER OBEGI"
+];
+
+function isGrandTotalExcluded(memberName) {
+  return grandTotalExcludedMembers.includes(
+    memberName.trim().replace(/\s+/g, " ").toUpperCase()
+  );
+}
 
 
 /* =========================================
@@ -10590,7 +10609,7 @@ function calculate2025() {
 
     if(statusCell){
 
-      if (paidMembers.includes(memberName)) {
+      if (paidMembers.includes(memberName.trim().replace(/\s+/g, " ").toUpperCase())) {
 
         statusCell.innerHTML =
           "✅ <b>Paid on 22nd Dec 2025</b>";
@@ -10615,9 +10634,15 @@ function calculate2025() {
        GRAND TOTALS
     ========================= */
 
-    grandTotal += totalSavings;
-    totalSaved += saved;
-    totalReward += reward;
+    // Exclude only the six specifically listed members from grand totals.
+    // Payment status for other members does not affect their totals.
+    const normalizedName = memberName.trim().replace(/\s+/g, " ").toUpperCase();
+    const isBoniface = normalizedName === "BONIFACE CHELLUGET";
+    if (!isGrandTotalExcluded(normalizedName) && !isBoniface) {
+      grandTotal += totalSavings;
+      totalSaved += saved;
+      totalReward += reward;
+    }
 
   });
 
@@ -11450,7 +11475,8 @@ function calculate2026() {
       }
     }
 
-    // Exclude Boniface from every group monetary total, but not his row.
+    // The six-member exclusion applies ONLY to the separate 2025 table.
+    // In this 2026 table, only Boniface is excluded from group totals.
     if (!isBoniface) {
       grandTotal2025 += savings2025;
       grandTotal2026 += currentSavings;
