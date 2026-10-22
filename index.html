@@ -201,6 +201,108 @@ section{
 }
 </style>
 
+
+<style id="future-finders-professional-refresh">
+:root{--ff-navy:#12304a;--ff-teal:#087f8c;--ff-green:#16866b;--ff-ink:#243447;--ff-muted:#65758b;--ff-line:#dce5ec;--ff-bg:#f3f7fa;--ff-card:#ffffff;--ff-shadow:0 8px 24px rgba(22,48,74,.08)}
+html{scroll-behavior:smooth;scroll-padding-top:90px} body{font-family:Inter,"Segoe UI",Roboto,Arial,sans-serif!important;background:var(--ff-bg)!important;color:var(--ff-ink);line-height:1.55}
+header{background:linear-gradient(120deg,#12304a 0%,#087f8c 65%,#16866b 100%)!important;color:#fff;box-shadow:0 5px 20px rgba(18,48,74,.16)!important}
+header h1,h1{letter-spacing:-.025em;line-height:1.2} h2{color:var(--ff-navy);line-height:1.3} h3{color:#174c62;line-height:1.35}
+section,#dashboard,main,.section-container,.content-section{box-sizing:border-box} section,#dashboard{border-radius:16px}
+section:not(.popup):not(.modal),#dashboard,.card,.panel,.dashboard-card,.service-card,.about-card,.stat-card,.mini-dashboard>div{border-radius:16px}
+button,.btn,input[type=button],input[type=submit],a.button{transition:transform .16s ease,box-shadow .16s ease,filter .16s ease;border-radius:9px; font-weight:600}
+button:hover,.btn:hover,input[type=button]:hover,input[type=submit]:hover{filter:brightness(1.04);box-shadow:0 5px 14px rgba(18,48,74,.14)}
+input:not([type=checkbox]):not([type=radio]):not([type=button]):not([type=submit]),select,textarea{border:1px solid #cbd7e1;border-radius:9px;padding:10px 12px;max-width:100%;box-sizing:border-box;background:#fff;color:var(--ff-ink)}
+input:focus,select:focus,textarea:focus{outline:3px solid rgba(8,127,140,.14);border-color:var(--ff-teal)}
+table{width:100%;border-collapse:separate;border-spacing:0;background:#fff;border:1px solid var(--ff-line);border-radius:12px;overflow:hidden;box-shadow:0 3px 12px rgba(22,48,74,.04)}th{background:#eaf3f7;color:#15384d;font-weight:700;text-align:left}th,td{padding:10px 12px;border-bottom:1px solid #e5edf2;vertical-align:middle}tbody tr:nth-child(even){background:#f8fbfd}tbody tr:hover{background:#edf7f8}tbody tr:last-child td{border-bottom:0}
+.card,.panel,.dashboard-card,.service-card,.stat-card,.mini-dashboard>div{box-shadow:var(--ff-shadow);border:1px solid rgba(205,220,230,.8);background:var(--ff-card)}
+nav{gap:8px}nav a{border-radius:8px;padding:8px 11px;text-decoration:none;transition:background .15s ease}nav a:hover{background:rgba(255,255,255,.14)}
+img{max-width:100%;height:auto} .logo,header img{object-fit:contain}
+hr{border:0;border-top:1px solid var(--ff-line);margin:22px 0}
+footer{background:#12304a!important;color:#eaf4f7!important;padding:20px!important;text-align:center}
+.modal,.popup,.popup-content,[role=dialog]{border-radius:16px}
+@media(max-width:768px){body{font-size:14px}section,#dashboard{margin:14px 10px!important;padding:14px!important}table{display:block;overflow-x:auto;white-space:nowrap}th,td{padding:8px 9px}header h1,h1{font-size:clamp(1.35rem,5vw,2rem)}button,.btn{max-width:100%}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}}
+</style>
+
+<style id="future-finders-layout-refinement">
+/* Clear, consistent navigation */
+#navButtons{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;align-items:stretch;width:min(1120px,calc(100% - 32px));margin:22px auto;padding:0;box-sizing:border-box}
+#navButtons .nav-btn{display:flex;align-items:center;justify-content:center;gap:7px;min-height:54px;padding:12px 14px;box-sizing:border-box;text-align:center;text-decoration:none;line-height:1.35;white-space:normal;overflow-wrap:anywhere;background:linear-gradient(135deg,#12304a,#087f8c);color:#fff;border:1px solid rgba(255,255,255,.18);border-radius:12px;box-shadow:0 4px 12px rgba(18,48,74,.12);font-weight:650}
+#navButtons .nav-btn:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(18,48,74,.2);background:linear-gradient(135deg,#087f8c,#16866b)}
+#navButtons .nav-btn:focus-visible,button:focus-visible,a:focus-visible{outline:3px solid #f3b544;outline-offset:3px}
+#navButtons .nav-btn .spinner{flex:0 0 auto}
+#navButtons #backBtn{background:#64748b!important}
+
+/* Member login and member dashboard */
+#loginForm{width:min(520px,calc(100% - 28px));box-sizing:border-box;padding:clamp(20px,4vw,34px);margin:28px auto;border:1px solid var(--ff-line);box-shadow:var(--ff-shadow)}
+#loginForm h2{margin:0 0 8px;font-size:1.55rem}
+#loginForm h1{margin:0 0 24px;font-size:1.1rem;color:var(--ff-muted);font-weight:500;letter-spacing:0}
+#loginForm label{display:block;margin:14px 0 7px;color:var(--ff-ink)}
+#loginForm #memberName,#loginForm .password-container input{width:100%;min-height:46px;box-sizing:border-box;padding:12px 42px 12px 12px}
+#loginForm .password-container{margin:12px 0}
+#loginForm #memberLoginBtn{display:flex;justify-content:center;align-items:center;width:100%;box-sizing:border-box;margin-top:14px;min-height:46px;text-decoration:none}
+#loginMessage{min-height:1.3em;margin:12px 0 0;text-align:center;font-weight:600}
+#dashboard{width:min(1180px,calc(100% - 28px));box-sizing:border-box;margin:22px auto;padding:clamp(16px,2.5vw,30px);border:1px solid var(--ff-line)}
+#dashboard>h3{margin:0 0 18px;padding:15px 18px;border-radius:12px;background:#edf6f8;text-align:left;color:var(--ff-navy)}
+#dashboard .dashboard-buttons{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:12px;margin:18px 0 24px}
+#dashboard .dashboard-buttons>.action-btn,#dashboard .dashboard-buttons>button{display:flex;justify-content:center;align-items:center;min-height:50px;width:100%;box-sizing:border-box;padding:12px 16px;text-align:center;white-space:normal;line-height:1.4;text-decoration:none}
+#dashboard #loanMessage{padding:10px 14px;border-radius:9px;background:#f6f9fb}
+#dashboard #allContributions{margin-top:24px;padding-top:20px;border-top:1px solid var(--ff-line)}
+#dashboard #allContributions>button{display:inline-flex;justify-content:center;align-items:center;min-height:42px;margin:6px 8px 8px 0;padding:10px 16px;max-width:100%;white-space:normal;line-height:1.35}
+#dashboard #memberNoteSection{box-sizing:border-box;border:1px solid #cde8d6!important;border-radius:12px!important}
+#dashboard .table-container{max-width:100%;overflow:auto}
+#dashboard table{min-width:680px}
+
+/* Admin: dashboard summary and tools should read as clear sections */
+#admin{width:min(1240px,calc(100% - 28px));box-sizing:border-box;margin:22px auto;padding:clamp(16px,2.5vw,30px);border:1px solid var(--ff-line);border-radius:18px;background:#fff;box-shadow:var(--ff-shadow)}
+#admin #logoutBtn{float:right;min-height:42px;padding:10px 16px;border-radius:10px!important}
+#admin #adminSummary{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px!important;clear:both;padding-top:10px}
+#admin #adminSummary .summary-card{display:flex;align-items:center;justify-content:center;min-height:92px;box-sizing:border-box;padding:18px;background:linear-gradient(145deg,#f4f9fb,#fff);border:1px solid var(--ff-line);border-left:4px solid var(--ff-teal);border-radius:13px;box-shadow:0 4px 14px rgba(18,48,74,.05);font-weight:700;text-align:center;line-height:1.5}
+#admin #membersNotesPanel,#admin #membersOverviewPanel,#admin #pickedNumbersTable,#admin #pendingMembersPanel,#admin #loanApplicationsPanel,#admin .admin-panel{box-sizing:border-box;max-width:100%;margin:20px 0;padding:20px;border:1px solid var(--ff-line);border-radius:14px;background:#fff;box-shadow:0 4px 14px rgba(18,48,74,.05)}
+#admin #membersNotesPanel h3,#admin #membersOverviewPanel h3,#admin #pickedNumbersTable h3,#admin #pendingMembersPanel h3,#admin h3{margin-top:0;text-align:left}
+#admin #membersNotesPanel>div:first-of-type{display:grid!important;grid-template-columns:minmax(180px,1fr) minmax(240px,2fr) auto;gap:12px!important;align-items:start}
+#admin #membersNotesPanel input,#admin #membersNotesPanel textarea{width:100%;min-width:0;box-sizing:border-box}
+#admin #membersNotesPanel table,#admin #membersOverviewPanel table,#admin #pickedNumbersTable table,#admin #pendingMembersPanel table{display:table;width:100%;min-width:680px}
+#admin #membersNotesPanel,#admin #membersOverviewPanel,#admin #pickedNumbersTable,#admin #pendingMembersPanel{overflow-x:auto}
+#admin button{min-height:38px;padding:9px 13px;white-space:normal;line-height:1.35}
+#admin #membersNotesPanel button,#admin #pickedNumbersTable button{margin:5px 6px 5px 0}
+#admin input[type="text"],#admin input[type="search"],#admin input[type="number"],#admin select,#admin textarea{max-width:100%;box-sizing:border-box}
+#admin .summary-card strong{display:block}
+
+/* Contributions and savings summaries */
+.contribution-totals-summary{margin:24px 0;padding:22px;border:1px solid var(--ff-line);border-radius:16px;background:#f8fbfd;box-shadow:0 4px 14px rgba(18,48,74,.05)}
+.contribution-totals-summary h3{text-align:left;margin:0 0 16px}
+.contribution-total-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.contribution-total-card{min-width:0;padding:16px;border:1px solid var(--ff-line);border-radius:12px;background:#fff;display:flex;flex-direction:column;gap:8px;overflow-wrap:anywhere}
+.contribution-total-card span{color:var(--ff-muted);font-size:.9rem}
+.contribution-total-card strong{font-size:1.25rem;color:var(--ff-navy);font-variant-numeric:tabular-nums}
+
+/* Tables: readable on desktop, scrollable rather than crushed on mobile */
+.table-container{width:100%;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+#popup2025 table,#popup2026 table{min-width:1050px}
+#popup2025 .popup2025-content,#popup2026 .popup2026-content{max-width:96vw;box-sizing:border-box}
+#popup2025 h4,#popup2026 h4{color:var(--ff-navy);margin:10px 40px 18px}
+
+@media(max-width:1050px){#navButtons{grid-template-columns:repeat(3,minmax(0,1fr))}#admin #adminSummary{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:680px){
+ #navButtons{width:calc(100% - 24px);grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:14px auto}
+ #navButtons .nav-btn{min-height:48px;padding:10px 8px;font-size:13px;border-radius:10px}
+ #loginForm,#dashboard,#admin{width:calc(100% - 20px);margin:14px auto;padding:16px}
+ #dashboard .dashboard-buttons{grid-template-columns:1fr}
+ #admin #adminSummary{grid-template-columns:1fr 1fr;gap:8px!important}
+ #admin #adminSummary .summary-card{min-height:78px;padding:12px;font-size:13px}
+ #admin #membersNotesPanel,#admin #membersOverviewPanel,#admin #pickedNumbersTable,#admin #pendingMembersPanel{padding:13px}
+ #admin #membersNotesPanel>div:first-of-type{grid-template-columns:1fr!important}
+ #admin #membersNotesPanel>div:first-of-type>div{display:grid!important;grid-template-columns:1fr 1fr;gap:8px}
+ #admin #logoutBtn{float:none;display:block;width:100%;margin:8px 0}
+ .contribution-totals-summary{padding:14px}
+ .contribution-total-grid{grid-template-columns:1fr 1fr}
+ .contribution-total-card{padding:12px}
+ .contribution-total-card strong{font-size:1.05rem}
+}
+@media(max-width:390px){#navButtons{grid-template-columns:1fr}.contribution-total-grid{grid-template-columns:1fr}#admin #adminSummary{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){#navButtons .nav-btn{transition:none}section{animation:none!important}html{scroll-behavior:auto}}
+</style>
 </head>
 
 <style>
@@ -2338,14 +2440,14 @@ style="width:150px; height:150px; border-radius:50%; object-fit:cover; box-shado
 <a class="nav-btn" onclick="simulateAction(this,'loginForm')">🔑 Member Login <span class="spinner"></span></a>
 <a class="nav-btn" onclick="simulateAction(this,'adminLogin')">⚙️ Admin <span class="spinner"></span></a>
 <a class="nav-btn" onclick="simulateAction(this,'rules')">
-  📜 THE CONSITITUTION <span class="spinner"></span>
+  📜 The Constitution <span class="spinner"></span>
 </a>
 <a class="nav-btn" onclick="simulateAction(this,'contact')">📞 Contact <span class="spinner"></span>
 </a>
 <a class="nav-btn" id="backBtn" onclick="showAllButtons()" style="display:none; background:#d32f2f;">⬅️ Back to Menu <span class="spinner"></span></a>
 </div>
 
-<!-- 📜 THE CONSITITUTION -->
+<!-- 📜 The Constitution -->
 <section id="rules" style="background:#f5fff7; padding:30px; border-radius:12px; box-shadow:0 2px 12px rgba(0,0,0,0.08); font-family:'Poppins', sans-serif; color:#2e3b32;">
   
 <h2 style="text-align:center; color:#1b5e20;">📜 CHAMA CONSTITUTION</h2>
@@ -3087,7 +3189,7 @@ style="width:150px; height:150px; border-radius:50%; object-fit:cover; box-shado
   <!-- ⏳ UPCOMING MEETING -->
   <!-- ========================= -->
  <div style="margin-top:25px; padding:15px; background:#e3f2fd; border-left:6px solid #1565c0; border-radius:8px;"> 
-  <h3 style="color:#0d47a1;">🗓️ FUTURE FINDERS CHAMA – PREVOIUS MEETING</h3>
+  <h3 style="color:#0d47a1;">🗓️ FUTURE FINDERS CHAMA – PREVIOUS MEETING</h3>
 
   <p>
     <b>Date:</b> Sunday, <b>18th January 2026</b><br>
@@ -3585,14 +3687,17 @@ function closeSystemUpdatePopup(){
 </section>
 
 <!-- ⚙️ Admin Login -->
-<section id="adminLogin">
-  <h2>⚙️ Admin Login</h2>
-  <input id="adminUser" placeholder="Admin Name" type="text" />
+<section id="adminLogin" aria-labelledby="adminLoginHeading">
+  <div class="ff-login-icon" aria-hidden="true">⚙️</div>
+  <h2 id="adminLoginHeading">Administrator Login</h2>
+  <p class="ff-login-intro">Sign in to manage members, savings, loans and group records.</p>
+  <label for="adminUser">Administrator name</label>
+  <input id="adminUser" name="adminUser" autocomplete="username" placeholder="Enter administrator name" type="text" />
 
-  <!-- Admin Password -->
+  <label for="adminPass">Password</label>
   <div class="password-container">
-    <input id="adminPass" placeholder="Admin Password" type="password" />
-    <span class="toggle-eye" onclick="togglePassword('adminPass', this)">👁️</span>
+    <input id="adminPass" name="adminPass" autocomplete="current-password" placeholder="Enter your password" type="password" />
+    <span class="toggle-eye" role="button" tabindex="0" aria-label="Show or hide password" onclick="togglePassword('adminPass', this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();togglePassword('adminPass', this)}">👁️</span>
   </div>
 
   <a class="action-btn" id="adminBtn" onclick="adminLogin()">
@@ -3658,7 +3763,7 @@ function closeSystemUpdatePopup(){
           </tr>
         </thead>
         <tbody id="membersNotesBody">
-          <tr><td colspan="4" style="color:gray; text-align:center;">No notes yet.</td><td class="saved2025">0</td><td class="reward2025">0</td></tr>
+          <tr><td colspan="4" style="color:gray; text-align:center; padding:16px;">No notes yet.</td></tr>
         </tbody>
       </table></div>
     </div>
@@ -8444,11 +8549,21 @@ y += 38;
 </a>
 </section>
 <!-- Member Login -->
-<section id="loginForm">
-<h2>🔑 Member Login</h2>
-<h1>Chama Savings &amp; Loan System</h1>
-<label for="memberName"><b>Select Your Name:</b></label>
-<select id="memberName" required="">
+<section id="loginForm" aria-labelledby="memberLoginHeading">
+<div class="ff-login-icon" aria-hidden="true">👤</div>
+<h2 id="memberLoginHeading">Member Login</h2>
+<h1>Future Finders Chama Group <span class="ff-login-subtitle">Savings &amp; Loan Portal</span></h1>
+<p class="ff-login-intro">Access your savings, contributions and member services securely.</p>
+<label for="memberLoginSearch">Search your member name</label>
+<div class="member-login-search" style="display:flex;gap:8px;margin:8px 0 12px;align-items:stretch;">
+  <input id="memberLoginSearch" type="search" placeholder="Type your name, then click Search" autocomplete="off"
+    style="flex:1;min-width:0;padding:11px 12px;border:1px solid #cbd5e1;border-radius:8px;font-size:15px;" />
+  <button id="memberLoginSearchBtn" type="button" onclick="searchMemberLoginName()"
+    style="padding:10px 16px;border:0;border-radius:8px;background:#087f8c;color:#fff;font-weight:700;cursor:pointer;">Search</button>
+</div>
+<p id="memberLoginSearchMessage" role="status" aria-live="polite" style="margin:0 0 10px;font-size:13px;color:#475569;"></p>
+<label for="memberName">Member name</label>
+<select id="memberName" name="memberName" autocomplete="username" required="">
 <option value="">-- Choose your name --</option>
 <option>BONIFACE CHELLUGET</option>
 <option>HILDA ODERO</option>
@@ -8482,11 +8597,11 @@ y += 38;
 </select>
 <!-- Member Password -->
 <div class="password-container">
-  <input id="memberPass" 
-         type="password"
-         placeholder="Enter your correct password" />
+  <input id="memberPass" name="memberPass" autocomplete="current-password"
+         type="password" required
+         placeholder="Enter your password" />
 
-  <span class="toggle-eye" onclick="togglePassword('memberPass', this)">
+  <span class="toggle-eye" role="button" tabindex="0" aria-label="Show or hide password" onclick="togglePassword('memberPass', this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();togglePassword('memberPass', this)}">
     👁️
   </span>
 </div>
@@ -9882,7 +9997,7 @@ cursor:pointer;
 font-weight:bold;
 margin:10px 0;
 ">
-📊 click to View 2025 Contributions
+📊 View 2025 Contributions
 </button>
 
 
@@ -10705,7 +10820,7 @@ cursor:pointer;
 font-weight:bold;
 margin:10px 0;
 ">
-📊 click to View 2026 Contributions
+📊 View 2026 Contributions
 </button>
 
 
@@ -12905,6 +13020,67 @@ function closePopup() {
 let loggedInUser = "";
 
 // 🔐 Member Login    
+function searchMemberLoginName() {
+  const searchInput = document.getElementById('memberLoginSearch');
+  const select = document.getElementById('memberName');
+  const message = document.getElementById('memberLoginSearchMessage');
+  if (!searchInput || !select || !message) return;
+
+  const query = searchInput.value.trim().toLocaleLowerCase();
+  const options = Array.from(select.options);
+  let matches = 0;
+  let firstMatch = null;
+
+  options.forEach(option => {
+    const isPlaceholder = option.value === '';
+    if (isPlaceholder) {
+      option.hidden = false;
+      return;
+    }
+    // Keep every member name hidden until a non-empty search is submitted.
+    const matchesQuery = Boolean(query) && option.textContent.toLocaleLowerCase().includes(query);
+    option.hidden = !matchesQuery;
+    if (matchesQuery) {
+      matches++;
+      if (!firstMatch) firstMatch = option;
+    }
+  });
+
+  if (!query) {
+    select.value = '';
+    message.textContent = 'Enter part or all of your name and click Search to display matching names.';
+  } else if (matches === 0) {
+    select.value = '';
+    message.textContent = 'No matching member found. Check the spelling or try another part of your name.';
+  } else if (matches === 1) {
+    select.value = firstMatch.value || firstMatch.textContent;
+    message.textContent = '1 matching member found. Confirm your name below.';
+  } else {
+    select.value = '';
+    message.textContent = matches + ' matching members found. Select your name from the list below.';
+  }
+  select.focus();
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  const searchInput = document.getElementById('memberLoginSearch');
+  const select = document.getElementById('memberName');
+  const message = document.getElementById('memberLoginSearchMessage');
+
+  // On first load, show only the placeholder in the member dropdown.
+  if (select) {
+    Array.from(select.options).forEach(option => {
+      option.hidden = option.value !== '';
+    });
+    select.value = '';
+  }
+  if (message) message.textContent = 'Search for your name first to display matching members.';
+
+  if (searchInput) searchInput.addEventListener('keydown', function (event) {
+    if (event.key === 'Enter') { event.preventDefault(); searchMemberLoginName(); }
+  });
+});
+
 function login() { 
   let btn = document.getElementById("memberLoginBtn");
   let spinner = btn.querySelector(".spinner");
@@ -19545,7 +19721,7 @@ function renderNotes() {
 
   if (!tbody) return;
   if (notes.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="4" style="color:gray; text-align:center;">No notes yet.</td><td class="saved2025">0</td><td class="reward2025">0</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="4" style="color:gray; text-align:center; padding:16px;">No notes yet.</td></tr>`;
     return;
   }
 
@@ -20272,4 +20448,242 @@ async function downloadIndividualSavingsReportsPDF() {
   } catch (err) { alert('The individual savings PDF could not be created. ' + (err && err.message ? err.message : 'Please try again.')); }
   finally { if (button) { button.disabled = false; button.innerHTML = oldText; } }
 }
+</script>
+
+
+
+<style id="ff-login-admin-professional-v2">
+/* Dedicated sign-in screens: clean, calm, consistent hierarchy */
+#adminLogin, #loginForm {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid #d9e4eb !important;
+  border-radius: 20px !important;
+  box-shadow: 0 18px 48px rgba(18,48,74,.12) !important;
+}
+#adminLogin {
+  width: min(460px, calc(100% - 30px)) !important;
+  margin: clamp(28px,6vh,68px) auto !important;
+  padding: clamp(24px,4vw,38px) !important;
+  box-sizing: border-box;
+  text-align: left;
+}
+#adminLogin::before, #loginForm::before {
+  content: ""; position: absolute; z-index: -1; top: 0; left: 0; right: 0;
+  height: 7px; background: linear-gradient(90deg,#12304a,#087f8c,#16866b);
+}
+#adminLogin h2, #loginForm h2 {
+  color: #12304a !important; font-size: clamp(1.35rem,3vw,1.7rem) !important;
+  line-height: 1.25; letter-spacing: -.025em; margin: 5px 0 10px !important;
+}
+#adminLogin h2::after { content: "Secure administrator access"; display:block; margin-top:8px; color:#647789; font-size:.9rem; font-weight:400; letter-spacing:0; }
+#adminLogin input, #loginForm input, #loginForm select {
+  width: 100%; min-height: 49px; padding: 13px 14px; border: 1px solid #cbd8e2;
+  border-radius: 10px; box-sizing: border-box; background:#fbfdff; font-size: 15px;
+}
+#adminLogin > input { margin: 14px 0 11px; }
+#adminLogin .password-container, #loginForm .password-container {
+  position: relative; width:100%; margin: 12px 0 16px; box-sizing:border-box;
+}
+#adminLogin .password-container input, #loginForm .password-container input { padding-right: 48px; }
+#adminLogin .toggle-eye, #loginForm .toggle-eye {
+  position:absolute; right:13px; top:50%; transform:translateY(-50%); cursor:pointer;
+  padding:5px; border-radius:7px; line-height:1;
+}
+#adminBtn, #memberLoginBtn {
+  display:flex !important; align-items:center; justify-content:center; gap:8px;
+  width:100% !important; min-height:49px; margin: 18px 0 0 !important; padding:13px 18px;
+  box-sizing:border-box; border:0; border-radius:10px !important;
+  background:linear-gradient(135deg,#12304a,#087f8c) !important; color:#fff !important;
+  font-weight:700; font-size:15px; line-height:1.35; text-align:center; text-decoration:none !important;
+  box-shadow:0 7px 16px rgba(8,127,140,.18); cursor:pointer;
+}
+#adminBtn:hover, #memberLoginBtn:hover { filter:brightness(1.05); transform:translateY(-1px); box-shadow:0 10px 22px rgba(8,127,140,.23); }
+#adminLoginMessage, #loginMessage { min-height:20px; margin:14px 0 0 !important; text-align:center; line-height:1.45; overflow-wrap:anywhere; }
+#loginForm {
+  width:min(540px,calc(100% - 30px)) !important; margin:28px auto !important;
+  padding:clamp(24px,4vw,40px) !important; box-sizing:border-box;
+}
+#loginForm h1 { color:#647789 !important; font-size:1rem !important; line-height:1.5; font-weight:500 !important; margin:0 0 25px !important; }
+#loginForm label { display:block; margin:16px 0 8px !important; color:#29475c; font-size:.92rem; font-weight:700; }
+#loginForm #memberName { margin-top:0; }
+#loginForm #memberName:focus, #loginForm input:focus, #adminLogin input:focus { outline:3px solid rgba(8,127,140,.14); border-color:#087f8c; background:#fff; }
+#adminLogin input::placeholder, #loginForm input::placeholder { color:#8293a1; }
+/* Admin panel: consistent spacing and orderly control groups */
+#admin { color:#20384b; }
+#admin > div:first-child { padding:18px !important; margin:4px 0 22px !important; background:#f6fafc; border:1px solid #e1eaf0; border-radius:15px; }
+#admin > div:first-child img { width:112px !important; max-height:112px; object-fit:contain; }
+#admin h2 { color:#12304a; line-height:1.3; }
+#admin h3 { color:#12304a; line-height:1.35; }
+#admin #adminSummary { margin:18px 0 26px; }
+#admin .admin-panel h2, #admin .admin-panel h3,
+#admin #membersNotesPanel h2, #admin #membersOverviewPanel h2,
+#admin #pendingMembersPanel h2, #admin #loanApplicationsPanel h2 { padding-bottom:10px; border-bottom:1px solid #e5edf2; }
+#admin .admin-panel button, #admin .admin-panel .action-btn,
+#admin #membersNotesPanel button, #admin #membersOverviewPanel button,
+#admin #pendingMembersPanel button, #admin #loanApplicationsPanel button {
+  border-radius:9px !important; margin:4px 5px 4px 0; font-weight:650;
+}
+#admin input:not([type=checkbox]):not([type=radio]), #admin select, #admin textarea { min-height:42px; border-radius:9px; }
+#admin textarea { min-height:100px; resize:vertical; }
+#admin table th { position:relative; }
+#admin table td, #admin table th { line-height:1.45; }
+#admin button:focus-visible, #admin a:focus-visible, #admin input:focus-visible, #admin select:focus-visible, #admin textarea:focus-visible,
+#loginForm button:focus-visible, #loginForm a:focus-visible, #adminLogin button:focus-visible, #adminLogin a:focus-visible { outline:3px solid #f3b544; outline-offset:2px; }
+@media(max-width:600px) {
+  #adminLogin, #loginForm { width:calc(100% - 24px) !important; padding:22px 18px !important; margin:18px auto !important; border-radius:15px !important; }
+  #admin > div:first-child { padding:12px !important; }
+  #admin .admin-panel, #admin #membersNotesPanel, #admin #membersOverviewPanel, #admin #pickedNumbersTable, #admin #pendingMembersPanel, #admin #loanApplicationsPanel { margin:14px 0; padding:14px; }
+  #admin button, #admin .action-btn { max-width:100%; white-space:normal; overflow-wrap:anywhere; }
+}
+@media(prefers-reduced-motion:reduce) { #adminBtn:hover, #memberLoginBtn:hover { transform:none; } }
+</style>
+
+
+<style id="ff-final-professional-finish">
+/* Final polish: make sign-in and admin work areas feel like one coherent system. */
+#adminLogin, #loginForm { font-family: Inter, "Segoe UI", Arial, sans-serif; color:#20384b; }
+.ff-login-icon { width:54px; height:54px; margin:0 auto 14px; display:grid; place-items:center; border-radius:16px; background:linear-gradient(135deg,#e7f4f6,#eaf4ef); font-size:25px; }
+#adminLogin h2, #loginForm h2 { text-align:center; }
+.ff-login-intro { margin:0 0 22px; color:#647789; text-align:center; font-size:.94rem; line-height:1.6; }
+.ff-login-subtitle { display:block; font-size:.94em; color:#087f8c; margin-top:4px; }
+#adminLogin label, #loginForm label { display:block; font-size:.9rem; font-weight:700; color:#29475c; margin:15px 0 7px !important; }
+#adminLogin > input { margin:0 !important; }
+#adminLogin .password-container, #loginForm .password-container { margin:10px 0 14px; }
+#adminBtn, #memberLoginBtn { min-height:51px; letter-spacing:.01em; }
+#adminLoginMessage, #loginMessage { border-radius:9px; }
+/* Give the admin workspace a predictable content width and clear visual hierarchy. */
+#admin { max-width:1440px; margin:0 auto; padding:clamp(12px,2vw,28px); box-sizing:border-box; }
+#admin > #logoutBtn, #admin > button[onclick="showAvailableNumbers()"] { min-height:42px; padding:10px 16px !important; border-radius:9px !important; font-weight:700; margin:0 8px 12px 0 !important; box-shadow:0 3px 8px rgba(18,48,74,.10); }
+#admin > #logoutBtn { background:#a92e3a !important; }
+#admin > button[onclick="showAvailableNumbers()"] { background:#16866b !important; }
+#adminSummary { display:grid !important; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px !important; margin:16px 0 28px !important; }
+#adminSummary .summary-card { min-width:0; padding:20px 18px !important; border:1px solid #dfe9ef; border-radius:14px; background:linear-gradient(145deg,#fff,#f7fbfc); box-shadow:0 6px 18px rgba(18,48,74,.06); color:#20384b; font-size:1rem; line-height:1.5; font-weight:700; overflow-wrap:anywhere; }
+#membersNotesPanel, #membersOverviewPanel, #pendingMembersPanel, #loanApplicationsPanel, #pickedNumbersTable { background:#fff; border:1px solid #e0e9ef !important; border-radius:15px; padding:clamp(14px,2vw,24px) !important; margin:18px 0 24px !important; box-shadow:0 7px 24px rgba(18,48,74,.045); }
+#admin table { border-color:#e1eaf0; }
+#admin table th { background:#123b55; color:#fff; padding:12px 13px; font-size:.9rem; white-space:normal; }
+#admin table td { padding:11px 13px; vertical-align:middle; }
+#adminSummary + #membersNotesPanel { margin-top:0 !important; }
+#admin button, #admin .action-btn { transition:transform .15s ease, box-shadow .15s ease, filter .15s ease; }
+#admin button:hover, #admin .action-btn:hover { filter:brightness(1.03); box-shadow:0 5px 14px rgba(18,48,74,.13); }
+#admin input:not([type=checkbox]):not([type=radio]), #admin select, #admin textarea { max-width:100%; box-sizing:border-box; }
+#admin input:focus-visible, #admin select:focus-visible, #admin textarea:focus-visible { outline:3px solid rgba(8,127,140,.2); border-color:#087f8c; }
+@media(max-width:980px) { #adminSummary { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media(max-width:600px) {
+  #admin { padding:10px; }
+  #adminSummary { grid-template-columns:1fr; gap:10px !important; }
+  #adminSummary .summary-card { padding:15px !important; }
+  #admin > #logoutBtn, #admin > button[onclick="showAvailableNumbers()"] { width:100%; margin:0 0 10px !important; }
+  #admin table { min-width:620px; }
+  #adminLogin, #loginForm { text-align:left; }
+}
+@media(prefers-reduced-motion:reduce) { #admin button, #admin .action-btn { transition:none; } }
+</style>
+
+<style id="ff-admin-accordion-styles">
+#admin .ff-admin-toolbar{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:22px 0 26px}
+#admin .ff-admin-toggle{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:62px;padding:16px 18px!important;border:1px solid #d9e6ed!important;border-radius:13px!important;background:linear-gradient(135deg,#fff,#f4f9fb)!important;color:#17384d!important;text-align:left;font-weight:750;font-size:15px;box-shadow:0 4px 12px rgba(18,48,74,.06);cursor:pointer}
+#admin .ff-admin-toggle:hover{border-color:#0b8790!important;background:#effafb!important}
+#admin .ff-admin-toggle .ff-chevron{display:inline-flex;align-items:center;justify-content:center;flex:0 0 28px;height:28px;border-radius:8px;background:#e5f3f4;color:#087f8c;font-size:18px;transition:transform .18s ease}
+#admin .ff-admin-toggle[aria-expanded="true"] .ff-chevron{transform:rotate(180deg)}
+#admin .ff-admin-card{min-width:0;margin:0 0 14px;border:1px solid #dce7ed;border-radius:15px;background:#fff;overflow:hidden;box-shadow:0 5px 18px rgba(18,48,74,.045)}
+#admin .ff-admin-card[hidden],#admin .ff-admin-content[hidden]{display:none!important}
+#admin .ff-admin-content{padding:clamp(14px,2vw,24px);overflow-x:auto;border-top:1px solid #e8eff3}
+#admin .ff-admin-content>h3:first-child,#admin .ff-admin-content>h2:first-child{margin-top:0}
+#admin .ff-admin-content>input[type="text"],#admin .ff-admin-content>select,#admin .ff-admin-content>textarea{width:100%;max-width:100%;box-sizing:border-box;margin:8px 0}
+#admin .ff-admin-content table{width:100%;border-collapse:collapse}
+#admin .ff-admin-content button{margin:5px 6px 5px 0}
+#admin .ff-admin-toolbar-label{margin:8px 0 0;color:#627789;font-size:.92rem}
+@media(max-width:600px){#admin .ff-admin-toolbar{grid-template-columns:1fr}#admin .ff-admin-toggle{min-height:56px;padding:13px 15px!important}#admin .ff-admin-content{padding:12px}}
+/* Visibility safety fix: keep all administrator section buttons visible */
+#admin .ff-admin-toolbar{display:grid!important;visibility:visible!important;opacity:1!important;width:100%;position:relative;z-index:5;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))!important;}
+#admin .ff-admin-toolbar .ff-admin-card{display:block!important;visibility:visible!important;opacity:1!important;position:relative!important;width:100%;min-height:0!important;}
+#admin .ff-admin-toolbar .ff-admin-toggle{display:flex!important;visibility:visible!important;opacity:1!important;min-height:62px!important;width:100%!important;position:relative!important;z-index:6;color:#17384d!important;background:#f4f9fb!important;}
+#admin .ff-admin-toolbar .ff-admin-content[hidden]{display:none!important;}
+#admin .ff-admin-toolbar .ff-admin-content:not([hidden]){display:block!important;}
+#admin .ff-admin-toolbar-label{display:block!important;visibility:visible!important;opacity:1!important;}
+/* Full-screen administrator workspace: one section at a time */
+#admin .ff-admin-card.is-open{position:fixed!important;inset:12px!important;z-index:99999!important;width:auto!important;height:auto!important;max-height:none!important;display:flex!important;flex-direction:column!important;background:#fff!important;border:1px solid #cbdbe4!important;border-radius:16px!important;box-shadow:0 18px 70px rgba(10,30,45,.3)!important;overflow:hidden!important;margin:0!important;}
+#admin .ff-admin-card.is-open .ff-admin-toggle{flex:0 0 auto!important;border-radius:0!important;background:#eaf6f7!important;font-size:18px!important;min-height:64px!important;}
+#admin .ff-admin-card.is-open .ff-admin-content{display:block!important;flex:1 1 auto!important;min-height:0!important;overflow:auto!important;padding:clamp(18px,3vw,36px)!important;}
+#admin .ff-admin-card.is-open .ff-admin-close{display:inline-flex;align-items:center;justify-content:center;align-self:flex-end;position:sticky;top:0;z-index:10;margin:0 0 12px!important;padding:11px 20px!important;border:0;border-radius:9px;background:#17384d;color:#fff;font-weight:700;cursor:pointer;}
+#admin .ff-admin-card.is-open .ff-admin-close:hover{background:#087f8c;}
+@media(max-width:600px){#admin .ff-admin-card.is-open{inset:5px!important;border-radius:10px!important}#admin .ff-admin-card.is-open .ff-admin-content{padding:12px!important}}
+@media(max-width:600px){#admin .ff-admin-toolbar{grid-template-columns:1fr!important;}}
+</style>
+<script id="ff-admin-accordion-script">
+(function(){
+  function initFutureFindersAdminAccordion(){
+    const admin=document.getElementById('admin');
+    if(!admin||admin.dataset.accordionReady==='1')return;
+    admin.dataset.accordionReady='1';
+    const toolbar=document.createElement('div');toolbar.className='ff-admin-toolbar';toolbar.setAttribute('aria-label','Administrator sections');
+    const intro=document.createElement('p');intro.className='ff-admin-toolbar-label';intro.textContent='Choose a section below to view its tools and records. Close it when you are finished.';
+    const definitions=[
+      {key:'summary',title:'📊 Dashboard Summary',selectors:['#adminSummary']},
+      {key:'notes',title:'🗒️ Members Notes',selectors:['#membersNotesPanel']},
+      {key:'members',title:'👥 Members Overview',selectors:['#membersOverviewPanel']},
+      {key:'loans',title:'📑 Loan Management & Applications',selectors:['h3.ff-mm-heading','#loanSearch','#loanStatusFilter','button.ff-export-loans','h3.ff-loan-heading','table.ff-loan-table']},
+      {key:'registrations',title:'📝 Pending Member Registrations',selectors:['#pendingMembersPanel']},
+      {key:'numbers',title:'🎲 Picked Lucky Numbers',selectors:['button.ff-picked-trigger','#pickedNumbersTable']},
+      {key:'updates',title:'🚀 System Updates & Notifications',selectors:['h3.ff-updates-heading','#updateMessage','button.ff-post-update','#memberSelectionBox','label.ff-whatsapp-label','div.ff-update-history']}
+    ];
+    const cards={};
+    definitions.forEach(d=>{
+      const card=document.createElement('section');card.className='ff-admin-card';card.dataset.adminPanel=d.key;
+      const toggle=document.createElement('button');toggle.type='button';toggle.className='ff-admin-toggle';toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-controls','ff-admin-content-'+d.key);
+      const label=document.createElement('span');label.textContent=d.title;
+      const chevron=document.createElement('span');chevron.className='ff-chevron';chevron.setAttribute('aria-hidden','true');chevron.textContent='⌄';
+      toggle.append(label,chevron);
+      const content=document.createElement('div');content.className='ff-admin-content';content.id='ff-admin-content-'+d.key;content.hidden=true;
+      const close=document.createElement('button');close.type='button';close.className='ff-admin-close';close.textContent='✕ Close section';close.setAttribute('aria-label','Close this administrator section');
+      close.addEventListener('click',()=>{content.hidden=true;toggle.setAttribute('aria-expanded','false');card.classList.remove('is-open');Array.from(toolbar.children).forEach(other=>{other.hidden=false;});intro.hidden=false;toolbar.scrollIntoView({behavior:'smooth',block:'start'});});
+      toggle.addEventListener('click',()=>{const opening=content.hidden;if(opening){Array.from(toolbar.children).forEach(other=>{if(other!==card)other.hidden=true;});intro.hidden=true;content.hidden=false;card.classList.add('is-open');toggle.setAttribute('aria-expanded','true');content.prepend(close);close.focus({preventScroll:true});}else{content.hidden=true;toggle.setAttribute('aria-expanded','false');card.classList.remove('is-open');Array.from(toolbar.children).forEach(other=>{other.hidden=false;});intro.hidden=false;}});
+      card.append(toggle,content);cards[d.key]={card,content};toolbar.append(card);
+    });
+    const findHeading=(text)=>Array.from(admin.querySelectorAll('h2,h3,h4')).find(e=>e.textContent.trim().includes(text));
+    const mm=findHeading('Member Management');if(mm)mm.classList.add('ff-mm-heading');
+    const loanHead=findHeading('Loan Applications');if(loanHead)loanHead.classList.add('ff-loan-heading');
+    const updateHead=findHeading('System Updates');if(updateHead)updateHead.classList.add('ff-updates-heading');
+    const exportLoans=Array.from(admin.querySelectorAll('button')).find(e=>e.getAttribute('onclick')==='exportLoans()');if(exportLoans)exportLoans.classList.add('ff-export-loans');
+    const loanTable=admin.querySelector('#adminLoanBody')?.closest('table');if(loanTable)loanTable.classList.add('ff-loan-table');
+    const pickedTrigger=Array.from(admin.querySelectorAll('button')).find(e=>e.getAttribute('onclick')==='togglePickedNumbers()');if(pickedTrigger){pickedTrigger.classList.add('ff-picked-trigger');pickedTrigger.textContent='🎲 View Picked Numbers';}
+    const postUpdate=Array.from(admin.querySelectorAll('button')).find(e=>e.getAttribute('onclick')==='postUpdate()');if(postUpdate)postUpdate.classList.add('ff-post-update');
+    const check=admin.querySelector('#sendWhatsAppUpdate');if(check&&check.closest('label'))check.closest('label').classList.add('ff-whatsapp-label');
+    const history=admin.querySelector('#updateHistoryBody')?.closest('div');if(history)history.classList.add('ff-update-history');
+    function move(selector,target){const el=admin.querySelector(selector);if(el&&target&&!el.closest('.ff-admin-content'))target.appendChild(el);}
+    move('#adminSummary',cards.summary.content);move('#membersNotesPanel',cards.notes.content);move('#membersOverviewPanel',cards.members.content);move('#pendingMembersPanel',cards.registrations.content);
+    ['h3.ff-mm-heading','#loanSearch','#loanStatusFilter','button.ff-export-loans','h3.ff-loan-heading','table.ff-loan-table'].forEach(s=>move(s,cards.loans.content));
+    ['button.ff-picked-trigger','#pickedNumbersTable'].forEach(s=>move(s,cards.numbers.content));
+    ['h3.ff-updates-heading','#updateMessage','button.ff-post-update','#memberSelectionBox','label.ff-whatsapp-label','div.ff-update-history'].forEach(s=>move(s,cards.updates.content));
+    // Always place the section picker visibly inside the admin panel, immediately
+    // after the quick-action button when available. Fall back safely if markup changes.
+    const quick=Array.from(admin.querySelectorAll('button')).find(e=>e.getAttribute('onclick')==='showAvailableNumbers()');
+    const logout=admin.querySelector('#logoutBtn');
+    if(quick && quick.parentNode){
+      quick.insertAdjacentElement('afterend',intro);
+      intro.insertAdjacentElement('afterend',toolbar);
+    } else if(logout && logout.parentNode){
+      logout.insertAdjacentElement('afterend',intro);
+      intro.insertAdjacentElement('afterend',toolbar);
+    } else {
+      admin.insertBefore(toolbar,admin.firstChild);
+      toolbar.insertAdjacentElement('beforebegin',intro);
+    }
+    // Force all section buttons to remain visible even if another stylesheet
+    // accidentally applies a hidden/display rule to the generated toolbar.
+    toolbar.style.setProperty('display','grid','important');
+    toolbar.style.setProperty('visibility','visible','important');
+    toolbar.style.setProperty('opacity','1','important');
+    toolbar.querySelectorAll('.ff-admin-card').forEach(el=>{el.style.setProperty('display','block','important');el.style.setProperty('visibility','visible','important');el.style.setProperty('opacity','1','important');});
+    toolbar.querySelectorAll('.ff-admin-toggle').forEach(el=>{el.style.setProperty('display','flex','important');el.style.setProperty('visibility','visible','important');el.style.setProperty('opacity','1','important');});
+    // Summary and tools stay closed until the administrator explicitly opens a section.
+    cards.summary.content.hidden=true;
+    // Ensure buttons inside the panels remain usable and sections start closed.
+    toolbar.querySelectorAll('.ff-admin-content').forEach(c=>c.hidden=true);
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initFutureFindersAdminAccordion);else initFutureFindersAdminAccordion();
+})();
 </script>
