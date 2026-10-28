@@ -12843,45 +12843,8 @@ const members = {
     savings: 8000,
     monthly: [1364, 200, 1000, 1000, 500, 1000, 500],
     note: "Consistent saver",
-    contracts: [], // Add reviewed contract records here; keep each renewal as a separate record.
-    loans: [
-      {
-        id: "",
-        requestedAmount: 0,
-        qualifiedAmount: 0,
-        idNumber: "",
-        repaymentPeriod: "",
-        repaymentAmount: 0,
-        monthlyRepay: 0,
-        amountPaid: 0,
-        balance: 0,
-        latePenalty: 0,
-        date: "",
-        firstRepaymentDate: "",
-        finalRepaymentDate: "",
-        status: "",
-        reason: "",
-        repaymentSchedule: []
-      },
-      {
-        id: "",
-        requestedAmount: 0,
-        qualifiedAmount: 0,
-        idNumber: "",
-        repaymentPeriod: "",
-        repaymentAmount: 0,
-        monthlyRepay: 0,
-        amountPaid: 0,
-        balance: 0,
-        latePenalty: 0,
-        date: "",
-        firstRepaymentDate: "",
-        finalRepaymentDate: "",
-        status: "",
-        reason: "",
-        repaymentSchedule: []
-      }
-    ]
+    contracts: [],
+    loans: []
   },
 
   "HILDA ODERO": {
@@ -12890,25 +12853,8 @@ const members = {
     savings: 1100,
     monthly: [900, 200],
     note: "Missed March payment — follow up on consistency.",
-    contracts: [], // Add reviewed contract records here; keep each renewal as a separate record.
-    loans: [
-      {
-        id: "", requestedAmount: 0, qualifiedAmount: 0,
-        idNumber: "", repaymentPeriod: "", repaymentAmount: 0,
-        monthlyRepay: 0, amountPaid: 0, balance: 0,
-        latePenalty: 0, date: "", firstRepaymentDate: "",
-        finalRepaymentDate: "", status: "", reason: "",
-        repaymentSchedule: []
-      },
-      {
-        id: "", requestedAmount: 0, qualifiedAmount: 0,
-        idNumber: "", repaymentPeriod: "", repaymentAmount: 0,
-        monthlyRepay: 0, amountPaid: 0, balance: 0,
-        latePenalty: 0, date: "", firstRepaymentDate: "",
-        finalRepaymentDate: "", status: "", reason: "",
-        repaymentSchedule: []
-      }
-    ]
+    contracts: [],
+    loans: []
   },
 
   "JOEL EGESA": {
@@ -12917,25 +12863,8 @@ const members = {
     savings: 2020,
     monthly: [720],
     note: "New member; low savings but improving gradually.",
-    contracts: [], // Add reviewed contract records here; keep each renewal as a separate record.
-    loans: [
-      {
-        id: "", requestedAmount: 0, qualifiedAmount: 0,
-        idNumber: "", repaymentPeriod: "", repaymentAmount: 0,
-        monthlyRepay: 0, amountPaid: 0, balance: 0,
-        latePenalty: 0, date: "", firstRepaymentDate: "",
-        finalRepaymentDate: "", status: "", reason: "",
-        repaymentSchedule: []
-      },
-      {
-        id: "", requestedAmount: 0, qualifiedAmount: 0,
-        idNumber: "", repaymentPeriod: "", repaymentAmount: 0,
-        monthlyRepay: 0, amountPaid: 0, balance: 0,
-        latePenalty: 0, date: "", firstRepaymentDate: "",
-        finalRepaymentDate: "", status: "", reason: "",
-        repaymentSchedule: []
-      }
-    ]
+    contracts: [],
+    loans: []
   },
 
   "SHALIK SHIVERENGE": {
@@ -12944,25 +12873,8 @@ const members = {
     savings: 2120,
     monthly: [250, 200, 130, 300, 160, 250, 50],
     note: "Needs encouragement to make regular deposits.",
-    contracts: [], // Add reviewed contract records here; keep each renewal as a separate record.
-    loans: [
-      {
-        id: "", requestedAmount: 0, qualifiedAmount: 0,
-        idNumber: "", repaymentPeriod: "", repaymentAmount: 0,
-        monthlyRepay: 0, amountPaid: 0, balance: 0,
-        latePenalty: 0, date: "", firstRepaymentDate: "",
-        finalRepaymentDate: "", status: "", reason: "",
-        repaymentSchedule: []
-      },
-      {
-        id: "", requestedAmount: 0, qualifiedAmount: 0,
-        idNumber: "", repaymentPeriod: "", repaymentAmount: 0,
-        monthlyRepay: 0, amountPaid: 0, balance: 0,
-        latePenalty: 0, date: "", firstRepaymentDate: "",
-        finalRepaymentDate: "", status: "", reason: "",
-        repaymentSchedule: []
-      }
-    ]
+    contracts: [],
+    loans: []
   },
 
   "ELVIS KAMASH": {
@@ -12972,24 +12884,69 @@ const members = {
     monthly: [902, 50, 1840, 892, 400, 2155, 264],
     note: "",
     fines: "",
-    contracts: [], // Add reviewed contract records here; keep each renewal as a separate record.
+    contracts: [],
     loans: [
       {
-        id: "", requestedAmount: 2500, qualifiedAmount: 2500,
-        idNumber: "", repaymentPeriod: "2", repaymentAmount: 2875,
-        monthlyRepay: 1438, amountPaid: 2875, balance: 0,
-        latePenalty: 0, date: "17/09/2026", firstRepaymentDate: "15/08/2026",
-        finalRepaymentDate: "15/09/2026", status: "APPROVED", reason: "QUALIFIED FOR A LOAN ",
-        repaymentSchedule: [2
-      ]
+        id: "",
+        requestedAmount: 2500,
+        qualifiedAmount: 2500,
+        idNumber: "",
+        repaymentPeriod: "2",
+        repaymentAmount: 2875,
+        monthlyRepay: 1438,
+        amountPaid: 2875,
+        balance: 0,
+        latePenalty: 0,
+        date: "17/09/2026",
+        firstRepaymentDate: "15/08/2026",
+        finalRepaymentDate: "15/09/2026",
+        status: "APPROVED",
+        reason: "QUALIFIED FOR A LOAN",
+        repaymentSchedule: [
+          {
+            month: 1,
+            dueDate: "15/08/2026",
+            amountDue: 1438,
+            amountPaid: 1438
+          },
+          {
+            month: 2,
+            dueDate: "15/09/2026",
+            amountDue: 1437,
+            amountPaid: 1437
+          }
+        ]
       },
       {
-        id: "", requestedAmount: 3000, qualifiedAmount: 3000,
-        idNumber: "", repaymentPeriod: "2", repaymentAmount: 3450,
-        monthlyRepay: 1725, amountPaid: 3450, balance: 0,
-        latePenalty: 0, date: "", firstRepaymentDate: "23/08/2026",
-        finalRepaymentDate: "23/09/2026", status: "APPROVED", reason: "QUALIFIED",
-        repaymentSchedule: [2]
+        id: "",
+        requestedAmount: 3000,
+        qualifiedAmount: 3000,
+        idNumber: "",
+        repaymentPeriod: "2",
+        repaymentAmount: 3450,
+        monthlyRepay: 1725,
+        amountPaid: 3450,
+        balance: 0,
+        latePenalty: 0,
+        date: "",
+        firstRepaymentDate: "23/08/2026",
+        finalRepaymentDate: "23/09/2026",
+        status: "APPROVED",
+        reason: "QUALIFIED",
+        repaymentSchedule: [
+          {
+            month: 1,
+            dueDate: "23/08/2026",
+            amountDue: 1725,
+            amountPaid: 1725
+          },
+          {
+            month: 2,
+            dueDate: "23/09/2026",
+            amountDue: 1725,
+            amountPaid: 1725
+          }
+        ]
       }
     ]
   },
@@ -13001,25 +12958,8 @@ const members = {
     monthly: [2022, 500, 300, 400, 400, 500],
     note: "Very reliable saver — possible leadership candidate. Fines: 30 as of 17th Nov 2025, paid 25.",
     fines: "",
-    contracts: [], // Add reviewed contract records here; keep each renewal as a separate record.
-    loans: [
-      {
-        id: "", requestedAmount: 0, qualifiedAmount: 0,
-        idNumber: "", repaymentPeriod: "", repaymentAmount: 0,
-        monthlyRepay: 0, amountPaid: 0, balance: 0,
-        latePenalty: 0, date: "", firstRepaymentDate: "",
-        finalRepaymentDate: "", status: "", reason: "",
-        repaymentSchedule: []
-      },
-      {
-        id: "", requestedAmount: 0, qualifiedAmount: 0,
-        idNumber: "", repaymentPeriod: "", repaymentAmount: 0,
-        monthlyRepay: 0, amountPaid: 0, balance: 0,
-        latePenalty: 0, date: "", firstRepaymentDate: "",
-        finalRepaymentDate: "", status: "", reason: "",
-        repaymentSchedule: []
-      }
-    ]
+    contracts: [],
+    loans: []
   },
 
   "JACKIENYARANGI": {
@@ -13029,25 +12969,8 @@ const members = {
     monthly: [1000, 250, 200, 200, 200, 200, 100],
     note: "Missed several months; check commitment level.",
     fines: "",
-    contracts: [], // Add reviewed contract records here; keep each renewal as a separate record.
-    loans: [
-      {
-        id: "", requestedAmount: 0, qualifiedAmount: 0,
-        idNumber: "", repaymentPeriod: "", repaymentAmount: 0,
-        monthlyRepay: 0, amountPaid: 0, balance: 0,
-        latePenalty: 0, date: "", firstRepaymentDate: "",
-        finalRepaymentDate: "", status: "", reason: "",
-        repaymentSchedule: []
-      },
-      {
-        id: "", requestedAmount: 0, qualifiedAmount: 0,
-        idNumber: "", repaymentPeriod: "", repaymentAmount: 0,
-        monthlyRepay: 0, amountPaid: 0, balance: 0,
-        latePenalty: 0, date: "", firstRepaymentDate: "",
-        finalRepaymentDate: "", status: "", reason: "",
-        repaymentSchedule: []
-      }
-    ]
+    contracts: [],
+    loans: []
   },
 
   "SAMUEL OYUGI": {
@@ -13056,51 +12979,105 @@ const members = {
     savings: 3122,
     monthly: [1922, 400, 450, 350],
     note: "Fines: 360 as of 2nd Nov 2025; paid 0, not paid 360. Very active; good candidate for larger loans.",
-    contracts: [], // Add reviewed contract records here; keep each renewal as a separate record.
-    loans: [
-      {
-        id: "", requestedAmount: 0, qualifiedAmount: 0,
-        idNumber: "", repaymentPeriod: "", repaymentAmount: 0,
-        monthlyRepay: 0, amountPaid: 0, balance: 0,
-        latePenalty: 0, date: "", firstRepaymentDate: "",
-        finalRepaymentDate: "", status: "", reason: "",
-        repaymentSchedule: []
-      },
-      {
-        id: "", requestedAmount: 0, qualifiedAmount: 0,
-        idNumber: "", repaymentPeriod: "", repaymentAmount: 0,
-        monthlyRepay: 0, amountPaid: 0, balance: 0,
-        latePenalty: 0, date: "", firstRepaymentDate: "",
-        finalRepaymentDate: "", status: "", reason: "",
-        repaymentSchedule: []
-      }
-    ]
+    contracts: [],
+    loans: []
   },
 
-  "KEFFA MOMANYI": {
+  "KEPHA MOMANYI": {
     phone: "0759237482",
     password: "0759237482",
     savings: 4180,
     monthly: [960, 250, 500, 350, 400, 350, 170],
     note: "On 4th Nov borrowed 300; 60 outstanding as of 2nd Nov 2025.",
     fines: "",
-    contracts: [], // Add reviewed contract records here; keep each renewal as a separate record.
+    contracts: [],
     loans: [
       {
-        id: "", requestedAmount: 0, qualifiedAmount: 0,
-        idNumber: "", repaymentPeriod: "", repaymentAmount: 0,
-        monthlyRepay: 0, amountPaid: 0, balance: 0,
-        latePenalty: 0, date: "", firstRepaymentDate: "",
-        finalRepaymentDate: "", status: "", reason: "",
-        repaymentSchedule: []
+        id: "",
+        requestedAmount: 1500,
+        qualifiedAmount: 1500,
+        idNumber: "407818334",
+        repaymentPeriod: "1 MONTH",
+        repaymentAmount: 1680,
+        monthlyRepay: 1680,
+        amountPaid: 1680,
+        balance: 0,
+        latePenalty: 0,
+        date: "05/06/2026",
+        firstRepaymentDate: "06/06/2026",
+        finalRepaymentDate: "06/06/2026",
+        status: "APPROVED",
+        reason: "QUALIFIED — FULLY REPAID",
+        repaymentSchedule: [
+          {
+            month: 1,
+            dueDate: "06/06/2026",
+            amountDue: 1680,
+            amountPaid: 1680
+          }
+        ]
       },
       {
-        id: "", requestedAmount: 0, qualifiedAmount: 0,
-        idNumber: "", repaymentPeriod: "", repaymentAmount: 0,
-        monthlyRepay: 0, amountPaid: 0, balance: 0,
-        latePenalty: 0, date: "", firstRepaymentDate: "",
-        finalRepaymentDate: "", status: "", reason: "",
-        repaymentSchedule: []
+        id: "FF-0759237482-260729",
+        requestedAmount: 2500,
+        qualifiedAmount: 2500,
+        idNumber: "40781834",
+        repaymentPeriod: "2 MONTHS",
+        repaymentAmount: 2875,
+        monthlyRepay: 1438,
+        amountPaid: 2875,
+        balance: 0,
+        latePenalty: 0,
+        date: "29/07/2026",
+        firstRepaymentDate: "29/08/2026",
+        finalRepaymentDate: "29/09/2026",
+        status: "APPROVED",
+        reason: "QUALIFIED — FULLY REPAID",
+        repaymentSchedule: [
+          {
+            month: 1,
+            dueDate: "29/08/2026",
+            amountDue: 1438,
+            amountPaid: 1438
+          },
+          {
+            month: 2,
+            dueDate: "29/09/2026",
+            amountDue: 1437,
+            amountPaid: 1437
+          }
+        ]
+      },
+      {
+        id: "",
+        requestedAmount: 2600,
+        qualifiedAmount: 2600,
+        idNumber: "40781834",
+        repaymentPeriod: "2 MONTHS",
+        repaymentAmount: 2990,
+        monthlyRepay: 1495,
+        amountPaid: 2990,
+        balance: 0,
+        latePenalty: 0,
+        date: "15/09/2026",
+        firstRepaymentDate: "15/10/2026",
+        finalRepaymentDate: "15/11/2026",
+        status: "APPROVED",
+        reason: "QUALIFIED — FULLY REPAID ON TIME",
+        repaymentSchedule: [
+          {
+            month: 1,
+            dueDate: "15/10/2026",
+            amountDue: 1495,
+            amountPaid: 1495
+          },
+          {
+            month: 2,
+            dueDate: "15/11/2026",
+            amountDue: 1495,
+            amountPaid: 1495
+          }
+        ]
       }
     ]
   },
@@ -13110,24 +13087,83 @@ const members = {
     password: "0706918919",
     savings: 6535,
     monthly: [1335, 150, 650, 0, 400, 500, 1700],
-    note: "Fines: 90 as of 2nd Nov 2025; paid 0, outstanding 30. Loan of 1500 borrowed 13th October, repayment 1680 within 7 days; fully paid 24th October.",
-    contracts: [], // Add reviewed contract records here; keep each renewal as a separate record.
+    note: "Fines: 90 as of 2nd Nov 2025; paid 0, outstanding 30. June 2026 loan of KSh 1,500 has KSh 700 outstanding.",
+    contracts: [],
     loans: [
       {
-        id: "", requestedAmount: 0, qualifiedAmount: 0,
-        idNumber: "", repaymentPeriod: "", repaymentAmount: 0,
-        monthlyRepay: 0, amountPaid: 0, balance: 0,
-        latePenalty: 0, date: "", firstRepaymentDate: "",
-        finalRepaymentDate: "", status: "", reason: "",
-        repaymentSchedule: []
+        id: "",
+        requestedAmount: 1500,
+        qualifiedAmount: 1500,
+        idNumber: "33959157",
+        repaymentPeriod: "1 MONTH",
+        repaymentAmount: 1680,
+        monthlyRepay: 1680,
+        amountPaid: 980,
+        balance: 700,
+        latePenalty: 0,
+        date: "28TH JUNE 2026",
+        firstRepaymentDate: "06/06/2026",
+        finalRepaymentDate: "28TH JULY 2026",
+        status: "APPROVED",
+        reason: "PARTIALLY REPAID — KSH 700 OUTSTANDING",
+        repaymentSchedule: [
+          {
+            month: 1,
+            dueDate: "28/07/2026",
+            amountDue: 1680,
+            amountPaid: 980
+          }
+        ]
       },
       {
-        id: "", requestedAmount: 0, qualifiedAmount: 0,
-        idNumber: "", repaymentPeriod: "", repaymentAmount: 0,
-        monthlyRepay: 0, amountPaid: 0, balance: 0,
-        latePenalty: 0, date: "", firstRepaymentDate: "",
-        finalRepaymentDate: "", status: "", reason: "",
-        repaymentSchedule: []
+        id: "",
+        requestedAmount: 1500,
+        qualifiedAmount: 1500,
+        idNumber: "33959157",
+        repaymentPeriod: "1 MONTH",
+        repaymentAmount: 1680,
+        monthlyRepay: 1680,
+        amountPaid: 1680,
+        balance: 0,
+        latePenalty: 0,
+        date: "06/02/2026",
+        firstRepaymentDate: "06/03/2026",
+        finalRepaymentDate: "06/03/2026",
+        status: "APPROVED",
+        reason: "QUALIFIED — FULLY REPAID WITH NO PENALTY",
+        repaymentSchedule: [
+          {
+            month: 1,
+            dueDate: "06/03/2026",
+            amountDue: 1680,
+            amountPaid: 1680
+          }
+        ]
+      },
+      {
+        id: "",
+        requestedAmount: 1000,
+        qualifiedAmount: 1000,
+        idNumber: "33959157",
+        repaymentPeriod: "1 MONTH",
+        repaymentAmount: 1120,
+        monthlyRepay: 1120,
+        amountPaid: 1120,
+        balance: 0,
+        latePenalty: 0,
+        date: "09/01/2026",
+        firstRepaymentDate: "09/02/2026",
+        finalRepaymentDate: "09/02/2026",
+        status: "APPROVED",
+        reason: "QUALIFIED — FULLY REPAID ON TIME",
+        repaymentSchedule: [
+          {
+            month: 1,
+            dueDate: "09/02/2026",
+            amountDue: 1120,
+            amountPaid: 1120
+          }
+        ]
       }
     ]
   },
@@ -13138,23 +13174,94 @@ const members = {
     savings: 12349,
     monthly: [1100, 200, 700, 1215, 505, 3836, 375],
     note: "",
-    contracts: [], // Add reviewed contract records here; keep each renewal as a separate record.
+    contracts: [],
     loans: [
       {
-        id: "", requestedAmount: 0, qualifiedAmount: 0,
-        idNumber: "", repaymentPeriod: "", repaymentAmount: 0,
-        monthlyRepay: 0, amountPaid: 0, balance: 0,
-        latePenalty: 0, date: "", firstRepaymentDate: "",
-        finalRepaymentDate: "", status: "", reason: "",
-        repaymentSchedule: []
+        id: "",
+        requestedAmount: 500,
+        qualifiedAmount: 500,
+        idNumber: "",
+        repaymentPeriod: "1 MONTH",
+        repaymentAmount: 560,
+        monthlyRepay: 560,
+        amountPaid: 560,
+        balance: 0,
+        latePenalty: 0,
+        date: "10/04/2026",
+        firstRepaymentDate: "10/05/2026",
+        finalRepaymentDate: "10/05/2026",
+        status: "APPROVED",
+        reason: "QUALIFIED — FULLY REPAID ON TIME",
+        repaymentSchedule: [
+          {
+            month: 1,
+            dueDate: "10/05/2026",
+            amountDue: 560,
+            amountPaid: 560
+          }
+        ]
       },
       {
-        id: "", requestedAmount: 0, qualifiedAmount: 0,
-        idNumber: "", repaymentPeriod: "", repaymentAmount: 0,
-        monthlyRepay: 0, amountPaid: 0, balance: 0,
-        latePenalty: 0, date: "", firstRepaymentDate: "",
-        finalRepaymentDate: "", status: "", reason: "",
-        repaymentSchedule: []
+        id: "FF-0725979420-260719",
+        requestedAmount: 3000,
+        qualifiedAmount: 3000,
+        idNumber: "38368808",
+        repaymentPeriod: "2 MONTHS",
+        repaymentAmount: 3450,
+        monthlyRepay: 1725,
+        amountPaid: 3450,
+        balance: 0,
+        latePenalty: 0,
+        date: "19/07/2026",
+        firstRepaymentDate: "19/08/2026",
+        finalRepaymentDate: "01/09/2026",
+        status: "APPROVED",
+        reason: "QUALIFIED — FULLY REPAID ON 01/09/2026",
+        repaymentSchedule: [
+          {
+            month: 1,
+            dueDate: "19/08/2026",
+            amountDue: 1725,
+            amountPaid: 1725
+          },
+          {
+            month: 2,
+            dueDate: "19/09/2026",
+            amountDue: 1725,
+            amountPaid: 1725
+          }
+        ]
+      },
+      {
+        id: "",
+        requestedAmount: 1000,
+        qualifiedAmount: 1000,
+        idNumber: "",
+        repaymentPeriod: "2 MONTHS",
+        repaymentAmount: 1150,
+        monthlyRepay: 575,
+        amountPaid: 1150,
+        balance: 0,
+        latePenalty: 0,
+        date: "09/06/2026",
+        firstRepaymentDate: "09/07/2026",
+        finalRepaymentDate: "09/08/2026",
+        status: "APPROVED",
+        reason: "QUALIFIED — FULLY REPAID ON TIME",
+        repaymentSchedule: [
+          {
+            month: 1,
+            dueDate: "09/07/2026",
+            amountDue: 575,
+            amountPaid: 575
+          },
+          {
+            month: 2,
+            dueDate: "09/08/2026",
+            amountDue: 575,
+            amountPaid: 575
+          }
+        ]
       }
     ]
   },
@@ -13165,25 +13272,8 @@ const members = {
     savings: 8100,
     monthly: [825, 100, 400, 125, 240, 890, 370],
     note: "",
-    contracts: [], // Add reviewed contract records here; keep each renewal as a separate record.
-    loans: [
-      {
-        id: "", requestedAmount: 0, qualifiedAmount: 0,
-        idNumber: "", repaymentPeriod: "", repaymentAmount: 0,
-        monthlyRepay: 0, amountPaid: 0, balance: 0,
-        latePenalty: 0, date: "", firstRepaymentDate: "",
-        finalRepaymentDate: "", status: "", reason: "",
-        repaymentSchedule: []
-      },
-      {
-        id: "", requestedAmount: 0, qualifiedAmount: 0,
-        idNumber: "", repaymentPeriod: "", repaymentAmount: 0,
-        monthlyRepay: 0, amountPaid: 0, balance: 0,
-        latePenalty: 0, date: "", firstRepaymentDate: "",
-        finalRepaymentDate: "", status: "", reason: "",
-        repaymentSchedule: []
-      }
-    ]
+    contracts: [],
+    loans: []
   },
 
   "ESTHER OBEGI": {
@@ -13192,25 +13282,8 @@ const members = {
     savings: 0,
     monthly: [0, 0, 0, 0, 0, 0, 0, 500, 0],
     note: "",
-    contracts: [], // Add reviewed contract records here; keep each renewal as a separate record.
-    loans: [
-      {
-        id: "", requestedAmount: 0, qualifiedAmount: 0,
-        idNumber: "", repaymentPeriod: "", repaymentAmount: 0,
-        monthlyRepay: 0, amountPaid: 0, balance: 0,
-        latePenalty: 0, date: "", firstRepaymentDate: "",
-        finalRepaymentDate: "", status: "", reason: "",
-        repaymentSchedule: []
-      },
-      {
-        id: "", requestedAmount: 0, qualifiedAmount: 0,
-        idNumber: "", repaymentPeriod: "", repaymentAmount: 0,
-        monthlyRepay: 0, amountPaid: 0, balance: 0,
-        latePenalty: 0, date: "", firstRepaymentDate: "",
-        finalRepaymentDate: "", status: "", reason: "",
-        repaymentSchedule: []
-      }
-    ]
+    contracts: [],
+    loans: []
   },
 
   "ELIZABETH SHIUNDU": {
@@ -13219,25 +13292,8 @@ const members = {
     savings: 1850,
     monthly: [400, 500, 400, 450, 100],
     note: "",
-    contracts: [], // Add reviewed contract records here; keep each renewal as a separate record.
-    loans: [
-      {
-        id: "", requestedAmount: 0, qualifiedAmount: 0,
-        idNumber: "", repaymentPeriod: "", repaymentAmount: 0,
-        monthlyRepay: 0, amountPaid: 0, balance: 0,
-        latePenalty: 0, date: "", firstRepaymentDate: "",
-        finalRepaymentDate: "", status: "", reason: "",
-        repaymentSchedule: []
-      },
-      {
-        id: "", requestedAmount: 0, qualifiedAmount: 0,
-        idNumber: "", repaymentPeriod: "", repaymentAmount: 0,
-        monthlyRepay: 0, amountPaid: 0, balance: 0,
-        latePenalty: 0, date: "", firstRepaymentDate: "",
-        finalRepaymentDate: "", status: "", reason: "",
-        repaymentSchedule: []
-      }
-    ]
+    contracts: [],
+    loans: []
   },
 
   "LILIAN KERUBO": {
@@ -13246,25 +13302,8 @@ const members = {
     savings: 1697,
     monthly: [400, 300, 100, 219, 300, 117, 53],
     note: "",
-    contracts: [], // Add reviewed contract records here; keep each renewal as a separate record.
-    loans: [
-      {
-        id: "", requestedAmount: 0, qualifiedAmount: 0,
-        idNumber: "", repaymentPeriod: "", repaymentAmount: 0,
-        monthlyRepay: 0, amountPaid: 0, balance: 0,
-        latePenalty: 0, date: "", firstRepaymentDate: "",
-        finalRepaymentDate: "", status: "", reason: "",
-        repaymentSchedule: []
-      },
-      {
-        id: "", requestedAmount: 0, qualifiedAmount: 0,
-        idNumber: "", repaymentPeriod: "", repaymentAmount: 0,
-        monthlyRepay: 0, amountPaid: 0, balance: 0,
-        latePenalty: 0, date: "", firstRepaymentDate: "",
-        finalRepaymentDate: "", status: "", reason: "",
-        repaymentSchedule: []
-      }
-    ]
+    contracts: [],
+    loans: []
   },
 
   "NELLY KARIMI": {
@@ -13273,23 +13312,82 @@ const members = {
     savings: 2100,
     monthly: [0, 0, 120, 170, 150, 300, 300, 0, 0],
     note: "",
-    contracts: [], // Add reviewed contract records here; keep each renewal as a separate record.
+    contracts: [],
     loans: [
       {
-        id: "", requestedAmount: 0, qualifiedAmount: 0,
-        idNumber: "", repaymentPeriod: "", repaymentAmount: 0,
-        monthlyRepay: 0, amountPaid: 0, balance: 0,
-        latePenalty: 0, date: "", firstRepaymentDate: "",
-        finalRepaymentDate: "", status: "", reason: "",
-        repaymentSchedule: []
+        id: "FF-0727428906-260823",
+        requestedAmount: 1000,
+        qualifiedAmount: 1000,
+        idNumber: "",
+        repaymentPeriod: "1 MONTH",
+        repaymentAmount: 1120,
+        monthlyRepay: 1120,
+        amountPaid: 1120,
+        balance: 0,
+        latePenalty: 0,
+        date: "23/08/2026",
+        firstRepaymentDate: "23/09/2026",
+        finalRepaymentDate: "23/09/2026",
+        status: "APPROVED",
+        reason: "QUALIFIED — FULLY REPAID ON TIME",
+        repaymentSchedule: [
+          {
+            month: 1,
+            dueDate: "23/09/2026",
+            amountDue: 1120,
+            amountPaid: 1120
+          }
+        ]
       },
       {
-        id: "", requestedAmount: 0, qualifiedAmount: 0,
-        idNumber: "", repaymentPeriod: "", repaymentAmount: 0,
-        monthlyRepay: 0, amountPaid: 0, balance: 0,
-        latePenalty: 0, date: "", firstRepaymentDate: "",
-        finalRepaymentDate: "", status: "", reason: "",
-        repaymentSchedule: []
+        id: "FF-0757905172-260919",
+        requestedAmount: 1200,
+        qualifiedAmount: 1200,
+        idNumber: "",
+        repaymentPeriod: "1 MONTH",
+        repaymentAmount: 1344,
+        monthlyRepay: 1344,
+        amountPaid: 1344,
+        balance: 0,
+        latePenalty: 0,
+        date: "19/09/2026",
+        firstRepaymentDate: "19/10/2026",
+        finalRepaymentDate: "19/10/2026",
+        status: "APPROVED",
+        reason: "QUALIFIED — FULLY REPAID ON TIME",
+        repaymentSchedule: [
+          {
+            month: 1,
+            dueDate: "19/10/2026",
+            amountDue: 1344,
+            amountPaid: 1344
+          }
+        ]
+      },
+      {
+        id: "FF-0757905172-261006",
+        requestedAmount: 1500,
+        qualifiedAmount: 1500,
+        idNumber: "",
+        repaymentPeriod: "1 MONTH",
+        repaymentAmount: 1680,
+        monthlyRepay: 1680,
+        amountPaid: 0,
+        balance: 1680,
+        latePenalty: 0,
+        date: "06/10/2026",
+        firstRepaymentDate: "06/11/2026",
+        finalRepaymentDate: "06/11/2026",
+        status: "APPROVED",
+        reason: "OUTSTANDING — NOT YET PAID",
+        repaymentSchedule: [
+          {
+            month: 1,
+            dueDate: "06/11/2026",
+            amountDue: 1680,
+            amountPaid: 0
+          }
+        ]
       }
     ]
   },
@@ -13300,25 +13398,8 @@ const members = {
     savings: 2820,
     monthly: [0, 0, 195, 170, 40, 0, 0, 0, 0],
     note: "",
-    contracts: [], // Add reviewed contract records here; keep each renewal as a separate record.
-    loans: [
-      {
-        id: "", requestedAmount: 0, qualifiedAmount: 0,
-        idNumber: "", repaymentPeriod: "", repaymentAmount: 0,
-        monthlyRepay: 0, amountPaid: 0, balance: 0,
-        latePenalty: 0, date: "", firstRepaymentDate: "",
-        finalRepaymentDate: "", status: "", reason: "",
-        repaymentSchedule: []
-      },
-      {
-        id: "", requestedAmount: 0, qualifiedAmount: 0,
-        idNumber: "", repaymentPeriod: "", repaymentAmount: 0,
-        monthlyRepay: 0, amountPaid: 0, balance: 0,
-        latePenalty: 0, date: "", firstRepaymentDate: "",
-        finalRepaymentDate: "", status: "", reason: "",
-        repaymentSchedule: []
-      }
-    ]
+    contracts: [],
+    loans: []
   },
 
   "JAPHETH MULI": {
@@ -13327,23 +13408,94 @@ const members = {
     savings: 59830,
     monthly: [0, 50, 215, 8855, 7930, 8010, 10000, 0, 0],
     note: "",
-    contracts: [], // Add reviewed contract records here; keep each renewal as a separate record.
+    contracts: [],
     loans: [
       {
-        id: "", requestedAmount: 0, qualifiedAmount: 0,
-        idNumber: "", repaymentPeriod: "", repaymentAmount: 0,
-        monthlyRepay: 0, amountPaid: 0, balance: 0,
-        latePenalty: 0, date: "", firstRepaymentDate: "",
-        finalRepaymentDate: "", status: "", reason: "",
-        repaymentSchedule: []
+        id: "",
+        requestedAmount: 2000,
+        qualifiedAmount: 2000,
+        idNumber: "42195496",
+        repaymentPeriod: "2 MONTHS",
+        repaymentAmount: 2300,
+        monthlyRepay: 1150,
+        amountPaid: 2300,
+        balance: 0,
+        latePenalty: 0,
+        date: "07/05/2026",
+        firstRepaymentDate: "07/06/2026",
+        finalRepaymentDate: "07/07/2026",
+        status: "APPROVED",
+        reason: "QUALIFIED — FULLY REPAID ON TIME",
+        repaymentSchedule: [
+          {
+            month: 1,
+            dueDate: "07/06/2026",
+            amountDue: 1150,
+            amountPaid: 1150
+          },
+          {
+            month: 2,
+            dueDate: "07/07/2026",
+            amountDue: 1150,
+            amountPaid: 1150
+          }
+        ]
       },
       {
-        id: "", requestedAmount: 0, qualifiedAmount: 0,
-        idNumber: "", repaymentPeriod: "", repaymentAmount: 0,
-        monthlyRepay: 0, amountPaid: 0, balance: 0,
-        latePenalty: 0, date: "", firstRepaymentDate: "",
-        finalRepaymentDate: "", status: "", reason: "",
-        repaymentSchedule: []
+        id: "",
+        requestedAmount: 3000,
+        qualifiedAmount: 3000,
+        idNumber: "42195496",
+        repaymentPeriod: "2 MONTHS",
+        repaymentAmount: 3450,
+        monthlyRepay: 1725,
+        amountPaid: 3730,
+        balance: 0,
+        latePenalty: 280,
+        date: "08/06/2026",
+        firstRepaymentDate: "08/07/2026",
+        finalRepaymentDate: "08/08/2026",
+        status: "APPROVED",
+        reason: "FULLY REPAID — KSH 280 LATE PENALTY PAID AT KSH 10 PER DAY",
+        repaymentSchedule: [
+          {
+            month: 1,
+            dueDate: "08/07/2026",
+            amountDue: 1725,
+            amountPaid: 1725
+          },
+          {
+            month: 2,
+            dueDate: "08/08/2026",
+            amountDue: 1725,
+            amountPaid: 1725
+          }
+        ]
+      },
+      {
+        id: "",
+        requestedAmount: 2000,
+        qualifiedAmount: 2000,
+        idNumber: "42195496",
+        repaymentPeriod: "1 MONTH",
+        repaymentAmount: 2300,
+        monthlyRepay: 2300,
+        amountPaid: 0,
+        balance: 2300,
+        latePenalty: 0,
+        date: "10/10/2026",
+        firstRepaymentDate: "10/11/2026",
+        finalRepaymentDate: "10/11/2026",
+        status: "APPROVED",
+        reason: "OUTSTANDING — NOT YET PAID",
+        repaymentSchedule: [
+          {
+            month: 1,
+            dueDate: "10/11/2026",
+            amountDue: 2300,
+            amountPaid: 0
+          }
+        ]
       }
     ]
   },
@@ -13354,25 +13506,8 @@ const members = {
     savings: 2456,
     monthly: [0, 50, 0, 0, 0, 0, 0, 0, 0],
     note: "",
-    contracts: [], // Add reviewed contract records here; keep each renewal as a separate record.
-    loans: [
-      {
-        id: "", requestedAmount: 0, qualifiedAmount: 0,
-        idNumber: "", repaymentPeriod: "", repaymentAmount: 0,
-        monthlyRepay: 0, amountPaid: 0, balance: 0,
-        latePenalty: 0, date: "", firstRepaymentDate: "",
-        finalRepaymentDate: "", status: "", reason: "",
-        repaymentSchedule: []
-      },
-      {
-        id: "", requestedAmount: 0, qualifiedAmount: 0,
-        idNumber: "", repaymentPeriod: "", repaymentAmount: 0,
-        monthlyRepay: 0, amountPaid: 0, balance: 0,
-        latePenalty: 0, date: "", firstRepaymentDate: "",
-        finalRepaymentDate: "", status: "", reason: "",
-        repaymentSchedule: []
-      }
-    ]
+    contracts: [],
+    loans: []
   },
 
   "BENSON NYATUKA": {
@@ -13381,25 +13516,8 @@ const members = {
     savings: 3789,
     monthly: [0, 0, 0, 0, 0, 0, 0, 0, 0],
     note: "",
-    contracts: [], // Add reviewed contract records here; keep each renewal as a separate record.
-    loans: [
-      {
-        id: "", requestedAmount: 0, qualifiedAmount: 0,
-        idNumber: "", repaymentPeriod: "", repaymentAmount: 0,
-        monthlyRepay: 0, amountPaid: 0, balance: 0,
-        latePenalty: 0, date: "", firstRepaymentDate: "",
-        finalRepaymentDate: "", status: "", reason: "",
-        repaymentSchedule: []
-      },
-      {
-        id: "", requestedAmount: 0, qualifiedAmount: 0,
-        idNumber: "", repaymentPeriod: "", repaymentAmount: 0,
-        monthlyRepay: 0, amountPaid: 0, balance: 0,
-        latePenalty: 0, date: "", firstRepaymentDate: "",
-        finalRepaymentDate: "", status: "", reason: "",
-        repaymentSchedule: []
-      }
-    ]
+    contracts: [],
+    loans: []
   },
 
   "ANN KEMUNTO": {
@@ -13408,25 +13526,8 @@ const members = {
     savings: 200,
     monthly: [0, 0, 0, 0, 0, 0, 0, 0, 0],
     note: "",
-    contracts: [], // Add reviewed contract records here; keep each renewal as a separate record.
-    loans: [
-      {
-        id: "", requestedAmount: 0, qualifiedAmount: 0,
-        idNumber: "", repaymentPeriod: "", repaymentAmount: 0,
-        monthlyRepay: 0, amountPaid: 0, balance: 0,
-        latePenalty: 0, date: "", firstRepaymentDate: "",
-        finalRepaymentDate: "", status: "", reason: "",
-        repaymentSchedule: []
-      },
-      {
-        id: "", requestedAmount: 0, qualifiedAmount: 0,
-        idNumber: "", repaymentPeriod: "", repaymentAmount: 0,
-        monthlyRepay: 0, amountPaid: 0, balance: 0,
-        latePenalty: 0, date: "", firstRepaymentDate: "",
-        finalRepaymentDate: "", status: "", reason: "",
-        repaymentSchedule: []
-      }
-    ]
+    contracts: [],
+    loans: []
   },
 
   "BOAZ KOKONYA": {
@@ -13435,25 +13536,8 @@ const members = {
     savings: 3000,
     monthly: [0, 0, 0, 0, 0, 0, 0, 0, 0],
     note: "",
-    contracts: [], // Add reviewed contract records here; keep each renewal as a separate record.
-    loans: [
-      {
-        id: "", requestedAmount: 0, qualifiedAmount: 0,
-        idNumber: "", repaymentPeriod: "", repaymentAmount: 0,
-        monthlyRepay: 0, amountPaid: 0, balance: 0,
-        latePenalty: 0, date: "", firstRepaymentDate: "",
-        finalRepaymentDate: "", status: "", reason: "",
-        repaymentSchedule: []
-      },
-      {
-        id: "", requestedAmount: 0, qualifiedAmount: 0,
-        idNumber: "", repaymentPeriod: "", repaymentAmount: 0,
-        monthlyRepay: 0, amountPaid: 0, balance: 0,
-        latePenalty: 0, date: "", firstRepaymentDate: "",
-        finalRepaymentDate: "", status: "", reason: "",
-        repaymentSchedule: []
-      }
-    ]
+    contracts: [],
+    loans: []
   }
 };
 // 🔄 Simulate loading action (button + spinner + section switch)
