@@ -2660,6 +2660,16 @@ style="width:150px; height:150px; border-radius:50%; object-fit:cover; box-shado
 
 <ul style="line-height:1.8;">
 
+  <!-- ANNUAL LOAN OPERATING PERIOD -->
+  <li>📅 <b>Annual Loan Operating Period and Closure:</b>
+    <ul style="margin-top:8px;">
+      <li>The chama's normal loan operating period shall run annually from <b>1 January to 31 October</b>.</li>
+      <li>Loan applications and new loan disbursements shall close from <b>1 November to 31 December</b> each year.</li>
+      <li>The annual closure shall allow the chama to prepare for its December activities and the close of the year.</li>
+      <li>Normal loan services shall resume on <b>1 January</b> of the following year, subject to the availability of funds and the usual approval requirements.</li>
+    </ul>
+  </li>
+
   <!-- ELIGIBILITY -->
   <li><b>Loan Eligibility:</b>
     <ul style="margin-top:8px;">
@@ -3742,6 +3752,21 @@ function closeSystemUpdatePopup(){
   <button onclick="showAvailableNumbers()" style="margin-top:10px; padding:8px 14px; background:#388e3c; color:white; border:none; border-radius:5px; cursor:pointer;">
     📋 Show Available Numbers
   </button>
+
+  <!-- MANUAL LOAN AVAILABILITY CONTROL (LOCAL TO THIS BROWSER) -->
+  <div id="loanAvailabilityAdminPanel" style="margin:18px 0; padding:16px; border:1px solid #cbd5e1; border-radius:10px; background:#f8fafc;">
+    <h3 style="margin:0 0 8px; color:#17324d;">💰 Loan Availability Control</h3>
+    <p style="margin:0 0 10px; color:#475569;">Choose the automatic Constitution schedule or temporarily override it on this browser.</p>
+    <div id="loanAvailabilityAdminStatus" role="status" style="padding:10px; background:white; border-radius:6px; margin-bottom:10px; line-height:1.5;"></div>
+    <label for="loanOverrideReason" style="display:block; font-weight:600; margin-bottom:5px;">Reason for manual change</label>
+    <input id="loanOverrideReason" type="text" placeholder="e.g. Temporary closure due to limited funds" style="box-sizing:border-box; width:100%; max-width:520px; padding:10px; border:1px solid #cbd5e1; border-radius:6px; margin-bottom:10px;">
+    <div style="display:flex; gap:8px; flex-wrap:wrap;">
+      <button type="button" onclick="setLoanAvailabilityOverride('CLOSED')" style="padding:10px 14px; background:#b42318; color:white; border:0; border-radius:6px; cursor:pointer;">🔒 Close Loans Now</button>
+      <button type="button" onclick="setLoanAvailabilityOverride('OPEN')" style="padding:10px 14px; background:#187a36; color:white; border:0; border-radius:6px; cursor:pointer;">🔓 Reopen Loans Now</button>
+      <button type="button" onclick="setLoanAvailabilityOverride('AUTO')" style="padding:10px 14px; background:#475569; color:white; border:0; border-radius:6px; cursor:pointer;">↻ Return to Automatic</button>
+    </div>
+    <p style="font-size:12px; color:#9a3412; margin:10px 0 0;"><strong>Local mode:</strong> This override is saved only in this browser on this device. It will not automatically change the loan status on members' other devices.</p>
+  </div>
 
   <!-- SUMMARY CARDS -->
   <div id="adminSummary" style="display:flex; gap:15px; margin:15px 0; flex-wrap:wrap;">
@@ -9526,7 +9551,81 @@ document.addEventListener(
      ========================================== -->
 
 <script>
-const LOANS_AVAILABLE = false;
+/*
+  LOAN AVAILABILITY CONTROL
+  Default: automatic Constitution schedule (1 January–31 October open;
+  1 November–31 December closed).
+  Admin can locally override this browser to CLOSED or OPEN at any time.
+  NOTE: localStorage is browser/device-specific and is not shared with members.
+*/
+const LOAN_OVERRIDE_KEY = "futureFindersLoanAvailabilityOverride";
+const LOAN_OVERRIDE_REASON_KEY = "futureFindersLoanAvailabilityReason";
+
+function getLoanAvailabilityState() {
+    const override = localStorage.getItem(LOAN_OVERRIDE_KEY) || "AUTO";
+    const month = new Date().getMonth() + 1;
+    const automaticOpen = month >= 1 && month <= 10;
+    const isOpen = override === "OPEN" ? true : override === "CLOSED" ? false : automaticOpen;
+    return { override, isOpen, automaticOpen, reason: localStorage.getItem(LOAN_OVERRIDE_REASON_KEY) || "" };
+}
+
+function setLoanAvailabilityOverride(mode) {
+    if (!localStorage.getItem("adminLoggedIn")) {
+        alert("Please log in as Admin before changing loan availability.");
+        return;
+    }
+    const reasonInput = document.getElementById("loanOverrideReason");
+    const reason = reasonInput ? reasonInput.value.trim() : "";
+    if ((mode === "CLOSED" || mode === "OPEN") && !reason) {
+        alert("Please enter a reason for this manual change.");
+        if (reasonInput) reasonInput.focus();
+        return;
+    }
+    if (mode === "AUTO") {
+        localStorage.setItem(LOAN_OVERRIDE_KEY, "AUTO");
+        localStorage.removeItem(LOAN_OVERRIDE_REASON_KEY);
+    } else {
+        localStorage.setItem(LOAN_OVERRIDE_KEY, mode);
+        localStorage.setItem(LOAN_OVERRIDE_REASON_KEY, reason);
+    }
+    renderLoanAvailabilityControl();
+    updateLoanUnavailablePopupMessage();
+    alert(mode === "AUTO" ? "Automatic loan schedule restored on this browser." : `Loans manually ${mode.toLowerCase()} on this browser.`);
+}
+
+function renderLoanAvailabilityControl() {
+    const state = getLoanAvailabilityState();
+    const status = document.getElementById("loanAvailabilityAdminStatus");
+    const reason = document.getElementById("loanOverrideReason");
+    if (status) {
+        const label = state.isOpen ? "OPEN" : "CLOSED";
+        const source = state.override === "AUTO" ? "Automatic Constitution schedule" : "Manual override";
+        status.innerHTML = `<strong>Current status: ${label}</strong><br><small>${source}${state.reason ? " — " + state.reason.replace(/[&<>"']/g, "") : ""}</small>`;
+        status.style.color = state.isOpen ? "#187a36" : "#b42318";
+    }
+    if (reason && state.override !== "AUTO" && !reason.value) reason.value = state.reason;
+}
+
+function updateLoanUnavailablePopupMessage() {
+    const state = getLoanAvailabilityState();
+    const body = document.querySelector("#loanUnavailablePopup .loan-popup-body");
+    const heading = document.querySelector("#loanUnavailablePopup .loan-popup-header h2");
+    if (!body || !heading) return;
+    if (state.override === "CLOSED") {
+        heading.textContent = "Temporary Loan Closure";
+        body.innerHTML = `<p>Loan applications are temporarily closed by the Chama Administrator.</p><p><strong>Reason:</strong> ${state.reason || "Temporary administrative closure"}</p><p>Please check again later for an update.</p><p>Thank you for your understanding and continued commitment to Future Finders Chama Group.</p>`;
+    } else {
+        heading.textContent = "Annual Loan Closure";
+        body.innerHTML = `<p>In accordance with the Future Finders Chama Group Constitution, the annual loan operating period runs from <strong>1 January to 31 October</strong>.</p><p>Loan services are closed from <strong>1 November to 31 December</strong> to allow the chama to prepare for its December activities and the close of the year.</p><p><strong>Loan services are scheduled to resume on 1 January.</strong></p><p>Thank you for your understanding and continued commitment to Future Finders Chama Group.</p>`;
+    }
+}
+
+function refreshLoanAvailabilityUI() {
+    renderLoanAvailabilityControl();
+    updateLoanUnavailablePopupMessage();
+}
+
+document.addEventListener("DOMContentLoaded", refreshLoanAvailabilityUI);
 </script>
 
 
@@ -9564,18 +9663,31 @@ const LOANS_AVAILABLE = false;
                 💰
             </div>
 
-            <h2>Loans Not Available</h2>
+            <h2>Annual Loan Closure</h2>
 
         </div>
 
         <div class="loan-popup-body">
 
             <p>
-                Loans are not available at the moment.
+                In accordance with the Future Finders Chama Group Constitution,
+                the annual loan operating period runs from
+                <strong>1 January to 31 October</strong>.
             </p>
 
             <p>
-                <strong>Please check again later.</strong>
+                Loan services are closed from <strong>1 November to 31 December</strong>
+                to allow the chama to prepare for its December activities and the
+                close of the year.
+            </p>
+
+            <p>
+                <strong>Loan services are scheduled to resume on 1 January.</strong>
+            </p>
+
+            <p>
+                Thank you for your understanding and continued commitment
+                to Future Finders Chama Group.
             </p>
 
         </div>
@@ -9840,10 +9952,10 @@ function handleLoanCheck() {
        SHOW THE POPUP
     */
 
-    if (!LOANS_AVAILABLE) {
-
+    const loanState = getLoanAvailabilityState();
+    if (!loanState.isOpen) {
+        updateLoanUnavailablePopupMessage();
         showLoanUnavailablePopup();
-
         return;
     }
 
@@ -11640,15 +11752,15 @@ function calculate2026() {
     // Reward rules retained from the existing page
     let rewardRate = 0;
     if (rewardBase >= 1500 && activeMonths >= 10) {
-      rewardRate = 0.77;
+      rewardRate = 0.75;
     } else if (rewardBase >= 1500 && activeMonths >= 6) {
       rewardRate = 0.70;
     } else if (rewardBase >= 1000) {
-      rewardRate = 0.27;
+      rewardRate = 0.30;
     }
 
     const reward = Math.round(rewardBase * rewardRate);
-    const paidOut2025 = Math.round(savings2025 * 0.80);
+    const paidOut2025 = Math.round(savings2025 * 0.99);
     const remaining2026 = rewardBase - reward;
     const saved = paidOut2025 + remaining2026;
 
@@ -12809,7 +12921,7 @@ function openRegistrationFees() {
 //   signatureName: "BONIFACE CHELLUGET",
 //   signedAt: "28 October 2026, 11:30", // use the timestamp printed on the signed contract
 //   signedAtISO: "2026-10-28T08:30:00.000Z",
-//   adminStatus: "Approved / Active", // e.g. Submitted — Awaiting Admin Review, Under Review, Approved / Active, Pending Correction, Rejected, Renewal Due, Expired
+//   adminStatus: "Approved / Active", // Pending statuses may be edited. Approved and rejected records are locked; rejected contracts are resubmitted as new records.
 //   startDate: "2026-10-28",
 //   expiryDate: "2027-10-28",
 //   adminNotes: "Reviewed against the signed PDF",
@@ -12836,6 +12948,7 @@ function openRegistrationFees() {
 // }],
 // Keep each renewal as a separate record. Redeploy index.html after editing so members see the update.
 // These hardcoded records appear in both Admin Contract Management and the matching member's Contract History.
+
 const members = {
   "BONIFACE CHELLUGET": {
     phone: "0713953004",
@@ -12843,9 +12956,26 @@ const members = {
     savings: 8000,
     monthly: [1364, 200, 1000, 1000, 500, 1000, 500],
     note: "Consistent saver",
-    contracts: [],
+    contracts: [
+      {
+        id: "FFC-2026-0773624",
+        member: "BONIFACE CHELLUGET",
+        type: "Membership Contract Renewal",
+        participation: "Monthly chama plus weekly participation plus savings",
+        signatureName: "BONIFACE CHELLUGET",
+        signedAt: "30 October 2026 at 17:32",
+        signedAtISO: "2026-10-30T17:32:00.000+03:00",
+        adminStatus: "Approved / Active",
+        startDate: "2027-01-01",
+        expiryDate: "2027-12-31",
+        adminNotes: "Contract reviewed and approved by Admin. Active from 1 January 2027 to 31 December 2027.",
+        createdAt: "2026-10-30T17:32:00.000+03:00",
+        version: 2
+      }
+    ],
     loans: []
   },
+
 
   "HILDA ODERO": {
     phone: "0795341320",
@@ -13105,7 +13235,7 @@ const members = {
         firstRepaymentDate: "06/06/2026",
         finalRepaymentDate: "28TH JULY 2026",
         status: "APPROVED",
-        reason: "PARTIALLY REPAID — KSH 700 OUTSTANDING",
+        reason: "PARTIALLY REPAID — KSH 1000 OUTSTANDING",
         repaymentSchedule: [
           {
             month: 1,
@@ -13306,91 +13436,93 @@ const members = {
     loans: []
   },
 
-  "NELLY KARIMI": {
-    phone: "0757905172",
-    password: "sheryl",
-    savings: 2100,
-    monthly: [0, 0, 120, 170, 150, 300, 300, 0, 0],
-    note: "",
-    contracts: [],
-    loans: [
-      {
-        id: "FF-0727428906-260823",
-        requestedAmount: 1000,
-        qualifiedAmount: 1000,
-        idNumber: "",
-        repaymentPeriod: "1 MONTH",
-        repaymentAmount: 1120,
-        monthlyRepay: 1120,
-        amountPaid: 1120,
-        balance: 0,
-        latePenalty: 0,
-        date: "23/08/2026",
-        firstRepaymentDate: "23/09/2026",
-        finalRepaymentDate: "23/09/2026",
-        status: "APPROVED",
-        reason: "QUALIFIED — FULLY REPAID ON TIME",
-        repaymentSchedule: [
-          {
-            month: 1,
-            dueDate: "23/09/2026",
-            amountDue: 1120,
-            amountPaid: 1120
-          }
-        ]
-      },
-      {
-        id: "FF-0757905172-260919",
-        requestedAmount: 1200,
-        qualifiedAmount: 1200,
-        idNumber: "",
-        repaymentPeriod: "1 MONTH",
-        repaymentAmount: 1344,
-        monthlyRepay: 1344,
-        amountPaid: 1344,
-        balance: 0,
-        latePenalty: 0,
-        date: "19/09/2026",
-        firstRepaymentDate: "19/10/2026",
-        finalRepaymentDate: "19/10/2026",
-        status: "APPROVED",
-        reason: "QUALIFIED — FULLY REPAID ON TIME",
-        repaymentSchedule: [
-          {
-            month: 1,
-            dueDate: "19/10/2026",
-            amountDue: 1344,
-            amountPaid: 1344
-          }
-        ]
-      },
-      {
-        id: "FF-0757905172-261006",
-        requestedAmount: 1500,
-        qualifiedAmount: 1500,
-        idNumber: "",
-        repaymentPeriod: "1 MONTH",
-        repaymentAmount: 1680,
-        monthlyRepay: 1680,
-        amountPaid: 0,
-        balance: 1680,
-        latePenalty: 0,
-        date: "06/10/2026",
-        firstRepaymentDate: "06/11/2026",
-        finalRepaymentDate: "06/11/2026",
-        status: "APPROVED",
-        reason: "OUTSTANDING — NOT YET PAID",
-        repaymentSchedule: [
-          {
-            month: 1,
-            dueDate: "06/11/2026",
-            amountDue: 1680,
-            amountPaid: 0
-          }
-        ]
-      }
-    ]
-  },
+  
+"NELLY KARIMI": {
+  phone: "0757905172",
+  password: "sheryl",
+  savings: 2100,
+  monthly: [0, 0, 120, 170, 150, 300, 300, 0, 0],
+  note: "",
+  contracts: [],
+  loans: [
+    {
+      id: "FF-0727428906-260823",
+      requestedAmount: 1000,
+      qualifiedAmount: 1000,
+      idNumber: "",
+      repaymentPeriod: "1 MONTH",
+      repaymentAmount: 1120,
+      monthlyRepay: 1120,
+      amountPaid: 1120,
+      balance: 0,
+      latePenalty: 0,
+      date: "23/08/2026",
+      firstRepaymentDate: "23/09/2026",
+      finalRepaymentDate: "23/09/2026",
+      status: "APPROVED",
+      reason: "QUALIFIED — FULLY REPAID ON TIME",
+      repaymentSchedule: [
+        {
+          month: 1,
+          dueDate: "23/09/2026",
+          amountDue: 1120,
+          amountPaid: 1120
+        }
+      ]
+    },
+    {
+      id: "FF-0757905172-260919",
+      requestedAmount: 1200,
+      qualifiedAmount: 1200,
+      idNumber: "",
+      repaymentPeriod: "1 MONTH",
+      repaymentAmount: 1344,
+      monthlyRepay: 1344,
+      amountPaid: 1344,
+      balance: 0,
+      latePenalty: 0,
+      date: "19/09/2026",
+      firstRepaymentDate: "19/10/2026",
+      finalRepaymentDate: "19/10/2026",
+      status: "APPROVED",
+      reason: "QUALIFIED — FULLY REPAID ON TIME",
+      repaymentSchedule: [
+        {
+          month: 1,
+          dueDate: "19/10/2026",
+          amountDue: 1344,
+          amountPaid: 1344
+        }
+      ]
+    },
+    {
+      id: "FF-0757905172-261006",
+      requestedAmount: 1500,
+      qualifiedAmount: 1500,
+      idNumber: "",
+      repaymentPeriod: "1 MONTH",
+      repaymentAmount: 1680,
+      monthlyRepay: 1680,
+      amountPaid: 1680,
+      balance: 0,
+      latePenalty: 0,
+      date: "06/10/2026",
+      firstRepaymentDate: "06/11/2026",
+      finalRepaymentDate: "01/11/2026",
+      status: "APPROVED",
+      reason: "QUALIFIED — FULLY REPAID ON 01/11/2026",
+      repaymentSchedule: [
+        {
+          month: 1,
+          dueDate: "06/11/2026",
+          amountDue: 1680,
+          amountPaid: 1680
+        }
+      ]
+    }
+  ]
+},
+
 
   "CANZEDENA ANYANGO": {
     phone: "0716031999",
@@ -18636,6 +18768,9 @@ function adminLogin() {
 
                 loadLoanApplications();
             }
+            if (typeof refreshLoanAvailabilityUI === "function") {
+                refreshLoanAvailabilityUI();
+            }
 
 
         } else {
@@ -21785,7 +21920,7 @@ async function downloadIndividualSavingsReportsPDF() {
     const byId=new Map();
     // Seed from published hardcoded records, then apply this browser's latest saved version.
     // Member edits reuse the same contract ID; Admin/published updates can be deployed in the hardcoded record.
-    [...seeded,...saved].forEach(c=>{if(c && c.id)byId.set(String(c.id),c)});
+    [...saved,...seeded].forEach(c=>{if(c && c.id)byId.set(String(c.id),c)});
     return [...byId.values()];
   }
   function putContracts(v){
@@ -21804,6 +21939,11 @@ async function downloadIndividualSavingsReportsPDF() {
   function byId(id){return document.getElementById(id)}
   function fmtDate(v){if(!v)return 'Not entered';const d=new Date(v+'T00:00:00');return Number.isNaN(d.getTime())?v:d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});}
   function status(c){return c.adminStatus||'Submitted — Awaiting Admin Review'}
+  // Only contracts awaiting a decision/correction may be edited. Approved and rejected
+  // records are preserved as final history entries; a rejected contract can be resubmitted
+  // only as a new record with a new reference.
+  function isPending(c){const s=String(status(c)).toLowerCase();return s.includes('pending')||s.includes('submitted')||s.includes('awaiting')||s.includes('under review');}
+  function setContractFormLocked(locked){const form=byId('ffMemberContractForm');if(!form)return;form.querySelectorAll('input,select,button').forEach(el=>{el.disabled=!!locked;});const submit=byId('ffContractSubmitBtn');if(submit)submit.disabled=!!locked;form.style.opacity=locked?'.72':'1';}
   function contractText(c){
     const signedDisplay = c.signedAt || (c.signedAtISO ? new Date(c.signedAtISO).toLocaleString('en-KE',{timeZone:'Africa/Nairobi',dateStyle:'long',timeStyle:'short'}) : 'Not signed');
     const list = items => '<ul>'+items.map(x=>'<li>'+x+'</li>').join('')+'</ul>';
@@ -21850,7 +21990,8 @@ async function downloadIndividualSavingsReportsPDF() {
       </div></div>`;
   }
   function renderMemberHistory(name){const host=byId('ffMemberContractHistory');if(!host)return;const rows=getContracts().filter(c=>String(c.member).toLowerCase()===String(name).toLowerCase()).sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''));if(!rows.length){host.innerHTML='<p style="color:#64748b;">No contract history yet. Complete the form above to submit your first contract.</p>';return;}host.innerHTML=rows.map(c=>`<div style="border:1px solid #cbd5e1;border-radius:10px;padding:13px;margin:9px 0;background:#fff;"><b>Reference:</b> ${esc(c.id)}<br><b>Type:</b> ${esc(c.type)}<br><b>Participation:</b> ${esc(c.participation)}<br><b>Submitted/signed:</b> ${esc(c.signedAt)}<br><b>Status:</b> <span style="font-weight:700;color:${String(status(c)).toLowerCase().includes('approved')||String(status(c)).toLowerCase().includes('active')?'#15803d':'#92400e'}">${esc(status(c))}</span><br><b>Start date:</b> ${esc(fmtDate(c.startDate))}<br><b>Expiry/renewal:</b> ${esc(fmtDate(c.expiryDate))}${c.adminNotes?`<br><b>Admin notes:</b> ${esc(c.adminNotes)}`:''}<div style="margin-top:8px;"><button type="button" onclick="downloadContractById('${esc(c.id)}')" style="padding:7px 10px;cursor:pointer;">Download / Print</button></div></div>`).join('');}
-  function renderAdmin(){const tbody=byId('ffAdminContractsTable');if(!tbody)return;const rows=getContracts().sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''));if(!rows.length){tbody.innerHTML='<tr><td colspan="8" style="padding:14px;text-align:center;color:#64748b;">No member contracts submitted yet.</td></tr>';return;}tbody.innerHTML=rows.map(c=>`<tr><td style="padding:8px;border-bottom:1px solid #e2e8f0;">${esc(c.member)}<br><small>${esc(c.id)}</small></td><td style="padding:8px;border-bottom:1px solid #e2e8f0;">${esc(c.participation)}</td><td style="padding:8px;border-bottom:1px solid #e2e8f0;">${esc(c.signedAt)}</td><td style="padding:8px;border-bottom:1px solid #e2e8f0;"><select id="ff-status-${esc(c.id)}" style="max-width:200px;padding:7px;">${['Submitted — Awaiting Admin Review','Under Review','Approved / Active','Pending Correction','Rejected','Renewal Due','Expired'].map(v=>`<option ${status(c)===v?'selected':''}>${v}</option>`).join('')}</select></td><td style="padding:8px;border-bottom:1px solid #e2e8f0;"><input id="ff-start-${esc(c.id)}" type="date" value="${esc(c.startDate||'')}" style="padding:7px;width:140px;"></td><td style="padding:8px;border-bottom:1px solid #e2e8f0;"><input id="ff-expiry-${esc(c.id)}" type="date" value="${esc(c.expiryDate||'')}" style="padding:7px;width:140px;"></td><td style="padding:8px;border-bottom:1px solid #e2e8f0;"><textarea id="ff-notes-${esc(c.id)}" rows="2" style="width:170px;">${esc(c.adminNotes||'')}</textarea></td><td style="padding:8px;border-bottom:1px solid #e2e8f0;white-space:nowrap;"><button type="button" onclick="saveAdminContractStatus('${esc(c.id)}')" style="padding:7px;cursor:pointer;">Save update</button> <button type="button" onclick="downloadContractById('${esc(c.id)}')" style="padding:7px;cursor:pointer;">PDF</button></td></tr>`).join('');}
+  function renderAdmin(){const tbody=byId('ffAdminContractsTable');if(!tbody)return;const rows=getContracts().sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''));if(!rows.length){tbody.innerHTML='<tr><td colspan="8" style="padding:14px;text-align:center;color:#64748b;">No member contracts submitted yet.</td></tr>';return;}tbody.innerHTML=rows.map(c=>{const editable=isPending(c);const dis=editable?'':'disabled';return `<tr><td style="padding:8px;border-bottom:1px solid #e2e8f0;">${esc(c.member)}<br><small>${esc(c.id)}</small></td><td style="padding:8px;border-bottom:1px solid #e2e8f0;">${esc(c.participation)}</td><td style="padding:8px;border-bottom:1px solid #e2e8f0;">${esc(c.signedAt)}</td><td style="padding:8px;border-bottom:1px solid #e2e8f0;"><select id="ff-status-${esc(c.id)}" ${dis} style="max-width:200px;padding:7px;">${['Submitted — Awaiting Admin Review','Under Review','Approved / Active','Pending Correction','Rejected','Renewal Due','Expired'].map(v=>`<option ${status(c)===v?'selected':''}>${v}</option>`).join('')}</select></td><td style="padding:8px;border-bottom:1px solid #e2e8f0;"><input id="ff-start-${esc(c.id)}" type="date" value="${esc(c.startDate||'')}" ${dis} style="padding:7px;width:140px;"></td><td style="padding:8px;border-bottom:1px solid #e2e8f0;"><input id="ff-expiry-${esc(c.id)}" type="date" value="${esc(c.expiryDate||'')}" ${dis} style="padding:7px;width:140px;"></td><td style="padding:8px;border-bottom:1px solid #e2e8f0;"><textarea id="ff-notes-${esc(c.id)}" rows="2" ${dis} style="width:170px;">${esc(c.adminNotes||'')}</textarea></td><td style="padding:8px;border-bottom:1px solid #e2e8f0;white-space:nowrap;">${editable?`<button type="button" onclick="saveAdminContractStatus('${esc(c.id)}')" style="padding:7px;cursor:pointer;">Save update</button>`:'<span style="color:#64748b;font-size:12px;">Locked</span>'} <button type="button" onclick="downloadContractById('${esc(c.id)}')" style="padding:7px;cursor:pointer;">PDF</button></td></tr>`;}).join('');}
+
   window.ffRefreshAdminContracts=renderAdmin;
   let ffContractPreviewReady=false;
   let ffEditingContractId=null;
@@ -21859,11 +22000,11 @@ async function downloadIndividualSavingsReportsPDF() {
     byId('ffContractPreviewWrap').style.display='block';byId('ffContractPreviewAcceptance').checked=false;ffContractPreviewReady=true;byId('ffMemberContractMessage').textContent='Full contract preview is open above. Read all sections, then confirm you reviewed it before signing.';byId('ffMemberContractMessage').style.color='#075985';};
   window.hideMemberContractPreview=function(){byId('ffContractPreviewWrap').style.display='none';};
   function invalidateContractPreview(){ffContractPreviewReady=false;byId('ffContractPreviewAcceptance').checked=false;byId('ffContractPreviewWrap').style.display='none';}
-  window.openMyContract=function(){const name=currentName();if(!name){alert('Please log in to your member account first.');return;}byId('ffContractMemberName').value=name;byId('ffContractTypedSignature').value='';byId('ffContractAcceptance').checked=false;byId('ffContractPreviewAcceptance').checked=false;byId('ffContractParticipation').value='';byId('ffContractMemberType').value='New Membership Contract';byId('ffContractPreviewWrap').style.display='none';ffContractPreviewReady=false;ffEditingContractId=null;byId('ffMemberContractMessage').textContent='';byId('ffMemberContractSignedActions').style.display='none';const own=getContracts().filter(c=>String(c.member).toLowerCase()===String(name).toLowerCase()).sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''));const latest=own[0];if(latest&&String(status(latest)).toLowerCase()!=='rejected'){ffEditingContractId=latest.id;byId('ffContractMemberType').value=latest.type||'New Membership Contract';byId('ffContractParticipation').value=latest.participation||'';byId('ffContractTypedSignature').value=latest.signatureName||name;byId('ffMemberContractMessage').textContent='You already have a contract ('+latest.id+') with status: '+status(latest)+'. Edit this same contract below and resubmit it for review. You cannot create another separate contract unless this one is rejected.';byId('ffMemberContractMessage').style.color='#075985';byId('ffContractSubmitBtn').textContent='✍️ Save Edits & Resubmit Contract';}else{byId('ffContractSubmitBtn').textContent='✍️ Sign, Submit & Prepare Contract';if(latest&&String(status(latest)).toLowerCase()==='rejected'){byId('ffMemberContractMessage').textContent='Your previous contract was rejected, so you may submit a new contract. Your previous record will remain in your history.';byId('ffMemberContractMessage').style.color='#92400e';}}renderMemberHistory(name);byId('ffMemberContractModal').style.display='block';document.body.style.overflow='hidden';};
+  window.openMyContract=function(){const name=currentName();if(!name){alert('Please log in to your member account first.');return;}byId('ffContractMemberName').value=name;byId('ffContractTypedSignature').value='';byId('ffContractAcceptance').checked=false;byId('ffContractPreviewAcceptance').checked=false;byId('ffContractParticipation').value='';byId('ffContractMemberType').value='New Membership Contract';byId('ffContractPreviewWrap').style.display='none';ffContractPreviewReady=false;ffEditingContractId=null;byId('ffMemberContractMessage').textContent='';byId('ffMemberContractSignedActions').style.display='none';setContractFormLocked(false);const own=getContracts().filter(c=>String(c.member).toLowerCase()===String(name).toLowerCase()).sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''));const latest=own[0];if(latest&&isPending(latest)){ffEditingContractId=latest.id;byId('ffContractMemberType').value=latest.type||'New Membership Contract';byId('ffContractParticipation').value=latest.participation||'';byId('ffContractTypedSignature').value=latest.signatureName||name;byId('ffMemberContractMessage').textContent='Your contract ('+latest.id+') is '+status(latest)+'. You may edit this pending contract and resubmit it for review. It will be locked once approved.';byId('ffMemberContractMessage').style.color='#075985';byId('ffContractSubmitBtn').textContent='✍️ Save Edits & Resubmit Contract';}else if(latest&&String(status(latest)).toLowerCase().includes('rejected')){byId('ffContractSubmitBtn').textContent='✍️ Sign & Submit New Contract';byId('ffMemberContractMessage').textContent='Your previous contract was rejected. You may submit a new contract with a new reference. The rejected contract will remain unchanged in your history.';byId('ffMemberContractMessage').style.color='#92400e';}else if(latest){setContractFormLocked(true);byId('ffContractSubmitBtn').textContent='Contract Locked';byId('ffMemberContractMessage').textContent='Your contract ('+latest.id+') is '+status(latest)+'. This record is locked and cannot be edited. If you need to make a change, Admin must first return it to Pending Correction. You can still download the signed contract from your history below.';byId('ffMemberContractMessage').style.color='#15803d';byId('ffMemberContractSignedActions').style.display='block';}else{byId('ffContractSubmitBtn').textContent='✍️ Sign, Submit & Prepare Contract';}renderMemberHistory(name);byId('ffMemberContractModal').style.display='block';document.body.style.overflow='hidden';}
   window.closeMyContract=function(){byId('ffMemberContractModal').style.display='none';document.body.style.overflow='';};
   ['ffContractMemberType','ffContractParticipation','ffContractTypedSignature'].forEach(id=>{document.addEventListener('DOMContentLoaded',()=>{const el=byId(id);if(el)el.addEventListener(id==='ffContractTypedSignature'?'input':'change',invalidateContractPreview);});});
-  window.submitMemberContract=function(ev){ev.preventDefault();const name=currentName();if(!name){alert('Please log in first.');return;}if(!ffContractPreviewReady||!byId('ffContractPreviewAcceptance').checked){byId('ffMemberContractMessage').textContent='Please view the full contract and confirm that you reviewed it before signing.';byId('ffMemberContractMessage').style.color='#b91c1c';byId('ffContractPreviewWrap').style.display='block';return;}const signature=byId('ffContractTypedSignature').value.trim();if(signature.toLowerCase()!==name.toLowerCase()){byId('ffMemberContractMessage').textContent='Please type your full member name exactly as shown on your account.';byId('ffMemberContractMessage').style.color='#b91c1c';return;}const all=getContracts();const own=all.filter(x=>String(x.member).toLowerCase()===String(name).toLowerCase()).sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''));const latest=own[0];if(!ffEditingContractId&&latest&&String(status(latest)).toLowerCase()!=='rejected'){byId('ffMemberContractMessage').textContent='You already have a contract that has not been rejected. Reopen My Membership Contract to edit and resubmit that same record instead of creating another.';byId('ffMemberContractMessage').style.color='#b91c1c';return;}const now=new Date();const signedAt=now.toLocaleString('en-KE',{timeZone:'Africa/Nairobi',dateStyle:'long',timeStyle:'short'});const base={member:name,type:byId('ffContractMemberType').value,participation:byId('ffContractParticipation').value,signatureName:signature,signedAt,signedAtISO:now.toISOString(),adminStatus:'Submitted — Awaiting Admin Review',startDate:'',expiryDate:'',adminNotes:'',version:2};let c;if(ffEditingContractId){const i=all.findIndex(x=>String(x.id)===String(ffEditingContractId)&&String(x.member).toLowerCase()===String(name).toLowerCase());if(i<0){byId('ffMemberContractMessage').textContent='The contract being edited could not be found. Please close and reopen the form.';byId('ffMemberContractMessage').style.color='#b91c1c';return;}c={...all[i],...base,lastEditedAt:now.toISOString(),version:(Number(all[i].version)||2)+1};all[i]=c;}else{const id='FFC-'+now.getFullYear()+'-'+now.getTime().toString().slice(-7);c={id,...base,createdAt:now.toISOString()};all.push(c);}putContracts(all);ffEditingContractId=c.id;byId('ffMemberContractMessage').textContent='Contract saved and submitted for review. '+(c.lastEditedAt?'Your existing contract was updated; no duplicate contract was created. ':'A new contract record was created.')+'The signed contract is opening now for you to print or save as PDF. Send that PDF to Admin on WhatsApp for review.';byId('ffMemberContractMessage').style.color='#087f5b';byId('ffMemberContractSignedActions').style.display='block';byId('ffContractSubmitBtn').textContent='✍️ Save Edits & Resubmit Contract';renderMemberHistory(name);renderAdmin();downloadPDF(c);};
-  window.saveAdminContractStatus=function(id){const all=getContracts();const i=all.findIndex(c=>c.id===id);if(i<0){alert('Contract record not found.');return;}const start=byId('ff-start-'+id).value;const expiry=byId('ff-expiry-'+id).value;if(start&&expiry&&expiry<start){alert('Expiry/renewal date cannot be earlier than the start date.');return;}all[i].adminStatus=byId('ff-status-'+id).value;all[i].startDate=start;all[i].expiryDate=expiry;all[i].adminNotes=byId('ff-notes-'+id).value.trim();all[i].adminUpdatedAt=new Date().toISOString();putContracts(all);renderAdmin();renderMemberHistory(currentName());const msg=byId('ffAdminContractMessage');if(msg){msg.textContent='Local review helper saved in this browser only. To publish the update for every member, copy this contract record into the matching members["MEMBER NAME"].contracts array in index.html and redeploy the website.';msg.style.color='#087f5b';}};
+  window.submitMemberContract=function(ev){ev.preventDefault();const name=currentName();if(!name){alert('Please log in first.');return;}const all=getContracts();const own=all.filter(x=>String(x.member).toLowerCase()===String(name).toLowerCase()).sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''));const latest=own[0];if(ffEditingContractId){const existing=all.find(x=>String(x.id)===String(ffEditingContractId)&&String(x.member).toLowerCase()===String(name).toLowerCase());if(!existing||!isPending(existing)){byId('ffMemberContractMessage').textContent='This contract is no longer pending and cannot be edited. Approved and rejected contracts are locked.';byId('ffMemberContractMessage').style.color='#b91c1c';setContractFormLocked(true);return;}}else if(latest&&!String(status(latest)).toLowerCase().includes('rejected')){byId('ffMemberContractMessage').textContent='You already have a contract that is not rejected. Only a pending contract can be edited; an approved contract is locked.';byId('ffMemberContractMessage').style.color='#b91c1c';return;}if(!ffContractPreviewReady||!byId('ffContractPreviewAcceptance').checked){byId('ffMemberContractMessage').textContent='Please view the full contract and confirm that you reviewed it before signing.';byId('ffMemberContractMessage').style.color='#b91c1c';byId('ffContractPreviewWrap').style.display='block';return;}const signature=byId('ffContractTypedSignature').value.trim();if(signature.toLowerCase()!==name.toLowerCase()){byId('ffMemberContractMessage').textContent='Please type your full member name exactly as shown on your account.';byId('ffMemberContractMessage').style.color='#b91c1c';return;}const now=new Date();const signedAt=now.toLocaleString('en-KE',{timeZone:'Africa/Nairobi',dateStyle:'long',timeStyle:'short'});const base={member:name,type:byId('ffContractMemberType').value,participation:byId('ffContractParticipation').value,signatureName:signature,signedAt,signedAtISO:now.toISOString(),adminStatus:'Submitted — Awaiting Admin Review',startDate:'',expiryDate:'',adminNotes:'',version:2};let c;if(ffEditingContractId){const i=all.findIndex(x=>String(x.id)===String(ffEditingContractId)&&String(x.member).toLowerCase()===String(name).toLowerCase());c={...all[i],...base,lastEditedAt:now.toISOString(),version:(Number(all[i].version)||2)+1};all[i]=c;}else{const id='FFC-'+now.getFullYear()+'-'+now.getTime().toString().slice(-7);c={id,...base,createdAt:now.toISOString()};all.push(c);}putContracts(all);ffEditingContractId=c.id;byId('ffMemberContractMessage').textContent='Contract saved and submitted for review. '+(c.lastEditedAt?'Your pending contract was updated; no duplicate contract was created. ':'A new contract record was created. The previous rejected record remains in your history.')+'The signed contract is opening now for you to print or save as PDF. Send that PDF to Admin on WhatsApp for review.';byId('ffMemberContractMessage').style.color='#087f5b';byId('ffMemberContractSignedActions').style.display='block';byId('ffContractSubmitBtn').textContent='✍️ Save Edits & Resubmit Contract';renderMemberHistory(name);renderAdmin();downloadPDF(c);};
+  window.saveAdminContractStatus=function(id){const all=getContracts();const i=all.findIndex(c=>c.id===id);if(i<0){alert('Contract record not found.');return;}if(!isPending(all[i])){alert('This contract is locked because it is no longer pending. Approved and rejected records cannot be edited.');renderAdmin();return;}const start=byId('ff-start-'+id).value;const expiry=byId('ff-expiry-'+id).value;if(start&&expiry&&expiry<start){alert('Expiry/renewal date cannot be earlier than the start date.');return;}all[i].adminStatus=byId('ff-status-'+id).value;all[i].startDate=start;all[i].expiryDate=expiry;all[i].adminNotes=byId('ff-notes-'+id).value.trim();all[i].adminUpdatedAt=new Date().toISOString();putContracts(all);renderAdmin();renderMemberHistory(currentName());const msg=byId('ffAdminContractMessage');if(msg){msg.textContent='Review update saved in this browser. Once a contract is approved or rejected, its record is locked. To publish the update for every member, copy this contract record into the matching members["MEMBER NAME"].contracts array in index.html and redeploy the website.';msg.style.color='#087f5b';}};
   function downloadPDF(c){
     const html=`<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(c.member)} — Membership Contract</title><style>
       @page{size:A4;margin:15mm 14mm 17mm;}
