@@ -233,6 +233,26 @@ footer{background:#12304a!important;color:#eaf4f7!important;padding:20px!importa
 #navButtons .nav-btn .spinner{flex:0 0 auto}
 #navButtons #backBtn{background:#64748b!important}
 
+
+/* Future Finders member dashboard: compact grouped action menus */
+#dashboard .dashboard-buttons>#ffMemberMenuGrid{grid-column:1/-1;width:100%;min-width:0}
+#dashboard .ff-member-menu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:12px;margin:18px 0 24px;align-items:start}
+#dashboard details.ff-member-menu{border:1px solid #d8e3eb;border-radius:13px;background:#fff;box-shadow:0 4px 14px rgba(15,45,65,.06);overflow:hidden;min-width:0}
+#dashboard details.ff-member-menu[open]{border-color:#8dbdc5;box-shadow:0 7px 20px rgba(15,45,65,.09)}
+#dashboard .ff-member-menu summary{list-style:none;display:flex;align-items:center;gap:10px;min-height:58px;padding:13px 15px;box-sizing:border-box;cursor:pointer;font-weight:800;color:#12334a;background:linear-gradient(135deg,#f0f8fa,#fff);user-select:none}
+#dashboard .ff-member-menu summary::-webkit-details-marker{display:none}
+#dashboard .ff-member-menu summary:after{content:'＋';margin-left:auto;flex:0 0 auto;font-size:19px;color:#087f8c}
+#dashboard .ff-member-menu[open] summary:after{content:'−'}
+#dashboard .ff-menu-icon{display:inline-flex;align-items:center;justify-content:center;width:35px;height:35px;flex:0 0 35px;border-radius:10px;background:#dff2f3;font-size:19px}
+#dashboard .ff-menu-items{display:grid;gap:8px;padding:11px;border-top:1px solid #e7eef2}
+#dashboard .ff-menu-items>.action-btn,#dashboard .ff-menu-items>button,#dashboard .ff-menu-items>.check-loan-btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:44px;box-sizing:border-box;margin:0!important;padding:10px 12px;border:0;border-radius:9px;text-align:center;line-height:1.35;white-space:normal;text-decoration:none;font-size:14px;cursor:pointer}
+#dashboard .ff-menu-items>.action-btn{background:#087f8c;color:#fff}
+#dashboard .ff-menu-items>.action-btn:hover,#dashboard .ff-menu-items>.check-loan-btn:hover{filter:brightness(.94)}
+#dashboard .ff-menu-items>.check-loan-btn{background:#166534;color:#fff}
+#dashboard .ff-menu-items .ff-menu-hint{font-size:12px;color:#64748b;line-height:1.45;padding:2px 4px 4px}
+#dashboard .ff-menu-logout{margin-top:10px!important}
+@media(max-width:560px){#dashboard .ff-member-menu-grid{grid-template-columns:1fr;gap:10px}#dashboard .ff-member-menu summary{min-height:54px}}
+
 /* Member login and member dashboard */
 #loginForm{width:min(520px,calc(100% - 28px));box-sizing:border-box;padding:clamp(20px,4vw,34px);margin:28px auto;border:1px solid var(--ff-line);box-shadow:var(--ff-shadow)}
 #loginForm h2{margin:0 0 8px;font-size:1.55rem}
@@ -3856,13 +3876,15 @@ function closeSystemUpdatePopup(){
     <p style="color:#475569;">Members sign and submit their contracts, then send the PDF to WhatsApp 0713953004. To publish an official status update for all members (like hardcoded loan records), edit the matching member’s <code>contracts</code> array in <code>index.html</code>: keep the same contract reference, set <code>adminStatus</code>, <code>startDate</code>, <code>expiryDate</code> and <code>adminNotes</code>, then redeploy the website. The controls below are a local review helper only; they do not rewrite the published HTML or update other devices.</p>
     <div style="overflow-x:auto;margin-top:16px;">
       <table style="width:100%;border-collapse:collapse;min-width:1100px;background:#fff;">
-        <thead style="background:#075985;color:#fff;"><tr><th style="padding:10px;text-align:left;">Member</th><th style="padding:10px;text-align:left;">Participation</th><th style="padding:10px;text-align:left;">Submitted / signed</th><th style="padding:10px;text-align:left;">Admin status</th><th style="padding:10px;text-align:left;">Start date</th><th style="padding:10px;text-align:left;">Expiry / renewal</th><th style="padding:10px;text-align:left;">Admin notes</th><th style="padding:10px;text-align:left;">Actions</th></tr></thead>
+        <thead style="background:#075985;color:#fff;"><tr><th style="padding:10px;text-align:left;">Member</th><th style="padding:10px;text-align:left;">Participation</th><th style="padding:10px;text-align:left;">Fee</th><th style="padding:10px;text-align:left;">Submitted / signed</th><th style="padding:10px;text-align:left;">Admin status</th><th style="padding:10px;text-align:left;">Start date</th><th style="padding:10px;text-align:left;">Expiry / renewal</th><th style="padding:10px;text-align:left;">Admin notes</th><th style="padding:10px;text-align:left;">Actions</th></tr></thead>
         <tbody id="ffAdminContractsTable"><tr><td colspan="8" style="padding:14px;text-align:center;color:#64748b;">No member contracts submitted yet.</td></tr></tbody>
       </table>
     </div>
     <p id="ffAdminContractMessage" role="status" style="font-weight:700;"></p>
   </div>
-  <!-- Membership Withdrawal / Exit Administration -->
+</div>
+
+<!-- Membership Withdrawal / Exit Administration -->
   <div id="ffExitAdminPanel" style="margin-top:28px;padding-top:22px;border-top:2px solid #ede9fe;">
    <h3 style="color:#56328a;">🚪 Membership Withdrawal & Exit Register</h3>
    <p style="color:#475569;line-height:1.6;">Review submitted voluntary withdrawal notices, reconcile the member's financial position and record the exit in accordance with Constitution Article 11. This review panel uses this browser's local storage. To publish official records for all devices, copy the finalized record into the relevant member's <code>exits</code> array in <code>index.html</code> and redeploy.</p>
@@ -3871,6 +3893,7 @@ function closeSystemUpdatePopup(){
    <div style="margin-top:12px;padding:12px;background:#f5f3ff;border-radius:9px;color:#475569;line-height:1.6;"><b>Administrator guidance:</b> Article 11.2 requires financial reconciliation within 30 days after the 30-day notice period ends. If settlement is delayed for a genuine administrative, verification or financial issue, record the reason and expected settlement date. Do not mark an exit as completed until the official process and register update have been completed. Disciplinary termination under Article 11.6 is a separate process and must not be treated as a voluntary withdrawal request.</div>
   </div>
 </div>
+
 
 <!-- Table Styles -->
 <style>
@@ -8679,7 +8702,44 @@ y += 38;
 <div id="dashboard">
 <h3>Welcome, <span id="memberDisplay"></span>!</h3>
 
+
 <div class="dashboard-buttons">
+
+<div id="ffMemberMenuGrid" class="ff-member-menu-grid" aria-label="Member services">
+  <details class="ff-member-menu">
+    <summary><span class="ff-menu-icon">💰</span><span>Savings & Contributions</span></summary>
+    <div class="ff-menu-items" data-menu="savings">
+      <div class="ff-menu-hint">View your savings and contribution options.</div>
+      <button type="button" class="ff-admin-action action-btn" onclick="showSavingsPopup()">💰 Open Savings Dashboard <span id="totalSavings">..</span></button>
+      <button type="button" class="ff-admin-action action-btn" onclick="showTopSavers()">🥇 View Top Savers List</button>
+      <button type="button" class="ff-menu-close" onclick="confirmCloseFFMemberSection(this)">Close section −</button>
+    </div>
+  </details>
+  <details class="ff-member-menu">
+    <summary><span class="ff-menu-icon">🏦</span><span>Loans</span></summary>
+    <div class="ff-menu-items" data-menu="loans">
+      <div class="ff-menu-hint">Check eligibility and follow your loan records.</div>
+      <button type="button" class="ff-admin-action action-btn" onclick="showQualifiedPopup()">✅ Qualified Members List <span id="qualifiedMembers">..</span></button>
+      <button type="button" class="ff-menu-close" onclick="confirmCloseFFMemberSection(this)">Close section −</button>
+    </div>
+  </details>
+  <details class="ff-member-menu">
+    <summary><span class="ff-menu-icon">📞</span><span>Contact & Membership</span></summary>
+    <div class="ff-menu-items" data-menu="membership">
+      <div class="ff-menu-hint">Renew or review your membership contract, or submit a voluntary exit notice.</div>
+      <button type="button" class="ff-admin-action action-btn" onclick="showMembersPopup()">👥 View Members List <span id="totalMembers">..</span></button>
+      <button type="button" class="ff-menu-close" onclick="confirmCloseFFMemberSection(this)">Close section −</button>
+    </div>
+  </details>
+  <details class="ff-member-menu">
+    <summary><span class="ff-menu-icon">🤝</span><span>Member Support</span></summary>
+    <div class="ff-menu-items" data-menu="support">
+      <div class="ff-menu-hint">Access welfare support and your member notes.</div>
+      <button type="button" class="ff-menu-close" onclick="confirmCloseFFMemberSection(this)">Close section −</button>
+    </div>
+  </details>
+</div>
+
 
 <!-- ==========================================
      CURRENT SAVINGS AVAILABILITY SETTING
@@ -10092,7 +10152,6 @@ document.addEventListener(
 <button class="action-btn" type="button" onclick="openMyContract()" style="background:#0b7285;margin-top:10px;">📄 My Membership Contract</button>
 
 
-
 <!-- Membership Withdrawal / Exit -->
 <button class="action-btn" type="button" onclick="openMemberExitForm()" style="background:#7c3aed;margin-top:10px;">🚪 Membership Withdrawal / Exit</button>
 <div id="ffMemberExitModal" role="dialog" aria-modal="true" aria-labelledby="ffExitTitle" style="display:none;position:fixed;inset:0;z-index:1000001;background:rgba(12,28,45,.72);padding:16px;overflow:auto;box-sizing:border-box;">
@@ -10123,6 +10182,7 @@ document.addEventListener(
  </div>
 </div>
 
+
 <!-- Member Contract Modal -->
 <div id="ffMemberContractModal" role="dialog" aria-modal="true" aria-labelledby="ffMemberContractTitle" style="display:none;position:fixed;inset:0;z-index:1000000;background:rgba(12,28,45,.68);padding:18px;overflow:auto;box-sizing:border-box;">
   <div style="max-width:900px;margin:20px auto;background:#fff;border-radius:16px;padding:24px;box-shadow:0 18px 55px rgba(0,0,0,.25);color:#243447;">
@@ -10130,7 +10190,16 @@ document.addEventListener(
     <p style="color:#64748b;">Complete the form, review the full contract, then sign and submit. Your signed contract will open automatically for printing/saving as PDF. Attach that PDF in WhatsApp and send it to 0713953004. Admin will publish your official status in the website's hardcoded contract record, just like loan records.</p>
     <form id="ffMemberContractForm" onsubmit="submitMemberContract(event)" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:16px 0;background:#f8fafc;border:1px solid #dbe4ec;padding:16px;border-radius:12px;">
       <label style="font-weight:700;">Full member name<input id="ffContractMemberName" required readonly style="display:block;width:100%;box-sizing:border-box;margin-top:6px;padding:11px;border:1px solid #cbd5e1;border-radius:7px;background:#eef2f7;"></label>
-      <label style="font-weight:700;">Contract type<select id="ffContractMemberType" required style="display:block;width:100%;box-sizing:border-box;margin-top:6px;padding:11px;border:1px solid #cbd5e1;border-radius:7px;"><option value="New Membership Contract">New Membership Contract</option><option value="Membership Contract Renewal">Membership Contract Renewal</option></select></label>
+      <label style="font-weight:700;">Contract type<select id="ffContractMemberType" required onchange="updateContractFee();invalidateContractPreview();" style="display:block;width:100%;box-sizing:border-box;margin-top:6px;padding:11px;border:1px solid #cbd5e1;border-radius:7px;"><option value="New Membership Contract">New Membership Contract</option><option value="Membership Contract Renewal">Membership Contract Renewal</option></select></label>
+      <div id="ffContractFeeQuestion" style="grid-column:1/-1;display:none;padding:12px;background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;">
+        <label style="font-weight:700;">Have you previously paid the Chama registration fee?
+          <select id="ffContractFeePaid" onchange="updateContractFee();invalidateContractPreview();" style="display:block;width:100%;box-sizing:border-box;margin-top:6px;padding:11px;border:1px solid #cbd5e1;border-radius:7px;">
+            <option value="">Please select</option><option value="yes">Yes, I already paid the registration fee</option><option value="no">No, I have never paid the registration fee</option>
+          </select>
+        </label>
+        <p id="ffContractFeeExplanation" style="margin:8px 0 0;line-height:1.5;font-weight:600;"></p>
+      </div>
+      <div id="ffContractFeeSummary" style="grid-column:1/-1;padding:12px;background:#ecfdf5;border:1px solid #a7f3d0;border-radius:8px;line-height:1.6;"><b>Applicable fee:</b> KSh 500 — one-time registration fee for a new member.</div>
       <label style="font-weight:700;grid-column:1/-1;">Choose your chama participation plan<select id="ffContractParticipation" required style="display:block;width:100%;box-sizing:border-box;margin-top:6px;padding:11px;border:1px solid #cbd5e1;border-radius:7px;"><option value="">Select participation plan</option><option>Weekly merry-go-round only</option><option>Monthly merry-go-round only</option><option>Weekly merry-go-round plus savings</option><option>Monthly merry-go-round plus savings</option><option>Monthly chama plus weekly participation</option><option>Monthly chama plus weekly participation plus savings</option></select></label>
       <div style="grid-column:1/-1;padding:12px;background:#eff6ff;border-radius:8px;line-height:1.6;"><b>Member undertaking</b><p style="margin:6px 0;">I agree to abide by the Future Finders Chama Group Constitution and approved rules; participate according to the plan selected above; make the contributions applicable to my chosen plan on time; act honestly and respectfully; and comply with the group’s approved welfare, savings, loan, discipline, dispute-resolution and exit procedures. Any applicable fees, fines and benefits remain governed by the Constitution and approved rules. Signing does not automatically admit a new applicant; the existing membership approval process still applies. If this form conflicts with the Constitution, the Constitution prevails.</p></div>
       <button type="button" onclick="previewMemberContract()" style="grid-column:1/-1;background:#075985;color:white;border:0;border-radius:9px;padding:13px 18px;font-weight:700;cursor:pointer;">👁️ View Full Contract Before Signing</button>
@@ -12005,33 +12074,26 @@ calculate2026();
 </style>
 
 
-<div class="mini-dashboard">
+<style id="ff-admin-dashboard-accordion-style">
+/* Compact admin dashboard accordions */
+.ff-admin-menu-wrap{width:min(1120px,calc(100% - 28px));margin:18px auto 24px}
+.ff-admin-menu-note{margin:0 0 12px;padding:10px 13px;border-radius:10px;background:#eef7fb;border-left:4px solid #087f8c;color:#385466;font-size:13px;line-height:1.5}
+.ff-admin-menu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:12px;align-items:start}
+.ff-admin-menu{border:1px solid #d8e3eb;border-radius:13px;background:#fff;box-shadow:0 4px 14px rgba(15,45,65,.06);overflow:hidden;min-width:0}
+.ff-admin-menu[open]{border-color:#8dbdc5;box-shadow:0 7px 20px rgba(15,45,65,.09)}
+.ff-admin-menu summary{list-style:none;display:flex;align-items:center;gap:10px;min-height:60px;padding:12px 14px;cursor:pointer;background:linear-gradient(135deg,#f0f8fa,#fff);color:#12334a;font-weight:800;user-select:none}
+.ff-admin-menu summary::-webkit-details-marker{display:none}
+.ff-admin-menu summary:after{content:'＋';margin-left:auto;font-size:19px;color:#087f8c}
+.ff-admin-menu[open] summary:after{content:'−'}
+.ff-admin-menu .ff-admin-icon{width:36px;height:36px;display:inline-flex;align-items:center;justify-content:center;border-radius:10px;background:#dff2f3;font-size:19px;flex:0 0 36px}
+.ff-admin-menu .ff-admin-content{padding:12px;border-top:1px solid #e7eef2}
+.ff-admin-menu .ff-admin-action{width:100%;min-height:44px;padding:10px 12px;border:0;border-radius:9px;background:linear-gradient(135deg,#087f8c,#166b78);color:#fff;font-size:14px;font-weight:700;cursor:pointer}
+.ff-admin-menu .ff-admin-action:hover{filter:brightness(.95)}
+.ff-admin-menu .ff-admin-description{margin:0 0 10px;color:#64748b;font-size:12px;line-height:1.45}
+@media(max-width:560px){.ff-admin-menu-grid{grid-template-columns:1fr}.ff-admin-menu summary{min-height:54px}}
+</style>
 
-  <div class="mini-card clickableCard" onclick="showMembersPopup()">
-    👥
-    <h3 id="totalMembers">..</h3>
-    <small>Click to view all Members</small>
-</div>
 
-  <div class="mini-card clickableCard" onclick="showSavingsPopup()">
-    💰
-    <h3 id="totalSavings">..</h3>
-    <small>Click to View Savings</small>
-</div>
-
-  <div class="mini-card clickableCard" onclick="showQualifiedPopup()">
-    ✅
-    <h3 id="qualifiedMembers">..</h3>
-    <small>Click to view Qualified</small>
-  </div>
-
-  <div class="mini-card clickableCard" onclick="showTopSavers()">
-    🥇
-    <h3>Top savers</h3>
-    <small>Click to view Top Savers</small>
-  </div>
-
-</div>
 
 
 
@@ -13001,13 +13063,16 @@ const members = {
         member: "BONIFACE CHELLUGET",
         type: "Membership Contract Renewal",
         participation: "Monthly chama plus weekly participation plus savings",
+        feeCategory: "Registration fee paid",
+        contractFee: 200,
+        registrationFeePaid: true,
         signatureName: "BONIFACE CHELLUGET",
         signedAt: "30 October 2026 at 17:32",
         signedAtISO: "2026-10-30T17:32:00.000+03:00",
         adminStatus: "Approved / Active",
         startDate: "2027-01-01",
         expiryDate: "2027-12-31",
-        adminNotes: "Contract reviewed and approved by Admin. Active from 1 January 2027 to 31 December 2027.",
+        adminNotes: "Contract reviewed and approved by Admin. Membership registration fee of KSh 200 received and recorded as paid. Active from 1 January 2027 to 31 December 2027.",
         createdAt: "2026-10-30T17:32:00.000+03:00",
         version: 2
       }
@@ -13949,6 +14014,8 @@ function login() {
 
       calculateGrandTotal();
       showPopup("success", "Welcome 🎉", `Hello ${name}, glad to see you again!`);
+      // Show the menu-use guide after the dashboard has become visible.
+      setTimeout(function(){ if (typeof window.openFFMenuHelp === "function") window.openFFMenuHelp(); }, 800);
       return;
     }
     
@@ -14026,6 +14093,8 @@ finesSection.style.display = "block";
 
     calculateGrandTotal();
     showPopup("success", "Welcome 🎉", `Hello ${name}, you are now logged in!`);
+    // Show the menu-use guide after the dashboard has become visible.
+    setTimeout(function(){ if (typeof window.openFFMenuHelp === "function") window.openFFMenuHelp(); }, 800);
   }, 1000);
 }
 // 💰 Show current savings
@@ -20081,23 +20150,7 @@ function memberLogout() {
     }, 600); // match fadeOut animation duration
   }, 1000); // logout spinner time
 }
-// ✅ Successful login for hardcoded or approved members
-msg.innerText = "";
-document.getElementById("loginForm").style.display = "none";
-let dashboard = document.getElementById("dashboard");
-dashboard.style.display = "block";
-
-// Add fade-in animation
-dashboard.classList.add("fade-in");
-setTimeout(() => dashboard.classList.remove("fade-in"), 600); // reset after animation
-
-document.getElementById("memberDisplay").innerText = name;
-
-// Load loan history
-loadMemberLoanHistory(name);
-
-// Welcome popup
-showPopup("success", "Welcome 🎉", `Hello ${name}, glad to see you again!`);
+// Removed orphaned duplicate login-success statements; login handling is inside login().
 
 /// 📧 Email Contact (with delay + success + fallback)
 function contactEmail() {
@@ -21581,6 +21634,148 @@ async function download2026TablePDF() {
 }
 </script>
 
+
+<style id="ff-menu-help-popup-style">
+.ff-menu-help-overlay{display:none;position:fixed;inset:0;z-index:1000000;background:rgba(8,30,45,.62);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:18px;box-sizing:border-box}
+.ff-menu-help-overlay.show{display:flex}
+.ff-menu-help-card{width:min(420px,100%);background:#fff;border-radius:18px;padding:25px 22px;text-align:center;box-shadow:0 18px 55px rgba(0,0,0,.28);animation:ffHelpIn .22s ease-out}
+.ff-menu-help-icon{font-size:32px;margin-bottom:8px}.ff-menu-help-card h2{font-size:20px;color:#12334a;margin:6px 0 10px}.ff-menu-help-card p{font-size:14px;line-height:1.6;color:#526575;margin:0 0 18px}.ff-menu-help-card button{border:0;border-radius:10px;background:linear-gradient(135deg,#087f8c,#166b78);color:#fff;padding:12px 20px;font-weight:750;cursor:pointer;min-height:44px;width:100%}@keyframes ffHelpIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+</style>
+<script>
+window.openFFMenuHelp = function(){
+  let p=document.getElementById('ffMenuHelpPopup');
+  if(!p) return;
+  // Keep the dialog as a direct child of body, outside hidden/transformed dashboard wrappers.
+  if(p.parentElement!==document.body) document.body.appendChild(p);
+  p.style.setProperty('position','fixed','important');
+  p.style.setProperty('inset','0','important');
+  p.style.setProperty('z-index','2147483647','important');
+  p.style.setProperty('display','flex','important');
+  p.style.setProperty('align-items','center','important');
+  p.style.setProperty('justify-content','center','important');
+  p.style.setProperty('background','rgba(8,30,45,.68)','important');
+  p.style.setProperty('padding','18px','important');
+  p.classList.add('show');
+  p.setAttribute('aria-hidden','false');
+};
+window.closeFFMenuHelp = function(){
+  const p=document.getElementById('ffMenuHelpPopup');
+  if(p){p.classList.remove('show');p.style.setProperty('display','none','important');p.setAttribute('aria-hidden','true');}
+};
+// Dismiss when the member taps the dark backdrop.
+document.addEventListener('click',function(e){
+  const p=document.getElementById('ffMenuHelpPopup');
+  if(p && e.target===p) window.closeFFMenuHelp();
+});
+// Backup trigger: detect the dashboard becoming visible after a successful login.
+document.addEventListener('DOMContentLoaded',function(){
+  const dashboard=document.getElementById('dashboard');
+  if(!dashboard) return;
+  const observer=new MutationObserver(function(){
+    const visible=dashboard.style.display!=='none' && getComputedStyle(dashboard).display!=='none';
+    const user=(typeof loggedInUser!=='undefined' && loggedInUser);
+    if(visible && user){
+      observer.disconnect();
+      setTimeout(function(){window.openFFMenuHelp();},300);
+    }
+  });
+  observer.observe(dashboard,{attributes:true,attributeFilter:['style','class']});
+});
+</script>
+
+
+<style id="ff-admin-menu-action-visibility">
+#dashboard .ff-menu-items .ff-admin-action{display:flex!important;align-items:center;justify-content:flex-start;gap:8px;width:100%;min-height:44px;margin:0;padding:10px 12px;border:0;border-radius:9px;background:linear-gradient(135deg,#087f8c,#166b78);color:#fff;font-weight:700;text-align:left;cursor:pointer;box-sizing:border-box}
+#dashboard .ff-menu-items .ff-admin-action span{margin-left:auto}
+#dashboard .ff-menu-items .ff-menu-close{display:block;width:100%;min-height:38px;margin:10px 0 0;padding:8px 12px;border:1px solid #cbd8df;border-radius:9px;background:#f3f7f9;color:#34515f;font-weight:700;text-align:center;cursor:pointer}
+#dashboard .ff-menu-items .ff-menu-close:hover{background:#e7f0f3}
+</style>
+<script id="ff-member-dashboard-menu-redesign">
+(function(){
+  const setup=function(){
+    const dashboard=document.getElementById('dashboard');
+    const grid=document.getElementById('ffMemberMenuGrid');
+    if(!dashboard||!grid||grid.dataset.ready==='1')return;
+    grid.dataset.ready='1';
+    const menu=(name)=>grid.querySelector('[data-menu="'+name+'"]');
+    const inPopup=(el)=>!!el.closest('#currentSavingsUnavailablePopup,#monthlySavingsUnavailablePopup,#loanUnavailablePopup,#ffMemberExitModal,#ffMemberContractModal,[role="dialog"]');
+    const move=(selector,target)=>{
+      const host=menu(target); if(!host)return;
+      dashboard.querySelectorAll(selector).forEach(el=>{
+        if(inPopup(el)||el.closest('#ffMemberMenuGrid'))return;
+        const close=host.querySelector('.ff-menu-close'); if(close)host.insertBefore(el,close); else host.appendChild(el);
+      });
+    };
+    move('[onclick="handleCurrentSavings()"], [onclick="handleMonthlySavings()"], [onclick="open2025Popup()"], [onclick="open2026Popup()"], [onclick="download2026TablePDF()"], [onclick="downloadIndividualSavingsReportsPDF()"]','savings');
+    move('[onclick="handleLoanCheck()"], [onclick="showMyLoans()"]','loans');
+    move('[onclick="openMyContract()"], [onclick="openMemberExitForm()"], [onclick="openRegistrationFees()"]','membership');
+    move('[onclick="showWelfareApplication()"], [onclick="openNotePopup()"]','support');
+    const logout=dashboard.querySelector('#memberLogoutBtn');
+    if(logout){logout.classList.add('ff-menu-logout');logout.style.display='inline-flex';}
+    // Only one category stays expanded at a time, keeping the dashboard compact.
+    grid.querySelectorAll('details.ff-member-menu').forEach(item=>item.addEventListener('toggle',()=>{
+      if(item.open)grid.querySelectorAll('details.ff-member-menu').forEach(other=>{if(other!==item)other.open=false;});
+    }));
+  };
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',setup);else setup();
+})();
+</script>
+
+
+<script id="ff-confirm-close-member-section">
+function confirmCloseFFMemberSection(button){
+  const section = button && button.closest('details.ff-member-menu');
+  if (!section) return;
+  const sectionName = section.querySelector('summary')?.innerText?.trim() || 'this section';
+  const accepted = window.confirm('Do you want to close ' + sectionName + '? This will also close any open form, application, list or popup.');
+  if (!accepted) return;
+
+  // Welfare and loan application forms are both rendered inside #loanMessage.
+  // Clearing this container closes either form without triggering a second prompt.
+  const sharedFormHost = document.getElementById('loanMessage');
+  if (sharedFormHost) sharedFormHost.innerHTML = '';
+
+  // Close member forms and overlays that may have been opened from a menu.
+  const ids = [
+    'topSaverPopup','membersPopup','savingsPopup','qualifiedPopup',
+    'ffMemberExitModal','ffMemberContractModal','notePopup',
+    'currentSavingsUnavailablePopup','monthlySavingsUnavailablePopup',
+    'loanUnavailablePopup','welfareForm'
+  ];
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.style.display = 'none';
+    el.setAttribute('aria-hidden', 'true');
+    el.classList.remove('show');
+  });
+
+  // Close any visible dialog-style form/popup opened within the member dashboard.
+  document.querySelectorAll('#dashboard [role="dialog"], #dashboard dialog[open], #dashboard .dashboardPopup').forEach(el => {
+    if (el.id === 'systemUpdatePopup') return;
+    if (el.tagName === 'DIALOG' && typeof el.close === 'function') el.close();
+    el.style.display = 'none';
+    el.setAttribute('aria-hidden', 'true');
+    el.classList.remove('show');
+  });
+
+  // Restore page scrolling if a full-screen modal had locked it.
+  document.body.style.overflow = '';
+  section.open = false;
+}
+</script>
+
+
+<!-- Actual member login guide popup (placed in the live page DOM, not inside a print-template string) -->
+<div id="ffMenuHelpPopup" class="ff-menu-help-overlay" aria-hidden="true" style="display:none">
+  <div class="ff-menu-help-card" role="dialog" aria-modal="true" aria-labelledby="ffMenuHelpTitle">
+    <div class="ff-menu-help-icon">☝️</div>
+    <h2 id="ffMenuHelpTitle">Welcome to your member dashboard</h2>
+    <p>To see the options inside a section, click the <b>＋</b> beside its heading. Click <b>−</b> or “Close section” when you are finished. You can open another section at any time.</p>
+    <button type="button" onclick="closeFFMenuHelp()">Okay, Continue</button>
+  </div>
+</div>
+
 </body>
 </html>
 
@@ -21871,7 +22066,6 @@ async function downloadIndividualSavingsReportsPDF() {
       {key:'members',title:'👥 Members Overview',selectors:['#membersOverviewPanel']},
       {key:'loans',title:'📑 Loan Management & Applications',selectors:['h3.ff-mm-heading','#loanSearch','#loanStatusFilter','button.ff-export-loans','h3.ff-loan-heading','table.ff-loan-table']},
       {key:'contracts',title:'📄 Membership Contracts & Review',selectors:['#memberContractsAdminPanel']},
-      {key:'exits',title:'🚪 Membership Withdrawal & Exit Register',selectors:['#ffExitAdminPanel']},
       {key:'registrations',title:'📝 Pending Member Registrations',selectors:['#pendingMembersPanel']},
       {key:'numbers',title:'🎲 Picked Lucky Numbers',selectors:['button.ff-picked-trigger','#pickedNumbersTable']},
       {key:'updates',title:'🚀 System Updates & Notifications',selectors:['h3.ff-updates-heading','#updateMessage','button.ff-post-update','#memberSelectionBox','label.ff-whatsapp-label','div.ff-update-history']}
@@ -21900,7 +22094,7 @@ async function downloadIndividualSavingsReportsPDF() {
     const check=admin.querySelector('#sendWhatsAppUpdate');if(check&&check.closest('label'))check.closest('label').classList.add('ff-whatsapp-label');
     const history=admin.querySelector('#updateHistoryBody')?.closest('div');if(history)history.classList.add('ff-update-history');
     function move(selector,target){const el=admin.querySelector(selector);if(el&&target&&!el.closest('.ff-admin-content'))target.appendChild(el);}
-    move('#adminSummary',cards.summary.content);move('#membersNotesPanel',cards.notes.content);move('#membersOverviewPanel',cards.members.content);move('#memberContractsAdminPanel',cards.contracts.content);move('#ffExitAdminPanel',cards.exits.content);move('#pendingMembersPanel',cards.registrations.content);
+    move('#adminSummary',cards.summary.content);move('#membersNotesPanel',cards.notes.content);move('#membersOverviewPanel',cards.members.content);move('#memberContractsAdminPanel',cards.contracts.content);move('#pendingMembersPanel',cards.registrations.content);
     ['h3.ff-mm-heading','#loanSearch','#loanStatusFilter','button.ff-export-loans','h3.ff-loan-heading','table.ff-loan-table'].forEach(s=>move(s,cards.loans.content));
     ['button.ff-picked-trigger','#pickedNumbersTable'].forEach(s=>move(s,cards.numbers.content));
     ['h3.ff-updates-heading','#updateMessage','button.ff-post-update','#memberSelectionBox','label.ff-whatsapp-label','div.ff-update-history'].forEach(s=>move(s,cards.updates.content));
@@ -22013,8 +22207,11 @@ async function downloadIndividualSavingsReportsPDF() {
       <p>This membership contract is not a loan application, loan approval or guarantor undertaking. Any loan is subject to the Constitution, applicable savings and membership eligibility requirements, repayment history, outstanding obligations, available funds, the applicable loan limits and approval by the authorized leadership. Each approved loan will be governed by its own loan record/agreement and repayment schedule. I agree to honour any loan obligations I separately accept.</p>
       <h3>6. Welfare and mutual support</h3>
       <p>I agree to comply with the Constitution and approved rules governing welfare contributions, benefit eligibility, claims and supporting information. Welfare assistance is subject to the applicable eligibility conditions, approved procedures and available Chama funds; this contract does not guarantee any particular benefit.</p>
-      <h3>7. Registration fee and contract renewal</h3>
-      <p>Under the Constitution, with effect from January 2027, new members are subject to a one-time registration fee of KSh 500 for approved administrative and logistical needs. This fee is separate from savings, Merry-Go-Round contributions, loan repayments, welfare contributions and other obligations. No additional fee shall be charged solely for renewing this membership contract. Any registration fee or other payment remains governed by the Constitution and duly approved rules.</p>
+      <h3>7. Membership registration and contract renewal fees</h3>
+      <p><b>Fee classification:</b> ${esc(c.feeCategory||'Not recorded')}.</p>
+      <p><b>Previous registration fee paid:</b> ${c.registrationFeePaid===true?'Yes':c.registrationFeePaid===false?(c.type==='New Membership Contract'?'Not applicable — new admission':'No'):'Not recorded'}.</p>
+      <p><b>Applicable fee recorded at submission:</b> KSh ${Number(c.contractFee||0).toLocaleString('en-KE')}.</p>
+      <p>New members joining under the current fee structure shall pay a one-time registration fee of KSh 500. For the 2027 contract renewal, members who joined during 2026 and already paid the former registration fee of KSh 200 shall be exempt from an additional renewal fee. Members who joined the Chama but have never paid the registration fee shall pay KSh 200 to regularize their membership. The member’s declaration in the contract form determines the fee recorded for review. All payments shall be acknowledged and recorded by the Chama for transparency and accountability. These fees are separate from savings, Merry-Go-Round contributions, loan repayments, welfare contributions and other obligations.</p>
       <h3>8. Conduct, confidentiality and accountability</h3>
       <p>I undertake to act with honesty, integrity, respect, fairness, discipline and accountability; respect the leadership and decisions properly adopted under the Constitution; safeguard Chama funds, property, records and confidential information; provide truthful information; and cooperate in keeping accurate membership and financial records. I will raise concerns respectfully and use the group’s approved channels to resolve discrepancies.</p>
       <h3>9. Discipline, disputes, suspension and withdrawal</h3>
@@ -22029,21 +22226,56 @@ async function downloadIndividualSavingsReportsPDF() {
       <footer class="contract-footer"><strong>FUTURE FINDERS CHAMA GROUP</strong><br>Official electronic membership record · Contract reference ${esc(c.id)}<br>“Together We Save. Together We Grow. Together We Succeed.”</footer>
       </div></div>`;
   }
-  function renderMemberHistory(name){const host=byId('ffMemberContractHistory');if(!host)return;const rows=getContracts().filter(c=>String(c.member).toLowerCase()===String(name).toLowerCase()).sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''));if(!rows.length){host.innerHTML='<p style="color:#64748b;">No contract history yet. Complete the form above to submit your first contract.</p>';return;}host.innerHTML=rows.map(c=>`<div style="border:1px solid #cbd5e1;border-radius:10px;padding:13px;margin:9px 0;background:#fff;"><b>Reference:</b> ${esc(c.id)}<br><b>Type:</b> ${esc(c.type)}<br><b>Participation:</b> ${esc(c.participation)}<br><b>Submitted/signed:</b> ${esc(c.signedAt)}<br><b>Status:</b> <span style="font-weight:700;color:${String(status(c)).toLowerCase().includes('approved')||String(status(c)).toLowerCase().includes('active')?'#15803d':'#92400e'}">${esc(status(c))}</span><br><b>Start date:</b> ${esc(fmtDate(c.startDate))}<br><b>Expiry/renewal:</b> ${esc(fmtDate(c.expiryDate))}${c.adminNotes?`<br><b>Admin notes:</b> ${esc(c.adminNotes)}`:''}<div style="margin-top:8px;"><button type="button" onclick="downloadContractById('${esc(c.id)}')" style="padding:7px 10px;cursor:pointer;">Download / Print</button></div></div>`).join('');}
-  function renderAdmin(){const tbody=byId('ffAdminContractsTable');if(!tbody)return;const rows=getContracts().sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''));if(!rows.length){tbody.innerHTML='<tr><td colspan="8" style="padding:14px;text-align:center;color:#64748b;">No member contracts submitted yet.</td></tr>';return;}tbody.innerHTML=rows.map(c=>{const editable=isPending(c);const dis=editable?'':'disabled';return `<tr><td style="padding:8px;border-bottom:1px solid #e2e8f0;">${esc(c.member)}<br><small>${esc(c.id)}</small></td><td style="padding:8px;border-bottom:1px solid #e2e8f0;">${esc(c.participation)}</td><td style="padding:8px;border-bottom:1px solid #e2e8f0;">${esc(c.signedAt)}</td><td style="padding:8px;border-bottom:1px solid #e2e8f0;"><select id="ff-status-${esc(c.id)}" ${dis} style="max-width:200px;padding:7px;">${['Submitted — Awaiting Admin Review','Under Review','Approved / Active','Pending Correction','Rejected','Renewal Due','Expired'].map(v=>`<option ${status(c)===v?'selected':''}>${v}</option>`).join('')}</select></td><td style="padding:8px;border-bottom:1px solid #e2e8f0;"><input id="ff-start-${esc(c.id)}" type="date" value="${esc(c.startDate||'')}" ${dis} style="padding:7px;width:140px;"></td><td style="padding:8px;border-bottom:1px solid #e2e8f0;"><input id="ff-expiry-${esc(c.id)}" type="date" value="${esc(c.expiryDate||'')}" ${dis} style="padding:7px;width:140px;"></td><td style="padding:8px;border-bottom:1px solid #e2e8f0;"><textarea id="ff-notes-${esc(c.id)}" rows="2" ${dis} style="width:170px;">${esc(c.adminNotes||'')}</textarea></td><td style="padding:8px;border-bottom:1px solid #e2e8f0;white-space:nowrap;">${editable?`<button type="button" onclick="saveAdminContractStatus('${esc(c.id)}')" style="padding:7px;cursor:pointer;">Save update</button>`:'<span style="color:#64748b;font-size:12px;">Locked</span>'} <button type="button" onclick="downloadContractById('${esc(c.id)}')" style="padding:7px;cursor:pointer;">PDF</button></td></tr>`;}).join('');}
+  function renderMemberHistory(name){const host=byId('ffMemberContractHistory');if(!host)return;const rows=getContracts().filter(c=>String(c.member).toLowerCase()===String(name).toLowerCase()).sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''));if(!rows.length){host.innerHTML='<p style="color:#64748b;">No contract history yet. Complete the form above to submit your first contract.</p>';return;}host.innerHTML=rows.map(c=>`<div style="border:1px solid #cbd5e1;border-radius:10px;padding:13px;margin:9px 0;background:#fff;"><b>Reference:</b> ${esc(c.id)}<br><b>Type:</b> ${esc(c.type)}<br><b>Participation:</b> ${esc(c.participation)}<br><b>Fee:</b> KSh ${Number(c.contractFee||0).toLocaleString('en-KE')} — ${esc(c.feeCategory||'Not recorded')}<br><b>Submitted/signed:</b> ${esc(c.signedAt)}<br><b>Status:</b> <span style="font-weight:700;color:${String(status(c)).toLowerCase().includes('approved')||String(status(c)).toLowerCase().includes('active')?'#15803d':'#92400e'}">${esc(status(c))}</span><br><b>Start date:</b> ${esc(fmtDate(c.startDate))}<br><b>Expiry/renewal:</b> ${esc(fmtDate(c.expiryDate))}${c.adminNotes?`<br><b>Admin notes:</b> ${esc(c.adminNotes)}`:''}<div style="margin-top:8px;"><button type="button" onclick="downloadContractById('${esc(c.id)}')" style="padding:7px 10px;cursor:pointer;">Download / Print</button></div></div>`).join('');}
+  function renderAdmin(){const tbody=byId('ffAdminContractsTable');if(!tbody)return;const rows=getContracts().sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''));if(!rows.length){tbody.innerHTML='<tr><td colspan="8" style="padding:14px;text-align:center;color:#64748b;">No member contracts submitted yet.</td></tr>';return;}tbody.innerHTML=rows.map(c=>{const editable=isPending(c);const dis=editable?'':'disabled';return `<tr><td style="padding:8px;border-bottom:1px solid #e2e8f0;">${esc(c.member)}<br><small>${esc(c.id)}</small></td><td style="padding:8px;border-bottom:1px solid #e2e8f0;">${esc(c.participation)}</td><td style="padding:8px;border-bottom:1px solid #e2e8f0;">KSh ${Number(c.contractFee||0).toLocaleString('en-KE')}<br><small>${esc(c.feeCategory||'Not recorded')}</small></td><td style="padding:8px;border-bottom:1px solid #e2e8f0;">${esc(c.signedAt)}</td><td style="padding:8px;border-bottom:1px solid #e2e8f0;"><select id="ff-status-${esc(c.id)}" ${dis} style="max-width:200px;padding:7px;">${['Submitted — Awaiting Admin Review','Under Review','Approved / Active','Pending Correction','Rejected','Renewal Due','Expired'].map(v=>`<option ${status(c)===v?'selected':''}>${v}</option>`).join('')}</select></td><td style="padding:8px;border-bottom:1px solid #e2e8f0;"><input id="ff-start-${esc(c.id)}" type="date" value="${esc(c.startDate||'')}" ${dis} style="padding:7px;width:140px;"></td><td style="padding:8px;border-bottom:1px solid #e2e8f0;"><input id="ff-expiry-${esc(c.id)}" type="date" value="${esc(c.expiryDate||'')}" ${dis} style="padding:7px;width:140px;"></td><td style="padding:8px;border-bottom:1px solid #e2e8f0;"><textarea id="ff-notes-${esc(c.id)}" rows="2" ${dis} style="width:170px;">${esc(c.adminNotes||'')}</textarea></td><td style="padding:8px;border-bottom:1px solid #e2e8f0;white-space:nowrap;">${editable?`<button type="button" onclick="saveAdminContractStatus('${esc(c.id)}')" style="padding:7px;cursor:pointer;">Save update</button>`:'<span style="color:#64748b;font-size:12px;">Locked</span>'} <button type="button" onclick="downloadContractById('${esc(c.id)}')" style="padding:7px;cursor:pointer;">PDF</button></td></tr>`;}).join('');}
 
   window.ffRefreshAdminContracts=renderAdmin;
   let ffContractPreviewReady=false;
   let ffEditingContractId=null;
-  function previewDraft(){const name=currentName();const sig=byId('ffContractTypedSignature').value.trim();return {id:'FFC-PREVIEW',member:name,type:byId('ffContractMemberType').value,participation:byId('ffContractParticipation').value||'Please select a participation plan',signatureName:sig||'To be signed by member',signedAt:'Will be recorded automatically when signed',signedAtISO:'',adminStatus:'Preview — Not signed',startDate:'',expiryDate:'',adminNotes:'',createdAt:new Date().toISOString(),version:2};}
-  window.previewMemberContract=function(){const name=currentName();if(!name){alert('Please log in first.');return;}if(!byId('ffContractParticipation').value){alert('Please select your participation plan before previewing the contract.');return;}const draft=previewDraft();byId('ffContractPreview').innerHTML='<style>.ff-contract-preview{font-family:Arial,Helvetica,sans-serif;color:#172033;font-size:14px;line-height:1.55}.ff-contract-preview .contract-document{max-width:100%;margin:0 auto}.ff-contract-preview .contract-frame{position:relative;border:2px solid #0c526b;padding:22px 20px;background:#fff}.ff-contract-preview .contract-frame:before{content:"";position:absolute;pointer-events:none;inset:5px;border:1px solid #c6a75e}.ff-contract-preview .contract-header{text-align:center;border-bottom:2px solid #0c526b;padding-bottom:15px;margin-bottom:15px;position:relative}.ff-contract-preview .contract-logo{display:block;width:76px;height:76px;object-fit:contain;margin:0 auto 10px}.ff-contract-preview .eyebrow{font-size:11px;letter-spacing:2px;color:#8a6b24;font-weight:bold}.ff-contract-preview .contract-header h1{font-size:22px;color:#0c526b;margin:5px 0}.ff-contract-preview .contract-header h2{font-size:16px;color:#172033;margin:5px 0}.ff-contract-preview .motto{font-style:italic;color:#5b6572}.ff-contract-preview .contract-meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border:1px solid #b8c6d1;margin:14px 0}.ff-contract-preview .contract-meta>div{padding:9px;border:1px solid #d6dfe6;min-width:0}.ff-contract-preview .contract-meta span,.ff-contract-preview .signature-panel span,.ff-contract-preview .admin-grid span{display:block;font-size:10px;font-weight:bold;color:#566575;margin-bottom:4px}.ff-contract-preview .contract-meta strong{display:block;font-size:12px;overflow-wrap:anywhere}.ff-contract-preview .contract-notice{padding:10px 12px;background:#f1f6f8;border-left:4px solid #0c526b;margin:12px 0;font-size:12px}.ff-contract-preview h3{font-size:14px;color:#0c526b;border-bottom:1px solid #d4dde4;padding-bottom:5px;margin:16px 0 7px}.ff-contract-preview p{margin:7px 0 10px;text-align:justify}.ff-contract-preview ul{margin:5px 0 12px;padding-left:22px}.ff-contract-preview li{margin:5px 0}.ff-contract-preview .selected-plan{border:1px solid #0c526b;background:#f2f8fa;color:#0c526b;text-align:center;font-weight:bold;padding:10px;margin:8px 0}.ff-contract-preview .signature-panel{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;border:1px solid #b8c6d1;padding:12px;margin-top:18px}.ff-contract-preview .signature-panel>div{padding:8px;border-bottom:1px solid #c7d1da;min-width:0}.ff-contract-preview .signature-panel strong{display:block;margin:8px 0;overflow-wrap:anywhere}.ff-contract-preview .signature-panel small{display:block;color:#5b6572}.ff-contract-preview .signature-script{font-family:Georgia,serif;font-style:italic;color:#0c526b;font-size:18px}.ff-contract-preview .admin-panel{border:1px solid #b8c6d1;margin-top:14px;padding:10px}.ff-contract-preview .admin-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.ff-contract-preview .admin-grid>div{padding:8px;border:1px solid #d6dfe6;min-width:0}.ff-contract-preview .admin-grid strong{font-size:12px;overflow-wrap:anywhere}.ff-contract-preview .admin-note-placeholder{color:#6b7280;font-style:italic}.ff-contract-preview .contract-footer{text-align:center;border-top:1px solid #c6a75e;padding-top:12px;margin-top:18px;color:#5b6572;font-size:11px}.ff-contract-preview .contract-footer strong{color:#0c526b;letter-spacing:.7px}@media(max-width:520px){.ff-contract-preview .contract-frame{padding:18px 12px}.ff-contract-preview .contract-meta,.ff-contract-preview .signature-panel{grid-template-columns:1fr}.ff-contract-preview .admin-grid{grid-template-columns:1fr}}</style><div class="ff-contract-preview">'+contractText(draft)+'</div>';
+  window.updateContractFee=function(){
+    const type=byId('ffContractMemberType')?.value||'';
+    const question=byId('ffContractFeeQuestion');
+    const paid=byId('ffContractFeePaid');
+    const explanation=byId('ffContractFeeExplanation');
+    const summary=byId('ffContractFeeSummary');
+    if(!question||!summary)return;
+    if(type==='New Membership Contract'){
+      question.style.display='none';
+      if(paid)paid.value='';
+      if(explanation)explanation.textContent='';
+      summary.innerHTML='<b>Applicable fee:</b> KSh 500 — one-time registration fee for a new member joining under the current fee structure.';
+    }else{
+      question.style.display='block';
+      const answer=paid?.value||'';
+      if(answer==='yes'){
+        if(explanation)explanation.textContent='Thank you. Members who joined in 2026 and already paid the registration fee of KSh 200 are exempt from the 2027 renewal fee.';
+        summary.innerHTML='<b>Applicable fee:</b> KSh 0 — exempt because the registration fee was previously paid.';
+      }else if(answer==='no'){
+        if(explanation)explanation.textContent='Since you joined the Chama but have never paid the registration fee, KSh 200 is payable to regularize your membership for the 2027 renewal.';
+        summary.innerHTML='<b>Applicable fee:</b> KSh 200 — outstanding registration payment for renewal.';
+      }else{
+        if(explanation)explanation.textContent='Please answer this question so the website can calculate the correct renewal fee.';
+        summary.innerHTML='<b>Applicable fee:</b> Please indicate whether you previously paid the registration fee.';
+      }
+    }
+  };
+  function getSelectedContractFee(){
+    const type=byId('ffContractMemberType')?.value||'';
+    const paid=byId('ffContractFeePaid')?.value||'';
+    if(type==='New Membership Contract')return {feeCategory:'New member registration fee',contractFee:500,registrationFeePaid:false};
+    if(paid==='yes')return {feeCategory:'Previously paid registration fee — 2027 renewal exempt',contractFee:0,registrationFeePaid:true};
+    if(paid==='no')return {feeCategory:'Registration fee outstanding — payable on 2027 renewal',contractFee:200,registrationFeePaid:false};
+    return null;
+  }
+  function previewDraft(){const name=currentName();const sig=byId('ffContractTypedSignature').value.trim();const fee=getSelectedContractFee()||{feeCategory:'Registration-fee answer required',contractFee:0,registrationFeePaid:null};return {id:'FFC-PREVIEW',member:name,type:byId('ffContractMemberType').value,...fee,participation:byId('ffContractParticipation').value||'Please select a participation plan',signatureName:sig||'To be signed by member',signedAt:'Will be recorded automatically when signed',signedAtISO:'',adminStatus:'Preview — Not signed',startDate:'',expiryDate:'',adminNotes:'',createdAt:new Date().toISOString(),version:2};}
+  window.previewMemberContract=function(){const name=currentName();if(!name){alert('Please log in first.');return;}if(!byId('ffContractParticipation').value){alert('Please select your participation plan before previewing the contract.');return;}if(byId('ffContractMemberType').value==='Membership Contract Renewal'&&!byId('ffContractFeePaid').value){alert('Please indicate whether you previously paid the Chama registration fee.');byId('ffContractFeePaid').focus();return;}const draft=previewDraft();byId('ffContractPreview').innerHTML='<style>.ff-contract-preview{font-family:Arial,Helvetica,sans-serif;color:#172033;font-size:14px;line-height:1.55}.ff-contract-preview .contract-document{max-width:100%;margin:0 auto}.ff-contract-preview .contract-frame{position:relative;border:2px solid #0c526b;padding:22px 20px;background:#fff}.ff-contract-preview .contract-frame:before{content:"";position:absolute;pointer-events:none;inset:5px;border:1px solid #c6a75e}.ff-contract-preview .contract-header{text-align:center;border-bottom:2px solid #0c526b;padding-bottom:15px;margin-bottom:15px;position:relative}.ff-contract-preview .contract-logo{display:block;width:76px;height:76px;object-fit:contain;margin:0 auto 10px}.ff-contract-preview .eyebrow{font-size:11px;letter-spacing:2px;color:#8a6b24;font-weight:bold}.ff-contract-preview .contract-header h1{font-size:22px;color:#0c526b;margin:5px 0}.ff-contract-preview .contract-header h2{font-size:16px;color:#172033;margin:5px 0}.ff-contract-preview .motto{font-style:italic;color:#5b6572}.ff-contract-preview .contract-meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border:1px solid #b8c6d1;margin:14px 0}.ff-contract-preview .contract-meta>div{padding:9px;border:1px solid #d6dfe6;min-width:0}.ff-contract-preview .contract-meta span,.ff-contract-preview .signature-panel span,.ff-contract-preview .admin-grid span{display:block;font-size:10px;font-weight:bold;color:#566575;margin-bottom:4px}.ff-contract-preview .contract-meta strong{display:block;font-size:12px;overflow-wrap:anywhere}.ff-contract-preview .contract-notice{padding:10px 12px;background:#f1f6f8;border-left:4px solid #0c526b;margin:12px 0;font-size:12px}.ff-contract-preview h3{font-size:14px;color:#0c526b;border-bottom:1px solid #d4dde4;padding-bottom:5px;margin:16px 0 7px}.ff-contract-preview p{margin:7px 0 10px;text-align:justify}.ff-contract-preview ul{margin:5px 0 12px;padding-left:22px}.ff-contract-preview li{margin:5px 0}.ff-contract-preview .selected-plan{border:1px solid #0c526b;background:#f2f8fa;color:#0c526b;text-align:center;font-weight:bold;padding:10px;margin:8px 0}.ff-contract-preview .signature-panel{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;border:1px solid #b8c6d1;padding:12px;margin-top:18px}.ff-contract-preview .signature-panel>div{padding:8px;border-bottom:1px solid #c7d1da;min-width:0}.ff-contract-preview .signature-panel strong{display:block;margin:8px 0;overflow-wrap:anywhere}.ff-contract-preview .signature-panel small{display:block;color:#5b6572}.ff-contract-preview .signature-script{font-family:Georgia,serif;font-style:italic;color:#0c526b;font-size:18px}.ff-contract-preview .admin-panel{border:1px solid #b8c6d1;margin-top:14px;padding:10px}.ff-contract-preview .admin-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.ff-contract-preview .admin-grid>div{padding:8px;border:1px solid #d6dfe6;min-width:0}.ff-contract-preview .admin-grid strong{font-size:12px;overflow-wrap:anywhere}.ff-contract-preview .admin-note-placeholder{color:#6b7280;font-style:italic}.ff-contract-preview .contract-footer{text-align:center;border-top:1px solid #c6a75e;padding-top:12px;margin-top:18px;color:#5b6572;font-size:11px}.ff-contract-preview .contract-footer strong{color:#0c526b;letter-spacing:.7px}@media(max-width:520px){.ff-contract-preview .contract-frame{padding:18px 12px}.ff-contract-preview .contract-meta,.ff-contract-preview .signature-panel{grid-template-columns:1fr}.ff-contract-preview .admin-grid{grid-template-columns:1fr}}</style><div class="ff-contract-preview">'+contractText(draft)+'</div>';
     byId('ffContractPreviewWrap').style.display='block';byId('ffContractPreviewAcceptance').checked=false;ffContractPreviewReady=true;byId('ffMemberContractMessage').textContent='Full contract preview is open above. Read all sections, then confirm you reviewed it before signing.';byId('ffMemberContractMessage').style.color='#075985';};
   window.hideMemberContractPreview=function(){byId('ffContractPreviewWrap').style.display='none';};
   function invalidateContractPreview(){ffContractPreviewReady=false;byId('ffContractPreviewAcceptance').checked=false;byId('ffContractPreviewWrap').style.display='none';}
   window.openMyContract=function(){const name=currentName();if(!name){alert('Please log in to your member account first.');return;}byId('ffContractMemberName').value=name;byId('ffContractTypedSignature').value='';byId('ffContractAcceptance').checked=false;byId('ffContractPreviewAcceptance').checked=false;byId('ffContractParticipation').value='';byId('ffContractMemberType').value='New Membership Contract';byId('ffContractPreviewWrap').style.display='none';ffContractPreviewReady=false;ffEditingContractId=null;byId('ffMemberContractMessage').textContent='';byId('ffMemberContractSignedActions').style.display='none';setContractFormLocked(false);const own=getContracts().filter(c=>String(c.member).toLowerCase()===String(name).toLowerCase()).sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''));const latest=own[0];if(latest&&isPending(latest)){ffEditingContractId=latest.id;byId('ffContractMemberType').value=latest.type||'New Membership Contract';byId('ffContractParticipation').value=latest.participation||'';byId('ffContractTypedSignature').value=latest.signatureName||name;byId('ffMemberContractMessage').textContent='Your contract ('+latest.id+') is '+status(latest)+'. You may edit this pending contract and resubmit it for review. It will be locked once approved.';byId('ffMemberContractMessage').style.color='#075985';byId('ffContractSubmitBtn').textContent='✍️ Save Edits & Resubmit Contract';}else if(latest&&String(status(latest)).toLowerCase().includes('rejected')){byId('ffContractSubmitBtn').textContent='✍️ Sign & Submit New Contract';byId('ffMemberContractMessage').textContent='Your previous contract was rejected. You may submit a new contract with a new reference. The rejected contract will remain unchanged in your history.';byId('ffMemberContractMessage').style.color='#92400e';}else if(latest){setContractFormLocked(true);byId('ffContractSubmitBtn').textContent='Contract Locked';byId('ffMemberContractMessage').textContent='Your contract ('+latest.id+') is '+status(latest)+'. This record is locked and cannot be edited. If you need to make a change, Admin must first return it to Pending Correction. You can still download the signed contract from your history below.';byId('ffMemberContractMessage').style.color='#15803d';byId('ffMemberContractSignedActions').style.display='block';}else{byId('ffContractSubmitBtn').textContent='✍️ Sign, Submit & Prepare Contract';}renderMemberHistory(name);byId('ffMemberContractModal').style.display='block';document.body.style.overflow='hidden';}
   window.closeMyContract=function(){byId('ffMemberContractModal').style.display='none';document.body.style.overflow='';};
   ['ffContractMemberType','ffContractParticipation','ffContractTypedSignature'].forEach(id=>{document.addEventListener('DOMContentLoaded',()=>{const el=byId(id);if(el)el.addEventListener(id==='ffContractTypedSignature'?'input':'change',invalidateContractPreview);});});
-  window.submitMemberContract=function(ev){ev.preventDefault();const name=currentName();if(!name){alert('Please log in first.');return;}const all=getContracts();const own=all.filter(x=>String(x.member).toLowerCase()===String(name).toLowerCase()).sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''));const latest=own[0];if(ffEditingContractId){const existing=all.find(x=>String(x.id)===String(ffEditingContractId)&&String(x.member).toLowerCase()===String(name).toLowerCase());if(!existing||!isPending(existing)){byId('ffMemberContractMessage').textContent='This contract is no longer pending and cannot be edited. Approved and rejected contracts are locked.';byId('ffMemberContractMessage').style.color='#b91c1c';setContractFormLocked(true);return;}}else if(latest&&!String(status(latest)).toLowerCase().includes('rejected')){byId('ffMemberContractMessage').textContent='You already have a contract that is not rejected. Only a pending contract can be edited; an approved contract is locked.';byId('ffMemberContractMessage').style.color='#b91c1c';return;}if(!ffContractPreviewReady||!byId('ffContractPreviewAcceptance').checked){byId('ffMemberContractMessage').textContent='Please view the full contract and confirm that you reviewed it before signing.';byId('ffMemberContractMessage').style.color='#b91c1c';byId('ffContractPreviewWrap').style.display='block';return;}const signature=byId('ffContractTypedSignature').value.trim();if(signature.toLowerCase()!==name.toLowerCase()){byId('ffMemberContractMessage').textContent='Please type your full member name exactly as shown on your account.';byId('ffMemberContractMessage').style.color='#b91c1c';return;}const now=new Date();const signedAt=now.toLocaleString('en-KE',{timeZone:'Africa/Nairobi',dateStyle:'long',timeStyle:'short'});const base={member:name,type:byId('ffContractMemberType').value,participation:byId('ffContractParticipation').value,signatureName:signature,signedAt,signedAtISO:now.toISOString(),adminStatus:'Submitted — Awaiting Admin Review',startDate:'',expiryDate:'',adminNotes:'',version:2};let c;if(ffEditingContractId){const i=all.findIndex(x=>String(x.id)===String(ffEditingContractId)&&String(x.member).toLowerCase()===String(name).toLowerCase());c={...all[i],...base,lastEditedAt:now.toISOString(),version:(Number(all[i].version)||2)+1};all[i]=c;}else{const id='FFC-'+now.getFullYear()+'-'+now.getTime().toString().slice(-7);c={id,...base,createdAt:now.toISOString()};all.push(c);}putContracts(all);ffEditingContractId=c.id;byId('ffMemberContractMessage').textContent='Contract saved and submitted for review. '+(c.lastEditedAt?'Your pending contract was updated; no duplicate contract was created. ':'A new contract record was created. The previous rejected record remains in your history.')+'The signed contract is opening now for you to print or save as PDF. Send that PDF to Admin on WhatsApp for review.';byId('ffMemberContractMessage').style.color='#087f5b';byId('ffMemberContractSignedActions').style.display='block';byId('ffContractSubmitBtn').textContent='✍️ Save Edits & Resubmit Contract';renderMemberHistory(name);renderAdmin();downloadPDF(c);};
+  window.submitMemberContract=function(ev){ev.preventDefault();const name=currentName();if(!name){alert('Please log in first.');return;}const all=getContracts();const own=all.filter(x=>String(x.member).toLowerCase()===String(name).toLowerCase()).sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''));const latest=own[0];if(ffEditingContractId){const existing=all.find(x=>String(x.id)===String(ffEditingContractId)&&String(x.member).toLowerCase()===String(name).toLowerCase());if(!existing||!isPending(existing)){byId('ffMemberContractMessage').textContent='This contract is no longer pending and cannot be edited. Approved and rejected contracts are locked.';byId('ffMemberContractMessage').style.color='#b91c1c';setContractFormLocked(true);return;}}else if(latest&&!String(status(latest)).toLowerCase().includes('rejected')){byId('ffMemberContractMessage').textContent='You already have a contract that is not rejected. Only a pending contract can be edited; an approved contract is locked.';byId('ffMemberContractMessage').style.color='#b91c1c';return;}if(byId('ffContractMemberType').value==='Membership Contract Renewal'&&!byId('ffContractFeePaid').value){byId('ffMemberContractMessage').textContent='Please indicate whether you previously paid the Chama registration fee.';byId('ffMemberContractMessage').style.color='#b91c1c';byId('ffContractFeePaid').focus();return;}if(!ffContractPreviewReady||!byId('ffContractPreviewAcceptance').checked){byId('ffMemberContractMessage').textContent='Please view the full contract and confirm that you reviewed it before signing.';byId('ffMemberContractMessage').style.color='#b91c1c';byId('ffContractPreviewWrap').style.display='block';return;}const signature=byId('ffContractTypedSignature').value.trim();if(signature.toLowerCase()!==name.toLowerCase()){byId('ffMemberContractMessage').textContent='Please type your full member name exactly as shown on your account.';byId('ffMemberContractMessage').style.color='#b91c1c';return;}const now=new Date();const signedAt=now.toLocaleString('en-KE',{timeZone:'Africa/Nairobi',dateStyle:'long',timeStyle:'short'});const fee=getSelectedContractFee();if(!fee){byId('ffMemberContractMessage').textContent='Please complete the registration-fee question before signing.';byId('ffMemberContractMessage').style.color='#b91c1c';return;}const base={member:name,type:byId('ffContractMemberType').value,...fee,participation:byId('ffContractParticipation').value,signatureName:signature,signedAt,signedAtISO:now.toISOString(),adminStatus:'Submitted — Awaiting Admin Review',startDate:'',expiryDate:'',adminNotes:'',version:2};let c;if(ffEditingContractId){const i=all.findIndex(x=>String(x.id)===String(ffEditingContractId)&&String(x.member).toLowerCase()===String(name).toLowerCase());c={...all[i],...base,lastEditedAt:now.toISOString(),version:(Number(all[i].version)||2)+1};all[i]=c;}else{const id='FFC-'+now.getFullYear()+'-'+now.getTime().toString().slice(-7);c={id,...base,createdAt:now.toISOString()};all.push(c);}putContracts(all);ffEditingContractId=c.id;byId('ffMemberContractMessage').textContent='Contract saved and submitted for review. '+(c.lastEditedAt?'Your pending contract was updated; no duplicate contract was created. ':'A new contract record was created. The previous rejected record remains in your history.')+'The signed contract is opening now for you to print or save as PDF. Send that PDF to Admin on WhatsApp for review.';byId('ffMemberContractMessage').style.color='#087f5b';byId('ffMemberContractSignedActions').style.display='block';byId('ffContractSubmitBtn').textContent='✍️ Save Edits & Resubmit Contract';renderMemberHistory(name);renderAdmin();downloadPDF(c);};
   window.saveAdminContractStatus=function(id){const all=getContracts();const i=all.findIndex(c=>c.id===id);if(i<0){alert('Contract record not found.');return;}if(!isPending(all[i])){alert('This contract is locked because it is no longer pending. Approved and rejected records cannot be edited.');renderAdmin();return;}const start=byId('ff-start-'+id).value;const expiry=byId('ff-expiry-'+id).value;if(start&&expiry&&expiry<start){alert('Expiry/renewal date cannot be earlier than the start date.');return;}all[i].adminStatus=byId('ff-status-'+id).value;all[i].startDate=start;all[i].expiryDate=expiry;all[i].adminNotes=byId('ff-notes-'+id).value.trim();all[i].adminUpdatedAt=new Date().toISOString();putContracts(all);renderAdmin();renderMemberHistory(currentName());const msg=byId('ffAdminContractMessage');if(msg){msg.textContent='Review update saved in this browser. Once a contract is approved or rejected, its record is locked. To publish the update for every member, copy this contract record into the matching members["MEMBER NAME"].contracts array in index.html and redeploy the website.';msg.style.color='#087f5b';}};
   function downloadPDF(c){
     const html=`<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(c.member)} — Membership Contract</title><style>
@@ -22057,7 +22289,10 @@ async function downloadIndividualSavingsReportsPDF() {
       .signature-panel{display:grid;grid-template-columns:1fr 1fr;gap:4mm;border:1px solid #b8c6d1;padding:4mm;margin-top:6mm;break-inside:avoid}.signature-panel>div{min-height:24mm;padding:2mm;border-bottom:1px solid #c7d1da}.signature-panel strong{display:block;margin:2mm 0;font-size:10pt;overflow-wrap:anywhere}.signature-panel small{display:block;color:#5b6572}.signature-script{font-family:Georgia,serif;font-style:italic;color:#0c526b;font-size:15pt!important}.admin-panel{border:1px solid #b8c6d1;margin-top:5mm;padding:3mm;break-inside:avoid}.admin-panel h3{margin:0 0 3mm;border-bottom:2px solid #c6a75e}.admin-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3mm}.admin-grid>div{padding:2mm;border:1px solid #d6dfe6;min-height:15mm}.admin-grid strong{font-size:8.5pt}.admin-note-placeholder{color:#6b7280;font-style:italic}.contract-footer{text-align:center;border-top:1px solid #c6a75e;padding-top:4mm;margin-top:7mm;color:#5b6572;font-size:8pt;break-inside:avoid}.contract-footer strong{color:#0c526b;letter-spacing:.7px}
       @media print{html,body{background:#fff!important}.contract-document{max-width:none;margin:0}.contract-frame{min-height:0;box-shadow:none;print-color-adjust:exact;-webkit-print-color-adjust:exact}.contract-frame:before{position:fixed}h3{break-after:avoid}p,li{orphans:3;widows:3}button{display:none}}
       @media screen{body{padding:18px}.contract-frame{box-shadow:0 4px 20px #0001}}
-    </style></head><body>${contractText(c)}<img class="contract-stamp" src="https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/WhatsApp%20Image%202026-08-27%20at%204.37.32%20PM.jpeg" alt="Official Future Finders stamp"><script>window.onload=()=>{setTimeout(()=>window.print(),450)};<\/script></body></html>`;
+    </style></head><body>${contractText(c)}<img class="contract-stamp" src="https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/WhatsApp%20Image%202026-08-27%20at%204.37.32%20PM.jpeg" alt="Official Future Finders stamp"><script>window.onload=()=>{setTimeout(()=>window.print(),450)};<\/script>
+
+
+</body></html>`;
     const w=window.open('','_blank');if(!w){alert('Please allow pop-ups so the contract can open for printing/saving as PDF.');return;}w.document.open();w.document.write(html);w.document.close();
   }
   window.downloadContractById=function(id){const c=getContracts().find(x=>x.id===id);if(!c){alert('Contract record not found.');return;}downloadPDF(c);};
@@ -22120,7 +22355,7 @@ async function downloadIndividualSavingsReportsPDF() {
 })();
 </script>
 
-\n<script id="ff-membership-exit-workflow">
+<script id="ff-membership-exit-workflow">
 (function(){
  const STORE='ffMemberExitNotices_v1';
  const $=id=>document.getElementById(id);
@@ -22133,7 +22368,11 @@ async function downloadIndividualSavingsReportsPDF() {
  function saveRows(rows){localStorage.setItem(STORE,JSON.stringify(rows));try{if(typeof members!=='undefined'&&members){Object.keys(members).forEach(n=>members[n].exits=[]);rows.forEach(r=>{const key=Object.keys(members).find(n=>n.toLowerCase()===String(r.member||'').toLowerCase());if(key){if(!Array.isArray(members[key].exits))members[key].exits=[];members[key].exits.push({...r});}});}}catch(e){}}
  function latestFor(name){return getRows().filter(r=>String(r.member).toLowerCase()===String(name).toLowerCase()).sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''))[0];}
  function docHtml(r){const amount=n=>'KSh '+Number(n||0).toLocaleString('en-KE',{minimumFractionDigits:2,maximumFractionDigits:2});return `<div style="font-family:Arial,sans-serif;color:#1f2937;font-size:13px;line-height:1.55;border:3px double #56328a;padding:22px;position:relative;"><div style="border:1px solid #c6a75e;padding:5px;"><header style="text-align:center;border-bottom:2px solid #56328a;padding-bottom:12px;margin-bottom:14px;"><img src="https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/FUTURE%20FINDERS%20LOGO.jpeg" style="width:78px;height:78px;object-fit:contain" onerror="this.style.display='none'"><div style="letter-spacing:2px;color:#8a6b24;font-weight:bold;font-size:10px;">OFFICIAL MEMBERSHIP NOTICE</div><h1 style="color:#56328a;margin:6px 0;font-size:21px;">FUTURE FINDERS CHAMA GROUP</h1><h2 style="font-size:16px;margin:5px 0;">MEMBERSHIP WITHDRAWAL & EXIT NOTICE</h2><div>Constitutional basis: Article 11 — Membership Exit, Suspension and Termination</div></header><p><b>Exit Notice Reference:</b> ${esc(r.id)} &nbsp; <b>Current status:</b> ${esc(r.status||'Notice Submitted')}</p><h3 style="color:#56328a;border-bottom:1px solid #ddd;padding-bottom:4px;">1. Member and notice details</h3><table style="width:100%;border-collapse:collapse"><tr><td style="padding:5px;border:1px solid #ddd"><b>Full name</b><br>${esc(r.member)}</td><td style="padding:5px;border:1px solid #ddd"><b>Membership number</b><br>${esc(r.membershipNo||'Not provided')}</td></tr><tr><td style="padding:5px;border:1px solid #ddd"><b>Registered phone</b><br>${esc(r.phone||'Not recorded')}</td><td style="padding:5px;border:1px solid #ddd"><b>Existing contract reference</b><br>${esc(r.contractRef||'Not provided')}</td></tr><tr><td style="padding:5px;border:1px solid #ddd"><b>Notice submitted</b><br>${esc(fmt(r.noticeDate))}</td><td style="padding:5px;border:1px solid #ddd"><b>Intended exit date</b><br>${esc(fmt(r.intendedExitDate))}</td></tr></table><h3 style="color:#56328a;border-bottom:1px solid #ddd;padding-bottom:4px;">2. Reason and explanation</h3><p><b>Reason:</b> ${esc(r.reason)}</p><p>${esc(r.explanation||'No additional explanation provided.')}</p><h3 style="color:#56328a;border-bottom:1px solid #ddd;padding-bottom:4px;">3. Constitutional explanations acknowledged by the member</h3><ul><li>This is a written voluntary withdrawal notice requiring at least thirty (30) days' notice before the intended exit date (Article 11.1).</li><li>Submission does not itself approve or immediately complete withdrawal, terminate all obligations, or automatically cancel pending matters.</li><li>The Chama reviews savings, contributions, loans, repayments, penalties and other obligations during the notice period. Reconciliation is to be completed within thirty (30) days after the notice period ends (Article 11.2).</li><li>Eligible savings mean verified accumulated personal savings. Merry-Go-Round and welfare contributions are treated separately. Registration fees, properly applied fines, penalties and charges are not refundable savings (Article 11.3).</li><li>Any settlement is calculated from official records: eligible personal savings plus approved amounts due, less outstanding obligations and lawful deductions. No specific refund is guaranteed by this notice.</li><li>Withdrawal does not cancel outstanding loans, contributions, penalties, guarantees or other financial obligations (Article 11.1 and 11.7).</li><li>A pending dispute or disciplinary matter is not automatically cancelled by withdrawal; final settlement may be deferred where necessary (Article 11.10).</li><li>Temporary suspension from activities or benefits is not the same as ending membership (Articles 11.4–11.5).</li><li>Disciplinary termination is not requested through this voluntary form. It must follow the constitutional disciplinary and decision-making process, give the member a reasonable opportunity to respond and preserve applicable appeal rights (Article 11.6 and Article 10).</li><li>A former member may apply for re-admission, but re-admission and restoration of previous privileges are not automatic; outstanding previous obligations must be addressed (Article 11.8).</li><li>If a member dies, the Chama separately reconciles the member's financial affairs with the lawful representative of the estate; this withdrawal form is not a death-claim form (Article 11.9).</li><li>Membership and financial-clearance records must be maintained securely, confidentially and accurately (Article 11.11).</li><li>The Chama will update the official membership register to reflect the effective date and nature of exit when the process is completed (Article 11.12).</li><li>All withdrawal, suspension, termination and re-admission matters must follow Article 11 and other applicable constitutional provisions (Article 11.13).</li></ul><h3 style="color:#56328a;border-bottom:1px solid #ddd;padding-bottom:4px;">4. Member declaration and digital signature</h3><p>I, <b>${esc(r.member)}</b>, voluntarily give written notice of withdrawal from Future Finders Chama Group. I confirm that the details provided are accurate and that I have read and understood the explanations above and Article 11 of the Constitution. I understand that this notice does not immediately complete my exit or release me from any outstanding obligation.</p><p><b>Digital signature:</b> ${esc(r.signature)}</p><p><b>Date and time signed:</b> ${esc(r.signedAt)}</p><h3 style="color:#56328a;border-bottom:1px solid #ddd;padding-bottom:4px;">5. Administrative reconciliation — to be completed by the Chama</h3><p>Eligible personal savings: ${amount(r.eligibleSavings)} &nbsp; | &nbsp; Approved amounts due: ${amount(r.approvedDue)}<br>Outstanding obligations / lawful deductions: ${amount(r.obligations)}<br><b>Net settlement recorded (positive = payable to member; negative = amount still owed to Chama):</b> ${amount(r.settlement)}</p><p>Admin remarks: ${esc(r.adminRemarks||'Pending administrative review')}<br>Chairlady remarks: ${esc(r.chairladyRemarks||'Pending confirmation / oversight')}<br>Reconciliation completed: ${esc(fmt(r.reconciliationDate))}<br>Expected settlement date: ${esc(fmt(r.expectedSettlementDate))}<br>Actual settlement date: ${esc(fmt(r.settlementDate))}<br>Effective exit date recorded: ${esc(fmt(r.effectiveExitDate))}</p><div style="border-top:1px solid #c6a75e;margin-top:18px;padding-top:10px;text-align:center;font-size:10px;color:#64748b;">This notice is governed by the Future Finders Chama Group Constitution. In case of conflict, the Constitution prevails.<br><b style="color:#56328a;">FUTURE FINDERS CHAMA GROUP</b></div></div></div>`;}
- function printRecord(r){const w=window.open('','_blank');if(!w){alert('Please allow pop-ups to download or print your signed notice.');return;}w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>${esc(r.id)} - Withdrawal Notice</title><style>@page{size:A4;margin:14mm}body{margin:0;padding:8px}button{padding:10px 16px;margin:12px 0;background:#56328a;color:#fff;border:0;border-radius:6px}@media print{button{display:none}}</style></head><body><button onclick="window.print()">Print / Save as PDF</button>${docHtml(r)}<script>window.onload=()=>setTimeout(()=>window.print(),500)<\\/script></body></html>`);w.document.close();}
+ function printRecord(r){const w=window.open('','_blank');if(!w){alert('Please allow pop-ups to download or print your signed notice.');return;}w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>${esc(r.id)} - Withdrawal Notice</title><style>@page{size:A4;margin:14mm}body{margin:0;padding:8px}button{padding:10px 16px;margin:12px 0;background:#56328a;color:#fff;border:0;border-radius:6px}@media print{button{display:none}}</style></head><body><button onclick="window.print()">Print / Save as PDF</button>${docHtml(r)}<script>window.onload=()=>setTimeout(()=>window.print(),500)<\\/script>
+
+
+
+</body></html>`);w.document.close();}
  function preview(){const name=currentName();if(!name){alert('Please log in to your member account first.');return;}const sig=$('ffExitSignature').value.trim();if(sig.toLowerCase()!==name.toLowerCase()){alert('Type your full name exactly as shown in your member account before previewing.');return;}const intended=$('ffExitIntendedDate').value;if(!intended||intended<addDays(today(),30)){alert('The intended exit date must be at least 30 days after the notice date.');return;}const r={id:'FFC-EXIT-PREVIEW',member:name,membershipNo:$('ffExitMembershipNo').value,phone:$('ffExitPhone').value,contractRef:$('ffExitContractRef').value,noticeDate:today(),intendedExitDate:intended,reason:$('ffExitReason').value,explanation:$('ffExitExplanation').value,signature:sig,signedAt:'Recorded automatically upon submission',status:'Preview only'};$('ffExitPreview').innerHTML=docHtml(r);$('ffExitPreviewWrap').style.display='block';$('ffExitPreviewAck').checked=false;}
  window.openMemberExitForm=function(){const name=currentName();if(!name){alert('Please log in to your member account first.');return;}const member=(typeof members!=='undefined'&&members)?members[name]:null;$('ffExitMemberName').value=name;$('ffExitPhone').value=member?.phone||'';$('ffExitNoticeDate').value=fmt(today());$('ffExitIntendedDate').min=addDays(today(),30);$('ffExitIntendedDate').value=addDays(today(),30);$('ffExitSignature').value='';$('ffExitDeclaration').checked=false;$('ffExitDisputeAck').checked=false;$('ffExitPreviewAck').checked=false;$('ffExitPreviewWrap').style.display='none';$('ffExitMessage').textContent='';$('ffExitSignedActions').style.display='none';$('ffMemberExitModal').style.display='block';document.body.style.overflow='hidden';renderMemberHistory(name);};
  window.closeMemberExitForm=function(){$('ffMemberExitModal').style.display='none';document.body.style.overflow='';};
@@ -22148,4 +22387,4 @@ async function downloadIndividualSavingsReportsPDF() {
  document.addEventListener('DOMContentLoaded',()=>{renderAdmin();const modal=$('ffMemberExitModal');if(modal)modal.addEventListener('click',e=>{if(e.target===modal)closeMemberExitForm();});});
  if(document.readyState!=='loading')renderAdmin();
 })();
-</script>\n
+</script>
