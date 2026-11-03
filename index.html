@@ -3776,19 +3776,19 @@ function closeSystemUpdatePopup(){
     📋 Show Available Numbers
   </button>
 
-  <!-- MANUAL LOAN AVAILABILITY CONTROL (LOCAL TO THIS BROWSER) -->
+  <!-- PUBLISHED LOAN AVAILABILITY CONTROL -->
   <div id="loanAvailabilityAdminPanel" style="margin:18px 0; padding:16px; border:1px solid #cbd5e1; border-radius:10px; background:#f8fafc;">
     <h3 style="margin:0 0 8px; color:#17324d;">💰 Loan Availability Control</h3>
-    <p style="margin:0 0 10px; color:#475569;">Choose the automatic Constitution schedule or temporarily override it on this browser.</p>
+    <p style="margin:0 0 10px; color:#475569;">Choose the automatic Constitution schedule or set a temporary manual status. Each action downloads an updated index.html; upload it to GitHub to publish the change for every member.</p>
     <div id="loanAvailabilityAdminStatus" role="status" style="padding:10px; background:white; border-radius:6px; margin-bottom:10px; line-height:1.5;"></div>
     <label for="loanOverrideReason" style="display:block; font-weight:600; margin-bottom:5px;">Reason for manual change</label>
     <input id="loanOverrideReason" type="text" placeholder="e.g. Temporary closure due to limited funds" style="box-sizing:border-box; width:100%; max-width:520px; padding:10px; border:1px solid #cbd5e1; border-radius:6px; margin-bottom:10px;">
     <div style="display:flex; gap:8px; flex-wrap:wrap;">
-      <button type="button" onclick="setLoanAvailabilityOverride('CLOSED')" style="padding:10px 14px; background:#b42318; color:white; border:0; border-radius:6px; cursor:pointer;">🔒 Close Loans Now</button>
-      <button type="button" onclick="setLoanAvailabilityOverride('OPEN')" style="padding:10px 14px; background:#187a36; color:white; border:0; border-radius:6px; cursor:pointer;">🔓 Reopen Loans Now</button>
-      <button type="button" onclick="setLoanAvailabilityOverride('AUTO')" style="padding:10px 14px; background:#475569; color:white; border:0; border-radius:6px; cursor:pointer;">↻ Return to Automatic</button>
+      <button type="button" class="action-btn ff-admin-action" onclick="setLoanAvailabilityOverride('CLOSED')">🔒 Close Loans Now</button>
+      <button type="button" class="action-btn ff-admin-action" onclick="setLoanAvailabilityOverride('OPEN')">🔓 Reopen Loans Now</button>
+      <button type="button" class="action-btn ff-admin-action" onclick="setLoanAvailabilityOverride('AUTO')">↻ Return to Automatic</button>
     </div>
-    <p style="font-size:12px; color:#9a3412; margin:10px 0 0;"><strong>Local mode:</strong> This override is saved only in this browser on this device. It will not automatically change the loan status on members' other devices.</p>
+    <p style="font-size:12px; color:#166534; margin:10px 0 0;"><strong>Publishing:</strong> After choosing an action, upload the downloaded <strong>index.html</strong> to your GitHub repository and commit the change. Once the site updates, all members will see the same loan status on their phones and computers.</p>
   </div>
 
   <!-- SUMMARY CARDS -->
@@ -3949,6 +3949,15 @@ function closeSystemUpdatePopup(){
     📂 Export Loans (CSV)
   </button>
 
+  <!-- PDF DOWNLOADS: ADMIN LOAN REGISTER AND INDIVIDUAL MEMBER HISTORY -->
+  <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:12px 0;padding:12px;border:1px solid #cbd5e1;border-radius:10px;background:#f8fafc;">
+    <button type="button" onclick="downloadAdminLoansPDF()" style="padding:10px 14px;background:#075985;color:#fff;border:0;border-radius:7px;font-weight:700;cursor:pointer;">⬇ Download All Loans (PDF)</button>
+    <select id="adminLoanHistoryMember" style="min-width:220px;padding:10px;border:1px solid #cbd5e1;border-radius:7px;">
+      <option value="">Select member loan history</option>
+    </select>
+    <button type="button" onclick="downloadAdminMemberLoanHistoryPDF()" style="padding:10px 14px;background:#166534;color:#fff;border:0;border-radius:7px;font-weight:700;cursor:pointer;">📑 Download Member Loan History (PDF)</button>
+  </div>
+
   <!-- 📜 Loan Applications Table -->
   <h3>📜 Loan Applications</h3>
   <p style="margin:8px 0 12px;color:#475569;">This register reads the loan records entered under each member in <code>const members</code>. To approve or reject a loan for everyone, edit that member's loan <code>status</code> (and <code>reason</code> if rejected) in the code, then publish the updated index.html. Admin decisions made only in this browser are not shared to other devices.</p>
@@ -3965,6 +3974,7 @@ function closeSystemUpdatePopup(){
         <th>Loan & Repayment Dates</th>
         <th>Decision / Reason</th>
         <th>Repayment Schedule</th>
+        <th>Admin Action</th>
       </tr>
     </thead>
     <tbody id="adminLoanBody">
@@ -9614,29 +9624,51 @@ document.addEventListener(
 </script>
 
 <!-- ==========================================
-     LOAN AVAILABILITY SETTING
-     
-     false = Loans NOT available
-     true  = Loans AVAILABLE
+     PUBLISHED LOAN AVAILABILITY SETTING
+     Admin actions generate a new index.html for GitHub publication.
      ========================================== -->
 
 <script>
 /*
-  LOAN AVAILABILITY CONTROL
-  Default: automatic Constitution schedule (1 January–31 October open;
-  1 November–31 December closed).
-  Admin can locally override this browser to CLOSED or OPEN at any time.
-  NOTE: localStorage is browser/device-specific and is not shared with members.
+  SHARED LOAN AVAILABILITY CONTROL
+  The published mode below is embedded in index.html. Admin button actions
+  generate a revised index.html containing the selected mode and reason.
+  Upload that downloaded file to GitHub so every member sees the same status.
+  Automatic Constitution schedule: 1 January–31 October OPEN;
+  1 November–31 December CLOSED.
 */
-const LOAN_OVERRIDE_KEY = "futureFindersLoanAvailabilityOverride";
-const LOAN_OVERRIDE_REASON_KEY = "futureFindersLoanAvailabilityReason";
+let PUBLISHED_LOAN_AVAILABILITY_MODE = "AUTO";
+let PUBLISHED_LOAN_AVAILABILITY_REASON = "";
 
 function getLoanAvailabilityState() {
-    const override = localStorage.getItem(LOAN_OVERRIDE_KEY) || "AUTO";
     const month = new Date().getMonth() + 1;
     const automaticOpen = month >= 1 && month <= 10;
+    const override = PUBLISHED_LOAN_AVAILABILITY_MODE;
     const isOpen = override === "OPEN" ? true : override === "CLOSED" ? false : automaticOpen;
-    return { override, isOpen, automaticOpen, reason: localStorage.getItem(LOAN_OVERRIDE_REASON_KEY) || "" };
+    return { override, isOpen, automaticOpen, reason: PUBLISHED_LOAN_AVAILABILITY_REASON };
+}
+
+function downloadPublishedLoanAvailabilityIndex(mode, reason) {
+    let html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+    const modePattern = /let PUBLISHED_LOAN_AVAILABILITY_MODE = \"(?:AUTO|OPEN|CLOSED)\";/;
+    const reasonPattern = /let PUBLISHED_LOAN_AVAILABILITY_REASON = \"(?:[^\"\\]|\\.)*\";/;
+    const modeLine = `let PUBLISHED_LOAN_AVAILABILITY_MODE = ${JSON.stringify(mode)};`;
+    const reasonLine = `let PUBLISHED_LOAN_AVAILABILITY_REASON = ${JSON.stringify(reason)};`;
+    if (!modePattern.test(html) || !reasonPattern.test(html)) {
+        alert("The updated index.html could not be prepared. Please contact the website administrator.");
+        return false;
+    }
+    html = html.replace(modePattern, modeLine).replace(reasonPattern, reasonLine);
+    const blob = new Blob([html], { type: "text/html;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "index.html";
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1500);
+    return true;
 }
 
 function setLoanAvailabilityOverride(mode) {
@@ -9651,16 +9683,18 @@ function setLoanAvailabilityOverride(mode) {
         if (reasonInput) reasonInput.focus();
         return;
     }
-    if (mode === "AUTO") {
-        localStorage.setItem(LOAN_OVERRIDE_KEY, "AUTO");
-        localStorage.removeItem(LOAN_OVERRIDE_REASON_KEY);
-    } else {
-        localStorage.setItem(LOAN_OVERRIDE_KEY, mode);
-        localStorage.setItem(LOAN_OVERRIDE_REASON_KEY, reason);
-    }
+    if (!['AUTO', 'OPEN', 'CLOSED'].includes(mode)) return;
+
+    PUBLISHED_LOAN_AVAILABILITY_MODE = mode;
+    PUBLISHED_LOAN_AVAILABILITY_REASON = mode === "AUTO" ? "" : reason;
     renderLoanAvailabilityControl();
     updateLoanUnavailablePopupMessage();
-    alert(mode === "AUTO" ? "Automatic loan schedule restored on this browser." : `Loans manually ${mode.toLowerCase()} on this browser.`);
+
+    if (downloadPublishedLoanAvailabilityIndex(PUBLISHED_LOAN_AVAILABILITY_MODE, PUBLISHED_LOAN_AVAILABILITY_REASON)) {
+        alert(mode === "AUTO"
+            ? "Automatic schedule restored. A new index.html has been downloaded. Upload it to GitHub to publish the change for all members."
+            : `Loans set to ${mode}. A new index.html has been downloaded. Upload it to GitHub to publish the change for all members.`);
+    }
 }
 
 function renderLoanAvailabilityControl() {
@@ -9669,8 +9703,8 @@ function renderLoanAvailabilityControl() {
     const reason = document.getElementById("loanOverrideReason");
     if (status) {
         const label = state.isOpen ? "OPEN" : "CLOSED";
-        const source = state.override === "AUTO" ? "Automatic Constitution schedule" : "Manual override";
-        status.innerHTML = `<strong>Current status: ${label}</strong><br><small>${source}${state.reason ? " — " + state.reason.replace(/[&<>"']/g, "") : ""}</small>`;
+        const source = state.override === "AUTO" ? "Automatic Constitution schedule" : "Published manual setting — upload the downloaded index.html to GitHub";
+        status.innerHTML = `<strong>Current status: ${label}</strong><br><small>${source}${state.reason ? " — " + state.reason.replace(/[&<>\"']/g, "") : ""}</small>`;
         status.style.color = state.isOpen ? "#187a36" : "#b42318";
     }
     if (reason && state.override !== "AUTO" && !reason.value) reason.value = state.reason;
@@ -13074,12 +13108,13 @@ const members = {
         signatureName: "BONIFACE CHELLUGET",
         signedAt: "30 October 2026 at 17:32",
         signedAtISO: "2026-10-30T17:32:00.000+03:00",
-        adminStatus: "Pending Correction",
+        adminStatus: "Approved / Active",
         startDate: "2027-01-01",
         expiryDate: "2027-12-31",
-        adminNotes: "Returned to Pending Correction at the member's request so the contract details can be edited. Membership registration fee of KSh 200 received and recorded as paid. Admin review and approval are required again after corrections.",
+        adminNotes: "Approved by Admin on 3 November 2026. Membership registration fee of KSh 200 received and recorded as paid. Contract is approved for the 2027 membership year, effective 1 January 2027.",
         createdAt: "2026-10-30T17:32:00.000+03:00",
-        version: 2
+        approvedAt: "2026-11-03T17:13:00+03:00",
+        version: 3
       }
     ],
     loans: []
@@ -15197,6 +15232,20 @@ updateProgress();
 async function submitLoan(event, name, maxAmount, phone) {
 
     event.preventDefault();
+
+    // A member may have only one application awaiting a decision at a time.
+    // Approved or rejected applications remain in My Loans history but do not block a new application.
+    try {
+      const existingLoans = typeof getMemberLoans === "function" ? getMemberLoans(name) : [];
+      const pendingLoan = existingLoans.find(loan => /pending|awaiting|under review/i.test(String(loan.status || "")) && !/reject|approved|disbursed/i.test(String(loan.status || "")));
+      if (pendingLoan) {
+        alert("Your loan application is still awaiting approval or rejection. Please wait for the administrator's decision before submitting another application. You can track it under My Loans.");
+        if (typeof showMyLoans === "function") showMyLoans();
+        return;
+      }
+    } catch (lockError) {
+      console.warn("Could not verify pending loan applications:", lockError);
+    }
 
     // =========================
     // LOAN DETAILS
@@ -19021,7 +19070,10 @@ function getLoanApplications() {
   [...memberLoans, ...olderManualLoans].forEach(app => sharedById.set(String(app.id), app));
   // Code-managed records always win: status, dates, repayments and reason
   // must match what the administrator entered in the member record in code.
-  const shared = [...sharedById.values()];
+  const shared = [...sharedById.values()].map(app => ({
+    ...app,
+    ...(localById.get(String(app.id)) || {})
+  }));
   const sharedIds = new Set(shared.map(app => String(app.id)));
   const browserOnly = localApplications.filter(app => !app || !app.id || !sharedIds.has(String(app.id)));
 
@@ -19081,7 +19133,7 @@ function loadLoanApplications() {
   if (!body) return;
 
   if (!applications.length) {
-    body.innerHTML = `<tr><td colspan="10" style="color:gray;padding:12px;">No loan records entered yet. Add the loan under the member in const members, then publish index.html.</td></tr>`;
+    body.innerHTML = `<tr><td colspan="11" style="color:gray;padding:12px;">No loan records entered yet. Add the loan under the member in const members, then publish index.html.</td></tr>`;
     return;
   }
 
@@ -19116,6 +19168,11 @@ function loadLoanApplications() {
       <td>${esc(app.date || "—")}<br><small>First: ${esc(firstDate)}<br>Final: ${esc(finalDate)}</small></td>
       <td style="font-weight:bold;color:${statusColor};">${esc(status)}${app.reason ? `<br><small style="color:#555;font-weight:normal;">Reason: ${esc(app.reason)}</small>` : ""}<br><small style="color:#64748b;font-weight:normal;">Decision is managed in the member record in code</small></td>
       <td>${schedule}</td>
+      <td style="min-width:125px;">
+        ${/pending|awaiting|under review/i.test(status) && !/reject|approved|disbursed/i.test(status)
+          ? `<button type="button" onclick="approveLoan(${applications.indexOf(app)})" style="display:block;margin:3px auto;padding:6px 9px;background:#16834a;color:#fff;border:0;border-radius:5px;cursor:pointer;">Approve</button><button type="button" onclick="rejectLoan(${applications.indexOf(app)})" style="display:block;margin:3px auto;padding:6px 9px;background:#bd2935;color:#fff;border:0;border-radius:5px;cursor:pointer;">Reject</button>`
+          : `<small style="color:#475569;">Decision recorded</small>`}
+      </td>
     </tr>`;
   }).join("");
 }
@@ -19126,57 +19183,68 @@ function sendWhatsAppNotification(message) {
   let url = `https://wa.me/${adminPhone}?text=${encodeURIComponent(message)}`;
   window.open(url, "_blank");
 }
+function saveHardcodedLoanDecision(index, status, reason = "") {
+  const applications = getLoanApplications();
+  const loan = applications[index];
+  if (!loan) return;
+  const decision = {
+    ...loan,
+    status,
+    reason,
+    decisionDate: new Date().toLocaleDateString("en-KE", { day: "numeric", month: "long", year: "numeric" })
+  };
+  const local = (() => {
+    try { const v = JSON.parse(localStorage.getItem("loanApplications")) || []; return Array.isArray(v) ? v : []; }
+    catch (e) { return []; }
+  })();
+  const at = local.findIndex(item => item && String(item.id) === String(loan.id));
+  if (at >= 0) local[at] = { ...local[at], ...decision };
+  else local.push(decision);
+  localStorage.setItem("loanApplications", JSON.stringify(local));
+
+  // Provide the exact hardcoded record update needed for publishing the decision to every device.
+  const memberKey = Object.keys(members || {}).find(key => key.toUpperCase() === String(loan.name || "").toUpperCase());
+  const member = memberKey ? members[memberKey] : null;
+  const memberLoan = member && Array.isArray(member.loans)
+    ? member.loans.find((item, i) => String(item && item.id || `FF-MEMBER-${memberKey.toUpperCase().replace(/[^A-Z0-9]+/g,"-")}-${i+1}`) === String(loan.id))
+    : null;
+  const hardcodedRecord = { ...loan, status, reason, decisionDate: decision.decisionDate };
+  const instruction = memberLoan
+    ? `Update this loan record under members["${memberKey}"].loans in index.html:\n\n${JSON.stringify(hardcodedRecord, null, 2)}\n\nThen commit and publish index.html on GitHub so the decision appears on all devices.`
+    : `Add/update this record in HARDCODED_LOAN_APPLICATIONS in index.html:\n\n${JSON.stringify(hardcodedRecord, null, 2)}\n\nThen commit and publish index.html on GitHub so the decision appears on all devices.`;
+  loadLoanApplications();
+  if (typeof updateAdminSummary === "function") updateAdminSummary();
+  if (typeof loadMemberLoanHistory === "function") loadMemberLoanHistory(loan.name);
+  if (typeof populateMemberDropdown === "function") populateMemberDropdown();
+  alert(`Loan ${status}. This decision is saved in this browser. To share it with the member on every device, copy the hardcoded update shown next and publish index.html on GitHub.`);
+  prompt("Copy this hardcoded update into index.html, then publish it:", instruction);
+  if (/approv/i.test(status)) {
+    const msg = `Hello ${loan.name},\n\nYour loan of KSh ${Number(loan.requestedAmount || loan.amount || 0).toLocaleString("en-KE")} has been APPROVED.\nRepayment period: ${loan.repaymentPeriod || "As agreed"}.\nThank you for trusting Future Finders Chama.`;
+    sendWhatsAppNotification(msg);
+  } else {
+    sendWhatsAppNotification(`Loan Rejected\nMember: ${loan.name}\nAmount: KSh ${loan.requestedAmount || loan.amount}\nReason: ${reason}`);
+  }
+}
+
 function approveLoan(index) {
-  let applications = getLoanApplications();
-  if (applications[index]) {
-    applications[index].status = "Approved ✅";
-    localStorage.setItem("loanApplications", JSON.stringify(applications));
-    loadLoanApplications();
-    loadMemberLoanHistory(applications[index].name);
-
-    // ✅ Refresh stats
-    updateAdminSummary();
-    loadLoanApplications();
-    loadMemberLoanHistory(applications[index].name);
-    populateMemberDropdown();
-    // ✅ WhatsApp Notification
-    let msg = `Hello ${applications[index].name},\n\n🎉 Good news! Your loan of Ksh ${applications[index].requestedAmount} has been *APPROVED*.\n\n📅 Repayment Period: ${applications[index].repaymentPeriod}\n💰 Total Repayment: Ksh ${applications[index].repaymentAmount}\n\n✅ Thank you for trusting Future Finders Chama.`;
-    sendWhatsAppNotification(msg);
-
-    alert(`🎉 Loan for ${applications[index].name} has been approved!`);
-  }
+  const applications = getLoanApplications();
+  const loan = applications[index];
+  if (!loan) return;
+  if (!confirm(`Approve the loan of KSh ${Number(loan.requestedAmount || loan.amount || 0).toLocaleString("en-KE")} for ${loan.name}?`)) return;
+  saveHardcodedLoanDecision(index, "Approved ✅", "");
 }
 
-
-// ❌ Reject Loan
 function rejectLoan(index) {
-  let applications = getLoanApplications();
-  
-  if (applications[index]) {
-    // Ask for rejection reason
-    let reason = prompt("⚠️ Enter reason for rejection:");
-    if (!reason) {
-      alert("❌ Rejection reason is required.");
-      return;
-    }
-
-    applications[index].status = "Rejected ❌";
-    applications[index].reason = reason;
-    localStorage.setItem("loanApplications", JSON.stringify(applications));
-
-    // Refresh views
-    updateAdminSummary();
-    loadLoanApplications();
-    loadMemberLoanHistory(applications[index].name);
-
-    // Notify Admin via WhatsApp
-    let msg = `❌ Loan Rejected\n\n👤 Member: ${applications[index].name}\n💰 Amount: Ksh ${applications[index].requestedAmount}\n📞 Phone: ${applications[index].phone}\n📅 Date: ${applications[index].date}\nReason: ${reason}`;
-    sendWhatsAppNotification(msg);
-
-    alert(`⚠️ Loan for ${applications[index].name} has been rejected.`);
+  const applications = getLoanApplications();
+  const loan = applications[index];
+  if (!loan) return;
+  const reason = prompt("Enter the reason for rejecting this loan:");
+  if (!reason || !reason.trim()) {
+    alert("A rejection reason is required.");
+    return;
   }
+  saveHardcodedLoanDecision(index, "Rejected ❌", reason.trim());
 }
-
 
 
 function deleteLoan(index) {
@@ -21989,7 +22057,8 @@ async function downloadIndividualSavingsReportsPDF() {
 #admin #pendingMembersPanel h2, #admin #loanApplicationsPanel h2 { padding-bottom:10px; border-bottom:1px solid #e5edf2; }
 #admin .admin-panel button, #admin .admin-panel .action-btn,
 #admin #membersNotesPanel button, #admin #membersOverviewPanel button,
-#admin #pendingMembersPanel button, #admin #loanApplicationsPanel button {
+#admin #pendingMembersPanel button, #admin #loanApplicationsPanel button,
+#admin #loanAvailabilityAdminPanel button, #admin #ffExitAdminPanel button {
   border-radius:9px !important; margin:4px 5px 4px 0; font-weight:650;
 }
 #admin input:not([type=checkbox]):not([type=radio]), #admin select, #admin textarea { min-height:42px; border-radius:9px; }
@@ -22006,6 +22075,8 @@ async function downloadIndividualSavingsReportsPDF() {
 }
 @media(prefers-reduced-motion:reduce) { #adminBtn:hover, #memberLoginBtn:hover { transform:none; } }
 </style>
+
+
 
 
 <style id="ff-final-professional-finish">
@@ -22095,7 +22166,9 @@ async function downloadIndividualSavingsReportsPDF() {
       {key:'contracts',title:'📄 Membership Contracts & Review',selectors:['#memberContractsAdminPanel']},
       {key:'registrations',title:'📝 Pending Member Registrations',selectors:['#pendingMembersPanel']},
       {key:'numbers',title:'🎲 Picked Lucky Numbers',selectors:['button.ff-picked-trigger','#pickedNumbersTable']},
-      {key:'updates',title:'🚀 System Updates & Notifications',selectors:['h3.ff-updates-heading','#updateMessage','button.ff-post-update','#memberSelectionBox','label.ff-whatsapp-label','div.ff-update-history']}
+      {key:'updates',title:'🚀 System Updates & Notifications',selectors:['h3.ff-updates-heading','#updateMessage','button.ff-post-update','#memberSelectionBox','label.ff-whatsapp-label','div.ff-update-history']},
+      {key:'loanAvailability',title:'💰 Loan Availability Control',selectors:['#loanAvailabilityAdminPanel']},
+      {key:'membershipExit',title:'🚪 Membership Withdrawal & Exit Register',selectors:['#ffExitAdminPanel']}
     ];
     const cards={};
     definitions.forEach(d=>{
@@ -22107,7 +22180,7 @@ async function downloadIndividualSavingsReportsPDF() {
       const content=document.createElement('div');content.className='ff-admin-content';content.id='ff-admin-content-'+d.key;content.hidden=true;
       const close=document.createElement('button');close.type='button';close.className='ff-admin-close';close.textContent='✕ Close section';close.setAttribute('aria-label','Close this administrator section');
       close.addEventListener('click',()=>{content.hidden=true;toggle.setAttribute('aria-expanded','false');card.classList.remove('is-open');Array.from(toolbar.children).forEach(other=>{other.hidden=false;});intro.hidden=false;toolbar.scrollIntoView({behavior:'smooth',block:'start'});});
-      toggle.addEventListener('click',()=>{const opening=content.hidden;if(opening){Array.from(toolbar.children).forEach(other=>{if(other!==card)other.hidden=true;});intro.hidden=true;content.hidden=false;card.classList.add('is-open');toggle.setAttribute('aria-expanded','true');content.prepend(close);if(d.key==='contracts'&&typeof window.ffRefreshAdminContracts==='function')window.ffRefreshAdminContracts();close.focus({preventScroll:true});}else{content.hidden=true;toggle.setAttribute('aria-expanded','false');card.classList.remove('is-open');Array.from(toolbar.children).forEach(other=>{other.hidden=false;});intro.hidden=false;}});
+      toggle.addEventListener('click',()=>{const opening=content.hidden;if(opening){Array.from(toolbar.children).forEach(other=>{if(other!==card)other.hidden=true;});intro.hidden=true;content.hidden=false;card.classList.add('is-open');toggle.setAttribute('aria-expanded','true');content.prepend(close);if(d.key==='contracts'){const panel=content.querySelector('#memberContractsAdminPanel');if(panel){panel.style.setProperty('display','block','important');panel.style.setProperty('visibility','visible','important');panel.style.setProperty('opacity','1','important');}if(typeof window.ffRefreshAdminContracts==='function'){window.ffRefreshAdminContracts();}else{const body=content.querySelector('#ffAdminContractsTable');if(body)body.innerHTML='<tr><td colspan="9" style="padding:14px;text-align:center;color:#b91c1c;">Contract review loaded, but the review script is unavailable. Please refresh the page.</td></tr>';}}close.focus({preventScroll:true});}else{content.hidden=true;toggle.setAttribute('aria-expanded','false');card.classList.remove('is-open');Array.from(toolbar.children).forEach(other=>{other.hidden=false;});intro.hidden=false;}});
       card.append(toggle,content);cards[d.key]={card,content};toolbar.append(card);
     });
     const findHeading=(text)=>Array.from(admin.querySelectorAll('h2,h3,h4')).find(e=>e.textContent.trim().includes(text));
@@ -22121,7 +22194,14 @@ async function downloadIndividualSavingsReportsPDF() {
     const check=admin.querySelector('#sendWhatsAppUpdate');if(check&&check.closest('label'))check.closest('label').classList.add('ff-whatsapp-label');
     const history=admin.querySelector('#updateHistoryBody')?.closest('div');if(history)history.classList.add('ff-update-history');
     function move(selector,target){const el=admin.querySelector(selector);if(el&&target&&!el.closest('.ff-admin-content'))target.appendChild(el);}
-    move('#adminSummary',cards.summary.content);move('#membersNotesPanel',cards.notes.content);move('#membersOverviewPanel',cards.members.content);move('#memberContractsAdminPanel',cards.contracts.content);move('#pendingMembersPanel',cards.registrations.content);
+    move('#adminSummary',cards.summary.content);move('#membersNotesPanel',cards.notes.content);
+    // Extract contracts before moving Members Overview, because the contract panel can be nested inside it.
+    move('#memberContractsAdminPanel',cards.contracts.content);move('#membersOverviewPanel',cards.members.content);move('#pendingMembersPanel',cards.registrations.content);
+    // Contract panel recovery: ensure the real panel is inside the review accordion and visible.
+    const contractPanel=admin.querySelector('#memberContractsAdminPanel');
+    if(contractPanel){cards.contracts.content.appendChild(contractPanel);contractPanel.style.setProperty('display','block','important');contractPanel.style.setProperty('visibility','visible','important');contractPanel.style.setProperty('opacity','1','important');contractPanel.style.setProperty('width','100%','important');contractPanel.style.setProperty('height','auto','important');contractPanel.style.setProperty('max-height','none','important');}
+    const contractTable=admin.querySelector('#ffAdminContractsTable');if(contractTable){contractTable.style.setProperty('display','table-row-group','important');contractTable.style.setProperty('visibility','visible','important');}
+    move('#loanAvailabilityAdminPanel',cards.loanAvailability.content);move('#ffExitAdminPanel',cards.membershipExit.content);
     ['h3.ff-mm-heading','#loanSearch','#loanStatusFilter','button.ff-export-loans','h3.ff-loan-heading','table.ff-loan-table'].forEach(s=>move(s,cards.loans.content));
     ['button.ff-picked-trigger','#pickedNumbersTable'].forEach(s=>move(s,cards.numbers.content));
     ['h3.ff-updates-heading','#updateMessage','button.ff-post-update','#memberSelectionBox','label.ff-whatsapp-label','div.ff-update-history'].forEach(s=>move(s,cards.updates.content));
@@ -22399,6 +22479,8 @@ async function downloadIndividualSavingsReportsPDF() {
  function latestFor(name){return getRows().filter(r=>String(r.member).toLowerCase()===String(name).toLowerCase()).sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''))[0];}
  function docHtml(r){const amount=n=>'KSh '+Number(n||0).toLocaleString('en-KE',{minimumFractionDigits:2,maximumFractionDigits:2});return `<div style="font-family:Arial,sans-serif;color:#1f2937;font-size:13px;line-height:1.55;border:3px double #56328a;padding:22px;position:relative;"><div style="border:1px solid #c6a75e;padding:5px;"><header style="text-align:center;border-bottom:2px solid #56328a;padding-bottom:12px;margin-bottom:14px;"><img src="https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/FUTURE%20FINDERS%20LOGO.jpeg" style="width:78px;height:78px;object-fit:contain" onerror="this.style.display='none'"><div style="letter-spacing:2px;color:#8a6b24;font-weight:bold;font-size:10px;">OFFICIAL MEMBERSHIP NOTICE</div><h1 style="color:#56328a;margin:6px 0;font-size:21px;">FUTURE FINDERS CHAMA GROUP</h1><h2 style="font-size:16px;margin:5px 0;">MEMBERSHIP WITHDRAWAL & EXIT NOTICE</h2><div>Constitutional basis: Article 11 — Membership Exit, Suspension and Termination</div></header><p><b>Exit Notice Reference:</b> ${esc(r.id)} &nbsp; <b>Current status:</b> ${esc(r.status||'Notice Submitted')}</p><h3 style="color:#56328a;border-bottom:1px solid #ddd;padding-bottom:4px;">1. Member and notice details</h3><table style="width:100%;border-collapse:collapse"><tr><td style="padding:5px;border:1px solid #ddd"><b>Full name</b><br>${esc(r.member)}</td><td style="padding:5px;border:1px solid #ddd"><b>Membership number</b><br>${esc(r.membershipNo||'Not provided')}</td></tr><tr><td style="padding:5px;border:1px solid #ddd"><b>Registered phone</b><br>${esc(r.phone||'Not recorded')}</td><td style="padding:5px;border:1px solid #ddd"><b>Existing contract reference</b><br>${esc(r.contractRef||'Not provided')}</td></tr><tr><td style="padding:5px;border:1px solid #ddd"><b>Notice submitted</b><br>${esc(fmt(r.noticeDate))}</td><td style="padding:5px;border:1px solid #ddd"><b>Intended exit date</b><br>${esc(fmt(r.intendedExitDate))}</td></tr></table><h3 style="color:#56328a;border-bottom:1px solid #ddd;padding-bottom:4px;">2. Reason and explanation</h3><p><b>Reason:</b> ${esc(r.reason)}</p><p>${esc(r.explanation||'No additional explanation provided.')}</p><h3 style="color:#56328a;border-bottom:1px solid #ddd;padding-bottom:4px;">3. Constitutional explanations acknowledged by the member</h3><ul><li>This is a written voluntary withdrawal notice requiring at least thirty (30) days' notice before the intended exit date (Article 11.1).</li><li>Submission does not itself approve or immediately complete withdrawal, terminate all obligations, or automatically cancel pending matters.</li><li>The Chama reviews savings, contributions, loans, repayments, penalties and other obligations during the notice period. Reconciliation is to be completed within thirty (30) days after the notice period ends (Article 11.2).</li><li>Eligible savings mean verified accumulated personal savings. Merry-Go-Round and welfare contributions are treated separately. Registration fees, properly applied fines, penalties and charges are not refundable savings (Article 11.3).</li><li>Any settlement is calculated from official records: eligible personal savings plus approved amounts due, less outstanding obligations and lawful deductions. No specific refund is guaranteed by this notice.</li><li>Withdrawal does not cancel outstanding loans, contributions, penalties, guarantees or other financial obligations (Article 11.1 and 11.7).</li><li>A pending dispute or disciplinary matter is not automatically cancelled by withdrawal; final settlement may be deferred where necessary (Article 11.10).</li><li>Temporary suspension from activities or benefits is not the same as ending membership (Articles 11.4–11.5).</li><li>Disciplinary termination is not requested through this voluntary form. It must follow the constitutional disciplinary and decision-making process, give the member a reasonable opportunity to respond and preserve applicable appeal rights (Article 11.6 and Article 10).</li><li>A former member may apply for re-admission, but re-admission and restoration of previous privileges are not automatic; outstanding previous obligations must be addressed (Article 11.8).</li><li>If a member dies, the Chama separately reconciles the member's financial affairs with the lawful representative of the estate; this withdrawal form is not a death-claim form (Article 11.9).</li><li>Membership and financial-clearance records must be maintained securely, confidentially and accurately (Article 11.11).</li><li>The Chama will update the official membership register to reflect the effective date and nature of exit when the process is completed (Article 11.12).</li><li>All withdrawal, suspension, termination and re-admission matters must follow Article 11 and other applicable constitutional provisions (Article 11.13).</li></ul><h3 style="color:#56328a;border-bottom:1px solid #ddd;padding-bottom:4px;">4. Member declaration and digital signature</h3><p>I, <b>${esc(r.member)}</b>, voluntarily give written notice of withdrawal from Future Finders Chama Group. I confirm that the details provided are accurate and that I have read and understood the explanations above and Article 11 of the Constitution. I understand that this notice does not immediately complete my exit or release me from any outstanding obligation.</p><p><b>Digital signature:</b> ${esc(r.signature)}</p><p><b>Date and time signed:</b> ${esc(r.signedAt)}</p><h3 style="color:#56328a;border-bottom:1px solid #ddd;padding-bottom:4px;">5. Administrative reconciliation — to be completed by the Chama</h3><p>Eligible personal savings: ${amount(r.eligibleSavings)} &nbsp; | &nbsp; Approved amounts due: ${amount(r.approvedDue)}<br>Outstanding obligations / lawful deductions: ${amount(r.obligations)}<br><b>Net settlement recorded (positive = payable to member; negative = amount still owed to Chama):</b> ${amount(r.settlement)}</p><p>Admin remarks: ${esc(r.adminRemarks||'Pending administrative review')}<br>Chairlady remarks: ${esc(r.chairladyRemarks||'Pending confirmation / oversight')}<br>Reconciliation completed: ${esc(fmt(r.reconciliationDate))}<br>Expected settlement date: ${esc(fmt(r.expectedSettlementDate))}<br>Actual settlement date: ${esc(fmt(r.settlementDate))}<br>Effective exit date recorded: ${esc(fmt(r.effectiveExitDate))}</p><div style="border-top:1px solid #c6a75e;margin-top:18px;padding-top:10px;text-align:center;font-size:10px;color:#64748b;">This notice is governed by the Future Finders Chama Group Constitution. In case of conflict, the Constitution prevails.<br><b style="color:#56328a;">FUTURE FINDERS CHAMA GROUP</b></div></div></div>`;}
  function printRecord(r){const w=window.open('','_blank');if(!w){alert('Please allow pop-ups to download or print your signed notice.');return;}w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>${esc(r.id)} - Withdrawal Notice</title><style>@page{size:A4;margin:14mm}body{margin:0;padding:8px}button{padding:10px 16px;margin:12px 0;background:#56328a;color:#fff;border:0;border-radius:6px}@media print{button{display:none}}</style></head><body><button onclick="window.print()">Print / Save as PDF</button>${docHtml(r)}<script>window.onload=()=>setTimeout(()=>window.print(),500)<\\/script>
+
+
 </body></html>`);w.document.close();}
  function preview(){const name=currentName();if(!name){alert('Please log in to your member account first.');return;}const sig=$('ffExitSignature').value.trim();if(sig.toLowerCase()!==name.toLowerCase()){alert('Type your full name exactly as shown in your member account before previewing.');return;}const intended=$('ffExitIntendedDate').value;if(!intended||intended<addDays(today(),30)){alert('The intended exit date must be at least 30 days after the notice date.');return;}const r={id:'FFC-EXIT-PREVIEW',member:name,membershipNo:$('ffExitMembershipNo').value,phone:$('ffExitPhone').value,contractRef:$('ffExitContractRef').value,noticeDate:today(),intendedExitDate:intended,reason:$('ffExitReason').value,explanation:$('ffExitExplanation').value,signature:sig,signedAt:'Recorded automatically upon submission',status:'Preview only'};$('ffExitPreview').innerHTML=docHtml(r);$('ffExitPreviewWrap').style.display='block';$('ffExitPreviewAck').checked=false;}
  window.openMemberExitForm=function(){const name=currentName();if(!name){alert('Please log in to your member account first.');return;}const member=(typeof members!=='undefined'&&members)?members[name]:null;$('ffExitMemberName').value=name;$('ffExitPhone').value=member?.phone||'';$('ffExitNoticeDate').value=fmt(today());$('ffExitIntendedDate').min=addDays(today(),30);$('ffExitIntendedDate').value=addDays(today(),30);$('ffExitSignature').value='';$('ffExitDeclaration').checked=false;$('ffExitDisputeAck').checked=false;$('ffExitPreviewAck').checked=false;$('ffExitPreviewWrap').style.display='none';$('ffExitMessage').textContent='';$('ffExitSignedActions').style.display='none';$('ffMemberExitModal').style.display='block';document.body.style.overflow='hidden';renderMemberHistory(name);};
@@ -22415,3 +22497,134 @@ async function downloadIndividualSavingsReportsPDF() {
  if(document.readyState!=='loading')renderAdmin();
 })();
 </script>
+
+
+<script id="ff-admin-loan-pdf-downloads">
+(function(){
+  const money = v => 'KSh ' + Number(v || 0).toLocaleString('en-KE', {minimumFractionDigits:2, maximumFractionDigits:2});
+  const safeName = v => String(v || 'Member').trim().replace(/[^a-z0-9]+/gi, '_').replace(/^_+|_+$/g, '') || 'Member';
+  function getApps(){
+    if(typeof getLoanApplications !== 'function') return [];
+    try { return getLoanApplications().filter(x => x && typeof x === 'object'); } catch(e) { return []; }
+  }
+  function pdf(){
+    if(!window.jspdf || !window.jspdf.jsPDF){ alert('PDF service is unavailable. Refresh the page and try again.'); return null; }
+    const {jsPDF}=window.jspdf;
+    return new jsPDF({orientation:'landscape',unit:'mm',format:'a4',compress:true});
+  }
+  function addHeader(doc, title, subtitle){
+    doc.setFont('helvetica','bold'); doc.setFontSize(16); doc.text('FUTURE FINDERS CHAMA GROUP', 14, 15);
+    doc.setFontSize(12); doc.text(title, 14, 23);
+    doc.setFont('helvetica','normal'); doc.setFontSize(9);
+    doc.text(subtitle + '  |  Generated: ' + new Date().toLocaleString('en-KE'), 14, 29);
+    doc.setDrawColor(86,50,138); doc.line(14,32,283,32);
+  }
+  function syncMemberOptions(){
+    const select=document.getElementById('adminLoanHistoryMember'); if(!select) return;
+    const apps=getApps();
+    const names=[...new Set(apps.map(a=>String(a.name||'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
+    const previous=select.value;
+    select.innerHTML='<option value="">Select member loan history</option>'+names.map(n=>'<option value="'+n.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;')+'">'+n.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</option>').join('');
+    if(names.includes(previous)) select.value=previous;
+  }
+  window.downloadAdminLoansPDF=function(){
+    const apps=getApps(); if(!apps.length){alert('There are no loan records to download.');return;}
+    const doc=pdf(); if(!doc)return;
+    addHeader(doc,'ADMIN LOAN REGISTER','All recorded loan applications and member loan records');
+    const rows=apps.map(a=>[
+      a.name||'—', a.phone||'—', a.id||'—', money(a.qualifiedAmount), money(a.requestedAmount??a.amount),
+      a.repaymentPeriod||'—', money(a.repaymentAmount??a.totalRepayment??a.requestedAmount??a.amount),
+      money(a.amountPaid??a.paid??0), money(a.balance??Math.max(0,Number(a.repaymentAmount??a.totalRepayment??a.requestedAmount??a.amount)-Number(a.amountPaid??a.paid??0))),
+      a.status||'Pending', a.date||'—'
+    ]);
+    doc.autoTable({startY:37,head:[['Member','Phone','Loan ID','Qualified','Borrowed','Period','Total Repayment','Paid','Balance','Status','Loan Date']],body:rows,styles:{fontSize:7,cellPadding:2,overflow:'linebreak'},headStyles:{fillColor:[18,63,145]},margin:{left:10,right:10}});
+    const y=doc.lastAutoTable.finalY+7; doc.setFontSize(9); doc.text('Total loan records: '+apps.length,12,y);
+    doc.save('Future_Finders_Admin_Loan_Register.pdf');
+  };
+  window.downloadAdminMemberLoanHistoryPDF=function(){
+    const select=document.getElementById('adminLoanHistoryMember');
+    const name=select?.value||'';
+    if(!name){alert('Please select a member first.');return;}
+    const apps=getApps().filter(a=>String(a.name||'').trim().toLowerCase()===name.toLowerCase());
+    if(!apps.length){alert('No loan history found for this member.');return;}
+    const doc=pdf(); if(!doc)return;
+    addHeader(doc,'INDIVIDUAL MEMBER LOAN HISTORY',name);
+    const first=apps[0];
+    doc.setFontSize(9); doc.text('Member: '+name+'    Phone: '+(first.phone||'Not recorded'),12,38);
+    let y=43;
+    apps.forEach((a,i)=>{
+      if(y>175){doc.addPage();y=18;}
+      doc.setFont('helvetica','bold');doc.setFontSize(10);doc.text('Loan '+(i+1)+' — '+(a.id||'Reference not recorded'),12,y); y+=6;
+      doc.setFont('helvetica','normal');doc.setFontSize(8);
+      const total=Number(a.repaymentAmount??a.totalRepayment??a.requestedAmount??a.amount??0);
+      const paid=Number(a.amountPaid??a.paid??0);
+      const balance=Number(a.balance??Math.max(0,total-paid));
+      const lines=[
+        'Loan date: '+(a.date||'Not recorded')+'    Status: '+(a.status||'Not recorded'),
+        'Amount borrowed: '+money(a.requestedAmount??a.amount)+'    Qualified: '+money(a.qualifiedAmount),
+        'Repayment period: '+(a.repaymentPeriod||'Not recorded')+'    Total repayment: '+money(total),
+        'Amount paid: '+money(paid)+'    Outstanding balance: '+money(balance),
+        'First repayment: '+(a.firstRepaymentDate||a.firstDueDate||a.repaymentDate||a.dueDate||'Not recorded')+'    Final repayment: '+(a.finalRepaymentDate||a.finalDueDate||'Not recorded'),
+        'Admin decision / notes: '+(a.reason||a.note||'None recorded')
+      ];
+      lines.forEach(line=>{const wrapped=doc.splitTextToSize(line,265);doc.text(wrapped,12,y);y+=wrapped.length*4;});
+      const schedule=Array.isArray(a.repaymentSchedule)?a.repaymentSchedule:[];
+      if(schedule.length){
+        doc.autoTable({startY:y+1,head:[['Installment','Due date','Amount due','Amount paid','Balance','Status']],body:schedule.map((r,j)=>{const due=Number(r.amount??r.installmentAmount??r.amountDue??0),p=Number(r.amountPaid??r.paid??0);return [r.installment||r.label||('Payment '+(j+1)),r.dueDate||r.date||'—',money(due),money(p),money(Math.max(0,due-p)),r.status|| (due<=p?'Paid':'Due')];}),styles:{fontSize:7,cellPadding:2},headStyles:{fillColor:[86,50,138]},margin:{left:12,right:12}});
+        y=doc.lastAutoTable.finalY+7;
+      } else {y+=2;doc.setFontSize(8);doc.text('Repayment schedule: No installment schedule recorded.',12,y);y+=7;}
+      y+=4;
+    });
+    doc.save('Loan_History_'+safeName(name)+'.pdf');
+  };
+  function refresh(){syncMemberOptions();}
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',refresh); else refresh();
+  const original=window.loadLoanApplications;
+  if(typeof original==='function'&&!original.__ffPdfRefreshWrapped){
+    const wrapped=function(){const result=original.apply(this,arguments);syncMemberOptions();return result;};
+    wrapped.__ffPdfRefreshWrapped=true; window.loadLoanApplications=wrapped;
+  }
+  document.addEventListener('click',e=>{if(e.target&&e.target.closest('#loanApplicationsPanel'))setTimeout(syncMemberOptions,0);});
+})();
+</script>
+<script id="ff-loan-management-placement-and-pending-lock">
+(function(){
+  function placeDownloads(){
+    const tools=document.querySelector('#adminLoanHistoryMember')?.parentElement;
+    if(!tools) return;
+    const panel=document.getElementById('loanApplicationsPanel');
+    if(panel && !panel.contains(tools)){
+      const table=panel.querySelector('#adminLoanBody')?.closest('table');
+      const heading=panel.querySelector('h3');
+      if(table) table.parentNode.insertBefore(tools,table);
+      else if(heading) heading.insertAdjacentElement('afterend',tools);
+      else panel.appendChild(tools);
+    } else if(!panel){
+      const heading=[...document.querySelectorAll('#admin h3')].find(h=>/loan applications/i.test(h.textContent||''));
+      if(heading && tools.parentElement!==heading.parentElement) heading.insertAdjacentElement('beforebegin',tools);
+    }
+    tools.style.margin='12px 0';
+    tools.setAttribute('aria-label','Loan PDF downloads under Loan Management Applications');
+  }
+  function refresh(){
+    placeDownloads();
+    const select=document.getElementById('adminLoanHistoryMember');
+    if(select && typeof window.downloadAdminMemberLoanHistoryPDF==='function') {
+      // Preserve the currently selected member; the PDF module owns the option list.
+    }
+  }
+  document.addEventListener('DOMContentLoaded',refresh);
+  document.addEventListener('click',e=>{
+    if(e.target && (e.target.closest('#admin') || /applications/i.test(e.target.textContent||''))) setTimeout(refresh,80);
+  });
+  if(document.readyState!=='loading') refresh();
+  // Keep the member-facing history on the existing My Loans control. Do not move it into admin.
+  window.ffHasPendingLoan=function(name){
+    try {
+      const loans=typeof getMemberLoans==='function'?getMemberLoans(name):[];
+      return loans.some(loan=>/pending|awaiting|under review/i.test(String(loan.status||'')) && !/reject|approved|disbursed/i.test(String(loan.status||'')));
+    } catch(e){ return false; }
+  };
+})();
+</script>
+
