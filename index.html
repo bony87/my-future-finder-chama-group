@@ -8714,6 +8714,16 @@ y += 38;
 <div id="dashboard">
 <h3>Welcome, <span id="memberDisplay"></span>!</h3>
 
+<!-- Member Log Summary: graph and monthly recommendations stay hidden until requested. -->
+<div id="memberLogSummaryControls" style="margin:14px 0 18px;">
+  <button type="button" id="memberLogSummaryBtn" onclick="toggleMemberLogSummary()" style="background:linear-gradient(135deg,#1565c0,#087f5b);color:#fff;border:0;padding:12px 20px;border-radius:10px;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.12);">📋 Summary ＋</button>
+  <div id="memberLogSummaryPanel" style="display:none;margin-top:12px;padding:16px;border:1px solid #c8dafa;border-radius:12px;background:#f7fbff;">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:8px;"><h3 style="margin:0;color:#12304a;">📋 My Savings Summary</h3><button type="button" onclick="toggleMemberLogSummary()" style="background:#eef2f6;color:#234;border:1px solid #ccd5df;padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:700;">Close Summary −</button></div>
+    <p style="margin:0 0 12px;color:#555;font-size:14px;">Choose what you would like to review. Both sections remain hidden until you open them.</p>
+    <button type="button" onclick="toggleMemberSavingsAdvice()" id="toggleMemberSavingsAdviceBtn" style="background:#1565c0;color:#fff;border:0;padding:10px 14px;border-radius:8px;cursor:pointer;margin:4px;font-weight:700;">💡 Monthly Savings Recommendations</button>
+    <button type="button" onclick="toggleMemberSavingsGraph()" id="toggleMemberSavingsGraphBtn" style="display:inline-block;background:#087f8c;color:white;border:0;padding:10px 14px;border-radius:8px;cursor:pointer;margin:4px;font-weight:700;">📈 Show My Savings Graph</button>
+  </div>
+</div>
 
 <div class="dashboard-buttons">
 
@@ -10301,12 +10311,36 @@ document.addEventListener(
 
 
 
+<style>
+/* Member graph and recommendations open as centered pop-up panels, matching other system dialogs. */
+.ff-member-summary-modal[style*="display: block"] {
+  position:fixed !important; z-index:100001 !important; top:50% !important; left:50% !important;
+  transform:translate(-50%,-50%) !important; width:min(900px,calc(100vw - 32px)) !important;
+  max-height:85vh !important; overflow:auto !important; box-sizing:border-box !important;
+  margin:0 !important; box-shadow:0 0 0 100vmax rgba(0,0,0,.66),0 12px 40px rgba(0,0,0,.28) !important;
+}
+@media(max-width:560px){.ff-member-summary-modal[style*="display: block"]{width:calc(100vw - 20px)!important;max-height:88vh!important;padding:14px!important}}
+</style>
+
 <!-- 🗒️ Personal Member Note Section -->
 <div id="memberNoteSection" style="margin-top:30px; background:#e8f5e9; padding:15px; border-radius:8px; display:none;">
   <h3 style="color:#2e7d32;">🗒️ Your Note / Fines</h3>
   <p id="personalNote" style="font-size:16px; color:#333; font-weight:bold;">
     Welcome! Your note will appear here after login.
   </p>
+</div>
+
+<!-- Personal monthly savings recommendations; private to the logged-in member. -->
+<div id="memberSavingsAdviceSection" class="ff-member-summary-modal" style="display:none;margin:18px 0;padding:18px;background:#f5f9ff;border:1px solid #c8dafa;border-radius:12px;">
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:8px;"><h3 style="margin:0;color:#12304a;">💡 Your Monthly Savings Recommendations</h3><button type="button" onclick="closeMemberSummaryPopup('advice')" style="background:#eef2f6;color:#234;border:1px solid #ccd5df;padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:700;">✕ Close</button></div>
+  <p style="margin:0 0 12px;color:#555;font-size:14px;">Personal suggestions based on your recorded monthly savings. These are guidance, not financial guarantees.</p>
+  <div id="memberMonthlySavingsAdvice"></div>
+</div>
+<div id="memberSavingsGraphSection" class="ff-member-summary-modal" style="display:none;margin:18px 0;padding:18px;background:#f4fbfa;border:1px solid #b2dfdb;border-radius:12px;">
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:8px;"><h3 style="margin:0;color:#00695c;">📈 Your Savings Progress</h3><button type="button" onclick="closeMemberSummaryPopup('graph')" style="background:#eef2f6;color:#234;border:1px solid #ccd5df;padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:700;">✕ Close</button></div>
+  <p style="margin:0 0 12px;color:#555;font-size:14px;">Your monthly savings pattern for 2026, taken directly from your row in the savings table.</p>
+  <div style="width:100%;overflow:hidden;"><canvas id="memberSavingsGraph" aria-label="Monthly savings graph" role="img" style="display:block;width:100%;max-width:100%;"></canvas></div>
+  <p id="memberSavingsGraphTotal" style="margin:10px 0 0;font-weight:bold;color:#00695c;"></p>
 </div>
 
 <!-- =========================
@@ -11169,7 +11203,7 @@ margin:10px 0;
       📊 Group Contributions for 2026
       <br>
       <span id="updateTime">
-        ⏱ Last updated on <b>24TH OCTOBER 2026 AT 15:30 PM</b>
+        ⏱ Last updated on <b>04TH NOVEMBER  2026 AT 13:05 PM</b>
       </span>
     </h4>
 
@@ -11226,7 +11260,7 @@ margin:10px 0;
 <td><input type="number" value="1000"></td>
 <td><input type="number" value="500"></td>
 <td><input type="number" value="1000"></td>
-<td><input type="number" value="0"></td>
+<td><input type="number" value="1000"></td>
 <td><input type="number" value="0"></td>
 <td class="rowTotal">0</td>
 <td class="saved2026">0</td>
@@ -11287,8 +11321,8 @@ margin:10px 0;
 <td><input type="number" value="100"></td>
 <td><input type="number" value="480"></td>
 <td><input type="number" value="250"></td>
-<td><input type="number" value="750"></td>
-<td><input type="number" value="0"></td>
+<td><input type="number" value="820"></td>
+<td><input type="number" value="150"></td>
 <td><input type="number" value="0"></td>
 <td class="rowTotal">0</td>
 <td class="saved2026">0</td>
@@ -11308,8 +11342,8 @@ margin:10px 0;
 <td><input type="number" value="400"></td>
 <td><input type="number" value="400"></td>
 <td><input type="number" value="400"></td>
-<td><input type="number" value="300"></td>
-<td><input type="number" value="0"></td>
+<td><input type="number" value="400"></td>
+<td><input type="number" value="100"></td>
 <td><input type="number" value="0"></td>
 <td class="rowTotal">0</td>
 <td class="saved2026">0</td>
@@ -11330,7 +11364,7 @@ margin:10px 0;
 <td><input type="number" value="0"></td>
 <td><input type="number" value="0"></td>
 <td><input type="number" value="100"></td>
-<td><input type="number" value="0"></td>
+<td><input type="number" value="50"></td>
 <td><input type="number" value="0"></td>
 <td class="rowTotal">0</td>
 <td class="saved2026">0</td>
@@ -11371,7 +11405,7 @@ margin:10px 0;
 <td><input type="number" value="450"></td>
 <td><input type="number" value="250"></td>
 <td><input type="number" value="370"></td>
-<td><input type="number" value="250"></td>
+<td><input type="number" value="350"></td>
 <td><input type="number" value="0"></td>
 <td><input type="number" value="0"></td>
 <td class="rowTotal">0</td>
@@ -11433,7 +11467,7 @@ margin:10px 0;
 <td><input type="number" value="185"></td>
 <td><input type="number" value="0"></td>
 <td><input type="number" value="50"></td>
-<td><input type="number" value="88"></td>
+<td><input type="number" value="138"></td>
 <td><input type="number" value="0"></td>
 <td><input type="number" value="0"></td>
 <td class="rowTotal">0</td>
@@ -11455,7 +11489,7 @@ margin:10px 0;
 <td><input type="number" value="0"></td>
 <td><input type="number" value="200"></td>
 <td><input type="number" value="1900"></td>
-<td><input type="number" value="0"></td>
+<td><input type="number" value="2000"></td>
 <td><input type="number" value="0"></td>
 <td class="rowTotal">0</td>
 <td class="saved2026">0</td>
@@ -11475,7 +11509,7 @@ margin:10px 0;
 <td><input type="number" value="350"></td>
 <td><input type="number" value="400"></td>
 <td><input type="number" value="150"></td>
-<td><input type="number" value="0"></td>
+<td><input type="number" value="150"></td>
 <td><input type="number" value="0"></td>
 <td><input type="number" value="0"></td>
 <td class="rowTotal">0</td>
@@ -11538,7 +11572,7 @@ margin:10px 0;
 <td><input type="number" value="100"></td>
 <td><input type="number" value="8600"></td>
 <td><input type="number" value="115"></td>
-<td><input type="number" value="550"></td>
+<td><input type="number" value="635"></td>
 <td><input type="number" value="0"></td>
 <td><input type="number" value="0"></td>
 <td class="rowTotal">0</td>
@@ -11560,7 +11594,7 @@ margin:10px 0;
 <td><input type="number" value="5000"></td>
 <td><input type="number" value="10915"></td>
 <td><input type="number" value="4000"></td>
-<td><input type="number" value="0"></td>
+<td><input type="number" value="3800"></td>
 <td><input type="number" value="0"></td>
 <td class="rowTotal">0</td>
 <td class="saved2026">0</td>
@@ -11580,8 +11614,8 @@ margin:10px 0;
 <td><input type="number" value="800"></td>
 <td><input type="number" value="200"></td>
 <td><input type="number" value="1102"></td>
-<td><input type="number" value="130"></td>
-<td><input type="number" value="0"></td>
+<td><input type="number" value="400"></td>
+<td><input type="number" value="40"></td>
 <td><input type="number" value="0"></td>
 <td class="rowTotal">0</td>
 <td class="saved2026">0</td>
@@ -11620,7 +11654,7 @@ margin:10px 0;
 <td><input type="number" value="0"></td>
 <td><input type="number" value="200"></td>
 <td><input type="number" value="50"></td>
-<td><input type="number" value="0"></td>
+<td><input type="number" value="3547"></td>
 <td><input type="number" value="0"></td>
 <td class="rowTotal">0</td>
 <td class="saved2026">0</td>
@@ -11917,14 +11951,34 @@ function calculate2026() {
     if (rewardCell) rewardCell.textContent = money(reward);
 
     if (statusCell) {
-      if (rewardBase >= 1500) {
-        statusCell.textContent = "🟢 YOU ARE ELIGIBLE";
+      // Canzedena Anyango has requested that her savings payout be deferred to 2027.
+      // Keep her calculated savings and reward figures unchanged; only override the payout status.
+      if (memberName === "CANZEDENA ANYANGO") {
+        statusCell.innerHTML = "⏸️ <strong>DEFERRED TO 2027</strong><br><small>Member requested to receive her savings next year.</small>";
+        statusCell.style.color = "#854d0e";
+        statusCell.style.backgroundColor = "#fef3c7";
+        statusCell.style.fontWeight = "700";
+        row.style.backgroundColor = "#fffbeb";
+      } else if (rewardBase >= 1500) {
+        statusCell.innerHTML = "🟢 <strong>YOU ARE ELIGIBLE</strong><br><small>Your savings will be paid by 15th December 2026.</small>";
+        statusCell.style.color = "";
+        statusCell.style.backgroundColor = "";
+        row.style.backgroundColor = "";
       } else if (rewardBase >= 1000) {
-        statusCell.textContent = "🟡 YOU ARE PARTIALLY ELIGIBLE";
+        statusCell.innerHTML = "🟡 <strong>YOU ARE PARTIALLY ELIGIBLE</strong><br><small>Your savings will be paid by 15th December 2026.</small>";
+        statusCell.style.color = "";
+        statusCell.style.backgroundColor = "";
+        row.style.backgroundColor = "";
       } else if (rewardBase >= 1) {
         statusCell.textContent = "🔴 YOU ARE NOT ELIGIBLE";
+        statusCell.style.color = "";
+        statusCell.style.backgroundColor = "";
+        row.style.backgroundColor = "";
       } else {
         statusCell.textContent = "⚪ NO SAVINGS YET";
+        statusCell.style.color = "";
+        statusCell.style.backgroundColor = "";
+        row.style.backgroundColor = "";
       }
     }
 
@@ -13673,7 +13727,7 @@ const members = {
     password: "Phinas",
     savings: 2820,
     monthly: [0, 0, 195, 170, 40, 0, 0, 0, 0],
-    note: "",
+    note: "Member has requested to defer receipt of her savings from December 2026 to 2027. Payout status: Deferred to 2027.",
     contracts: [],
     loans: []
   },
@@ -14011,6 +14065,17 @@ function login() {
 
       // Load loan history
       loadMemberLoanHistory(name);
+      renderMemberSavingsRecommendations();
+      const graphSection = document.getElementById("memberSavingsGraphSection");
+      const adviceSection = document.getElementById("memberSavingsAdviceSection");
+      const graphButton = document.getElementById("toggleMemberSavingsGraphBtn");
+      const adviceButton = document.getElementById("toggleMemberSavingsAdviceBtn");
+      const summaryPanel = document.getElementById("memberLogSummaryPanel");
+      if (graphSection) graphSection.style.display = "none";
+      if (adviceSection) adviceSection.style.display = "none";
+      if (summaryPanel) summaryPanel.style.display = "none";
+      if (graphButton) graphButton.textContent = "📈 Show My Savings Graph";
+      if (adviceButton) adviceButton.textContent = "💡 Monthly Savings Recommendations";
 
       // ===========================
       // 🔐 Table Edit Permissions Only
@@ -14081,6 +14146,7 @@ function login() {
     document.getElementById("memberDisplay").innerText = name;
 
     loadMemberLoanHistory(name);
+    renderMemberSavingsGraph();
  // ✅ Show only their note
   const noteSection = document.getElementById("memberNoteSection");
   const noteParagraph = document.getElementById("personalNote");
@@ -14146,14 +14212,196 @@ function showCurrentSavings() {
   alert("💰 Current Savings for 2025/2026: KES " + members[loggedInUser].savings);
 }
 
-// 📊 Show monthly contributions
+// 📊 Show monthly contributions directly from the member's row in the 2026 savings table.
+function getLoggedInMemberMonthlyTableData() {
+  if (!loggedInUser) return null;
+  const table = document.getElementById("table2026");
+  if (!table) return null;
+  const rows = Array.from(table.querySelectorAll("tbody tr"));
+  const row = rows.find(r => (r.cells[0]?.textContent || "").trim().replace(/\\s+/g, " ").toUpperCase() === loggedInUser.trim().replace(/\\s+/g, " ").toUpperCase());
+  if (!row) return null;
+  const inputs = Array.from(row.querySelectorAll("input[type='number']"));
+  const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  return months.map((month, index) => ({
+    month,
+    amount: Math.max(0, Number(inputs[index + 1]?.value) || 0)
+  }));
+}
+
 function showMonthlySavings() {
-  if (!loggedInUser || !members[loggedInUser]) {
+  if (!loggedInUser) {
     alert("⚠️ Please log in first.");
     return;
   }
-  alert("📊 Monthly Contributions: " + members[loggedInUser].monthly.join(", "));
+  const data = getLoggedInMemberMonthlyTableData();
+  if (!data) {
+    alert("Monthly savings table could not be found for your account.");
+    return;
+  }
+  let popup = document.getElementById("ffMonthlySavingsDetailPopup");
+  if (!popup) {
+    popup = document.createElement("div");
+    popup.id = "ffMonthlySavingsDetailPopup";
+    popup.style.cssText = "position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:100000;display:flex;align-items:center;justify-content:center;padding:16px;";
+    popup.innerHTML = '<div style="background:#fff;width:min(560px,100%);max-height:85vh;overflow:auto;border-radius:14px;padding:20px;box-shadow:0 8px 30px rgba(0,0,0,.25)"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><h2 style="margin:0;color:#00695c">📊 Your Monthly Savings – 2026</h2><button type="button" onclick="document.getElementById(\'ffMonthlySavingsDetailPopup\').remove()" style="border:0;background:#eee;border-radius:8px;padding:8px 12px;cursor:pointer">✕ Close</button></div><p style="color:#555">These figures are taken directly from your row in the savings table.</p><div id="ffMonthlySavingsDetailRows"></div><div id="ffMonthlySavingsDetailTotal" style="font-weight:bold;text-align:right;margin-top:14px;color:#00695c"></div></div>';
+    popup.addEventListener("click", function(e) { if (e.target === popup) popup.remove(); });
+    document.body.appendChild(popup);
+  }
+  const rowsHost = document.getElementById("ffMonthlySavingsDetailRows");
+  const total = data.reduce((sum, item) => sum + item.amount, 0);
+  rowsHost.innerHTML = data.map(item => '<div style="display:flex;justify-content:space-between;padding:9px 4px;border-bottom:1px solid #eee"><span>' + item.month + '</span><strong>KSh ' + item.amount.toLocaleString("en-KE") + '</strong></div>').join("");
+  document.getElementById("ffMonthlySavingsDetailTotal").textContent = "Total monthly contributions: KSh " + total.toLocaleString("en-KE");
+  if (popup.parentNode !== document.body) document.body.appendChild(popup);
 }
+
+// Display a private savings-progress graph in the logged-in member's personal profile.
+function toggleMemberLogSummary() {
+  const panel = document.getElementById("memberLogSummaryPanel");
+  const button = document.getElementById("memberLogSummaryBtn");
+  if (!panel) return;
+  const opening = panel.style.display === "none" || !panel.style.display;
+  panel.style.display = opening ? "block" : "none";
+  if (button) button.textContent = opening ? "📋 Summary −" : "📋 Summary ＋";
+  if (!opening) {
+    const advice = document.getElementById("memberSavingsAdviceSection");
+    const graph = document.getElementById("memberSavingsGraphSection");
+    if (advice) advice.style.display = "none";
+    if (graph) graph.style.display = "none";
+    const adviceButton = document.getElementById("toggleMemberSavingsAdviceBtn");
+    const graphButton = document.getElementById("toggleMemberSavingsGraphBtn");
+    if (adviceButton) adviceButton.textContent = "💡 Monthly Savings Recommendations";
+    if (graphButton) graphButton.textContent = "📈 Show My Savings Graph";
+  }
+}
+
+function closeMemberSummaryPopup(which) {
+  const sectionId = which === "advice" ? "memberSavingsAdviceSection" : "memberSavingsGraphSection";
+  const buttonId = which === "advice" ? "toggleMemberSavingsAdviceBtn" : "toggleMemberSavingsGraphBtn";
+  const section = document.getElementById(sectionId);
+  const button = document.getElementById(buttonId);
+  if (section) section.style.display = "none";
+  if (button) button.textContent = which === "advice" ? "💡 Monthly Savings Recommendations" : "📈 Show My Savings Graph";
+}
+
+function toggleMemberSavingsAdvice() {
+  const section = document.getElementById("memberSavingsAdviceSection");
+  const button = document.getElementById("toggleMemberSavingsAdviceBtn");
+  if (!section || !loggedInUser) return;
+  const opening = section.style.display === "none" || !section.style.display;
+  if (opening) {
+    const graph = document.getElementById("memberSavingsGraphSection");
+    if (graph) graph.style.display = "none";
+    const graphButton = document.getElementById("toggleMemberSavingsGraphBtn");
+    if (graphButton) graphButton.textContent = "📈 Show My Savings Graph";
+    renderMemberSavingsRecommendations();
+    section.style.display = "block";
+  } else {
+    section.style.display = "none";
+  }
+  if (button) button.textContent = opening ? "🙈 Hide Monthly Recommendations" : "💡 Monthly Savings Recommendations";
+}
+
+function toggleMemberSavingsGraph() {
+  const section = document.getElementById("memberSavingsGraphSection");
+  const button = document.getElementById("toggleMemberSavingsGraphBtn");
+  if (!section || !button || !loggedInUser) return;
+  const opening = section.style.display === "none" || !section.style.display;
+  if (opening) {
+    const advice = document.getElementById("memberSavingsAdviceSection");
+    if (advice) advice.style.display = "none";
+    const adviceButton = document.getElementById("toggleMemberSavingsAdviceBtn");
+    if (adviceButton) adviceButton.textContent = "💡 Monthly Savings Recommendations";
+    section.style.display = "block";
+    renderMemberSavingsGraph();
+  } else {
+    section.style.display = "none";
+  }
+  button.textContent = opening ? "🙈 Hide My Savings Graph" : "📈 Show My Savings Graph";
+}
+
+function renderMemberSavingsRecommendations() {
+  const section = document.getElementById("memberSavingsAdviceSection");
+  const container = document.getElementById("memberMonthlySavingsAdvice");
+  if (!section || !container || !loggedInUser) return;
+  const data = getLoggedInMemberMonthlyTableData();
+  if (!data || !data.length) { section.style.display = "none"; return; }
+  section.style.display = "none";
+  const money = n => "KSh " + Math.round(Number(n) || 0).toLocaleString("en-KE");
+  container.innerHTML = data.map((item, index) => {
+    const amount = Math.max(0, Number(item.amount) || 0);
+    const previous = index > 0 ? Math.max(0, Number(data[index - 1].amount) || 0) : null;
+    let message;
+    if (amount <= 0) {
+      message = "No savings are recorded for this month. If you are able, start with a small, realistic amount and keep a regular saving habit.";
+    } else if (previous !== null && amount > previous) {
+      message = `Well done — your savings increased by ${money(amount - previous)} compared with the previous month. Try to maintain this progress next month.`;
+    } else if (previous !== null && amount < previous) {
+      message = `Your recorded savings are ${money(previous - amount)} lower than the previous month. Review your budget and choose an affordable target to build consistency again.`;
+    } else {
+      message = "Good effort keeping savings on record. Set a realistic target for next month and try to meet it without affecting essential expenses.";
+    }
+    const target = amount > 0 ? Math.ceil(amount * 1.1 / 50) * 50 : 50;
+    return `<div style="background:#fff;border:1px solid #dce5ec;border-radius:10px;padding:12px;margin:9px 0;">
+      <div style="display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap;"><strong>${String(item.month || "Month")}</strong><strong style="color:#087f8c;">${money(amount)}</strong></div>
+      <p style="margin:7px 0;color:#334155;">${message}</p>
+      <p style="margin:0;color:#166534;font-size:13px;"><b>Suggested next step:</b> ${amount > 0 ? "Consider a next-month target of " + money(target) + ", if affordable." : "Consider starting with KSh 50 or another amount that fits your budget."}</p>
+    </div>`;
+  }).join("");
+}
+
+function renderMemberSavingsGraph() {
+  const section = document.getElementById("memberSavingsGraphSection");
+  const canvas = document.getElementById("memberSavingsGraph");
+  if (!section || !canvas || !loggedInUser) return;
+  const data = getLoggedInMemberMonthlyTableData();
+  if (!data) return;
+  if (section.style.display === "none") return;
+  const ctx = canvas.getContext("2d");
+  const width = canvas.width = Math.max(320, canvas.parentElement.clientWidth || 640);
+  const height = canvas.height = 270;
+  ctx.clearRect(0, 0, width, height);
+  const pad = {left: 48, right: 16, top: 20, bottom: 48};
+  const plotW = width - pad.left - pad.right;
+  const plotH = height - pad.top - pad.bottom;
+  const maxValue = Math.max(100, ...data.map(d => d.amount));
+  const step = maxValue / 4;
+  ctx.font = "11px Arial";
+  ctx.textAlign = "right";
+  ctx.textBaseline = "middle";
+  for (let i = 0; i <= 4; i++) {
+    const value = step * i;
+    const y = pad.top + plotH - (value / maxValue) * plotH;
+    ctx.strokeStyle = "#e5e7eb";
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(width - pad.right, y); ctx.stroke();
+    ctx.fillStyle = "#555";
+    ctx.fillText(Math.round(value).toLocaleString("en-KE"), pad.left - 7, y);
+  }
+  const slot = plotW / data.length;
+  const barW = Math.min(25, slot * .62);
+  data.forEach((item, i) => {
+    const barH = (item.amount / maxValue) * plotH;
+    const x = pad.left + i * slot + (slot - barW) / 2;
+    const y = pad.top + plotH - barH;
+    ctx.fillStyle = "#00897b";
+    ctx.fillRect(x, y, barW, barH);
+    ctx.save();
+    ctx.translate(x + barW / 2, height - 9);
+    ctx.rotate(-Math.PI / 4);
+    ctx.textAlign = "right";
+    ctx.fillStyle = "#444";
+    ctx.fillText(item.month.slice(0, 3), 0, 0);
+    ctx.restore();
+  });
+  const total = data.reduce((sum, item) => sum + item.amount, 0);
+  const totalLabel = document.getElementById("memberSavingsGraphTotal");
+  if (totalLabel) totalLabel.textContent = "Total saved in 2026: KSh " + total.toLocaleString("en-KE");
+}
+
+window.addEventListener("resize", function () {
+  const section = document.getElementById("memberSavingsGraphSection");
+  if (loggedInUser && section && section.style.display !== "none") renderMemberSavingsGraph();
+});
 
 // 🔒 MAXIMUM LOAN CAP
 const MAX_LOAN = 60000;
