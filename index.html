@@ -10338,7 +10338,7 @@ document.addEventListener(
 </div>
 <div id="memberSavingsGraphSection" class="ff-member-summary-modal" style="display:none;margin:18px 0;padding:18px;background:#f4fbfa;border:1px solid #b2dfdb;border-radius:12px;">
   <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:8px;"><h3 style="margin:0;color:#00695c;">📈 Your Savings Progress</h3><button type="button" onclick="closeMemberSummaryPopup('graph')" style="background:#eef2f6;color:#234;border:1px solid #ccd5df;padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:700;">✕ Close</button></div>
-  <p style="margin:0 0 12px;color:#555;font-size:14px;">Your monthly savings pattern for 2026, taken directly from your row in the savings table.</p>
+  <p style="margin:0 0 12px;color:#555;font-size:14px;">Your monthly savings pattern for 2026, taken from your personal savings-table row or saved member record.</p>
   <div style="width:100%;overflow:hidden;"><canvas id="memberSavingsGraph" aria-label="Monthly savings graph" role="img" style="display:block;width:100%;max-width:100%;"></canvas></div>
   <p id="memberSavingsGraphTotal" style="margin:10px 0 0;font-weight:bold;color:#00695c;"></p>
 </div>
@@ -14065,17 +14065,7 @@ function login() {
 
       // Load loan history
       loadMemberLoanHistory(name);
-      renderMemberSavingsRecommendations();
-      const graphSection = document.getElementById("memberSavingsGraphSection");
-      const adviceSection = document.getElementById("memberSavingsAdviceSection");
-      const graphButton = document.getElementById("toggleMemberSavingsGraphBtn");
-      const adviceButton = document.getElementById("toggleMemberSavingsAdviceBtn");
-      const summaryPanel = document.getElementById("memberLogSummaryPanel");
-      if (graphSection) graphSection.style.display = "none";
-      if (adviceSection) adviceSection.style.display = "none";
-      if (summaryPanel) summaryPanel.style.display = "none";
-      if (graphButton) graphButton.textContent = "📈 Show My Savings Graph";
-      if (adviceButton) adviceButton.textContent = "💡 Monthly Savings Recommendations";
+      initializeMemberSavingsSummaryForLogin();
 
       // ===========================
       // 🔐 Table Edit Permissions Only
@@ -14146,7 +14136,7 @@ function login() {
     document.getElementById("memberDisplay").innerText = name;
 
     loadMemberLoanHistory(name);
-    renderMemberSavingsGraph();
+    initializeMemberSavingsSummaryForLogin();
  // ✅ Show only their note
   const noteSection = document.getElementById("memberNoteSection");
   const noteParagraph = document.getElementById("personalNote");
@@ -14215,17 +14205,52 @@ function showCurrentSavings() {
 // 📊 Show monthly contributions directly from the member's row in the 2026 savings table.
 function getLoggedInMemberMonthlyTableData() {
   if (!loggedInUser) return null;
-  const table = document.getElementById("table2026");
-  if (!table) return null;
-  const rows = Array.from(table.querySelectorAll("tbody tr"));
-  const row = rows.find(r => (r.cells[0]?.textContent || "").trim().replace(/\\s+/g, " ").toUpperCase() === loggedInUser.trim().replace(/\\s+/g, " ").toUpperCase());
-  if (!row) return null;
-  const inputs = Array.from(row.querySelectorAll("input[type='number']"));
   const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-  return months.map((month, index) => ({
-    month,
-    amount: Math.max(0, Number(inputs[index + 1]?.value) || 0)
-  }));
+  const compactName = value => String(value || "").toUpperCase().replace(/[^A-Z0-9]/g, "");
+  const aliases = {
+    "KEPHAMOMANYI": "KEFHAMOMANYI",
+    "KEFHAMOMANYI": "KEFHAMOMANYI",
+    "JAPHETHMULI": "JAPHETMULI"
+  };
+  const canonicalName = value => aliases[compactName(value)] || compactName(value);
+  const table = document.getElementById("table2026");
+  const rows = table ? Array.from(table.querySelectorAll("tbody tr")) : [];
+  const wantedName = canonicalName(loggedInUser);
+  const row = rows.find(r => canonicalName(r.cells[0]?.textContent) === wantedName);
+  const memberRecord = (typeof members !== "undefined" && members) ? members[loggedInUser] : null;
+
+  // The legacy member.monthly array stores 2025 savings at index 0,
+  // followed by January–December 2026 values at indexes 1–12.
+  const fromMemberRecord = () => {
+    if (!memberRecord || !Array.isArray(memberRecord.monthly)) return null;
+    return months.map((month, index) => ({
+      month,
+      amount: Math.max(0, Number(memberRecord.monthly[index + 1]) || 0)
+    }));
+  };
+
+  if (row) {
+    const inputs = Array.from(row.querySelectorAll("input[type='number']"));
+    const monthlyData = months.map((month, index) => ({
+      month,
+      amount: Math.max(0, Number(inputs[index + 1]?.value) || 0)
+    }));
+    monthlyData.hasRecordedTableRow = true;
+    monthlyData.source = "table2026";
+    return monthlyData;
+  }
+
+  const memberData = fromMemberRecord();
+  if (memberData) {
+    memberData.hasRecordedTableRow = false;
+    memberData.source = "member-record";
+    return memberData;
+  }
+
+  const emptyMonths = months.map(month => ({ month, amount: 0 }));
+  emptyMonths.hasRecordedTableRow = false;
+  emptyMonths.source = "no-record";
+  return emptyMonths;
 }
 
 function showMonthlySavings() {
@@ -14243,15 +14268,53 @@ function showMonthlySavings() {
     popup = document.createElement("div");
     popup.id = "ffMonthlySavingsDetailPopup";
     popup.style.cssText = "position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:100000;display:flex;align-items:center;justify-content:center;padding:16px;";
-    popup.innerHTML = '<div style="background:#fff;width:min(560px,100%);max-height:85vh;overflow:auto;border-radius:14px;padding:20px;box-shadow:0 8px 30px rgba(0,0,0,.25)"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><h2 style="margin:0;color:#00695c">📊 Your Monthly Savings – 2026</h2><button type="button" onclick="document.getElementById(\'ffMonthlySavingsDetailPopup\').remove()" style="border:0;background:#eee;border-radius:8px;padding:8px 12px;cursor:pointer">✕ Close</button></div><p style="color:#555">These figures are taken directly from your row in the savings table.</p><div id="ffMonthlySavingsDetailRows"></div><div id="ffMonthlySavingsDetailTotal" style="font-weight:bold;text-align:right;margin-top:14px;color:#00695c"></div></div>';
+    popup.innerHTML = '<div style="background:#fff;width:min(560px,100%);max-height:85vh;overflow:auto;border-radius:14px;padding:20px;box-shadow:0 8px 30px rgba(0,0,0,.25)"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><h2 id="ffMonthlySavingsDetailTitle" style="margin:0;color:#00695c">📊 Monthly Savings – 2026</h2><button type="button" onclick="document.getElementById(\'ffMonthlySavingsDetailPopup\').remove()" style="border:0;background:#eee;border-radius:8px;padding:8px 12px;cursor:pointer">✕ Close</button></div><p id="ffMonthlySavingsDetailIntro" style="color:#555">Your personal monthly savings record.</p><div id="ffMonthlySavingsDetailNotice"></div><div id="ffMonthlySavingsDetailRows"></div><div id="ffMonthlySavingsDetailTotal" style="font-weight:bold;text-align:right;margin-top:14px;color:#00695c"></div></div>';
     popup.addEventListener("click", function(e) { if (e.target === popup) popup.remove(); });
     document.body.appendChild(popup);
   }
   const rowsHost = document.getElementById("ffMonthlySavingsDetailRows");
   const total = data.reduce((sum, item) => sum + item.amount, 0);
+  const memberName = String(loggedInUser).replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  const title = document.getElementById("ffMonthlySavingsDetailTitle");
+  const intro = document.getElementById("ffMonthlySavingsDetailIntro");
+  const notice = document.getElementById("ffMonthlySavingsDetailNotice");
+  if (title) title.textContent = "📊 " + memberName + " – Monthly Savings 2026";
+  if (intro) intro.textContent = "These figures belong to " + memberName + " and are refreshed from the current member record each time this window opens.";
+  if (notice) notice.innerHTML = data.hasRecordedTableRow === false
+    ? '<div style="background:#fff8e1;border:1px solid #f0d58a;color:#755400;border-radius:9px;padding:10px 12px;margin:10px 0;font-size:13px">No matching 2026 row was found in the main savings table. The figures below use this member’s saved monthly record where available. Any month without a recorded amount is shown as KSh 0. Please ask the administrator to add or correct the official table row.</div>'
+    : '<div style="background:#e8f5e9;border:1px solid #b7dfbd;color:#245b2b;border-radius:9px;padding:9px 12px;margin:10px 0;font-size:13px">Personal savings record loaded successfully.</div>';
   rowsHost.innerHTML = data.map(item => '<div style="display:flex;justify-content:space-between;padding:9px 4px;border-bottom:1px solid #eee"><span>' + item.month + '</span><strong>KSh ' + item.amount.toLocaleString("en-KE") + '</strong></div>').join("");
   document.getElementById("ffMonthlySavingsDetailTotal").textContent = "Total monthly contributions: KSh " + total.toLocaleString("en-KE");
   if (popup.parentNode !== document.body) document.body.appendChild(popup);
+}
+
+// Reset and prepare the personal Summary for every successful member login.
+// The content is always read using loggedInUser, so members only see their own row.
+function initializeMemberSavingsSummaryForLogin() {
+  const panel = document.getElementById("memberLogSummaryPanel");
+  const advice = document.getElementById("memberSavingsAdviceSection");
+  const graph = document.getElementById("memberSavingsGraphSection");
+  const summaryButton = document.getElementById("memberLogSummaryBtn");
+  const adviceButton = document.getElementById("toggleMemberSavingsAdviceBtn");
+  const graphButton = document.getElementById("toggleMemberSavingsGraphBtn");
+
+  if (panel) panel.style.display = "none";
+  if (advice) advice.style.display = "none";
+  if (graph) graph.style.display = "none";
+  if (summaryButton) summaryButton.textContent = "📋 Summary ＋";
+  if (adviceButton) adviceButton.textContent = "💡 Monthly Savings Recommendations";
+  if (graphButton) graphButton.textContent = "📈 Show My Savings Graph";
+
+  // Close any previous member's monthly detail window so one member's figures
+  // cannot remain visible after another member signs in.
+  const monthlyDetailPopup = document.getElementById("ffMonthlySavingsDetailPopup");
+  if (monthlyDetailPopup) monthlyDetailPopup.remove();
+
+  // Clear any previous member's displayed information before preparing this login.
+  const adviceHost = document.getElementById("memberMonthlySavingsAdvice");
+  if (adviceHost) adviceHost.innerHTML = "";
+  const totalLabel = document.getElementById("memberSavingsGraphTotal");
+  if (totalLabel) totalLabel.textContent = "";
 }
 
 // Display a private savings-progress graph in the logged-in member's personal profile.
@@ -14289,6 +14352,11 @@ function toggleMemberSavingsAdvice() {
   if (!section || !loggedInUser) return;
   const opening = section.style.display === "none" || !section.style.display;
   if (opening) {
+    const memberData = getLoggedInMemberMonthlyTableData();
+    if (!memberData) {
+      alert("Your monthly savings record is not yet available. Please contact the chama administrator to add or update your row in the 2026 savings table.");
+      return;
+    }
     const graph = document.getElementById("memberSavingsGraphSection");
     if (graph) graph.style.display = "none";
     const graphButton = document.getElementById("toggleMemberSavingsGraphBtn");
@@ -14307,12 +14375,18 @@ function toggleMemberSavingsGraph() {
   if (!section || !button || !loggedInUser) return;
   const opening = section.style.display === "none" || !section.style.display;
   if (opening) {
+    const memberData = getLoggedInMemberMonthlyTableData();
+    if (!memberData) {
+      alert("Your monthly savings record is not yet available. Please contact the chama administrator to add or update your row in the 2026 savings table.");
+      return;
+    }
     const advice = document.getElementById("memberSavingsAdviceSection");
     if (advice) advice.style.display = "none";
     const adviceButton = document.getElementById("toggleMemberSavingsAdviceBtn");
     if (adviceButton) adviceButton.textContent = "💡 Monthly Savings Recommendations";
     section.style.display = "block";
-    renderMemberSavingsGraph();
+    // Wait for the centered popup to receive its visible width before drawing.
+    requestAnimationFrame(() => requestAnimationFrame(renderMemberSavingsGraph));
   } else {
     section.style.display = "none";
   }
@@ -14327,7 +14401,10 @@ function renderMemberSavingsRecommendations() {
   if (!data || !data.length) { section.style.display = "none"; return; }
   section.style.display = "none";
   const money = n => "KSh " + Math.round(Number(n) || 0).toLocaleString("en-KE");
-  container.innerHTML = data.map((item, index) => {
+  const missingRowNotice = data.hasRecordedTableRow === false
+    ? '<div style="padding:11px 13px;margin:8px 0 12px;background:#fff7e6;border:1px solid #f2d28b;border-radius:9px;color:#805400;font-size:13px;">No matching 2026 savings-table row was found. These recommendations use the member’s saved monthly record where available; months without a recorded amount are treated as KSh 0. Ask the administrator to add or correct the official table row.</div>'
+    : '';
+  container.innerHTML = missingRowNotice + data.map((item, index) => {
     const amount = Math.max(0, Number(item.amount) || 0);
     const previous = index > 0 ? Math.max(0, Number(data[index - 1].amount) || 0) : null;
     let message;
@@ -14357,7 +14434,9 @@ function renderMemberSavingsGraph() {
   if (!data) return;
   if (section.style.display === "none") return;
   const ctx = canvas.getContext("2d");
-  const width = canvas.width = Math.max(320, canvas.parentElement.clientWidth || 640);
+  if (!ctx) return;
+  const measuredWidth = canvas.parentElement?.clientWidth || section.clientWidth || 640;
+  const width = canvas.width = Math.max(320, Math.floor(measuredWidth));
   const height = canvas.height = 270;
   ctx.clearRect(0, 0, width, height);
   const pad = {left: 48, right: 16, top: 20, bottom: 48};
@@ -14395,7 +14474,7 @@ function renderMemberSavingsGraph() {
   });
   const total = data.reduce((sum, item) => sum + item.amount, 0);
   const totalLabel = document.getElementById("memberSavingsGraphTotal");
-  if (totalLabel) totalLabel.textContent = "Total saved in 2026: KSh " + total.toLocaleString("en-KE");
+  if (totalLabel) totalLabel.textContent = (data.hasRecordedTableRow === false ? "No 2026 savings-table row found — recorded total shown as: KSh " : "Total saved in 2026: KSh ") + total.toLocaleString("en-KE");
 }
 
 window.addEventListener("resize", function () {
