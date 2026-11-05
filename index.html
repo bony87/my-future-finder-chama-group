@@ -3916,6 +3916,7 @@ function closeSystemUpdatePopup(){
     <th onclick="sortMembersTable('name')" style="padding:10px;">Name ⬍</th>
     <th onclick="sortMembersTable('phone')" style="padding:10px;">Phone ⬍</th>
     <th onclick="sortMembersTable('savings')" style="padding:10px;">Total Savings (Ksh) ⬍</th>
+    <th style="padding:10px;">Reward Back (Ksh)</th>
     <th style="padding:10px;">Monthly Deposits</th>
     <th onclick="sortMembersTable('note')" style="padding:10px;">Note ⬍</th>
   </tr>
@@ -13366,11 +13367,43 @@ const members = {
   "SAMUEL OYUGI": {
     phone: "0796860412",
     password: "0796860412",
-    savings: 3122,
+    savings: 0,
+    rewardBack: 3122,
     monthly: [1922, 400, 450, 350],
-    note: "Fines: 360 as of 2nd Nov 2025; paid 0, not paid 360. Very active; good candidate for larger loans.",
+    note: "Fines: 360 as of 2nd Nov 2025; paid 0, not paid 360. Very active; good candidate for larger loans. EXIT NOTICE: FFC-EXIT-2026-66752312 — Under Financial Reconciliation. Eligible personal savings of KSh 3,122 are to be reconciled, with all verified eligible personal savings expected to be settled in December 2026 after reconciliation; final approval and settlement remain pending.",
     contracts: [],
-    loans: []
+    loans: [],
+    exits: [{
+      id: "FFC-EXIT-2026-66752312",
+      member: "SAMUEL OYUGI",
+      membershipNo: "Not recorded",
+      phone: "0796860412",
+      contractRef: "Not recorded",
+      noticeDate: "2026-11-03",
+      intendedExitDate: "2026-12-03",
+      reconciliationDueDate: "2027-01-02",
+      reason: "Personal reasons",
+      explanation: "Voluntary membership exit notice submitted.",
+      signature: "Submitted notice on record",
+      signedAt: "03 November 2026",
+      signedAtISO: "2026-11-03T00:00:00.000Z",
+      status: "Under Financial Reconciliation",
+      eligibleSavings: 3122,
+      rewardBackAmount: 3122,
+      rewardBackMonth: "December 2026",
+      rewardBackStatus: "Allocated to December reward — payable after financial reconciliation; final approval and settlement pending",
+      approvedDue: 0,
+      obligations: 0,
+      settlement: 3122,
+      adminRemarks: "Pending administrative review",
+      chairladyRemarks: "Pending confirmation / oversight",
+      reconciliationDate: "",
+      expectedSettlementDate: "2027-01-02",
+      settlementDate: "",
+      effectiveExitDate: "",
+      createdAt: "2026-11-03T00:00:00.000Z",
+      article: "11"
+    }]
   },
 
   "KEPHA MOMANYI": {
@@ -21570,7 +21603,7 @@ function renderMembersTable() {
   let totalSavings = 0;
 
   if (totalMembers === 0) {
-    tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:gray;">No members data available.</td><td class="saved2025">0</td><td class="reward2025">0</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:gray;">No members data available.</td><td class="saved2025">0</td><td class="reward2025">0</td></tr>`;
     return;
   }
 
@@ -21581,7 +21614,8 @@ function renderMembersTable() {
       <tr>
         <td>${name}</td>
         <td>${data.phone}</td>
-        <td>Ksh ${data.savings.toLocaleString()}</td>
+        <td>Ksh ${(data.savings || 0).toLocaleString()}</td>
+        <td>Ksh ${(data.rewardBack || 0).toLocaleString()}</td>
         <td>${months}</td>
         <td>${data.note || ""}</td>
       </tr>
@@ -21605,12 +21639,13 @@ function filterMembersTable() {
 
 // ⬇️ Export CSV
 function exportMembersCSV() {
-  const rows = [["Name", "Phone", "Total Savings", "Monthly Deposits", "Note"]];
+  const rows = [["Name", "Phone", "Total Savings", "Reward Back", "Monthly Deposits", "Note"]];
   Object.entries(members).forEach(([name, data]) => {
     rows.push([
       name,
       data.phone,
-      data.savings,
+      data.savings || 0,
+      data.rewardBack || 0,
       (data.monthly || []).join(" | "),
       data.note || ""
     ]);
@@ -21683,7 +21718,8 @@ function renderSortedMembers(sortedData) {
       <tr>
         <td>${name}</td>
         <td>${data.phone}</td>
-        <td>Ksh ${data.savings.toLocaleString()}</td>
+        <td>Ksh ${(data.savings || 0).toLocaleString()}</td>
+        <td>Ksh ${(data.rewardBack || 0).toLocaleString()}</td>
         <td>${months}</td>
         <td>${data.note || ""}</td>
       </tr>
@@ -22979,7 +23015,7 @@ async function downloadIndividualSavingsReportsPDF() {
  window.closeMemberExitForm=function(){$('ffMemberExitModal').style.display='none';document.body.style.overflow='';};
  window.previewMemberExitNotice=preview;
  window.submitMemberExitNotice=function(ev){ev.preventDefault();const name=currentName();if(!name){alert('Please log in first.');return;}const latest=latestFor(name);if(latest&&latest.status!=='Notice Withdrawn'){  $('ffExitMessage').textContent='You already have an active withdrawal notice ('+latest.id+'). Please contact the Admin. If your exit has already been recorded, re-admission must follow Article 11.8 and the normal membership application process.';$('ffExitMessage').style.color='#b91c1c';return;}const intended=$('ffExitIntendedDate').value;if(!intended||intended<addDays(today(),30)){$('ffExitMessage').textContent='The intended exit date must be at least 30 days after the notice date, as required by Article 11.1.';$('ffExitMessage').style.color='#b91c1c';return;}const sig=$('ffExitSignature').value.trim();if(sig.toLowerCase()!==name.toLowerCase()){$('ffExitMessage').textContent='Your digital signature must match your full registered member name.';$('ffExitMessage').style.color='#b91c1c';return;}if(!$('ffExitPreviewAck').checked){$('ffExitMessage').textContent='Please review the complete notice preview and confirm that you have read it before signing.';$('ffExitMessage').style.color='#b91c1c';$('ffExitPreviewWrap').style.display='block';return;}const now=new Date();const signedAt=now.toLocaleString('en-KE',{timeZone:'Africa/Nairobi',dateStyle:'long',timeStyle:'short'});const rows=getRows();const r={id:'FFC-EXIT-'+now.getFullYear()+'-'+now.getTime().toString().slice(-7),member:name,membershipNo:$('ffExitMembershipNo').value.trim(),phone:$('ffExitPhone').value,contractRef:$('ffExitContractRef').value.trim(),noticeDate:today(),intendedExitDate:intended,reconciliationDueDate:addDays(intended,30),reason:$('ffExitReason').value,explanation:$('ffExitExplanation').value.trim(),signature:sig,signedAt,signedAtISO:now.toISOString(),status:'Notice Submitted — 30-Day Notice',eligibleSavings:0,approvedDue:0,obligations:0,settlement:0,adminRemarks:'',chairladyRemarks:'',reconciliationDate:'',expectedSettlementDate:addDays(intended,30),settlementDate:'',effectiveExitDate:'',createdAt:now.toISOString(),article:'11'};rows.push(r);saveRows(rows);$('ffExitMessage').textContent='Your written withdrawal notice has been recorded in this browser. Reference: '+r.id+'. Download the signed PDF and send it to the Admin. Your membership has not yet been marked as exited.';$('ffExitMessage').style.color='#087f5b';$('ffExitSignedActions').style.display='block';renderMemberHistory(name);renderAdmin();printRecord(r);};
- function renderMemberHistory(name){const host=$('ffMemberExitHistory');if(!host)return;const rows=getRows().filter(r=>String(r.member).toLowerCase()===String(name).toLowerCase()).sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''));host.innerHTML=rows.length?rows.map(r=>`<div style="border:1px solid #ddd6fe;border-radius:10px;padding:12px;margin:9px 0;background:#fff;"><b>Reference:</b> ${esc(r.id)}<br><b>Notice date:</b> ${esc(fmt(r.noticeDate))}<br><b>Intended exit:</b> ${esc(fmt(r.intendedExitDate))}<br><b>Status:</b> <strong>${esc(r.status)}</strong><br><b>Financial reconciliation target:</b> ${esc(fmt(r.reconciliationDueDate))}<br><button type="button" onclick="downloadExitNoticeById('${esc(r.id)}')" style="margin-top:8px;padding:8px;cursor:pointer;">Download / Print Notice</button></div>`).join(''):'<p style="color:#64748b;">No withdrawal notices have been submitted.</p>'; }
+ function renderMemberHistory(name){const host=$('ffMemberExitHistory');if(!host)return;const rows=getRows().filter(r=>String(r.member).toLowerCase()===String(name).toLowerCase()).sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''));host.innerHTML=rows.length?rows.map(r=>`<div style="border:1px solid #ddd6fe;border-radius:10px;padding:12px;margin:9px 0;background:#fff;"><b>Reference:</b> ${esc(r.id)}<br><b>Notice date:</b> ${esc(fmt(r.noticeDate))}<br><b>Intended exit:</b> ${esc(fmt(r.intendedExitDate))}<br><b>Status:</b> <strong>${esc(r.status)}</strong><br><b>Financial reconciliation target:</b> ${esc(fmt(r.reconciliationDueDate))}<br><b>Personal savings allocated to Reward Back:</b> KSh ${Number(r.rewardBackAmount||r.eligibleSavings||0).toLocaleString('en-KE')}<br><b>Reward period:</b> ${esc(r.rewardBackMonth||'December 2026')}<br><b>Reward Back payment:</b> ${esc(r.rewardBackStatus||'Pending financial reconciliation and final approval')}<br><b>Reconciliation note:</b> All verified eligible personal savings are to be settled after reconciliation. The financial reconciliation target is 02 January 2027; final approval and settlement remain pending.<br><button type="button" onclick="downloadExitNoticeById('${esc(r.id)}')" style="margin-top:8px;padding:8px;cursor:pointer;">Download / Print Notice</button></div>`).join(''):'<p style="color:#64748b;">No withdrawal notices have been submitted.</p>'; }
  function renderAdmin(){const body=$('ffAdminExitTable');if(!body)return;const rows=getRows().sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''));if(!rows.length){body.innerHTML='<tr><td colspan="9" style="padding:14px;text-align:center;color:#64748b;">No withdrawal notices have been submitted in this browser.</td></tr>';return;}body.innerHTML=rows.map(r=>`<tr><td style="padding:8px;border-bottom:1px solid #ddd;">${esc(r.member)}<br><small>${esc(r.id)}</small></td><td style="padding:8px;border-bottom:1px solid #ddd;">${esc(fmt(r.noticeDate))}<br>${esc(fmt(r.intendedExitDate))}</td><td style="padding:8px;border-bottom:1px solid #ddd;"><select id="ff-exit-status-${esc(r.id)}" style="width:190px;padding:7px;">${['Notice Submitted — 30-Day Notice','Under Financial Reconciliation','Settlement Pending','Exit Recorded','Notice Withdrawn'].map(v=>`<option ${r.status===v?'selected':''}>${v}</option>`).join('')}</select></td><td style="padding:8px;border-bottom:1px solid #ddd;"><input id="ff-exit-savings-${esc(r.id)}" type="number" min="0" step="0.01" value="${Number(r.eligibleSavings||0)}" style="width:110px;padding:7px;"></td><td style="padding:8px;border-bottom:1px solid #ddd;"><input id="ff-exit-obligations-${esc(r.id)}" type="number" min="0" step="0.01" value="${Number(r.obligations||0)}" style="width:110px;padding:7px;"></td><td style="padding:8px;border-bottom:1px solid #ddd;"><input id="ff-exit-due-${esc(r.id)}" type="number" min="0" step="0.01" value="${Number(r.approvedDue||0)}" style="width:110px;padding:7px;"></td><td style="padding:8px;border-bottom:1px solid #ddd;"><input id="ff-exit-net-${esc(r.id)}" type="number" readonly value="${Number(r.settlement||0)}" style="width:110px;padding:7px;background:#f1f5f9;"></td><td style="padding:8px;border-bottom:1px solid #ddd;"><textarea id="ff-exit-admin-${esc(r.id)}" placeholder="Admin remarks" rows="2" style="width:170px;">${esc(r.adminRemarks||'')}</textarea><textarea id="ff-exit-chair-${esc(r.id)}" placeholder="Chairlady remarks / oversight" rows="2" style="width:170px;margin-top:5px;">${esc(r.chairladyRemarks||'')}</textarea><label style="display:block;font-size:11px;">Reconciled <input id="ff-exit-reconciled-${esc(r.id)}" type="date" value="${esc(r.reconciliationDate||'')}"></label><label style="display:block;font-size:11px;">Expected settlement <input id="ff-exit-expected-${esc(r.id)}" type="date" value="${esc(r.expectedSettlementDate||'')}"></label><label style="display:block;font-size:11px;">Settled <input id="ff-exit-settled-${esc(r.id)}" type="date" value="${esc(r.settlementDate||'')}"></label><label style="display:block;font-size:11px;">Effective exit <input id="ff-exit-effective-${esc(r.id)}" type="date" value="${esc(r.effectiveExitDate||'')}"></label></td><td style="padding:8px;border-bottom:1px solid #ddd;white-space:nowrap;"><button type="button" onclick="saveAdminExitRecord('${esc(r.id)}')" style="padding:7px;cursor:pointer;">Save review</button> <button type="button" onclick="downloadExitNoticeById('${esc(r.id)}')" style="padding:7px;cursor:pointer;">PDF</button></td></tr>`).join('');}
  window.saveAdminExitRecord=function(id){const rows=getRows();const i=rows.findIndex(r=>r.id===id);if(i<0)return;const r=rows[i];const savings=Number($('ff-exit-savings-'+id).value||0),obligations=Number($('ff-exit-obligations-'+id).value||0),due=Number($('ff-exit-due-'+id).value||0);if([savings,obligations,due].some(n=>!Number.isFinite(n)||n<0)){alert('Enter valid non-negative financial amounts.');return;}r.status=$('ff-exit-status-'+id).value;r.eligibleSavings=savings;r.obligations=obligations;r.approvedDue=due;r.settlement=savings+due-obligations;r.adminRemarks=$('ff-exit-admin-'+id).value.trim();r.chairladyRemarks=$('ff-exit-chair-'+id).value.trim();r.reconciliationDate=$('ff-exit-reconciled-'+id).value;r.expectedSettlementDate=$('ff-exit-expected-'+id).value;r.settlementDate=$('ff-exit-settled-'+id).value;r.effectiveExitDate=$('ff-exit-effective-'+id).value;r.adminUpdatedAt=new Date().toISOString();if(r.status==='Exit Recorded'&&!r.effectiveExitDate){alert('Enter the effective exit date before recording the exit.');return;}saveRows(rows);renderAdmin();renderMemberHistory(currentName());$('ffAdminExitMessage').textContent='Review saved locally in this browser. To publish this official exit record across devices, add it to the member exits array in index.html and redeploy.';$('ffAdminExitMessage').style.color='#087f5b';};
  window.downloadExitNoticeById=function(id){const r=getRows().find(x=>x.id===id);if(r)printRecord(r);else alert('Exit notice record not found.');};
