@@ -323,6 +323,62 @@ footer{background:#12304a!important;color:#eaf4f7!important;padding:20px!importa
 @media(max-width:390px){#navButtons{grid-template-columns:1fr}.contribution-total-grid{grid-template-columns:1fr}#admin #adminSummary{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){#navButtons .nav-btn{transition:none}section{animation:none!important}html{scroll-behavior:auto}}
 </style>
+
+<style id="professional-splash-refresh">
+/* Professional, calm loading screen */
+#splash{
+  background:linear-gradient(145deg,#f7f9fc 0%,#e9eef5 100%) !important;
+  background-image:none !important;
+  color:#17324d !important;
+  opacity:1;
+  z-index:999999;
+}
+#splash::before,#splash::after{display:none !important;animation:none !important;content:none !important;}
+#splash .splash-content{
+  width:min(92vw,520px) !important; padding:34px 30px !important;
+  border:1px solid #d7e0ea !important; border-radius:20px !important;
+  background:#ffffff !important; box-shadow:0 18px 55px rgba(23,50,77,.12) !important;
+  animation:none !important; transform:none !important;
+}
+#splash .splash-content img{
+  width:clamp(90px,17vw,135px) !important; height:auto !important;
+  max-height:135px !important; object-fit:contain !important;
+  margin:0 auto 20px !important; filter:none !important;
+}
+#splash #splashText{
+  color:#17324d !important; font-size:clamp(19px,3vw,27px) !important;
+  font-weight:700 !important; letter-spacing:.2px !important;
+  line-height:1.35 !important; text-shadow:none !important;
+  margin:12px 0 24px !important; animation:none !important;
+}
+#splash .progress-container{
+  width:100% !important; height:15px !important; margin:0 auto !important;
+  border-radius:999px !important; overflow:hidden !important;
+  background:#e5ebf2 !important; border:1px solid #d4deea !important;
+  box-shadow:none !important;
+}
+#splash #progressBar{
+  height:100% !important; border-radius:999px !important;
+  background:linear-gradient(90deg,#174a73,#2b789b) !important;
+  box-shadow:none !important; transition:width .12s linear !important;
+  animation:none !important;
+}
+#splash #progressPercent{
+  display:block !important; color:#174a73 !important;
+  font-size:clamp(22px,4vw,32px) !important; font-weight:800 !important;
+  font-variant-numeric:tabular-nums !important; margin:14px 0 0 !important;
+  text-shadow:none !important; animation:none !important;
+}
+#splash .loader{display:none !important; animation:none !important;}
+@media(max-width:480px){#splash .splash-content{padding:27px 20px !important;border-radius:16px !important;}}
+</style>
+
+<style id="ff-hide-site-until-ready">
+/* Keep the whole website hidden until the welcome/loading screen finishes. */
+body:not(.ff-ready) > *:not(#splash){visibility:hidden !important;}
+body:not(.ff-ready) #splash{visibility:visible !important;display:flex !important;}
+body.ff-ready #splash{display:none !important;}
+</style>
 </head>
 
 <style>
@@ -2255,56 +2311,50 @@ animation:shake .3s;
 }
 </style>
 <script>
-
-/* ROTATING TEXT (STAYS ACTIVE) */
-const messages = [
-  "Welcome to Future Finders Chama Group...",
-  "Founder: Boniface Kaiser Chelluget...",
-  "Preparing dashboard...",
-  "Loading system data...",
-  "Ready to go"
-];
-
-let msgIndex = 0;
-
-setInterval(()=>{
-  msgIndex = (msgIndex + 1) % messages.length;
-  document.getElementById("splashText").innerText = messages[msgIndex];
-},2000);
-
-
-/* 6 SECOND PROGRESS */
-let progress = 0;
-let duration = 9000; // 9 seconds
-let intervalTime = 10; // update every 10ms
-let increment = 100 / (duration / intervalTime);
-
-let bar = document.getElementById("progressBar");
-let percent = document.getElementById("progressPercent");
-
-let progressInterval = setInterval(()=>{
-
-  progress += increment;
-
-  if(progress >= 100){
-    progress = 100;
-
-    clearInterval(progressInterval);
-
-    /* PLAY SOUND */
-    document.getElementById("loadSound").play();
-
-    setTimeout(()=>{
-      document.getElementById("splash").style.display = "none";
-    },500);
+/* Professional startup: wait until the page and its assets have loaded,
+   then show a clear progress indicator before revealing the website. */
+(function(){
+  const messages = [
+    "Welcome to Future Finders Chama Group",
+    "Preparing your dashboard…",
+    "Loading system data…",
+    "Almost ready…"
+  ];
+  function beginSplashProgress(){
+    const splash = document.getElementById("splash");
+    const bar = splash ? splash.querySelector("#progressBar") : null;
+    const percent = document.getElementById("progressPercent");
+    const title = document.getElementById("splashText");
+    if(!splash || !bar || !percent || !title){
+      document.body.classList.add("ff-ready");
+      return;
+    }
+    let progress = 0;
+    let messageIndex = 0;
+    const duration = 4500;
+    const started = Date.now();
+    const messageTimer = setInterval(()=>{
+      messageIndex = (messageIndex + 1) % messages.length;
+      title.textContent = messages[messageIndex];
+    }, 1300);
+    const timer = setInterval(()=>{
+      progress = Math.min(100, ((Date.now()-started)/duration)*100);
+      bar.style.width = progress.toFixed(0) + "%";
+      percent.textContent = Math.floor(progress) + "%";
+      if(progress >= 100){
+        clearInterval(timer);
+        clearInterval(messageTimer);
+        title.textContent = "Welcome to Future Finders Chama Group";
+        setTimeout(()=>{
+          document.body.classList.add("ff-ready");
+          splash.style.display = "none";
+        },350);
+      }
+    },40);
   }
-
-  bar.style.width = progress + "%";
-
-  percent.innerText = Math.floor(progress) + "%";
-
-},intervalTime);
-
+  if(document.readyState === "complete") beginSplashProgress();
+  else window.addEventListener("load", beginSplashProgress, {once:true});
+})();
 </script>
 
 
@@ -3740,8 +3790,20 @@ function closeSystemUpdatePopup(){
   <div class="ff-login-icon" aria-hidden="true">⚙️</div>
   <h2 id="adminLoginHeading">Administrator Login</h2>
   <p class="ff-login-intro">Sign in to manage members, savings, loans and group records.</p>
+  <label for="adminLoginSearch">Search your administrator name</label>
+  <div class="member-login-search" style="display:flex;gap:8px;margin:8px 0 12px;align-items:stretch;">
+    <input id="adminLoginSearch" type="search" placeholder="Type your name, then click Search" autocomplete="off"
+      style="flex:1;min-width:0;padding:11px 12px;border:1px solid #cbd5e1;border-radius:8px;font-size:15px;" />
+    <button id="adminLoginSearchBtn" type="button" onclick="searchAdminLoginName()"
+      style="padding:10px 16px;border:0;border-radius:8px;background:#087f8c;color:#fff;font-weight:700;cursor:pointer;">Search</button>
+  </div>
+  <p id="adminLoginSearchMessage" role="status" aria-live="polite" style="margin:0 0 10px;font-size:13px;color:#475569;"></p>
   <label for="adminUser">Administrator name</label>
-  <input id="adminUser" name="adminUser" autocomplete="username" placeholder="Enter administrator name" type="text" />
+  <select id="adminUser" name="adminUser" autocomplete="username" required>
+    <option value="">-- Choose your name --</option>
+    <option value="boniface chelluget">BONIFACE CHELLUGET</option>
+    <option value="faith kwamboka">FAITH KWAMBOKA</option>
+  </select>
 
   <label for="adminPass">Password</label>
   <div class="password-container">
@@ -19176,6 +19238,29 @@ function calculateGrandTotal() {
 // 🔑 ADMIN LOGIN WITH SPINNER
 // =========================
 
+function searchAdminLoginName() {
+  const input = document.getElementById("adminLoginSearch");
+  const select = document.getElementById("adminUser");
+  const message = document.getElementById("adminLoginSearchMessage");
+  const query = input.value.trim().toLowerCase();
+  const matches = Array.from(select.options).filter(option => option.value && option.text.toLowerCase().includes(query));
+  select.value = "";
+  if (!query) {
+    message.style.color = "#b45309";
+    message.textContent = "Please type the administrator's name first.";
+  } else if (matches.length === 1) {
+    select.value = matches[0].value;
+    message.style.color = "green";
+    message.textContent = "Name found. Please enter your password.";
+  } else if (matches.length > 1) {
+    message.style.color = "#b45309";
+    message.textContent = "More than one match. Please type the full name.";
+  } else {
+    message.style.color = "red";
+    message.textContent = "Administrator name not found.";
+  }
+}
+
 function adminLogin() {
 
     let usernameInput =
@@ -19222,15 +19307,18 @@ function adminLogin() {
         // ✅ SUCCESSFUL LOGIN
         // =========================
 
-        if (
-            username === "bony" &&
-            password === "2025"
-        ) {
+        const isAdmin = username === "boniface chelluget" && password === "2025";
+        const isChairlady = username === "faith kwamboka" && password === "2027";
+
+        if (isAdmin || isChairlady) {
 
             message.style.color = "green";
 
-            message.innerHTML =
-                "✅ Login successful! Welcome, Admin.";
+            message.innerHTML = isChairlady
+                ? "✅ Login successful! Welcome, Chairlady Faith."
+                : "✅ Login successful! Welcome, Admin.";
+
+            localStorage.setItem("adminLoginRole", isChairlady ? "chairlady" : "admin");
 
 
             document.getElementById(
@@ -19288,6 +19376,7 @@ function adminLogout() {
 
   setTimeout(() => {
     localStorage.removeItem("adminLoggedIn");
+    localStorage.removeItem("adminLoginRole");
 
     document.getElementById("admin").style.display = "none";
     document.getElementById("adminLogin").style.display = "block";
@@ -20862,94 +20951,77 @@ let countdownInterval;
 
 </script>
 <script>
+/* Weekly contribution clock:
+   Active countdown runs from Monday 8:00 a.m. to the following Monday midnight.
+   From Sunday midnight until Monday 8:00 a.m. the clock pauses and displays
+   the late-payment warning. It automatically restarts at Monday 8:00 a.m. */
 function updateCountdown() {
   const now = new Date();
   const countdownBox = document.getElementById("countdown");
-  const progressBar = document.getElementById("progressBar");
+  // There are two progress bars on the page; target the weekly countdown bar only.
+  const progressBar = document.querySelector("#countdownBar + .progress-container .progress-bar");
+  if (!countdownBox) return;
 
-  // 🕒 Define Sunday midnight deadline
-  const deadline = new Date(now);
-  const day = now.getDay(); // 0=Sunday, 1=Monday, ... 6=Saturday
-  deadline.setDate(now.getDate() + (7 - day)); // Next Sunday
-  deadline.setHours(23, 59, 59, 999);
+  const monday = new Date(now);
+  const day = now.getDay(); // Sunday=0, Monday=1 ... Saturday=6
+  const daysSinceMonday = (day + 6) % 7;
+  monday.setDate(now.getDate() - daysSinceMonday);
+  monday.setHours(0,0,0,0);
 
-  // 🕒 Define Monday 8 AM pause end
-  const monday8am = new Date(deadline);
-  monday8am.setDate(deadline.getDate() + 1); // Monday after deadline
-  monday8am.setHours(8, 0, 0, 0);
+  const mondayEight = new Date(monday);
+  mondayEight.setHours(8,0,0,0);
 
-  // If we're between Sunday midnight and Monday 8 AM → PAY FINE
-  if (now > deadline && now < monday8am) {
-    countdownBox.innerText =
-      "⚠️ Please pay fine of Ksh 30 before countdown resumes.";
+  // Sunday midnight is the start of the late-payment warning period.
+  const nextMondayMidnight = new Date(monday);
+  nextMondayMidnight.setDate(monday.getDate() + 7);
+  nextMondayMidnight.setHours(0,0,0,0);
+
+  const nextMondayEight = new Date(nextMondayMidnight);
+  nextMondayEight.setHours(8,0,0,0);
+
+  const inLateWindow = now >= nextMondayMidnight && now < nextMondayEight;
+  const isMondayGrace = day === 1 && now < mondayEight;
+
+  if (inLateWindow || isMondayGrace) {
+    countdownBox.textContent = "⚠️ PAYMENT DEADLINE PASSED — Please clear your weekly contribution and late fine of Ksh 30 before Monday, 8:00 a.m.";
     countdownBox.className = "red";
-
     if (progressBar) {
       progressBar.style.width = "0%";
-      progressBar.innerText = "0%";
+      progressBar.textContent = "";
       progressBar.className = "progress-bar progress-red";
+      progressBar.parentElement.setAttribute("data-label", "COUNTDOWN PAUSED · 0%");
     }
     return;
   }
 
-  // If it's already Monday 8 AM or later → roll deadline to next Sunday
-  if (now >= monday8am) {
+  // During Monday 8 a.m. onward, the next deadline is the coming Monday at midnight.
+  let activeStart = new Date(monday);
+  activeStart.setHours(8,0,0,0);
+  let deadline = new Date(nextMondayMidnight);
+  if (now >= nextMondayEight) {
+    activeStart = new Date(nextMondayEight);
+    deadline = new Date(nextMondayMidnight);
     deadline.setDate(deadline.getDate() + 7);
   }
 
-  // 🕒 Normal countdown
-  const timeDiff = deadline - now;
-  if (timeDiff <= 0) {
-    countdownBox.innerText =
-      "⚠️ The deadline has passed! Late fine of Ksh 30 applies.";
-    countdownBox.className = "red";
-    if (progressBar) {
-      progressBar.style.width = "0%";
-      progressBar.innerText = "0%";
-      progressBar.className = "progress-bar progress-red";
-    }
-    return;
-  }
+  const remaining = Math.max(0, deadline - now);
+  const d = Math.floor(remaining / 86400000);
+  const h = Math.floor((remaining % 86400000) / 3600000);
+  const m = Math.floor((remaining % 3600000) / 60000);
+  const sec = Math.floor((remaining % 60000) / 1000);
+  countdownBox.textContent = `Time remaining: ${d} days, ${h} hours, ${m} minutes, ${sec} seconds`;
 
-  const d = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-  const h = Math.floor((timeDiff / (1000 * 60 * 60)) % 24);
-  const m = Math.floor((timeDiff / (1000 * 60)) % 60);
-  const s = Math.floor((timeDiff / 1000) % 60);
-
-  countdownBox.innerText =
-    `Time left: ${d} days, ${h} hours, ${m} minutes, ${s} seconds`;
-
-  // 📊 Progress calculation
-  const weekStart = new Date(now);
-  weekStart.setDate(now.getDate() - (day - 1 < 0 ? 6 : day - 1)); // Monday morning
-  weekStart.setHours(0, 0, 0, 0);
-
-  const weekDuration = deadline - weekStart;
-  const weekPassed = now - weekStart;
-  const percentLeft = Math.max(
-    0,
-    Math.min(100, ((weekDuration - weekPassed) / weekDuration) * 100)
-  );
-
+  const totalActive = deadline - activeStart;
+  const percentLeft = totalActive > 0 ? Math.max(0, Math.min(100, (remaining / totalActive) * 100)) : 0;
   if (progressBar) {
     progressBar.style.width = percentLeft.toFixed(1) + "%";
-    progressBar.innerText = percentLeft.toFixed(1) + "%";
-
-    // 🚦 Color by urgency
-    if (percentLeft > 40) {
-      countdownBox.className = "green";
-      progressBar.className = "progress-bar progress-green";
-    } else if (percentLeft > 20) {
-      countdownBox.className = "yellow";
-      progressBar.className = "progress-bar progress-yellow";
-    } else {
-      countdownBox.className = "red";
-      progressBar.className = "progress-bar progress-red";
-    }
+    progressBar.textContent = "";
+    progressBar.className = "progress-bar " + (percentLeft > 40 ? "progress-green" : percentLeft > 20 ? "progress-yellow" : "progress-red");
+    progressBar.parentElement.setAttribute("data-label", percentLeft.toFixed(1) + "% time remaining");
   }
+  countdownBox.className = percentLeft > 40 ? "green" : percentLeft > 20 ? "yellow" : "red";
 }
 
-// Run immediately and update every second
 updateCountdown();
 setInterval(updateCountdown, 1000);
 </script>
@@ -22198,6 +22270,37 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
+
+<style id="ff-countdown-readability">
+/* Weekly countdown bar: strong contrast and a label that stays readable at every fill level. */
+#countdownBar + .progress-container{
+  position:relative !important; width:min(92%,900px) !important; height:34px !important;
+  margin:8px auto 22px !important; background:#e8eef5 !important;
+  border:1px solid #9aaec2 !important; border-radius:999px !important;
+  overflow:hidden !important; box-shadow:inset 0 1px 3px rgba(15,35,55,.16) !important;
+}
+#countdownBar + .progress-container::after{
+  content:attr(data-label); position:absolute; inset:0; display:flex; align-items:center;
+  justify-content:center; z-index:2; color:#102a43 !important; font-size:14px;
+  font-weight:800; letter-spacing:.2px; text-shadow:0 1px 0 rgba(255,255,255,.8);
+  pointer-events:none;
+}
+#countdownBar + .progress-container .progress-bar{
+  height:100% !important; min-width:0 !important; border-radius:999px !important;
+  transition:width .8s linear !important; animation:none !important;
+  background:#1976d2 !important;
+}
+#countdownBar + .progress-container .progress-bar.progress-green{background:#16834a !important;}
+#countdownBar + .progress-container .progress-bar.progress-yellow{background:#d18b00 !important;}
+#countdownBar + .progress-container .progress-bar.progress-red{background:#bd2635 !important;}
+#countdown{line-height:1.45; white-space:normal;}
+@media(max-width:600px){
+ #countdownBar + .progress-container{width:94% !important;height:32px !important;}
+ #countdownBar + .progress-container::after{font-size:12px;}
+ #countdown{font-size:1rem;padding:12px 14px;}
+}
+</style>
+
 </body>
 </html>
 
@@ -22729,6 +22832,37 @@ async function downloadIndividualSavingsReportsPDF() {
     </style></head><body>${contractText(c)}<img class="contract-stamp" src="https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/WhatsApp%20Image%202026-08-27%20at%204.37.32%20PM.jpeg" alt="Official Future Finders stamp"><script>window.onload=()=>{setTimeout(()=>window.print(),450)};<\/script>
 
 
+
+<style id="ff-countdown-readability">
+/* Weekly countdown bar: strong contrast and a label that stays readable at every fill level. */
+#countdownBar + .progress-container{
+  position:relative !important; width:min(92%,900px) !important; height:34px !important;
+  margin:8px auto 22px !important; background:#e8eef5 !important;
+  border:1px solid #9aaec2 !important; border-radius:999px !important;
+  overflow:hidden !important; box-shadow:inset 0 1px 3px rgba(15,35,55,.16) !important;
+}
+#countdownBar + .progress-container::after{
+  content:attr(data-label); position:absolute; inset:0; display:flex; align-items:center;
+  justify-content:center; z-index:2; color:#102a43 !important; font-size:14px;
+  font-weight:800; letter-spacing:.2px; text-shadow:0 1px 0 rgba(255,255,255,.8);
+  pointer-events:none;
+}
+#countdownBar + .progress-container .progress-bar{
+  height:100% !important; min-width:0 !important; border-radius:999px !important;
+  transition:width .8s linear !important; animation:none !important;
+  background:#1976d2 !important;
+}
+#countdownBar + .progress-container .progress-bar.progress-green{background:#16834a !important;}
+#countdownBar + .progress-container .progress-bar.progress-yellow{background:#d18b00 !important;}
+#countdownBar + .progress-container .progress-bar.progress-red{background:#bd2635 !important;}
+#countdown{line-height:1.45; white-space:normal;}
+@media(max-width:600px){
+ #countdownBar + .progress-container{width:94% !important;height:32px !important;}
+ #countdownBar + .progress-container::after{font-size:12px;}
+ #countdown{font-size:1rem;padding:12px 14px;}
+}
+</style>
+
 </body></html>`;
     const w=window.open('','_blank');if(!w){alert('Please allow pop-ups so the contract can open for printing/saving as PDF.');return;}w.document.open();w.document.write(html);w.document.close();
   }
@@ -22807,6 +22941,37 @@ async function downloadIndividualSavingsReportsPDF() {
  function docHtml(r){const amount=n=>'KSh '+Number(n||0).toLocaleString('en-KE',{minimumFractionDigits:2,maximumFractionDigits:2});return `<div style="font-family:Arial,sans-serif;color:#1f2937;font-size:13px;line-height:1.55;border:3px double #56328a;padding:22px;position:relative;"><div style="border:1px solid #c6a75e;padding:5px;"><header style="text-align:center;border-bottom:2px solid #56328a;padding-bottom:12px;margin-bottom:14px;"><img src="https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/FUTURE%20FINDERS%20LOGO.jpeg" style="width:78px;height:78px;object-fit:contain" onerror="this.style.display='none'"><div style="letter-spacing:2px;color:#8a6b24;font-weight:bold;font-size:10px;">OFFICIAL MEMBERSHIP NOTICE</div><h1 style="color:#56328a;margin:6px 0;font-size:21px;">FUTURE FINDERS CHAMA GROUP</h1><h2 style="font-size:16px;margin:5px 0;">MEMBERSHIP WITHDRAWAL & EXIT NOTICE</h2><div>Constitutional basis: Article 11 — Membership Exit, Suspension and Termination</div></header><p><b>Exit Notice Reference:</b> ${esc(r.id)} &nbsp; <b>Current status:</b> ${esc(r.status||'Notice Submitted')}</p><h3 style="color:#56328a;border-bottom:1px solid #ddd;padding-bottom:4px;">1. Member and notice details</h3><table style="width:100%;border-collapse:collapse"><tr><td style="padding:5px;border:1px solid #ddd"><b>Full name</b><br>${esc(r.member)}</td><td style="padding:5px;border:1px solid #ddd"><b>Membership number</b><br>${esc(r.membershipNo||'Not provided')}</td></tr><tr><td style="padding:5px;border:1px solid #ddd"><b>Registered phone</b><br>${esc(r.phone||'Not recorded')}</td><td style="padding:5px;border:1px solid #ddd"><b>Existing contract reference</b><br>${esc(r.contractRef||'Not provided')}</td></tr><tr><td style="padding:5px;border:1px solid #ddd"><b>Notice submitted</b><br>${esc(fmt(r.noticeDate))}</td><td style="padding:5px;border:1px solid #ddd"><b>Intended exit date</b><br>${esc(fmt(r.intendedExitDate))}</td></tr></table><h3 style="color:#56328a;border-bottom:1px solid #ddd;padding-bottom:4px;">2. Reason and explanation</h3><p><b>Reason:</b> ${esc(r.reason)}</p><p>${esc(r.explanation||'No additional explanation provided.')}</p><h3 style="color:#56328a;border-bottom:1px solid #ddd;padding-bottom:4px;">3. Constitutional explanations acknowledged by the member</h3><ul><li>This is a written voluntary withdrawal notice requiring at least thirty (30) days' notice before the intended exit date (Article 11.1).</li><li>Submission does not itself approve or immediately complete withdrawal, terminate all obligations, or automatically cancel pending matters.</li><li>The Chama reviews savings, contributions, loans, repayments, penalties and other obligations during the notice period. Reconciliation is to be completed within thirty (30) days after the notice period ends (Article 11.2).</li><li>Eligible savings mean verified accumulated personal savings. Merry-Go-Round and welfare contributions are treated separately. Registration fees, properly applied fines, penalties and charges are not refundable savings (Article 11.3).</li><li>Any settlement is calculated from official records: eligible personal savings plus approved amounts due, less outstanding obligations and lawful deductions. No specific refund is guaranteed by this notice.</li><li>Withdrawal does not cancel outstanding loans, contributions, penalties, guarantees or other financial obligations (Article 11.1 and 11.7).</li><li>A pending dispute or disciplinary matter is not automatically cancelled by withdrawal; final settlement may be deferred where necessary (Article 11.10).</li><li>Temporary suspension from activities or benefits is not the same as ending membership (Articles 11.4–11.5).</li><li>Disciplinary termination is not requested through this voluntary form. It must follow the constitutional disciplinary and decision-making process, give the member a reasonable opportunity to respond and preserve applicable appeal rights (Article 11.6 and Article 10).</li><li>A former member may apply for re-admission, but re-admission and restoration of previous privileges are not automatic; outstanding previous obligations must be addressed (Article 11.8).</li><li>If a member dies, the Chama separately reconciles the member's financial affairs with the lawful representative of the estate; this withdrawal form is not a death-claim form (Article 11.9).</li><li>Membership and financial-clearance records must be maintained securely, confidentially and accurately (Article 11.11).</li><li>The Chama will update the official membership register to reflect the effective date and nature of exit when the process is completed (Article 11.12).</li><li>All withdrawal, suspension, termination and re-admission matters must follow Article 11 and other applicable constitutional provisions (Article 11.13).</li></ul><h3 style="color:#56328a;border-bottom:1px solid #ddd;padding-bottom:4px;">4. Member declaration and digital signature</h3><p>I, <b>${esc(r.member)}</b>, voluntarily give written notice of withdrawal from Future Finders Chama Group. I confirm that the details provided are accurate and that I have read and understood the explanations above and Article 11 of the Constitution. I understand that this notice does not immediately complete my exit or release me from any outstanding obligation.</p><p><b>Digital signature:</b> ${esc(r.signature)}</p><p><b>Date and time signed:</b> ${esc(r.signedAt)}</p><h3 style="color:#56328a;border-bottom:1px solid #ddd;padding-bottom:4px;">5. Administrative reconciliation — to be completed by the Chama</h3><p>Eligible personal savings: ${amount(r.eligibleSavings)} &nbsp; | &nbsp; Approved amounts due: ${amount(r.approvedDue)}<br>Outstanding obligations / lawful deductions: ${amount(r.obligations)}<br><b>Net settlement recorded (positive = payable to member; negative = amount still owed to Chama):</b> ${amount(r.settlement)}</p><p>Admin remarks: ${esc(r.adminRemarks||'Pending administrative review')}<br>Chairlady remarks: ${esc(r.chairladyRemarks||'Pending confirmation / oversight')}<br>Reconciliation completed: ${esc(fmt(r.reconciliationDate))}<br>Expected settlement date: ${esc(fmt(r.expectedSettlementDate))}<br>Actual settlement date: ${esc(fmt(r.settlementDate))}<br>Effective exit date recorded: ${esc(fmt(r.effectiveExitDate))}</p><div style="border-top:1px solid #c6a75e;margin-top:18px;padding-top:10px;text-align:center;font-size:10px;color:#64748b;">This notice is governed by the Future Finders Chama Group Constitution. In case of conflict, the Constitution prevails.<br><b style="color:#56328a;">FUTURE FINDERS CHAMA GROUP</b></div></div></div>`;}
  function printRecord(r){const w=window.open('','_blank');if(!w){alert('Please allow pop-ups to download or print your signed notice.');return;}w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>${esc(r.id)} - Withdrawal Notice</title><style>@page{size:A4;margin:14mm}body{margin:0;padding:8px}button{padding:10px 16px;margin:12px 0;background:#56328a;color:#fff;border:0;border-radius:6px}@media print{button{display:none}}</style></head><body><button onclick="window.print()">Print / Save as PDF</button>${docHtml(r)}<script>window.onload=()=>setTimeout(()=>window.print(),500)<\\/script>
 
+
+
+<style id="ff-countdown-readability">
+/* Weekly countdown bar: strong contrast and a label that stays readable at every fill level. */
+#countdownBar + .progress-container{
+  position:relative !important; width:min(92%,900px) !important; height:34px !important;
+  margin:8px auto 22px !important; background:#e8eef5 !important;
+  border:1px solid #9aaec2 !important; border-radius:999px !important;
+  overflow:hidden !important; box-shadow:inset 0 1px 3px rgba(15,35,55,.16) !important;
+}
+#countdownBar + .progress-container::after{
+  content:attr(data-label); position:absolute; inset:0; display:flex; align-items:center;
+  justify-content:center; z-index:2; color:#102a43 !important; font-size:14px;
+  font-weight:800; letter-spacing:.2px; text-shadow:0 1px 0 rgba(255,255,255,.8);
+  pointer-events:none;
+}
+#countdownBar + .progress-container .progress-bar{
+  height:100% !important; min-width:0 !important; border-radius:999px !important;
+  transition:width .8s linear !important; animation:none !important;
+  background:#1976d2 !important;
+}
+#countdownBar + .progress-container .progress-bar.progress-green{background:#16834a !important;}
+#countdownBar + .progress-container .progress-bar.progress-yellow{background:#d18b00 !important;}
+#countdownBar + .progress-container .progress-bar.progress-red{background:#bd2635 !important;}
+#countdown{line-height:1.45; white-space:normal;}
+@media(max-width:600px){
+ #countdownBar + .progress-container{width:94% !important;height:32px !important;}
+ #countdownBar + .progress-container::after{font-size:12px;}
+ #countdown{font-size:1rem;padding:12px 14px;}
+}
+</style>
 
 </body></html>`);w.document.close();}
  function preview(){const name=currentName();if(!name){alert('Please log in to your member account first.');return;}const sig=$('ffExitSignature').value.trim();if(sig.toLowerCase()!==name.toLowerCase()){alert('Type your full name exactly as shown in your member account before previewing.');return;}const intended=$('ffExitIntendedDate').value;if(!intended||intended<addDays(today(),30)){alert('The intended exit date must be at least 30 days after the notice date.');return;}const r={id:'FFC-EXIT-PREVIEW',member:name,membershipNo:$('ffExitMembershipNo').value,phone:$('ffExitPhone').value,contractRef:$('ffExitContractRef').value,noticeDate:today(),intendedExitDate:intended,reason:$('ffExitReason').value,explanation:$('ffExitExplanation').value,signature:sig,signedAt:'Recorded automatically upon submission',status:'Preview only'};$('ffExitPreview').innerHTML=docHtml(r);$('ffExitPreviewWrap').style.display='block';$('ffExitPreviewAck').checked=false;}
@@ -22954,3 +23119,4 @@ async function downloadIndividualSavingsReportsPDF() {
   };
 })();
 </script>
+
