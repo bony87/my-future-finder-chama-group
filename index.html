@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html lang="en"><head>
+
+<html lang="en">
+
+<head>
 <style>
 body{
     font-family: Arial, Helvetica, sans-serif;
@@ -116,7 +119,9 @@ footer{
 }
 </style>
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta 
+  name="viewport" 
+  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
   <title>Future Finders Chama Group</title>
 
@@ -133,7 +138,7 @@ footer{
   </script>
 
 <!-- Modern UI Enhancement -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
 body{
   font-family:'Poppins',sans-serif;
@@ -374,6 +379,8 @@ body:not(.ff-ready) > *:not(#splash){visibility:hidden !important;}
 body:not(.ff-ready) #splash{visibility:visible !important;display:flex !important;}
 body.ff-ready #splash{display:none !important;}
 </style>
+</head>
+
 <style>
    body { 
   font-family: Arial, sans-serif; 
@@ -1797,7 +1804,11 @@ table th {
 }
 
 
-</style><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&amp;display=swap" rel="stylesheet"><style>
+</style>
+
+<!-- Modern UI Enhancement -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
 body{
   font-family:'Poppins',sans-serif;
 }
@@ -1950,18 +1961,31 @@ color:white;
 border-color:#2E7D32;
 
 }
-</style></head>
+</style>
 
-
-
-<!-- Modern UI Enhancement -->
-
-
-
-
-<body class="ff-ready">
+</head>
+<body>
 <!-- SPLASH SCREEN -->
+<div id="splash">
+  <div class="splash-content">
 
+    <img src="https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/FUTURE%20FINDERS%20LOGO.jpeg" alt="Future Finders">
+
+    <h2 id="splashText">Welcome to Future Finders Chama Group...</h2>
+
+    <!-- PROGRESS BAR -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- PERCENT -->
+    <div id="progressPercent">0%</div>
+
+    <!-- SPINNER -->
+    <div class="loader"></div>
+
+  </div>
+</div>
 
 <!-- SOUND -->
 <audio id="loadSound">
@@ -2425,7 +2449,8 @@ animation:shake .3s;
 </div>
 
     <!-- Success Popup -->
-<div id="successPopup" style="display:none; position:fixed; top:20px; right:20px; background:#4caf50; color:#fff; 
+<div id="successPopup" 
+     style="display:none; position:fixed; top:20px; right:20px; background:#4caf50; color:#fff; 
             padding:10px 20px; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.2); 
             font-weight:bold; z-index:1000;">
   ✅ Download successful!
@@ -2434,11 +2459,11 @@ animation:shake .3s;
 <!-- Fixed Countdown Bar -->
 <div id="countdownBar">
 <span>⏳ Weekly Contributions Countdown: </span>
-<span id="countdown" class="red">Time remaining: 0 days, 6 hours, 0 minutes, 43 seconds</span>
+<span id="countdown">Loading...</span>
 </div>
 <!-- Progress Bar -->
-<div class="progress-container" data-label="3.8% time remaining">
-<div class="progress-bar progress-red" id="weeklyProgressBar" style="width: 3.8%;"></div>
+<div class="progress-container">
+<div class="progress-bar" id="weeklyProgressBar">100%</div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
@@ -2469,7 +2494,9 @@ animation:shake .3s;
 </div>
 <!-- Logo at the Top -->
 <div style="margin:20px 0; text-align:center;">
-<img alt="Future Finders Logo" src="https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/FUTURE%20FINDERS%20LOGO.jpeg" style="width:150px; height:150px; border-radius:50%; object-fit:cover; box-shadow:0 2px 6px rgba(0,0,0,0.2);">
+<img alt="Future Finders Logo" 
+src="https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/FUTURE%20FINDERS%20LOGO.jpeg" 
+style="width:150px; height:150px; border-radius:50%; object-fit:cover; box-shadow:0 2px 6px rgba(0,0,0,0.2);"/>
 <p style="margin-top:10px; font-style:italic; color:#555;">Our Identity, Our Strength</p>
 </div>
 <!-- System Update Banner -->
@@ -2483,31 +2510,31 @@ animation:shake .3s;
 </header>
 <!-- NAVIGATION -->
 <div id="navButtons">
-<a class="nav-btn" onclick="simulateAction(this,'home')" style="display: none;">🏠 Home <span class="spinner"></span></a>
-<a class="nav-btn" onclick="simulateAction(this,'about')" style="display: none;">ℹ️ About Us <span class="spinner"></span></a>
-<a class="nav-btn" onclick="simulateAction(this,'membership')" style="display: none;">👥 Membership <span class="spinner"></span></a>
-<a class="nav-btn" onclick="simulateLoanThenDisable(this)" style="display: none;">
+<a class="nav-btn" onclick="simulateAction(this,'home')">🏠 Home <span class="spinner"></span></a>
+<a class="nav-btn" onclick="simulateAction(this,'about')">ℹ️ About Us <span class="spinner"></span></a>
+<a class="nav-btn" onclick="simulateAction(this,'membership')">👥 Membership <span class="spinner"></span></a>
+<a class="nav-btn" onclick="simulateLoanThenDisable(this)">
     🎲 Pick Number
     <span class="spinner"></span>
 </a>
-<a class="nav-btn" onclick="simulateAction(this,'services')" style="display: none;">💼 Services <span class="spinner"></span></a>
-<a class="nav-btn" onclick="simulateAction(this,'updates')" style="display: none;">
+<a class="nav-btn" onclick="simulateAction(this,'services')">💼 Services <span class="spinner"></span></a>
+<a class="nav-btn" onclick="simulateAction(this,'updates')">
   📰 News 
   <span id="newsBadge" style="display:none; color:red; font-weight:bold; margin-left:5px;">●</span>
 <span class="spinner"></span>
 </a>
-<a class="nav-btn" onclick="simulateAction(this,'loginForm')" style="display: none;">🔑 Member Login <span class="spinner"></span></a>
-<a class="nav-btn" onclick="simulateAction(this,'adminLogin')" style="pointer-events: auto; display: inline-block;">⚙️ Admin <span class="spinner" style="display: none;"></span></a>
-<a class="nav-btn" onclick="simulateAction(this,'rules')" style="display: none;">
+<a class="nav-btn" onclick="simulateAction(this,'loginForm')">🔑 Member Login <span class="spinner"></span></a>
+<a class="nav-btn" onclick="simulateAction(this,'adminLogin')">⚙️ Admin <span class="spinner"></span></a>
+<a class="nav-btn" onclick="simulateAction(this,'rules')">
   📜 The Constitution <span class="spinner"></span>
 </a>
-<a class="nav-btn" onclick="simulateAction(this,'contact')" style="display: none;">📞 Contact <span class="spinner"></span>
+<a class="nav-btn" onclick="simulateAction(this,'contact')">📞 Contact <span class="spinner"></span>
 </a>
-<a class="nav-btn" id="backBtn" onclick="showAllButtons()" style="display: inline-block; background: rgb(211, 47, 47);">⬅️ Back to Menu <span class="spinner"></span></a>
+<a class="nav-btn" id="backBtn" onclick="showAllButtons()" style="display:none; background:#d32f2f;">⬅️ Back to Menu <span class="spinner"></span></a>
 </div>
 
 <!-- 📜 The Constitution -->
-<section id="rules" style="background: rgb(245, 255, 247); padding: 30px; border-radius: 12px; box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 12px; font-family: Poppins, sans-serif; color: rgb(46, 59, 50); display: none;">
+<section id="rules" style="background:#f5fff7; padding:30px; border-radius:12px; box-shadow:0 2px 12px rgba(0,0,0,0.08); font-family:'Poppins', sans-serif; color:#2e3b32;">
   
 <h2 style="text-align:center; color:#1b5e20;">📜 CHAMA CONSTITUTION</h2>
 <p style="text-align:center; font-style:italic; color:#2e7d32;">
@@ -2583,7 +2610,7 @@ animation:shake .3s;
 </ul>
 
 <!-- ARTICLE 2 -->
-<h3 style="color:#2e7d32;">💰 Article 2: Savings &amp; Contributions</h3>
+<h3 style="color:#2e7d32;">💰 Article 2: Savings & Contributions</h3>
 
 <ul style="line-height:1.8;">
 
@@ -2807,7 +2834,7 @@ animation:shake .3s;
   <li><b>The chama shall have two key leadership roles:</b></li>
 
   <!-- ADMIN ROLE -->
-  <li>💰 <b>Founder &amp; Admin Roles:</b>
+  <li>💰 <b>Founder & Admin Roles:</b>
     <ul style="margin-top:8px;">
       <li>Oversee all financial management of the chama.</li>
       <li>Maintain accurate records of savings, contributions, and balances.</li>
@@ -3192,15 +3219,16 @@ animation:shake .3s;
 </p>
   <!-- Back Button -->
   <div style="text-align:center; margin-top:25px;">
-    <a class="action-btn" onclick="simulateAction(this,'home')" style="background:#2e7d32; color:white; padding:12px 24px; border-radius:8px; text-decoration:none; font-weight:bold; box-shadow:0 2px 5px rgba(46,125,50,0.3);">
+    <a class="action-btn" onclick="simulateAction(this,'home')" 
+       style="background:#2e7d32; color:white; padding:12px 24px; border-radius:8px; text-decoration:none; font-weight:bold; box-shadow:0 2px 5px rgba(46,125,50,0.3);">
       ⬅️ Back to Home <span class="spinner"></span>
     </a>
   </div>
-</ul></section>
+</section>
 
 
 <!-- 💼 Services -->
-<section id="services" style="display: none;">
+<section id="services">
 <h2>💼 Our Services</h2>
 <ul style="list-style:none; padding:0; font-size:16px;">
 <li>💰 <b>Monthly Savings:</b> Contribute consistently and grow your financial discipline.</li>
@@ -3228,8 +3256,8 @@ animation:shake .3s;
 </section>
 <!-- 📰 News & Updates Section -->
 <!-- 📰 NEWS & UPDATES SECTION -->
-<section id="updates" style="display: none;">
-  <h2>📰 News &amp; Updates</h2>
+<section id="updates">
+  <h2>📰 News & Updates</h2>
 
   <!-- ========================= -->
   <!-- 🔒 PREVIOUS MEETING -->
@@ -3245,7 +3273,7 @@ animation:shake .3s;
 
     <p><b>Agenda Covered:</b></p>
     <ol>
-      <li>🧾 Polishing of Rules &amp; Regulations</li>
+      <li>🧾 Polishing of Rules & Regulations</li>
       <li>📈 Chama Progress Discussion</li>
       <li>💸 Fine of Ksh 30</li>
     </ol>
@@ -3276,7 +3304,7 @@ animation:shake .3s;
     </li>
     <li>Update on Rules</li>
     <li>
-      Discussion &amp; Agreement on <b>Contribution Dates for the Monthly Chama</b>
+      Discussion & Agreement on <b>Contribution Dates for the Monthly Chama</b>
     </li>
     <li>
       Criteria to Be Used for Selecting Numbers for the Merry-Go-Round
@@ -3296,26 +3324,29 @@ animation:shake .3s;
       🔒 MEETING CLOSED<br>
       Thank you all for attending 🙏
     </div>
-  
-  
+  </div>
+  </div>
 
 <!-- ====================================== -->
 <!-- ⏳ FUTURE FINDERS MID-YEAR MEETING -->
 <!-- ====================================== -->
 
 <!-- COUNTDOWN (DISPLAY THIS FIRST) -->
-<div id="meetingCountdown" style="margin-bottom: 20px; padding: 20px; text-align: center; font-size: 22px; font-weight: bold; border-radius: 12px; background: linear-gradient(135deg, rgb(198, 40, 40), rgb(142, 0, 0)); color: rgb(255, 255, 255); box-shadow: rgba(0, 0, 0, 0.25) 0px 6px 15px;">
-        <div style="font-size:32px;">🔒</div>
+<div id="meetingCountdown"
+style="
+margin-bottom:20px;
+padding:20px;
+text-align:center;
+font-size:22px;
+font-weight:bold;
+border-radius:12px;
+background:linear-gradient(135deg,#1565c0,#0d47a1);
+color:#fff;
+box-shadow:0 6px 15px rgba(0,0,0,.25);">
 
-        <h2 style="margin:10px 0;">
-        MEETING CLOSED
-        </h2>
+⏳ Loading Meeting Countdown...
 
-        <div>
-        Thank you for attending.<br>
-        See you in the next meeting.
-        </div>
-        </div>
+</div>
 
 <!-- ========================= -->
 <!-- 📢 MEETING NOTICE -->
@@ -3520,10 +3551,10 @@ const timer = setInterval(updateMeetingCountdown,1000);
 updateMeetingCountdown();
 
 </script>
-
+</script>
 <!-- ================= POPUP HTML ================= -->
 
-<div id="systemUpdatePopup" class="dashboardPopup" style="display: flex;">
+<div id="systemUpdatePopup" class="dashboardPopup">
 
   <div class="popup-content">
 
@@ -3595,18 +3626,18 @@ function closeSystemUpdatePopup(){
 </section>
 
 <!-- Contact -->
-<section id="contact" style="display: none;">
+<section id="contact">
 <h2>📞 Contact Us</h2>
 <button class="contact-btn email" onclick="contactEmail()">📧 Email Us</button>
 <button class="contact-btn phone" onclick="contactPhone()">📞 Call Us</button>
 <button class="contact-btn whatsapp" onclick="contactWhatsApp()">💬 WhatsApp Chat</button>
 </section>
-<section class="active" id="home" style="display: none;">
+<section class="active" id="home">
 <h2>🏠 Home</h2>
 <p>Welcome to Future Finders Chama. Together we save, invest, and grow.</p>
 </section>
 <!-- Random Picker -->
-<section id="picker" style="display: none;">
+<section id="picker">
 <h2>🎉 Random Number Picker</h2>
 <!-- Select member -->
 <label for="memberSelect"><b>Select Your Name:</b></label>
@@ -3636,7 +3667,7 @@ function closeSystemUpdatePopup(){
 </select>
 <!-- Choose send method -->
 <div style="margin: 10px 0;">
-<label><input name="sendOption" type="radio" value="whatsapp"> Send via WhatsApp 💬</label>
+<label><input name="sendOption" type="radio" value="whatsapp"/> Send via WhatsApp 💬</label>
 </div>
 <!-- Pick button -->
 <a class="action-btn" id="pickBtn" onclick="pickNumber()">
@@ -3648,7 +3679,7 @@ function closeSystemUpdatePopup(){
 <p id="resultCaption"></p>
 </section>
 <!-- ℹ️ About Us -->
-<section id="about" style="display: none;">
+<section id="about">
   <h2>ℹ️ About Us</h2>
 
   <p>
@@ -3743,7 +3774,11 @@ function closeSystemUpdatePopup(){
 
   <!-- Logo -->
   <div style="margin:20px 0; text-align:center;">
-    <img alt="Future Finders Chama Logo" src="https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/FUTURE%20FINDERS%20LOGO.jpeg" style="width:150px; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.2);">
+    <img
+      alt="Future Finders Chama Logo"
+      src="https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/FUTURE%20FINDERS%20LOGO.jpeg"
+      style="width:150px; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.2);"
+    />
     <p style="margin-top:10px; font-style:italic; color:#555;">
       Our Identity, Our Strength
     </p>
@@ -3751,18 +3786,20 @@ function closeSystemUpdatePopup(){
 </section>
 
 <!-- ⚙️ Admin Login -->
-<section id="adminLogin" aria-labelledby="adminLoginHeading" style="display: none;">
+<section id="adminLogin" aria-labelledby="adminLoginHeading">
   <div class="ff-login-icon" aria-hidden="true">⚙️</div>
   <h2 id="adminLoginHeading">Administrator Login</h2>
   <p class="ff-login-intro">Sign in to manage members, savings, loans and group records.</p>
   <label for="adminLoginSearch">Search your administrator name</label>
   <div class="member-login-search" style="display:flex;gap:8px;margin:8px 0 12px;align-items:stretch;">
-    <input id="adminLoginSearch" type="search" placeholder="Type your name, then click Search" autocomplete="off" style="flex:1;min-width:0;padding:11px 12px;border:1px solid #cbd5e1;border-radius:8px;font-size:15px;">
-    <button id="adminLoginSearchBtn" type="button" onclick="searchAdminLoginName()" style="padding:10px 16px;border:0;border-radius:8px;background:#087f8c;color:#fff;font-weight:700;cursor:pointer;">Search</button>
+    <input id="adminLoginSearch" type="search" placeholder="Type your name, then click Search" autocomplete="off"
+      style="flex:1;min-width:0;padding:11px 12px;border:1px solid #cbd5e1;border-radius:8px;font-size:15px;" />
+    <button id="adminLoginSearchBtn" type="button" onclick="searchAdminLoginName()"
+      style="padding:10px 16px;border:0;border-radius:8px;background:#087f8c;color:#fff;font-weight:700;cursor:pointer;">Search</button>
   </div>
-  <p id="adminLoginSearchMessage" role="status" aria-live="polite" style="margin: 0px 0px 10px; font-size: 13px; color: green;">Name found. Please enter your password.</p>
+  <p id="adminLoginSearchMessage" role="status" aria-live="polite" style="margin:0 0 10px;font-size:13px;color:#475569;"></p>
   <label for="adminUser">Administrator name</label>
-  <select id="adminUser" name="adminUser" autocomplete="username" required="">
+  <select id="adminUser" name="adminUser" autocomplete="username" required>
     <option value="">-- Choose your name --</option>
     <option value="boniface chelluget">BONIFACE CHELLUGET</option>
     <option value="faith kwamboka">FAITH KWAMBOKA</option>
@@ -3770,21 +3807,23 @@ function closeSystemUpdatePopup(){
 
   <label for="adminPass">Password</label>
   <div class="password-container">
-    <input id="adminPass" name="adminPass" autocomplete="current-password" placeholder="Enter your password" type="password">
+    <input id="adminPass" name="adminPass" autocomplete="current-password" placeholder="Enter your password" type="password" />
     <span class="toggle-eye" role="button" tabindex="0" aria-label="Show or hide password" onclick="togglePassword('adminPass', this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();togglePassword('adminPass', this)}">👁️</span>
   </div>
 
-  <a class="action-btn" id="adminBtn" onclick="adminLogin()" style="pointer-events: auto;">
-    Admin Login <span class="spinner" style="display: none;"></span>
+  <a class="action-btn" id="adminBtn" onclick="adminLogin()">
+    Admin Login <span class="spinner"></span>
   </a>
-  <p id="adminLoginMessage" style="color: green;">✅ Login successful! Welcome, Admin.</p>
+  <p id="adminLoginMessage"></p>
 </section>
 
 <!-- =================== ADMIN PANEL =================== -->
-<section id="admin" style="display: block;" data-accordion-ready="1">
+<section id="admin" style="display:none;">
   <!-- Logo and Motto -->
   <div style="margin:20px 0; text-align:center;">
-    <img alt="Future Finders Logo" src="https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/FUTURE%20FINDERS%20LOGO.jpeg?raw=true" style="width:150px; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.2);">
+    <img alt="Future Finders Logo"
+      src="https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/FUTURE%20FINDERS%20LOGO.jpeg?raw=true"
+      style="width:150px; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.2);" />
     <p style="margin-top:10px; font-style:italic; color:#555;">Our Identity, Our Strength</p>
   </div>
 
@@ -3797,16 +3836,26 @@ function closeSystemUpdatePopup(){
   <!-- Quick Tools -->
   <button onclick="showAvailableNumbers()" style="margin-top:10px; padding:8px 14px; background:#388e3c; color:white; border:none; border-radius:5px; cursor:pointer;">
     📋 Show Available Numbers
-  </button><p class="ff-admin-toolbar-label" hidden="">Choose a section below to view its tools and records. Close it when you are finished.</p><div class="ff-admin-toolbar" aria-label="Administrator sections" style="display: grid !important; visibility: visible !important; opacity: 1 !important;"><section class="ff-admin-card" data-admin-panel="summary" hidden="" style="display: none; visibility: visible !important; opacity: 1 !important;"><button type="button" class="ff-admin-toggle" aria-expanded="false" aria-controls="ff-admin-content-summary" style="display: flex !important; visibility: visible !important; opacity: 1 !important;"><span>📊 Dashboard Summary</span><span class="ff-chevron" aria-hidden="true">⌄</span></button><div class="ff-admin-content" id="ff-admin-content-summary" hidden=""><div id="adminSummary" style="display:flex; gap:15px; margin:15px 0; flex-wrap:wrap;">
+  </button>
+
+  <!-- Loan availability is controlled by the PUBLISHED_LOANS_OPEN setting in the code. -->
+
+  <!-- SUMMARY CARDS -->
+  <div id="adminSummary" style="display:flex; gap:15px; margin:15px 0; flex-wrap:wrap;">
     <div class="summary-card" id="totalMembersCard">👥 Total Members: 0</div>
     <div class="summary-card" id="totalSavingsCard">💰 Total Savings: Ksh 0</div>
     <div class="summary-card" id="totalLoansCard">📑 Total Loans: 0</div>
     <div class="summary-card" id="loanBreakdownCard">📊 Loan Status: 0 Pending / 0 Approved / 0 Rejected</div>
-  </div></div></section><section class="ff-admin-card" data-admin-panel="notes" hidden="" style="display: none; visibility: visible !important; opacity: 1 !important;"><button type="button" class="ff-admin-toggle" aria-expanded="false" aria-controls="ff-admin-content-notes" style="display: flex !important; visibility: visible !important; opacity: 1 !important;"><span>🗒️ Members Notes</span><span class="ff-chevron" aria-hidden="true">⌄</span></button><div class="ff-admin-content" id="ff-admin-content-notes" hidden=""><div id="membersNotesPanel" style="margin-top:25px; border-top:1px dashed #ddd; padding-top:15px;">
+  </div>
+
+  <!-- 🗒️ Members Notes -->
+  <div id="membersNotesPanel" style="margin-top:25px; border-top:1px dashed #ddd; padding-top:15px;">
     <h3>🗒️ Members Notes</h3>
     <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:flex-start;">
-      <input id="noteMemberName" placeholder="Member name (optional)" type="text" style="padding:8px; border:1px solid #ccc; border-radius:5px; width:250px;">
-      <textarea id="adminNoteText" placeholder="Type your note here..." rows="3" style="flex:1; min-width:260px; padding:8px; border:1px solid #ccc; border-radius:5px;"></textarea>
+      <input id="noteMemberName" placeholder="Member name (optional)" type="text"
+        style="padding:8px; border:1px solid #ccc; border-radius:5px; width:250px;" />
+      <textarea id="adminNoteText" placeholder="Type your note here..." rows="3"
+        style="flex:1; min-width:260px; padding:8px; border:1px solid #ccc; border-radius:5px;"></textarea>
       <div style="display:flex; flex-direction:column; gap:8px;">
         <button id="saveNoteBtn" onclick="saveMemberNote()" style="padding:10px 14px; background:#1976d2; color:white; border:none; border-radius:5px; cursor:pointer;">💾 Save Note</button>
         <button onclick="clearNoteInputs()" style="padding:8px 12px; background:#9e9e9e; color:white; border:none; border-radius:5px; cursor:pointer;">✖ Clear</button>
@@ -3826,15 +3875,22 @@ function closeSystemUpdatePopup(){
             <th style="width:120px; text-align:center;">Actions</th>
           </tr>
         </thead>
-        <tbody id="membersNotesBody"><tr><td colspan="4" style="color:gray; text-align:center; padding:16px;">No notes yet.</td></tr></tbody>
+        <tbody id="membersNotesBody">
+          <tr><td colspan="4" style="color:gray; text-align:center; padding:16px;">No notes yet.</td></tr>
+        </tbody>
       </table></div>
-    </div></div></section><section class="ff-admin-card" data-admin-panel="members" hidden="" style="display: none; visibility: visible !important; opacity: 1 !important;"><button type="button" class="ff-admin-toggle" aria-expanded="false" aria-controls="ff-admin-content-members" style="display: flex !important; visibility: visible !important; opacity: 1 !important;"><span>👥 Members Overview</span><span class="ff-chevron" aria-hidden="true">⌄</span></button><div class="ff-admin-content" id="ff-admin-content-members" hidden=""><div id="membersOverviewPanel" style="margin-top:30px; border-top:1px dashed #ccc; padding-top:20px;">
+    </div>
+  </div>
+<!-- 👥 Members Overview Section -->
+<div id="membersOverviewPanel" style="margin-top:30px; border-top:1px dashed #ccc; padding-top:20px;">
   <h2 style="color:#1976d2; margin-bottom:15px;">👥 Members Overview</h2>
 
   <!-- Search and Export -->
   <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
-    <input id="memberSearchInput" onkeyup="filterMembersTable()" placeholder="🔍 Search by name or phone..." style="flex:1; min-width:200px; padding:10px; border:1px solid #bbb; border-radius:6px; font-size:15px;">
-    <button onclick="exportMembersCSV()" style="padding:10px 16px; background:#1976d2; color:white; border:none; border-radius:6px; cursor:pointer;">
+    <input id="memberSearchInput" onkeyup="filterMembersTable()" placeholder="🔍 Search by name or phone..."
+      style="flex:1; min-width:200px; padding:10px; border:1px solid #bbb; border-radius:6px; font-size:15px;">
+    <button onclick="exportMembersCSV()" 
+      style="padding:10px 16px; background:#1976d2; color:white; border:none; border-radius:6px; cursor:pointer;">
       ⬇️ Export CSV
     </button>
   </div>
@@ -3854,591 +3910,42 @@ function closeSystemUpdatePopup(){
 </thead>
 
       <tbody id="membersTableBody" style="background:white;">
-      <tr>
-        <td>BONIFACE CHELLUGET</td>
-        <td>0713953004</td>
-        <td>Ksh 8,000</td>
-        <td>Ksh 0</td>
-        <td>1364, 200, 1000, 1000, 500, 1000, 500</td>
-        <td>Consistent saver</td>
-      </tr>
-    
-      <tr>
-        <td>HILDA ODERO</td>
-        <td>0795341320</td>
-        <td>Ksh 1,100</td>
-        <td>Ksh 0</td>
-        <td>900, 200</td>
-        <td>Missed March payment — follow up on consistency.</td>
-      </tr>
-    
-      <tr>
-        <td>JOEL EGESA</td>
-        <td>0768039551</td>
-        <td>Ksh 2,020</td>
-        <td>Ksh 0</td>
-        <td>720</td>
-        <td>New member; low savings but improving gradually.</td>
-      </tr>
-    
-      <tr>
-        <td>SHALIK SHIVERENGE</td>
-        <td>0746277086</td>
-        <td>Ksh 2,120</td>
-        <td>Ksh 0</td>
-        <td>250, 200, 130, 300, 160, 250, 50</td>
-        <td>Needs encouragement to make regular deposits.</td>
-      </tr>
-    
-      <tr>
-        <td>ELVIS KAMASH</td>
-        <td>0798577851</td>
-        <td>Ksh 15,701</td>
-        <td>Ksh 0</td>
-        <td>902, 50, 1840, 892, 400, 2155, 264</td>
-        <td></td>
-      </tr>
-    
-      <tr>
-        <td>JULIUS KEBASO</td>
-        <td>0705296154</td>
-        <td>Ksh 4,722</td>
-        <td>Ksh 0</td>
-        <td>2022, 500, 300, 400, 400, 500</td>
-        <td>Very reliable saver — possible leadership candidate. Fines: 30 as of 17th Nov 2025, paid 25.</td>
-      </tr>
-    
-      <tr>
-        <td>JACKIENYARANGI</td>
-        <td>0790206224</td>
-        <td>Ksh 2,300</td>
-        <td>Ksh 0</td>
-        <td>1000, 250, 200, 200, 200, 200, 100</td>
-        <td>Missed several months; check commitment level.</td>
-      </tr>
-    
-      <tr>
-        <td>SAMUEL OYUGI</td>
-        <td>0796860412</td>
-        <td>Ksh 0</td>
-        <td>Ksh 3,122</td>
-        <td>1922, 400, 450, 350</td>
-        <td>Fines: 360 as of 2nd Nov 2025; paid 0, not paid 360. Very active; good candidate for larger loans. EXIT NOTICE: FFC-EXIT-2026-66752312 — Under Financial Reconciliation. Eligible personal savings of KSh 3,122 are to be reconciled, with all verified eligible personal savings expected to be settled in December 2026 after reconciliation; final approval and settlement remain pending.</td>
-      </tr>
-    
-      <tr>
-        <td>KEPHA MOMANYI</td>
-        <td>0759237482</td>
-        <td>Ksh 4,180</td>
-        <td>Ksh 0</td>
-        <td>960, 250, 500, 350, 400, 350, 170</td>
-        <td>On 4th Nov borrowed 300; 60 outstanding as of 2nd Nov 2025.</td>
-      </tr>
-    
-      <tr>
-        <td>FAITH MOKOGI</td>
-        <td>0706918919</td>
-        <td>Ksh 6,535</td>
-        <td>Ksh 0</td>
-        <td>1335, 150, 650, 0, 400, 500, 1700</td>
-        <td>Fines: 90 as of 2nd Nov 2025; paid 0, outstanding 30. June 2026 loan of KSh 1,500 has KSh 700 outstanding.</td>
-      </tr>
-    
-      <tr>
-        <td>SHAMIM ISIJI</td>
-        <td>0725979420</td>
-        <td>Ksh 12,349</td>
-        <td>Ksh 0</td>
-        <td>1100, 200, 700, 1215, 505, 3836, 375</td>
-        <td></td>
-      </tr>
-    
-      <tr>
-        <td>CLAUDIA MORAA</td>
-        <td>0741520782</td>
-        <td>Ksh 8,100</td>
-        <td>Ksh 0</td>
-        <td>825, 100, 400, 125, 240, 890, 370</td>
-        <td></td>
-      </tr>
-    
-      <tr>
-        <td>ESTHER OBEGI</td>
-        <td>0748845363</td>
-        <td>Ksh 0</td>
-        <td>Ksh 0</td>
-        <td>0, 0, 0, 0, 0, 0, 0, 500, 0</td>
-        <td></td>
-      </tr>
-    
-      <tr>
-        <td>ELIZABETH SHIUNDU</td>
-        <td>0745078964</td>
-        <td>Ksh 1,850</td>
-        <td>Ksh 0</td>
-        <td>400, 500, 400, 450, 100</td>
-        <td></td>
-      </tr>
-    
-      <tr>
-        <td>LILIAN KERUBO</td>
-        <td>0796476808</td>
-        <td>Ksh 1,697</td>
-        <td>Ksh 0</td>
-        <td>400, 300, 100, 219, 300, 117, 53</td>
-        <td></td>
-      </tr>
-    
-      <tr>
-        <td>NELLY KARIMI</td>
-        <td>0757905172</td>
-        <td>Ksh 2,100</td>
-        <td>Ksh 0</td>
-        <td>0, 0, 120, 170, 150, 300, 300, 0, 0</td>
-        <td></td>
-      </tr>
-    
-      <tr>
-        <td>CANZEDENA ANYANGO</td>
-        <td>0716031999</td>
-        <td>Ksh 2,820</td>
-        <td>Ksh 0</td>
-        <td>0, 0, 195, 170, 40, 0, 0, 0, 0</td>
-        <td>Member has requested to defer receipt of her savings from December 2026 to 2027. Payout status: Deferred to 2027.</td>
-      </tr>
-    
-      <tr>
-        <td>JAPHETH MULI</td>
-        <td>0746989737</td>
-        <td>Ksh 59,830</td>
-        <td>Ksh 0</td>
-        <td>0, 50, 215, 8855, 7930, 8010, 10000, 0, 0</td>
-        <td></td>
-      </tr>
-    
-      <tr>
-        <td>DEFTERS PHOLIUS</td>
-        <td>2026</td>
-        <td>Ksh 2,456</td>
-        <td>Ksh 0</td>
-        <td>0, 50, 0, 0, 0, 0, 0, 0, 0</td>
-        <td></td>
-      </tr>
-    
-      <tr>
-        <td>BENSON NYATUKA</td>
-        <td>0788927292</td>
-        <td>Ksh 3,789</td>
-        <td>Ksh 0</td>
-        <td>0, 0, 0, 0, 0, 0, 0, 0, 0</td>
-        <td></td>
-      </tr>
-    
-      <tr>
-        <td>ANN KEMUNTO</td>
-        <td>0704607118</td>
-        <td>Ksh 200</td>
-        <td>Ksh 0</td>
-        <td>0, 0, 0, 0, 0, 0, 0, 0, 0</td>
-        <td></td>
-      </tr>
-    
-      <tr>
-        <td>EDNAH NANCY</td>
-        <td>0717684177</td>
-        <td>Ksh 0</td>
-        <td>Ksh 0</td>
-        <td>0, 0, 0, 0, 0, 0, 0, 0, 0</td>
-        <td></td>
-      </tr>
-    
-      <tr>
-        <td>PURITY MOMANYI</td>
-        <td>0103155480</td>
-        <td>Ksh 0</td>
-        <td>Ksh 0</td>
-        <td>0, 0, 0, 0, 0, 0, 0, 0, 0</td>
-        <td></td>
-      </tr>
-    
-      <tr>
-        <td>BOAZ KOKONYA</td>
-        <td>0718124321</td>
-        <td>Ksh 3,000</td>
-        <td>Ksh 0</td>
-        <td>0, 0, 0, 0, 0, 0, 0, 0, 0</td>
-        <td></td>
-      </tr>
-    </tbody>
+        <tr>
+          <td colspan="5" style="text-align:center; color:gray; padding:20px;">Loading members...</td>
+        </tr>
+      </tbody>
     </table>
   </div>
 
   <!-- Summary -->
   <div id="membersSummary" style="margin-top:15px; font-weight:600; color:#333;">
-    👤 Total Members: <span id="totalMembersCount">24</span> |
-    💰 Combined Savings: Ksh <span id="totalSavingsSum">144,869</span>
+    👤 Total Members: <span id="totalMembersCount">0</span> |
+    💰 Combined Savings: Ksh <span id="totalSavingsSum">0</span>
   </div>
 
   <!-- 📄 Member Contract Management -->
-  
-</div></div></section><section class="ff-admin-card" data-admin-panel="loans" hidden="" style="display: none; visibility: visible !important; opacity: 1 !important;"><button type="button" class="ff-admin-toggle" aria-expanded="false" aria-controls="ff-admin-content-loans" style="display: flex !important; visibility: visible !important; opacity: 1 !important;"><span>📑 Loan Management &amp; Applications</span><span class="ff-chevron" aria-hidden="true">⌄</span></button><div class="ff-admin-content" id="ff-admin-content-loans" hidden=""><h3 class="ff-mm-heading">👤 Member Management</h3><input id="loanSearch" onkeyup="filterLoans()" placeholder="🔍 Search loans by name, phone, or status..." style="width:95%; padding:8px; margin:10px 0; border:1px solid #ccc; border-radius:5px;" type="text"><select id="loanStatusFilter" onchange="filterLoans()" style="padding:8px; margin:10px 0; border:1px solid #ccc; border-radius:5px;">
-    <option value="">📂 Show All</option>
-    <option value="Pending">⏳ Pending</option>
-    <option value="Approved">✅ Approved</option>
-    <option value="Rejected">❌ Rejected</option>
-  </select><button onclick="exportLoans()" style="padding:8px 12px; margin:10px 0; background:#1976d2; color:white; border:none; border-radius:5px; cursor:pointer;" class="ff-export-loans">
-    📂 Export Loans (CSV)
-  </button><div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:12px 0;padding:12px;border:1px solid #cbd5e1;border-radius:10px;background:#f8fafc;" aria-label="Loan PDF downloads under Loan Management Applications">
-    <button type="button" onclick="downloadAdminLoansPDF()" style="padding:10px 14px;background:#075985;color:#fff;border:0;border-radius:7px;font-weight:700;cursor:pointer;">⬇ Download All Loans (PDF)</button>
-    <select id="adminLoanHistoryMember" style="min-width:220px;padding:10px;border:1px solid #cbd5e1;border-radius:7px;"><option value="">Select member loan history</option><option value="ELVIS KAMASH">ELVIS KAMASH</option><option value="FAITH MOKOGI">FAITH MOKOGI</option><option value="JAPHETH MULI">JAPHETH MULI</option><option value="KEPHA MOMANYI">KEPHA MOMANYI</option><option value="NELLY KARIMI">NELLY KARIMI</option><option value="SHAMIM ISIJI">SHAMIM ISIJI</option></select>
-    <button type="button" onclick="downloadAdminMemberLoanHistoryPDF()" style="padding:10px 14px;background:#166534;color:#fff;border:0;border-radius:7px;font-weight:700;cursor:pointer;">📑 Download Member Loan History (PDF)</button>
-  </div><h3 class="ff-loan-heading">📜 Loan Applications</h3><table border="1" style="width:100%; border-collapse:collapse; text-align:center;" class="ff-loan-table">
-    <thead style="background:#1976d2; color:white;">
-      <tr>
-        <th>Name</th>
-        <th>Phone</th>
-        <th>Qualified Loan</th>
-        <th>Requested Amount</th>
-        <th>ID Number</th>
-        <th>Period</th>
-        <th>Repayment / Paid / Balance</th>
-        <th>Loan &amp; Repayment Dates</th>
-        <th>Decision / Reason</th>
-        <th>Repayment Schedule</th>
-        <th>Admin Action</th>
-      </tr>
-    </thead>
-    <tbody id="adminLoanBody"><tr>
-      <td>ELVIS KAMASH</td>
-      <td>0798577851</td>
-      <td>KSh 2,500</td>
-      <td>KSh 2,500</td>
-      <td>—</td>
-      <td>2</td>
-      <td>KSh 2,875<br><small>Paid: KSh 2,875<br>Late penalty: <span style="color:#64748b;">KSh 0</span><br>Balance incl. penalty: KSh 0</small></td>
-      <td>17/09/2026<br><small>First: 15/08/2026<br>Final: 15/09/2026</small></td>
-      <td style="font-weight:bold;color:#218838;">APPROVED<br><small style="color:#555;font-weight:normal;">Reason: QUALIFIED FOR A LOAN</small><br><small style="color:#64748b;font-weight:normal;">Decision is managed in the member record in code</small></td>
-      <td><details style="min-width:180px;text-align:left;"><summary style="cursor:pointer;color:#155e75;">View schedule (2)</summary><div style="padding:6px 0;"><div style="padding:5px;border-bottom:1px solid #e5e7eb;"><b>Payment 1</b><br>Due: 15/08/2026<br>Due: KSh 1,438<br>Paid: KSh 1,438</div><div style="padding:5px;border-bottom:1px solid #e5e7eb;"><b>Payment 2</b><br>Due: 15/09/2026<br>Due: KSh 1,437<br>Paid: KSh 1,437</div></div></details></td>
-      <td style="min-width:125px;">
-        <small style="color:#475569;">Decision recorded</small>
-      </td>
-    </tr><tr>
-      <td>ELVIS KAMASH</td>
-      <td>0798577851</td>
-      <td>KSh 3,000</td>
-      <td>KSh 3,000</td>
-      <td>—</td>
-      <td>2</td>
-      <td>KSh 3,450<br><small>Paid: KSh 3,450<br>Late penalty: <span style="color:#64748b;">KSh 0</span><br>Balance incl. penalty: KSh 0</small></td>
-      <td>—<br><small>First: 23/08/2026<br>Final: 23/09/2026</small></td>
-      <td style="font-weight:bold;color:#218838;">APPROVED<br><small style="color:#555;font-weight:normal;">Reason: QUALIFIED</small><br><small style="color:#64748b;font-weight:normal;">Decision is managed in the member record in code</small></td>
-      <td><details style="min-width:180px;text-align:left;"><summary style="cursor:pointer;color:#155e75;">View schedule (2)</summary><div style="padding:6px 0;"><div style="padding:5px;border-bottom:1px solid #e5e7eb;"><b>Payment 1</b><br>Due: 23/08/2026<br>Due: KSh 1,725<br>Paid: KSh 1,725</div><div style="padding:5px;border-bottom:1px solid #e5e7eb;"><b>Payment 2</b><br>Due: 23/09/2026<br>Due: KSh 1,725<br>Paid: KSh 1,725</div></div></details></td>
-      <td style="min-width:125px;">
-        <small style="color:#475569;">Decision recorded</small>
-      </td>
-    </tr><tr>
-      <td>KEPHA MOMANYI</td>
-      <td>0759237482</td>
-      <td>KSh 1,500</td>
-      <td>KSh 1,500</td>
-      <td>407818334</td>
-      <td>1 MONTH</td>
-      <td>KSh 1,680<br><small>Paid: KSh 1,680<br>Late penalty: <span style="color:#64748b;">KSh 0</span><br>Balance incl. penalty: KSh 0</small></td>
-      <td>05/06/2026<br><small>First: 06/06/2026<br>Final: 06/06/2026</small></td>
-      <td style="font-weight:bold;color:#218838;">APPROVED<br><small style="color:#555;font-weight:normal;">Reason: QUALIFIED — FULLY REPAID</small><br><small style="color:#64748b;font-weight:normal;">Decision is managed in the member record in code</small></td>
-      <td><details style="min-width:180px;text-align:left;"><summary style="cursor:pointer;color:#155e75;">View schedule (1)</summary><div style="padding:6px 0;"><div style="padding:5px;border-bottom:1px solid #e5e7eb;"><b>Payment 1</b><br>Due: 06/06/2026<br>Due: KSh 1,680<br>Paid: KSh 1,680</div></div></details></td>
-      <td style="min-width:125px;">
-        <small style="color:#475569;">Decision recorded</small>
-      </td>
-    </tr><tr>
-      <td>KEPHA MOMANYI</td>
-      <td>0759237482</td>
-      <td>KSh 2,500</td>
-      <td>KSh 2,500</td>
-      <td>40781834</td>
-      <td>2 MONTHS</td>
-      <td>KSh 2,875<br><small>Paid: KSh 2,875<br>Late penalty: <span style="color:#64748b;">KSh 0</span><br>Balance incl. penalty: KSh 0</small></td>
-      <td>29/07/2026<br><small>First: 29/08/2026<br>Final: 29/09/2026</small></td>
-      <td style="font-weight:bold;color:#218838;">APPROVED<br><small style="color:#555;font-weight:normal;">Reason: QUALIFIED — FULLY REPAID</small><br><small style="color:#64748b;font-weight:normal;">Decision is managed in the member record in code</small></td>
-      <td><details style="min-width:180px;text-align:left;"><summary style="cursor:pointer;color:#155e75;">View schedule (2)</summary><div style="padding:6px 0;"><div style="padding:5px;border-bottom:1px solid #e5e7eb;"><b>Payment 1</b><br>Due: 29/08/2026<br>Due: KSh 1,438<br>Paid: KSh 1,438</div><div style="padding:5px;border-bottom:1px solid #e5e7eb;"><b>Payment 2</b><br>Due: 29/09/2026<br>Due: KSh 1,437<br>Paid: KSh 1,437</div></div></details></td>
-      <td style="min-width:125px;">
-        <small style="color:#475569;">Decision recorded</small>
-      </td>
-    </tr><tr>
-      <td>KEPHA MOMANYI</td>
-      <td>0759237482</td>
-      <td>KSh 2,600</td>
-      <td>KSh 2,600</td>
-      <td>40781834</td>
-      <td>2 MONTHS</td>
-      <td>KSh 2,990<br><small>Paid: KSh 2,990<br>Late penalty: <span style="color:#64748b;">KSh 0</span><br>Balance incl. penalty: KSh 0</small></td>
-      <td>15/09/2026<br><small>First: 15/10/2026<br>Final: 15/11/2026</small></td>
-      <td style="font-weight:bold;color:#218838;">APPROVED<br><small style="color:#555;font-weight:normal;">Reason: QUALIFIED — FULLY REPAID ON TIME</small><br><small style="color:#64748b;font-weight:normal;">Decision is managed in the member record in code</small></td>
-      <td><details style="min-width:180px;text-align:left;"><summary style="cursor:pointer;color:#155e75;">View schedule (2)</summary><div style="padding:6px 0;"><div style="padding:5px;border-bottom:1px solid #e5e7eb;"><b>Payment 1</b><br>Due: 15/10/2026<br>Due: KSh 1,495<br>Paid: KSh 1,495</div><div style="padding:5px;border-bottom:1px solid #e5e7eb;"><b>Payment 2</b><br>Due: 15/11/2026<br>Due: KSh 1,495<br>Paid: KSh 1,495</div></div></details></td>
-      <td style="min-width:125px;">
-        <small style="color:#475569;">Decision recorded</small>
-      </td>
-    </tr><tr>
-      <td>FAITH MOKOGI</td>
-      <td>0706918919</td>
-      <td>KSh 1,500</td>
-      <td>KSh 1,500</td>
-      <td>33959157</td>
-      <td>1 MONTH</td>
-      <td>KSh 1,680<br><small>Paid: KSh 980<br>Late penalty: <span style="color:#c62828;">KSh 300</span><br>Balance incl. penalty: KSh 1,000</small></td>
-      <td>28TH JUNE 2026<br><small>First: 06/06/2026<br>Final: 28TH JULY 2026</small></td>
-      <td style="font-weight:bold;color:#218838;">APPROVED<br><small style="color:#555;font-weight:normal;">Reason: PARTIALLY REPAID — KSH 1000 OUTSTANDING</small><br><small style="color:#64748b;font-weight:normal;">Decision is managed in the member record in code</small></td>
-      <td><details style="min-width:180px;text-align:left;"><summary style="cursor:pointer;color:#155e75;">View schedule (1)</summary><div style="padding:6px 0;"><div style="padding:5px;border-bottom:1px solid #e5e7eb;"><b>Payment 1</b><br>Due: 28/07/2026<br>Due: KSh 1,680<br>Paid: KSh 980</div><div style="padding:7px;color:#c62828;"><b>Total late penalty: KSh 300</b></div></div></details></td>
-      <td style="min-width:125px;">
-        <small style="color:#475569;">Decision recorded</small>
-      </td>
-    </tr><tr>
-      <td>FAITH MOKOGI</td>
-      <td>0706918919</td>
-      <td>KSh 1,500</td>
-      <td>KSh 1,500</td>
-      <td>33959157</td>
-      <td>1 MONTH</td>
-      <td>KSh 1,680<br><small>Paid: KSh 1,680<br>Late penalty: <span style="color:#64748b;">KSh 0</span><br>Balance incl. penalty: KSh 0</small></td>
-      <td>06/02/2026<br><small>First: 06/03/2026<br>Final: 06/03/2026</small></td>
-      <td style="font-weight:bold;color:#218838;">APPROVED<br><small style="color:#555;font-weight:normal;">Reason: QUALIFIED — FULLY REPAID WITH NO PENALTY</small><br><small style="color:#64748b;font-weight:normal;">Decision is managed in the member record in code</small></td>
-      <td><details style="min-width:180px;text-align:left;"><summary style="cursor:pointer;color:#155e75;">View schedule (1)</summary><div style="padding:6px 0;"><div style="padding:5px;border-bottom:1px solid #e5e7eb;"><b>Payment 1</b><br>Due: 06/03/2026<br>Due: KSh 1,680<br>Paid: KSh 1,680</div></div></details></td>
-      <td style="min-width:125px;">
-        <small style="color:#475569;">Decision recorded</small>
-      </td>
-    </tr><tr>
-      <td>FAITH MOKOGI</td>
-      <td>0706918919</td>
-      <td>KSh 1,000</td>
-      <td>KSh 1,000</td>
-      <td>33959157</td>
-      <td>1 MONTH</td>
-      <td>KSh 1,120<br><small>Paid: KSh 1,120<br>Late penalty: <span style="color:#64748b;">KSh 0</span><br>Balance incl. penalty: KSh 0</small></td>
-      <td>09/01/2026<br><small>First: 09/02/2026<br>Final: 09/02/2026</small></td>
-      <td style="font-weight:bold;color:#218838;">APPROVED<br><small style="color:#555;font-weight:normal;">Reason: QUALIFIED — FULLY REPAID ON TIME</small><br><small style="color:#64748b;font-weight:normal;">Decision is managed in the member record in code</small></td>
-      <td><details style="min-width:180px;text-align:left;"><summary style="cursor:pointer;color:#155e75;">View schedule (1)</summary><div style="padding:6px 0;"><div style="padding:5px;border-bottom:1px solid #e5e7eb;"><b>Payment 1</b><br>Due: 09/02/2026<br>Due: KSh 1,120<br>Paid: KSh 1,120</div></div></details></td>
-      <td style="min-width:125px;">
-        <small style="color:#475569;">Decision recorded</small>
-      </td>
-    </tr><tr>
-      <td>SHAMIM ISIJI</td>
-      <td>0725979420</td>
-      <td>KSh 500</td>
-      <td>KSh 500</td>
-      <td>—</td>
-      <td>1 MONTH</td>
-      <td>KSh 560<br><small>Paid: KSh 560<br>Late penalty: <span style="color:#64748b;">KSh 0</span><br>Balance incl. penalty: KSh 0</small></td>
-      <td>10/04/2026<br><small>First: 10/05/2026<br>Final: 10/05/2026</small></td>
-      <td style="font-weight:bold;color:#218838;">APPROVED<br><small style="color:#555;font-weight:normal;">Reason: QUALIFIED — FULLY REPAID ON TIME</small><br><small style="color:#64748b;font-weight:normal;">Decision is managed in the member record in code</small></td>
-      <td><details style="min-width:180px;text-align:left;"><summary style="cursor:pointer;color:#155e75;">View schedule (1)</summary><div style="padding:6px 0;"><div style="padding:5px;border-bottom:1px solid #e5e7eb;"><b>Payment 1</b><br>Due: 10/05/2026<br>Due: KSh 560<br>Paid: KSh 560</div></div></details></td>
-      <td style="min-width:125px;">
-        <small style="color:#475569;">Decision recorded</small>
-      </td>
-    </tr><tr>
-      <td>SHAMIM ISIJI</td>
-      <td>0725979420</td>
-      <td>KSh 3,000</td>
-      <td>KSh 3,000</td>
-      <td>38368808</td>
-      <td>2 MONTHS</td>
-      <td>KSh 3,450<br><small>Paid: KSh 3,450<br>Late penalty: <span style="color:#64748b;">KSh 0</span><br>Balance incl. penalty: KSh 0</small></td>
-      <td>19/07/2026<br><small>First: 19/08/2026<br>Final: 01/09/2026</small></td>
-      <td style="font-weight:bold;color:#218838;">APPROVED<br><small style="color:#555;font-weight:normal;">Reason: QUALIFIED — FULLY REPAID ON 01/09/2026</small><br><small style="color:#64748b;font-weight:normal;">Decision is managed in the member record in code</small></td>
-      <td><details style="min-width:180px;text-align:left;"><summary style="cursor:pointer;color:#155e75;">View schedule (2)</summary><div style="padding:6px 0;"><div style="padding:5px;border-bottom:1px solid #e5e7eb;"><b>Payment 1</b><br>Due: 19/08/2026<br>Due: KSh 1,725<br>Paid: KSh 1,725</div><div style="padding:5px;border-bottom:1px solid #e5e7eb;"><b>Payment 2</b><br>Due: 19/09/2026<br>Due: KSh 1,725<br>Paid: KSh 1,725</div></div></details></td>
-      <td style="min-width:125px;">
-        <small style="color:#475569;">Decision recorded</small>
-      </td>
-    </tr><tr>
-      <td>SHAMIM ISIJI</td>
-      <td>0725979420</td>
-      <td>KSh 1,000</td>
-      <td>KSh 1,000</td>
-      <td>—</td>
-      <td>2 MONTHS</td>
-      <td>KSh 1,150<br><small>Paid: KSh 1,150<br>Late penalty: <span style="color:#64748b;">KSh 0</span><br>Balance incl. penalty: KSh 0</small></td>
-      <td>09/06/2026<br><small>First: 09/07/2026<br>Final: 09/08/2026</small></td>
-      <td style="font-weight:bold;color:#218838;">APPROVED<br><small style="color:#555;font-weight:normal;">Reason: QUALIFIED — FULLY REPAID ON TIME</small><br><small style="color:#64748b;font-weight:normal;">Decision is managed in the member record in code</small></td>
-      <td><details style="min-width:180px;text-align:left;"><summary style="cursor:pointer;color:#155e75;">View schedule (2)</summary><div style="padding:6px 0;"><div style="padding:5px;border-bottom:1px solid #e5e7eb;"><b>Payment 1</b><br>Due: 09/07/2026<br>Due: KSh 575<br>Paid: KSh 575</div><div style="padding:5px;border-bottom:1px solid #e5e7eb;"><b>Payment 2</b><br>Due: 09/08/2026<br>Due: KSh 575<br>Paid: KSh 575</div></div></details></td>
-      <td style="min-width:125px;">
-        <small style="color:#475569;">Decision recorded</small>
-      </td>
-    </tr><tr>
-      <td>NELLY KARIMI</td>
-      <td>0757905172</td>
-      <td>KSh 1,000</td>
-      <td>KSh 1,000</td>
-      <td>—</td>
-      <td>1 MONTH</td>
-      <td>KSh 1,120<br><small>Paid: KSh 1,120<br>Late penalty: <span style="color:#64748b;">KSh 0</span><br>Balance incl. penalty: KSh 0</small></td>
-      <td>23/08/2026<br><small>First: 23/09/2026<br>Final: 23/09/2026</small></td>
-      <td style="font-weight:bold;color:#218838;">APPROVED<br><small style="color:#555;font-weight:normal;">Reason: QUALIFIED — FULLY REPAID ON TIME</small><br><small style="color:#64748b;font-weight:normal;">Decision is managed in the member record in code</small></td>
-      <td><details style="min-width:180px;text-align:left;"><summary style="cursor:pointer;color:#155e75;">View schedule (1)</summary><div style="padding:6px 0;"><div style="padding:5px;border-bottom:1px solid #e5e7eb;"><b>Payment 1</b><br>Due: 23/09/2026<br>Due: KSh 1,120<br>Paid: KSh 1,120</div></div></details></td>
-      <td style="min-width:125px;">
-        <small style="color:#475569;">Decision recorded</small>
-      </td>
-    </tr><tr>
-      <td>NELLY KARIMI</td>
-      <td>0757905172</td>
-      <td>KSh 1,200</td>
-      <td>KSh 1,200</td>
-      <td>—</td>
-      <td>1 MONTH</td>
-      <td>KSh 1,344<br><small>Paid: KSh 1,344<br>Late penalty: <span style="color:#64748b;">KSh 0</span><br>Balance incl. penalty: KSh 0</small></td>
-      <td>19/09/2026<br><small>First: 19/10/2026<br>Final: 19/10/2026</small></td>
-      <td style="font-weight:bold;color:#218838;">APPROVED<br><small style="color:#555;font-weight:normal;">Reason: QUALIFIED — FULLY REPAID ON TIME</small><br><small style="color:#64748b;font-weight:normal;">Decision is managed in the member record in code</small></td>
-      <td><details style="min-width:180px;text-align:left;"><summary style="cursor:pointer;color:#155e75;">View schedule (1)</summary><div style="padding:6px 0;"><div style="padding:5px;border-bottom:1px solid #e5e7eb;"><b>Payment 1</b><br>Due: 19/10/2026<br>Due: KSh 1,344<br>Paid: KSh 1,344</div></div></details></td>
-      <td style="min-width:125px;">
-        <small style="color:#475569;">Decision recorded</small>
-      </td>
-    </tr><tr>
-      <td>NELLY KARIMI</td>
-      <td>0757905172</td>
-      <td>KSh 1,500</td>
-      <td>KSh 1,500</td>
-      <td>—</td>
-      <td>1 MONTH</td>
-      <td>KSh 1,680<br><small>Paid: KSh 1,680<br>Late penalty: <span style="color:#64748b;">KSh 0</span><br>Balance incl. penalty: KSh 0</small></td>
-      <td>06/10/2026<br><small>First: 06/11/2026<br>Final: 01/11/2026</small></td>
-      <td style="font-weight:bold;color:#218838;">APPROVED<br><small style="color:#555;font-weight:normal;">Reason: QUALIFIED — FULLY REPAID ON 01/11/2026</small><br><small style="color:#64748b;font-weight:normal;">Decision is managed in the member record in code</small></td>
-      <td><details style="min-width:180px;text-align:left;"><summary style="cursor:pointer;color:#155e75;">View schedule (1)</summary><div style="padding:6px 0;"><div style="padding:5px;border-bottom:1px solid #e5e7eb;"><b>Payment 1</b><br>Due: 06/11/2026<br>Due: KSh 1,680<br>Paid: KSh 1,680</div></div></details></td>
-      <td style="min-width:125px;">
-        <small style="color:#475569;">Decision recorded</small>
-      </td>
-    </tr><tr>
-      <td>JAPHETH MULI</td>
-      <td>0746989737</td>
-      <td>KSh 2,000</td>
-      <td>KSh 2,000</td>
-      <td>42195496</td>
-      <td>2 MONTHS</td>
-      <td>KSh 2,300<br><small>Paid: KSh 2,300<br>Late penalty: <span style="color:#64748b;">KSh 0</span><br>Balance incl. penalty: KSh 0</small></td>
-      <td>07/05/2026<br><small>First: 07/06/2026<br>Final: 07/07/2026</small></td>
-      <td style="font-weight:bold;color:#218838;">APPROVED<br><small style="color:#555;font-weight:normal;">Reason: QUALIFIED — FULLY REPAID ON TIME</small><br><small style="color:#64748b;font-weight:normal;">Decision is managed in the member record in code</small></td>
-      <td><details style="min-width:180px;text-align:left;"><summary style="cursor:pointer;color:#155e75;">View schedule (2)</summary><div style="padding:6px 0;"><div style="padding:5px;border-bottom:1px solid #e5e7eb;"><b>Payment 1</b><br>Due: 07/06/2026<br>Due: KSh 1,150<br>Paid: KSh 1,150</div><div style="padding:5px;border-bottom:1px solid #e5e7eb;"><b>Payment 2</b><br>Due: 07/07/2026<br>Due: KSh 1,150<br>Paid: KSh 1,150</div></div></details></td>
-      <td style="min-width:125px;">
-        <small style="color:#475569;">Decision recorded</small>
-      </td>
-    </tr><tr>
-      <td>JAPHETH MULI</td>
-      <td>0746989737</td>
-      <td>KSh 3,000</td>
-      <td>KSh 3,000</td>
-      <td>42195496</td>
-      <td>2 MONTHS</td>
-      <td>KSh 3,450<br><small>Paid: KSh 3,730<br>Late penalty: <span style="color:#c62828;">KSh 280</span><br>Balance incl. penalty: KSh 280</small></td>
-      <td>08/06/2026<br><small>First: 08/07/2026<br>Final: 08/08/2026</small></td>
-      <td style="font-weight:bold;color:#218838;">APPROVED<br><small style="color:#555;font-weight:normal;">Reason: FULLY REPAID — KSH 280 LATE PENALTY PAID AT KSH 10 PER DAY</small><br><small style="color:#64748b;font-weight:normal;">Decision is managed in the member record in code</small></td>
-      <td><details style="min-width:180px;text-align:left;"><summary style="cursor:pointer;color:#155e75;">View schedule (2)</summary><div style="padding:6px 0;"><div style="padding:5px;border-bottom:1px solid #e5e7eb;"><b>Payment 1</b><br>Due: 08/07/2026<br>Due: KSh 1,725<br>Paid: KSh 1,725</div><div style="padding:5px;border-bottom:1px solid #e5e7eb;"><b>Payment 2</b><br>Due: 08/08/2026<br>Due: KSh 1,725<br>Paid: KSh 1,725</div><div style="padding:7px;color:#c62828;"><b>Total late penalty: KSh 280</b></div></div></details></td>
-      <td style="min-width:125px;">
-        <small style="color:#475569;">Decision recorded</small>
-      </td>
-    </tr><tr>
-      <td>JAPHETH MULI</td>
-      <td>0746989737</td>
-      <td>KSh 2,000</td>
-      <td>KSh 2,000</td>
-      <td>42195496</td>
-      <td>1 MONTH</td>
-      <td>KSh 2,300<br><small>Paid: KSh 0<br>Late penalty: <span style="color:#64748b;">KSh 0</span><br>Balance incl. penalty: KSh 2,300</small></td>
-      <td>10/10/2026<br><small>First: 10/11/2026<br>Final: 10/11/2026</small></td>
-      <td style="font-weight:bold;color:#218838;">APPROVED<br><small style="color:#555;font-weight:normal;">Reason: OUTSTANDING — NOT YET PAID</small><br><small style="color:#64748b;font-weight:normal;">Decision is managed in the member record in code</small></td>
-      <td><details style="min-width:180px;text-align:left;"><summary style="cursor:pointer;color:#155e75;">View schedule (1)</summary><div style="padding:6px 0;"><div style="padding:5px;border-bottom:1px solid #e5e7eb;"><b>Payment 1</b><br>Due: 10/11/2026<br>Due: KSh 2,300<br>Paid: KSh 0</div></div></details></td>
-      <td style="min-width:125px;">
-        <small style="color:#475569;">Decision recorded</small>
-      </td>
-    </tr></tbody>
-  </table></div></section><section class="ff-admin-card" data-admin-panel="contracts" hidden="" style="display: none; visibility: visible !important; opacity: 1 !important;"><button type="button" class="ff-admin-toggle" aria-expanded="false" aria-controls="ff-admin-content-contracts" style="display: flex !important; visibility: visible !important; opacity: 1 !important;"><span>📄 Membership Contracts &amp; Review</span><span class="ff-chevron" aria-hidden="true">⌄</span></button><div class="ff-admin-content" id="ff-admin-content-contracts" hidden=""><div id="memberContractsAdminPanel" style="margin-top:28px;padding-top:22px;border-top:2px solid #dbeafe;">
+  <div id="memberContractsAdminPanel" style="margin-top:28px;padding-top:22px;border-top:2px solid #dbeafe;">
     <h3 style="color:#075985;">📄 Member Contract Management — Hardcoded Records</h3>
     <p style="color:#475569;">Members sign and submit their contracts, then send the PDF to WhatsApp 0713953004. To publish an official status update for all members (like hardcoded loan records), edit the matching member’s <code>contracts</code> array in <code>index.html</code>: keep the same contract reference, set <code>adminStatus</code>, <code>startDate</code>, <code>expiryDate</code> and <code>adminNotes</code>, then redeploy the website. The controls below are a local review helper only; they do not rewrite the published HTML or update other devices.</p>
     <div style="overflow-x:auto;margin-top:16px;">
       <table style="width:100%;border-collapse:collapse;min-width:1100px;background:#fff;">
         <thead style="background:#075985;color:#fff;"><tr><th style="padding:10px;text-align:left;">Member</th><th style="padding:10px;text-align:left;">Participation</th><th style="padding:10px;text-align:left;">Fee</th><th style="padding:10px;text-align:left;">Submitted / signed</th><th style="padding:10px;text-align:left;">Admin status</th><th style="padding:10px;text-align:left;">Start date</th><th style="padding:10px;text-align:left;">Expiry / renewal</th><th style="padding:10px;text-align:left;">Admin notes</th><th style="padding:10px;text-align:left;">Actions</th></tr></thead>
-        <tbody id="ffAdminContractsTable"><tr><td style="padding:8px;border-bottom:1px solid #e2e8f0;">FAITH MOKOGI<br><small>FFC-2026-3385954</small></td><td style="padding:8px;border-bottom:1px solid #e2e8f0;">Monthly chama plus weekly participation plus savings</td><td style="padding:8px;border-bottom:1px solid #e2e8f0;">KSh 200<br><small>Registration fee outstanding — payable by 1 January 2027</small></td><td style="padding:8px;border-bottom:1px solid #e2e8f0;">7 November 2026 at 15:09</td><td style="padding:8px;border-bottom:1px solid #e2e8f0;"><select id="ff-status-FFC-2026-3385954" disabled="" style="max-width:200px;padding:7px;"><option>Submitted — Awaiting Admin Review</option><option>Under Review</option><option selected="">Approved / Active</option><option>Pending Correction</option><option>Rejected</option><option>Renewal Due</option><option>Expired</option></select></td><td style="padding:8px;border-bottom:1px solid #e2e8f0;"><input id="ff-start-FFC-2026-3385954" type="date" value="2027-01-01" disabled="" style="padding:7px;width:140px;"></td><td style="padding:8px;border-bottom:1px solid #e2e8f0;"><input id="ff-expiry-FFC-2026-3385954" type="date" value="2027-12-31" disabled="" style="padding:7px;width:140px;"></td><td style="padding:8px;border-bottom:1px solid #e2e8f0;"><textarea id="ff-notes-FFC-2026-3385954" rows="2" disabled="" style="width:170px;">Approved by Admin on 7 November 2026. Contract is approved for the 2027 membership year and will be active from 1 January 2027 to 31 December 2027. Registration fee of KSh 200 remains outstanding and must be paid by 1 January 2027.</textarea></td><td style="padding:8px;border-bottom:1px solid #e2e8f0;white-space:nowrap;"><span style="color:#64748b;font-size:12px;">Locked</span> <button type="button" onclick="downloadContractById('FFC-2026-3385954')" style="padding:7px;cursor:pointer;">PDF</button></td></tr><tr><td style="padding:8px;border-bottom:1px solid #e2e8f0;">BONIFACE CHELLUGET<br><small>FFC-2026-0773624</small></td><td style="padding:8px;border-bottom:1px solid #e2e8f0;">Monthly chama plus weekly participation plus savings</td><td style="padding:8px;border-bottom:1px solid #e2e8f0;">KSh 200<br><small>Registration fee paid</small></td><td style="padding:8px;border-bottom:1px solid #e2e8f0;">30 October 2026 at 17:32</td><td style="padding:8px;border-bottom:1px solid #e2e8f0;"><select id="ff-status-FFC-2026-0773624" disabled="" style="max-width:200px;padding:7px;"><option>Submitted — Awaiting Admin Review</option><option>Under Review</option><option selected="">Approved / Active</option><option>Pending Correction</option><option>Rejected</option><option>Renewal Due</option><option>Expired</option></select></td><td style="padding:8px;border-bottom:1px solid #e2e8f0;"><input id="ff-start-FFC-2026-0773624" type="date" value="2027-01-01" disabled="" style="padding:7px;width:140px;"></td><td style="padding:8px;border-bottom:1px solid #e2e8f0;"><input id="ff-expiry-FFC-2026-0773624" type="date" value="2027-12-31" disabled="" style="padding:7px;width:140px;"></td><td style="padding:8px;border-bottom:1px solid #e2e8f0;"><textarea id="ff-notes-FFC-2026-0773624" rows="2" disabled="" style="width:170px;">Approved by Admin on 3 November 2026. Membership registration fee of KSh 200 received and recorded as paid. Contract is approved for the 2027 membership year, effective 1 January 2027.</textarea></td><td style="padding:8px;border-bottom:1px solid #e2e8f0;white-space:nowrap;"><span style="color:#64748b;font-size:12px;">Locked</span> <button type="button" onclick="downloadContractById('FFC-2026-0773624')" style="padding:7px;cursor:pointer;">PDF</button></td></tr><tr><td style="padding:8px;border-bottom:1px solid #e2e8f0;">CLAUDIA MORAA<br><small>FFC-2026-5586793</small></td><td style="padding:8px;border-bottom:1px solid #e2e8f0;">Not specified in the supplied contract details</td><td style="padding:8px;border-bottom:1px solid #e2e8f0;">KSh 200<br><small>Registration fee pending — KSh 200 payable</small></td><td style="padding:8px;border-bottom:1px solid #e2e8f0;">Not recorded</td><td style="padding:8px;border-bottom:1px solid #e2e8f0;"><select id="ff-status-FFC-2026-5586793" disabled="" style="max-width:200px;padding:7px;"><option>Submitted — Awaiting Admin Review</option><option>Under Review</option><option selected="">Approved / Active</option><option>Pending Correction</option><option>Rejected</option><option>Renewal Due</option><option>Expired</option></select></td><td style="padding:8px;border-bottom:1px solid #e2e8f0;"><input id="ff-start-FFC-2026-5586793" type="date" value="2027-01-01" disabled="" style="padding:7px;width:140px;"></td><td style="padding:8px;border-bottom:1px solid #e2e8f0;"><input id="ff-expiry-FFC-2026-5586793" type="date" value="2027-12-31" disabled="" style="padding:7px;width:140px;"></td><td style="padding:8px;border-bottom:1px solid #e2e8f0;"><textarea id="ff-notes-FFC-2026-5586793" rows="2" disabled="" style="width:170px;">Contract recorded as ACTIVE for the 2027 membership year, effective 1 January 2027 to 31 December 2027. Registration fee of KSh 200 remains PENDING and must be recorded upon receipt.</textarea></td><td style="padding:8px;border-bottom:1px solid #e2e8f0;white-space:nowrap;"><span style="color:#64748b;font-size:12px;">Locked</span> <button type="button" onclick="downloadContractById('FFC-2026-5586793')" style="padding:7px;cursor:pointer;">PDF</button></td></tr><tr><td style="padding:8px;border-bottom:1px solid #e2e8f0;">BOAZ KOKONYA<br><small>FFC-2026-3164280</small></td><td style="padding:8px;border-bottom:1px solid #e2e8f0;">Monthly merry-go-round plus savings</td><td style="padding:8px;border-bottom:1px solid #e2e8f0;">KSh 0<br><small>2027 renewal exempt — no registration fee payable</small></td><td style="padding:8px;border-bottom:1px solid #e2e8f0;">Not recorded</td><td style="padding:8px;border-bottom:1px solid #e2e8f0;"><select id="ff-status-FFC-2026-3164280" disabled="" style="max-width:200px;padding:7px;"><option>Submitted — Awaiting Admin Review</option><option>Under Review</option><option selected="">Approved / Active</option><option>Pending Correction</option><option>Rejected</option><option>Renewal Due</option><option>Expired</option></select></td><td style="padding:8px;border-bottom:1px solid #e2e8f0;"><input id="ff-start-FFC-2026-3164280" type="date" value="2027-01-01" disabled="" style="padding:7px;width:140px;"></td><td style="padding:8px;border-bottom:1px solid #e2e8f0;"><input id="ff-expiry-FFC-2026-3164280" type="date" value="2027-12-31" disabled="" style="padding:7px;width:140px;"></td><td style="padding:8px;border-bottom:1px solid #e2e8f0;"><textarea id="ff-notes-FFC-2026-3164280" rows="2" disabled="" style="width:170px;">Contract recorded as ACTIVE for the 2027 membership year, effective 1 January 2027 to 31 December 2027. Registration fee is KSh 0 because the member is exempt from the 2027 renewal fee.</textarea></td><td style="padding:8px;border-bottom:1px solid #e2e8f0;white-space:nowrap;"><span style="color:#64748b;font-size:12px;">Locked</span> <button type="button" onclick="downloadContractById('FFC-2026-3164280')" style="padding:7px;cursor:pointer;">PDF</button></td></tr></tbody>
+        <tbody id="ffAdminContractsTable"><tr><td colspan="8" style="padding:14px;text-align:center;color:#64748b;">No member contracts submitted yet.</td></tr></tbody>
       </table>
     </div>
     <p id="ffAdminContractMessage" role="status" style="font-weight:700;"></p>
-  </div></div></section><section class="ff-admin-card" data-admin-panel="registrations" hidden="" style="display: none; visibility: visible !important; opacity: 1 !important;"><button type="button" class="ff-admin-toggle" aria-expanded="false" aria-controls="ff-admin-content-registrations" style="display: flex !important; visibility: visible !important; opacity: 1 !important;"><span>📝 Pending Member Registrations</span><span class="ff-chevron" aria-hidden="true">⌄</span></button><div class="ff-admin-content" id="ff-admin-content-registrations" hidden=""><div id="pendingMembersPanel" style="margin-top:20px;">
-    <h3>📝 Pending Member Registrations</h3>
-    <table border="1" style="width:100%; border-collapse:collapse; text-align:center;">
-      <thead style="background:#00796b; color:white;">
-        <tr>
-          <th>Name</th>
-          <th>Phone</th>
-          <th>Email</th>
-          <th>Status</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody id="pendingMembersBody">
-        <tr><td colspan="5" style="color:gray;">No pending registrations.</td><td class="saved2025">0</td><td class="reward2025">0</td></tr>
-      </tbody>
-    </table>
-  </div></div></section><section class="ff-admin-card" data-admin-panel="numbers" hidden="" style="display: none; visibility: visible !important; opacity: 1 !important;"><button type="button" class="ff-admin-toggle" aria-expanded="false" aria-controls="ff-admin-content-numbers" style="display: flex !important; visibility: visible !important; opacity: 1 !important;"><span>🎲 Picked Lucky Numbers</span><span class="ff-chevron" aria-hidden="true">⌄</span></button><div class="ff-admin-content" id="ff-admin-content-numbers" hidden=""><button onclick="togglePickedNumbers()" style="padding:10px; margin:5px; background:#1976d2; color:white; border:none; border-radius:5px; cursor:pointer;" class="ff-picked-trigger">🎲 View Picked Numbers</button><div id="pickedNumbersTable" style="display:none; margin-top:20px;">
-    <h3>🎲 Picked Lucky Numbers</h3>
-    <button onclick="downloadPickedNumbers()" style="margin-bottom:10px; padding:8px 12px; background:#388e3c; color:white; border:none; border-radius:5px; cursor:pointer;">⬇️ Download CSV</button>
-    <button onclick="resetPickedNumbers()" style="margin-bottom:10px; padding:8px 12px; background:#d32f2f; color:white; border:none; border-radius:5px; cursor:pointer;">🗑️ Reset Picked Numbers</button>
-    <table border="1" style="width:100%; border-collapse:collapse; text-align:center;">
-      <thead style="background:#1976d2; color:white;">
-        <tr><th>Member</th><th>Lucky Number</th></tr>
-      </thead>
-      <tbody id="pickedNumbersBody">
-        <tr><td colspan="2" style="color:gray;">No numbers picked yet.</td><td class="saved2025">0</td><td class="reward2025">0</td></tr>
-      </tbody>
-    </table>
-  </div></div></section><section class="ff-admin-card" data-admin-panel="updates" hidden="" style="display: none; visibility: visible !important; opacity: 1 !important;"><button type="button" class="ff-admin-toggle" aria-expanded="false" aria-controls="ff-admin-content-updates" style="display: flex !important; visibility: visible !important; opacity: 1 !important;"><span>🚀 System Updates &amp; Notifications</span><span class="ff-chevron" aria-hidden="true">⌄</span></button><div class="ff-admin-content" id="ff-admin-content-updates" hidden=""><h3 class="ff-updates-heading">🚀 System Updates</h3><textarea id="updateMessage" placeholder="Type new update..." style="width:90%; padding:10px; margin-bottom:10px;"></textarea><button onclick="postUpdate()" style="padding:10px; background:#1976d2; color:white; border:none; border-radius:5px; cursor:pointer;" class="ff-post-update">📢 Post Update</button><div id="memberSelectionBox" style="display:none; margin-top:8px;">
-    <label><b>Select Members:</b></label><br>
-    <select id="memberSelectMulti" multiple="" size="10" style="width:260px; padding:6px;"><option value="BONIFACE CHELLUGET">BONIFACE CHELLUGET</option><option value="HILDA ODERO">HILDA ODERO</option><option value="JOEL EGESA">JOEL EGESA</option><option value="SHALIK SHIVERENGE">SHALIK SHIVERENGE</option><option value="ELVIS KAMASH">ELVIS KAMASH</option><option value="JULIUS KEBASO">JULIUS KEBASO</option><option value="JACKIENYARANGI">JACKIENYARANGI</option><option value="SAMUEL OYUGI">SAMUEL OYUGI</option><option value="KEPHA MOMANYI">KEPHA MOMANYI</option><option value="FAITH MOKOGI">FAITH MOKOGI</option><option value="SHAMIM ISIJI">SHAMIM ISIJI</option><option value="CLAUDIA MORAA">CLAUDIA MORAA</option><option value="ESTHER OBEGI">ESTHER OBEGI</option><option value="ELIZABETH SHIUNDU">ELIZABETH SHIUNDU</option><option value="LILIAN KERUBO">LILIAN KERUBO</option><option value="NELLY KARIMI">NELLY KARIMI</option><option value="CANZEDENA ANYANGO">CANZEDENA ANYANGO</option><option value="JAPHETH MULI">JAPHETH MULI</option><option value="DEFTERS PHOLIUS">DEFTERS PHOLIUS</option><option value="BENSON NYATUKA">BENSON NYATUKA</option><option value="ANN KEMUNTO">ANN KEMUNTO</option><option value="EDNAH NANCY">EDNAH NANCY</option><option value="PURITY MOMANYI">PURITY MOMANYI</option><option value="BOAZ KOKONYA">BOAZ KOKONYA</option></select><br>
-    <button onclick="selectAllMembers()" style="margin-top:5px; padding:5px 10px; background:#388e3c; color:white; border:none; border-radius:4px; cursor:pointer;">✅ Select All</button>
-    <input id="memberSearch" onkeyup="filterMembers()" placeholder="🔍 Search member..." style="width:260px; padding:6px; margin-bottom:6px;" type="text">
-    <button onclick="clearAllMembers()" style="margin-top:5px; padding:5px 10px; background:#d32f2f; color:white; border:none; border-radius:4px; cursor:pointer;">❌ Clear All</button>
-    <p style="font-size:12px; color:gray; margin-top:5px;">(Hold CTRL/SHIFT to select multiple manually)</p>
-  </div><label style="display:block; margin-top:8px;" class="ff-whatsapp-label">
-    <input id="sendWhatsAppUpdate" onchange="toggleMemberSelection()" type="checkbox"> 📲 Send WhatsApp notification to members
-  </label><div style="margin-top:20px;" class="ff-update-history">
-    <h4>📜 Past Updates</h4>
-    <table border="1" style="width:100%; border-collapse:collapse; text-align:center;">
-      <thead style="background:#1976d2; color:white;">
-        <tr><th>All Updates (Click to Expand/Collapse)</th></tr>
-      </thead>
-      <tbody id="updateHistoryBody">
-        <tr><td style="color:gray;">No updates posted yet.</td><td class="saved2025">0</td><td class="reward2025">0</td></tr>
-      </tbody>
-    </table>
-  </div></div></section><section class="ff-admin-card is-open" data-admin-panel="loanAvailability" style="display: none; visibility: visible !important; opacity: 1 !important;"><button type="button" class="ff-admin-toggle" aria-expanded="true" aria-controls="ff-admin-content-loanAvailability" style="display: flex !important; visibility: visible !important; opacity: 1 !important;"><span>💰 Loan Availability Control</span><span class="ff-chevron" aria-hidden="true">⌄</span></button><div class="ff-admin-content" id="ff-admin-content-loanAvailability"><button type="button" class="ff-admin-close" aria-label="Close this administrator section">✕ Close section</button><div id="loanAvailabilityAdminPanel" style="margin:18px 0; padding:16px; border:1px solid #cbd5e1; border-radius:10px; background:#f8fafc;">
-    <h3 style="margin:0 0 8px; color:#17324d;">💰 Loan Availability Control</h3>
-    <p style="margin:0 0 10px; color:#475569;">Choose the automatic Constitution schedule or set a temporary manual status. Each action downloads an updated index.html; upload it to GitHub to publish the change for every member.</p>
-    <div id="loanAvailabilityAdminStatus" role="status" style="padding: 10px; background: white; border-radius: 6px; margin-bottom: 10px; line-height: 1.5; color: rgb(24, 122, 54);"><strong>Current status: OPEN</strong><br><small>Published manual setting — upload the downloaded index.html to GitHub — member requested for special loan</small></div>
-    <label for="loanOverrideReason" style="display:block; font-weight:600; margin-bottom:5px;">Reason for manual change</label>
-    <input id="loanOverrideReason" type="text" placeholder="e.g. Temporary closure due to limited funds" style="box-sizing:border-box; width:100%; max-width:520px; padding:10px; border:1px solid #cbd5e1; border-radius:6px; margin-bottom:10px;">
-    <div style="display:flex; gap:8px; flex-wrap:wrap;">
-      <button type="button" class="action-btn ff-admin-action" onclick="setLoanAvailabilityOverride('CLOSED')">🔒 Close Loans Now</button>
-      <button type="button" class="action-btn ff-admin-action" onclick="setLoanAvailabilityOverride('OPEN')">🔓 Reopen Loans Now</button>
-      <button type="button" class="action-btn ff-admin-action" onclick="setLoanAvailabilityOverride('AUTO')">↻ Return to Automatic</button>
-    </div>
-    <p style="font-size:12px; color:#166534; margin:10px 0 0;"><strong>Publishing:</strong> After choosing an action, upload the downloaded <strong>index.html</strong> to your GitHub repository and commit the change. Once the site updates, all members will see the same loan status on their phones and computers.</p>
-  </div></div></section><section class="ff-admin-card" data-admin-panel="membershipExit" hidden="" style="display: none; visibility: visible !important; opacity: 1 !important;"><button type="button" class="ff-admin-toggle" aria-expanded="false" aria-controls="ff-admin-content-membershipExit" style="display: flex !important; visibility: visible !important; opacity: 1 !important;"><span>🚪 Membership Withdrawal &amp; Exit Register</span><span class="ff-chevron" aria-hidden="true">⌄</span></button><div class="ff-admin-content" id="ff-admin-content-membershipExit" hidden=""><div id="ffExitAdminPanel" style="margin-top:28px;padding-top:22px;border-top:2px solid #ede9fe;">
-   <h3 style="color:#56328a;">🚪 Membership Withdrawal &amp; Exit Register</h3>
-   <p style="color:#475569;line-height:1.6;">Review submitted voluntary withdrawal notices, reconcile the member's financial position and record the exit in accordance with Constitution Article 11. This review panel uses this browser's local storage. To publish official records for all devices, copy the finalized record into the relevant member's <code>exits</code> array in <code>index.html</code> and redeploy.</p>
-   <div style="overflow-x:auto;"><table style="width:100%;min-width:1100px;border-collapse:collapse;background:#fff;"><thead style="background:#56328a;color:#fff;"><tr><th style="padding:9px;text-align:left;">Member / Reference</th><th style="padding:9px;text-align:left;">Notice / Intended Exit</th><th style="padding:9px;text-align:left;">Status</th><th style="padding:9px;text-align:left;">Eligible savings (KSh)</th><th style="padding:9px;text-align:left;">Outstanding obligations (KSh)</th><th style="padding:9px;text-align:left;">Approved amounts due (KSh)</th><th style="padding:9px;text-align:left;">Net settlement (+ payable / − owed)</th><th style="padding:9px;text-align:left;">Admin / Chairlady remarks</th><th style="padding:9px;text-align:left;">Actions</th></tr></thead><tbody id="ffAdminExitTable"><tr><td style="padding:8px;border-bottom:1px solid #ddd;">SAMUEL OYUGI<br><small>FFC-EXIT-2026-66752312</small></td><td style="padding:8px;border-bottom:1px solid #ddd;">03 November 2026<br>03 December 2026</td><td style="padding:8px;border-bottom:1px solid #ddd;"><select id="ff-exit-status-FFC-EXIT-2026-66752312" style="width:190px;padding:7px;"><option>Notice Submitted — 30-Day Notice</option><option selected="">Under Financial Reconciliation</option><option>Settlement Pending</option><option>Exit Recorded</option><option>Notice Withdrawn</option></select></td><td style="padding:8px;border-bottom:1px solid #ddd;"><input id="ff-exit-savings-FFC-EXIT-2026-66752312" type="number" min="0" step="0.01" value="3122" style="width:110px;padding:7px;"></td><td style="padding:8px;border-bottom:1px solid #ddd;"><input id="ff-exit-obligations-FFC-EXIT-2026-66752312" type="number" min="0" step="0.01" value="0" style="width:110px;padding:7px;"></td><td style="padding:8px;border-bottom:1px solid #ddd;"><input id="ff-exit-due-FFC-EXIT-2026-66752312" type="number" min="0" step="0.01" value="0" style="width:110px;padding:7px;"></td><td style="padding:8px;border-bottom:1px solid #ddd;"><input id="ff-exit-net-FFC-EXIT-2026-66752312" type="number" readonly="" value="3122" style="width:110px;padding:7px;background:#f1f5f9;"></td><td style="padding:8px;border-bottom:1px solid #ddd;"><textarea id="ff-exit-admin-FFC-EXIT-2026-66752312" placeholder="Admin remarks" rows="2" style="width:170px;">Pending administrative review</textarea><textarea id="ff-exit-chair-FFC-EXIT-2026-66752312" placeholder="Chairlady remarks / oversight" rows="2" style="width:170px;margin-top:5px;">Pending confirmation / oversight</textarea><label style="display:block;font-size:11px;">Reconciled <input id="ff-exit-reconciled-FFC-EXIT-2026-66752312" type="date" value=""></label><label style="display:block;font-size:11px;">Expected settlement <input id="ff-exit-expected-FFC-EXIT-2026-66752312" type="date" value="2027-01-02"></label><label style="display:block;font-size:11px;">Settled <input id="ff-exit-settled-FFC-EXIT-2026-66752312" type="date" value=""></label><label style="display:block;font-size:11px;">Effective exit <input id="ff-exit-effective-FFC-EXIT-2026-66752312" type="date" value=""></label></td><td style="padding:8px;border-bottom:1px solid #ddd;white-space:nowrap;"><button type="button" onclick="saveAdminExitRecord('FFC-EXIT-2026-66752312')" style="padding:7px;cursor:pointer;">Save review</button> <button type="button" onclick="downloadExitNoticeById('FFC-EXIT-2026-66752312')" style="padding:7px;cursor:pointer;">PDF</button></td></tr></tbody></table></div>
-   <p id="ffAdminExitMessage" role="status" style="font-weight:700;"></p>
-   <div style="margin-top:12px;padding:12px;background:#f5f3ff;border-radius:9px;color:#475569;line-height:1.6;"><b>Administrator guidance:</b> Article 11.2 requires financial reconciliation within 30 days after the 30-day notice period ends. If settlement is delayed for a genuine administrative, verification or financial issue, record the reason and expected settlement date. Do not mark an exit as completed until the official process and register update have been completed. Disciplinary termination under Article 11.6 is a separate process and must not be treated as a voluntary withdrawal request.</div>
-  </div></div></section></div>
-
-  <!-- PUBLISHED LOAN AVAILABILITY CONTROL -->
-  
-
-  <!-- SUMMARY CARDS -->
-  
-
-  <!-- 🗒️ Members Notes -->
-  
-  
-<!-- 👥 Members Overview Section -->
-
+  </div>
+</div>
 
 <!-- Membership Withdrawal / Exit Administration -->
-  
-
+  <div id="ffExitAdminPanel" style="margin-top:28px;padding-top:22px;border-top:2px solid #ede9fe;">
+   <h3 style="color:#56328a;">🚪 Membership Withdrawal & Exit Register</h3>
+   <p style="color:#475569;line-height:1.6;">Review submitted voluntary withdrawal notices, reconcile the member's financial position and record the exit in accordance with Constitution Article 11. This review panel uses this browser's local storage. To publish official records for all devices, copy the finalized record into the relevant member's <code>exits</code> array in <code>index.html</code> and redeploy.</p>
+   <div style="overflow-x:auto;"><table style="width:100%;min-width:1100px;border-collapse:collapse;background:#fff;"><thead style="background:#56328a;color:#fff;"><tr><th style="padding:9px;text-align:left;">Member / Reference</th><th style="padding:9px;text-align:left;">Notice / Intended Exit</th><th style="padding:9px;text-align:left;">Status</th><th style="padding:9px;text-align:left;">Eligible savings (KSh)</th><th style="padding:9px;text-align:left;">Outstanding obligations (KSh)</th><th style="padding:9px;text-align:left;">Approved amounts due (KSh)</th><th style="padding:9px;text-align:left;">Net settlement (+ payable / − owed)</th><th style="padding:9px;text-align:left;">Admin / Chairlady remarks</th><th style="padding:9px;text-align:left;">Actions</th></tr></thead><tbody id="ffAdminExitTable"><tr><td colspan="9" style="padding:14px;text-align:center;color:#64748b;">No withdrawal notices have been submitted in this browser.</td></tr></tbody></table></div>
+   <p id="ffAdminExitMessage" role="status" style="font-weight:700;"></p>
+   <div style="margin-top:12px;padding:12px;background:#f5f3ff;border-radius:9px;color:#475569;line-height:1.6;"><b>Administrator guidance:</b> Article 11.2 requires financial reconciliation within 30 days after the 30-day notice period ends. If settlement is delayed for a genuine administrative, verification or financial issue, record the reason and expected settlement date. Do not mark an exit as completed until the official process and register update have been completed. Disciplinary termination under Article 11.6 is a separate process and must not be treated as a voluntary withdrawal request.</div>
+  </div>
+</div>
 
 
 <!-- Table Styles -->
@@ -4480,38 +3987,119 @@ function closeSystemUpdatePopup(){
 
 
   <!-- 👤 Member Management -->
-  
-  
-  
-  
+  <h3>👤 Member Management</h3>
+  <input id="loanSearch" onkeyup="filterLoans()" placeholder="🔍 Search loans by name, phone, or status..." style="width:95%; padding:8px; margin:10px 0; border:1px solid #ccc; border-radius:5px;" type="text" />
+  <select id="loanStatusFilter" onchange="filterLoans()" style="padding:8px; margin:10px 0; border:1px solid #ccc; border-radius:5px;">
+    <option value="">📂 Show All</option>
+    <option value="Pending">⏳ Pending</option>
+    <option value="Approved">✅ Approved</option>
+    <option value="Rejected">❌ Rejected</option>
+  </select>
+  <button onclick="exportLoans()" style="padding:8px 12px; margin:10px 0; background:#1976d2; color:white; border:none; border-radius:5px; cursor:pointer;">
+    📂 Export Loans (CSV)
+  </button>
 
   <!-- PDF DOWNLOADS: ADMIN LOAN REGISTER AND INDIVIDUAL MEMBER HISTORY -->
-  
+  <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:12px 0;padding:12px;border:1px solid #cbd5e1;border-radius:10px;background:#f8fafc;">
+    <button type="button" onclick="downloadAdminLoansPDF()" style="padding:10px 14px;background:#075985;color:#fff;border:0;border-radius:7px;font-weight:700;cursor:pointer;">⬇ Download All Loans (PDF)</button>
+    <select id="adminLoanHistoryMember" style="min-width:220px;padding:10px;border:1px solid #cbd5e1;border-radius:7px;">
+      <option value="">Select member loan history</option>
+    </select>
+    <button type="button" onclick="downloadAdminMemberLoanHistoryPDF()" style="padding:10px 14px;background:#166534;color:#fff;border:0;border-radius:7px;font-weight:700;cursor:pointer;">📑 Download Member Loan History (PDF)</button>
+  </div>
 
   <!-- 📜 Loan Applications Table -->
-  
+  <h3>📜 Loan Applications</h3>
   <p style="margin:8px 0 12px;color:#475569;">This register reads the loan records entered under each member in <code>const members</code>. To approve or reject a loan for everyone, edit that member's loan <code>status</code> (and <code>reason</code> if rejected) in the code, then publish the updated index.html. Admin decisions made only in this browser are not shared to other devices.</p>
-  
+  <table border="1" style="width:100%; border-collapse:collapse; text-align:center;">
+    <thead style="background:#1976d2; color:white;">
+      <tr>
+        <th>Name</th>
+        <th>Phone</th>
+        <th>Qualified Loan</th>
+        <th>Requested Amount</th>
+        <th>ID Number</th>
+        <th>Period</th>
+        <th>Repayment / Paid / Balance</th>
+        <th>Loan & Repayment Dates</th>
+        <th>Decision / Reason</th>
+        <th>Repayment Schedule</th>
+        <th>Admin Action</th>
+      </tr>
+    </thead>
+    <tbody id="adminLoanBody">
+      <tr><td colspan="10" style="color:gray;">No loan records entered yet. Add the loan under the member in const members.</td></tr>
+    </tbody>
+  </table>
 
   <!-- 🎲 Lucky Numbers -->
-  
-  
+  <button onclick="togglePickedNumbers()" style="padding:10px; margin:5px; background:#1976d2; color:white; border:none; border-radius:5px; cursor:pointer;">
+    🎲 View Picked Numbers
+  </button>
+  <div id="pickedNumbersTable" style="display:none; margin-top:20px;">
+    <h3>🎲 Picked Lucky Numbers</h3>
+    <button onclick="downloadPickedNumbers()" style="margin-bottom:10px; padding:8px 12px; background:#388e3c; color:white; border:none; border-radius:5px; cursor:pointer;">⬇️ Download CSV</button>
+    <button onclick="resetPickedNumbers()" style="margin-bottom:10px; padding:8px 12px; background:#d32f2f; color:white; border:none; border-radius:5px; cursor:pointer;">🗑️ Reset Picked Numbers</button>
+    <table border="1" style="width:100%; border-collapse:collapse; text-align:center;">
+      <thead style="background:#1976d2; color:white;">
+        <tr><th>Member</th><th>Lucky Number</th></tr>
+      </thead>
+      <tbody id="pickedNumbersBody">
+        <tr><td colspan="2" style="color:gray;">No numbers picked yet.</td><td class="saved2025">0</td><td class="reward2025">0</td></tr>
+      </tbody>
+    </table>
+  </div>
 
   <!-- 📝 Pending Members -->
-  
+  <div id="pendingMembersPanel" style="margin-top:20px;">
+    <h3>📝 Pending Member Registrations</h3>
+    <table border="1" style="width:100%; border-collapse:collapse; text-align:center;">
+      <thead style="background:#00796b; color:white;">
+        <tr>
+          <th>Name</th>
+          <th>Phone</th>
+          <th>Email</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="pendingMembersBody">
+        <tr><td colspan="5" style="color:gray;">No pending registrations.</td><td class="saved2025">0</td><td class="reward2025">0</td></tr>
+      </tbody>
+    </table>
+  </div>
 
   <!-- 🚀 System Updates -->
-  
-  <br>
-  
+  <h3>🚀 System Updates</h3>
+  <textarea id="updateMessage" placeholder="Type new update..." style="width:90%; padding:10px; margin-bottom:10px;"></textarea><br />
+  <button onclick="postUpdate()" style="padding:10px; background:#1976d2; color:white; border:none; border-radius:5px; cursor:pointer;">📢 Post Update</button>
 
   <!-- Optional WhatsApp Notifications -->
-  
+  <div id="memberSelectionBox" style="display:none; margin-top:8px;">
+    <label><b>Select Members:</b></label><br />
+    <select id="memberSelectMulti" multiple size="10" style="width:260px; padding:6px;"></select><br />
+    <button onclick="selectAllMembers()" style="margin-top:5px; padding:5px 10px; background:#388e3c; color:white; border:none; border-radius:4px; cursor:pointer;">✅ Select All</button>
+    <input id="memberSearch" onkeyup="filterMembers()" placeholder="🔍 Search member..." style="width:260px; padding:6px; margin-bottom:6px;" type="text" />
+    <button onclick="clearAllMembers()" style="margin-top:5px; padding:5px 10px; background:#d32f2f; color:white; border:none; border-radius:4px; cursor:pointer;">❌ Clear All</button>
+    <p style="font-size:12px; color:gray; margin-top:5px;">(Hold CTRL/SHIFT to select multiple manually)</p>
+  </div>
 
-  
+  <label style="display:block; margin-top:8px;">
+    <input id="sendWhatsAppUpdate" onchange="toggleMemberSelection()" type="checkbox" /> 📲 Send WhatsApp notification to members
+  </label>
 
   <!-- 📜 Past Updates -->
-  
+  <div style="margin-top:20px;">
+    <h4>📜 Past Updates</h4>
+    <table border="1" style="width:100%; border-collapse:collapse; text-align:center;">
+      <thead style="background:#1976d2; color:white;">
+        <tr><th>All Updates (Click to Expand/Collapse)</th></tr>
+      </thead>
+      <tbody id="updateHistoryBody">
+        <tr><td style="color:gray;">No updates posted yet.</td><td class="saved2025">0</td><td class="reward2025">0</td></tr>
+      </tbody>
+    </table>
+  </div>
 </section>
 
 <!-- Styles for Notes Table -->
@@ -4568,7 +4156,10 @@ function closeSystemUpdatePopup(){
         box-shadow:0 8px 25px rgba(0,0,0,0.15);
     ">
 
-        <img src="https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/FUTURE%20FINDERS%20LOGO.jpeg" alt="Future Finders Chama Group Logo" style="
+        <img
+            src="https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/FUTURE%20FINDERS%20LOGO.jpeg"
+            alt="Future Finders Chama Group Logo"
+            style="
                 width:95px;
                 height:95px;
                 object-fit:contain;
@@ -4577,7 +4168,8 @@ function closeSystemUpdatePopup(){
                 padding:6px;
                 box-shadow:0 4px 15px rgba(0,0,0,0.20);
                 margin-bottom:12px;
-            ">
+            "
+        >
 
         <h2 style="
             margin:5px 0;
@@ -4645,7 +4237,7 @@ function closeSystemUpdatePopup(){
             color:#1976d2;
             margin-top:0;
         ">
-            📌 Membership &amp; Loan Eligibility
+            📌 Membership & Loan Eligibility
         </h3>
 
         <div style="
@@ -4673,7 +4265,7 @@ function closeSystemUpdatePopup(){
             </p>
 
             <p>
-                ✅ <b>Support &amp; Trust:</b>
+                ✅ <b>Support & Trust:</b>
                 Being a member means supporting one another and
                 upholding transparency within the group.
             </p>
@@ -4731,7 +4323,12 @@ function closeSystemUpdatePopup(){
                 transition:0.2s;
             ">
 
-                <input type="radio" name="membershipCategory" value="Category A - Ksh 300 Weekly" style="margin-right:8px;">
+                <input
+                    type="radio"
+                    name="membershipCategory"
+                    value="Category A - Ksh 300 Weekly"
+                    style="margin-right:8px;"
+                >
 
                 <b style="
                     color:#087f5b;
@@ -4769,7 +4366,12 @@ function closeSystemUpdatePopup(){
                 transition:0.2s;
             ">
 
-                <input type="radio" name="membershipCategory" value="Category B - Ksh 1,000 Monthly" style="margin-right:8px;">
+                <input
+                    type="radio"
+                    name="membershipCategory"
+                    value="Category B - Ksh 1,000 Monthly"
+                    style="margin-right:8px;"
+                >
 
                 <b style="
                     color:#1565c0;
@@ -4885,14 +4487,18 @@ function closeSystemUpdatePopup(){
 
         <div style="text-align:center;margin-bottom:25px;">
 
-            <img src="https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/FUTURE%20FINDERS%20LOGO.jpeg" alt="Future Finders Logo" style="
+            <img
+                src="https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/FUTURE%20FINDERS%20LOGO.jpeg"
+                alt="Future Finders Logo"
+                style="
                     width:70px;
                     height:70px;
                     object-fit:contain;
                     border-radius:50%;
                     background:white;
                     padding:4px;
-                ">
+                "
+            >
 
             <h3 style="
                 color:#1976d2;
@@ -4924,14 +4530,17 @@ function closeSystemUpdatePopup(){
                 💰 Merry-Go-Round Category *
             </label>
 
-            <select id="regCategory" style="
+            <select
+                id="regCategory"
+                style="
                     width:100%;
                     padding:13px;
                     border:1px solid #ccc;
                     border-radius:8px;
                     font-size:15px;
                     box-sizing:border-box;
-                ">
+                "
+            >
 
                 <option value="">
                     -- Select Category --
@@ -4952,19 +4561,37 @@ function closeSystemUpdatePopup(){
 
         <!-- FULL NAME -->
         <div class="form-group" style="margin-bottom:15px;">
-            <input id="regName" placeholder="Full Name *" type="text" style="width:100%;box-sizing:border-box;">
+            <input
+                id="regName"
+                placeholder="Full Name *"
+                type="text"
+                style="width:100%;box-sizing:border-box;"
+            >
         </div>
 
 
         <!-- PHONE -->
         <div class="form-group" style="margin-bottom:15px;">
-            <input id="regPhone" placeholder="Phone Number * e.g. 0712345678" type="text" maxlength="10" inputmode="numeric" oninput="this.value=this.value.replace(/[^0-9]/g,'')" style="width:100%;box-sizing:border-box;">
+            <input
+                id="regPhone"
+                placeholder="Phone Number * e.g. 0712345678"
+                type="text"
+                maxlength="10"
+                inputmode="numeric"
+                oninput="this.value=this.value.replace(/[^0-9]/g,'')"
+                style="width:100%;box-sizing:border-box;"
+            >
         </div>
 
 
         <!-- EMAIL -->
         <div class="form-group" style="margin-bottom:15px;">
-            <input id="regEmail" placeholder="Email Address *" type="email" style="width:100%;box-sizing:border-box;">
+            <input
+                id="regEmail"
+                placeholder="Email Address *"
+                type="email"
+                style="width:100%;box-sizing:border-box;"
+            >
         </div>
 
 
@@ -4979,33 +4606,61 @@ function closeSystemUpdatePopup(){
                 Date of Birth
             </label>
 
-            <input id="regDOB" type="date" style="width:100%;box-sizing:border-box;">
+            <input
+                id="regDOB"
+                type="date"
+                style="width:100%;box-sizing:border-box;"
+            >
         </div>
 
 
         <!-- ID -->
         <div class="form-group" style="margin-bottom:15px;">
 
-            <input id="regID" placeholder="ID Number (7–9 digits) *" type="text" maxlength="9" inputmode="numeric" oninput="this.value=this.value.replace(/[^0-9]/g,'')" style="width:100%;box-sizing:border-box;">
+            <input
+                id="regID"
+                placeholder="ID Number (7–9 digits) *"
+                type="text"
+                maxlength="9"
+                inputmode="numeric"
+                oninput="this.value=this.value.replace(/[^0-9]/g,'')"
+                style="width:100%;box-sizing:border-box;"
+            >
 
         </div>
 
 
         <!-- ADDRESS -->
         <div class="form-group" style="margin-bottom:15px;">
-            <input id="regAddress" placeholder="Physical Address / Town" type="text" style="width:100%;box-sizing:border-box;">
+            <input
+                id="regAddress"
+                placeholder="Physical Address / Town"
+                type="text"
+                style="width:100%;box-sizing:border-box;"
+            >
         </div>
 
 
         <!-- OCCUPATION -->
         <div class="form-group" style="margin-bottom:15px;">
-            <input id="regOccupation" placeholder="Occupation / Employer" type="text" style="width:100%;box-sizing:border-box;">
+            <input
+                id="regOccupation"
+                placeholder="Occupation / Employer"
+                type="text"
+                style="width:100%;box-sizing:border-box;"
+            >
         </div>
 
 
         <!-- SAVINGS -->
         <div class="form-group" style="margin-bottom:15px;">
-            <input id="regSavings" placeholder="Initial Savings Amount (Ksh)" type="number" min="0" style="width:100%;box-sizing:border-box;">
+            <input
+                id="regSavings"
+                placeholder="Initial Savings Amount (Ksh)"
+                type="number"
+                min="0"
+                style="width:100%;box-sizing:border-box;"
+            >
         </div>
 
 
@@ -5021,7 +4676,12 @@ function closeSystemUpdatePopup(){
                 🔐 Create Password *
             </label>
 
-            <input id="regPass" placeholder="Create Password" type="password" style="width:100%;box-sizing:border-box;">
+            <input
+                id="regPass"
+                placeholder="Create Password"
+                type="password"
+                style="width:100%;box-sizing:border-box;"
+            >
 
         </div>
 
@@ -5029,7 +4689,12 @@ function closeSystemUpdatePopup(){
         <!-- CONFIRM PASSWORD -->
         <div class="form-group" style="margin-bottom:15px;">
 
-            <input id="regPassConfirm" placeholder="Repeat Password *" type="password" style="width:100%;box-sizing:border-box;">
+            <input
+                id="regPassConfirm"
+                placeholder="Repeat Password *"
+                type="password"
+                style="width:100%;box-sizing:border-box;"
+            >
 
         </div>
 
@@ -5037,13 +4702,16 @@ function closeSystemUpdatePopup(){
         <!-- COMMUNICATION -->
         <div class="form-group" style="margin-bottom:15px;">
 
-            <select id="regComm" style="
+            <select
+                id="regComm"
+                style="
                     width:100%;
                     padding:13px;
                     border:1px solid #ccc;
                     border-radius:8px;
                     box-sizing:border-box;
-                ">
+                "
+            >
 
                 <option value="">
                     Preferred Communication
@@ -5074,11 +4742,14 @@ function closeSystemUpdatePopup(){
 
             <label>
 
-                <input type="checkbox" id="regAgree">
+                <input
+                    type="checkbox"
+                    id="regAgree"
+                >
 
                 I agree to the
                 <a href="#">
-                    Chama Rules &amp; Regulations
+                    Chama Rules & Regulations
                 </a>
 
             </label>
@@ -5094,7 +4765,10 @@ function closeSystemUpdatePopup(){
 
             <label>
 
-                <input type="checkbox" id="regDeclaration">
+                <input
+                    type="checkbox"
+                    id="regDeclaration"
+                >
 
                 I declare that the information I have provided
                 is true and correct.
@@ -5110,7 +4784,10 @@ function closeSystemUpdatePopup(){
             margin-top:25px;
         ">
 
-            <button type="button" onclick="registerMember()" style="
+            <button
+                type="button"
+                onclick="registerMember()"
+                style="
                     background:linear-gradient(135deg,#1976d2,#087f5b);
                     color:white;
                     border:none;
@@ -5121,12 +4798,16 @@ function closeSystemUpdatePopup(){
                     cursor:pointer;
                     margin:5px;
                     box-shadow:0 4px 12px rgba(0,0,0,0.15);
-                ">
+                "
+            >
                 ✅ Register Member
             </button>
 
 
-            <button type="button" id="downloadFormBtn" style="
+            <button
+                type="button"
+                id="downloadFormBtn"
+                style="
                     display:none;
                     background:#4caf50;
                     color:white;
@@ -5137,12 +4818,16 @@ function closeSystemUpdatePopup(){
                     font-weight:bold;
                     cursor:pointer;
                     margin:5px;
-                ">
+                "
+            >
                 📄 Download Registration Form
             </button>
 
 
-            <button type="button" id="shareWhatsAppBtn" style="
+            <button
+                type="button"
+                id="shareWhatsAppBtn"
+                style="
                     display:none;
                     background:#25D366;
                     color:white;
@@ -5153,7 +4838,8 @@ function closeSystemUpdatePopup(){
                     font-weight:bold;
                     cursor:pointer;
                     margin:5px;
-                ">
+                "
+            >
                 📱 Share on WhatsApp
             </button>
 
@@ -5163,7 +4849,9 @@ function closeSystemUpdatePopup(){
 
 
     <!-- NOTE -->
-    <p id="nbMessage" style="
+    <p
+        id="nbMessage"
+        style="
             display:none;
             max-width:700px;
             margin:15px auto 30px;
@@ -5174,7 +4862,8 @@ function closeSystemUpdatePopup(){
             color:#d84315;
             text-align:center;
             font-weight:bold;
-        ">
+        "
+    >
 
         ⚠️ NB: Please download the registration form first,
         then click the WhatsApp button to share your
@@ -9006,56 +8695,60 @@ y += 38;
 <a class="action-btn" onclick="simulateAction(this,'services')" style="background:#d32f2f; margin-top:15px;">
     ⬅️ Back to Services <span class="spinner"></span>
 </a>
-
+</section>
 <!-- Member Login -->
-<section id="loginForm" aria-labelledby="memberLoginHeading" style="display: none;">
+<section id="loginForm" aria-labelledby="memberLoginHeading">
 <div class="ff-login-icon" aria-hidden="true">👤</div>
 <h2 id="memberLoginHeading">Member Login</h2>
 <h1>Future Finders Chama Group <span class="ff-login-subtitle">Savings &amp; Loan Portal</span></h1>
 <p class="ff-login-intro">Access your savings, contributions and member services securely.</p>
 <label for="memberLoginSearch">Search your member name</label>
 <div class="member-login-search" style="display:flex;gap:8px;margin:8px 0 12px;align-items:stretch;">
-  <input id="memberLoginSearch" type="search" placeholder="Type your name, then click Search" autocomplete="off" style="flex:1;min-width:0;padding:11px 12px;border:1px solid #cbd5e1;border-radius:8px;font-size:15px;">
-  <button id="memberLoginSearchBtn" type="button" onclick="searchMemberLoginName()" style="padding:10px 16px;border:0;border-radius:8px;background:#087f8c;color:#fff;font-weight:700;cursor:pointer;">Search</button>
+  <input id="memberLoginSearch" type="search" placeholder="Type your name, then click Search" autocomplete="off"
+    style="flex:1;min-width:0;padding:11px 12px;border:1px solid #cbd5e1;border-radius:8px;font-size:15px;" />
+  <button id="memberLoginSearchBtn" type="button" onclick="searchMemberLoginName()"
+    style="padding:10px 16px;border:0;border-radius:8px;background:#087f8c;color:#fff;font-weight:700;cursor:pointer;">Search</button>
 </div>
-<p id="memberLoginSearchMessage" role="status" aria-live="polite" style="margin:0 0 10px;font-size:13px;color:#475569;">Search for your name first to display matching members.</p>
+<p id="memberLoginSearchMessage" role="status" aria-live="polite" style="margin:0 0 10px;font-size:13px;color:#475569;"></p>
 <label for="memberName">Member name</label>
 <select id="memberName" name="memberName" autocomplete="username" required="">
 <option value="">-- Choose your name --</option>
-<option hidden="">BONIFACE CHELLUGET</option>
-<option hidden="">HILDA ODERO</option>
-<option hidden="">JOEL EGESA</option>
-<option hidden="">SHALIK SHIVERENGE</option>
-<option hidden="">EVERLINE MAINA</option>
-<option hidden="">ELVIS KAMASH</option>
-<option hidden="">JULIUS KEBASO</option>
-<option hidden="">CHRISTINE PIUS</option>
-<option hidden="">EDNAH NANCY</option>
-<option hidden="">JACKIE NYARANGI</option>
+<option>BONIFACE CHELLUGET</option>
+<option>HILDA ODERO</option>
+<option>JOEL EGESA</option>
+<option>SHALIK SHIVERENGE</option>
+<option>EVERLINE MAINA</option>
+<option>ELVIS KAMASH</option>
+<option>JULIUS KEBASO</option>
+<option>CHRISTINE PIUS</option>
+<option>EDNAH NANCY</option>
+<option>JACKIE NYARANGI</option>
 
-<option hidden="">SAMUEL OYUGI</option>
-<option hidden="">KEFFA MOMANYI</option>
+<option>SAMUEL OYUGI</option>
+<option>KEFFA MOMANYI</option>
 
-<option hidden="">FAITH MOKOGI</option>
-<option hidden="">ANN KEMUNTO</option>
-<option hidden="">SHAMIM ISIJI</option>
-<option hidden="">CLAUDIA MORAA</option>
+<option>FAITH MOKOGI</option>
+<option>ANN KEMUNTO</option>
+<option>SHAMIM ISIJI</option>
+<option>CLAUDIA MORAA</option>
 
 
-<option hidden="">ELIZABETH SHIUNDU</option>
-<option hidden="">LILIAN KERUBO</option>
-<option hidden="">NELLY KARIMI</option>
+<option>ELIZABETH SHIUNDU</option>
+<option>LILIAN KERUBO</option>
+<option>NELLY KARIMI</option>
 
-<option hidden="">CANZEDENA ANYANGO</option>
-<option hidden="">JAPHETH MULI</option>
-<option hidden="">DEFTERS PHOLIUS</option>
-<option hidden="">BENSON NYATUKA</option>
-<option hidden="">BOAZ KOKONYA</option>
-<option hidden="">PURITY MOMANYI</option>
+<option>CANZEDENA ANYANGO</option>
+<option>JAPHETH MULI</option>
+<option>DEFTERS PHOLIUS</option>
+<option>BENSON NYATUKA</option>
+<option>BOAZ KOKONYA</option>
+<option>PURITY MOMANYI</option>
 </select>
 <!-- Member Password -->
 <div class="password-container">
-  <input id="memberPass" name="memberPass" autocomplete="current-password" type="password" required="" placeholder="Enter your password">
+  <input id="memberPass" name="memberPass" autocomplete="current-password"
+         type="password" required
+         placeholder="Enter your password" />
 
   <span class="toggle-eye" role="button" tabindex="0" aria-label="Show or hide password" onclick="togglePassword('memberPass', this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();togglePassword('memberPass', this)}">
     👁️
@@ -9069,7 +8762,7 @@ y += 38;
 </section>
 <!-- Dashboard -->
  
-<div id="dashboard" style="display: none;">
+<div id="dashboard">
 <h3>Welcome, <span id="memberDisplay"></span>!</h3>
 <div id="ffContractApprovalLoginMessage" role="status" aria-live="polite" style="display:none;position:relative;margin:12px 0 18px;padding:12px 42px 12px 14px;border:1px solid #86efac;border-left:5px solid #16a34a;border-radius:11px;background:linear-gradient(100deg,#f0fdf4,#ffffff);color:#166534;box-shadow:0 3px 12px rgba(22,101,52,.08);font-size:14px;line-height:1.45;"><button type="button" aria-label="Dismiss approval message" onclick="document.getElementById('ffContractApprovalLoginMessage').style.display='none'" style="position:absolute;right:9px;top:8px;border:0;background:transparent;color:#166534;font-size:19px;cursor:pointer;line-height:1;">×</button><div style="display:flex;align-items:center;gap:10px;"><span style="font-size:25px;line-height:1;">🎉</span><div><strong style="display:block;font-size:15px;margin-bottom:2px;">Congratulations! Your contract has been approved.</strong><span id="ffContractApprovalLoginSubtext">Your membership contract is approved and active. Welcome to another successful year with Future Finders!</span></div></div></div>
 
@@ -9086,51 +8779,14 @@ y += 38;
 
 <div class="dashboard-buttons">
 
-<div id="ffMemberMenuGrid" class="ff-member-menu-grid" aria-label="Member services" data-ready="1">
+<div id="ffMemberMenuGrid" class="ff-member-menu-grid" aria-label="Member services">
   <details class="ff-member-menu">
-    <summary><span class="ff-menu-icon">💰</span><span>Savings &amp; Contributions</span></summary>
+    <summary><span class="ff-menu-icon">💰</span><span>Savings & Contributions</span></summary>
     <div class="ff-menu-items" data-menu="savings">
       <div class="ff-menu-hint">View your savings and contribution options.</div>
       <button type="button" class="ff-admin-action action-btn" onclick="showSavingsPopup()">💰 Open Savings Dashboard <span id="totalSavings">..</span></button>
       <button type="button" class="ff-admin-action action-btn" onclick="showTopSavers()">🥇 View Top Savers List</button>
-      <a class="action-btn" onclick="handleCurrentSavings()">
-
-
-💰 View Current Savings
-
-
-</a><a class="action-btn" onclick="handleMonthlySavings()">
-
-
-📊 View Monthly Savings
-
-</a><button onclick="open2025Popup()" style="
-background:#00796b;
-color:white;
-border:none;
-padding:10px 18px;
-border-radius:8px;
-cursor:pointer;
-font-weight:bold;
-margin:10px 0;
-">
-📊 View 2025 Contributions
-</button><button onclick="open2026Popup()" style="
-background:#1565c0;
-color:white;
-border:none;
-padding:10px 18px;
-border-radius:8px;
-cursor:pointer;
-font-weight:bold;
-margin:10px 0;
-">
-📊 View 2026 Contributions
-</button><button type="button" onclick="download2026TablePDF()" style="background:#0b6b57;color:#fff;border:0;border-radius:8px;padding:12px 18px;font-weight:700;font-size:15px;cursor:pointer;box-shadow:0 3px 8px rgba(0,0,0,.18);">
-        📄 Download 2026 Table (PDF)
-      </button><button type="button" onclick="downloadIndividualSavingsReportsPDF()" style="background:#123f91;color:#fff;border:0;border-radius:8px;padding:12px 18px;font-weight:700;font-size:15px;cursor:pointer;box-shadow:0 3px 8px rgba(0,0,0,.18);margin-left:8px;">
-        👤 Download Individual Savings Reports (PDF)
-      </button><button type="button" class="ff-menu-close" onclick="confirmCloseFFMemberSection(this)">Close section −</button>
+      <button type="button" class="ff-menu-close" onclick="confirmCloseFFMemberSection(this)">Close section −</button>
     </div>
   </details>
   <details class="ff-member-menu">
@@ -9138,30 +8794,22 @@ margin:10px 0;
     <div class="ff-menu-items" data-menu="loans">
       <div class="ff-menu-hint">Check eligibility and follow your loan records.</div>
       <button type="button" class="ff-admin-action action-btn" onclick="showQualifiedPopup()">✅ Qualified Members List <span id="qualifiedMembers">..</span></button>
-      <button type="button" class="check-loan-btn" onclick="handleLoanCheck()">
-
-    🔍 Check Loan Eligibility
-
-</button><button type="button" class="check-loan-btn" onclick="showMyLoans()" style="margin-top:10px;background:#087f5b;">
-    📋 My Loans
-</button><button type="button" class="ff-menu-close" onclick="confirmCloseFFMemberSection(this)">Close section −</button>
+      <button type="button" class="ff-menu-close" onclick="confirmCloseFFMemberSection(this)">Close section −</button>
     </div>
   </details>
   <details class="ff-member-menu">
-    <summary><span class="ff-menu-icon">📞</span><span>Contact &amp; Membership</span></summary>
+    <summary><span class="ff-menu-icon">📞</span><span>Contact & Membership</span></summary>
     <div class="ff-menu-items" data-menu="membership">
       <div class="ff-menu-hint">Renew or review your membership contract, or submit a voluntary exit notice.</div>
       <button type="button" class="ff-admin-action action-btn" onclick="showMembersPopup()">👥 View Members List <span id="totalMembers">..</span></button>
-      <a class="action-btn" onclick="openRegistrationFees()">📝 View Registration Fees</a><button class="action-btn" type="button" onclick="openMyContract()" style="background:#0b7285;margin-top:10px;">📄 My Membership Contract</button><button class="action-btn" type="button" onclick="openMemberExitForm()" style="background:#7c3aed;margin-top:10px;">🚪 Membership Withdrawal / Exit</button><button type="button" class="ff-menu-close" onclick="confirmCloseFFMemberSection(this)">Close section −</button>
+      <button type="button" class="ff-menu-close" onclick="confirmCloseFFMemberSection(this)">Close section −</button>
     </div>
   </details>
   <details class="ff-member-menu">
     <summary><span class="ff-menu-icon">🤝</span><span>Member Support</span></summary>
     <div class="ff-menu-items" data-menu="support">
       <div class="ff-menu-hint">Access welfare support and your member notes.</div>
-      <button class="action-btn" onclick="showWelfareApplication()">
-💞 Apply for Welfare Support
-</button><button class="action-btn" onclick="openNotePopup()">🗒️ View Notes/Fines</button><button type="button" class="ff-menu-close" onclick="confirmCloseFFMemberSection(this)">Close section −</button>
+      <button type="button" class="ff-menu-close" onclick="confirmCloseFFMemberSection(this)">Close section −</button>
     </div>
   </details>
 </div>
@@ -9182,16 +8830,25 @@ const CURRENT_SAVINGS_AVAILABLE = false;
      VIEW CURRENT SAVINGS BUTTON
      ========================================== -->
 
+<a class="action-btn"
+onclick="handleCurrentSavings()">
 
+
+💰 View Current Savings
+
+
+</a>
 
 <!-- ==========================================
      CURRENT SAVINGS UNAVAILABLE POPUP
      ========================================== -->
 
-<div id="currentSavingsUnavailablePopup" class="current-savings-popup-overlay">
+<div id="currentSavingsUnavailablePopup"
+     class="current-savings-popup-overlay">
 
 ```
-<div class="current-savings-popup" onclick="event.stopPropagation()">
+<div class="current-savings-popup"
+     onclick="event.stopPropagation()">
 
     <div class="current-savings-popup-header">
 
@@ -9217,7 +8874,9 @@ const CURRENT_SAVINGS_AVAILABLE = false;
     </div>
 
 
-    <button type="button" class="current-savings-popup-close" onclick="hideCurrentSavingsUnavailablePopup()">
+    <button type="button"
+            class="current-savings-popup-close"
+            onclick="hideCurrentSavingsUnavailablePopup()">
 
         ✓ Okay, Thank You
 
@@ -9607,16 +9266,24 @@ const MONTHLY_SAVINGS_AVAILABLE = true;
      VIEW MONTHLY SAVINGS BUTTON
      ========================================== -->
 
+<a class="action-btn"
+onclick="handleMonthlySavings()">
 
+
+📊 View Monthly Savings
+
+</a>
 
 <!-- ==========================================
      MONTHLY SAVINGS UNAVAILABLE POPUP
      ========================================== -->
 
-<div id="monthlySavingsUnavailablePopup" class="monthly-savings-popup-overlay">
+<div id="monthlySavingsUnavailablePopup"
+     class="monthly-savings-popup-overlay">
 
 ```
-<div class="monthly-savings-popup" onclick="event.stopPropagation()">
+<div class="monthly-savings-popup"
+     onclick="event.stopPropagation()">
 
     <div class="monthly-savings-popup-header">
 
@@ -9642,7 +9309,9 @@ const MONTHLY_SAVINGS_AVAILABLE = true;
     </div>
 
 
-    <button type="button" class="monthly-savings-popup-close" onclick="hideMonthlySavingsUnavailablePopup()">
+    <button type="button"
+            class="monthly-savings-popup-close"
+            onclick="hideMonthlySavingsUnavailablePopup()">
 
         ✓ Okay, Thank You
 
@@ -10023,84 +9692,28 @@ document.addEventListener(
 
 <script>
 /*
-  SHARED LOAN AVAILABILITY CONTROL
-  The published mode below is embedded in index.html. Admin button actions
-  generate a revised index.html containing the selected mode and reason.
-  Upload that downloaded file to GitHub so every member sees the same status.
-  Automatic Constitution schedule: 1 January–31 October OPEN;
-  1 November–31 December CLOSED.
+  HARD-CODED LOAN AVAILABILITY SWITCH
+  true  = members can apply for loans
+  false = loan applications are closed
+  To change availability later, edit the value below and republish index.html.
+  No admin control is used for this setting.
 */
-let PUBLISHED_LOAN_AVAILABILITY_MODE = "OPEN";
-let PUBLISHED_LOAN_AVAILABILITY_REASON = "member requested for special loan";
+const PUBLISHED_LOANS_OPEN = true;
+const PUBLISHED_LOAN_AVAILABILITY_REASON = "Loan applications are currently open.";
 
 function getLoanAvailabilityState() {
-    const month = new Date().getMonth() + 1;
-    const automaticOpen = month >= 1 && month <= 10;
-    const override = PUBLISHED_LOAN_AVAILABILITY_MODE;
-    const isOpen = override === "OPEN" ? true : override === "CLOSED" ? false : automaticOpen;
-    return { override, isOpen, automaticOpen, reason: PUBLISHED_LOAN_AVAILABILITY_REASON };
-}
-
-function downloadPublishedLoanAvailabilityIndex(mode, reason) {
-    let html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
-    const modePattern = /let PUBLISHED_LOAN_AVAILABILITY_MODE = \"(?:AUTO|OPEN|CLOSED)\";/;
-    const reasonPattern = /let PUBLISHED_LOAN_AVAILABILITY_REASON = \"(?:[^\"\\]|\\.)*\";/;
-    const modeLine = `let PUBLISHED_LOAN_AVAILABILITY_MODE = ${JSON.stringify(mode)};`;
-    const reasonLine = `let PUBLISHED_LOAN_AVAILABILITY_REASON = ${JSON.stringify(reason)};`;
-    if (!modePattern.test(html) || !reasonPattern.test(html)) {
-        alert("The updated index.html could not be prepared. Please contact the website administrator.");
-        return false;
-    }
-    html = html.replace(modePattern, modeLine).replace(reasonPattern, reasonLine);
-    const blob = new Blob([html], { type: "text/html;charset=utf-8" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = "index.html";
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 1500);
-    return true;
-}
-
-function setLoanAvailabilityOverride(mode) {
-    if (!localStorage.getItem("adminLoggedIn")) {
-        alert("Please log in as Admin before changing loan availability.");
-        return;
-    }
-    const reasonInput = document.getElementById("loanOverrideReason");
-    const reason = reasonInput ? reasonInput.value.trim() : "";
-    if ((mode === "CLOSED" || mode === "OPEN") && !reason) {
-        alert("Please enter a reason for this manual change.");
-        if (reasonInput) reasonInput.focus();
-        return;
-    }
-    if (!['AUTO', 'OPEN', 'CLOSED'].includes(mode)) return;
-
-    PUBLISHED_LOAN_AVAILABILITY_MODE = mode;
-    PUBLISHED_LOAN_AVAILABILITY_REASON = mode === "AUTO" ? "" : reason;
-    renderLoanAvailabilityControl();
-    updateLoanUnavailablePopupMessage();
-
-    if (downloadPublishedLoanAvailabilityIndex(PUBLISHED_LOAN_AVAILABILITY_MODE, PUBLISHED_LOAN_AVAILABILITY_REASON)) {
-        alert(mode === "AUTO"
-            ? "Automatic schedule restored. A new index.html has been downloaded. Upload it to GitHub to publish the change for all members."
-            : `Loans set to ${mode}. A new index.html has been downloaded. Upload it to GitHub to publish the change for all members.`);
-    }
+    return {
+        override: PUBLISHED_LOANS_OPEN ? "OPEN" : "CLOSED",
+        isOpen: PUBLISHED_LOANS_OPEN,
+        automaticOpen: PUBLISHED_LOANS_OPEN,
+        reason: PUBLISHED_LOAN_AVAILABILITY_REASON,
+        windowEnd: "",
+        remainingMs: null
+    };
 }
 
 function renderLoanAvailabilityControl() {
-    const state = getLoanAvailabilityState();
-    const status = document.getElementById("loanAvailabilityAdminStatus");
-    const reason = document.getElementById("loanOverrideReason");
-    if (status) {
-        const label = state.isOpen ? "OPEN" : "CLOSED";
-        const source = state.override === "AUTO" ? "Automatic Constitution schedule" : "Published manual setting — upload the downloaded index.html to GitHub";
-        status.innerHTML = `<strong>Current status: ${label}</strong><br><small>${source}${state.reason ? " — " + state.reason.replace(/[&<>\"']/g, "") : ""}</small>`;
-        status.style.color = state.isOpen ? "#187a36" : "#b42318";
-    }
-    if (reason && state.override !== "AUTO" && !reason.value) reason.value = state.reason;
+    // Intentionally no admin controls: availability is hard-coded above.
 }
 
 function updateLoanUnavailablePopupMessage() {
@@ -10108,12 +9721,12 @@ function updateLoanUnavailablePopupMessage() {
     const body = document.querySelector("#loanUnavailablePopup .loan-popup-body");
     const heading = document.querySelector("#loanUnavailablePopup .loan-popup-header h2");
     if (!body || !heading) return;
-    if (state.override === "CLOSED") {
-        heading.textContent = "Temporary Loan Closure";
-        body.innerHTML = `<p>Loan applications are temporarily closed by the Chama Administrator.</p><p><strong>Reason:</strong> ${state.reason || "Temporary administrative closure"}</p><p>Please check again later for an update.</p><p>Thank you for your understanding and continued commitment to Future Finders Chama Group.</p>`;
+    if (state.isOpen) {
+        heading.textContent = "Loan Applications Are Open";
+        body.innerHTML = `<p>Loan applications are currently open. You may proceed to check your eligibility and submit an application.</p>`;
     } else {
-        heading.textContent = "Annual Loan Closure";
-        body.innerHTML = `<p>In accordance with the Future Finders Chama Group Constitution, the annual loan operating period runs from <strong>1 January to 31 October</strong>.</p><p>Loan services are closed from <strong>1 November to 31 December</strong> to allow the chama to prepare for its December activities and the close of the year.</p><p><strong>Loan services are scheduled to resume on 1 January.</strong></p><p>Thank you for your understanding and continued commitment to Future Finders Chama Group.</p>`;
+        heading.textContent = "Loan Applications Are Closed";
+        body.innerHTML = `<p>Loan applications are currently closed.</p><p>Please check again later for an update.</p><p>Thank you for your understanding and continued commitment to Future Finders Chama Group.</p>`;
     }
 }
 
@@ -10127,19 +9740,34 @@ document.addEventListener("DOMContentLoaded", refreshLoanAvailabilityUI);
 
 
 <!-- CHECK LOAN BUTTON -->
+<button type="button"
+        class="check-loan-btn"
+        onclick="handleLoanCheck()">
+
+    🔍 Check Loan Eligibility
+
+</button>
+
 
 
 <!-- MEMBER LOAN HISTORY BUTTON -->
-
+<button type="button"
+        class="check-loan-btn"
+        onclick="showMyLoans()"
+        style="margin-top:10px;background:#087f5b;">
+    📋 My Loans
+</button>
 
 
 <!-- ==========================================
      LOAN UNAVAILABLE POPUP
      ========================================== -->
 
-<div id="loanUnavailablePopup" class="loan-popup-overlay">
+<div id="loanUnavailablePopup"
+     class="loan-popup-overlay">
 
-    <div class="loan-popup" onclick="event.stopPropagation()">
+    <div class="loan-popup"
+         onclick="event.stopPropagation()">
 
         <div class="loan-popup-header">
 
@@ -10151,9 +9779,34 @@ document.addEventListener("DOMContentLoaded", refreshLoanAvailabilityUI);
 
         </div>
 
-        <div class="loan-popup-body"><p>In accordance with the Future Finders Chama Group Constitution, the annual loan operating period runs from <strong>1 January to 31 October</strong>.</p><p>Loan services are closed from <strong>1 November to 31 December</strong> to allow the chama to prepare for its December activities and the close of the year.</p><p><strong>Loan services are scheduled to resume on 1 January.</strong></p><p>Thank you for your understanding and continued commitment to Future Finders Chama Group.</p></div>
+        <div class="loan-popup-body">
 
-        <button type="button" class="loan-popup-close" onclick="hideLoanUnavailablePopup()">
+            <p>
+                In accordance with the Future Finders Chama Group Constitution,
+                the annual loan operating period runs from
+                <strong>1 January to 31 October</strong>.
+            </p>
+
+            <p>
+                Loan services are closed from <strong>1 November to 31 December</strong>
+                to allow the chama to prepare for its December activities and the
+                close of the year.
+            </p>
+
+            <p>
+                <strong>Loan services are scheduled to resume on 1 January.</strong>
+            </p>
+
+            <p>
+                Thank you for your understanding and continued commitment
+                to Future Finders Chama Group.
+            </p>
+
+        </div>
+
+        <button type="button"
+                class="loan-popup-close"
+                onclick="hideLoanUnavailablePopup()">
 
             ✓ Okay, Thank You
 
@@ -10529,41 +10182,43 @@ document.addEventListener(
 
 </script>
 
+<button class="action-btn" onclick="showWelfareApplication()">
+💞 Apply for Welfare Support
+</button>
 
+<button class="action-btn" onclick="openNotePopup()">🗒️ View Notes/Fines</button>
 
-
-
-
+<a class="action-btn" onclick="openRegistrationFees()">📝 View Registration Fees</a>
 
 
 
 <!-- 📄 Member Contract -->
-
+<button class="action-btn" type="button" onclick="openMyContract()" style="background:#0b7285;margin-top:10px;">📄 My Membership Contract</button>
 
 
 <!-- Membership Withdrawal / Exit -->
-
+<button class="action-btn" type="button" onclick="openMemberExitForm()" style="background:#7c3aed;margin-top:10px;">🚪 Membership Withdrawal / Exit</button>
 <div id="ffMemberExitModal" role="dialog" aria-modal="true" aria-labelledby="ffExitTitle" style="display:none;position:fixed;inset:0;z-index:1000001;background:rgba(12,28,45,.72);padding:16px;overflow:auto;box-sizing:border-box;">
  <div style="max-width:960px;margin:18px auto;background:#fff;border-radius:16px;padding:clamp(16px,3vw,28px);box-shadow:0 18px 55px rgba(0,0,0,.28);color:#243447;">
-  <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;"><h2 id="ffExitTitle" style="margin:0;color:#56328a;">Membership Withdrawal &amp; Exit Notice</h2><button type="button" onclick="closeMemberExitForm()" style="border:0;border-radius:8px;padding:9px 13px;background:#e8eef3;cursor:pointer;font-weight:700;">✕ Close</button></div>
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;"><h2 id="ffExitTitle" style="margin:0;color:#56328a;">Membership Withdrawal & Exit Notice</h2><button type="button" onclick="closeMemberExitForm()" style="border:0;border-radius:8px;padding:9px 13px;background:#e8eef3;cursor:pointer;font-weight:700;">✕ Close</button></div>
   <p style="color:#475569;line-height:1.65;">Use this form only when you voluntarily wish to withdraw from Future Finders Chama Group. It creates a formal written notice under Article 11.1 of the Constitution. Submitting this notice does not end your membership immediately, cancel your contract automatically, erase your records or release you from financial obligations.</p>
   <div style="padding:14px;border-left:4px solid #7c3aed;background:#f5f3ff;border-radius:8px;line-height:1.65;margin:12px 0;"><b>Important constitutional timelines</b><ul style="margin:7px 0 0;padding-left:20px;"><li>Give at least <b>30 days' written notice</b> before the intended exit date.</li><li>The Chama reconciles your financial records during the notice period.</li><li>Financial reconciliation is to be completed within <b>30 days after the notice period ends</b>.</li><li>Any eligible settlement is subject to verified savings, approved amounts due, outstanding obligations and lawful deductions.</li><li>If settlement is delayed by a genuine administrative, verification or financial issue, the Chama should explain the reason and expected settlement date.</li></ul><p style="margin:9px 0 0;"><b>Withdrawal is different from suspension or disciplinary termination.</b> This member form is for voluntary withdrawal. A temporary suspension does not automatically end membership (Articles 11.4–11.5). Disciplinary termination is a separate Chama process requiring the constitutional procedure, a reasonable opportunity for the member to respond and applicable appeal rights (Article 11.6). A former member's re-admission is not automatic (Article 11.8).</p></div>
   <form id="ffMemberExitForm" onsubmit="submitMemberExitNotice(event)" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:13px;margin-top:16px;background:#f8fafc;border:1px solid #dbe4ec;padding:16px;border-radius:12px;">
-   <label style="font-weight:700;">Full member name<input id="ffExitMemberName" readonly="" required="" style="display:block;width:100%;box-sizing:border-box;margin-top:6px;padding:11px;border:1px solid #cbd5e1;border-radius:7px;background:#eef2f7;"></label>
+   <label style="font-weight:700;">Full member name<input id="ffExitMemberName" readonly required style="display:block;width:100%;box-sizing:border-box;margin-top:6px;padding:11px;border:1px solid #cbd5e1;border-radius:7px;background:#eef2f7;"></label>
    <label style="font-weight:700;">Membership number (if known)<input id="ffExitMembershipNo" placeholder="Enter your membership number if available" style="display:block;width:100%;box-sizing:border-box;margin-top:6px;padding:11px;border:1px solid #cbd5e1;border-radius:7px;"></label>
-   <label style="font-weight:700;">Registered phone number<input id="ffExitPhone" readonly="" style="display:block;width:100%;box-sizing:border-box;margin-top:6px;padding:11px;border:1px solid #cbd5e1;border-radius:7px;background:#eef2f7;"></label>
-   <label style="font-weight:700;">Date written notice is submitted<input id="ffExitNoticeDate" readonly="" style="display:block;width:100%;box-sizing:border-box;margin-top:6px;padding:11px;border:1px solid #cbd5e1;border-radius:7px;background:#eef2f7;"></label>
-   <label style="font-weight:700;">Intended date of exit (minimum 30 days' notice)<input id="ffExitIntendedDate" type="date" required="" style="display:block;width:100%;box-sizing:border-box;margin-top:6px;padding:11px;border:1px solid #cbd5e1;border-radius:7px;"></label>
-   <label style="font-weight:700;">Reason for withdrawal<select id="ffExitReason" required="" style="display:block;width:100%;box-sizing:border-box;margin-top:6px;padding:11px;border:1px solid #cbd5e1;border-radius:7px;"><option value="">Select reason</option><option>Personal reasons</option><option>Relocation or change of residence</option><option>Financial circumstances</option><option>Health or family circumstances</option><option>Unable to continue participation</option><option>Other reason (explained below)</option></select></label>
+   <label style="font-weight:700;">Registered phone number<input id="ffExitPhone" readonly style="display:block;width:100%;box-sizing:border-box;margin-top:6px;padding:11px;border:1px solid #cbd5e1;border-radius:7px;background:#eef2f7;"></label>
+   <label style="font-weight:700;">Date written notice is submitted<input id="ffExitNoticeDate" readonly style="display:block;width:100%;box-sizing:border-box;margin-top:6px;padding:11px;border:1px solid #cbd5e1;border-radius:7px;background:#eef2f7;"></label>
+   <label style="font-weight:700;">Intended date of exit (minimum 30 days' notice)<input id="ffExitIntendedDate" type="date" required style="display:block;width:100%;box-sizing:border-box;margin-top:6px;padding:11px;border:1px solid #cbd5e1;border-radius:7px;"></label>
+   <label style="font-weight:700;">Reason for withdrawal<select id="ffExitReason" required style="display:block;width:100%;box-sizing:border-box;margin-top:6px;padding:11px;border:1px solid #cbd5e1;border-radius:7px;"><option value="">Select reason</option><option>Personal reasons</option><option>Relocation or change of residence</option><option>Financial circumstances</option><option>Health or family circumstances</option><option>Unable to continue participation</option><option>Other reason (explained below)</option></select></label>
    <label style="grid-column:1/-1;font-weight:700;">Explanation / additional details<textarea id="ffExitExplanation" rows="3" placeholder="Briefly explain your reason for requesting withdrawal." style="display:block;width:100%;box-sizing:border-box;margin-top:6px;padding:11px;border:1px solid #cbd5e1;border-radius:7px;"></textarea></label>
    <label style="grid-column:1/-1;font-weight:700;">Existing contract reference (if known)<input id="ffExitContractRef" placeholder="Optional — enter your current membership contract reference" style="display:block;width:100%;box-sizing:border-box;margin-top:6px;padding:11px;border:1px solid #cbd5e1;border-radius:7px;"></label>
    <div style="grid-column:1/-1;border:1px solid #cbd5e1;border-radius:9px;padding:13px;background:#fff;line-height:1.6;"><b>What happens to your financial records?</b><p style="margin:7px 0;">The Chama will reconcile your verified personal savings, contributions, loans, repayments, penalties and other obligations. Eligible personal savings are treated separately from Merry-Go-Round and welfare contributions. Registration fees, properly applied fines, penalties and charges are not refundable as savings. Merry-Go-Round contributions are handled under the applicable cycle rules; welfare contributions are not automatically refundable. Any approved reward or benefit is calculated separately where you qualify.</p><p style="margin:7px 0;"><b>Settlement calculation:</b> Eligible Personal Savings + Approved Amounts Due − Outstanding Obligations and Lawful Deductions. The final amount is determined from official Chama records; this form does not guarantee a particular refund.</p><p style="margin:7px 0;">If you have an outstanding loan, contribution, penalty, guarantee or other obligation, it remains payable after withdrawal. Where an amount is payable to you, it may first be reconciled against outstanding obligations in accordance with the Constitution and applicable Chama rules.</p></div>
    <label style="grid-column:1/-1;display:flex;align-items:flex-start;gap:9px;line-height:1.5;"><input id="ffExitDisputeAck" type="checkbox" style="margin-top:4px;"> I confirm that I understand a pending dispute or disciplinary matter is not automatically cancelled by my withdrawal notice. I may still submit notice, but the matter and any related obligations may continue to be handled under the Constitution.</label>
-   <label style="grid-column:1/-1;font-weight:700;">Type your full name as your digital signature<input id="ffExitSignature" required="" autocomplete="name" placeholder="Enter your full name exactly as shown in your account" style="display:block;width:100%;box-sizing:border-box;margin-top:6px;padding:11px;border:1px solid #cbd5e1;border-radius:7px;"></label>
-   <label style="grid-column:1/-1;display:flex;align-items:flex-start;gap:9px;line-height:1.5;"><input id="ffExitDeclaration" type="checkbox" required="" style="margin-top:4px;"> I confirm that I am voluntarily giving written notice to withdraw. I have read the explanations above and understand that this notice is not immediate termination, does not waive my obligations and is subject to the Constitution, including Article 11.</label>
+   <label style="grid-column:1/-1;font-weight:700;">Type your full name as your digital signature<input id="ffExitSignature" required autocomplete="name" placeholder="Enter your full name exactly as shown in your account" style="display:block;width:100%;box-sizing:border-box;margin-top:6px;padding:11px;border:1px solid #cbd5e1;border-radius:7px;"></label>
+   <label style="grid-column:1/-1;display:flex;align-items:flex-start;gap:9px;line-height:1.5;"><input id="ffExitDeclaration" type="checkbox" required style="margin-top:4px;"> I confirm that I am voluntarily giving written notice to withdraw. I have read the explanations above and understand that this notice is not immediate termination, does not waive my obligations and is subject to the Constitution, including Article 11.</label>
    <button type="button" onclick="previewMemberExitNotice()" style="grid-column:1/-1;background:#56328a;color:#fff;border:0;border-radius:9px;padding:13px;font-weight:700;cursor:pointer;">👁️ Review Official Exit Notice Before Signing</button>
    <div id="ffExitPreviewWrap" style="display:none;grid-column:1/-1;border:1px solid #cbd5e1;border-radius:10px;padding:12px;background:#eef2f7;"><b style="color:#56328a;">DOCUMENT PREVIEW — PLEASE READ BEFORE SIGNING</b><div id="ffExitPreview" style="max-height:480px;overflow:auto;background:#fff;padding:12px;margin-top:9px;"></div><label style="display:flex;gap:8px;margin-top:10px;"><input id="ffExitPreviewAck" type="checkbox"> I have reviewed the full withdrawal notice preview.</label></div>
-   <button id="ffExitSubmitBtn" type="submit" style="grid-column:1/-1;background:#087f5b;color:#fff;border:0;border-radius:9px;padding:13px;font-weight:700;cursor:pointer;">✍️ Sign &amp; Submit 30-Day Withdrawal Notice</button>
+   <button id="ffExitSubmitBtn" type="submit" style="grid-column:1/-1;background:#087f5b;color:#fff;border:0;border-radius:9px;padding:13px;font-weight:700;cursor:pointer;">✍️ Sign & Submit 30-Day Withdrawal Notice</button>
    <p id="ffExitMessage" role="status" style="grid-column:1/-1;font-weight:700;margin:0;"></p>
   </form>
   <div id="ffExitSignedActions" style="display:none;padding:14px;border:1px solid #bbf7d0;background:#f0fdf4;border-radius:10px;margin:14px 0;"><b>Withdrawal notice recorded in this browser.</b><p>Download or print the signed notice, then attach the PDF to a WhatsApp message to the Admin at 0713953004. The notice is not an approval or final clearance. Keep your copy for reference.</p><button type="button" onclick="downloadMyExitNotice()" style="background:#56328a;color:#fff;border:0;border-radius:8px;padding:11px;cursor:pointer;">⬇ Download / Print Signed Notice</button> <button type="button" onclick="sendExitNoticeWhatsApp()" style="background:#16a34a;color:#fff;border:0;border-radius:8px;padding:11px;cursor:pointer;">🟢 Send to Admin on WhatsApp</button></div>
@@ -10585,8 +10240,8 @@ document.addEventListener(
     <div id="ffMemberContractFormWrap" style="display:none;">
       <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin:12px 0;"><h3 style="margin:0;color:#075985;">✍️ Contract Form</h3><button type="button" onclick="showMyContractHistory()" style="padding:9px 13px;border:0;border-radius:8px;background:#e2e8f0;font-weight:700;cursor:pointer;">← Back to Contract History</button></div>
     <form id="ffMemberContractForm" onsubmit="submitMemberContract(event)" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:16px 0;background:#f8fafc;border:1px solid #dbe4ec;padding:16px;border-radius:12px;">
-      <label style="font-weight:700;">Full member name<input id="ffContractMemberName" required="" readonly="" style="display:block;width:100%;box-sizing:border-box;margin-top:6px;padding:11px;border:1px solid #cbd5e1;border-radius:7px;background:#eef2f7;"></label>
-      <label style="font-weight:700;">Contract type<select id="ffContractMemberType" required="" onchange="updateContractFee();invalidateContractPreview();" style="display:block;width:100%;box-sizing:border-box;margin-top:6px;padding:11px;border:1px solid #cbd5e1;border-radius:7px;"><option value="New Membership Contract">New Membership Contract</option><option value="Membership Contract Renewal">Membership Contract Renewal</option></select></label>
+      <label style="font-weight:700;">Full member name<input id="ffContractMemberName" required readonly style="display:block;width:100%;box-sizing:border-box;margin-top:6px;padding:11px;border:1px solid #cbd5e1;border-radius:7px;background:#eef2f7;"></label>
+      <label style="font-weight:700;">Contract type<select id="ffContractMemberType" required onchange="updateContractFee();invalidateContractPreview();" style="display:block;width:100%;box-sizing:border-box;margin-top:6px;padding:11px;border:1px solid #cbd5e1;border-radius:7px;"><option value="New Membership Contract">New Membership Contract</option><option value="Membership Contract Renewal">Membership Contract Renewal</option></select></label>
       <div id="ffContractFeeQuestion" style="grid-column:1/-1;display:none;padding:12px;background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;">
         <label style="font-weight:700;">Have you previously paid the Chama registration fee?
           <select id="ffContractFeePaid" onchange="updateContractFee();invalidateContractPreview();" style="display:block;width:100%;box-sizing:border-box;margin-top:6px;padding:11px;border:1px solid #cbd5e1;border-radius:7px;">
@@ -10596,8 +10251,10 @@ document.addEventListener(
         <p id="ffContractFeeExplanation" style="margin:8px 0 0;line-height:1.5;font-weight:600;"></p>
       </div>
       <div id="ffContractFeeSummary" style="grid-column:1/-1;padding:12px;background:#ecfdf5;border:1px solid #a7f3d0;border-radius:8px;line-height:1.6;"><b>Applicable fee:</b> KSh 500 — one-time registration fee for a new member.</div>
-      <label style="font-weight:700;grid-column:1/-1;">Choose your chama participation plan<select id="ffContractParticipation" required="" style="display:block;width:100%;box-sizing:border-box;margin-top:6px;padding:11px;border:1px solid #cbd5e1;border-radius:7px;"><option value="">Select participation plan</option><option>Weekly merry-go-round only</option><option>Monthly merry-go-round only</option><option>Weekly merry-go-round plus savings</option><option>Monthly merry-go-round plus savings</option><option>Monthly chama plus weekly participation</option><option>Monthly chama plus weekly participation plus savings</option><option>Savings Only (No Merry-Go-Round)</option></select></label>
-      <div id="ffParticipationPlanNotice" style="grid-column:1/-1;padding:12px;background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;line-height:1.6;color:#7c2d12;"><b>Important participation notice:</b> Members who choose <b>Savings Only</b> save with the Chama but do not join the merry-go-round and are not entitled to merry-go-round payouts. Members who do not actively participate in savings are not eligible for Chama loans or welfare support. Savings Only members may apply for loans or welfare only when they meet the applicable savings threshold and all other eligibility rules</div>
+      <label style="font-weight:700;grid-column:1/-1;">Choose your chama participation plan<select id="ffContractParticipation" required style="display:block;width:100%;box-sizing:border-box;margin-top:6px;padding:11px;border:1px solid #cbd5e1;border-radius:7px;"><option value="">Select participation plan</option><option>Weekly merry-go-round only</option><option>Monthly merry-go-round only</option><option>Weekly merry-go-round plus savings</option><option>Monthly merry-go-round plus savings</option><option>Monthly chama plus weekly participation</option><option>Monthly chama plus weekly participation plus savings</option><option>Savings Only (No Merry-Go-Round)</option></select></label>
+      <div id="ffParticipationPlanNotice" style="grid-column:1/-1;padding:12px;background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;line-height:1.6;color:#7c2d12;">
+        <b>Important participation notice:</b> Members who choose <b>Savings Only</b> save with the Chama but do not join the merry-go-round and are not entitled to merry-go-round payouts. Members who do not actively participate in savings are not eligible for Chama loans or welfare support. Savings Only members may apply for loans or welfare only when they meet the applicable savings threshold and all other eligibility rules.
+      </div>
       <div style="grid-column:1/-1;padding:12px;background:#eff6ff;border-radius:8px;line-height:1.6;"><b>Member undertaking</b><p style="margin:6px 0;">I agree to abide by the Future Finders Chama Group Constitution and approved rules; participate according to the plan selected above; make the contributions applicable to my chosen plan on time; act honestly and respectfully; and comply with the group’s approved welfare, savings, loan, discipline, dispute-resolution and exit procedures. Any applicable fees, fines and benefits remain governed by the Constitution and approved rules. Signing does not automatically admit a new applicant; the existing membership approval process still applies. If this form conflicts with the Constitution, the Constitution prevails.</p></div>
       <button type="button" onclick="previewMemberContract()" style="grid-column:1/-1;background:#075985;color:white;border:0;border-radius:9px;padding:13px 18px;font-weight:700;cursor:pointer;">👁️ View Full Contract Before Signing</button>
       <div id="ffContractPreviewWrap" style="display:none;grid-column:1/-1;background:#eaf0f5;border:1px solid #cbd5e1;border-radius:10px;padding:12px;">
@@ -10605,10 +10262,10 @@ document.addEventListener(
         <p style="margin:0 0 10px;color:#475569;">Review the entire contract below. The signing date/time and final reference will be recorded when you sign. If you change the contract type, participation plan or signature, preview it again before signing.</p>
         <div id="ffContractPreview" style="max-height:560px;overflow:auto;background:white;border-radius:7px;padding:14px;"></div>
       </div>
-      <label style="font-weight:700;grid-column:1/-1;">Type your full name as your digital signature<input id="ffContractTypedSignature" required="" autocomplete="name" placeholder="Enter your full name exactly as shown in your account" style="display:block;width:100%;box-sizing:border-box;margin-top:6px;padding:11px;border:1px solid #cbd5e1;border-radius:7px;"></label>
-      <label style="grid-column:1/-1;display:flex;align-items:flex-start;gap:9px;line-height:1.5;"><input id="ffContractPreviewAcceptance" type="checkbox" required="" style="margin-top:4px;"> I have viewed and reviewed the full contract above before signing.</label>
-      <label style="grid-column:1/-1;display:flex;align-items:flex-start;gap:9px;line-height:1.5;"><input id="ffContractAcceptance" type="checkbox" required="" style="margin-top:4px;"> I confirm that I have read and understood this contract and voluntarily agree to the selected participation plan and the group Constitution.</label>
-      <button id="ffContractSubmitBtn" type="submit" style="grid-column:1/-1;background:#087f5b;color:white;border:0;border-radius:9px;padding:13px 18px;font-weight:700;cursor:pointer;">✍️ Sign, Submit &amp; Prepare Contract</button>
+      <label style="font-weight:700;grid-column:1/-1;">Type your full name as your digital signature<input id="ffContractTypedSignature" required autocomplete="name" placeholder="Enter your full name exactly as shown in your account" style="display:block;width:100%;box-sizing:border-box;margin-top:6px;padding:11px;border:1px solid #cbd5e1;border-radius:7px;"></label>
+      <label style="grid-column:1/-1;display:flex;align-items:flex-start;gap:9px;line-height:1.5;"><input id="ffContractPreviewAcceptance" type="checkbox" required style="margin-top:4px;"> I have viewed and reviewed the full contract above before signing.</label>
+      <label style="grid-column:1/-1;display:flex;align-items:flex-start;gap:9px;line-height:1.5;"><input id="ffContractAcceptance" type="checkbox" required style="margin-top:4px;"> I confirm that I have read and understood this contract and voluntarily agree to the selected participation plan and the group Constitution.</label>
+      <button id="ffContractSubmitBtn" type="submit" style="grid-column:1/-1;background:#087f5b;color:white;border:0;border-radius:9px;padding:13px 18px;font-weight:700;cursor:pointer;">✍️ Sign, Submit & Prepare Contract</button>
       <p id="ffMemberContractMessage" role="status" style="grid-column:1/-1;font-weight:700;margin:0;"></p>
     </form>
     </div>
@@ -10616,7 +10273,7 @@ document.addEventListener(
   </div>
 </div>
 <!-- 🚪 Member Logout -->
-<button class="action-btn ff-menu-logout" id="memberLogoutBtn" onclick="memberLogout()" style="background: rgb(211, 47, 47); margin-top: 15px; position: relative; display: inline-flex;">
+<button class="action-btn" id="memberLogoutBtn" onclick="memberLogout()" style="background:#d32f2f; margin-top:15px; position:relative;">
   🚪 Logout
   <span class="spinner" style="display:none; margin-left:8px; border:2px solid #f3f3f3; border-top:2px solid white; border-radius:50%; width:14px; height:14px; animation: spin 1s linear infinite; vertical-align:middle;"></span>
 </button>
@@ -10695,7 +10352,19 @@ document.addEventListener(
    BUTTON TO OPEN TABLE
 ========================= -->
 
-
+<button onclick="open2025Popup()" 
+style="
+background:#00796b;
+color:white;
+border:none;
+padding:10px 18px;
+border-radius:8px;
+cursor:pointer;
+font-weight:bold;
+margin:10px 0;
+">
+📊 View 2025 Contributions
+</button>
 
 
 
@@ -10709,7 +10378,7 @@ document.addEventListener(
 
     <!-- CLOSE BUTTON -->
     <span class="close2025" onclick="close2025Popup()">
-      ×
+      &times;
     </span>
 
     <!-- TITLE -->
@@ -10718,7 +10387,9 @@ document.addEventListener(
     <!-- TABLE -->
     <div class="table-container">
 
-<table id="table2025" border="1" style="width:100%; border-collapse:collapse; text-align:center;">
+<table id="table2025"
+border="1"
+style="width:100%; border-collapse:collapse; text-align:center;">
 
 <thead style="background:#00796b; color:white;">
 
@@ -10764,10 +10435,10 @@ PAYMENT STATUS
 <td><input type="number" value="200"></td>
 <td><input type="number" value="200"></td>
 
-<td class="rowTotal">3,410</td>
-<td class="saved2025">Ksh 1,364</td>
-<td class="reward2025">Ksh 2,046</td>
-<td class="paymentStatus" style="color: green; font-weight: bold;">✅ <b>Paid on 22nd Dec 2025</b></td>
+<td class="rowTotal">0</td>
+<td class="saved2025">0</td>
+<td class="reward2025">0</td>
+<td class="paymentStatus"></td>
 </tr>
 
 <tr>
@@ -10785,10 +10456,10 @@ PAYMENT STATUS
 <td><input type="number" value="0"></td>
 <td><input type="number" value="0"></td>
 
-<td class="rowTotal">Ksh 900</td>
-<td class="saved2025">Ksh 900</td>
-<td class="reward2025">Ksh 0</td>
-<td class="paymentStatus" style="color: rgb(183, 28, 28); font-weight: bold;">⏳ Not Paid</td>
+<td class="rowTotal">0</td>
+<td class="saved2025">0</td>
+<td class="reward2025">0</td>
+<td class="paymentStatus"></td>
 </tr>
 
 <tr>
@@ -10806,10 +10477,10 @@ PAYMENT STATUS
 <td><input type="number" value="0"></td>
 <td><input type="number" value="0"></td>
 
-<td class="rowTotal">Ksh 720</td>
-<td class="saved2025">Ksh 720</td>
-<td class="reward2025">Ksh 0</td>
-<td class="paymentStatus" style="color: rgb(183, 28, 28); font-weight: bold;">⏳ Not Paid</td>
+<td class="rowTotal">0</td>
+<td class="saved2025">0</td>
+<td class="reward2025">0</td>
+<td class="paymentStatus"></td>
 </tr>
 
 <tr>
@@ -10827,10 +10498,10 @@ PAYMENT STATUS
 <td><input type="number" value="0"></td>
 <td><input type="number" value="0"></td>
 
-<td class="rowTotal">Ksh 250</td>
-<td class="saved2025">Ksh 250</td>
-<td class="reward2025">Ksh 0</td>
-<td class="paymentStatus" style="color: rgb(183, 28, 28); font-weight: bold;">⏳ Not Paid</td>
+<td class="rowTotal">0</td>
+<td class="saved2025">0</td>
+<td class="reward2025">0</td>
+<td class="paymentStatus"></td>
 </tr>
 
 <tr>
@@ -10848,10 +10519,10 @@ PAYMENT STATUS
 <td><input type="number" value="355"></td>
 <td><input type="number" value="0"></td>
 
-<td class="rowTotal">Ksh 627</td>
-<td class="saved2025">Ksh 627</td>
-<td class="reward2025">Ksh 0</td>
-<td class="paymentStatus" style="color: green; font-weight: bold;">✅ <b>Paid on 22nd Dec 2025</b></td>
+<td class="rowTotal">0</td>
+<td class="saved2025">0</td>
+<td class="reward2025">0</td>
+<td class="paymentStatus"></td>
 </tr>
 
 <tr>
@@ -10869,10 +10540,10 @@ PAYMENT STATUS
 <td><input type="number" value="105"></td>
 <td><input type="number" value="0"></td>
 
-<td class="rowTotal">Ksh 1,805</td>
-<td class="saved2025">Ksh 902</td>
-<td class="reward2025">Ksh 903</td>
-<td class="paymentStatus" style="color: green; font-weight: bold;">✅ <b>Paid on 22nd Dec 2025</b></td>
+<td class="rowTotal">0</td>
+<td class="saved2025">0</td>
+<td class="reward2025">0</td>
+<td class="paymentStatus"></td>
 </tr>
 
 <tr>
@@ -10890,10 +10561,10 @@ PAYMENT STATUS
 <td><input type="number" value="405"></td>
 <td><input type="number" value="300"></td>
 
-<td class="rowTotal">Ksh 5,055</td>
-<td class="saved2025">Ksh 2,022</td>
-<td class="reward2025">Ksh 3,033</td>
-<td class="paymentStatus" style="color: green; font-weight: bold;">✅ <b>Paid on 22nd Dec 2025</b></td>
+<td class="rowTotal">0</td>
+<td class="saved2025">0</td>
+<td class="reward2025">0</td>
+<td class="paymentStatus"></td>
 </tr>
 
 <tr>
@@ -10911,10 +10582,10 @@ PAYMENT STATUS
 <td><input type="number" value="205"></td>
 <td><input type="number" value="150"></td>
 
-<td class="rowTotal">Ksh 1,755</td>
-<td class="saved2025">Ksh 877</td>
-<td class="reward2025">Ksh 878</td>
-<td class="paymentStatus" style="color: green; font-weight: bold;">✅ <b>Paid on 22nd Dec 2025</b></td>
+<td class="rowTotal">0</td>
+<td class="saved2025">0</td>
+<td class="reward2025">0</td>
+<td class="paymentStatus"></td>
 </tr>
 
 <tr>
@@ -10932,10 +10603,10 @@ PAYMENT STATUS
 <td><input type="number" value="150"></td>
 <td><input type="number" value="150"></td>
 
-<td class="rowTotal">Ksh 1,000</td>
-<td class="saved2025">Ksh 1,000</td>
-<td class="reward2025">Ksh 0</td>
-<td class="paymentStatus" style="color: rgb(183, 28, 28); font-weight: bold;">⏳ Not Paid</td>
+<td class="rowTotal">0</td>
+<td class="saved2025">0</td>
+<td class="reward2025">0</td>
+<td class="paymentStatus"></td>
 </tr>
 
 <tr>
@@ -10953,10 +10624,10 @@ PAYMENT STATUS
 <td><input type="number" value="405"></td>
 <td><input type="number" value="300"></td>
 
-<td class="rowTotal">Ksh 4,805</td>
-<td class="saved2025">Ksh 1,922</td>
-<td class="reward2025">Ksh 2,883</td>
-<td class="paymentStatus" style="color: green; font-weight: bold;">✅ <b>Paid on 22nd Dec 2025</b></td>
+<td class="rowTotal">0</td>
+<td class="saved2025">0</td>
+<td class="reward2025">0</td>
+<td class="paymentStatus"></td>
 </tr>
 <tr>
 <td>KEFFA MOMANYI</td>
@@ -10973,10 +10644,10 @@ PAYMENT STATUS
 <td><input type="number" value="200"></td>
 <td><input type="number" value="150"></td>
 
-<td class="rowTotal">Ksh 2,400</td>
-<td class="saved2025">Ksh 960</td>
-<td class="reward2025">Ksh 1,440</td>
-<td class="paymentStatus" style="color: green; font-weight: bold;">✅ <b>Paid on 22nd Dec 2025</b></td>
+<td class="rowTotal">0</td>
+<td class="saved2025">0</td>
+<td class="reward2025">0</td>
+<td class="paymentStatus"></td>
 </tr>
 
 <tr>
@@ -10994,10 +10665,10 @@ PAYMENT STATUS
 <td><input type="number" value="605"></td>
 <td><input type="number" value="450"></td>
 
-<td class="rowTotal">Ksh 7,505</td>
-<td class="saved2025">Ksh 3,002</td>
-<td class="reward2025">Ksh 4,503</td>
-<td class="paymentStatus" style="color: green; font-weight: bold;">✅ <b>Paid on 22nd Dec 2025</b></td>
+<td class="rowTotal">0</td>
+<td class="saved2025">0</td>
+<td class="reward2025">0</td>
+<td class="paymentStatus"></td>
 </tr>
 
 <tr>
@@ -11015,10 +10686,10 @@ PAYMENT STATUS
 <td><input type="number" value="0"></td>
 <td><input type="number" value="0"></td>
 
-<td class="rowTotal">Ksh 0</td>
-<td class="saved2025">Ksh 0</td>
-<td class="reward2025">Ksh 0</td>
-<td class="paymentStatus" style="color: green; font-weight: bold;">✅ <b>Paid on 22nd Dec 2025</b></td>
+<td class="rowTotal">0</td>
+<td class="saved2025">0</td>
+<td class="reward2025">0</td>
+<td class="paymentStatus"></td>
 </tr>
 
 <tr>
@@ -11036,10 +10707,10 @@ PAYMENT STATUS
 <td><input type="number" value="100"></td>
 <td><input type="number" value="100"></td>
 
-<td class="rowTotal">Ksh 2,670</td>
-<td class="saved2025">Ksh 1,335</td>
-<td class="reward2025">Ksh 1,335</td>
-<td class="paymentStatus" style="color: green; font-weight: bold;">✅ <b>Paid on 22nd Dec 2025</b></td>
+<td class="rowTotal">0</td>
+<td class="saved2025">0</td>
+<td class="reward2025">0</td>
+<td class="paymentStatus"></td>
 </tr>
 
 <tr>
@@ -11057,10 +10728,10 @@ PAYMENT STATUS
 <td><input type="number" value="0"></td>
 <td><input type="number" value="0"></td>
 
-<td class="rowTotal">Ksh 600</td>
-<td class="saved2025">Ksh 600</td>
-<td class="reward2025">Ksh 0</td>
-<td class="paymentStatus" style="color: green; font-weight: bold;">✅ <b>Paid on 22nd Dec 2025</b></td>
+<td class="rowTotal">0</td>
+<td class="saved2025">0</td>
+<td class="reward2025">0</td>
+<td class="paymentStatus"></td>
 </tr>
 
 <tr>
@@ -11078,10 +10749,10 @@ PAYMENT STATUS
 <td><input type="number" value="100"></td>
 <td><input type="number" value="0"></td>
 
-<td class="rowTotal">Ksh 1,100</td>
-<td class="saved2025">Ksh 1,100</td>
-<td class="reward2025">Ksh 0</td>
-<td class="paymentStatus" style="color: rgb(183, 28, 28); font-weight: bold;">⏳ Not Paid</td>
+<td class="rowTotal">0</td>
+<td class="saved2025">0</td>
+<td class="reward2025">0</td>
+<td class="paymentStatus"></td>
 </tr>
 
 <tr>
@@ -11099,10 +10770,10 @@ PAYMENT STATUS
 <td><input type="number" value="250"></td>
 <td><input type="number" value="200"></td>
 
-<td class="rowTotal">Ksh 1,650</td>
-<td class="saved2025">Ksh 825</td>
-<td class="reward2025">Ksh 825</td>
-<td class="paymentStatus" style="color: green; font-weight: bold;">✅ <b>Paid on 22nd Dec 2025</b></td>
+<td class="rowTotal">0</td>
+<td class="saved2025">0</td>
+<td class="reward2025">0</td>
+<td class="paymentStatus"></td>
 </tr>
 
 <tr>
@@ -11120,10 +10791,10 @@ PAYMENT STATUS
 <td><input type="number" value="0"></td>
 <td><input type="number" value="0"></td>
 
-<td class="rowTotal">Ksh 1,050</td>
-<td class="saved2025">Ksh 1,050</td>
-<td class="reward2025">Ksh 0</td>
-<td class="paymentStatus" style="color: green; font-weight: bold;">✅ <b>Paid on 22nd Dec 2025</b></td>
+<td class="rowTotal">0</td>
+<td class="saved2025">0</td>
+<td class="reward2025">0</td>
+<td class="paymentStatus"></td>
 </tr>
 
 <tr>
@@ -11141,10 +10812,10 @@ PAYMENT STATUS
 <td><input type="number" value="100"></td>
 <td><input type="number" value="300"></td>
 
-<td class="rowTotal">Ksh 400</td>
-<td class="saved2025">Ksh 400</td>
-<td class="reward2025">Ksh 0</td>
-<td class="paymentStatus" style="color: rgb(183, 28, 28); font-weight: bold;">⏳ Not Paid</td>
+<td class="rowTotal">0</td>
+<td class="saved2025">0</td>
+<td class="reward2025">0</td>
+<td class="paymentStatus"></td>
 </tr>
 
 <!-- ADD ALL OTHER MEMBERS HERE USING SAME FORMAT -->
@@ -11155,9 +10826,9 @@ PAYMENT STATUS
 GRAND TOTAL
 </td>
 
-<td id="grandTotal_2025">Ksh 22,755</td>
-<td id="savedTotal_2025">Ksh 12,336</td>
-<td id="rewardTotal_2025">Ksh 10,419</td>
+<td id="grandTotal_2025">0</td>
+<td id="savedTotal_2025">0</td>
+<td id="rewardTotal_2025">0</td>
 <td>-</td>
 
 </tr>
@@ -11504,7 +11175,19 @@ calculate2025();
    BUTTON TO OPEN 2026 TABLE
 ========================= -->
 
-
+<button onclick="open2026Popup()"
+style="
+background:#1565c0;
+color:white;
+border:none;
+padding:10px 18px;
+border-radius:8px;
+cursor:pointer;
+font-weight:bold;
+margin:10px 0;
+">
+📊 View 2026 Contributions
+</button>
 
 
 <!-- =========================
@@ -11517,7 +11200,7 @@ calculate2025();
 
     <!-- CLOSE BUTTON -->
     <span class="close2026" onclick="close2026Popup()">
-      ×
+      &times;
     </span>
 
     <!-- HEADER -->
@@ -11531,8 +11214,12 @@ calculate2025();
 
     <!-- PROFESSIONAL 2026 PDF DOWNLOAD -->
     <div style="display:flex; justify-content:flex-end; margin:12px 0 16px;">
-      
-      
+      <button type="button" onclick="download2026TablePDF()" style="background:#0b6b57;color:#fff;border:0;border-radius:8px;padding:12px 18px;font-weight:700;font-size:15px;cursor:pointer;box-shadow:0 3px 8px rgba(0,0,0,.18);">
+        📄 Download 2026 Table (PDF)
+      </button>
+      <button type="button" onclick="downloadIndividualSavingsReportsPDF()" style="background:#123f91;color:#fff;border:0;border-radius:8px;padding:12px 18px;font-weight:700;font-size:15px;cursor:pointer;box-shadow:0 3px 8px rgba(0,0,0,.18);margin-left:8px;">
+        👤 Download Individual Savings Reports (PDF)
+      </button>
     </div>
 
     <!-- TABLE CONTAINER -->
@@ -11580,10 +11267,10 @@ calculate2025();
 <td><input type="number" value="1000"></td>
 <td><input type="number" value="1000"></td>
 <td><input type="number" value="0"></td>
-<td class="rowTotal">Ksh 9,864</td>
-<td class="saved2026">Ksh 3,543</td>
-<td class="reward2026">Ksh 6,578</td>
-<td class="paymentStatus">🟢 <strong>YOU ARE ELIGIBLE</strong><br><small>Your savings will be paid by 15th December 2026.</small></td>
+<td class="rowTotal">0</td>
+<td class="saved2026">0</td>
+<td class="reward2026">0</td>
+<td class="paymentStatus">PENDING</td>
 </tr>
 
 <tr>
@@ -11601,10 +11288,10 @@ calculate2025();
 <td><input type="number" value="0"></td>
 <td><input type="number" value="0"></td>
 <td><input type="number" value="0"></td>
-<td class="rowTotal">Ksh 6,535</td>
-<td class="saved2026">Ksh 2,962</td>
-<td class="reward2026">Ksh 3,826</td>
-<td class="paymentStatus">🟢 <strong>YOU ARE ELIGIBLE</strong><br><small>Your savings will be paid by 15th December 2026.</small></td>
+<td class="rowTotal">0</td>
+<td class="saved2026">0</td>
+<td class="reward2026">0</td>
+<td class="paymentStatus">PENDING</td>
 </tr>
 <tr>
 <td>HILDA ODERO</td>
@@ -11621,10 +11308,10 @@ calculate2025();
 <td><input type="number" value="0"></td>
 <td><input type="number" value="0"></td>
 <td><input type="number" value="0"></td>
-<td class="rowTotal">Ksh 1,100</td>
-<td class="saved2026">Ksh 1,270</td>
-<td class="reward2026">Ksh 0</td>
-<td class="paymentStatus">🔴 YOU ARE NOT ELIGIBLE</td>
+<td class="rowTotal">0</td>
+<td class="saved2026">0</td>
+<td class="reward2026">0</td>
+<td class="paymentStatus">PENDING</td>
 </tr>
 
 <tr>
@@ -11642,10 +11329,10 @@ calculate2025();
 <td><input type="number" value="820"></td>
 <td><input type="number" value="250"></td>
 <td><input type="number" value="0"></td>
-<td class="rowTotal">Ksh 3,240</td>
-<td class="saved2026">Ksh 1,008</td>
-<td class="reward2026">Ksh 2,280</td>
-<td class="paymentStatus">🟢 <strong>YOU ARE ELIGIBLE</strong><br><small>Your savings will be paid by 15th December 2026.</small></td>
+<td class="rowTotal">0</td>
+<td class="saved2026">0</td>
+<td class="reward2026">0</td>
+<td class="paymentStatus">PENDING</td>
 </tr>
 
 <tr>
@@ -11663,10 +11350,10 @@ calculate2025();
 <td><input type="number" value="400"></td>
 <td><input type="number" value="100"></td>
 <td><input type="number" value="0"></td>
-<td class="rowTotal">Ksh 6,122</td>
-<td class="saved2026">Ksh 3,127</td>
-<td class="reward2026">Ksh 3,377</td>
-<td class="paymentStatus">🟢 <strong>YOU ARE ELIGIBLE</strong><br><small>Your savings will be paid by 15th December 2026.</small></td>
+<td class="rowTotal">0</td>
+<td class="saved2026">0</td>
+<td class="reward2026">0</td>
+<td class="paymentStatus">PENDING</td>
 </tr>
 
 <tr>
@@ -11684,10 +11371,10 @@ calculate2025();
 <td><input type="number" value="100"></td>
 <td><input type="number" value="50"></td>
 <td><input type="number" value="0"></td>
-<td class="rowTotal">Ksh 2,450</td>
-<td class="saved2026">Ksh 1,485</td>
-<td class="reward2026">Ksh 1,154</td>
-<td class="paymentStatus">🟢 <strong>YOU ARE ELIGIBLE</strong><br><small>Your savings will be paid by 15th December 2026.</small></td>
+<td class="rowTotal">0</td>
+<td class="saved2026">0</td>
+<td class="reward2026">0</td>
+<td class="paymentStatus">PENDING</td>
 </tr>
 
 <tr>
@@ -11705,10 +11392,10 @@ calculate2025();
 <td><input type="number" value="0"></td>
 <td><input type="number" value="0"></td>
 <td><input type="number" value="0"></td>
-<td class="rowTotal">Ksh 3,122</td>
-<td class="saved2026">Ksh 3,010</td>
-<td class="reward2026">Ksh 475</td>
-<td class="paymentStatus">🟢 <strong>YOU ARE ELIGIBLE</strong><br><small>Your savings will be paid by 15th December 2026.</small></td>
+<td class="rowTotal">0</td>
+<td class="saved2026">0</td>
+<td class="reward2026">0</td>
+<td class="paymentStatus">PENDING</td>
 </tr>
 
 <tr>
@@ -11726,10 +11413,10 @@ calculate2025();
 <td><input type="number" value="350"></td>
 <td><input type="number" value="0"></td>
 <td><input type="number" value="0"></td>
-<td class="rowTotal">Ksh 4,580</td>
-<td class="saved2026">Ksh 1,903</td>
-<td class="reward2026">Ksh 2,858</td>
-<td class="paymentStatus">🟢 <strong>YOU ARE ELIGIBLE</strong><br><small>Your savings will be paid by 15th December 2026.</small></td>
+<td class="rowTotal">0</td>
+<td class="saved2026">0</td>
+<td class="reward2026">0</td>
+<td class="paymentStatus">PENDING</td>
 </tr>
 
 <tr>
@@ -11747,10 +11434,10 @@ calculate2025();
 <td><input type="number" value="300"></td>
 <td><input type="number" value="0"></td>
 <td><input type="number" value="0"></td>
-<td class="rowTotal">Ksh 8,400</td>
-<td class="saved2026">Ksh 2,752</td>
-<td class="reward2026">Ksh 5,804</td>
-<td class="paymentStatus">🟢 <strong>YOU ARE ELIGIBLE</strong><br><small>Your savings will be paid by 15th December 2026.</small></td>
+<td class="rowTotal">0</td>
+<td class="saved2026">0</td>
+<td class="reward2026">0</td>
+<td class="paymentStatus">PENDING</td>
 </tr>
 <tr>
 <td>ELIZABETH SHIUNDU</td>
@@ -11767,10 +11454,10 @@ calculate2025();
 <td><input type="number" value="0"></td>
 <td><input type="number" value="0"></td>
 <td><input type="number" value="0"></td>
-<td class="rowTotal">Ksh 2,250</td>
-<td class="saved2026">Ksh 1,747</td>
-<td class="reward2026">Ksh 579</td>
-<td class="paymentStatus">🟢 <strong>YOU ARE ELIGIBLE</strong><br><small>Your savings will be paid by 15th December 2026.</small></td>
+<td class="rowTotal">0</td>
+<td class="saved2026">0</td>
+<td class="reward2026">0</td>
+<td class="paymentStatus">PENDING</td>
 </tr>
 
 <tr>
@@ -11788,10 +11475,10 @@ calculate2025();
 <td><input type="number" value="138"></td>
 <td><input type="number" value="0"></td>
 <td><input type="number" value="0"></td>
-<td class="rowTotal">Ksh 1,885</td>
-<td class="saved2026">Ksh 865</td>
-<td class="reward2026">Ksh 1,096</td>
-<td class="paymentStatus">🟢 <strong>YOU ARE ELIGIBLE</strong><br><small>Your savings will be paid by 15th December 2026.</small></td>
+<td class="rowTotal">0</td>
+<td class="saved2026">0</td>
+<td class="reward2026">0</td>
+<td class="paymentStatus">PENDING</td>
 </tr>
 
 <tr>
@@ -11809,10 +11496,10 @@ calculate2025();
 <td><input type="number" value="1900"></td>
 <td><input type="number" value="2000"></td>
 <td><input type="number" value="0"></td>
-<td class="rowTotal">Ksh 6,356</td>
-<td class="saved2026">Ksh 1,907</td>
-<td class="reward2026">Ksh 4,449</td>
-<td class="paymentStatus">🟢 <strong>YOU ARE ELIGIBLE</strong><br><small>Your savings will be paid by 15th December 2026.</small></td>
+<td class="rowTotal">0</td>
+<td class="saved2026">0</td>
+<td class="reward2026">0</td>
+<td class="paymentStatus">PENDING</td>
 </tr>
 
 <tr>
@@ -11830,10 +11517,10 @@ calculate2025();
 <td><input type="number" value="150"></td>
 <td><input type="number" value="0"></td>
 <td><input type="number" value="0"></td>
-<td class="rowTotal">Ksh 2,240</td>
-<td class="saved2026">Ksh 560</td>
-<td class="reward2026">Ksh 1,680</td>
-<td class="paymentStatus">🟢 <strong>YOU ARE ELIGIBLE</strong><br><small>Your savings will be paid by 15th December 2026.</small></td>
+<td class="rowTotal">0</td>
+<td class="saved2026">0</td>
+<td class="reward2026">0</td>
+<td class="paymentStatus">PENDING</td>
 </tr>
 
 <tr>
@@ -11851,10 +11538,10 @@ calculate2025();
 <td><input type="number" value="0"></td>
 <td><input type="number" value="0"></td>
 <td><input type="number" value="0"></td>
-<td class="rowTotal">Ksh 1,150</td>
-<td class="saved2026">Ksh 805</td>
-<td class="reward2026">Ksh 345</td>
-<td class="paymentStatus">🟡 <strong>YOU ARE PARTIALLY ELIGIBLE</strong><br><small>Your savings will be paid by 15th December 2026.</small></td>
+<td class="rowTotal">0</td>
+<td class="saved2026">0</td>
+<td class="reward2026">0</td>
+<td class="paymentStatus">PENDING</td>
 </tr>
 
 <tr>
@@ -11872,10 +11559,10 @@ calculate2025();
 <td><input type="number" value="15250"></td>
 <td><input type="number" value="50"></td>
 <td><input type="number" value="0"></td>
-<td class="rowTotal">Ksh 27,999</td>
-<td class="saved2026">Ksh 7,868</td>
-<td class="reward2026">Ksh 20,339</td>
-<td class="paymentStatus">🟢 <strong>YOU ARE ELIGIBLE</strong><br><small>Your savings will be paid by 15th December 2026.</small></td>
+<td class="rowTotal">0</td>
+<td class="saved2026">0</td>
+<td class="reward2026">0</td>
+<td class="paymentStatus">PENDING</td>
 </tr>
 
 <tr>
@@ -11893,10 +11580,10 @@ calculate2025();
 <td><input type="number" value="635"></td>
 <td><input type="number" value="0"></td>
 <td><input type="number" value="0"></td>
-<td class="rowTotal">Ksh 16,351</td>
-<td class="saved2026">Ksh 4,800</td>
-<td class="reward2026">Ksh 11,721</td>
-<td class="paymentStatus">🟢 <strong>YOU ARE ELIGIBLE</strong><br><small>Your savings will be paid by 15th December 2026.</small></td>
+<td class="rowTotal">0</td>
+<td class="saved2026">0</td>
+<td class="reward2026">0</td>
+<td class="paymentStatus">PENDING</td>
 </tr>
 
 <tr>
@@ -11914,13 +11601,13 @@ calculate2025();
 <td><input type="number" value="4000"></td>
 <td><input type="number" value="3800"></td>
 <td><input type="number" value="0"></td>
-<td class="rowTotal">Ksh 67,630</td>
-<td class="saved2026">Ksh 16,907</td>
-<td class="reward2026">Ksh 50,723</td>
-<td class="paymentStatus">🟢 <strong>YOU ARE ELIGIBLE</strong><br><small>Your savings will be paid by 15th December 2026.</small></td>
+<td class="rowTotal">0</td>
+<td class="saved2026">0</td>
+<td class="reward2026">0</td>
+<td class="paymentStatus">PENDING</td>
 </tr>
 
-<tr style="background-color: rgb(255, 251, 235);">
+<tr>
 <td>CANZEDENA ANYANGO</td>
 <td><input type="number" value="0"></td>
 <td><input type="number" value="0"></td>
@@ -11935,10 +11622,10 @@ calculate2025();
 <td><input type="number" value="400"></td>
 <td><input type="number" value="40"></td>
 <td><input type="number" value="0"></td>
-<td class="rowTotal">Ksh 3,260</td>
-<td class="saved2026">Ksh 815</td>
-<td class="reward2026">Ksh 2,445</td>
-<td class="paymentStatus" style="color: rgb(133, 77, 14); background-color: rgb(254, 243, 199); font-weight: 700;">⏸️ <strong>DEFERRED TO 2027</strong><br><small>Member requested to receive her savings next year.</small></td>
+<td class="rowTotal">0</td>
+<td class="saved2026">0</td>
+<td class="reward2026">0</td>
+<td class="paymentStatus">PENDING</td>
 </tr>
 <tr>
 <td>BENSON NYATUKA</td>
@@ -11955,12 +11642,12 @@ calculate2025();
 <td><input type="number" value="100"></td>
 <td><input type="number" value="0"></td>
 <td><input type="number" value="0"></td>
-<td class="rowTotal">Ksh 4,359</td>
-<td class="saved2026">Ksh 3,051</td>
-<td class="reward2026">Ksh 1,308</td>
-<td class="paymentStatus">🟢 <strong>YOU ARE ELIGIBLE</strong><br><small>Your savings will be paid by 15th December 2026.</small></td>
+<td class="rowTotal">0</td>
+<td class="saved2026">0</td>
+<td class="reward2026">0</td>
+<td class="paymentStatus">PENDING</td>
 </tr>
-<tr><td>ANN KEMUNTO</td>
+<td>ANN KEMUNTO</td>
 <td><input type="number" value="0"></td>
 <td><input type="number" value="0"></td>
 <td><input type="number" value="0"></td>
@@ -11974,12 +11661,12 @@ calculate2025();
 <td><input type="number" value="50"></td>
 <td><input type="number" value="3597"></td>
 <td><input type="number" value="0"></td>
-<td class="rowTotal">Ksh 3,847</td>
-<td class="saved2026">Ksh 2,693</td>
-<td class="reward2026">Ksh 1,154</td>
-<td class="paymentStatus">🟢 <strong>YOU ARE ELIGIBLE</strong><br><small>Your savings will be paid by 15th December 2026.</small></td>
+<td class="rowTotal">0</td>
+<td class="saved2026">0</td>
+<td class="reward2026">0</td>
+<td class="paymentStatus">PENDING</td>
 </tr>
-<tr><td>JOEL EGESA</td>
+<td>JOEL EGESA</td>
 <td><input type="number" value="0"></td>
 <td><input type="number" value="0"></td>
 <td><input type="number" value="20"></td>
@@ -11993,12 +11680,12 @@ calculate2025();
 <td><input type="number" value="2500"></td>
 <td><input type="number" value="10000"></td>
 <td><input type="number" value="0"></td>
-<td class="rowTotal">Ksh 14,520</td>
-<td class="saved2026">Ksh 10,164</td>
-<td class="reward2026">Ksh 4,356</td>
-<td class="paymentStatus">🟢 <strong>YOU ARE ELIGIBLE</strong><br><small>Your savings will be paid by 15th December 2026.</small></td>
+<td class="rowTotal">0</td>
+<td class="saved2026">0</td>
+<td class="reward2026">0</td>
+<td class="paymentStatus">PENDING</td>
 </tr>
-<tr><td>BOAZ KOKONYA</td>
+<td>BOAZ KOKONYA</td>
 <td><input type="number" value="0"></td>
 <td><input type="number" value="0"></td>
 <td><input type="number" value="0"></td>
@@ -12012,18 +11699,18 @@ calculate2025();
 <td><input type="number" value="2500"></td>
 <td><input type="number" value="0"></td>
 <td><input type="number" value="0"></td>
-<td class="rowTotal">Ksh 5,500</td>
-<td class="saved2026">Ksh 3,850</td>
-<td class="reward2026">Ksh 1,650</td>
-<td class="paymentStatus">🟢 <strong>YOU ARE ELIGIBLE</strong><br><small>Your savings will be paid by 15th December 2026.</small></td>
+<td class="rowTotal">0</td>
+<td class="saved2026">0</td>
+<td class="reward2026">0</td>
+<td class="paymentStatus">PENDING</td>
 </tr>
 <!-- ADD ALL OTHER MEMBERS USING SAME FORMAT -->
 
 <tr style="font-weight:bold; background:#e0f2f1;">
 <td colspan="14" style="text-align:right;">GRAND TOTAL</td>
-<td id="grandTotal_2026">Ksh 192,896</td>
-<td id="savedTotal_2026">Ksh 73,549</td>
-<td id="rewardTotal_2026">Ksh 121,619</td>
+<td id="grandTotal_2026">0</td>
+<td id="savedTotal_2026">0</td>
+<td id="rewardTotal_2026">0</td>
 <td>-</td>
 </tr>
 
@@ -12036,11 +11723,11 @@ calculate2025();
     <div id="contributionTotalsSummary" class="contribution-totals-summary" aria-live="polite">
       <h3>2026 Contributions — Group Totals</h3>
       <div class="contribution-total-grid">
-        <div class="contribution-total-card"><span>2025 Savings Total</span><strong id="summaryTotal2025">Ksh 12,016</strong></div>
-        <div class="contribution-total-card"><span>2026 Contributions Total</span><strong id="summaryTotal2026">Ksh 180,880</strong></div>
-        <div class="contribution-total-card total-highlight"><span>Total Savings (2025 + 2026)</span><strong id="summaryGrandTotal">Ksh 192,896</strong></div>
-        <div class="contribution-total-card saved-highlight"><span>Saved 2026 After Reward</span><strong id="summarySavedTotal">Ksh 73,549</strong></div>
-        <div class="contribution-total-card reward-highlight"><span>Total Reward Back</span><strong id="summaryRewardTotal">Ksh 121,619</strong></div>
+        <div class="contribution-total-card"><span>2025 Savings Total</span><strong id="summaryTotal2025">Ksh 0</strong></div>
+        <div class="contribution-total-card"><span>2026 Contributions Total</span><strong id="summaryTotal2026">Ksh 0</strong></div>
+        <div class="contribution-total-card total-highlight"><span>Total Savings (2025 + 2026)</span><strong id="summaryGrandTotal">Ksh 0</strong></div>
+        <div class="contribution-total-card saved-highlight"><span>Saved 2026 After Reward</span><strong id="summarySavedTotal">Ksh 0</strong></div>
+        <div class="contribution-total-card reward-highlight"><span>Total Reward Back</span><strong id="summaryRewardTotal">Ksh 0</strong></div>
       </div>
     </div>
 
@@ -12562,14 +12249,20 @@ calculate2026();
       <!-- SEARCH BOX -->
       <div style="position:relative;">
 
-        <input id="memberPopupSearchInput" type="text" placeholder="🔍 Search member..." oninput="searchMembers()" style="
+        <input 
+          id="memberPopupSearchInput"
+          type="text"
+          placeholder="🔍 Search member..."
+          oninput="searchMembers()"
+          style="
             width:100%;
             padding:10px;
             margin-bottom:10px;
             border:1px solid #ccc;
             border-radius:8px;
             font-size:14px;
-          ">
+          "
+        >
 
         <span onclick="clearSearch()" style="
           position:absolute;
@@ -14904,6 +14597,11 @@ const MAX_LOAN = 60000;
 
 // ========================= 🏦 Loan Eligibility Check =========================
 function checkLoan() {
+  if (typeof getLoanAvailabilityState === "function" && !getLoanAvailabilityState().isOpen) {
+    updateLoanUnavailablePopupMessage();
+    showLoanUnavailablePopup();
+    return;
+  }
   if (!loggedInUser || !members[loggedInUser]) {
     alert("⚠️ Please log in first.");
     return;
@@ -15116,6 +14814,11 @@ function closeLoanForm() {
 
  // ========================= 📝 Styled Loan Application Form =========================
 function showLoanForm(name, maxAmount, repaymentPeriod) {
+    if (typeof getLoanAvailabilityState === "function" && !getLoanAvailabilityState().isOpen) {
+        updateLoanUnavailablePopupMessage();
+        showLoanUnavailablePopup();
+        return;
+    }
     const phone = members[name].phone;
     const loanResult = document.getElementById("loanMessage");
 
@@ -15976,6 +15679,13 @@ updateProgress();
 async function submitLoan(event, name, maxAmount, phone) {
 
     event.preventDefault();
+
+    // Final deadline check prevents a form opened before closing time from being submitted afterward.
+    if (typeof getLoanAvailabilityState === "function" && !getLoanAvailabilityState().isOpen) {
+        updateLoanUnavailablePopupMessage();
+        showLoanUnavailablePopup();
+        return;
+    }
 
     // A member may have only one application awaiting a decision at a time.
     // Approved or rejected applications remain in My Loans history but do not block a new application.
@@ -22659,8 +22369,8 @@ document.addEventListener('DOMContentLoaded', function () {
 }
 </style>
 
-
-
+</body>
+</html>
 
 
 <script>
@@ -23495,4 +23205,3 @@ async function downloadIndividualSavingsReportsPDF() {
 })();
 </script>
 
-</div></div></body></html>
