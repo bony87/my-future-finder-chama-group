@@ -3925,12 +3925,12 @@ function closeSystemUpdatePopup(){
 
   <!-- 📄 Member Contract Management -->
   <div id="memberContractsAdminPanel" style="margin-top:28px;padding-top:22px;border-top:2px solid #dbeafe;">
-    <h3 style="color:#075985;">📄 Member Contract Management — Hardcoded Records</h3>
-    <p style="color:#475569;">Members sign and submit their contracts, then send the PDF to WhatsApp 0713953004. To publish an official status update for all members (like hardcoded loan records), edit the matching member’s <code>contracts</code> array in <code>index.html</code>: keep the same contract reference, set <code>adminStatus</code>, <code>startDate</code>, <code>expiryDate</code> and <code>adminNotes</code>, then redeploy the website. The controls below are a local review helper only; they do not rewrite the published HTML or update other devices.</p>
-    <div style="overflow-x:auto;margin-top:16px;">
-      <table style="width:100%;border-collapse:collapse;min-width:1100px;background:#fff;">
-        <thead style="background:#075985;color:#fff;"><tr><th style="padding:10px;text-align:left;">Member</th><th style="padding:10px;text-align:left;">Participation</th><th style="padding:10px;text-align:left;">Fee</th><th style="padding:10px;text-align:left;">Submitted / signed</th><th style="padding:10px;text-align:left;">Admin status</th><th style="padding:10px;text-align:left;">Start date</th><th style="padding:10px;text-align:left;">Expiry / renewal</th><th style="padding:10px;text-align:left;">Admin notes</th><th style="padding:10px;text-align:left;">Actions</th></tr></thead>
-        <tbody id="ffAdminContractsTable"><tr><td colspan="8" style="padding:14px;text-align:center;color:#64748b;">No member contracts submitted yet.</td></tr></tbody>
+    <h3 style="color:#075985;">📄 Member Contract Management — Submission Register</h3>
+    <p style="color:#475569;line-height:1.6;">All contracts are automatically arranged from the earliest submission to the latest submission. The full register below shows each contract reference, plan, fee declaration, signing date/time and administration details. Scroll horizontally to view every column on smaller screens.</p>
+    <div style="overflow-x:auto;margin-top:16px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;">
+      <table style="width:100%;border-collapse:separate;border-spacing:0;min-width:1500px;background:#fff;font-size:14px;line-height:1.5;">
+        <thead style="background:#075985;color:#fff;"><tr><th style="padding:13px 12px;text-align:left;white-space:nowrap;">No. (Oldest first)</th><th style="padding:13px 12px;text-align:left;min-width:190px;">Member / Contract reference</th><th style="padding:13px 12px;text-align:left;min-width:180px;">Contract type</th><th style="padding:13px 12px;text-align:left;min-width:230px;">Participation plan</th><th style="padding:13px 12px;text-align:left;min-width:190px;">Registration fee / payment</th><th style="padding:13px 12px;text-align:left;min-width:190px;">Date &amp; time signed (EAT)</th><th style="padding:13px 12px;text-align:left;min-width:190px;">Admin status</th><th style="padding:13px 12px;text-align:left;min-width:130px;">Start date</th><th style="padding:13px 12px;text-align:left;min-width:140px;">Expiry / renewal</th><th style="padding:13px 12px;text-align:left;min-width:220px;">Admin notes</th><th style="padding:13px 12px;text-align:left;min-width:130px;">Actions</th></tr></thead>
+        <tbody id="ffAdminContractsTable"><tr><td colspan="11" style="padding:18px;text-align:center;color:#64748b;">No member contracts submitted yet.</td></tr></tbody>
       </table>
     </div>
     <p id="ffAdminContractMessage" role="status" style="font-weight:700;"></p>
@@ -8725,7 +8725,7 @@ y += 38;
 <option>JACKIE NYARANGI</option>
 
 <option>SAMUEL OYUGI</option>
-<option>KEFFA MOMANYI</option>
+<option>KEPHA MOMANYI</option>
 
 <option>FAITH MOKOGI</option>
 <option>ANN KEMUNTO</option>
@@ -9698,7 +9698,7 @@ document.addEventListener(
   To change availability later, edit the value below and republish index.html.
   No admin control is used for this setting.
 */
-const PUBLISHED_LOANS_OPEN = true;
+const PUBLISHED_LOANS_OPEN = false;
 const PUBLISHED_LOAN_AVAILABILITY_REASON = "Loan applications are currently open.";
 
 function getLoanAvailabilityState() {
@@ -13667,7 +13667,8 @@ const members = {
         contractFee: 200,
         registrationFeePaid: false,
         signatureName: "CLAUDIA MORAA",
-        signedAt: "Not recorded",
+        signedAt: "8 November 2026",
+        signedAtISO: "2026-11-08T00:00:00+03:00",
         adminStatus: "Approved / Active",
         startDate: "2027-01-01",
         expiryDate: "2027-12-31",
@@ -13704,7 +13705,26 @@ const members = {
     savings: 1697,
     monthly: [400, 300, 100, 219, 300, 117, 53],
     note: "",
-    contracts: [],
+    contracts: [
+      {
+        id: "FFC-2026-8307037",
+        member: "LILIAN KERUBO",
+        type: "Membership Contract Renewal",
+        participation: "Weekly merry-go-round plus savings",
+        feeCategory: "Registration fee outstanding — payable on 2027 renewal",
+        contractFee: 200,
+        registrationFeePaid: false,
+        signatureName: "LILIAN KERUBO",
+        signedAt: "8 November 2026 at 20:18 (EAT)",
+        signedAtISO: "2026-11-08T20:18:00+03:00",
+        adminStatus: "Approved / Active",
+        startDate: "2027-01-01",
+        expiryDate: "2027-12-31",
+        adminNotes: "Approved and activated for the 2027 membership year, effective 1 January 2027 to 31 December 2027. Registration fee of KSh 200 has NOT been paid and remains outstanding for 2027 renewal.",
+        createdAt: "2026-11-08T20:18:00+03:00",
+        version: 3
+      }
+    ],
     loans: []
   },
 
@@ -13812,7 +13832,26 @@ const members = {
     savings: 59830,
     monthly: [0, 50, 215, 8855, 7930, 8010, 10000, 0, 0],
     note: "",
-    contracts: [],
+    contracts: [
+      {
+        id: "FFC-2026-3941204",
+        member: "JAPHETH MULI",
+        type: "Membership Contract Renewal",
+        participation: "Monthly chama plus weekly participation plus savings",
+        feeCategory: "Registration fee paid",
+        contractFee: 200,
+        registrationFeePaid: true,
+        signatureName: "JAPHETH MULI",
+        signedAt: "7 November 2026 at 18:05 (EAT)",
+        signedAtISO: "2026-11-07T18:05:00+03:00",
+        adminStatus: "Approved / Active",
+        startDate: "2027-01-01",
+        expiryDate: "2027-12-31",
+        adminNotes: "Approved and activated for the 2027 membership year, effective 1 January 2027 to 31 December 2027. Member has paid the KSh 200 registration fee; payment recorded as PAID.",
+        createdAt: "2026-11-07T18:05:00+03:00",
+        version: 3
+      }
+    ],
     loans: [
       {
         id: "",
@@ -13948,7 +13987,26 @@ const members = {
     savings: 0,
     monthly: [0, 0, 0, 0, 0, 0, 0, 0, 0],
     note: "",
-    contracts: [],
+    contracts: [
+      {
+        id: "FFC-2026-8257717",
+        member: "PURITY MOMANYI",
+        type: "Membership Contract Renewal",
+        participation: "Monthly merry-go-round only",
+        feeCategory: "Registration fee outstanding — payable on 2027 renewal",
+        contractFee: 200,
+        registrationFeePaid: false,
+        signatureName: "PURITY MOMANYI",
+        signedAt: "9 November 2026 at 12:57 (EAT)",
+        signedAtISO: "2026-11-09T12:57:00+03:00",
+        adminStatus: "Approved / Active",
+        startDate: "2027-01-01",
+        expiryDate: "2027-12-31",
+        adminNotes: "Approved and activated for the 2027 membership year, effective 1 January 2027 to 31 December 2027. Registration fee of KSh 200 has NOT been paid and remains outstanding for 2027 renewal.",
+        createdAt: "2026-11-09T12:57:00+03:00",
+        version: 3
+      }
+    ],
     loans: []
   },
   "BOAZ KOKONYA": {
@@ -13967,7 +14025,8 @@ const members = {
         contractFee: 0,
         registrationFeePaid: true,
         signatureName: "BOAZ KOKONYA",
-        signedAt: "Not recorded",
+        signedAt: "8 November 2026",
+        signedAtISO: "2026-11-08T00:00:00+03:00",
         adminStatus: "Approved / Active",
         startDate: "2027-01-01",
         expiryDate: "2027-12-31",
@@ -22678,7 +22737,7 @@ async function downloadIndividualSavingsReportsPDF() {
       const content=document.createElement('div');content.className='ff-admin-content';content.id='ff-admin-content-'+d.key;content.hidden=true;
       const close=document.createElement('button');close.type='button';close.className='ff-admin-close';close.textContent='✕ Close section';close.setAttribute('aria-label','Close this administrator section');
       close.addEventListener('click',()=>{content.hidden=true;toggle.setAttribute('aria-expanded','false');card.classList.remove('is-open');Array.from(toolbar.children).forEach(other=>{other.hidden=false;});intro.hidden=false;toolbar.scrollIntoView({behavior:'smooth',block:'start'});});
-      toggle.addEventListener('click',()=>{const opening=content.hidden;if(opening){Array.from(toolbar.children).forEach(other=>{if(other!==card)other.hidden=true;});intro.hidden=true;content.hidden=false;card.classList.add('is-open');toggle.setAttribute('aria-expanded','true');content.prepend(close);if(d.key==='contracts'){const panel=content.querySelector('#memberContractsAdminPanel');if(panel){panel.style.setProperty('display','block','important');panel.style.setProperty('visibility','visible','important');panel.style.setProperty('opacity','1','important');}if(typeof window.ffRefreshAdminContracts==='function'){window.ffRefreshAdminContracts();}else{const body=content.querySelector('#ffAdminContractsTable');if(body)body.innerHTML='<tr><td colspan="9" style="padding:14px;text-align:center;color:#b91c1c;">Contract review loaded, but the review script is unavailable. Please refresh the page.</td></tr>';}}close.focus({preventScroll:true});}else{content.hidden=true;toggle.setAttribute('aria-expanded','false');card.classList.remove('is-open');Array.from(toolbar.children).forEach(other=>{other.hidden=false;});intro.hidden=false;}});
+      toggle.addEventListener('click',()=>{const opening=content.hidden;if(opening){Array.from(toolbar.children).forEach(other=>{if(other!==card)other.hidden=true;});intro.hidden=true;content.hidden=false;card.classList.add('is-open');toggle.setAttribute('aria-expanded','true');content.prepend(close);if(d.key==='contracts'){const panel=content.querySelector('#memberContractsAdminPanel');if(panel){panel.style.setProperty('display','block','important');panel.style.setProperty('visibility','visible','important');panel.style.setProperty('opacity','1','important');}if(typeof window.ffRefreshAdminContracts==='function'){window.ffRefreshAdminContracts();}else{const body=content.querySelector('#ffAdminContractsTable');if(body)body.innerHTML='<tr><td colspan="11" style="padding:14px;text-align:center;color:#b91c1c;">Contract review loaded, but the review script is unavailable. Please refresh the page.</td></tr>';}}close.focus({preventScroll:true});}else{content.hidden=true;toggle.setAttribute('aria-expanded','false');card.classList.remove('is-open');Array.from(toolbar.children).forEach(other=>{other.hidden=false;});intro.hidden=false;}});
       card.append(toggle,content);cards[d.key]={card,content};toolbar.append(card);
     });
     const findHeading=(text)=>Array.from(admin.querySelectorAll('h2,h3,h4')).find(e=>e.textContent.trim().includes(text));
@@ -22846,7 +22905,21 @@ async function downloadIndividualSavingsReportsPDF() {
     if(actions){if(isPending(latest)){actions.innerHTML='<span style="color:#92400e;font-weight:700;">Your contract is awaiting review. You may edit it until Admin approves it.</span>';}else if(String(status(latest)).toLowerCase().includes('rejected')){actions.innerHTML='<button type="button" onclick="startNewMemberContract()" style="padding:11px 16px;border:0;border-radius:9px;background:#087f5b;color:white;font-weight:700;cursor:pointer;">＋ Submit a New Contract</button>';}else{actions.innerHTML='<span style="color:#15803d;font-weight:700;">🔒 Approved contract — locked. You can view or print your history, but editing is disabled.</span>';}}
   }
 
-  function renderAdmin(){const tbody=byId('ffAdminContractsTable');if(!tbody)return;const rows=getContracts().sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''));if(!rows.length){tbody.innerHTML='<tr><td colspan="8" style="padding:14px;text-align:center;color:#64748b;">No member contracts submitted yet.</td></tr>';return;}tbody.innerHTML=rows.map(c=>{const editable=isPending(c);const dis=editable?'':'disabled';return `<tr><td style="padding:8px;border-bottom:1px solid #e2e8f0;">${esc(c.member)}<br><small>${esc(c.id)}</small></td><td style="padding:8px;border-bottom:1px solid #e2e8f0;">${esc(c.participation)}</td><td style="padding:8px;border-bottom:1px solid #e2e8f0;">KSh ${Number(c.contractFee||0).toLocaleString('en-KE')}<br><small>${esc(c.feeCategory||'Not recorded')}</small></td><td style="padding:8px;border-bottom:1px solid #e2e8f0;">${esc(c.signedAt)}</td><td style="padding:8px;border-bottom:1px solid #e2e8f0;"><select id="ff-status-${esc(c.id)}" ${dis} style="max-width:200px;padding:7px;">${['Submitted — Awaiting Admin Review','Under Review','Approved / Active','Pending Correction','Rejected','Renewal Due','Expired'].map(v=>`<option ${status(c)===v?'selected':''}>${v}</option>`).join('')}</select></td><td style="padding:8px;border-bottom:1px solid #e2e8f0;"><input id="ff-start-${esc(c.id)}" type="date" value="${esc(c.startDate||'')}" ${dis} style="padding:7px;width:140px;"></td><td style="padding:8px;border-bottom:1px solid #e2e8f0;"><input id="ff-expiry-${esc(c.id)}" type="date" value="${esc(c.expiryDate||'')}" ${dis} style="padding:7px;width:140px;"></td><td style="padding:8px;border-bottom:1px solid #e2e8f0;"><textarea id="ff-notes-${esc(c.id)}" rows="2" ${dis} style="width:170px;">${esc(c.adminNotes||'')}</textarea></td><td style="padding:8px;border-bottom:1px solid #e2e8f0;white-space:nowrap;">${editable?`<button type="button" onclick="saveAdminContractStatus('${esc(c.id)}')" style="padding:7px;cursor:pointer;">Save update</button>`:'<span style="color:#64748b;font-size:12px;">Locked</span>'} <button type="button" onclick="downloadContractById('${esc(c.id)}')" style="padding:7px;cursor:pointer;">PDF</button></td></tr>`;}).join('');}
+  function renderAdmin(){
+    const tbody=byId('ffAdminContractsTable');if(!tbody)return;
+    const rows=getContracts().slice().sort((a,b)=>{
+      const dateA=Date.parse(a.createdAt||a.signedAt||'')||0;
+      const dateB=Date.parse(b.createdAt||b.signedAt||'')||0;
+      return dateA-dateB || String(a.id||'').localeCompare(String(b.id||''));
+    });
+    if(!rows.length){tbody.innerHTML='<tr><td colspan="11" style="padding:18px;text-align:center;color:#64748b;">No member contracts submitted yet.</td></tr>';return;}
+    const cell='padding:12px;border-bottom:1px solid #e2e8f0;vertical-align:top;white-space:normal;overflow-wrap:anywhere;';
+    tbody.innerHTML=rows.map((c,index)=>{
+      const editable=isPending(c);const dis=editable?'':'disabled';
+      const feeText=`KSh ${Number(c.contractFee||0).toLocaleString('en-KE')} — ${esc(c.feeCategory||'Payment status not recorded')}`;
+      return `<tr style="background:${index%2?'#f8fafc':'#ffffff'};"><td style="${cell}font-weight:800;text-align:center;">${index+1}</td><td style="${cell}min-width:190px;"><strong>${esc(c.member)}</strong><br><span style="font-size:12px;color:#475569;">${esc(c.id)}</span></td><td style="${cell}min-width:180px;">${esc(c.type||'Not recorded')}</td><td style="${cell}min-width:230px;">${esc(c.participation||'Not recorded')}</td><td style="${cell}min-width:190px;">${feeText}</td><td style="${cell}min-width:190px;">${esc(c.signedAt||c.createdAt||'Not recorded')}</td><td style="${cell}min-width:190px;"><select id="ff-status-${esc(c.id)}" ${dis} style="width:100%;min-width:170px;box-sizing:border-box;padding:9px;border:1px solid #94a3b8;border-radius:6px;background:#fff;">${['Submitted — Awaiting Admin Review','Under Review','Approved / Active','Pending Correction','Rejected','Renewal Due','Expired'].map(v=>`<option ${status(c)===v?'selected':''}>${v}</option>`).join('')}</select></td><td style="${cell}min-width:130px;"><input id="ff-start-${esc(c.id)}" type="date" value="${esc(c.startDate||'')}" ${dis} style="width:100%;min-width:125px;box-sizing:border-box;padding:8px;"></td><td style="${cell}min-width:140px;"><input id="ff-expiry-${esc(c.id)}" type="date" value="${esc(c.expiryDate||'')}" ${dis} style="width:100%;min-width:130px;box-sizing:border-box;padding:8px;"></td><td style="${cell}min-width:220px;"><textarea id="ff-notes-${esc(c.id)}" rows="3" ${dis} style="width:100%;min-width:200px;box-sizing:border-box;padding:8px;white-space:pre-wrap;">${esc(c.adminNotes||'')}</textarea></td><td style="${cell}min-width:130px;white-space:nowrap;">${editable?`<button type="button" onclick="saveAdminContractStatus('${esc(c.id)}')" style="display:block;margin-bottom:7px;padding:9px 11px;cursor:pointer;">Save update</button>`:'<span style="display:block;color:#64748b;font-size:12px;margin-bottom:7px;">Locked</span>'}<button type="button" onclick="downloadContractById('${esc(c.id)}')" style="padding:9px 11px;cursor:pointer;">View / PDF</button></td></tr>`;
+    }).join('');
+  }
 
   window.ffRefreshAdminContracts=renderAdmin;
   let ffContractPreviewReady=false;
