@@ -4143,734 +4143,263 @@ function closeSystemUpdatePopup(){
      ========================================================= -->
 
 <section id="membership" style="display:none;">
+<style>
+#membership{--ff-green:#087f5b;--ff-blue:#155e9a;--ff-ink:#1e293b;--ff-muted:#64748b;--ff-line:#e2e8f0;color:var(--ff-ink);padding:18px 14px 46px;background:#f3f6fa}
+#membership *{box-sizing:border-box}
+#membership .ff-wrap{max-width:980px;margin:0 auto}
+#membership .ff-hero{position:relative;overflow:hidden;display:flex;align-items:center;gap:22px;padding:30px;background:linear-gradient(125deg,#075c45,#087f5b 52%,#155e9a);color:#fff;border-radius:20px;box-shadow:0 12px 30px rgba(15,55,75,.16)}
+#membership .ff-hero img{width:88px;height:88px;object-fit:contain;background:#fff;border-radius:50%;padding:6px;flex:0 0 auto}
+#membership .ff-hero h2{margin:0 0 7px;font-size:clamp(23px,4vw,31px);line-height:1.2}
+#membership .ff-hero p{margin:0;color:#e7f6f1;font-size:15px;line-height:1.6}
+#membership .ff-eyebrow{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;font-weight:800;color:#d1fae5;margin-bottom:7px}
+#membership .ff-panel{background:#fff;border:1px solid var(--ff-line);border-radius:17px;padding:24px;margin:20px auto;box-shadow:0 5px 18px rgba(15,35,60,.045)}
+#membership .ff-panel h3{margin:0 0 8px;font-size:21px;color:#14543f}
+#membership .ff-muted{color:var(--ff-muted);line-height:1.65;margin:0}
+#membership .ff-steps{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-top:20px}
+#membership .ff-step{padding:15px 12px;background:#f8fafc;border:1px solid var(--ff-line);border-radius:13px;min-height:135px}
+#membership .ff-step-no{display:grid;place-items:center;width:31px;height:31px;border-radius:50%;background:#e1f3ec;color:#087f5b;font-weight:800;margin-bottom:10px}
+#membership .ff-step b{display:block;font-size:14px;margin-bottom:5px;color:#173b32}
+#membership .ff-step small{display:block;color:var(--ff-muted);font-size:12px;line-height:1.5}
+#membership .ff-note{margin-top:16px;padding:13px 15px;border-radius:10px;background:#eff6ff;color:#334155;border-left:4px solid #2563eb;font-size:13px;line-height:1.6}
+#membership .ff-category-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:18px}
+#membership .ff-category{border:1px solid #cfe5dc;border-radius:14px;padding:19px;background:linear-gradient(145deg,#f5fbf8,#fff)}
+#membership .ff-category.blue{border-color:#d3e2f4;background:linear-gradient(145deg,#f3f8ff,#fff)}
+#membership .ff-category .tag{font-size:11px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:#087f5b}
+#membership .ff-category.blue .tag{color:#155e9a}
+#membership .ff-category strong{display:block;font-size:22px;margin:8px 0 4px;color:#173b32}
+#membership .ff-category.blue strong{color:#174d7b}
+#membership .ff-category p{margin:0;color:var(--ff-muted);font-size:13px;line-height:1.5}
+#membership .ff-fee{display:grid;grid-template-columns:1fr auto;align-items:center;gap:14px;background:#fffaf0;border:1px solid #f4dfb5;border-radius:14px;padding:18px;margin-top:17px}
+#membership .ff-till{background:#fff;border:1px dashed #e5a43a;border-radius:10px;padding:12px 17px;text-align:center;min-width:190px}
+#membership .ff-till strong{display:block;font-size:23px;color:#a85a08;letter-spacing:1px}
+#membership #registerForm{max-width:900px;margin:24px auto;padding:0;background:#fff;border:1px solid var(--ff-line);border-radius:18px;box-shadow:0 8px 25px rgba(15,35,60,.07);overflow:visible;font-family:Arial,sans-serif}
+#membership .ff-form-head{padding:25px 28px;background:#f8fbfa;border-bottom:1px solid var(--ff-line);display:flex;gap:15px;align-items:center}
+#membership .ff-form-head img{width:60px;height:60px;object-fit:contain;background:#fff;border:1px solid var(--ff-line);border-radius:50%;padding:4px}
+#membership .ff-form-head h3{margin:0 0 5px;color:#14543f;font-size:23px}
+#membership .ff-form-head p{margin:0;color:var(--ff-muted);font-size:13px;line-height:1.5}
+#membership .ff-form-body{padding:26px 28px}
+#membership .ff-form-section{margin:0 0 25px;padding:0 0 23px;border:0;border-bottom:1px solid #edf1f5;min-width:0}
+#membership .ff-form-section:last-of-type{border-bottom:0;margin-bottom:8px}
+#membership .ff-form-section legend{padding:0;margin:0 0 15px;font-size:16px;font-weight:800;color:#14543f}
+#membership .ff-section-sub{font-size:12px;color:var(--ff-muted);font-weight:400;margin-left:5px}
+#membership .ff-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px 18px}
+#membership .ff-field{min-width:0}
+#membership .ff-field.full{grid-column:1/-1}
+#membership .ff-field label{display:block;margin:0 0 7px;color:#334155;font-size:13px;font-weight:700}
+#membership .ff-field label .req{color:#dc2626}
+#membership #registerForm input:not([type=checkbox]):not([type=radio]),#membership #registerForm select{display:block;width:100%;min-height:46px;padding:11px 13px;border:1px solid #cbd5e1;border-radius:9px;background:#fff;color:#1e293b;font-size:14px;outline:none;transition:border-color .15s,box-shadow .15s}
+#membership #registerForm input:focus,#membership #registerForm select:focus{border-color:#0b8b68;box-shadow:0 0 0 3px rgba(8,127,91,.12)}
+#membership .ff-hint{display:block;color:#94a3b8;font-size:11px;margin-top:5px;line-height:1.4}
+#membership .ff-check{display:flex;gap:10px;align-items:flex-start;padding:13px;background:#f8fafc;border:1px solid var(--ff-line);border-radius:10px;margin:10px 0;color:#475569;font-size:13px;line-height:1.55}
+#membership .ff-check input{margin-top:3px;flex:0 0 auto;accent-color:#087f5b}
+#membership .ff-check a{color:#087f5b;font-weight:700}
+#membership .ff-submit{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin:23px 0 8px}
+#membership #registerForm button{border:0;border-radius:10px;padding:14px 22px;font-weight:800;font-size:14px;cursor:pointer}
+#membership #registerForm button[onclick="registerMember()"]{background:linear-gradient(120deg,#087f5b,#155e9a);color:white;box-shadow:0 5px 13px rgba(8,90,80,.18)}
+#membership #downloadFormBtn{background:#15803d;color:white}
+#membership #shareWhatsAppBtn{background:#20b85a;color:white}
+#membership .ff-privacy{max-width:720px;margin:15px auto 0;text-align:center;color:#64748b;font-size:12px;line-height:1.65}
+#membership .ff-back{display:block;text-align:center;margin:22px auto 0;color:#155e9a;font-weight:700;text-decoration:none}
+@media(max-width:760px){#membership .ff-steps{grid-template-columns:repeat(2,minmax(0,1fr))}#membership .ff-step:last-child{grid-column:1/-1}}
+/* Step 5 visibility and small-screen safeguards */
+#membership #registerForm,#membership .ff-form-body,#membership .membershipWizardStep{height:auto;max-height:none;overflow:visible}
+#membership .membershipWizardStep.active{display:block;min-height:220px}
+#membership #membershipStep5{padding-bottom:12px}
+#membership #membershipStep5 .ff-form-section{display:block;width:100%;padding:0 0 18px;margin:0 0 14px;overflow:visible}
+#membership #membershipStep5 .ff-check{width:100%;min-height:58px;white-space:normal;overflow-wrap:anywhere;align-items:flex-start;padding:15px;margin:12px 0}
+#membership #membershipStep5 .ff-check span{display:block;min-width:0;flex:1;line-height:1.65}
+#membership #membershipStep5 .mem-info-box,#membership #membershipStep5 .ff-muted{display:block;width:100%;white-space:normal;overflow-wrap:anywhere;line-height:1.75}
+#membership #membershipStep5 .ff-submit{display:flex;position:relative;z-index:2;width:100%;padding:8px 0 14px;margin:18px 0 8px;overflow:visible}
+#membership #membershipStep5 .ff-submit button{min-height:48px;white-space:normal}
+#membership .mem-nav{position:relative;z-index:2;clear:both;padding-bottom:8px}
+@media(max-width:560px){#membership #membershipStep5 .ff-check{font-size:13px;padding:13px}#membership #membershipStep5 .ff-submit button{width:100%}#membership .mem-nav{gap:8px}}
+@media(max-width:560px){#membership{padding:10px 8px 30px}#membership .ff-hero{padding:22px 17px;gap:13px}#membership .ff-hero img{width:65px;height:65px}#membership .ff-hero p{font-size:13px}#membership .ff-panel{padding:18px;margin:14px auto}#membership .ff-steps{grid-template-columns:1fr 1fr;gap:8px}#membership .ff-step{min-height:0;padding:12px 10px}#membership .ff-category-grid{grid-template-columns:1fr}#membership .ff-fee{grid-template-columns:1fr}#membership .ff-till{min-width:0}#membership .ff-form-head{padding:19px 17px}#membership .ff-form-head img{width:49px;height:49px}#membership .ff-form-head h3{font-size:19px}#membership .ff-form-body{padding:20px 16px}#membership .ff-fields{grid-template-columns:1fr;gap:13px}#membership .ff-field.full{grid-column:auto}}
 
-    <!-- PAGE HEADER -->
-    <div style="
-        max-width:900px;
-        margin:20px auto;
-        padding:30px 20px;
-        text-align:center;
-        background:linear-gradient(135deg,#087f5b,#1565c0);
-        color:white;
-        border-radius:18px;
-        box-shadow:0 8px 25px rgba(0,0,0,0.15);
-    ">
+#membership .mem-progress{margin:20px auto 0;max-width:520px}
+#membership .mem-progress-circles{display:flex;justify-content:center;align-items:center;gap:12px}
+#membership .mem-circle{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.22);border:2px solid rgba(255,255,255,.65);color:#fff;font-weight:800;font-size:14px}
+#membership .mem-circle.active{background:#fff;color:#1565c0;border-color:#fff;box-shadow:0 0 0 4px rgba(255,255,255,.18)}
+#membership .mem-circle.done{background:#087f5b;border-color:#fff;color:#fff}
+#membership #memStepText{margin:10px 0 0;color:#fff;font-weight:800;font-size:13px}
+#membership .mem-required-note{padding:11px 13px;background:#fff7ed;border-left:4px solid #f59e0b;border-radius:8px;color:#7c2d12;font-size:12px;line-height:1.5;margin:0 0 20px}
+#membership .membershipWizardStep{display:none;animation:memFade .22s ease}
+#membership .membershipWizardStep.active{display:block}
+#membership .membershipWizardStep[hidden]{display:none!important}
+#membership .mem-info-box{padding:14px 16px;background:#eff6ff;border-left:4px solid #2563eb;border-radius:9px;color:#334155;font-size:13px;line-height:1.7;margin:12px 0 4px}
+#membership .mem-payment-card{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center;padding:18px;background:#fffaf0;border:1px solid #f4dfb5;border-radius:13px}
+#membership .mem-payment-card strong{display:block;font-size:30px;color:#9a5808;margin:5px 0}
+#membership .mem-payment-card p{margin:0;color:#64748b;font-size:13px;line-height:1.5}
+#membership .mem-kicker{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;color:#9a5808}
+#membership .mem-till{background:#fff;border:1px dashed #e5a43a;border-radius:10px;padding:12px 17px;text-align:center;min-width:180px}
+#membership .mem-till small{display:block;font-size:10px;color:#64748b;font-weight:800}
+#membership .mem-till b{display:block;font-size:24px;color:#9a5808;margin:5px 0}
+#membership .mem-warning{margin-top:13px;padding:12px 14px;background:#fff1f2;border-left:4px solid #e11d48;border-radius:8px;color:#9f1239;font-size:13px;line-height:1.6}
+#membership .mem-nav{display:flex;justify-content:space-between;gap:12px;margin:22px 0 8px;padding-top:16px;border-top:1px solid #edf1f5}
+#membership .mem-nav button{min-width:130px;background:#e2e8f0;color:#334155}
+#membership .mem-nav button#memNextBtn{background:linear-gradient(120deg,#1565c0,#42a5f5);color:#fff}
+#membership .mem-nav button:disabled{opacity:.45;cursor:not-allowed}
+@keyframes memFade{from{opacity:.5;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:560px){#membership .mem-progress-circles{gap:7px}#membership .mem-circle{width:30px;height:30px;font-size:12px}#membership .mem-payment-card{grid-template-columns:1fr}#membership .mem-till{min-width:0}#membership .mem-nav button{min-width:0;flex:1}}
+</style>
+<div class="ff-wrap">
+  <header class="ff-hero">
+    <img src="https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/FUTURE%20FINDERS%20LOGO.jpeg" alt="Future Finders Chama Group logo">
+    <div><div class="ff-eyebrow">👥 Membership Registration Portal</div><h2>Future Finders Chama Group</h2><p>Welcome to the Future Finders Chama Group membership portal. New applicants should follow the numbered steps, review the Chama rules and provide complete, accurate information. Existing members should use Member Login instead of submitting a new application.</p></div>
+  </header>
 
-        <img
-            src="https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/FUTURE%20FINDERS%20LOGO.jpeg"
-            alt="Future Finders Chama Group Logo"
-            style="
-                width:95px;
-                height:95px;
-                object-fit:contain;
-                background:white;
-                border-radius:50%;
-                padding:6px;
-                box-shadow:0 4px 15px rgba(0,0,0,0.20);
-                margin-bottom:12px;
-            "
-        >
-
-        <h2 style="
-            margin:5px 0;
-            font-size:30px;
-            font-weight:800;
-        ">
-            👥 Future Finders Chama Group
-        </h2>
-
-        <p style="
-            margin:8px 0 0;
-            font-size:17px;
-            opacity:0.95;
-        ">
-            Membership Registration Portal
-        </p>
-
+  <section class="ff-panel" aria-label="Registration process">
+    <h3>How to become a member</h3>
+    <p class="ff-muted">Follow these five simple steps to submit your membership application. The application form below will guide you through each step, just like the Chama welfare application.</p>
+    <div class="ff-steps">
+      <div class="ff-step"><span class="ff-step-no">01</span><b>Review the rules</b><small>Read the Chama requirements and understand member responsibilities.</small></div>
+      <div class="ff-step"><span class="ff-step-no">02</span><b>Choose a category</b><small>Select weekly or monthly Merry-Go-Round contributions.</small></div>
+      <div class="ff-step"><span class="ff-step-no">03</span><b>Pay the fee</b><small>Pay the one-time registration fee and keep your confirmation.</small></div>
+      <div class="ff-step"><span class="ff-step-no">04</span><b>Fill in your details</b><small>Provide accurate contact, identification and account details.</small></div>
+      <div class="ff-step"><span class="ff-step-no">05</span><b>Submit for review</b><small>The administrator will verify your application before approval.</small></div>
     </div>
+    <div class="ff-note"><b>Membership notice:</b> Submitting an application does not mean automatic approval. Your details and payment may be verified by the administrator. Existing members should use <b>Member Login</b> instead of registering again.</div>
+  </section>
+<script>
+(function(){
+  var currentMembershipStep = 1;
+  var membershipStepNames = ['Membership category','Personal information','Account & communication','Registration fee','Declarations & consent'];
+  window.membershipWizardMove = function(direction){
+    var current = document.getElementById('membershipStep'+currentMembershipStep);
+    if(direction > 0 && current){
+      var requiredFields = current.querySelectorAll('input[required],select[required],textarea[required]');
+      for(var i=0;i<requiredFields.length;i++){
+        if(!requiredFields[i].checkValidity()){requiredFields[i].reportValidity();return;}
+      }
+    }
+    currentMembershipStep = Math.max(1,Math.min(5,currentMembershipStep+direction));
+    for(var n=1;n<=5;n++){
+      var panel=document.getElementById('membershipStep'+n);
+      var circle=document.getElementById('memCircle'+n);
+      if(panel){panel.classList.toggle('active',n===currentMembershipStep);panel.hidden=n!==currentMembershipStep;}
+      if(circle){circle.classList.toggle('active',n===currentMembershipStep);circle.classList.toggle('done',n<currentMembershipStep);}
+    }
+    var text=document.getElementById('memStepText');if(text)text.textContent='Step '+currentMembershipStep+' of 5 · '+membershipStepNames[currentMembershipStep-1];
+    var prev=document.getElementById('memPrevBtn');var next=document.getElementById('memNextBtn');
+    if(prev)prev.disabled=currentMembershipStep===1;
+    if(next)next.style.display=currentMembershipStep===5?'none':'inline-block';
+    var active=document.getElementById('membershipStep'+currentMembershipStep);
+    if(active){var first=active.querySelector('input,select,textarea');if(first&&currentMembershipStep!==1)first.focus({preventScroll:true});var form=document.getElementById('registerForm');if(form){var top=form.getBoundingClientRect().top+window.pageYOffset-18;if(top<window.pageYOffset||currentMembershipStep===5)window.scrollTo({top:top,behavior:'smooth'});}}
+  };
+  document.addEventListener('DOMContentLoaded',function(){window.membershipWizardMove(0);});
+})();
+</script>
+
+<script>
+(function(){
+  function setupFutureFindersRegistrationForm(){
+    var dob=document.getElementById('regDOB');
+    if(dob){dob.max=new Date().toISOString().slice(0,10);}
+  }
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',setupFutureFindersRegistrationForm);}else{setupFutureFindersRegistrationForm();}
+})();
+</script>
 
 
-    <!-- INTRODUCTION -->
-    <div style="
-        max-width:800px;
-        margin:20px auto;
-        padding:18px 22px;
-        background:#f1f8f5;
-        border-left:6px solid #087f5b;
-        border-radius:10px;
-        color:#333;
-        line-height:1.7;
-    ">
+  <section id="membershipGuidelines" class="ff-panel">
+    <h3>📌 Membership &amp; Loan Eligibility</h3>
+    <div class="ff-note" style="background:#f0fdf4;border-left-color:#16a34a"><b>✅ Loan Qualification:</b> A member must actively participate in savings and meet the applicable minimum savings requirement (currently <b>KSh 2,000</b> for official loan qualification). Members who do not save are not eligible for Chama loans. All applications remain subject to the applicable loan rules and approval.</div>
+    <div class="ff-note"><b>✅ Official Membership:</b> To become an official member, you must be active in the Chama for a minimum of <b>4 months</b> and complete the <b>KSh 500 registration fee</b> payment.</div>
+    <div class="ff-note" style="background:#f8fafc;border-left-color:#64748b"><b>✅ Commitment:</b> Members are expected to contribute consistently and maintain good financial discipline.</div>
+    <div class="ff-note" style="background:#f8fafc;border-left-color:#64748b"><b>✅ Support &amp; Trust:</b> Being a member means supporting one another and upholding transparency within the group.</div>
+    <p style="margin:12px 0 0"><a href="#rules" style="color:#087f5b;font-weight:700">Read the Chama Rules &amp; Regulations →</a></p>
+  </section>
 
-        <h3 style="
-            margin-top:0;
-            color:#087f5b;
-        ">
-            📋 Welcome to Future Finders Chama Group
-        </h3>
-
-        <p>
-            If you are a new member, please read and understand all
-            Chama rules and regulations before registration.
-            If you are already a member, please use the member
-            login section.
-        </p>
-
+  <section id="membershipCategories" class="ff-panel">
+    <h3>Choose your Merry-Go-Round category</h3>
+    <p class="ff-muted">Select the contribution category you wish to join. Your selection will also be made in the registration form below.</p>
+    <div class="ff-category-grid">
+      <div class="ff-category"><span class="tag">Category A</span><strong>KSh 300 <small style="font-size:14px;font-weight:600">/ weekly</small></strong><p>Merry-Go-Round contribution paid weekly.</p></div>
+      <div class="ff-category blue"><span class="tag">Category B</span><strong>KSh 1,000 <small style="font-size:14px;font-weight:600">/ monthly</small></strong><p>Merry-Go-Round contribution paid monthly.</p></div>
     </div>
+  </section>
 
+  <section id="membershipFee" class="ff-panel">
+    <h3>Registration fee</h3>
+    <p class="ff-muted">A one-time registration fee of <b>KSh 500</b> is required. Please use the Till details below and retain your M-Pesa confirmation message for verification.</p>
+    <div class="ff-fee"><div><b style="color:#8a4b08">Pay via M-Pesa Buy Goods</b><p style="margin:6px 0 0;color:#64748b;font-size:13px">Account name: BONIFACE CHELLUGET</p></div><div class="ff-till"><span style="display:block;color:#64748b;font-size:11px;font-weight:800;text-transform:uppercase">Till number</span><strong>3591312</strong></div></div>
+    <p style="margin:13px 0 0;color:#a34113;font-size:13px;font-weight:700">Important: The registration fee is a one-time payment and is strictly non-refundable.</p>
+  </section>
 
-    <!-- =====================================================
-         MEMBERSHIP & LOAN ELIGIBILITY
-         ===================================================== -->
-
-    <div style="
-        max-width:800px;
-        margin:20px auto;
-        padding:20px;
-        background:#e3f2fd;
-        border-left:6px solid #1976d2;
-        border-radius:10px;
-        box-shadow:0 4px 12px rgba(0,0,0,0.08);
-    ">
-
-        <h3 style="
-            color:#1976d2;
-            margin-top:0;
-        ">
-            📌 Membership & Loan Eligibility
-        </h3>
-
-        <div style="
-            line-height:1.8;
-            color:#333;
-        ">
-
-            <p>
-                ✅ <b>Loan Qualification:</b>
-                A member must actively participate in savings and meet the applicable minimum savings requirement (currently <b>Ksh 2,000</b> for official loan qualification). Members who do not save are not eligible for Chama loans. All applications remain subject to the applicable loan rules and approval.
-            </p>
-
-            <p>
-                ✅ <b>Official Membership:</b>
-                To become an official member, you must be active
-                in the Chama for a minimum of
-                <b>4 months</b> and complete the
-                <b>Ksh 500 registration fee</b> payment.
-            </p>
-
-            <p>
-                ✅ <b>Commitment:</b>
-                Members are expected to contribute consistently
-                and maintain good financial discipline.
-            </p>
-
-            <p>
-                ✅ <b>Support & Trust:</b>
-                Being a member means supporting one another and
-                upholding transparency within the group.
-            </p>
-
+  <form id="registerForm" onsubmit="return false;">
+    <div class="ff-form-head" style="display:block;text-align:center;background:linear-gradient(135deg,#1565c0,#42a5f5);color:#fff;border:0">
+      <img src="https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/FUTURE%20FINDERS%20LOGO.jpeg" alt="Future Finders logo" style="width:76px;height:76px;margin:0 auto 10px;border:3px solid #fff">
+      <h3 style="color:#fff;margin-bottom:6px">📝 New Member Registration</h3>
+      <p style="color:#eaf4ff">Complete all five steps to submit your Future Finders Chama membership application.</p>
+      <div class="mem-progress" aria-label="Registration progress">
+        <div class="mem-progress-circles">
+          <span class="mem-circle active" id="memCircle1">1</span><span class="mem-circle" id="memCircle2">2</span><span class="mem-circle" id="memCircle3">3</span><span class="mem-circle" id="memCircle4">4</span><span class="mem-circle" id="memCircle5">5</span>
         </div>
-
+        <p id="memStepText">Step 1 of 5 · Membership category</p>
+      </div>
     </div>
+    <div class="ff-form-body">
+      <p class="mem-required-note"><span class="req">*</span> Required fields must be completed. Please use accurate details as they appear on your National ID.</p>
 
+      <div class="membershipWizardStep active" id="membershipStep1">
+        <fieldset class="ff-form-section"><legend>Step 1 · Choose your Merry-Go-Round category</legend><div class="ff-fields">
+          <div class="ff-field full"><label for="regCategory">Merry-Go-Round category <span class="req">*</span></label><select id="regCategory" required><option value="">-- Select Category --</option><option value="Category A - Ksh 300 Weekly">Category A — KSh 300 Weekly</option><option value="Category B - Ksh 1,000 Monthly">Category B — KSh 1,000 Monthly</option></select><small class="ff-hint">Select the contribution category you wish to join.</small></div>
+        </div></fieldset>
+        <div class="mem-info-box"><b>Category A:</b> KSh 300 weekly Merry-Go-Round contribution.<br><b>Category B:</b> KSh 1,000 monthly Merry-Go-Round contribution.</div>
+      </div>
 
-    <!-- =====================================================
-         MERRY-GO-ROUND CATEGORIES
-         ===================================================== -->
+      <div class="membershipWizardStep" id="membershipStep2" hidden>
+        <fieldset class="ff-form-section"><legend>Step 2 · Personal information</legend><div class="ff-fields">
+          <div class="ff-field"><label for="regName">Full name as shown on ID <span class="req">*</span></label><input id="regName" type="text" placeholder="Enter your full name" autocomplete="name" required></div>
+          <div class="ff-field"><label for="regID">National ID number <span class="req">*</span></label><input id="regID" type="text" placeholder="7–9 digit ID number" maxlength="9" inputmode="numeric" autocomplete="off" oninput="this.value=this.value.replace(/[^0-9]/g,'')" required><small class="ff-hint">Enter digits only.</small></div>
+          <div class="ff-field"><label for="regPhone">Active phone number <span class="req">*</span></label><input id="regPhone" type="tel" placeholder="e.g. 0712345678" maxlength="10" inputmode="numeric" autocomplete="tel" oninput="this.value=this.value.replace(/[^0-9]/g,'')" required></div>
+          <div class="ff-field"><label for="regEmail">Email address <span class="req">*</span></label><input id="regEmail" type="email" placeholder="name@example.com" autocomplete="email" required></div>
+          <div class="ff-field"><label for="regDOB">Date of birth <span class="req">*</span></label><input id="regDOB" type="date" required></div>
+          <div class="ff-field"><label for="regAddress">Physical address / town</label><input id="regAddress" type="text" placeholder="Your town or area" autocomplete="street-address"></div>
+          <div class="ff-field"><label for="regOccupation">Occupation / employer</label><input id="regOccupation" type="text" placeholder="Your occupation or employer"></div>
+          <div class="ff-field"><label for="regSavings">Initial savings amount (KSh)</label><input id="regSavings" type="number" min="0" step="1" placeholder="Enter amount, if applicable"></div>
+        </div></fieldset>
+      </div>
 
-    <div style="
-        max-width:800px;
-        margin:20px auto;
-        padding:22px;
-        background:#ffffff;
-        border-radius:12px;
-        box-shadow:0 5px 18px rgba(0,0,0,0.10);
-        border:1px solid #e0e0e0;
-    ">
+      <div class="membershipWizardStep" id="membershipStep3" hidden>
+        <fieldset class="ff-form-section"><legend>Step 3 · Account security &amp; communication</legend><div class="ff-fields">
+          <div class="ff-field"><label for="regPass">🔐 Create password <span class="req">*</span></label><input id="regPass" type="password" placeholder="At least 6 characters" autocomplete="new-password" minlength="6" required><small class="ff-hint">Keep your password private. Do not share it with anyone.</small></div>
+          <div class="ff-field"><label for="regPassConfirm">Confirm password <span class="req">*</span></label><input id="regPassConfirm" type="password" placeholder="Enter the same password again" autocomplete="new-password" minlength="6" required></div>
+          <div class="ff-field full"><label for="regComm">Preferred communication <span class="req">*</span></label><select id="regComm" required><option value="">Choose how we should contact you</option><option value="WhatsApp">WhatsApp</option><option value="SMS">SMS</option><option value="Email">Email</option></select></div>
+        </div></fieldset>
+        <div class="mem-info-box"><b>Account safety:</b> Choose a password that is difficult to guess. Future Finders administrators should never ask you to disclose your password.</div>
+      </div>
 
-        <h3 style="
-            text-align:center;
-            color:#087f5b;
-            margin-top:0;
-        ">
-            💰 Choose Your Merry-Go-Round Category
-        </h3>
+      <div class="membershipWizardStep" id="membershipStep4" hidden>
+        <fieldset class="ff-form-section"><legend>Step 4 · Registration fee payment details</legend>
+          <div class="mem-payment-card"><div><span class="mem-kicker">One-time registration fee</span><strong>KSh 500</strong><p>Pay using M-Pesa Buy Goods and keep your confirmation message for verification.</p></div><div class="mem-till"><small>TILL NUMBER</small><b>3591312</b><small>Account: BONIFACE CHELLUGET</small></div></div>
+          <div class="mem-warning"><b>⚠ Important:</b> The registration fee is a one-time payment and is strictly non-refundable. Your application remains subject to administrator verification and approval.</div>
+          <div class="ff-fields" style="margin-top:16px">
+            <div class="ff-field full"><label for="regMpesaCode">M-Pesa payment confirmation code</label><input id="regMpesaCode" type="text" maxlength="20" placeholder="Enter the M-Pesa transaction code, if already paid"><small class="ff-hint">Optional at application stage. If you have not paid yet, leave this blank and follow the payment instructions.</small></div>
+          </div>
+        </fieldset>
+      </div>
 
-        <p style="
-            text-align:center;
-            color:#555;
-            margin-bottom:20px;
-        ">
-            Select the contribution category you wish to join.
-        </p>
-
-
-        <div style="
-            display:grid;
-            grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
-            gap:15px;
-        ">
-
-            <!-- CATEGORY A -->
-            <label style="
-                display:block;
-                padding:20px;
-                border:2px solid #087f5b;
-                border-radius:12px;
-                background:#f1f8f5;
-                cursor:pointer;
-                transition:0.2s;
-            ">
-
-                <input
-                    type="radio"
-                    name="membershipCategory"
-                    value="Category A - Ksh 300 Weekly"
-                    style="margin-right:8px;"
-                >
-
-                <b style="
-                    color:#087f5b;
-                    font-size:18px;
-                ">
-                    Category A
-                </b>
-
-                <div style="
-                    margin-top:8px;
-                    color:#333;
-                ">
-                    💵 <b>Ksh 300 Weekly</b>
-                </div>
-
-                <small style="
-                    display:block;
-                    margin-top:8px;
-                    color:#666;
-                ">
-                    Merry-Go-Round contribution
-                </small>
-
-            </label>
-
-
-            <!-- CATEGORY B -->
-            <label style="
-                display:block;
-                padding:20px;
-                border:2px solid #1565c0;
-                border-radius:12px;
-                background:#f1f6ff;
-                cursor:pointer;
-                transition:0.2s;
-            ">
-
-                <input
-                    type="radio"
-                    name="membershipCategory"
-                    value="Category B - Ksh 1,000 Monthly"
-                    style="margin-right:8px;"
-                >
-
-                <b style="
-                    color:#1565c0;
-                    font-size:18px;
-                ">
-                    Category B
-                </b>
-
-                <div style="
-                    margin-top:8px;
-                    color:#333;
-                ">
-                    💵 <b>Ksh 1,000 Monthly</b>
-                </div>
-
-                <small style="
-                    display:block;
-                    margin-top:8px;
-                    color:#666;
-                ">
-                    Merry-Go-Round contribution
-                </small>
-
-            </label>
-
+      <div class="membershipWizardStep" id="membershipStep5" hidden>
+        <fieldset class="ff-form-section"><legend>Step 5 · Declarations &amp; consent</legend>
+          <label class="ff-check"><input type="checkbox" id="regAgree" required><span>I agree to the <a href="#rules">Chama Rules &amp; Regulations</a>. <span class="req">*</span></span></label>
+          <label class="ff-check"><input type="checkbox" id="regDeclaration" required><span>I declare that the information I have provided is true and correct. I understand that the administrator may contact me to verify my details or payment before approval. <span class="req">*</span></span></label>
+          <div class="mem-info-box"><b>Before submitting:</b> Confirm that your National ID details, active phone number, email address and registration-fee payment confirmation (if already paid) are accurate and available.</div>
+          <p class="ff-muted" style="margin-top:14px">By submitting, you confirm that your information is accurate and that you have read the Chama rules. Submission is an application only; it does not guarantee automatic membership approval.</p>
+        </fieldset>
+        <div class="ff-submit">
+          <button type="button" onclick="registerMember()">✅ Register Member</button>
+          <button type="button" id="downloadFormBtn" style="display:none">📄 Download Registration Form</button>
+          <button type="button" id="shareWhatsAppBtn" style="display:none">📱 Share on WhatsApp</button>
         </div>
-
+      </div>
+      <div class="mem-nav"><button type="button" id="memPrevBtn" onclick="membershipWizardMove(-1)" disabled>← Previous</button><button type="button" id="memNextBtn" onclick="membershipWizardMove(1)">Next step →</button></div>
+      <p class="ff-privacy">Your information will be used by the Chama administrator to review and manage your application. Keep your login password private and do not share it with anyone.</p>
     </div>
-
-
-    <!-- =====================================================
-         REGISTRATION FEE
-         ===================================================== -->
-
-    <div style="
-        max-width:800px;
-        margin:20px auto;
-        padding:22px;
-        background:#fff8e1;
-        border-left:6px solid #fb8c00;
-        border-radius:10px;
-        box-shadow:0 4px 12px rgba(0,0,0,0.08);
-    ">
-
-        <h3 style="
-            color:#e65100;
-            margin-top:0;
-        ">
-            💳 Registration Fee
-        </h3>
-
-        <p style="
-            line-height:1.7;
-            color:#333;
-        ">
-            After completing your registration, you are required
-            to pay a
-            <b style="color:#d84315;">
-                Ksh 500 registration fee
-            </b>
-            to the following Till:
-        </p>
-
-        <div style="
-            padding:16px;
-            margin-top:12px;
-            background:#ffffff;
-            border:1px dashed #fb8c00;
-            border-radius:10px;
-            text-align:center;
-        ">
-
-            <p style="margin:6px 0;font-size:19px;">
-                <b>Till Number:</b>
-                <span style="color:#e65100;font-weight:bold;">
-                    3591312
-                </span>
-            </p>
-
-            <p style="margin:6px 0;font-size:16px;">
-                <b>Account Name:</b>
-                BONIFACE CHELLUGET
-            </p>
-
-        </div>
-
-        <p style="
-            margin-bottom:0;
-            color:#bf360c;
-            font-size:14px;
-            font-weight:bold;
-        ">
-            ⚠️ The registration fee is a one-time payment and
-            is strictly non-refundable.
-        </p>
-
-    </div>
-
-
-    <!-- =====================================================
-         REGISTRATION FORM
-         ===================================================== -->
-
-    <div id="registerForm" style="
-        max-width:700px;
-        margin:40px auto;
-        padding:30px;
-        background:#f7f9fc;
-        border-radius:16px;
-        box-shadow:0 8px 25px rgba(0,0,0,0.12);
-        font-family:Arial,sans-serif;
-    ">
-
-        <div style="text-align:center;margin-bottom:25px;">
-
-            <img
-                src="https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/FUTURE%20FINDERS%20LOGO.jpeg"
-                alt="Future Finders Logo"
-                style="
-                    width:70px;
-                    height:70px;
-                    object-fit:contain;
-                    border-radius:50%;
-                    background:white;
-                    padding:4px;
-                "
-            >
-
-            <h3 style="
-                color:#1976d2;
-                margin:12px 0 5px;
-                font-size:24px;
-            ">
-                📝 New Member Registration
-            </h3>
-
-            <p style="
-                margin:0;
-                color:#777;
-            ">
-                Please provide accurate information.
-            </p>
-
-        </div>
-
-
-        <!-- CATEGORY -->
-        <div class="form-group" style="margin-bottom:15px;">
-
-            <label style="
-                display:block;
-                margin-bottom:7px;
-                font-weight:bold;
-                color:#333;
-            ">
-                💰 Merry-Go-Round Category *
-            </label>
-
-            <select
-                id="regCategory"
-                style="
-                    width:100%;
-                    padding:13px;
-                    border:1px solid #ccc;
-                    border-radius:8px;
-                    font-size:15px;
-                    box-sizing:border-box;
-                "
-            >
-
-                <option value="">
-                    -- Select Category --
-                </option>
-
-                <option value="Category A - Ksh 300 Weekly">
-                    Category A - Ksh 300 Weekly
-                </option>
-
-                <option value="Category B - Ksh 1,000 Monthly">
-                    Category B - Ksh 1,000 Monthly
-                </option>
-
-            </select>
-
-        </div>
-
-
-        <!-- FULL NAME -->
-        <div class="form-group" style="margin-bottom:15px;">
-            <input
-                id="regName"
-                placeholder="Full Name *"
-                type="text"
-                style="width:100%;box-sizing:border-box;"
-            >
-        </div>
-
-
-        <!-- PHONE -->
-        <div class="form-group" style="margin-bottom:15px;">
-            <input
-                id="regPhone"
-                placeholder="Phone Number * e.g. 0712345678"
-                type="text"
-                maxlength="10"
-                inputmode="numeric"
-                oninput="this.value=this.value.replace(/[^0-9]/g,'')"
-                style="width:100%;box-sizing:border-box;"
-            >
-        </div>
-
-
-        <!-- EMAIL -->
-        <div class="form-group" style="margin-bottom:15px;">
-            <input
-                id="regEmail"
-                placeholder="Email Address *"
-                type="email"
-                style="width:100%;box-sizing:border-box;"
-            >
-        </div>
-
-
-        <!-- DOB -->
-        <div class="form-group" style="margin-bottom:15px;">
-            <label style="
-                display:block;
-                margin-bottom:6px;
-                color:#555;
-                font-size:14px;
-            ">
-                Date of Birth
-            </label>
-
-            <input
-                id="regDOB"
-                type="date"
-                style="width:100%;box-sizing:border-box;"
-            >
-        </div>
-
-
-        <!-- ID -->
-        <div class="form-group" style="margin-bottom:15px;">
-
-            <input
-                id="regID"
-                placeholder="ID Number (7–9 digits) *"
-                type="text"
-                maxlength="9"
-                inputmode="numeric"
-                oninput="this.value=this.value.replace(/[^0-9]/g,'')"
-                style="width:100%;box-sizing:border-box;"
-            >
-
-        </div>
-
-
-        <!-- ADDRESS -->
-        <div class="form-group" style="margin-bottom:15px;">
-            <input
-                id="regAddress"
-                placeholder="Physical Address / Town"
-                type="text"
-                style="width:100%;box-sizing:border-box;"
-            >
-        </div>
-
-
-        <!-- OCCUPATION -->
-        <div class="form-group" style="margin-bottom:15px;">
-            <input
-                id="regOccupation"
-                placeholder="Occupation / Employer"
-                type="text"
-                style="width:100%;box-sizing:border-box;"
-            >
-        </div>
-
-
-        <!-- SAVINGS -->
-        <div class="form-group" style="margin-bottom:15px;">
-            <input
-                id="regSavings"
-                placeholder="Initial Savings Amount (Ksh)"
-                type="number"
-                min="0"
-                style="width:100%;box-sizing:border-box;"
-            >
-        </div>
-
-
-        <!-- PASSWORD -->
-        <div class="form-group" style="margin-bottom:15px;">
-
-            <label style="
-                display:block;
-                margin-bottom:6px;
-                color:#333;
-                font-weight:bold;
-            ">
-                🔐 Create Password *
-            </label>
-
-            <input
-                id="regPass"
-                placeholder="Create Password"
-                type="password"
-                style="width:100%;box-sizing:border-box;"
-            >
-
-        </div>
-
-
-        <!-- CONFIRM PASSWORD -->
-        <div class="form-group" style="margin-bottom:15px;">
-
-            <input
-                id="regPassConfirm"
-                placeholder="Repeat Password *"
-                type="password"
-                style="width:100%;box-sizing:border-box;"
-            >
-
-        </div>
-
-
-        <!-- COMMUNICATION -->
-        <div class="form-group" style="margin-bottom:15px;">
-
-            <select
-                id="regComm"
-                style="
-                    width:100%;
-                    padding:13px;
-                    border:1px solid #ccc;
-                    border-radius:8px;
-                    box-sizing:border-box;
-                "
-            >
-
-                <option value="">
-                    Preferred Communication
-                </option>
-
-                <option value="WhatsApp">
-                    WhatsApp
-                </option>
-
-                <option value="SMS">
-                    SMS
-                </option>
-
-                <option value="Email">
-                    Email
-                </option>
-
-            </select>
-
-        </div>
-
-
-        <!-- AGREEMENT -->
-        <div class="form-group" style="
-            margin:15px 0;
-            line-height:1.6;
-        ">
-
-            <label>
-
-                <input
-                    type="checkbox"
-                    id="regAgree"
-                >
-
-                I agree to the
-                <a href="#">
-                    Chama Rules & Regulations
-                </a>
-
-            </label>
-
-        </div>
-
-
-        <!-- DECLARATION -->
-        <div class="form-group" style="
-            margin:15px 0;
-            line-height:1.6;
-        ">
-
-            <label>
-
-                <input
-                    type="checkbox"
-                    id="regDeclaration"
-                >
-
-                I declare that the information I have provided
-                is true and correct.
-
-            </label>
-
-        </div>
-
-
-        <!-- BUTTONS -->
-        <div style="
-            text-align:center;
-            margin-top:25px;
-        ">
-
-            <button
-                type="button"
-                onclick="registerMember()"
-                style="
-                    background:linear-gradient(135deg,#1976d2,#087f5b);
-                    color:white;
-                    border:none;
-                    padding:14px 30px;
-                    border-radius:10px;
-                    font-size:16px;
-                    font-weight:bold;
-                    cursor:pointer;
-                    margin:5px;
-                    box-shadow:0 4px 12px rgba(0,0,0,0.15);
-                "
-            >
-                ✅ Register Member
-            </button>
-
-
-            <button
-                type="button"
-                id="downloadFormBtn"
-                style="
-                    display:none;
-                    background:#4caf50;
-                    color:white;
-                    border:none;
-                    padding:14px 25px;
-                    border-radius:10px;
-                    font-size:15px;
-                    font-weight:bold;
-                    cursor:pointer;
-                    margin:5px;
-                "
-            >
-                📄 Download Registration Form
-            </button>
-
-
-            <button
-                type="button"
-                id="shareWhatsAppBtn"
-                style="
-                    display:none;
-                    background:#25D366;
-                    color:white;
-                    border:none;
-                    padding:14px 25px;
-                    border-radius:10px;
-                    font-size:15px;
-                    font-weight:bold;
-                    cursor:pointer;
-                    margin:5px;
-                "
-            >
-                📱 Share on WhatsApp
-            </button>
-
-        </div>
-
-    </div>
-
-
-    <!-- NOTE -->
-    <p
-        id="nbMessage"
-        style="
-            display:none;
-            max-width:700px;
-            margin:15px auto 30px;
-            padding:15px;
-            background:#fff3e0;
-            border-left:5px solid #fb8c00;
-            border-radius:8px;
-            color:#d84315;
-            text-align:center;
-            font-weight:bold;
-        "
-    >
-
-        ⚠️ NB: Please download the registration form first,
-        then click the WhatsApp button to share your
-        registration details with the administrator.
-
-    </p>
-
+  </form>
+
+  <p id="nbMessage" style="display:none;max-width:850px;margin:15px auto 25px;padding:14px;background:#fff7ed;border-left:4px solid #f59e0b;border-radius:9px;color:#9a3412;text-align:center;font-weight:700">Please complete the registration process and follow the on-screen instructions.</p>
+  <a class="ff-back" href="#" onclick="simulateAction(this,'services');return false;">← Back to Services</a>
+</div>
 </section>
 
 
@@ -4932,6 +4461,9 @@ async function registerMember() {
 
     const comm =
         document.getElementById("regComm").value;
+
+    const mpesaCode =
+        (document.getElementById("regMpesaCode") || {}).value || "";
 
     const agree =
         document.getElementById("regAgree").checked;
@@ -5065,6 +4597,8 @@ async function registerMember() {
 
         registrationFee: "Ksh 500",
 
+        mpesaCode: mpesaCode,
+
         timestamp: timestamp
 
     };
@@ -5161,14 +4695,15 @@ async function registerMember() {
         "\n📡 *Preferred Communication:* " +
         (comm || "N/A") +
 
-        "\n🔐 *Created Password:* " +
-        password +
-
         "\n💳 *Registration Fee:* Ksh 500" +
+
+        "\n🧾 *M-Pesa Confirmation:* " + (mpesaCode || "Not provided yet") +
 
         "\n💰 *Till Number:* 3591312" +
 
         "\n👤 *Till Account Name:* BONIFACE CHELLUGET" +
+
+        "\n🔐 *Account access:* Please activate the member account using the phone number above and issue a temporary password through a private channel. The member's chosen password is not shared." +
 
         "\n🕒 *Registered At:* " +
         timestamp;
@@ -5704,99 +5239,35 @@ function createRegistrationPDF(
 
 
     /* =====================================================
-       ACCOUNT / PASSWORD INFORMATION
+       MEMBER ACCOUNT & REGISTRATION FEE
+       Passwords are private and must never be printed/shared.
        ===================================================== */
 
     sectionTitle(
-        "3. MEMBER ACCOUNT DETAILS",
+        "3. MEMBER ACCOUNT & REGISTRATION FEE",
         y + 10
     );
 
-
     y += 25;
 
+    doc.setFillColor(239, 246, 255);
+    doc.roundedRect(15, y - 6, 180, 31, 2, 2, "F");
+    doc.setTextColor(45, 55, 65);
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(9);
+    doc.text("Member Login ID (Phone):", 20, y + 3);
+    doc.setFont("helvetica", "normal");
+    doc.text(String(member.phone || "Not provided"), 75, y + 3);
 
-    doc.setFillColor(
-        255,
-        243,
-        224
-    );
+    doc.setFont("helvetica", "bold");
+    doc.text("Password Security:", 20, y + 12);
+    doc.setFont("helvetica", "normal");
+    doc.text("Private — not printed or shared with the administrator", 75, y + 12);
 
-
-    doc.roundedRect(
-        15,
-        y - 6,
-        180,
-        22,
-        2,
-        2,
-        "F"
-    );
-
-
-    doc.setTextColor(
-        60,
-        60,
-        60
-    );
-
-
-    doc.setFont(
-        "helvetica",
-        "bold"
-    );
-
-
-    doc.setFontSize(
-        9
-    );
-
-
-    doc.text(
-        "Created Password:",
-        20,
-        y + 3
-    );
-
-
-    doc.setFont(
-        "helvetica",
-        "normal"
-    );
-
-
-    doc.text(
-        member.password,
-        65,
-        y + 3
-    );
-
-
-    doc.setFont(
-        "helvetica",
-        "bold"
-    );
-
-
-    doc.text(
-        "Registration Fee:",
-        20,
-        y + 12
-    );
-
-
-    doc.setFont(
-        "helvetica",
-        "normal"
-    );
-
-
-    doc.text(
-        "Ksh 500",
-        65,
-        y + 12
-    );
-
+    doc.setFont("helvetica", "bold");
+    doc.text("Registration Fee:", 20, y + 21);
+    doc.setFont("helvetica", "normal");
+    doc.text("Ksh 500 (one-time, non-refundable)", 75, y + 21);
 
     /* =====================================================
        PAYMENT DETAILS
@@ -6083,7 +5554,7 @@ function createRegistrationPDF(
 
             alert(
                 "✅ Registration form downloaded successfully!\n\n" +
-                "Please keep the form safely and share it with the administrator."
+                "Please keep the form safely and share it with the administrator.\n\nYour password is intentionally excluded. The administrator should issue a temporary password privately; never send your chosen password."
             );
 
         },
@@ -8701,7 +8172,7 @@ y += 38;
 <div class="ff-login-icon" aria-hidden="true">👤</div>
 <h2 id="memberLoginHeading">Member Login</h2>
 <h1>Future Finders Chama Group <span class="ff-login-subtitle">Savings &amp; Loan Portal</span></h1>
-<p class="ff-login-intro">Access your savings, contributions and member services securely.</p>
+<p class="ff-login-intro">Registered members can sign in here to access their savings, contributions and member services.</p>
 <label for="memberLoginSearch">Search your member name</label>
 <div class="member-login-search" style="display:flex;gap:8px;margin:8px 0 12px;align-items:stretch;">
   <input id="memberLoginSearch" type="search" placeholder="Type your name, then click Search" autocomplete="off"
@@ -8756,8 +8227,28 @@ y += 38;
 </div>
 
 <!-- Spinner already inside the button -->
-<a class="action-btn" id="memberLoginBtn" onclick="login()">Login <span class="spinner"></span></a>
-<p id="loginMessage"></p>
+<button type="button" class="action-btn" id="memberLoginBtn" onclick="login()">Login <span class="spinner"></span></button>
+<p id="loginMessage" role="status" aria-live="polite"></p>
+<div class="ff-login-help" style="margin-top:18px;padding:15px;border:1px solid #dbe7ee;border-radius:12px;background:#f8fbfd;text-align:center;">
+  <p style="margin:4px 0 12px;color:#334155;">Not signed up yet? <a href="#membership" onclick="return openMembershipRegistrationFromLogin();" style="color:#087f8c;font-weight:700;">Click here to register</a>.</p>
+  <p style="margin:4px 0 8px;color:#334155;">Already registered but cannot remember your password?</p>
+  <button type="button" class="action-btn" onclick="toggleMemberPasswordReset(true)" style="background:#526579;margin:4px auto;">Forgot password? Reset it here</button>
+</div>
+<div id="memberPasswordResetPanel" style="display:none;margin-top:16px;padding:18px;border:1px solid #cbdde8;border-radius:12px;background:#fff;">
+  <h3 style="margin:0 0 8px;text-align:left;">🔐 Request a Password Reset</h3>
+  <p style="font-size:13px;color:#64748b;margin:0 0 12px;">Enter your registered details. Your request will be prepared for the admin WhatsApp number 0713953004.</p>
+  <label for="resetMemberFullName">Full name</label>
+  <input id="resetMemberFullName" type="text" autocomplete="name" placeholder="Enter your full registered name" style="width:100%;box-sizing:border-box;">
+  <label for="resetMemberIdNumber">National ID number</label>
+  <input id="resetMemberIdNumber" type="text" inputmode="numeric" autocomplete="off" placeholder="Enter your ID number" style="width:100%;box-sizing:border-box;">
+  <label for="resetMemberNewPassword">New password</label>
+  <input id="resetMemberNewPassword" type="password" autocomplete="new-password" minlength="6" placeholder="Enter your proposed new password" style="width:100%;box-sizing:border-box;">
+  <label style="display:flex!important;gap:9px;align-items:flex-start;font-weight:500!important;font-size:13px!important;line-height:1.45;"><input id="resetPasswordWhatsAppConsent" type="checkbox" style="width:auto;margin:2px 0 0;"> I understand that the proposed password will be included in a WhatsApp message to the admin and may be visible in message history.</label>
+  <p style="font-size:12px;color:#9a3412;margin:8px 0;">Security note: sending passwords in messages is not recommended. Use a unique password and delete the sent message after the admin has updated the website.</p>
+  <button type="button" class="action-btn" onclick="sendMemberPasswordResetRequest()" style="background:#16866b;">Prepare WhatsApp Reset Request</button>
+  <button type="button" class="action-btn" onclick="toggleMemberPasswordReset(false)" style="background:#64748b;">Cancel</button>
+  <p id="memberPasswordResetMessage" role="status" aria-live="polite" style="font-size:13px;text-align:center;"></p>
+</div>
 
 </section>
 <!-- Dashboard -->
@@ -13295,7 +12786,7 @@ const members = {
     loans: []
   },
 
-  "JACKIENYARANGI": {
+  "JACKIE NYARANGI": {
     phone: "0790206224",
     password: "0790206224",
     savings: 2300,
@@ -13460,6 +12951,32 @@ const members = {
             amountDue: 1495,
             amountPaid: 1495
           }
+        ]
+      },
+      {
+        id: "FF-0759237482-261110",
+        applicationNo: "FF-0759237482-261110",
+        requestedAmount: 2600,
+        qualifiedAmount: 2600,
+        idNumber: "40781834",
+        repaymentPeriod: "1 MONTH",
+        interestRate: 15,
+        interestAmount: 390,
+        repaymentAmount: 2990,
+        monthlyRepay: 2990,
+        amountPaid: 0,
+        balance: 2990,
+        latePenalty: 0,
+        date: "10/11/2026",
+        firstRepaymentDate: "09/12/2026",
+        finalRepaymentDate: "09/12/2026",
+        paymentMethod: "M-Pesa",
+        status: "APPROVED",
+        reason: "APPROVED BY ADMIN — ONE-MONTH REPAYMENT; FULL PAYMENT OF KSH 2,990 DUE BY 09/12/2026",
+        approvedAt: "2026-11-10T12:15:00+03:00",
+        signatureName: "Kepha Angwenyi",
+        repaymentSchedule: [
+          { month: 1, dueDate: "09/12/2026", amountDue: 2990, amountPaid: 0 }
         ]
       }
     ]
@@ -13840,7 +13357,25 @@ const members = {
     savings: 2820,
     monthly: [0, 0, 195, 170, 40, 0, 0, 0, 0],
     note: "Member has requested to defer receipt of her savings from December 2026 to 2027. Payout status: Deferred to 2027.",
-    contracts: [],
+    contracts: [{
+      id: "FFC-2026-1662304",
+      member: "CANZEDENA ANYANGO",
+      type: "Membership Contract Renewal",
+      participation: "Monthly merry-go-round plus savings",
+      feeCategory: "Registration fee outstanding — payable on 2027 renewal",
+      contractFee: 200,
+      registrationFeePaid: false,
+      signatureName: "CANZEDENA ANYANGO",
+      signedAt: "10 November 2026 at 12:07 (EAT)",
+      signedAtISO: "2026-11-10T12:07:00+03:00",
+      adminStatus: "Approved / Active",
+      startDate: "2027-01-01",
+      expiryDate: "2027-12-31",
+      adminNotes: "Approved by Admin on 10 November 2026. Contract is approved for the 2027 membership year, effective 1 January 2027 to 31 December 2027. Registration fee of KSh 200 remains outstanding and is payable on 2027 renewal.",
+      createdAt: "2026-11-10T12:07:00+03:00",
+      approvedAt: "2026-11-10T12:15:00+03:00",
+      version: 3
+    }],
     loans: []
   },
 
@@ -14247,9 +13782,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // On first load, show only the placeholder in the member dropdown.
   if (select) {
-    Array.from(select.options).forEach(option => {
-      option.hidden = option.value !== '';
-    });
+    try {
+      const locallyRegistered = JSON.parse(localStorage.getItem("members") || "[]");
+      if (Array.isArray(locallyRegistered)) locallyRegistered.forEach(record => {
+        const fullName = String(record && record.name || "").trim();
+        if (fullName && !Array.from(select.options).some(option => option.value.toLowerCase() === fullName.toLowerCase())) {
+          const option = document.createElement("option"); option.value = fullName; option.textContent = fullName; select.appendChild(option);
+        }
+      });
+    } catch (e) { /* Keep the published member list available if local data is invalid. */ }
+    Array.from(select.options).forEach(option => { option.hidden = option.value !== ''; });
     select.value = '';
   }
   if (message) message.textContent = 'Search for your name first to display matching members.';
@@ -14258,6 +13800,53 @@ document.addEventListener('DOMContentLoaded', function () {
     if (event.key === 'Enter') { event.preventDefault(); searchMemberLoginName(); }
   });
 });
+
+function openMembershipRegistrationFromLogin() {
+  const membershipButton = document.querySelector('#navButtons .nav-btn[onclick*="membership"]');
+  if (membershipButton) {
+    simulateAction(membershipButton, 'membership');
+  } else {
+    document.querySelectorAll("section, #dashboard, #admin, #newsSection").forEach(sec => sec.style.display = "none");
+    const membershipSection = document.getElementById('membership');
+    if (membershipSection) membershipSection.style.display = 'block';
+    const backBtn = document.getElementById('backBtn');
+    if (backBtn) backBtn.style.display = 'inline-block';
+  }
+  return false;
+}
+
+function toggleMemberPasswordReset(show) {
+  const panel = document.getElementById("memberPasswordResetPanel");
+  if (panel) panel.style.display = show ? "block" : "none";
+  const message = document.getElementById("memberPasswordResetMessage");
+  if (message) message.textContent = "";
+  if (show) document.getElementById("resetMemberFullName")?.focus();
+}
+
+function sendMemberPasswordResetRequest() {
+  const fullName = document.getElementById("resetMemberFullName").value.trim();
+  const idNumber = document.getElementById("resetMemberIdNumber").value.trim();
+  const newPassword = document.getElementById("resetMemberNewPassword").value;
+  const consent = document.getElementById("resetPasswordWhatsAppConsent").checked;
+  const message = document.getElementById("memberPasswordResetMessage");
+  if (!fullName || !idNumber || !newPassword) { message.textContent = "Please complete your full name, ID number and proposed new password."; return; }
+  if (!/^\d{7,9}$/.test(idNumber)) { message.textContent = "Enter a valid Kenyan ID number (7–9 digits)."; return; }
+  if (newPassword.length < 6) { message.textContent = "Your new password must contain at least 6 characters."; return; }
+  if (!consent) { message.textContent = "Please confirm that you understand the password will be sent in the WhatsApp message."; return; }
+  const adminMessage = "🔐 FUTURE FINDERS CHAMA — MEMBER PASSWORD RESET REQUEST\n\n" +
+    "Full name: " + fullName + "\n" +
+    "National ID number: " + idNumber + "\n" +
+    "Proposed new password: " + newPassword + "\n\n" +
+    "ADMIN ACTION: Verify the member's identity and update the password in the hardcoded members record in the website source. Do not approve this request based on the message alone.";
+  const whatsappURL = "https://wa.me/254713953004?text=" + encodeURIComponent(adminMessage);
+  const opened = window.open(whatsappURL, "_blank", "noopener");
+  if (!opened) message.textContent = "Your browser blocked the WhatsApp tab. Allow pop-ups, then press the button again.";
+  else {
+    message.textContent = "WhatsApp opened with the reset request. Please press Send in WhatsApp; the website cannot send it without your confirmation.";
+    document.getElementById("resetMemberNewPassword").value = "";
+    document.getElementById("resetPasswordWhatsAppConsent").checked = false;
+  }
+}
 
 function login() { 
   let btn = document.getElementById("memberLoginBtn");
@@ -14276,8 +13865,13 @@ function login() {
       return;
     }
 
-    // ✅ Check hardcoded members
-    if (members[name] && members[name].password === pass) {
+    // Check the hardcoded member register and locally submitted registration records.
+    // Local registrations are browser-specific until an administrator adds them to the published members object.
+    let locallyRegisteredMembers = [];
+    try { locallyRegisteredMembers = JSON.parse(localStorage.getItem("members") || "[]"); if (!Array.isArray(locallyRegisteredMembers)) locallyRegisteredMembers = []; } catch (e) { locallyRegisteredMembers = []; }
+    const localRegisteredMember = locallyRegisteredMembers.find(m => String(m.name || "").trim().toLowerCase() === name.toLowerCase());
+
+    if ((members[name] && members[name].password === pass) || (localRegisteredMember && localRegisteredMember.password === pass)) {
       loggedInUser = name; // ✅ store clean name
       msg.innerText = "";
       document.getElementById("loginForm").style.display = "none";
