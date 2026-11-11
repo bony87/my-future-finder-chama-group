@@ -277,6 +277,7 @@ footer{background:#12304a!important;color:#eaf4f7!important;padding:20px!importa
 #admin{width:min(1240px,calc(100% - 28px));box-sizing:border-box;margin:22px auto;padding:clamp(16px,2.5vw,30px);border:1px solid var(--ff-line);border-radius:18px;background:#fff;box-shadow:var(--ff-shadow)}
 #admin #logoutBtn{float:right;min-height:42px;padding:10px 16px;border-radius:10px!important}
 #admin #adminSummary{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px!important;clear:both;padding-top:10px}
+#admin #ffAdminLoanFinancialSummary{display:block!important;visibility:visible!important;opacity:1!important;width:100%!important;max-width:100%!important;box-sizing:border-box!important;grid-column:1/-1!important}
 #admin #adminSummary .summary-card{display:flex;align-items:center;justify-content:center;min-height:92px;box-sizing:border-box;padding:18px;background:linear-gradient(145deg,#f4f9fb,#fff);border:1px solid var(--ff-line);border-left:4px solid var(--ff-teal);border-radius:13px;box-shadow:0 4px 14px rgba(18,48,74,.05);font-weight:700;text-align:center;line-height:1.5}
 #admin #membersNotesPanel,#admin #membersOverviewPanel,#admin #pickedNumbersTable,#admin #pendingMembersPanel,#admin #loanApplicationsPanel,#admin .admin-panel{box-sizing:border-box;max-width:100%;margin:20px 0;padding:20px;border:1px solid var(--ff-line);border-radius:14px;background:#fff;box-shadow:0 4px 14px rgba(18,48,74,.05)}
 #admin #membersNotesPanel h3,#admin #membersOverviewPanel h3,#admin #pickedNumbersTable h3,#admin #pendingMembersPanel h3,#admin h3{margin-top:0;text-align:left}
@@ -3841,13 +3842,64 @@ function closeSystemUpdatePopup(){
 
   <!-- Loan availability is controlled by the PUBLISHED_LOANS_OPEN setting in the code. -->
 
+  <!-- FUTURE FINDERS: PROMINENT CHAMA FINANCIAL OVERVIEW -->
+  <section id="ffChamaFinancialOverview" aria-label="Chama Financial Overview" style="display:block;clear:both;width:100%;box-sizing:border-box;margin:20px 0;padding:20px;border:1px solid #cbd5e1;border-top:5px solid #087f5b;border-radius:14px;background:#f0fdf4;">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px;">
+      <div><h2 style="margin:0;color:#14532d;font-size:22px;">📊 Chama Financial Overview</h2><p style="margin:5px 0 0;color:#475569;font-size:13px;">Main membership and loan position — figures supplied for this admin index.</p></div>
+      <span style="padding:6px 10px;border-radius:20px;background:#dcfce7;color:#166534;font-size:12px;font-weight:700;">ADMIN SUMMARY</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:11px;margin-bottom:16px;">
+      <div style="padding:15px;background:#fff;border:1px solid #bbf7d0;border-radius:10px;"><div style="font-size:12px;color:#64748b;font-weight:700;">👥 TOTAL MEMBERS</div><div style="font-size:27px;font-weight:800;color:#14532d;margin-top:5px;">24</div></div>
+      <div style="padding:15px;background:#fff;border:1px solid #bbf7d0;border-radius:10px;"><div style="font-size:12px;color:#64748b;font-weight:700;">💰 TOTAL SAVINGS</div><div style="font-size:27px;font-weight:800;color:#14532d;margin-top:5px;">KSh 144,869</div></div>
+      <div style="padding:15px;background:#fff;border:1px solid #bbf7d0;border-radius:10px;"><div style="font-size:12px;color:#64748b;font-weight:700;">📑 TOTAL LOANS ISSUED</div><div style="font-size:27px;font-weight:800;color:#14532d;margin-top:5px;">KSh 35,400.00</div></div>
+      <div style="padding:15px;background:#fff;border:1px solid #bbf7d0;border-radius:10px;"><div style="font-size:12px;color:#64748b;font-weight:700;">💹 TOTAL INTEREST EARNED</div><div style="font-size:27px;font-weight:800;color:#14532d;margin-top:5px;">KSh 4,029.00</div></div>
+    </div>
+    <div style="padding:13px 15px;background:#fff;border:1px solid #bbf7d0;border-radius:10px;margin-bottom:15px;">
+      <div style="font-weight:800;color:#14532d;margin-bottom:9px;">📊 Loan Status</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;">
+        <span style="padding:7px 10px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:7px;">Pending: <b>0</b></span>
+        <span style="padding:7px 10px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:7px;">Active: <b>4</b></span>
+        <span style="padding:7px 10px;background:#fff7ed;border:1px solid #fed7aa;border-radius:7px;">Overdue: <b>2</b></span>
+        <span style="padding:7px 10px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:7px;">Cleared: <b>15</b></span>
+        <span style="padding:7px 10px;background:#fef2f2;border:1px solid #fecaca;border-radius:7px;">Rejected: <b>0</b></span>
+      </div>
+    </div>
+    <div style="padding:15px;background:#fff;border:1px solid #bbf7d0;border-radius:10px;">
+      <h3 style="margin:0 0 5px;color:#14532d;">📊 Overall Loan Financial Summary</h3>
+      <p style="margin:0 0 12px;color:#64748b;font-size:12px;">Calculated summary figures supplied for approved and disbursed loans. Pending and rejected applications are excluded from money lent.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:9px;">
+        <div style="padding:11px;background:#f8fafc;border-radius:8px;"><div style="font-size:12px;color:#64748b;">Loans issued</div><b style="font-size:21px;color:#0f172a;">19</b></div>
+        <div style="padding:11px;background:#f8fafc;border-radius:8px;"><div style="font-size:12px;color:#64748b;">Total principal lent</div><b style="font-size:21px;color:#0f172a;">KSh 35,400.00</b></div>
+        <div style="padding:11px;background:#f8fafc;border-radius:8px;"><div style="font-size:12px;color:#64748b;">Total interest expected</div><b style="font-size:21px;color:#0f172a;">KSh 4,974.00</b></div>
+        <div style="padding:11px;background:#f8fafc;border-radius:8px;"><div style="font-size:12px;color:#64748b;">Total repayment expected</div><b style="font-size:21px;color:#0f172a;">KSh 40,374.00</b></div>
+        <div style="padding:11px;background:#f8fafc;border-radius:8px;"><div style="font-size:12px;color:#64748b;">Total repayments received</div><b style="font-size:21px;color:#0f172a;">KSh 32,704.00</b></div>
+        <div style="padding:11px;background:#f8fafc;border-radius:8px;"><div style="font-size:12px;color:#64748b;">Principal recovered</div><b style="font-size:21px;color:#0f172a;">KSh 28,675.00</b></div>
+        <div style="padding:11px;background:#f8fafc;border-radius:8px;"><div style="font-size:12px;color:#64748b;">Interest returned</div><b style="font-size:21px;color:#0f172a;">KSh 4,029.00</b></div>
+        <div style="padding:11px;background:#f8fafc;border-radius:8px;"><div style="font-size:12px;color:#64748b;">Outstanding principal</div><b style="font-size:21px;color:#0f172a;">KSh 6,725.00</b></div>
+        <div style="padding:11px;background:#f8fafc;border-radius:8px;"><div style="font-size:12px;color:#64748b;">Outstanding interest</div><b style="font-size:21px;color:#0f172a;">KSh 945.00</b></div>
+        <div style="padding:11px;background:#f8fafc;border-radius:8px;"><div style="font-size:12px;color:#64748b;">Total outstanding balance</div><b style="font-size:21px;color:#b45309;">KSh 7,670.00</b></div>
+      </div>
+    </div>
+    <p style="margin:12px 0 0;color:#64748b;font-size:11px;line-height:1.5;">Note: These overview figures are displayed as supplied. The loan-status counts total 21 (4 active + 2 overdue + 15 cleared), while the loans-issued figure is 19; reconcile the underlying loan register before treating the counts as a reconciled report.</p>
+  </section>
+
   <!-- SUMMARY CARDS -->
   <div id="adminSummary" style="display:flex; gap:15px; margin:15px 0; flex-wrap:wrap;">
     <div class="summary-card" id="totalMembersCard">👥 Total Members: 0</div>
     <div class="summary-card" id="totalSavingsCard">💰 Total Savings: Ksh 0</div>
     <div class="summary-card" id="totalLoansCard">📑 Total Loans: 0</div>
+    <div class="summary-card" id="totalInterestEarnedCard">💹 Total Interest Earned: KSh 0.00</div>
     <div class="summary-card" id="loanBreakdownCard">📊 Loan Status: 0 Pending / 0 Approved / 0 Rejected</div>
   </div>
+  <section id="ffAdminLoanFinancialSummary" style="display:block;flex:0 0 100%;width:100%;box-sizing:border-box;margin:12px 0 20px;padding:15px;border:1px solid #cbd5e1;border-radius:12px;background:#f8fafc;clear:both;">
+    <h3 style="margin:0 0 5px;color:#173b57;">📊 Overall Loan Financial Summary</h3>
+    <p style="margin:0 0 12px;font-size:12px;color:#64748b;">Loan totals and each member’s individual loan breakdown.</p>
+    <div id="ffAdminLoanSummaryRefreshMessage" style="font-size:12px;color:#64748b;margin-bottom:10px;">Loading loan summary…</div>
+    <button type="button" id="ffToggleAllMemberLoanSummaries" onclick="toggleAdminMemberLoanSummaries()" aria-expanded="false" style="width:100%;padding:13px 16px;border:1px solid #cbd5e1;border-radius:9px;background:#173b57;color:#fff;font-weight:700;text-align:left;cursor:pointer;font-size:14px;">📋 All Members’ Loan Summaries <span style="float:right;">＋</span></button>
+    <div id="ffAllMemberLoanSummariesContent" hidden style="padding:8px 0 0;"><p style="padding:14px;text-align:center;color:#64748b;background:#fff;border:1px solid #dbe4ec;border-radius:9px;">Loan summaries are loading.</p></div>
+  </section>
+
+
 
   <!-- 🗒️ Members Notes -->
   <div id="membersNotesPanel" style="margin-top:25px; border-top:1px dashed #ddd; padding-top:15px;">
@@ -3882,6 +3934,22 @@ function closeSystemUpdatePopup(){
       </table></div>
     </div>
   </div>
+<!-- FUTURE FINDERS: ADMIN OVERVIEW DASHBOARD (hardcoded-record snapshot) -->
+<section id="ffAdminOverviewDashboard" style="margin:24px auto;padding:22px;border:1px solid #cbd5e1;border-top:5px solid #075985;border-radius:12px;background:#f8fafc;max-width:1200px;box-shadow:0 3px 12px rgba(15,23,42,.06);">
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;">
+    <div><h2 style="margin:0;color:#075985;text-align:left;">📊 Chama Admin Dashboard</h2><p style="margin:6px 0;color:#64748b;">Live summary calculated from the member and contract records currently hardcoded in this index.</p></div>
+    <button type="button" onclick="ffRefreshAdminDashboard()" style="padding:10px 14px;border:0;border-radius:8px;background:#075985;color:#fff;font-weight:700;cursor:pointer;">↻ Refresh summary</button>
+  </div>
+  <div id="ffAdminMetricCards" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:12px;margin-top:16px;">
+    <div style="padding:15px;background:#fff;border:1px solid #dbeafe;border-radius:10px;color:#64748b;">Loading dashboard…</div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-top:16px;">
+    <div style="padding:15px;background:#fff;border:1px solid #e2e8f0;border-radius:10px;"><h3 style="margin:0 0 10px;color:#075985;text-align:left;">🔔 Admin attention list</h3><div id="ffAdminAttentionList" style="color:#475569;line-height:1.6;">Preparing alerts…</div></div>
+    <div style="padding:15px;background:#fff;border:1px solid #e2e8f0;border-radius:10px;"><h3 style="margin:0 0 10px;color:#075985;text-align:left;">📤 Quick reports</h3><p style="margin:0 0 12px;color:#64748b;">Exports are snapshots of the records currently stored in this HTML index. They do not create or verify payments.</p><div style="display:flex;gap:8px;flex-wrap:wrap;"><button type="button" onclick="ffExportDashboardMembers()" style="padding:9px 12px;border:0;border-radius:7px;background:#166534;color:#fff;font-weight:700;cursor:pointer;">⬇ Member summary CSV</button><button type="button" onclick="ffExportDashboardContracts()" style="padding:9px 12px;border:0;border-radius:7px;background:#1d4ed8;color:#fff;font-weight:700;cursor:pointer;">⬇ Contract register CSV</button></div></div>
+  </div>
+  <p style="margin:14px 0 0;color:#64748b;font-size:12px;line-height:1.5;">Important: totals reflect hardcoded index data only. They are not a bank/M-Pesa reconciliation, a complete transaction ledger, or a real-time multi-device database. Verify source records before making financial decisions.</p>
+</section>
+
 <!-- 👥 Members Overview Section -->
 <div id="membersOverviewPanel" style="margin-top:30px; border-top:1px dashed #ccc; padding-top:20px;">
   <h2 style="color:#1976d2; margin-bottom:15px;">👥 Members Overview</h2>
@@ -3927,7 +3995,7 @@ function closeSystemUpdatePopup(){
   <!-- 📄 Member Contract Management -->
   <div id="memberContractsAdminPanel" style="margin-top:28px;padding-top:22px;border-top:2px solid #dbeafe;">
     <h3 style="color:#075985;">📄 Member Contract Management — Submission Register</h3>
-    <p style="color:#475569;line-height:1.6;">All contracts are automatically arranged from the earliest submission to the latest submission. The full register below shows each contract reference, plan, fee declaration, signing date/time and administration details. Scroll horizontally to view every column on smaller screens.</p>
+    <p style="color:#475569;line-height:1.6;">All contracts are automatically arranged from the earliest submission to the latest submission. The full register below shows each contract reference, plan, fee declaration, signing date/time and administration details. Use the download-arrow icon to save a contract PDF directly; no print dialog is opened. Fee and renewal alerts are highlighted where applicable. Scroll horizontally to view every column on smaller screens.</p>
     <div style="overflow-x:auto;margin-top:16px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;">
       <table style="width:100%;border-collapse:separate;border-spacing:0;min-width:1500px;background:#fff;font-size:14px;line-height:1.5;">
         <thead style="background:#075985;color:#fff;"><tr><th style="padding:13px 12px;text-align:left;white-space:nowrap;">No. (Oldest first)</th><th style="padding:13px 12px;text-align:left;min-width:190px;">Member / Contract reference</th><th style="padding:13px 12px;text-align:left;min-width:180px;">Contract type</th><th style="padding:13px 12px;text-align:left;min-width:230px;">Participation plan</th><th style="padding:13px 12px;text-align:left;min-width:190px;">Registration fee / payment</th><th style="padding:13px 12px;text-align:left;min-width:190px;">Date &amp; time signed (EAT)</th><th style="padding:13px 12px;text-align:left;min-width:190px;">Admin status</th><th style="padding:13px 12px;text-align:left;min-width:130px;">Start date</th><th style="padding:13px 12px;text-align:left;min-width:140px;">Expiry / renewal</th><th style="padding:13px 12px;text-align:left;min-width:220px;">Admin notes</th><th style="padding:13px 12px;text-align:left;min-width:130px;">Actions</th></tr></thead>
@@ -8300,6 +8368,8 @@ y += 38;
     <p style="margin:0 0 12px;color:#555;font-size:14px;">Choose what you would like to review. Both sections remain hidden until you open them.</p>
     <button type="button" onclick="toggleMemberSavingsAdvice()" id="toggleMemberSavingsAdviceBtn" style="background:#1565c0;color:#fff;border:0;padding:10px 14px;border-radius:8px;cursor:pointer;margin:4px;font-weight:700;">💡 Monthly Savings Recommendations</button>
     <button type="button" onclick="toggleMemberSavingsGraph()" id="toggleMemberSavingsGraphBtn" style="display:inline-block;background:#087f8c;color:white;border:0;padding:10px 14px;border-radius:8px;cursor:pointer;margin:4px;font-weight:700;">📈 Show My Savings Graph</button>
+    <button type="button" onclick="toggleMemberLoanSummary()" id="toggleMemberLoanSummaryBtn" style="display:inline-block;background:#16845b;color:white;border:0;padding:10px 14px;border-radius:8px;cursor:pointer;margin:4px;font-weight:700;">💳 My Loan Summary</button>
+    <div id="memberLoanSummarySection" style="display:none;margin-top:14px;"></div>
   </div>
 </div>
 
@@ -9760,6 +9830,9 @@ document.addEventListener(
     <p style="color:#64748b;">Complete the form, review the full contract, then sign and submit. Your signed contract will download automatically as a PDF. Attach that PDF in WhatsApp and send it to 0713953004. Admin will publish your official status in the website's hardcoded contract record, just like loan records.</p>
     <div id="ffMemberContractHistoryView" style="margin:16px 0;">
       <h3 style="color:#075985;">📑 My Contract History &amp; Status</h3>
+      <div id="ffContractFeeDeadlineNote" role="note" style="margin:10px 0 14px;padding:13px 15px;background:#fff7ed;border:1px solid #fed7aa;border-left:5px solid #ea580c;border-radius:9px;color:#7c2d12;line-height:1.5;">
+        <strong>⚠ Registration Fee Payment Deadline:</strong> If your contract shows a KSh 200 registration fee as outstanding, please ensure it is paid <strong>no later than 31 December 2026</strong>. Members whose fee is already recorded as paid do not need to pay it again.
+      </div>
       <div id="ffMemberContractHistory"><p style="color:#64748b;">Your contract submissions will appear here.</p></div>
       <div id="ffMemberContractHistoryActions" style="display:flex;gap:10px;flex-wrap:wrap;margin:12px 0;"></div>
     </div>
@@ -9795,7 +9868,7 @@ document.addEventListener(
       <p id="ffMemberContractMessage" role="status" style="grid-column:1/-1;font-weight:700;margin:0;"></p>
     </form>
     </div>
-    <div id="ffMemberContractSignedActions" style="display:none;margin:12px 0;padding:14px;border:1px solid #bbf7d0;border-radius:10px;background:#f0fdf4;"><b>Contract signed and submitted.</b><p>Your signed contract opens in the official PDF print layout. Choose “Save as PDF” in the print window to save the contract. Attach the saved PDF in WhatsApp and press Send yourself. Admin will publish your status update to the website after review.</p><button type="button" onclick="downloadMySignedContract()" style="background:#075985;color:white;border:0;border-radius:9px;padding:12px 18px;font-weight:700;cursor:pointer;">⬇ Save Signed Contract as PDF</button> <button type="button" onclick="sendContractWhatsApp()" style="background:#16a34a;color:white;border:0;border-radius:9px;padding:12px 18px;font-weight:700;cursor:pointer;">🟢 Send via WhatsApp</button></div>
+    <div id="ffMemberContractSignedActions" style="display:none;margin:12px 0;padding:14px;border:1px solid #bbf7d0;border-radius:10px;background:#f0fdf4;"><b>Contract signed and submitted.</b><p>Your signed contract downloads directly as a PDF. Attach the downloaded PDF in WhatsApp and press Send yourself. Admin will publish your status update to the website after review.</p><button type="button" onclick="downloadMySignedContract()" style="background:#075985;color:white;border:0;border-radius:9px;padding:12px 18px;font-weight:700;cursor:pointer;">⬇ Download Signed Contract PDF</button> <button type="button" onclick="sendContractWhatsApp()" style="background:#16a34a;color:white;border:0;border-radius:9px;padding:12px 18px;font-weight:700;cursor:pointer;">🟢 Send via WhatsApp</button></div>
   </div>
 </div>
 <!-- 🚪 Member Logout -->
@@ -10734,7 +10807,7 @@ margin:10px 0;
       📊 Group Contributions for 2026
       <br>
       <span id="updateTime">
-        ⏱ Last updated on <b>06TH NOVEMBER  2026 AT 16:53 PM</b>
+        ⏱ Last updated on <b>11TH NOVEMBER  2026 AT 16:53 PM</b>
       </span>
     </h4>
 
@@ -10853,7 +10926,7 @@ margin:10px 0;
 <td><input type="number" value="480"></td>
 <td><input type="number" value="250"></td>
 <td><input type="number" value="820"></td>
-<td><input type="number" value="250"></td>
+<td><input type="number" value="450"></td>
 <td><input type="number" value="0"></td>
 <td class="rowTotal">0</td>
 <td class="saved2026">0</td>
@@ -10874,7 +10947,7 @@ margin:10px 0;
 <td><input type="number" value="400"></td>
 <td><input type="number" value="400"></td>
 <td><input type="number" value="400"></td>
-<td><input type="number" value="100"></td>
+<td><input type="number" value="200"></td>
 <td><input type="number" value="0"></td>
 <td class="rowTotal">0</td>
 <td class="saved2026">0</td>
@@ -10895,7 +10968,7 @@ margin:10px 0;
 <td><input type="number" value="0"></td>
 <td><input type="number" value="0"></td>
 <td><input type="number" value="100"></td>
-<td><input type="number" value="50"></td>
+<td><input type="number" value="100"></td>
 <td><input type="number" value="0"></td>
 <td class="rowTotal">0</td>
 <td class="saved2026">0</td>
@@ -10925,7 +10998,7 @@ margin:10px 0;
 </tr>
 
 <tr>
-<td>KEFHA MOMANYI</td>
+<td>KEPHA MOMANYI</td>
 <td><input type="number" value="960"></td>
 <td><input type="number" value="250"></td>
 <td><input type="number" value="500"></td>
@@ -10999,7 +11072,7 @@ margin:10px 0;
 <td><input type="number" value="0"></td>
 <td><input type="number" value="50"></td>
 <td><input type="number" value="138"></td>
-<td><input type="number" value="0"></td>
+<td><input type="number" value="100"></td>
 <td><input type="number" value="0"></td>
 <td class="rowTotal">0</td>
 <td class="saved2026">0</td>
@@ -11223,7 +11296,7 @@ margin:10px 0;
 <td><input type="number" value="0"></td>
 <td><input type="number" value="3000"></td>
 <td><input type="number" value="2500"></td>
-<td><input type="number" value="0"></td>
+<td><input type="number" value="1500"></td>
 <td><input type="number" value="0"></td>
 <td class="rowTotal">0</td>
 <td class="saved2026">0</td>
@@ -12712,7 +12785,26 @@ const members = {
     savings: 1100,
     monthly: [900, 200],
     note: "Missed March payment — follow up on consistency.",
-    contracts: [],
+    contracts: [
+      {
+        "id": "FFC-2026-7256390",
+        "member": "HILDA ODERO",
+        "type": "Membership Contract Renewal",
+        "participation": "Savings Only (No Merry-Go-Round)",
+        "feeCategory": "Registration fee outstanding — payable on 2027 renewal",
+        "contractFee": 200,
+        "registrationFeePaid": false,
+        "signatureName": "HILDA ODERO",
+        "signedAt": "11 November 2026 at 14:40 EAT",
+        "signedAtISO": "2026-11-11T14:40:00+03:00",
+        "adminStatus": "Approved / Active",
+        "startDate": "2027-01-01",
+        "expiryDate": "2027-12-31",
+        "adminNotes": "Approved by Admin for the 2027 membership year, effective 1 January 2027. Registration fee of KSh 200 remains outstanding and is payable on 2027 renewal.",
+        "createdAt": "2026-11-11T14:40:00+03:00",
+        "version": 2
+      }
+    ],
     loans: []
   },
 
@@ -12857,7 +12949,26 @@ const members = {
     monthly: [2022, 500, 300, 400, 400, 500],
     note: "Very reliable saver — possible leadership candidate. Fines: 30 as of 17th Nov 2025, paid 25.",
     fines: "",
-    contracts: [],
+    contracts: [
+      {
+        "id": "FFC-2026-7277460",
+        "member": "JULIUS KEBASO",
+        "type": "Membership Contract Renewal",
+        "participation": "Monthly chama plus weekly participation plus savings",
+        "feeCategory": "Registration fee outstanding — payable on 2027 renewal",
+        "contractFee": 200,
+        "registrationFeePaid": false,
+        "signatureName": "JULIUS KEBASO",
+        "signedAt": "11 November 2026 at 11:54 EAT",
+        "signedAtISO": "2026-11-11T11:54:00+03:00",
+        "adminStatus": "Approved / Active",
+        "startDate": "2027-01-01",
+        "expiryDate": "2027-12-31",
+        "adminNotes": "Approved by Admin for the 2027 membership year, effective 1 January 2027. Registration fee of KSh 200 remains outstanding and is payable on 2027 renewal.",
+        "createdAt": "2026-11-11T11:54:00+03:00",
+        "version": 2
+      }
+    ],
     loans: []
   },
 
@@ -12868,7 +12979,26 @@ const members = {
     monthly: [1000, 250, 200, 200, 200, 200, 100],
     note: "Missed several months; check commitment level.",
     fines: "",
-    contracts: [],
+    contracts: [
+      {
+        "id": "FFC-2026-9664717",
+        "member": "JACKIE NYARANGI",
+        "type": "Membership Contract Renewal",
+        "participation": "Weekly merry-go-round plus savings",
+        "feeCategory": "Registration fee outstanding — payable on 2027 renewal",
+        "contractFee": 200,
+        "registrationFeePaid": false,
+        "signatureName": "JACKIE NYARANGI",
+        "signedAt": "11 November 2026 at 09:47 EAT",
+        "signedAtISO": "2026-11-11T09:47:00+03:00",
+        "adminStatus": "Approved / Active",
+        "startDate": "2027-01-01",
+        "expiryDate": "2027-12-31",
+        "adminNotes": "Approved by Admin for the 2027 membership year, effective 1 January 2027. Registration fee of KSh 200 remains outstanding and is payable on 2027 renewal.",
+        "createdAt": "2026-11-11T09:47:00+03:00",
+        "version": 2
+      }
+    ],
     loans: []
   },
 
@@ -14229,10 +14359,14 @@ function initializeMemberSavingsSummaryForLogin() {
   const summaryButton = document.getElementById("memberLogSummaryBtn");
   const adviceButton = document.getElementById("toggleMemberSavingsAdviceBtn");
   const graphButton = document.getElementById("toggleMemberSavingsGraphBtn");
+  const loanSummary = document.getElementById("memberLoanSummarySection");
+  const loanSummaryButton = document.getElementById("toggleMemberLoanSummaryBtn");
 
   if (panel) panel.style.display = "none";
   if (advice) advice.style.display = "none";
   if (graph) graph.style.display = "none";
+  if (loanSummary) { loanSummary.style.display = "none"; loanSummary.innerHTML = ""; }
+  if (loanSummaryButton) loanSummaryButton.textContent = "💳 My Loan Summary";
   if (summaryButton) summaryButton.textContent = "📋 Summary ＋";
   if (adviceButton) adviceButton.textContent = "💡 Monthly Savings Recommendations";
   if (graphButton) graphButton.textContent = "📈 Show My Savings Graph";
@@ -14260,8 +14394,12 @@ function toggleMemberLogSummary() {
   if (!opening) {
     const advice = document.getElementById("memberSavingsAdviceSection");
     const graph = document.getElementById("memberSavingsGraphSection");
+    const loanSummary = document.getElementById("memberLoanSummarySection");
     if (advice) advice.style.display = "none";
     if (graph) graph.style.display = "none";
+    if (loanSummary) loanSummary.style.display = "none";
+    const loanSummaryButton = document.getElementById("toggleMemberLoanSummaryBtn");
+    if (loanSummaryButton) loanSummaryButton.textContent = "💳 My Loan Summary";
     const adviceButton = document.getElementById("toggleMemberSavingsAdviceBtn");
     const graphButton = document.getElementById("toggleMemberSavingsGraphBtn");
     if (adviceButton) adviceButton.textContent = "💡 Monthly Savings Recommendations";
@@ -14323,6 +14461,43 @@ function toggleMemberSavingsGraph() {
     section.style.display = "none";
   }
   button.textContent = opening ? "🙈 Hide My Savings Graph" : "📈 Show My Savings Graph";
+}
+
+function toggleMemberLoanSummary() {
+  const section = document.getElementById("memberLoanSummarySection");
+  const button = document.getElementById("toggleMemberLoanSummaryBtn");
+  const loanMessage = document.getElementById("loanMessage");
+  if (!section || !button) return;
+  const opening = section.style.display === "none" || !section.style.display;
+  if (!opening) {
+    section.style.display = "none";
+    button.textContent = "💳 My Loan Summary";
+    return;
+  }
+  if (!loggedInUser) {
+    alert("Please log in to view your loan summary.");
+    return;
+  }
+  if (!loanMessage) {
+    alert("Your loan summary is not available right now. Please try again.");
+    return;
+  }
+  const previousLoanMessage = loanMessage.innerHTML;
+  try {
+    // Reuse the exact member-specific calculation already used by My Loans.
+    showMyLoans({ summaryOnly: true });
+    const calculatedSummary = loanMessage.querySelector("#ffMemberLoanFinancialSummary");
+    if (!calculatedSummary) throw new Error("The loan summary could not be prepared.");
+    section.innerHTML = calculatedSummary.outerHTML;
+    section.style.display = "block";
+    button.textContent = "🙈 Hide My Loan Summary";
+  } catch (error) {
+    console.error("Member loan summary display error:", error);
+    alert(error.message || "Unable to display your loan summary.");
+  } finally {
+    // Do not disturb the member's separate My Loans screen.
+    loanMessage.innerHTML = previousLoanMessage;
+  }
 }
 
 function renderMemberSavingsRecommendations() {
@@ -21315,7 +21490,7 @@ function downloadMemberLoanReport(loan) {
     alert(error.message||"Unable to generate the loan report PDF.");
   }
 }
-function showMyLoans() {
+function showMyLoans(options = {}) {
   const name = loggedInUser || document.getElementById("memberDisplay")?.innerText?.trim();
   if (!name) {
     alert("Please log in to view your loans.");
@@ -21327,6 +21502,53 @@ function showMyLoans() {
 
   const loans = getMemberLoans(name);
   const activePrincipal = getOutstandingLoanPrincipal(name);
+  // Calculate this member's summary from the exact same loan rows used below
+  // to render the visible table. This avoids a second lookup that could return
+  // an empty list and leave the summary at zero.
+  const summaryLoans = loans.filter(loan => {
+    const status = String(loan.status || "").trim().toLowerCase();
+    return /approv|disburs|active|paid|clear|complete|settled/.test(status) &&
+      !/reject|declin|cancel|pending|awaiting|under review/.test(status);
+  });
+  const loanTotals = {
+    count: 0, principal: 0, interest: 0, expected: 0, received: 0,
+    principalRecovered: 0, interestReturned: 0, outstandingPrincipal: 0,
+    outstandingInterest: 0, outstanding: 0, penaltyCharged: 0,
+    penaltyPaid: 0, penaltyOutstanding: 0
+  };
+  summaryLoans.forEach(loan => {
+    const principal = Math.max(0, Number(loan.requestedAmount ?? loan.amount ?? loan.principal ?? 0) || 0);
+    if (!principal) return;
+    const expected = Math.max(principal, Number(loan.repaymentAmount ?? loan.totalRepayment ?? principal) || principal);
+    const interest = Math.max(0, expected - principal);
+    const penalty = Math.max(0, Number(loan.latePenalty ?? loan.penalty ?? 0) || 0);
+    const rawPaid = Math.max(0, Number(loan.amountPaid ?? loan.paid ?? 0) || 0);
+    // If the recorded paid figure exceeds the contractual repayment, treat
+    // the excess as penalty paid, not as principal or interest repayment.
+    const inferredPenaltyPaid = Math.min(penalty, Math.max(0, rawPaid - expected));
+    const penaltyPaid = Math.min(penalty, Math.max(0, Number(loan.penaltyPaid ?? loan.latePenaltyPaid ?? inferredPenaltyPaid) || 0));
+    const loanPaid = Math.min(expected, Math.max(0, rawPaid - penaltyPaid));
+    const principalPaid = expected > 0 ? Math.min(principal, loanPaid * (principal / expected)) : 0;
+    const interestPaid = Math.min(interest, Math.max(0, loanPaid - principalPaid));
+    const principalOwing = Math.max(0, principal - principalPaid);
+    const interestOwing = Math.max(0, interest - interestPaid);
+    loanTotals.count += 1;
+    loanTotals.principal += principal;
+    loanTotals.interest += interest;
+    loanTotals.expected += expected;
+    loanTotals.received += loanPaid;
+    loanTotals.principalRecovered += principalPaid;
+    loanTotals.interestReturned += interestPaid;
+    loanTotals.outstandingPrincipal += principalOwing;
+    loanTotals.outstandingInterest += interestOwing;
+    loanTotals.outstanding += Math.max(0, expected - loanPaid);
+    loanTotals.penaltyCharged += penalty;
+    loanTotals.penaltyPaid += penaltyPaid;
+    loanTotals.penaltyOutstanding += Math.max(0, penalty - penaltyPaid);
+  });
+  const summaryMoney = value => `KSh ${Number(value || 0).toLocaleString("en-KE", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+  const summaryCard = (label, value) => `<div style="padding:12px;border:1px solid #dbe4ec;border-radius:10px;background:#fff;min-width:0;"><div style="font-size:12px;color:#64748b;font-weight:700;">${label}</div><div style="font-size:18px;font-weight:800;color:#183b56;margin-top:5px;overflow-wrap:anywhere;">${value}</div></div>`;
+  const memberLoanSummaryHtml = `<section id="ffMemberLoanFinancialSummary" data-inline-calculated="true" style="display:block;width:100%;box-sizing:border-box;margin:16px 0;padding:16px;border:2px solid #16845b;border-radius:12px;background:#f1fbf5;clear:both;"><h3 style="display:block;margin:0 0 10px;color:#087f5b;font-size:20px;">📊 My Loan Financial Summary — ${String(name).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]))} <span style="font-size:12px;color:#64748b;">View-Only 🔒</span></h3><p style="font-size:13px;color:#52616b;margin:0 0 12px;">Automatically calculated from approved loan records entered under this member in the website code.</p><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;">${summaryCard('Total loans taken', loanTotals.count)}${summaryCard('Total principal borrowed', summaryMoney(loanTotals.principal))}${summaryCard('Total interest charged', summaryMoney(loanTotals.interest))}${summaryCard('Total repayment expected', summaryMoney(loanTotals.expected))}${summaryCard('Total repayments received', summaryMoney(loanTotals.received))}${summaryCard('Principal recovered', summaryMoney(loanTotals.principalRecovered))}${summaryCard('Interest returned', summaryMoney(loanTotals.interestReturned))}${summaryCard('Outstanding principal', summaryMoney(loanTotals.outstandingPrincipal))}${summaryCard('Outstanding interest', summaryMoney(loanTotals.outstandingInterest))}${summaryCard('Total outstanding balance', summaryMoney(loanTotals.outstanding))}</div><h4 style="margin:16px 0 8px;color:#087f5b;font-size:14px;">Late Penalties — Recorded Separately</h4><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;">${summaryCard('Late penalty charged', summaryMoney(loanTotals.penaltyCharged))}${summaryCard('Late penalty paid', summaryMoney(loanTotals.penaltyPaid))}${summaryCard('Outstanding late penalty', summaryMoney(loanTotals.penaltyOutstanding))}</div></section>`;
   const safe = value => String(value ?? "—")
     .replace(/&/g, "&amp;").replace(/</g, "&lt;")
     .replace(/>/g, "&gt;").replace(/"/g, "&quot;")
@@ -21382,6 +21604,10 @@ function showMyLoans() {
     </tr>`;
   }).join("");
 
+  if (options.summaryOnly) {
+    target.innerHTML = memberLoanSummaryHtml;
+    return;
+  }
   target.innerHTML = `<div style="margin:14px 0;padding:16px;border:1px solid #d6e4ee;border-radius:12px;background:#fff;">
     <h3 style="margin-top:0;color:#087f5b;">📋 My Loans — ${safe(name)}</h3>
     <p><b>Active approved loan principal:</b> ${money(activePrincipal)}</p>
@@ -21407,8 +21633,12 @@ function showMyLoans() {
           </table>
         </div>`
       : `<p style="color:#666;">No loan records found for you yet.</p>`}
+    ${memberLoanSummaryHtml}
     <p style="font-size:12px;color:#666;margin-bottom:0;">We encourage every member to repay loans on time so we can keep Future Finders Chama strong and ensure loan support remains available to members who need it. Please plan your repayments carefully and honour the agreed due dates. Late loan payments may attract penalties in accordance with the group’s loan rules. If you anticipate any difficulty making a payment on time, kindly contact the chama administrator early so the matter can be discussed.</p>
   </div>`;
+  // Render with the exact member name resolved inside this function. This
+  // avoids relying on login variables being exposed on the window object.
+  // Financial summary is calculated inline from this exact visible loan list.
   target.scrollIntoView({behavior:"smooth", block:"nearest"});
 }
 
@@ -22668,7 +22898,7 @@ async function downloadIndividualSavingsReportsPDF() {
     const toolbar=document.createElement('div');toolbar.className='ff-admin-toolbar';toolbar.setAttribute('aria-label','Administrator sections');
     const intro=document.createElement('p');intro.className='ff-admin-toolbar-label';intro.textContent='Choose a section below to view its tools and records. Close it when you are finished.';
     const definitions=[
-      {key:'summary',title:'📊 Dashboard Summary',selectors:['#adminSummary']},
+      {key:'summary',title:'📊 Dashboard Summary',selectors:['#adminSummary','#ffAdminLoanFinancialSummary']},
       {key:'notes',title:'🗒️ Members Notes',selectors:['#membersNotesPanel']},
       {key:'members',title:'👥 Members Overview',selectors:['#membersOverviewPanel']},
       {key:'loans',title:'📑 Loan Management & Applications',selectors:['h3.ff-mm-heading','#loanSearch','#loanStatusFilter','button.ff-export-loans','h3.ff-loan-heading','table.ff-loan-table']},
@@ -22703,7 +22933,7 @@ async function downloadIndividualSavingsReportsPDF() {
     const check=admin.querySelector('#sendWhatsAppUpdate');if(check&&check.closest('label'))check.closest('label').classList.add('ff-whatsapp-label');
     const history=admin.querySelector('#updateHistoryBody')?.closest('div');if(history)history.classList.add('ff-update-history');
     function move(selector,target){const el=admin.querySelector(selector);if(el&&target&&!el.closest('.ff-admin-content'))target.appendChild(el);}
-    move('#adminSummary',cards.summary.content);move('#membersNotesPanel',cards.notes.content);
+    move('#adminSummary',cards.summary.content);move('#ffAdminLoanFinancialSummary',cards.summary.content);move('#membersNotesPanel',cards.notes.content);
     // Extract contracts before moving Members Overview, because the contract panel can be nested inside it.
     move('#memberContractsAdminPanel',cards.contracts.content);move('#membersOverviewPanel',cards.members.content);move('#pendingMembersPanel',cards.registrations.content);
     // Contract panel recovery: ensure the real panel is inside the review accordion and visible.
@@ -22852,9 +23082,9 @@ async function downloadIndividualSavingsReportsPDF() {
     if(!rows.length){host.innerHTML='<p style="color:#64748b;">No contract history yet. Start by completing your membership contract.</p>';if(actions)actions.innerHTML='<button type="button" onclick="startNewMemberContract()" style="padding:11px 16px;border:0;border-radius:9px;background:#087f5b;color:white;font-weight:700;cursor:pointer;">＋ Complete Contract Form</button>';return;}
     const latest=rows[0];
     const latestApproved=String(status(latest)).toLowerCase().includes('approved')||String(status(latest)).toLowerCase().includes('active');
-    const approvalWelcome=latestApproved?'<div role="status" aria-live="polite" style="display:flex;align-items:center;gap:10px;padding:12px 14px;margin:10px 0 14px;border:1px solid #86efac;border-left:4px solid #16a34a;border-radius:10px;background:linear-gradient(90deg,#f0fdf4,#ffffff);color:#166534;box-shadow:0 2px 8px rgba(22,101,52,.08);"><span style="font-size:22px;">🎉</span><div><strong style="display:block;font-size:14px;">Congratulations! Your contract has been approved.</strong><span style="font-size:12px;color:#3f6212;">Your membership contract is approved and active. You can view or print your contract history below.</span></div></div>':'';
-    host.innerHTML=approvalWelcome+rows.map(c=>{const pending=isPending(c);const approved=String(status(c)).toLowerCase().includes('approved')||String(status(c)).toLowerCase().includes('active');return `<div style="border:1px solid ${approved?'#86efac':'#cbd5e1'};border-radius:10px;padding:13px;margin:9px 0;background:${approved?'#f0fdf4':'#fff'};"><b>Reference:</b> ${esc(c.id)}<br><b>Type:</b> ${esc(c.type)}<br><b>Participation:</b> ${esc(c.participation)}<br><b>Fee:</b> KSh ${Number(c.contractFee||0).toLocaleString('en-KE')} — ${esc(c.feeCategory||'Not recorded')}<br><b>Submitted/signed:</b> ${esc(c.signedAt)}<br><b>Status:</b> <span style="font-weight:700;color:${approved?'#15803d':pending?'#92400e':'#b91c1c'}">${esc(status(c))}</span><br><b>Start date:</b> ${esc(fmtDate(c.startDate))}<br><b>Expiry/renewal:</b> ${esc(fmtDate(c.expiryDate))}${c.adminNotes?`<br><b>Admin notes:</b> ${esc(c.adminNotes)}`:''}<div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;"><button type="button" onclick="downloadContractById('${esc(c.id)}')" style="padding:7px 10px;cursor:pointer;">Download PDF</button>${pending&&c.id===latest.id?`<button type="button" onclick="editMyContract('${esc(c.id)}')" style="padding:7px 12px;background:#075985;color:white;border:0;border-radius:7px;cursor:pointer;font-weight:700;">✏️ Edit Contract</button>`:''}</div></div>`;}).join('');
-    if(actions){if(isPending(latest)){actions.innerHTML='<span style="color:#92400e;font-weight:700;">Your contract is awaiting review. You may edit it until Admin approves it.</span>';}else if(String(status(latest)).toLowerCase().includes('rejected')){actions.innerHTML='<button type="button" onclick="startNewMemberContract()" style="padding:11px 16px;border:0;border-radius:9px;background:#087f5b;color:white;font-weight:700;cursor:pointer;">＋ Submit a New Contract</button>';}else{actions.innerHTML='<span style="color:#15803d;font-weight:700;">🔒 Approved contract — locked. You can view or print your history, but editing is disabled.</span>';}}
+    const approvalWelcome=latestApproved?'<div role="status" aria-live="polite" style="display:flex;align-items:center;gap:10px;padding:12px 14px;margin:10px 0 14px;border:1px solid #86efac;border-left:4px solid #16a34a;border-radius:10px;background:linear-gradient(90deg,#f0fdf4,#ffffff);color:#166534;box-shadow:0 2px 8px rgba(22,101,52,.08);"><span style="font-size:22px;">🎉</span><div><strong style="display:block;font-size:14px;">Congratulations! Your contract has been approved.</strong><span style="font-size:12px;color:#3f6212;">Your membership contract is approved and active. You can view or download your contract history below.</span></div></div>':'';
+    host.innerHTML=approvalWelcome+rows.map(c=>{const pending=isPending(c);const approved=String(status(c)).toLowerCase().includes('approved')||String(status(c)).toLowerCase().includes('active');return `<div style="border:1px solid ${approved?'#86efac':'#cbd5e1'};border-radius:10px;padding:13px;margin:9px 0;background:${approved?'#f0fdf4':'#fff'};"><b>Reference:</b> ${esc(c.id)}<br><b>Type:</b> ${esc(c.type)}<br><b>Participation:</b> ${esc(c.participation)}<br><b>Fee:</b> KSh ${Number(c.contractFee||0).toLocaleString('en-KE')} — ${esc(c.feeCategory||'Not recorded')}<br><b>Submitted/signed:</b> ${esc(c.signedAt)}<br><b>Status:</b> <span style="font-weight:700;color:${approved?'#15803d':pending?'#92400e':'#b91c1c'}">${esc(status(c))}</span><br><b>Start date:</b> ${esc(fmtDate(c.startDate))}<br><b>Expiry/renewal:</b> ${esc(fmtDate(c.expiryDate))}${c.adminNotes?`<br><b>Admin notes:</b> ${esc(c.adminNotes)}`:''}<div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;"><button type="button" aria-label="Download contract PDF" title="Download contract PDF" onclick="downloadContractById('${esc(c.id)}')" style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border:0;border-radius:8px;background:#e0f2fe;color:#075985;font-size:18px;font-weight:800;cursor:pointer;">⬇</button>${pending&&c.id===latest.id?`<button type="button" onclick="editMyContract('${esc(c.id)}')" style="padding:7px 12px;background:#075985;color:white;border:0;border-radius:7px;cursor:pointer;font-weight:700;">✏️ Edit Contract</button>`:''}</div></div>`;}).join('');
+    if(actions){if(isPending(latest)){actions.innerHTML='<span style="color:#92400e;font-weight:700;">Your contract is awaiting review. You may edit it until Admin approves it.</span>';}else if(String(status(latest)).toLowerCase().includes('rejected')){actions.innerHTML='<button type="button" onclick="startNewMemberContract()" style="padding:11px 16px;border:0;border-radius:9px;background:#087f5b;color:white;font-weight:700;cursor:pointer;">＋ Submit a New Contract</button>';}else{actions.innerHTML='<span style="color:#15803d;font-weight:700;">🔒 Approved contract — locked. You can view or download your history, but editing is disabled.</span>';}}
   }
 
   function renderAdmin(){
@@ -22868,8 +23098,10 @@ async function downloadIndividualSavingsReportsPDF() {
     const cell='padding:12px;border-bottom:1px solid #e2e8f0;vertical-align:top;white-space:normal;overflow-wrap:anywhere;';
     tbody.innerHTML=rows.map((c,index)=>{
       const editable=isPending(c);const dis=editable?'':'disabled';
-      const feeText=`KSh ${Number(c.contractFee||0).toLocaleString('en-KE')} — ${esc(c.feeCategory||'Payment status not recorded')}`;
-      return `<tr style="background:${index%2?'#f8fafc':'#ffffff'};"><td style="${cell}font-weight:800;text-align:center;">${index+1}</td><td style="${cell}min-width:190px;"><strong>${esc(c.member)}</strong><br><span style="font-size:12px;color:#475569;">${esc(c.id)}</span></td><td style="${cell}min-width:180px;">${esc(c.type||'Not recorded')}</td><td style="${cell}min-width:230px;">${esc(c.participation||'Not recorded')}</td><td style="${cell}min-width:190px;">${feeText}</td><td style="${cell}min-width:190px;">${esc(c.signedAt||c.createdAt||'Not recorded')}</td><td style="${cell}min-width:190px;"><select id="ff-status-${esc(c.id)}" ${dis} style="width:100%;min-width:170px;box-sizing:border-box;padding:9px;border:1px solid #94a3b8;border-radius:6px;background:#fff;">${['Submitted — Awaiting Admin Review','Under Review','Approved / Active','Pending Correction','Rejected','Renewal Due','Expired'].map(v=>`<option ${status(c)===v?'selected':''}>${v}</option>`).join('')}</select></td><td style="${cell}min-width:130px;"><input id="ff-start-${esc(c.id)}" type="date" value="${esc(c.startDate||'')}" ${dis} style="width:100%;min-width:125px;box-sizing:border-box;padding:8px;"></td><td style="${cell}min-width:140px;"><input id="ff-expiry-${esc(c.id)}" type="date" value="${esc(c.expiryDate||'')}" ${dis} style="width:100%;min-width:130px;box-sizing:border-box;padding:8px;"></td><td style="${cell}min-width:220px;"><textarea id="ff-notes-${esc(c.id)}" rows="3" ${dis} style="width:100%;min-width:200px;box-sizing:border-box;padding:8px;white-space:pre-wrap;">${esc(c.adminNotes||'')}</textarea></td><td style="${cell}min-width:130px;white-space:nowrap;">${editable?`<button type="button" onclick="saveAdminContractStatus('${esc(c.id)}')" style="display:block;margin-bottom:7px;padding:9px 11px;cursor:pointer;">Save update</button>`:'<span style="display:block;color:#64748b;font-size:12px;margin-bottom:7px;">Locked</span>'}<button type="button" onclick="downloadContractById('${esc(c.id)}')" style="padding:9px 11px;cursor:pointer;">Download PDF</button></td></tr>`;
+      const feeOutstanding=c.registrationFeePaid===false||/outstanding/i.test(String(c.feeCategory||''));
+      const feeText=`KSh ${Number(c.contractFee||0).toLocaleString('en-KE')} — ${esc(c.feeCategory||'Payment status not recorded')}${feeOutstanding?'<br><span style="display:inline-block;margin-top:5px;padding:3px 7px;border-radius:999px;background:#fff7ed;color:#9a3412;font-size:11px;font-weight:800;">⚠ Fee outstanding</span>':''}`;
+      let expiryFlag='';if(c.expiryDate){const today=new Date();today.setHours(0,0,0,0);const expiry=new Date(c.expiryDate+'T00:00:00');if(!isNaN(expiry)){const days=Math.ceil((expiry-today)/86400000);if(days<0)expiryFlag='<br><span style="display:inline-block;margin-top:5px;padding:3px 7px;border-radius:999px;background:#fee2e2;color:#991b1b;font-size:11px;font-weight:800;">Expired</span>';else if(days<=60)expiryFlag=`<br><span style="display:inline-block;margin-top:5px;padding:3px 7px;border-radius:999px;background:#fef3c7;color:#92400e;font-size:11px;font-weight:800;">Renewal due in ${days} day(s)</span>`;}}
+      return `<tr style="background:${index%2?'#f8fafc':'#ffffff'};"><td style="${cell}font-weight:800;text-align:center;">${index+1}</td><td style="${cell}min-width:190px;"><strong>${esc(c.member)}</strong><br><span style="font-size:12px;color:#475569;">${esc(c.id)}</span></td><td style="${cell}min-width:180px;">${esc(c.type||'Not recorded')}</td><td style="${cell}min-width:230px;">${esc(c.participation||'Not recorded')}</td><td style="${cell}min-width:190px;">${feeText}</td><td style="${cell}min-width:190px;">${esc(c.signedAt||c.createdAt||'Not recorded')}</td><td style="${cell}min-width:190px;"><select id="ff-status-${esc(c.id)}" ${dis} style="width:100%;min-width:170px;box-sizing:border-box;padding:9px;border:1px solid #94a3b8;border-radius:6px;background:#fff;">${['Submitted — Awaiting Admin Review','Under Review','Approved / Active','Pending Correction','Rejected','Renewal Due','Expired'].map(v=>`<option ${status(c)===v?'selected':''}>${v}</option>`).join('')}</select></td><td style="${cell}min-width:130px;"><input id="ff-start-${esc(c.id)}" type="date" value="${esc(c.startDate||'')}" ${dis} style="width:100%;min-width:125px;box-sizing:border-box;padding:8px;"></td><td style="${cell}min-width:140px;"><input id="ff-expiry-${esc(c.id)}" type="date" value="${esc(c.expiryDate||'')}" ${dis} style="width:100%;min-width:130px;box-sizing:border-box;padding:8px;">${expiryFlag}</td><td style="${cell}min-width:220px;"><textarea id="ff-notes-${esc(c.id)}" rows="3" ${dis} style="width:100%;min-width:200px;box-sizing:border-box;padding:8px;white-space:pre-wrap;">${esc(c.adminNotes||'')}</textarea></td><td style="${cell}min-width:130px;white-space:nowrap;">${editable?`<button type="button" onclick="saveAdminContractStatus('${esc(c.id)}')" style="display:block;margin-bottom:7px;padding:9px 11px;cursor:pointer;">Save update</button>`:'<span style="display:block;color:#64748b;font-size:12px;margin-bottom:7px;">Locked</span>'}<button type="button" aria-label="Download contract PDF for ${esc(c.member)}" title="Download contract PDF" onclick="downloadContractById('${esc(c.id)}')" style="display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border:0;border-radius:8px;background:#e0f2fe;color:#075985;font-size:19px;font-weight:800;cursor:pointer;" onmouseover="this.style.background='#bae6fd'" onmouseout="this.style.background='#e0f2fe'">⬇</button></td></tr>`;
     }).join('');
   }
 
@@ -22924,9 +23156,9 @@ async function downloadIndividualSavingsReportsPDF() {
   window.openMyContract=function(){const name=currentName();if(!name){alert('Please log in to your member account first.');return;}byId('ffContractMemberName').value=name;ffEditingContractId=null;byId('ffContractPreviewWrap').style.display='none';ffContractPreviewReady=false;byId('ffMemberContractMessage').textContent='';byId('ffMemberContractSignedActions').style.display='none';setContractFormLocked(false);const own=getContracts().filter(c=>String(c.member).toLowerCase()===String(name).toLowerCase()).sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''));renderMemberHistory(name);if(own.length){showHistoryView();const latest=own[0];if(isPending(latest)){byId('ffMemberContractMessage').textContent='Your contract is awaiting Admin review. Use Edit Contract in the history if you need to make corrections.';}else if(String(status(latest)).toLowerCase().includes('approved')||String(status(latest)).toLowerCase().includes('active')){setContractFormLocked(true);}}else{startNewMemberContract();}byId('ffMemberContractModal').style.display='block';document.body.style.overflow='hidden';}
     window.closeMyContract=function(){byId('ffMemberContractModal').style.display='none';document.body.style.overflow='';};
   ['ffContractMemberType','ffContractParticipation','ffContractTypedSignature'].forEach(id=>{document.addEventListener('DOMContentLoaded',()=>{const el=byId(id);if(el)el.addEventListener(id==='ffContractTypedSignature'?'input':'change',invalidateContractPreview);});});
-  window.submitMemberContract=function(ev){ev.preventDefault();const name=currentName();if(!name){alert('Please log in first.');return;}const all=getContracts();const own=all.filter(x=>String(x.member).toLowerCase()===String(name).toLowerCase()).sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''));const latest=own[0];if(ffEditingContractId){const existing=all.find(x=>String(x.id)===String(ffEditingContractId)&&String(x.member).toLowerCase()===String(name).toLowerCase());if(!existing||!isPending(existing)){byId('ffMemberContractMessage').textContent='This contract is no longer pending and cannot be edited. Approved and rejected contracts are locked.';byId('ffMemberContractMessage').style.color='#b91c1c';setContractFormLocked(true);return;}}else if(latest&&!String(status(latest)).toLowerCase().includes('rejected')){byId('ffMemberContractMessage').textContent='You already have a contract that is not rejected. Only a pending contract can be edited; an approved contract is locked.';byId('ffMemberContractMessage').style.color='#b91c1c';return;}if(byId('ffContractMemberType').value==='Membership Contract Renewal'&&!byId('ffContractFeePaid').value){byId('ffMemberContractMessage').textContent='Please indicate whether you previously paid the Chama registration fee.';byId('ffMemberContractMessage').style.color='#b91c1c';byId('ffContractFeePaid').focus();return;}if(!ffContractPreviewReady||!byId('ffContractPreviewAcceptance').checked){byId('ffMemberContractMessage').textContent='Please view the full contract and confirm that you reviewed it before signing.';byId('ffMemberContractMessage').style.color='#b91c1c';byId('ffContractPreviewWrap').style.display='block';return;}const signature=byId('ffContractTypedSignature').value.trim();if(signature.toLowerCase()!==name.toLowerCase()){byId('ffMemberContractMessage').textContent='Please type your full member name exactly as shown on your account.';byId('ffMemberContractMessage').style.color='#b91c1c';return;}const now=new Date();const signedAt=now.toLocaleString('en-KE',{timeZone:'Africa/Nairobi',dateStyle:'long',timeStyle:'short'});const fee=getSelectedContractFee();if(!fee){byId('ffMemberContractMessage').textContent='Please complete the registration-fee question before signing.';byId('ffMemberContractMessage').style.color='#b91c1c';return;}const base={member:name,type:byId('ffContractMemberType').value,...fee,participation:byId('ffContractParticipation').value,signatureName:signature,signedAt,signedAtISO:now.toISOString(),adminStatus:'Submitted — Awaiting Admin Review',startDate:'',expiryDate:'',adminNotes:'',version:2};let c;if(ffEditingContractId){const i=all.findIndex(x=>String(x.id)===String(ffEditingContractId)&&String(x.member).toLowerCase()===String(name).toLowerCase());c={...all[i],...base,lastEditedAt:now.toISOString(),version:(Number(all[i].version)||2)+1};all[i]=c;}else{const id='FFC-'+now.getFullYear()+'-'+now.getTime().toString().slice(-7);c={id,...base,createdAt:now.toISOString()};all.push(c);}putContracts(all);ffEditingContractId=c.id;byId('ffMemberContractMessage').textContent='Contract saved and submitted for review. '+(c.lastEditedAt?'Your pending contract was updated; no duplicate contract was created. ':'A new contract record was created. The previous rejected record remains in your history.')+'Your signed contract is opening in the PDF save window now. Send that PDF to Admin on WhatsApp for review.';byId('ffMemberContractMessage').style.color='#087f5b';byId('ffMemberContractSignedActions').style.display='block';byId('ffContractSubmitBtn').textContent='✍️ Save Edits & Resubmit Contract';renderMemberHistory(name);renderAdmin();byId('ffMemberContractSignedActions').style.display='none';showHistoryView();downloadPDF(c);};
+  window.submitMemberContract=function(ev){ev.preventDefault();const name=currentName();if(!name){alert('Please log in first.');return;}const all=getContracts();const own=all.filter(x=>String(x.member).toLowerCase()===String(name).toLowerCase()).sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''));const latest=own[0];if(ffEditingContractId){const existing=all.find(x=>String(x.id)===String(ffEditingContractId)&&String(x.member).toLowerCase()===String(name).toLowerCase());if(!existing||!isPending(existing)){byId('ffMemberContractMessage').textContent='This contract is no longer pending and cannot be edited. Approved and rejected contracts are locked.';byId('ffMemberContractMessage').style.color='#b91c1c';setContractFormLocked(true);return;}}else if(latest&&!String(status(latest)).toLowerCase().includes('rejected')){byId('ffMemberContractMessage').textContent='You already have a contract that is not rejected. Only a pending contract can be edited; an approved contract is locked.';byId('ffMemberContractMessage').style.color='#b91c1c';return;}if(byId('ffContractMemberType').value==='Membership Contract Renewal'&&!byId('ffContractFeePaid').value){byId('ffMemberContractMessage').textContent='Please indicate whether you previously paid the Chama registration fee.';byId('ffMemberContractMessage').style.color='#b91c1c';byId('ffContractFeePaid').focus();return;}if(!ffContractPreviewReady||!byId('ffContractPreviewAcceptance').checked){byId('ffMemberContractMessage').textContent='Please view the full contract and confirm that you reviewed it before signing.';byId('ffMemberContractMessage').style.color='#b91c1c';byId('ffContractPreviewWrap').style.display='block';return;}const signature=byId('ffContractTypedSignature').value.trim();if(signature.toLowerCase()!==name.toLowerCase()){byId('ffMemberContractMessage').textContent='Please type your full member name exactly as shown on your account.';byId('ffMemberContractMessage').style.color='#b91c1c';return;}const now=new Date();const signedAt=now.toLocaleString('en-KE',{timeZone:'Africa/Nairobi',dateStyle:'long',timeStyle:'short'});const fee=getSelectedContractFee();if(!fee){byId('ffMemberContractMessage').textContent='Please complete the registration-fee question before signing.';byId('ffMemberContractMessage').style.color='#b91c1c';return;}const base={member:name,type:byId('ffContractMemberType').value,...fee,participation:byId('ffContractParticipation').value,signatureName:signature,signedAt,signedAtISO:now.toISOString(),adminStatus:'Submitted — Awaiting Admin Review',startDate:'',expiryDate:'',adminNotes:'',version:2};let c;if(ffEditingContractId){const i=all.findIndex(x=>String(x.id)===String(ffEditingContractId)&&String(x.member).toLowerCase()===String(name).toLowerCase());c={...all[i],...base,lastEditedAt:now.toISOString(),version:(Number(all[i].version)||2)+1};all[i]=c;}else{const id='FFC-'+now.getFullYear()+'-'+now.getTime().toString().slice(-7);c={id,...base,createdAt:now.toISOString()};all.push(c);}putContracts(all);ffEditingContractId=c.id;byId('ffMemberContractMessage').textContent='Contract saved and submitted for review. '+(c.lastEditedAt?'Your pending contract was updated; no duplicate contract was created. ':'A new contract record was created. The previous rejected record remains in your history.')+'Your signed contract PDF is downloading now. Send that PDF to Admin on WhatsApp for review.';byId('ffMemberContractMessage').style.color='#087f5b';byId('ffMemberContractSignedActions').style.display='block';byId('ffContractSubmitBtn').textContent='✍️ Save Edits & Resubmit Contract';renderMemberHistory(name);renderAdmin();byId('ffMemberContractSignedActions').style.display='none';showHistoryView();downloadPDF(c);};
   window.saveAdminContractStatus=function(id){const all=getContracts();const i=all.findIndex(c=>c.id===id);if(i<0){alert('Contract record not found.');return;}if(!isPending(all[i])){alert('This contract is locked because it is no longer pending. Approved and rejected records cannot be edited.');renderAdmin();return;}const start=byId('ff-start-'+id).value;const expiry=byId('ff-expiry-'+id).value;if(start&&expiry&&expiry<start){alert('Expiry/renewal date cannot be earlier than the start date.');return;}all[i].adminStatus=byId('ff-status-'+id).value;all[i].startDate=start;all[i].expiryDate=expiry;all[i].adminNotes=byId('ff-notes-'+id).value.trim();all[i].adminUpdatedAt=new Date().toISOString();putContracts(all);renderAdmin();renderMemberHistory(currentName());const msg=byId('ffAdminContractMessage');if(msg){msg.textContent='Review update saved in this browser. Once a contract is approved or rejected, its record is locked. To publish the update for every member, copy this contract record into the matching members["MEMBER NAME"].contracts array in index.html and redeploy the website.';msg.style.color='#087f5b';}};
-  function downloadPDF(c){
+  async function downloadPDF(c){
     // Use the browser's native print-to-PDF engine so the saved PDF preserves
     // the exact HTML/CSS contract layout (logo, borders, watermark, stamp and pagination).
     // Canvas-based html2pdf was distorting images and page breaks on some members' contracts.
@@ -23047,9 +23279,32 @@ async function downloadIndividualSavingsReportsPDF() {
  function saveRows(rows){localStorage.setItem(STORE,JSON.stringify(rows));try{if(typeof members!=='undefined'&&members){Object.keys(members).forEach(n=>members[n].exits=[]);rows.forEach(r=>{const key=Object.keys(members).find(n=>n.toLowerCase()===String(r.member||'').toLowerCase());if(key){if(!Array.isArray(members[key].exits))members[key].exits=[];members[key].exits.push({...r});}});}}catch(e){}}
  function latestFor(name){return getRows().filter(r=>String(r.member).toLowerCase()===String(name).toLowerCase()).sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''))[0];}
  function docHtml(r){const amount=n=>'KSh '+Number(n||0).toLocaleString('en-KE',{minimumFractionDigits:2,maximumFractionDigits:2});return `<div style="font-family:Arial,sans-serif;color:#1f2937;font-size:13px;line-height:1.55;border:3px double #56328a;padding:22px;position:relative;"><div style="border:1px solid #c6a75e;padding:5px;"><header style="text-align:center;border-bottom:2px solid #56328a;padding-bottom:12px;margin-bottom:14px;"><img src="https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/FUTURE%20FINDERS%20LOGO.jpeg" style="width:78px;height:78px;object-fit:contain" onerror="this.style.display='none'"><div style="letter-spacing:2px;color:#8a6b24;font-weight:bold;font-size:10px;">OFFICIAL MEMBERSHIP NOTICE</div><h1 style="color:#56328a;margin:6px 0;font-size:21px;">FUTURE FINDERS CHAMA GROUP</h1><h2 style="font-size:16px;margin:5px 0;">MEMBERSHIP WITHDRAWAL & EXIT NOTICE</h2><div>Constitutional basis: Article 11 — Membership Exit, Suspension and Termination</div></header><p><b>Exit Notice Reference:</b> ${esc(r.id)} &nbsp; <b>Current status:</b> ${esc(r.status||'Notice Submitted')}</p><h3 style="color:#56328a;border-bottom:1px solid #ddd;padding-bottom:4px;">1. Member and notice details</h3><table style="width:100%;border-collapse:collapse"><tr><td style="padding:5px;border:1px solid #ddd"><b>Full name</b><br>${esc(r.member)}</td><td style="padding:5px;border:1px solid #ddd"><b>Membership number</b><br>${esc(r.membershipNo||'Not provided')}</td></tr><tr><td style="padding:5px;border:1px solid #ddd"><b>Registered phone</b><br>${esc(r.phone||'Not recorded')}</td><td style="padding:5px;border:1px solid #ddd"><b>Existing contract reference</b><br>${esc(r.contractRef||'Not provided')}</td></tr><tr><td style="padding:5px;border:1px solid #ddd"><b>Notice submitted</b><br>${esc(fmt(r.noticeDate))}</td><td style="padding:5px;border:1px solid #ddd"><b>Intended exit date</b><br>${esc(fmt(r.intendedExitDate))}</td></tr></table><h3 style="color:#56328a;border-bottom:1px solid #ddd;padding-bottom:4px;">2. Reason and explanation</h3><p><b>Reason:</b> ${esc(r.reason)}</p><p>${esc(r.explanation||'No additional explanation provided.')}</p><h3 style="color:#56328a;border-bottom:1px solid #ddd;padding-bottom:4px;">3. Constitutional explanations acknowledged by the member</h3><ul><li>This is a written voluntary withdrawal notice requiring at least thirty (30) days' notice before the intended exit date (Article 11.1).</li><li>Submission does not itself approve or immediately complete withdrawal, terminate all obligations, or automatically cancel pending matters.</li><li>The Chama reviews savings, contributions, loans, repayments, penalties and other obligations during the notice period. Reconciliation is to be completed within thirty (30) days after the notice period ends (Article 11.2).</li><li>Eligible savings mean verified accumulated personal savings. Merry-Go-Round and welfare contributions are treated separately. Registration fees, properly applied fines, penalties and charges are not refundable savings (Article 11.3).</li><li>Any settlement is calculated from official records: eligible personal savings plus approved amounts due, less outstanding obligations and lawful deductions. No specific refund is guaranteed by this notice.</li><li>Withdrawal does not cancel outstanding loans, contributions, penalties, guarantees or other financial obligations (Article 11.1 and 11.7).</li><li>A pending dispute or disciplinary matter is not automatically cancelled by withdrawal; final settlement may be deferred where necessary (Article 11.10).</li><li>Temporary suspension from activities or benefits is not the same as ending membership (Articles 11.4–11.5).</li><li>Disciplinary termination is not requested through this voluntary form. It must follow the constitutional disciplinary and decision-making process, give the member a reasonable opportunity to respond and preserve applicable appeal rights (Article 11.6 and Article 10).</li><li>A former member may apply for re-admission, but re-admission and restoration of previous privileges are not automatic; outstanding previous obligations must be addressed (Article 11.8).</li><li>If a member dies, the Chama separately reconciles the member's financial affairs with the lawful representative of the estate; this withdrawal form is not a death-claim form (Article 11.9).</li><li>Membership and financial-clearance records must be maintained securely, confidentially and accurately (Article 11.11).</li><li>The Chama will update the official membership register to reflect the effective date and nature of exit when the process is completed (Article 11.12).</li><li>All withdrawal, suspension, termination and re-admission matters must follow Article 11 and other applicable constitutional provisions (Article 11.13).</li></ul><h3 style="color:#56328a;border-bottom:1px solid #ddd;padding-bottom:4px;">4. Member declaration and digital signature</h3><p>I, <b>${esc(r.member)}</b>, voluntarily give written notice of withdrawal from Future Finders Chama Group. I confirm that the details provided are accurate and that I have read and understood the explanations above and Article 11 of the Constitution. I understand that this notice does not immediately complete my exit or release me from any outstanding obligation.</p><p><b>Digital signature:</b> ${esc(r.signature)}</p><p><b>Date and time signed:</b> ${esc(r.signedAt)}</p><h3 style="color:#56328a;border-bottom:1px solid #ddd;padding-bottom:4px;">5. Administrative reconciliation — to be completed by the Chama</h3><p>Eligible personal savings: ${amount(r.eligibleSavings)} &nbsp; | &nbsp; Approved amounts due: ${amount(r.approvedDue)}<br>Outstanding obligations / lawful deductions: ${amount(r.obligations)}<br><b>Net settlement recorded (positive = payable to member; negative = amount still owed to Chama):</b> ${amount(r.settlement)}</p><p>Admin remarks: ${esc(r.adminRemarks||'Pending administrative review')}<br>Chairlady remarks: ${esc(r.chairladyRemarks||'Pending confirmation / oversight')}<br>Reconciliation completed: ${esc(fmt(r.reconciliationDate))}<br>Expected settlement date: ${esc(fmt(r.expectedSettlementDate))}<br>Actual settlement date: ${esc(fmt(r.settlementDate))}<br>Effective exit date recorded: ${esc(fmt(r.effectiveExitDate))}</p><div style="border-top:1px solid #c6a75e;margin-top:18px;padding-top:10px;text-align:center;font-size:10px;color:#64748b;">This notice is governed by the Future Finders Chama Group Constitution. In case of conflict, the Constitution prevails.<br><b style="color:#56328a;">FUTURE FINDERS CHAMA GROUP</b></div></div></div>`;}
- function printRecord(r){const w=window.open('','_blank');if(!w){alert('Please allow pop-ups to download or print your signed notice.');return;}w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>${esc(r.id)} - Withdrawal Notice</title><style>@page{size:A4;margin:14mm}body{margin:0;padding:8px}button{padding:10px 16px;margin:12px 0;background:#56328a;color:#fff;border:0;border-radius:6px}@media print{button{display:none}}</style></head><body><button onclick="window.print()">Print / Save as PDF</button>${docHtml(r)}<script>window.onload=()=>setTimeout(()=>window.print(),500)<\\/script>
+ function printRecord(r){
+  const w=window.open('','_blank');
+  if(!w){alert('Please allow pop-ups to download or print your signed notice.');return;}
+  w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>${esc(r.id)} - Withdrawal Notice</title><style>@page{size:A4;margin:14mm}body{margin:0;padding:8px;font-family:Arial,sans-serif}button{padding:10px 16px;margin:12px 0;background:#56328a;color:#fff;border:0;border-radius:6px;cursor:pointer}@media print{button{display:none}}</style></head><body><button onclick="window.print()">Print / Save as PDF</button>${docHtml(r)}<script>window.onload=()=>setTimeout(()=>window.print(),500)<\/script></body></html>`);
+  w.document.close();
+ }
 
 
+
+
+
+ function preview(){const name=currentName();if(!name){alert('Please log in to your member account first.');return;}const sig=$('ffExitSignature').value.trim();if(sig.toLowerCase()!==name.toLowerCase()){alert('Type your full name exactly as shown in your member account before previewing.');return;}const intended=$('ffExitIntendedDate').value;if(!intended||intended<addDays(today(),30)){alert('The intended exit date must be at least 30 days after the notice date.');return;}const r={id:'FFC-EXIT-PREVIEW',member:name,membershipNo:$('ffExitMembershipNo').value,phone:$('ffExitPhone').value,contractRef:$('ffExitContractRef').value,noticeDate:today(),intendedExitDate:intended,reason:$('ffExitReason').value,explanation:$('ffExitExplanation').value,signature:sig,signedAt:'Recorded automatically upon submission',status:'Preview only'};$('ffExitPreview').innerHTML=docHtml(r);$('ffExitPreviewWrap').style.display='block';$('ffExitPreviewAck').checked=false;}
+ window.openMemberExitForm=function(){const name=currentName();if(!name){alert('Please log in to your member account first.');return;}const member=(typeof members!=='undefined'&&members)?members[name]:null;$('ffExitMemberName').value=name;$('ffExitPhone').value=member?.phone||'';$('ffExitNoticeDate').value=fmt(today());$('ffExitIntendedDate').min=addDays(today(),30);$('ffExitIntendedDate').value=addDays(today(),30);$('ffExitSignature').value='';$('ffExitDeclaration').checked=false;$('ffExitDisputeAck').checked=false;$('ffExitPreviewAck').checked=false;$('ffExitPreviewWrap').style.display='none';$('ffExitMessage').textContent='';$('ffExitSignedActions').style.display='none';$('ffMemberExitModal').style.display='block';document.body.style.overflow='hidden';renderMemberHistory(name);};
+ window.closeMemberExitForm=function(){$('ffMemberExitModal').style.display='none';document.body.style.overflow='';};
+ window.previewMemberExitNotice=preview;
+ window.submitMemberExitNotice=function(ev){ev.preventDefault();const name=currentName();if(!name){alert('Please log in first.');return;}const latest=latestFor(name);if(latest&&latest.status!=='Notice Withdrawn'){  $('ffExitMessage').textContent='You already have an active withdrawal notice ('+latest.id+'). Please contact the Admin. If your exit has already been recorded, re-admission must follow Article 11.8 and the normal membership application process.';$('ffExitMessage').style.color='#b91c1c';return;}const intended=$('ffExitIntendedDate').value;if(!intended||intended<addDays(today(),30)){$('ffExitMessage').textContent='The intended exit date must be at least 30 days after the notice date, as required by Article 11.1.';$('ffExitMessage').style.color='#b91c1c';return;}const sig=$('ffExitSignature').value.trim();if(sig.toLowerCase()!==name.toLowerCase()){$('ffExitMessage').textContent='Your digital signature must match your full registered member name.';$('ffExitMessage').style.color='#b91c1c';return;}if(!$('ffExitPreviewAck').checked){$('ffExitMessage').textContent='Please review the complete notice preview and confirm that you have read it before signing.';$('ffExitMessage').style.color='#b91c1c';$('ffExitPreviewWrap').style.display='block';return;}const now=new Date();const signedAt=now.toLocaleString('en-KE',{timeZone:'Africa/Nairobi',dateStyle:'long',timeStyle:'short'});const rows=getRows();const r={id:'FFC-EXIT-'+now.getFullYear()+'-'+now.getTime().toString().slice(-7),member:name,membershipNo:$('ffExitMembershipNo').value.trim(),phone:$('ffExitPhone').value,contractRef:$('ffExitContractRef').value.trim(),noticeDate:today(),intendedExitDate:intended,reconciliationDueDate:addDays(intended,30),reason:$('ffExitReason').value,explanation:$('ffExitExplanation').value.trim(),signature:sig,signedAt,signedAtISO:now.toISOString(),status:'Notice Submitted — 30-Day Notice',eligibleSavings:0,approvedDue:0,obligations:0,settlement:0,adminRemarks:'',chairladyRemarks:'',reconciliationDate:'',expectedSettlementDate:addDays(intended,30),settlementDate:'',effectiveExitDate:'',createdAt:now.toISOString(),article:'11'};rows.push(r);saveRows(rows);$('ffExitMessage').textContent='Your written withdrawal notice has been recorded in this browser. Reference: '+r.id+'. Download the signed PDF and send it to the Admin. Your membership has not yet been marked as exited.';$('ffExitMessage').style.color='#087f5b';$('ffExitSignedActions').style.display='block';renderMemberHistory(name);renderAdmin();printRecord(r);};
+ function renderMemberHistory(name){const host=$('ffMemberExitHistory');if(!host)return;const rows=getRows().filter(r=>String(r.member).toLowerCase()===String(name).toLowerCase()).sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''));host.innerHTML=rows.length?rows.map(r=>`<div style="border:1px solid #ddd6fe;border-radius:10px;padding:12px;margin:9px 0;background:#fff;"><b>Reference:</b> ${esc(r.id)}<br><b>Notice date:</b> ${esc(fmt(r.noticeDate))}<br><b>Intended exit:</b> ${esc(fmt(r.intendedExitDate))}<br><b>Status:</b> <strong>${esc(r.status)}</strong><br><b>Financial reconciliation target:</b> ${esc(fmt(r.reconciliationDueDate))}<br><b>Personal savings allocated to Reward Back:</b> KSh ${Number(r.rewardBackAmount||r.eligibleSavings||0).toLocaleString('en-KE')}<br><b>Reward period:</b> ${esc(r.rewardBackMonth||'December 2026')}<br><b>Reward Back payment:</b> ${esc(r.rewardBackStatus||'Pending financial reconciliation and final approval')}<br><b>Reconciliation note:</b> All verified eligible personal savings are to be settled after reconciliation. The financial reconciliation target is 02 January 2027; final approval and settlement remain pending.<br><button type="button" onclick="downloadExitNoticeById('${esc(r.id)}')" style="margin-top:8px;padding:8px;cursor:pointer;">Download / Print Notice</button></div>`).join(''):'<p style="color:#64748b;">No withdrawal notices have been submitted.</p>'; }
+ function renderAdmin(){const body=$('ffAdminExitTable');if(!body)return;const rows=getRows().sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''));if(!rows.length){body.innerHTML='<tr><td colspan="9" style="padding:14px;text-align:center;color:#64748b;">No withdrawal notices have been submitted in this browser.</td></tr>';return;}body.innerHTML=rows.map(r=>`<tr><td style="padding:8px;border-bottom:1px solid #ddd;">${esc(r.member)}<br><small>${esc(r.id)}</small></td><td style="padding:8px;border-bottom:1px solid #ddd;">${esc(fmt(r.noticeDate))}<br>${esc(fmt(r.intendedExitDate))}</td><td style="padding:8px;border-bottom:1px solid #ddd;"><select id="ff-exit-status-${esc(r.id)}" style="width:190px;padding:7px;">${['Notice Submitted — 30-Day Notice','Under Financial Reconciliation','Settlement Pending','Exit Recorded','Notice Withdrawn'].map(v=>`<option ${r.status===v?'selected':''}>${v}</option>`).join('')}</select></td><td style="padding:8px;border-bottom:1px solid #ddd;"><input id="ff-exit-savings-${esc(r.id)}" type="number" min="0" step="0.01" value="${Number(r.eligibleSavings||0)}" style="width:110px;padding:7px;"></td><td style="padding:8px;border-bottom:1px solid #ddd;"><input id="ff-exit-obligations-${esc(r.id)}" type="number" min="0" step="0.01" value="${Number(r.obligations||0)}" style="width:110px;padding:7px;"></td><td style="padding:8px;border-bottom:1px solid #ddd;"><input id="ff-exit-due-${esc(r.id)}" type="number" min="0" step="0.01" value="${Number(r.approvedDue||0)}" style="width:110px;padding:7px;"></td><td style="padding:8px;border-bottom:1px solid #ddd;"><input id="ff-exit-net-${esc(r.id)}" type="number" readonly value="${Number(r.settlement||0)}" style="width:110px;padding:7px;background:#f1f5f9;"></td><td style="padding:8px;border-bottom:1px solid #ddd;"><textarea id="ff-exit-admin-${esc(r.id)}" placeholder="Admin remarks" rows="2" style="width:170px;">${esc(r.adminRemarks||'')}</textarea><textarea id="ff-exit-chair-${esc(r.id)}" placeholder="Chairlady remarks / oversight" rows="2" style="width:170px;margin-top:5px;">${esc(r.chairladyRemarks||'')}</textarea><label style="display:block;font-size:11px;">Reconciled <input id="ff-exit-reconciled-${esc(r.id)}" type="date" value="${esc(r.reconciliationDate||'')}"></label><label style="display:block;font-size:11px;">Expected settlement <input id="ff-exit-expected-${esc(r.id)}" type="date" value="${esc(r.expectedSettlementDate||'')}"></label><label style="display:block;font-size:11px;">Settled <input id="ff-exit-settled-${esc(r.id)}" type="date" value="${esc(r.settlementDate||'')}"></label><label style="display:block;font-size:11px;">Effective exit <input id="ff-exit-effective-${esc(r.id)}" type="date" value="${esc(r.effectiveExitDate||'')}"></label></td><td style="padding:8px;border-bottom:1px solid #ddd;white-space:nowrap;"><button type="button" onclick="saveAdminExitRecord('${esc(r.id)}')" style="padding:7px;cursor:pointer;">Save review</button> <button type="button" onclick="downloadExitNoticeById('${esc(r.id)}')" style="padding:7px;cursor:pointer;">PDF</button></td></tr>`).join('');}
+ window.saveAdminExitRecord=function(id){const rows=getRows();const i=rows.findIndex(r=>r.id===id);if(i<0)return;const r=rows[i];const savings=Number($('ff-exit-savings-'+id).value||0),obligations=Number($('ff-exit-obligations-'+id).value||0),due=Number($('ff-exit-due-'+id).value||0);if([savings,obligations,due].some(n=>!Number.isFinite(n)||n<0)){alert('Enter valid non-negative financial amounts.');return;}r.status=$('ff-exit-status-'+id).value;r.eligibleSavings=savings;r.obligations=obligations;r.approvedDue=due;r.settlement=savings+due-obligations;r.adminRemarks=$('ff-exit-admin-'+id).value.trim();r.chairladyRemarks=$('ff-exit-chair-'+id).value.trim();r.reconciliationDate=$('ff-exit-reconciled-'+id).value;r.expectedSettlementDate=$('ff-exit-expected-'+id).value;r.settlementDate=$('ff-exit-settled-'+id).value;r.effectiveExitDate=$('ff-exit-effective-'+id).value;r.adminUpdatedAt=new Date().toISOString();if(r.status==='Exit Recorded'&&!r.effectiveExitDate){alert('Enter the effective exit date before recording the exit.');return;}saveRows(rows);renderAdmin();renderMemberHistory(currentName());$('ffAdminExitMessage').textContent='Review saved locally in this browser. To publish this official exit record across devices, add it to the member exits array in index.html and redeploy.';$('ffAdminExitMessage').style.color='#087f5b';};
+ window.downloadExitNoticeById=function(id){const r=getRows().find(x=>x.id===id);if(r)printRecord(r);else alert('Exit notice record not found.');};
+ window.downloadMyExitNotice=function(){const r=latestFor(currentName());if(r)printRecord(r);else alert('No withdrawal notice found.');};
+ window.sendExitNoticeWhatsApp=function(){const r=latestFor(currentName());if(!r){alert('Submit your notice first.');return;}const msg=`Hello Admin, I am ${r.member}. I am submitting my written 30-day membership withdrawal notice under Article 11 of the Future Finders Chama Group Constitution. Reference: ${r.id}. Intended exit date: ${r.intendedExitDate}. I will attach the signed PDF for your records and review.`;window.open('https://wa.me/254713953004?text='+encodeURIComponent(msg),'_blank');};
+ document.addEventListener('DOMContentLoaded',()=>{renderAdmin();const modal=$('ffMemberExitModal');if(modal)modal.addEventListener('click',e=>{if(e.target===modal)closeMemberExitForm();});});
+ if(document.readyState!=='loading')renderAdmin();
+})();
+</script>
 
 <style id="ff-countdown-readability">
 /* Weekly countdown bar: strong contrast and a label that stays readable at every fill level. */
@@ -23081,23 +23336,53 @@ async function downloadIndividualSavingsReportsPDF() {
 }
 </style>
 
-</body></html>`);w.document.close();}
- function preview(){const name=currentName();if(!name){alert('Please log in to your member account first.');return;}const sig=$('ffExitSignature').value.trim();if(sig.toLowerCase()!==name.toLowerCase()){alert('Type your full name exactly as shown in your member account before previewing.');return;}const intended=$('ffExitIntendedDate').value;if(!intended||intended<addDays(today(),30)){alert('The intended exit date must be at least 30 days after the notice date.');return;}const r={id:'FFC-EXIT-PREVIEW',member:name,membershipNo:$('ffExitMembershipNo').value,phone:$('ffExitPhone').value,contractRef:$('ffExitContractRef').value,noticeDate:today(),intendedExitDate:intended,reason:$('ffExitReason').value,explanation:$('ffExitExplanation').value,signature:sig,signedAt:'Recorded automatically upon submission',status:'Preview only'};$('ffExitPreview').innerHTML=docHtml(r);$('ffExitPreviewWrap').style.display='block';$('ffExitPreviewAck').checked=false;}
- window.openMemberExitForm=function(){const name=currentName();if(!name){alert('Please log in to your member account first.');return;}const member=(typeof members!=='undefined'&&members)?members[name]:null;$('ffExitMemberName').value=name;$('ffExitPhone').value=member?.phone||'';$('ffExitNoticeDate').value=fmt(today());$('ffExitIntendedDate').min=addDays(today(),30);$('ffExitIntendedDate').value=addDays(today(),30);$('ffExitSignature').value='';$('ffExitDeclaration').checked=false;$('ffExitDisputeAck').checked=false;$('ffExitPreviewAck').checked=false;$('ffExitPreviewWrap').style.display='none';$('ffExitMessage').textContent='';$('ffExitSignedActions').style.display='none';$('ffMemberExitModal').style.display='block';document.body.style.overflow='hidden';renderMemberHistory(name);};
- window.closeMemberExitForm=function(){$('ffMemberExitModal').style.display='none';document.body.style.overflow='';};
- window.previewMemberExitNotice=preview;
- window.submitMemberExitNotice=function(ev){ev.preventDefault();const name=currentName();if(!name){alert('Please log in first.');return;}const latest=latestFor(name);if(latest&&latest.status!=='Notice Withdrawn'){  $('ffExitMessage').textContent='You already have an active withdrawal notice ('+latest.id+'). Please contact the Admin. If your exit has already been recorded, re-admission must follow Article 11.8 and the normal membership application process.';$('ffExitMessage').style.color='#b91c1c';return;}const intended=$('ffExitIntendedDate').value;if(!intended||intended<addDays(today(),30)){$('ffExitMessage').textContent='The intended exit date must be at least 30 days after the notice date, as required by Article 11.1.';$('ffExitMessage').style.color='#b91c1c';return;}const sig=$('ffExitSignature').value.trim();if(sig.toLowerCase()!==name.toLowerCase()){$('ffExitMessage').textContent='Your digital signature must match your full registered member name.';$('ffExitMessage').style.color='#b91c1c';return;}if(!$('ffExitPreviewAck').checked){$('ffExitMessage').textContent='Please review the complete notice preview and confirm that you have read it before signing.';$('ffExitMessage').style.color='#b91c1c';$('ffExitPreviewWrap').style.display='block';return;}const now=new Date();const signedAt=now.toLocaleString('en-KE',{timeZone:'Africa/Nairobi',dateStyle:'long',timeStyle:'short'});const rows=getRows();const r={id:'FFC-EXIT-'+now.getFullYear()+'-'+now.getTime().toString().slice(-7),member:name,membershipNo:$('ffExitMembershipNo').value.trim(),phone:$('ffExitPhone').value,contractRef:$('ffExitContractRef').value.trim(),noticeDate:today(),intendedExitDate:intended,reconciliationDueDate:addDays(intended,30),reason:$('ffExitReason').value,explanation:$('ffExitExplanation').value.trim(),signature:sig,signedAt,signedAtISO:now.toISOString(),status:'Notice Submitted — 30-Day Notice',eligibleSavings:0,approvedDue:0,obligations:0,settlement:0,adminRemarks:'',chairladyRemarks:'',reconciliationDate:'',expectedSettlementDate:addDays(intended,30),settlementDate:'',effectiveExitDate:'',createdAt:now.toISOString(),article:'11'};rows.push(r);saveRows(rows);$('ffExitMessage').textContent='Your written withdrawal notice has been recorded in this browser. Reference: '+r.id+'. Download the signed PDF and send it to the Admin. Your membership has not yet been marked as exited.';$('ffExitMessage').style.color='#087f5b';$('ffExitSignedActions').style.display='block';renderMemberHistory(name);renderAdmin();printRecord(r);};
- function renderMemberHistory(name){const host=$('ffMemberExitHistory');if(!host)return;const rows=getRows().filter(r=>String(r.member).toLowerCase()===String(name).toLowerCase()).sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''));host.innerHTML=rows.length?rows.map(r=>`<div style="border:1px solid #ddd6fe;border-radius:10px;padding:12px;margin:9px 0;background:#fff;"><b>Reference:</b> ${esc(r.id)}<br><b>Notice date:</b> ${esc(fmt(r.noticeDate))}<br><b>Intended exit:</b> ${esc(fmt(r.intendedExitDate))}<br><b>Status:</b> <strong>${esc(r.status)}</strong><br><b>Financial reconciliation target:</b> ${esc(fmt(r.reconciliationDueDate))}<br><b>Personal savings allocated to Reward Back:</b> KSh ${Number(r.rewardBackAmount||r.eligibleSavings||0).toLocaleString('en-KE')}<br><b>Reward period:</b> ${esc(r.rewardBackMonth||'December 2026')}<br><b>Reward Back payment:</b> ${esc(r.rewardBackStatus||'Pending financial reconciliation and final approval')}<br><b>Reconciliation note:</b> All verified eligible personal savings are to be settled after reconciliation. The financial reconciliation target is 02 January 2027; final approval and settlement remain pending.<br><button type="button" onclick="downloadExitNoticeById('${esc(r.id)}')" style="margin-top:8px;padding:8px;cursor:pointer;">Download / Print Notice</button></div>`).join(''):'<p style="color:#64748b;">No withdrawal notices have been submitted.</p>'; }
- function renderAdmin(){const body=$('ffAdminExitTable');if(!body)return;const rows=getRows().sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''));if(!rows.length){body.innerHTML='<tr><td colspan="9" style="padding:14px;text-align:center;color:#64748b;">No withdrawal notices have been submitted in this browser.</td></tr>';return;}body.innerHTML=rows.map(r=>`<tr><td style="padding:8px;border-bottom:1px solid #ddd;">${esc(r.member)}<br><small>${esc(r.id)}</small></td><td style="padding:8px;border-bottom:1px solid #ddd;">${esc(fmt(r.noticeDate))}<br>${esc(fmt(r.intendedExitDate))}</td><td style="padding:8px;border-bottom:1px solid #ddd;"><select id="ff-exit-status-${esc(r.id)}" style="width:190px;padding:7px;">${['Notice Submitted — 30-Day Notice','Under Financial Reconciliation','Settlement Pending','Exit Recorded','Notice Withdrawn'].map(v=>`<option ${r.status===v?'selected':''}>${v}</option>`).join('')}</select></td><td style="padding:8px;border-bottom:1px solid #ddd;"><input id="ff-exit-savings-${esc(r.id)}" type="number" min="0" step="0.01" value="${Number(r.eligibleSavings||0)}" style="width:110px;padding:7px;"></td><td style="padding:8px;border-bottom:1px solid #ddd;"><input id="ff-exit-obligations-${esc(r.id)}" type="number" min="0" step="0.01" value="${Number(r.obligations||0)}" style="width:110px;padding:7px;"></td><td style="padding:8px;border-bottom:1px solid #ddd;"><input id="ff-exit-due-${esc(r.id)}" type="number" min="0" step="0.01" value="${Number(r.approvedDue||0)}" style="width:110px;padding:7px;"></td><td style="padding:8px;border-bottom:1px solid #ddd;"><input id="ff-exit-net-${esc(r.id)}" type="number" readonly value="${Number(r.settlement||0)}" style="width:110px;padding:7px;background:#f1f5f9;"></td><td style="padding:8px;border-bottom:1px solid #ddd;"><textarea id="ff-exit-admin-${esc(r.id)}" placeholder="Admin remarks" rows="2" style="width:170px;">${esc(r.adminRemarks||'')}</textarea><textarea id="ff-exit-chair-${esc(r.id)}" placeholder="Chairlady remarks / oversight" rows="2" style="width:170px;margin-top:5px;">${esc(r.chairladyRemarks||'')}</textarea><label style="display:block;font-size:11px;">Reconciled <input id="ff-exit-reconciled-${esc(r.id)}" type="date" value="${esc(r.reconciliationDate||'')}"></label><label style="display:block;font-size:11px;">Expected settlement <input id="ff-exit-expected-${esc(r.id)}" type="date" value="${esc(r.expectedSettlementDate||'')}"></label><label style="display:block;font-size:11px;">Settled <input id="ff-exit-settled-${esc(r.id)}" type="date" value="${esc(r.settlementDate||'')}"></label><label style="display:block;font-size:11px;">Effective exit <input id="ff-exit-effective-${esc(r.id)}" type="date" value="${esc(r.effectiveExitDate||'')}"></label></td><td style="padding:8px;border-bottom:1px solid #ddd;white-space:nowrap;"><button type="button" onclick="saveAdminExitRecord('${esc(r.id)}')" style="padding:7px;cursor:pointer;">Save review</button> <button type="button" onclick="downloadExitNoticeById('${esc(r.id)}')" style="padding:7px;cursor:pointer;">PDF</button></td></tr>`).join('');}
- window.saveAdminExitRecord=function(id){const rows=getRows();const i=rows.findIndex(r=>r.id===id);if(i<0)return;const r=rows[i];const savings=Number($('ff-exit-savings-'+id).value||0),obligations=Number($('ff-exit-obligations-'+id).value||0),due=Number($('ff-exit-due-'+id).value||0);if([savings,obligations,due].some(n=>!Number.isFinite(n)||n<0)){alert('Enter valid non-negative financial amounts.');return;}r.status=$('ff-exit-status-'+id).value;r.eligibleSavings=savings;r.obligations=obligations;r.approvedDue=due;r.settlement=savings+due-obligations;r.adminRemarks=$('ff-exit-admin-'+id).value.trim();r.chairladyRemarks=$('ff-exit-chair-'+id).value.trim();r.reconciliationDate=$('ff-exit-reconciled-'+id).value;r.expectedSettlementDate=$('ff-exit-expected-'+id).value;r.settlementDate=$('ff-exit-settled-'+id).value;r.effectiveExitDate=$('ff-exit-effective-'+id).value;r.adminUpdatedAt=new Date().toISOString();if(r.status==='Exit Recorded'&&!r.effectiveExitDate){alert('Enter the effective exit date before recording the exit.');return;}saveRows(rows);renderAdmin();renderMemberHistory(currentName());$('ffAdminExitMessage').textContent='Review saved locally in this browser. To publish this official exit record across devices, add it to the member exits array in index.html and redeploy.';$('ffAdminExitMessage').style.color='#087f5b';};
- window.downloadExitNoticeById=function(id){const r=getRows().find(x=>x.id===id);if(r)printRecord(r);else alert('Exit notice record not found.');};
- window.downloadMyExitNotice=function(){const r=latestFor(currentName());if(r)printRecord(r);else alert('No withdrawal notice found.');};
- window.sendExitNoticeWhatsApp=function(){const r=latestFor(currentName());if(!r){alert('Submit your notice first.');return;}const msg=`Hello Admin, I am ${r.member}. I am submitting my written 30-day membership withdrawal notice under Article 11 of the Future Finders Chama Group Constitution. Reference: ${r.id}. Intended exit date: ${r.intendedExitDate}. I will attach the signed PDF for your records and review.`;window.open('https://wa.me/254713953004?text='+encodeURIComponent(msg),'_blank');};
- document.addEventListener('DOMContentLoaded',()=>{renderAdmin();const modal=$('ffMemberExitModal');if(modal)modal.addEventListener('click',e=>{if(e.target===modal)closeMemberExitForm();});});
- if(document.readyState!=='loading')renderAdmin();
+
+
+
+
+<script id="ff-admin-dashboard-hardcoded-v1">
+(function(){
+  const byId=id=>document.getElementById(id);
+  const money=n=>'KSh '+Number(n||0).toLocaleString('en-KE',{maximumFractionDigits:2});
+  const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  function rows(){
+    if(typeof members==='undefined'||!members||typeof members!=='object')return [];
+    return Object.entries(members).map(([name,m])=>({name,member:m||{}}));
+  }
+  function allContracts(list){return list.flatMap(x=>(Array.isArray(x.member.contracts)?x.member.contracts:[]).map(c=>({...c,member:c.member||x.name})));}
+  function allLoans(list){return list.flatMap(x=>(Array.isArray(x.member.loans)?x.member.loans:[]).map(l=>({...l,member:l.member||x.name})));}
+  function csv(rows){return rows.map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\r\n');}
+  function download(name,content){const blob=new Blob(['\ufeff'+content],{type:'text/csv;charset=utf-8;'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;a.style.display='none';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+  function card(label,value,detail){return `<div style="padding:15px;background:#fff;border:1px solid #dbeafe;border-radius:10px;min-height:92px;"><div style="font-size:12px;color:#64748b;font-weight:700;text-transform:uppercase;letter-spacing:.04em;">${esc(label)}</div><div style="font-size:25px;color:#0f172a;font-weight:800;margin:7px 0;">${esc(value)}</div><div style="font-size:12px;color:#64748b;">${esc(detail)}</div></div>`;}
+  window.ffRefreshAdminDashboard=function(){
+    const list=rows(),contracts=allContracts(list),loans=allLoans(list);
+    const active=list.filter(x=>contracts.some(c=>String(c.member).toLowerCase()===x.name.toLowerCase()&&/approved|active/i.test(String(c.adminStatus||c.status||''))&&!/not approved|unapproved|rejected/i.test(String(c.adminStatus||c.status||''))));
+    const pending=contracts.filter(c=>/pending|awaiting|under review|submitted/i.test(String(c.adminStatus||c.status||''))&&!/approved|active|rejected/i.test(String(c.adminStatus||c.status||'')));
+    const unpaid=contracts.filter(c=>c.registrationFeePaid===false||/outstanding/i.test(String(c.feeCategory||'')));
+    const savings=list.reduce((sum,x)=>sum+Number(x.member.savings||0),0);
+    const loanPending=loans.filter(l=>/pending|awaiting|under review/i.test(String(l.status||''))&&!/rejected/i.test(String(l.status||''))).length;
+    const expiry=[];const today=new Date();today.setHours(0,0,0,0);
+    contracts.forEach(c=>{if(!c.expiryDate)return;const d=new Date(c.expiryDate+'T00:00:00');if(!isNaN(d)&&d>=today){const days=Math.ceil((d-today)/86400000);if(days<=60)expiry.push({...c,days});}});
+    const cards=byId('ffAdminMetricCards');if(cards)cards.innerHTML=[
+      card('Member records',list.length,'Members in hardcoded register'),
+      card('Members with active contracts',active.length,'At least one approved / active contract'),
+      card('Combined savings snapshot',money(savings),'Sum of member savings fields'),
+      card('Contract records',contracts.length,'All hardcoded contract entries'),
+      card('Registration fees outstanding',unpaid.length,'Contract records flagged unpaid/outstanding'),
+      card('Loan records',loans.length,'Loan entries in member records')
+    ].join('');
+    const alerts=[];
+    if(pending.length)alerts.push(`<li><b>${pending.length}</b> contract(s) marked pending / awaiting review.</li>`);
+    if(unpaid.length)alerts.push(`<li><b>${unpaid.length}</b> contract(s) have registration fees flagged outstanding. Check the individual records before collecting or changing payment status.</li>`);
+    if(loanPending)alerts.push(`<li><b>${loanPending}</b> loan application(s) appear pending in the hardcoded loan records.</li>`);
+    if(expiry.length)alerts.push(`<li><b>${expiry.length}</b> contract(s) expire within 60 days: ${expiry.map(c=>esc(c.member)+' ('+esc(c.expiryDate)+')').join('; ')}.</li>`);
+    const attention=byId('ffAdminAttentionList');if(attention)attention.innerHTML=alerts.length?'<ul style="margin:0;padding-left:20px;">'+alerts.join('')+'</ul>':'<p style="margin:0;color:#166534;">No pending contract, fee, loan or 60-day expiry flags were found in the current hardcoded records.</p>';
+  };
+  window.ffExportDashboardMembers=function(){const list=rows();const data=[['Member','Phone','Savings snapshot (KSh)','Monthly deposit entries','Contract count','Loan count','Member note'],...list.map(x=>[x.name,x.member.phone||'',x.member.savings||0,Array.isArray(x.member.monthly)?x.member.monthly.length:0,Array.isArray(x.member.contracts)?x.member.contracts.length:0,Array.isArray(x.member.loans)?x.member.loans.length:0,x.member.note||''])];download('Future_Finders_Member_Summary.csv',csv(data));};
+  window.ffExportDashboardContracts=function(){const data=[['Member','Reference','Contract type','Participation','Fee category','Fee amount (KSh)','Registration fee paid','Signed at','Status','Start date','Expiry date','Admin notes'],...allContracts(rows()).map(c=>[c.member,c.id||'',c.type||'',c.participation||'',c.feeCategory||'',c.contractFee??'',c.registrationFeePaid===true?'Yes':c.registrationFeePaid===false?'No':'Not specified',c.signedAt||'',c.adminStatus||c.status||'',c.startDate||'',c.expiryDate||'',c.adminNotes||''])];download('Future_Finders_Contract_Register.csv',csv(data));};
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',window.ffRefreshAdminDashboard);else window.ffRefreshAdminDashboard();
 })();
 </script>
-
 
 <script id="ff-admin-loan-pdf-downloads">
 (function(){
@@ -23219,6 +23504,17 @@ async function downloadIndividualSavingsReportsPDF() {
   });
   if(document.readyState!=='loading') refresh();
   // Keep the member-facing history on the existing My Loans control. Do not move it into admin.
+  // The accounting summary is inserted immediately below the member's loan table.
+  const originalShowMyLoans=window.showMyLoans;
+  if(typeof originalShowMyLoans==='function' && !originalShowMyLoans.__ffAccountingPlacementWrapped){
+    const showWithMemberSummary=function(){
+      const result=originalShowMyLoans.apply(this,arguments);
+      const memberName=window.loggedInUser||document.getElementById('memberDisplay')?.innerText?.trim();
+      return result;
+    };
+    showWithMemberSummary.__ffAccountingPlacementWrapped=true;
+    window.showMyLoans=showWithMemberSummary;
+  }
   window.ffHasPendingLoan=function(name){
     try {
       const loans=typeof getMemberLoans==='function'?getMemberLoans(name):[];
@@ -23228,3 +23524,177 @@ async function downloadIndividualSavingsReportsPDF() {
 })();
 </script>
 
+<script id="ff-proportional-loan-accounting-v1">
+(function(){
+  'use strict';
+  const money = n => 'KSh ' + Number(n || 0).toLocaleString('en-KE',{minimumFractionDigits:2,maximumFractionDigits:2});
+  const esc = v => String(v ?? '—').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const norm = v => String(v || '').trim().toUpperCase();
+  const approved = loan => {
+    const s=String(loan.status||'').toLowerCase();
+    return !/reject|declin|cancel|pending|awaiting|under review/.test(s) && /approv|disburs|active|paid|clear|complete|settled/.test(s);
+  };
+  function paidTotal(loan){
+    const explicit=loan.amountPaid ?? loan.paid;
+    if(explicit !== undefined && explicit !== null && explicit !== '') return Math.max(0,Number(explicit)||0);
+    if(Array.isArray(loan.repaymentSchedule)) return loan.repaymentSchedule.reduce((a,r)=>a+Math.max(0,Number(r.amountPaid ?? r.paid ?? 0)||0),0);
+    return 0;
+  }
+  function account(loan){
+    const principal=Math.max(0,Number(loan.requestedAmount ?? loan.amount ?? loan.principal ?? 0)||0);
+    const totalDue=Math.max(principal,Number(loan.repaymentAmount ?? loan.totalRepayment ?? principal)||principal);
+    const interest=Math.max(0,totalDue-principal);
+    const paid=Math.min(totalDue,paidTotal(loan));
+    // Proportional allocation: each payment is split using the original principal/total repayment ratio.
+    const principalPaid=totalDue>0 ? Math.min(principal,paid*(principal/totalDue)) : 0;
+    const interestPaid=Math.min(interest,Math.max(0,paid-principalPaid));
+    const outstandingPrincipal=Math.max(0,principal-principalPaid);
+    const outstandingInterest=Math.max(0,interest-interestPaid);
+    return {principal,totalDue,interest,paid,principalPaid,interestPaid,outstandingPrincipal,outstandingInterest,balance:Math.max(0,totalDue-paid)};
+  }
+  function allLoans(){
+    try{return typeof getLoanApplications==='function' ? getLoanApplications().filter(x=>x&&typeof x==='object') : [];}catch(e){return [];}
+  }
+  function memberLoans(name){
+    // Use the exact same unified member-loan source as the visible My Loans table.
+    // This prevents the summary from silently missing member records when the
+    // browser-local register and the code-managed member register differ.
+    try {
+      if(typeof getMemberLoans==='function') {
+        const rows=getMemberLoans(name);
+        if(Array.isArray(rows)) return rows.filter(x=>x&&typeof x==='object'&&norm(x.name||name)===norm(name));
+      }
+    } catch(e) {}
+    return allLoans().filter(x=>norm(x.name)===norm(name));
+  }
+  function aggregate(loans){
+    const result={count:0,principal:0,interest:0,totalDue:0,paid:0,principalPaid:0,interestPaid:0,outstandingPrincipal:0,outstandingInterest:0,balance:0};
+    const rows=Array.isArray(loans)?loans.filter(l=>l&&typeof l==='object'):[];
+    // Member summary receives the member's coded loan array. Do not require a
+    // second status whitelist: older coded records may use different approved
+    // labels. Exclude only clearly unissued applications.
+    rows.filter(l=>!/(reject|declin|cancel|pending|awaiting|under review)/i.test(String(l.status||''))).forEach(l=>{
+      const a=account(l);
+      if(a.principal<=0) return;
+      result.count++;
+      ['principal','interest','totalDue','paid','principalPaid','interestPaid','outstandingPrincipal','outstandingInterest','balance'].forEach(k=>{result[k]+=Number(a[k])||0;});
+    });
+    return result;
+  }
+  function card(label,value,sub=''){
+    return `<div style="padding:12px;border:1px solid #dbe4ec;border-radius:10px;background:#fff;min-width:0;"><div style="font-size:12px;color:#64748b;font-weight:700;">${label}</div><div style="font-size:18px;font-weight:800;color:#183b56;margin-top:5px;overflow-wrap:anywhere;">${value}</div>${sub?`<div style="font-size:11px;color:#64748b;margin-top:3px;">${sub}</div>`:''}</div>`;
+  }
+  function renderMemberSummary(name, visibleTableLoans){
+    const host=document.getElementById('loanMessage'); if(!host)return;
+    const box=host.querySelector('#ffMemberLoanFinancialSummary'); if(!box)return;
+    // Primary source is the actual hard-coded member record, not localStorage
+    // or a second name-based search. Match the member key case-insensitively.
+    let memberKey=null;
+    if(typeof members==='object' && members){
+      memberKey=Object.keys(members).find(k=>norm(k)===norm(name));
+    }
+    let loans=(memberKey && Array.isArray(members[memberKey]?.loans)) ? members[memberKey].loans.map((loan,index)=>({
+      ...(loan&&typeof loan==='object'?loan:{amount:Number(loan)||0}),
+      name:memberKey,
+      id:(loan&&loan.id)||`FF-MEMBER-${norm(memberKey).replace(/[^A-Z0-9]+/g,'-')}-${index+1}`
+    })) : (Array.isArray(visibleTableLoans)?visibleTableLoans:memberLoans(name));
+    const a=aggregate(loans);
+    box.style.display='block'; box.style.width='100%'; box.style.boxSizing='border-box';
+    box.style.margin='16px 0'; box.style.padding='16px'; box.style.border='2px solid #16845b';
+    box.style.borderRadius='12px'; box.style.background='#f1fbf5'; box.style.clear='both';
+    box.innerHTML=`<h3 style="display:block;margin:0 0 10px;color:#087f5b;font-size:20px;">📊 My Loan Financial Summary — ${esc(name)}</h3><p style="font-size:13px;color:#52616b;margin:0 0 12px;">Automatically calculated from the loan records entered under this member in the website code.</p><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;">${card('Total loans taken',a.count)}${card('Total principal borrowed',money(a.principal))}${card('Total interest charged',money(a.interest))}${card('Total repayment expected',money(a.totalDue))}${card('Total repayments received',money(a.paid))}${card('Principal recovered',money(a.principalPaid))}${card('Interest returned',money(a.interestPaid))}${card('Outstanding principal',money(a.outstandingPrincipal))}${card('Outstanding interest',money(a.outstandingInterest))}${card('Total outstanding balance',money(a.balance))}</div>`;
+  }
+  function renderAdminLoanSummary(){
+    const anchor=document.getElementById('adminSummary'); if(!anchor)return;
+    const loans=allLoans(); const issued=loans.filter(approved); const a=aggregate(issued);
+    const pending=loans.filter(l=>/pending|awaiting|under review/i.test(String(l.status||''))&&!/reject|approved|disbursed/i.test(String(l.status||''))).length;
+    const rejected=loans.filter(l=>/reject|declin|cancel/i.test(String(l.status||''))).length;
+    const active=issued.filter(l=>{const x=account(l);return x.balance>0;}).length;
+    const cleared=issued.filter(l=>account(l).balance<=0).length;
+    const overdue=issued.filter(l=>{
+      const rows=Array.isArray(l.repaymentSchedule)?l.repaymentSchedule:[];
+      return rows.some(r=>{const due=r.dueDate||r.date; if(!due)return false;const d=new Date(due);if(Number.isNaN(d.getTime()))return false;const amt=Number(r.amountDue??r.amount??r.installmentAmount??0)||0;const paid=Number(r.amountPaid??r.paid??0)||0;return d<new Date()&&amt>paid;});
+    }).length;
+    const loansCard=document.getElementById('totalLoansCard');
+    if(loansCard)loansCard.textContent='📑 Total Loans Issued: '+money(a.principal);
+    // Interest earned means interest actually collected from repayments,
+    // not the interest merely expected on outstanding loans.
+    const interestEarnedCard=document.getElementById('totalInterestEarnedCard');
+    if(interestEarnedCard)interestEarnedCard.textContent='💹 Total Interest Earned: '+money(a.interestPaid);
+    const statusCard=document.getElementById('loanBreakdownCard');
+    if(statusCard)statusCard.textContent=`📊 Loan Status: ${pending} Pending / ${active} Active / ${overdue} Overdue / ${cleared} Cleared / ${rejected} Rejected`;
+    // Build the admin's expanded member summaries from the same unified
+    // member-loan source used by each member's My Loans screen.
+    const memberNames=[...new Set([
+      ...issued.map(l=>String(l.name||'').trim()).filter(Boolean),
+      ...(typeof members==='object'&&members?Object.keys(members):[])
+    ])].filter(Boolean).sort((x,y)=>x.localeCompare(y));
+    function detailedMemberTotals(rows){
+      const t={count:0,principal:0,interest:0,expected:0,received:0,principalRecovered:0,interestReturned:0,outstandingPrincipal:0,outstandingInterest:0,outstanding:0,penaltyCharged:0,penaltyPaid:0,penaltyOutstanding:0};
+      (Array.isArray(rows)?rows:[]).filter(approved).forEach(loan=>{
+        const principal=Math.max(0,Number(loan.requestedAmount??loan.amount??loan.principal??0)||0);
+        if(!principal)return;
+        const expected=Math.max(principal,Number(loan.repaymentAmount??loan.totalRepayment??principal)||principal);
+        const interest=Math.max(0,expected-principal);
+        const penalty=Math.max(0,Number(loan.latePenalty??loan.penalty??0)||0);
+        const rawPaid=Math.max(0,Number(loan.amountPaid??loan.paid??0)||0);
+        const inferredPenaltyPaid=Math.min(penalty,Math.max(0,rawPaid-expected));
+        const penaltyPaid=Math.min(penalty,Math.max(0,Number(loan.penaltyPaid??loan.latePenaltyPaid??inferredPenaltyPaid)||0));
+        const paid=Math.min(expected,Math.max(0,rawPaid-penaltyPaid));
+        const principalPaid=expected>0?Math.min(principal,paid*(principal/expected)):0;
+        const interestPaid=Math.min(interest,Math.max(0,paid-principalPaid));
+        t.count++;t.principal+=principal;t.interest+=interest;t.expected+=expected;t.received+=paid;
+        t.principalRecovered+=principalPaid;t.interestReturned+=interestPaid;
+        t.outstandingPrincipal+=Math.max(0,principal-principalPaid);
+        t.outstandingInterest+=Math.max(0,interest-interestPaid);
+        t.outstanding+=Math.max(0,expected-paid);t.penaltyCharged+=penalty;
+        t.penaltyPaid+=penaltyPaid;t.penaltyOutstanding+=Math.max(0,penalty-penaltyPaid);
+      });
+      return t;
+    }
+    const memberSummaryCards=memberNames.map(name=>{
+      let rows=memberLoans(name);
+      if((!Array.isArray(rows)||!rows.length)&&typeof members==='object'&&members){
+        const key=Object.keys(members).find(k=>norm(k)===norm(name));
+        if(key&&Array.isArray(members[key]?.loans)) rows=members[key].loans.map(l=>({...l,name:key}));
+      }
+      const m=detailedMemberTotals(rows);
+      if(!m.count)return '';
+      return `<section data-admin-member-loan-summary="${esc(name)}" style="display:block;width:100%;box-sizing:border-box;margin:16px 0;padding:16px;border:2px solid #16845b;border-radius:12px;background:#f1fbf5;clear:both;"><h3 style="display:block;margin:0 0 10px;color:#087f5b;font-size:20px;">📊 My Loan Financial Summary — ${esc(name)} <span style="font-size:12px;color:#64748b;">View-Only 🔒</span></h3><p style="font-size:13px;color:#52616b;margin:0 0 12px;">Automatically calculated from approved loan records entered under this member in the website code.</p><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;">${card('Total loans taken',m.count)}${card('Total principal borrowed',money(m.principal))}${card('Total interest charged',money(m.interest))}${card('Total repayment expected',money(m.expected))}${card('Total repayments received',money(m.received))}${card('Principal recovered',money(m.principalRecovered))}${card('Interest returned',money(m.interestReturned))}${card('Outstanding principal',money(m.outstandingPrincipal))}${card('Outstanding interest',money(m.outstandingInterest))}${card('Total outstanding balance',money(m.outstanding))}</div><h4 style="margin:16px 0 8px;color:#087f5b;font-size:14px;">Late Penalties — Recorded Separately</h4><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;">${card('Late penalty charged',money(m.penaltyCharged))}${card('Late penalty paid',money(m.penaltyPaid))}${card('Outstanding late penalty',money(m.penaltyOutstanding))}</div></section>`;
+    }).join('');
+    let panel=document.getElementById('ffAdminLoanFinancialSummary');
+    if(!panel){panel=document.createElement('section');panel.id='ffAdminLoanFinancialSummary';panel.style.cssText='margin:12px 0 20px;padding:15px;border:1px solid #cbd5e1;border-radius:12px;background:#f8fafc;';anchor.insertAdjacentElement('afterend',panel);}
+    panel.style.setProperty('display','block','important');
+    panel.style.setProperty('visibility','visible','important');
+    panel.style.setProperty('opacity','1','important');
+    panel.style.setProperty('width','100%','important');
+    panel.style.setProperty('height','auto','important');
+    panel.style.setProperty('max-height','none','important');
+    panel.style.setProperty('grid-column','1 / -1','important');
+    panel.innerHTML=`<h3 style="margin:0 0 5px;color:#173b57;">📊 Overall Loan Financial Summary</h3><p style="margin:0 0 12px;font-size:12px;color:#64748b;">Calculated from approved and disbursed loans across all members. Pending and rejected applications are excluded from money lent.</p><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:9px;">${card('Loans issued',a.count)}${card('Total principal lent',money(a.principal))}${card('Total interest expected',money(a.interest))}${card('Total repayment expected',money(a.totalDue))}${card('Total repayments received',money(a.paid))}${card('Principal recovered',money(a.principalPaid))}${card('Interest returned',money(a.interestPaid))}${card('Outstanding principal',money(a.outstandingPrincipal))}${card('Outstanding interest',money(a.outstandingInterest))}${card('Total outstanding balance',money(a.balance))}</div><div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;"><span style="padding:7px 10px;border-radius:7px;background:#fff;border:1px solid #dbe4ec;">Pending: <b>${pending}</b></span><span style="padding:7px 10px;border-radius:7px;background:#fff;border:1px solid #dbe4ec;">Active / owing: <b>${active}</b></span><span style="padding:7px 10px;border-radius:7px;background:#fff;border:1px solid #dbe4ec;">Overdue: <b>${overdue}</b></span><span style="padding:7px 10px;border-radius:7px;background:#fff;border:1px solid #dbe4ec;">Cleared: <b>${cleared}</b></span><span style="padding:7px 10px;border-radius:7px;background:#fff;border:1px solid #dbe4ec;">Rejected: <b>${rejected}</b></span></div><div style="margin-top:16px;"><button type="button" id="ffToggleAllMemberLoanSummaries" onclick="toggleAdminMemberLoanSummaries()" aria-expanded="false" style="width:100%;padding:13px 16px;border:1px solid #cbd5e1;border-radius:9px;background:#173b57;color:#fff;font-weight:700;text-align:left;cursor:pointer;font-size:14px;">📋 All Members’ Loan Summaries <span style="float:right;">＋</span></button><div id="ffAllMemberLoanSummariesContent" hidden style="padding:8px 0 0;">${memberSummaryCards||'<p style="padding:14px;text-align:center;color:#64748b;background:#fff;border:1px solid #dbe4ec;border-radius:9px;">No approved or disbursed member loans recorded for individual display.</p>'}</div></div>`;
+  }
+  window.toggleAdminMemberLoanSummaries=function(){
+    const content=document.getElementById('ffAllMemberLoanSummariesContent');
+    const button=document.getElementById('ffToggleAllMemberLoanSummaries');
+    if(!content||!button)return;
+    const opening=content.hidden;
+    content.hidden=!opening;
+    button.setAttribute('aria-expanded',String(opening));
+    button.innerHTML=`📋 All Members’ Loan Summaries <span style="float:right;">${opening?'−':'＋'}</span>`;
+  };
+  window.FFLoanAccounting={account,aggregate,memberLoans,renderMemberSummary,refresh:renderAdminLoanSummary};
+  // Extend the existing summary without removing its original member/savings cards.
+  if(typeof window.updateAdminSummary==='function'){
+    const oldUpdate=window.updateAdminSummary;
+    window.updateAdminSummary=function(){oldUpdate.apply(this,arguments);renderAdminLoanSummary();};
+  }
+  // Member summary is rendered by showMyLoans() using its exact name and loan rows.
+  // Refresh the new admin panel whenever the existing loan register is reloaded.
+  if(typeof window.loadLoanApplications==='function'){
+    const oldLoad=window.loadLoanApplications;
+    window.loadLoanApplications=function(){oldLoad.apply(this,arguments);renderAdminLoanSummary();};
+  }
+  document.addEventListener('DOMContentLoaded',()=>{if(typeof window.updateAdminSummary==='function')window.updateAdminSummary();else renderAdminLoanSummary();});
+  if(document.readyState!=='loading'){if(typeof window.updateAdminSummary==='function')window.updateAdminSummary();else renderAdminLoanSummary();}
+})();
+</script>
