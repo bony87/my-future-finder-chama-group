@@ -4010,6 +4010,7 @@ function closeSystemUpdatePopup(){
   <div id="memberContractsAdminPanel" style="margin-top:28px;padding-top:22px;border-top:2px solid #dbeafe;">
     <h3 style="color:#075985;">📄 Member Contract Management — Submission Register</h3>
     <p style="color:#475569;line-height:1.6;">All contracts are automatically arranged from the earliest submission to the latest submission. The full register below shows each contract reference, plan, fee declaration, signing date/time and administration details. Use the download-arrow icon to save a contract PDF directly; no print dialog is opened. Fee and renewal alerts are highlighted where applicable. Scroll horizontally to view every column on smaller screens.</p>
+    <div role="note" style="margin:12px 0;padding:13px 15px;border:1px solid #fdba74;border-left:5px solid #ea580c;border-radius:10px;background:#fff7ed;color:#9a3412;line-height:1.55;"><strong>⚠ Registration Fee Payment Deadline:</strong> If a member's contract shows a KSh 200 registration fee as outstanding, it must be paid no later than <strong>31 December 2026</strong>. Members whose registration fee is already recorded as paid do not need to pay it again. Please verify and update payment records when payment is received.</div>
     <div style="overflow-x:auto;margin-top:16px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;">
       <table style="width:100%;border-collapse:separate;border-spacing:0;min-width:1500px;background:#fff;font-size:14px;line-height:1.5;">
         <thead style="background:#075985;color:#fff;"><tr><th style="padding:13px 12px;text-align:left;white-space:nowrap;">No. (Oldest first)</th><th style="padding:13px 12px;text-align:left;min-width:190px;">Member / Contract reference</th><th style="padding:13px 12px;text-align:left;min-width:180px;">Contract type</th><th style="padding:13px 12px;text-align:left;min-width:230px;">Participation plan</th><th style="padding:13px 12px;text-align:left;min-width:190px;">Registration fee / payment</th><th style="padding:13px 12px;text-align:left;min-width:190px;">Date &amp; time signed (EAT)</th><th style="padding:13px 12px;text-align:left;min-width:190px;">Admin status</th><th style="padding:13px 12px;text-align:left;min-width:130px;">Start date</th><th style="padding:13px 12px;text-align:left;min-width:140px;">Expiry / renewal</th><th style="padding:13px 12px;text-align:left;min-width:220px;">Admin notes</th><th style="padding:13px 12px;text-align:left;min-width:130px;">Actions</th></tr></thead>
@@ -13108,7 +13109,25 @@ const members = {
     savings: 14520,
     monthly: [720],
     note: "New member; low savings but improving gradually.",
-    contracts: [],
+    contracts: [{
+      id: "FFC-2026-1453619",
+      member: "JOEL EGESA",
+      type: "Membership Contract Renewal",
+      participation: "Monthly merry-go-round plus savings",
+      feeCategory: "Registration fee outstanding — payable on 2027 renewal",
+      contractFee: 200,
+      registrationFeePaid: false,
+      signatureName: "JOEL EGESA",
+      signedAt: "12 November 2026 at 16:50 (EAT)",
+      signedAtISO: "2026-11-12T16:50:00+03:00",
+      adminStatus: "Approved / Active",
+      startDate: "2027-01-01",
+      expiryDate: "2027-12-31",
+      adminNotes: "Approved by Admin on 12 November 2026. Contract is approved and active for the 2027 membership year, effective 1 January 2027 to 31 December 2027. Registration fee of KSh 200 remains outstanding and is payable on 2027 renewal. Participation plan: Monthly merry-go-round plus savings.",
+      createdAt: "2026-11-12T16:50:00+03:00",
+      approvedAt: "2026-11-12T16:58:00+03:00",
+      version: 2
+    }],
     loans: []
   },
 
@@ -14033,7 +14052,25 @@ const members = {
     savings: 6356,
     monthly: [0, 50, 0, 0, 0, 0, 0, 0, 0],
     note: "",
-    contracts: [],
+    contracts: [{
+      id: "FFC-2026-1035816",
+      member: "DEFTERS PHOLIUS",
+      type: "Membership Contract Renewal",
+      participation: "Weekly merry-go-round plus savings",
+      feeCategory: "Previously paid registration fee — 2027 renewal exempt",
+      contractFee: 0,
+      registrationFeePaid: true,
+      signatureName: "DEFTERS PHOLIUS",
+      signedAt: "12 November 2026 at 16:43 (EAT)",
+      signedAtISO: "2026-11-12T16:43:00+03:00",
+      adminStatus: "Approved / Active",
+      startDate: "2027-01-01",
+      expiryDate: "2027-12-31",
+      adminNotes: "Approved by Admin on 12 November 2026. Contract is approved and active for the 2027 membership year, effective 1 January 2027 to 31 December 2027. Previously paid registration fee recorded; 2027 renewal exempt. Participation plan: Weekly merry-go-round plus savings.",
+      createdAt: "2026-11-12T16:43:00+03:00",
+      approvedAt: "2026-11-12T16:58:00+03:00",
+      version: 2
+    }],
     loans: []
   },
 
@@ -23362,6 +23399,13 @@ async function downloadIndividualSavingsReportsPDF() {
         });
       }
     }catch(e){}
+    // Explicit published-register fallback for the two newly approved 2027 renewals.
+    // This keeps them visible in the Admin register even if a browser has an older cached member list.
+    const latestApprovedFallback=[
+      {id:'FFC-2026-1035816',member:'DEFTERS PHOLIUS',type:'Membership Contract Renewal',participation:'Weekly merry-go-round plus savings',feeCategory:'Previously paid registration fee — 2027 renewal exempt',contractFee:0,registrationFeePaid:true,signatureName:'DEFTERS PHOLIUS',signedAt:'12 November 2026 at 16:43 (EAT)',signedAtISO:'2026-11-12T16:43:00+03:00',adminStatus:'Approved / Active',startDate:'2027-01-01',expiryDate:'2027-12-31',adminNotes:'Approved by Admin on 12 November 2026. Contract is approved and active for the 2027 membership year, effective 1 January 2027 to 31 December 2027. Previously paid registration fee recorded; 2027 renewal exempt. Participation plan: Weekly merry-go-round plus savings.',createdAt:'2026-11-12T16:43:00+03:00',approvedAt:'2026-11-12T16:58:00+03:00',version:2},
+      {id:'FFC-2026-1453619',member:'JOEL EGESA',type:'Membership Contract Renewal',participation:'Monthly merry-go-round plus savings',feeCategory:'Registration fee outstanding — payable on 2027 renewal',contractFee:200,registrationFeePaid:false,signatureName:'JOEL EGESA',signedAt:'12 November 2026 at 16:50 (EAT)',signedAtISO:'2026-11-12T16:50:00+03:00',adminStatus:'Approved / Active',startDate:'2027-01-01',expiryDate:'2027-12-31',adminNotes:'Approved by Admin on 12 November 2026. Contract is approved and active for the 2027 membership year, effective 1 January 2027 to 31 December 2027. Registration fee of KSh 200 remains outstanding and is payable on 2027 renewal. Participation plan: Monthly merry-go-round plus savings.',createdAt:'2026-11-12T16:50:00+03:00',approvedAt:'2026-11-12T16:58:00+03:00',version:2}
+    ];
+    latestApprovedFallback.forEach(c=>{if(!seeded.some(x=>String(x.id)===c.id))seeded.push(c)});
     const byId=new Map();
     // Seed from published hardcoded records, then apply this browser's latest saved version.
     // Member edits reuse the same contract ID; Admin/published updates can be deployed in the hardcoded record.
@@ -23448,7 +23492,9 @@ async function downloadIndividualSavingsReportsPDF() {
     const latest=rows[0];
     const latestApproved=String(status(latest)).toLowerCase().includes('approved')||String(status(latest)).toLowerCase().includes('active');
     const approvalWelcome=latestApproved?'<div role="status" aria-live="polite" style="display:flex;align-items:center;gap:10px;padding:12px 14px;margin:10px 0 14px;border:1px solid #86efac;border-left:4px solid #16a34a;border-radius:10px;background:linear-gradient(90deg,#f0fdf4,#ffffff);color:#166534;box-shadow:0 2px 8px rgba(22,101,52,.08);"><span style="font-size:22px;">🎉</span><div><strong style="display:block;font-size:14px;">Congratulations! Your contract has been approved.</strong><span style="font-size:12px;color:#3f6212;">Your membership contract is approved and active. You can view or download your contract history below.</span></div></div>':'';
-    host.innerHTML=approvalWelcome+rows.map(c=>{const pending=isPending(c);const approved=String(status(c)).toLowerCase().includes('approved')||String(status(c)).toLowerCase().includes('active');return `<div style="border:1px solid ${approved?'#86efac':'#cbd5e1'};border-radius:10px;padding:13px;margin:9px 0;background:${approved?'#f0fdf4':'#fff'};"><b>Reference:</b> ${esc(c.id)}<br><b>Type:</b> ${esc(c.type)}<br><b>Participation:</b> ${esc(c.participation)}<br><b>Fee:</b> KSh ${Number(c.contractFee||0).toLocaleString('en-KE')} — ${esc(c.feeCategory||'Not recorded')}<br><b>Submitted/signed:</b> ${esc(c.signedAt)}<br><b>Status:</b> <span style="font-weight:700;color:${approved?'#15803d':pending?'#92400e':'#b91c1c'}">${esc(status(c))}</span><br><b>Start date:</b> ${esc(fmtDate(c.startDate))}<br><b>Expiry/renewal:</b> ${esc(fmtDate(c.expiryDate))}${c.adminNotes?`<br><b>Admin notes:</b> ${esc(c.adminNotes)}`:''}<div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;"><button type="button" aria-label="Download contract PDF" title="Download contract PDF" onclick="downloadContractById('${esc(c.id)}')" style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border:0;border-radius:8px;background:#e0f2fe;color:#075985;font-size:18px;font-weight:800;cursor:pointer;">⬇</button>${pending&&c.id===latest.id?`<button type="button" onclick="editMyContract('${esc(c.id)}')" style="padding:7px 12px;background:#075985;color:white;border:0;border-radius:7px;cursor:pointer;font-weight:700;">✏️ Edit Contract</button>`:''}</div></div>`;}).join('');
+    const hasOutstandingFee=rows.some(c=>c.registrationFeePaid===false||/outstanding|pending/i.test(String(c.feeCategory||'')));
+    const feeDeadlineNotice=hasOutstandingFee?'<div role="note" style="margin:10px 0 14px;padding:12px 14px;border:1px solid #fdba74;border-left:5px solid #ea580c;border-radius:10px;background:#fff7ed;color:#9a3412;line-height:1.55;"><strong>⚠ Registration Fee Payment Deadline:</strong> If your contract shows a KSh 200 registration fee as outstanding, please ensure it is paid <strong>no later than 31 December 2026</strong>. Members whose fee is already recorded as paid do not need to pay it again.</div>':'';
+    host.innerHTML=approvalWelcome+feeDeadlineNotice+rows.map(c=>{const pending=isPending(c);const approved=String(status(c)).toLowerCase().includes('approved')||String(status(c)).toLowerCase().includes('active');const feeOutstanding=c.registrationFeePaid===false||/outstanding|pending/i.test(String(c.feeCategory||''));return `<div style="border:1px solid ${approved?'#86efac':'#cbd5e1'};border-radius:10px;padding:14px;margin:10px 0;background:${approved?'#f0fdf4':'#fff'};box-shadow:0 2px 7px rgba(15,23,42,.04);"><b>Reference:</b> ${esc(c.id)}<br><b>Type:</b> ${esc(c.type)}<br><b>Participation:</b> ${esc(c.participation)}<br><b>Fee:</b> KSh ${Number(c.contractFee||0).toLocaleString('en-KE')} — ${esc(c.feeCategory||'Not recorded')}${feeOutstanding?'<br><span style="display:inline-block;margin:5px 0;padding:4px 8px;border-radius:999px;background:#ffedd5;color:#9a3412;font-size:12px;font-weight:800;">⚠ Fee outstanding — pay by 31 December 2026</span>':''}<br><b>Submitted/signed:</b> ${esc(c.signedAt)}<br><b>Status:</b> <span style="font-weight:700;color:${approved?'#15803d':pending?'#92400e':'#b91c1c'}">${esc(status(c))}</span><br><b>Start date:</b> ${esc(fmtDate(c.startDate))}<br><b>Expiry/renewal:</b> ${esc(fmtDate(c.expiryDate))}${c.adminNotes?`<br><b>Admin notes:</b> ${esc(c.adminNotes)}`:''}<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;"><button type="button" aria-label="Download contract PDF" title="Download contract PDF" onclick="downloadContractById('${esc(c.id)}')" style="display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border:0;border-radius:8px;background:#e0f2fe;color:#075985;font-size:19px;font-weight:800;cursor:pointer;">⬇</button>${pending&&c.id===latest.id?`<button type="button" onclick="editMyContract('${esc(c.id)}')" style="padding:7px 12px;background:#075985;color:white;border:0;border-radius:7px;cursor:pointer;font-weight:700;">✏️ Edit Contract</button>`:''}</div></div>`;}).join('');
     if(actions){if(isPending(latest)){actions.innerHTML='<span style="color:#92400e;font-weight:700;">Your contract is awaiting review. You may edit it until Admin approves it.</span>';}else if(String(status(latest)).toLowerCase().includes('rejected')){actions.innerHTML='<button type="button" onclick="startNewMemberContract()" style="padding:11px 16px;border:0;border-radius:9px;background:#087f5b;color:white;font-weight:700;cursor:pointer;">＋ Submit a New Contract</button>';}else{actions.innerHTML='<span style="color:#15803d;font-weight:700;">🔒 Approved contract — locked. You can view or download your history, but editing is disabled.</span>';}}
   }
 
