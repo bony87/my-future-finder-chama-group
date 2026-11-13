@@ -14231,20 +14231,26 @@ const members = {
         repaymentPeriod: "1 MONTH",
         repaymentAmount: 2300,
         monthlyRepay: 2300,
-        amountPaid: 0,
-        balance: 2300,
-        latePenalty: 0,
+        amountPaid: 1000,
+        balance: 1300,
+        latePenalty: 30,
+        latePenaltyPaid: 0,
         date: "10/10/2026",
         firstRepaymentDate: "10/11/2026",
         finalRepaymentDate: "10/11/2026",
+        lastPaymentDate: "06/11/2026",
+        paymentHistory: [
+          { date: "06/11/2026", amount: 1000, note: "Repayment received" }
+        ],
         status: "APPROVED",
-        reason: "OUTSTANDING — NOT YET PAID",
+        reason: "PARTIALLY REPAID — KSH 1,000 RECEIVED ON 06/11/2026. KSH 1,300 LOAN BALANCE OUTSTANDING; KSH 30 LATE PAYMENT FINE ACCRUED AS AT 13/11/2026.",
         repaymentSchedule: [
           {
             month: 1,
             dueDate: "10/11/2026",
             amountDue: 2300,
-            amountPaid: 0
+            amountPaid: 1000,
+            status: "PARTIALLY PAID — OVERDUE"
           }
         ]
       }
