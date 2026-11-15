@@ -2514,7 +2514,7 @@ style="width:150px; height:150px; border-radius:50%; object-fit:cover; box-shado
 <div id="navButtons">
 <a class="nav-btn" onclick="simulateAction(this,'home')">🏠 Home <span class="spinner"></span></a>
 <a class="nav-btn" onclick="simulateAction(this,'about')">ℹ️ About Us <span class="spinner"></span></a>
-<a class="nav-btn" onclick="simulateAction(this,'membership')">👥 Membership <span class="spinner"></span></a>
+<a class="nav-btn" id="membershipMainBtn" onclick="openMembershipMenu(this)">👥 Membership <span class="spinner"></span></a>
 <a class="nav-btn" onclick="simulateLoanThenDisable(this)">
     🎲 Pick Number
     <span class="spinner"></span>
@@ -2525,7 +2525,6 @@ style="width:150px; height:150px; border-radius:50%; object-fit:cover; box-shado
   <span id="newsBadge" style="display:none; color:red; font-weight:bold; margin-left:5px;">●</span>
 <span class="spinner"></span>
 </a>
-<a class="nav-btn" onclick="simulateAction(this,'loginForm')">🔑 Member Login <span class="spinner"></span></a>
 <a class="nav-btn" onclick="simulateAction(this,'adminLogin')">⚙️ Admin <span class="spinner"></span></a>
 <a class="nav-btn" onclick="simulateAction(this,'rules')">
   📜 The Constitution <span class="spinner"></span>
@@ -2534,6 +2533,23 @@ style="width:150px; height:150px; border-radius:50%; object-fit:cover; box-shado
 </a>
 <a class="nav-btn" id="backBtn" onclick="showAllButtons()" style="display:none; background:#d32f2f;">⬅️ Back to Menu <span class="spinner"></span></a>
 </div>
+
+<!-- MEMBERSHIP SUB-MENU: new applicants and existing members -->
+<section id="membershipChoice" style="display:none;background:#f5f9fc;padding:clamp(20px,4vw,34px);">
+  <div style="max-width:850px;margin:0 auto;text-align:center;">
+    <div style="font-size:38px;">👥</div>
+    <h2 style="color:#12304a;margin:6px 0 8px;">Membership</h2>
+    <p style="color:#526579;line-height:1.65;margin:0 auto 22px;">Choose whether you are applying to become a new member or signing in to your existing member account.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:16px;text-align:left;">
+      <button type="button" onclick="openNewMembership()" style="min-height:145px;padding:22px;border:1px solid #cfe0e8;border-radius:15px;background:linear-gradient(135deg,#eaf7f4,#fff);color:#12304a;cursor:pointer;text-align:left;box-shadow:0 5px 16px rgba(18,48,74,.08);">
+        <span style="display:block;font-size:30px;margin-bottom:8px;">🌟</span><strong style="display:block;font-size:18px;">New Membership</strong><span style="display:block;margin-top:7px;font-size:13px;line-height:1.55;color:#526579;font-weight:500;">Read the welcome information, membership guide, requirements and complete the registration application.</span>
+      </button>
+      <button type="button" onclick="openExistingMemberLogin()" style="min-height:145px;padding:22px;border:1px solid #cfe0e8;border-radius:15px;background:linear-gradient(135deg,#edf3fb,#fff);color:#12304a;cursor:pointer;text-align:left;box-shadow:0 5px 16px rgba(18,48,74,.08);">
+        <span style="display:block;font-size:30px;margin-bottom:8px;">🔐</span><strong style="display:block;font-size:18px;">Member Login</strong><span style="display:block;margin-top:7px;font-size:13px;line-height:1.55;color:#526579;font-weight:500;">Already registered? Sign in to access your savings, contributions, loans and member services.</span>
+      </button>
+    </div>
+  </div>
+</section>
 
 <!-- 📜 The Constitution -->
 <section id="rules" style="background:#f5fff7; padding:30px; border-radius:12px; box-shadow:0 2px 12px rgba(0,0,0,0.08); font-family:'Poppins', sans-serif; color:#2e3b32;">
@@ -3284,6 +3300,57 @@ style="width:150px; height:150px; border-radius:50%; object-fit:cover; box-shado
 </section>
 <!-- 📰 News & Updates Section -->
 <!-- 📰 NEWS & UPDATES SECTION -->
+
+<!-- 🌟 NEW MEMBER WELCOME & DOWNLOAD CENTRE -->
+<section id="newMemberInfo" style="padding:30px 18px;background:linear-gradient(180deg,#f4f8ff 0%,#ffffff 100%);">
+  <div style="max-width:1120px;margin:0 auto;">
+    <div style="text-align:center;max-width:850px;margin:0 auto 24px;">
+      <div style="font-size:36px;">🌟</div>
+      <h2 style="color:#123d73;margin:6px 0 10px;">New Members – Welcome &amp; Information</h2>
+      <p style="color:#425466;line-height:1.75;margin:0;">Welcome to Future Finders Chama Group! Explore our services, understand how membership works and download our information guide. We look forward to saving, supporting and growing together.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,310px),1fr));gap:20px;align-items:stretch;">
+      <article style="background:#fff;border:1px solid #dce6f1;border-radius:16px;padding:18px;box-shadow:0 5px 18px rgba(18,48,74,.07);">
+        <img src="https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/Future_Finders_Chama_Overview_Poster_Official_Logo_No_QR.png" alt="Future Finders Chama Group overview poster" loading="lazy" style="display:block;width:100%;height:auto;max-height:620px;object-fit:contain;border-radius:10px;background:#f7f9fc;">
+        <h3 style="color:#123d73;margin:15px 0 7px;">Chama Overview Poster</h3>
+        <p style="color:#435466;line-height:1.6;margin:0 0 14px;">A quick introduction to our Chama, services, membership information and contact details.</p>
+        <a href="https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/Future_Finders_Chama_Overview_Poster_Official_Logo_No_QR.png" target="_blank" rel="noopener" style="display:inline-block;background:#123d73;color:#fff;padding:11px 17px;border-radius:9px;text-decoration:none;font-weight:700;">View / Save Poster</a>
+      </article>
+      <article style="background:#fff;border:1px solid #dce6f1;border-radius:16px;padding:22px;box-shadow:0 5px 18px rgba(18,48,74,.07);display:flex;flex-direction:column;justify-content:center;">
+        <div style="font-size:42px;">📘</div>
+        <h3 style="color:#123d73;margin:10px 0;">New Member Information Guide</h3>
+        <p style="color:#435466;line-height:1.7;">Read the full guide covering who we are, our mission and vision, all eight services, how to join, registration payment details, member responsibilities and important loan operating dates.</p>
+        <div style="background:#eef4fc;border-left:4px solid #d69a13;border-radius:8px;padding:13px;margin:8px 0 16px;color:#23415f;line-height:1.7;">
+          <strong>Registration fee:</strong> KSh 500 (one-time)<br>
+          <strong>Till Number:</strong> 3591312<br>
+          <strong>Account Name:</strong> BONIFACE CHELLUGET<br>
+          <strong>Call / WhatsApp:</strong> 0713953004
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;">
+          <a href="https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/Future_Finders_New_Member_Guide_With_Website_QR.pdf" target="_blank" rel="noopener" style="display:inline-block;background:#123d73;color:#fff;padding:11px 17px;border-radius:9px;text-decoration:none;font-weight:700;">Read PDF Guide</a>
+          <a href="https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/Future_Finders_New_Member_Guide_With_Website_QR.pdf" download style="display:inline-block;background:#e9a91b;color:#172b4d;padding:11px 17px;border-radius:9px;text-decoration:none;font-weight:700;">Download PDF</a>
+          <a href="https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/Future_Finders_Website_QR_Code.png" target="_blank" rel="noopener" style="display:inline-block;background:#16866b;color:#fff;padding:11px 17px;border-radius:9px;text-decoration:none;font-weight:700;">View / Save Website QR</a>
+        </div>
+      </article>
+    </div>
+    <div style="margin:18px auto 0;max-width:420px;text-align:center;background:#f7fbff;border:1px solid #dce6f1;border-radius:14px;padding:16px;">
+      <h3 style="color:#123d73;margin:0 0 8px;">Website QR Code</h3>
+      <a href="https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/Future_Finders_Website_QR_Code.png" target="_blank" rel="noopener" style="display:inline-block;color:#123d73;font-weight:700;text-decoration:underline;">Open or save the QR code image</a>
+      <p style="margin:7px 0 0;color:#526579;font-size:13px;">Scan this code to visit the Future Finders Chama website.</p>
+    </div>
+    <div style="background:#123d73;color:#fff;border-radius:14px;padding:18px;text-align:center;margin:22px 0 0;">
+      <h3 style="margin:0 0 7px;color:#fff;">Ready to learn more or join us?</h3>
+      <p style="margin:0 0 12px;line-height:1.6;">Visit our membership section or contact our team on 0713953004.</p>
+      <a href="https://wa.me/254713953004" target="_blank" rel="noopener" style="display:inline-block;background:#fff;color:#123d73;padding:10px 18px;border-radius:9px;text-decoration:none;font-weight:700;">Contact Us on WhatsApp</a>
+    </div>
+    <div style="max-width:720px;margin:28px auto 4px;padding:24px 18px;text-align:center;background:linear-gradient(135deg,#0b3b72,#087f5b);border-radius:16px;box-shadow:0 8px 22px rgba(13,52,103,.16);color:#fff;">
+      <h3 style="margin:0 0 8px;color:#fff;font-size:22px;">Ready to become a member?</h3>
+      <p style="margin:0 0 16px;line-height:1.65;color:#eef7ff;">Please read the information above first. When you are ready, click below to open the membership registration form.</p>
+      <button type="button" onclick="showNewMemberRegistration()" style="border:0;border-radius:10px;background:#f2b800;color:#17365d;padding:14px 24px;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.15);">📝 Click Here to Register</button>
+    </div>
+  </div>
+</section>
+
 <section id="updates">
   <h2>📰 News & Updates</h2>
 
@@ -14428,6 +14495,56 @@ const members = {
     loans: []
   }
 };
+// Membership navigation: one main button opens the two membership pathways.
+function openMembershipMenu(button) {
+  const spinner = button.querySelector('.spinner');
+  if (spinner) spinner.style.display = 'inline-block';
+  button.style.pointerEvents = 'none';
+  setTimeout(() => {
+    if (spinner) spinner.style.display = 'none';
+    button.style.pointerEvents = 'auto';
+    document.querySelectorAll('section, #dashboard, #admin, #newsSection').forEach(el => el.style.display = 'none');
+    document.querySelectorAll('#navButtons .nav-btn').forEach(el => el.style.display = 'none');
+    button.style.display = 'inline-block';
+    const menu = document.getElementById('membershipChoice');
+    if (menu) menu.style.display = 'block';
+    const back = document.getElementById('backBtn');
+    if (back) back.style.display = 'inline-block';
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }, 450);
+}
+
+// New Membership opens the welcome and information centre first.
+function openNewMembership() {
+  document.querySelectorAll('section, #dashboard, #admin, #newsSection').forEach(el => el.style.display = 'none');
+  const welcome = document.getElementById('newMemberInfo');
+  const registration = document.getElementById('membership');
+  if (welcome) welcome.style.display = 'block';
+  if (registration) registration.style.display = 'none';
+  const back = document.getElementById('backBtn');
+  if (back) back.style.display = 'inline-block';
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+// Show the registration wizard only after the applicant clicks the registration button.
+function showNewMemberRegistration() {
+  const welcome = document.getElementById('newMemberInfo');
+  const registration = document.getElementById('membership');
+  if (welcome) welcome.style.display = 'none';
+  if (registration) registration.style.display = 'block';
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+// Existing members go directly to the original login form.
+function openExistingMemberLogin() {
+  document.querySelectorAll('section, #dashboard, #admin, #newsSection').forEach(el => el.style.display = 'none');
+  const login = document.getElementById('loginForm');
+  if (login) login.style.display = 'block';
+  const back = document.getElementById('backBtn');
+  if (back) back.style.display = 'inline-block';
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
 // 🔄 Simulate loading action (button + spinner + section switch)
 function simulateAction(button, sectionId) {
   let spinner = button.querySelector(".spinner");
