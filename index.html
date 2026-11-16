@@ -2514,7 +2514,8 @@ style="width:150px; height:150px; border-radius:50%; object-fit:cover; box-shado
 <div id="navButtons">
 <a class="nav-btn" onclick="simulateAction(this,'home')">🏠 Home <span class="spinner"></span></a>
 <a class="nav-btn" onclick="simulateAction(this,'about')">ℹ️ About Us <span class="spinner"></span></a>
-<a class="nav-btn" id="membershipMainBtn" onclick="openMembershipMenu(this)">👥 Membership <span class="spinner"></span></a>
+<a class="nav-btn" onclick="simulateAction(this,'membership')">👥 Membership <span class="spinner"></span></a>
+ <a class="nav-btn" onclick="simulateAction(this,'newMemberInfo')">🌟 New Members <span class="spinner"></span></a>
 <a class="nav-btn" onclick="simulateLoanThenDisable(this)">
     🎲 Pick Number
     <span class="spinner"></span>
@@ -2525,6 +2526,7 @@ style="width:150px; height:150px; border-radius:50%; object-fit:cover; box-shado
   <span id="newsBadge" style="display:none; color:red; font-weight:bold; margin-left:5px;">●</span>
 <span class="spinner"></span>
 </a>
+<a class="nav-btn" onclick="simulateAction(this,'loginForm')">🔑 Member Login <span class="spinner"></span></a>
 <a class="nav-btn" onclick="simulateAction(this,'adminLogin')">⚙️ Admin <span class="spinner"></span></a>
 <a class="nav-btn" onclick="simulateAction(this,'rules')">
   📜 The Constitution <span class="spinner"></span>
@@ -2533,23 +2535,6 @@ style="width:150px; height:150px; border-radius:50%; object-fit:cover; box-shado
 </a>
 <a class="nav-btn" id="backBtn" onclick="showAllButtons()" style="display:none; background:#d32f2f;">⬅️ Back to Menu <span class="spinner"></span></a>
 </div>
-
-<!-- MEMBERSHIP SUB-MENU: new applicants and existing members -->
-<section id="membershipChoice" style="display:none;background:#f5f9fc;padding:clamp(20px,4vw,34px);">
-  <div style="max-width:850px;margin:0 auto;text-align:center;">
-    <div style="font-size:38px;">👥</div>
-    <h2 style="color:#12304a;margin:6px 0 8px;">Membership</h2>
-    <p style="color:#526579;line-height:1.65;margin:0 auto 22px;">Choose whether you are applying to become a new member or signing in to your existing member account.</p>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:16px;text-align:left;">
-      <button type="button" onclick="openNewMembership()" style="min-height:145px;padding:22px;border:1px solid #cfe0e8;border-radius:15px;background:linear-gradient(135deg,#eaf7f4,#fff);color:#12304a;cursor:pointer;text-align:left;box-shadow:0 5px 16px rgba(18,48,74,.08);">
-        <span style="display:block;font-size:30px;margin-bottom:8px;">🌟</span><strong style="display:block;font-size:18px;">New Membership</strong><span style="display:block;margin-top:7px;font-size:13px;line-height:1.55;color:#526579;font-weight:500;">Read the welcome information, membership guide, requirements and complete the registration application.</span>
-      </button>
-      <button type="button" onclick="openExistingMemberLogin()" style="min-height:145px;padding:22px;border:1px solid #cfe0e8;border-radius:15px;background:linear-gradient(135deg,#edf3fb,#fff);color:#12304a;cursor:pointer;text-align:left;box-shadow:0 5px 16px rgba(18,48,74,.08);">
-        <span style="display:block;font-size:30px;margin-bottom:8px;">🔐</span><strong style="display:block;font-size:18px;">Member Login</strong><span style="display:block;margin-top:7px;font-size:13px;line-height:1.55;color:#526579;font-weight:500;">Already registered? Sign in to access your savings, contributions, loans and member services.</span>
-      </button>
-    </div>
-  </div>
-</section>
 
 <!-- 📜 The Constitution -->
 <section id="rules" style="background:#f5fff7; padding:30px; border-radius:12px; box-shadow:0 2px 12px rgba(0,0,0,0.08); font-family:'Poppins', sans-serif; color:#2e3b32;">
@@ -3342,11 +3327,6 @@ style="width:150px; height:150px; border-radius:50%; object-fit:cover; box-shado
       <h3 style="margin:0 0 7px;color:#fff;">Ready to learn more or join us?</h3>
       <p style="margin:0 0 12px;line-height:1.6;">Visit our membership section or contact our team on 0713953004.</p>
       <a href="https://wa.me/254713953004" target="_blank" rel="noopener" style="display:inline-block;background:#fff;color:#123d73;padding:10px 18px;border-radius:9px;text-decoration:none;font-weight:700;">Contact Us on WhatsApp</a>
-    </div>
-    <div style="max-width:720px;margin:28px auto 4px;padding:24px 18px;text-align:center;background:linear-gradient(135deg,#0b3b72,#087f5b);border-radius:16px;box-shadow:0 8px 22px rgba(13,52,103,.16);color:#fff;">
-      <h3 style="margin:0 0 8px;color:#fff;font-size:22px;">Ready to become a member?</h3>
-      <p style="margin:0 0 16px;line-height:1.65;color:#eef7ff;">Please read the information above first. When you are ready, click below to open the membership registration form.</p>
-      <button type="button" onclick="showNewMemberRegistration()" style="border:0;border-radius:10px;background:#f2b800;color:#17365d;padding:14px 24px;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.15);">📝 Click Here to Register</button>
     </div>
   </div>
 </section>
@@ -11422,7 +11402,7 @@ calculate2025();
       📊 Group Contributions for 2026
       <br>
       <span id="updateTime">
-        ⏱ Last updated on <b>11TH NOVEMBER  2026 AT 16:53 PM</b>
+        ⏱ Last updated on <b>16TH NOVEMBER  2026 AT 11:05 AM</b>
       </span>
     </h4>
 
@@ -11552,7 +11532,7 @@ calculate2025();
 <td><input type="number" value="400"></td>
 <td><input type="number" value="400"></td>
 <td><input type="number" value="400"></td>
-<td><input type="number" value="200"></td>
+<td><input type="number" value="300"></td>
 <td><input type="number" value="0"></td>
 <td class="rowTotal">0</td>
 <td class="saved2026">0</td>
@@ -11573,7 +11553,7 @@ calculate2025();
 <td><input type="number" value="0"></td>
 <td><input type="number" value="0"></td>
 <td><input type="number" value="100"></td>
-<td><input type="number" value="100"></td>
+<td><input type="number" value="150"></td>
 <td><input type="number" value="0"></td>
 <td class="rowTotal">0</td>
 <td class="saved2026">0</td>
@@ -11863,7 +11843,7 @@ calculate2025();
 <td><input type="number" value="0"></td>
 <td><input type="number" value="200"></td>
 <td><input type="number" value="50"></td>
-<td><input type="number" value="3597"></td>
+<td><input type="number" value="3647"></td>
 <td><input type="number" value="0"></td>
 <td class="rowTotal">0</td>
 <td class="saved2026">0</td>
@@ -13616,7 +13596,7 @@ const members = {
     savings: 0,
     rewardBack: 3122,
     monthly: [1922, 400, 450, 350],
-    note: "Fines: KSh 360 as of 2 Nov 2025; paid KSh 0, unpaid KSh 360. Very active; good candidate for larger loans. EXIT NOTICE: FFC-EXIT-2026-66752312 — Under Financial Reconciliation, pending Chairlady confirmation. Eligible personal savings / December 2026 Reward Back: KSh 3,122. Deductions: KSh 360 unpaid fines + KSh 400 welfare support = KSh 760. Provisional net settlement: KSh 2,362, not yet approved or paid. Reconciliation target: 02 January 2027.",
+    note: "Fines: KSh 360 as of 2 Nov 2025; paid KSh 0, unpaid KSh 360. Very active; good candidate for larger loans. EXIT NOTICE: FFC-EXIT-2026-66752312 — Approved. Eligible personal savings / December 2026 Reward Back: KSh 3,122. Deductions: KSh 360 unpaid fines + KSh 400 welfare support = KSh 760. Approved net settlement: KSh 2,362, scheduled for payment by 15 December 2026; not yet paid.",
     contracts: [],
     loans: [],
     exits: [{
@@ -13627,26 +13607,26 @@ const members = {
       contractRef: "Not recorded",
       noticeDate: "2026-11-03",
       intendedExitDate: "2026-12-03",
-      reconciliationDueDate: "2027-01-02",
+      reconciliationDueDate: "2026-12-15",
       reason: "Personal reasons",
       explanation: "Voluntary membership exit notice submitted.",
       signature: "Submitted notice on record",
       signedAt: "03 November 2026",
       signedAtISO: "2026-11-03T00:00:00.000Z",
-      status: "Under Financial Reconciliation — Pending Chairlady Confirmation",
+      status: "Approved",
       eligibleSavings: 3122,
       rewardBackAmount: 3122,
       finesDeduction: 360,
       welfareSupportDeduction: 400,
       rewardBackMonth: "December 2026",
-      rewardBackStatus: "Allocated to December reward — payable after financial reconciliation; final approval and settlement pending",
+      rewardBackStatus: "Approved — KSh 2,362 scheduled for payment by 15 December 2026; not yet paid",
       approvedDue: 0,
       obligations: 760,
       settlement: 2362,
-      adminRemarks: "KSh 360 unpaid fines plus KSh 400 welfare support deduction; provisional net settlement KSh 2,362.",
-      chairladyRemarks: "Pending Chairlady confirmation; settlement not approved or paid.",
+      adminRemarks: "Approved net settlement of KSh 2,362 after KSh 360 unpaid fines and KSh 400 welfare support deductions. Payment is scheduled by 15 December 2026.",
+      chairladyRemarks: "Approval recorded. Net settlement of KSh 2,362 is to be paid by 15 December 2026; payment remains pending until recorded.",
       reconciliationDate: "",
-      expectedSettlementDate: "2027-01-02",
+      expectedSettlementDate: "2026-12-15",
       settlementDate: "",
       effectiveExitDate: "",
       createdAt: "2026-11-03T00:00:00.000Z",
@@ -14495,56 +14475,6 @@ const members = {
     loans: []
   }
 };
-// Membership navigation: one main button opens the two membership pathways.
-function openMembershipMenu(button) {
-  const spinner = button.querySelector('.spinner');
-  if (spinner) spinner.style.display = 'inline-block';
-  button.style.pointerEvents = 'none';
-  setTimeout(() => {
-    if (spinner) spinner.style.display = 'none';
-    button.style.pointerEvents = 'auto';
-    document.querySelectorAll('section, #dashboard, #admin, #newsSection').forEach(el => el.style.display = 'none');
-    document.querySelectorAll('#navButtons .nav-btn').forEach(el => el.style.display = 'none');
-    button.style.display = 'inline-block';
-    const menu = document.getElementById('membershipChoice');
-    if (menu) menu.style.display = 'block';
-    const back = document.getElementById('backBtn');
-    if (back) back.style.display = 'inline-block';
-    window.scrollTo({top: 0, behavior: 'smooth'});
-  }, 450);
-}
-
-// New Membership opens the welcome and information centre first.
-function openNewMembership() {
-  document.querySelectorAll('section, #dashboard, #admin, #newsSection').forEach(el => el.style.display = 'none');
-  const welcome = document.getElementById('newMemberInfo');
-  const registration = document.getElementById('membership');
-  if (welcome) welcome.style.display = 'block';
-  if (registration) registration.style.display = 'none';
-  const back = document.getElementById('backBtn');
-  if (back) back.style.display = 'inline-block';
-  window.scrollTo({top: 0, behavior: 'smooth'});
-}
-
-// Show the registration wizard only after the applicant clicks the registration button.
-function showNewMemberRegistration() {
-  const welcome = document.getElementById('newMemberInfo');
-  const registration = document.getElementById('membership');
-  if (welcome) welcome.style.display = 'none';
-  if (registration) registration.style.display = 'block';
-  window.scrollTo({top: 0, behavior: 'smooth'});
-}
-
-// Existing members go directly to the original login form.
-function openExistingMemberLogin() {
-  document.querySelectorAll('section, #dashboard, #admin, #newsSection').forEach(el => el.style.display = 'none');
-  const login = document.getElementById('loginForm');
-  if (login) login.style.display = 'block';
-  const back = document.getElementById('backBtn');
-  if (back) back.style.display = 'inline-block';
-  window.scrollTo({top: 0, behavior: 'smooth'});
-}
-
 // 🔄 Simulate loading action (button + spinner + section switch)
 function simulateAction(button, sectionId) {
   let spinner = button.querySelector(".spinner");
@@ -24212,7 +24142,7 @@ async function downloadIndividualSavingsReportsPDF() {
  window.previewMemberExitNotice=preview;
  window.submitMemberExitNotice=function(ev){ev.preventDefault();const name=currentName();if(!name){alert('Please log in first.');return;}const rows=getRows();const editing=editingExitId?rows.find(x=>x.id===editingExitId):null;const latest=latestFor(name);if(editing&&(!isExitPending(editing)||String(editing.member).toLowerCase()!==name.toLowerCase())){alert('Only your own pending exit notice can be edited.');return;}if(!editing&&latest&&isExitPending(latest)){$('ffExitMessage').textContent='You already have a pending withdrawal notice ('+latest.id+'). Please use Edit Pending Exit Notice in your history.';$('ffExitMessage').style.color='#b91c1c';return;}if(!editing&&latest&&!String(latest.status||'').toLowerCase().includes('reject')&&latest.status!=='Notice Withdrawn'){$('ffExitMessage').textContent='An exit notice is already in progress or recorded. Please contact the Admin.';$('ffExitMessage').style.color='#b91c1c';return;}const intended=$('ffExitIntendedDate').value;if(!intended||intended<addDays(today(),30)){$('ffExitMessage').textContent='The intended exit date must be at least 30 days after the notice date, as required by Article 11.1.';$('ffExitMessage').style.color='#b91c1c';return;}const sig=$('ffExitSignature').value.trim();if(sig.toLowerCase()!==name.toLowerCase()){$('ffExitMessage').textContent='Your digital signature must match your full registered member name.';$('ffExitMessage').style.color='#b91c1c';return;}if(!$('ffExitPreviewAck').checked){$('ffExitMessage').textContent='Please review the complete notice preview and confirm that you have read it before signing.';$('ffExitMessage').style.color='#b91c1c';$('ffExitPreviewWrap').style.display='block';return;}const now=new Date();const signedAt=now.toLocaleString('en-KE',{timeZone:'Africa/Nairobi',dateStyle:'long',timeStyle:'short'});let r;if(editing){Object.assign(editing,{membershipNo:$('ffExitMembershipNo').value.trim(),phone:$('ffExitPhone').value,contractRef:$('ffExitContractRef').value.trim(),intendedExitDate:intended,reconciliationDueDate:addDays(intended,30),reason:$('ffExitReason').value,explanation:$('ffExitExplanation').value.trim(),signature:sig,signedAt,signedAtISO:now.toISOString(),updatedAt:now.toISOString(),disputeAcknowledged:$('ffExitDisputeAck').checked});r=editing;}else{r={id:'FFC-EXIT-'+now.getFullYear()+'-'+now.getTime().toString().slice(-7),member:name,membershipNo:$('ffExitMembershipNo').value.trim(),phone:$('ffExitPhone').value,contractRef:$('ffExitContractRef').value.trim(),noticeDate:today(),intendedExitDate:intended,reconciliationDueDate:addDays(intended,30),reason:$('ffExitReason').value,explanation:$('ffExitExplanation').value.trim(),signature:sig,signedAt,signedAtISO:now.toISOString(),status:'Notice Submitted — 30-Day Notice',eligibleSavings:0,approvedDue:0,obligations:0,settlement:0,adminRemarks:'',chairladyRemarks:'',reconciliationDate:'',expectedSettlementDate:addDays(intended,30),settlementDate:'',effectiveExitDate:'',createdAt:now.toISOString(),article:'11',disputeAcknowledged:$('ffExitDisputeAck').checked};rows.push(r);}saveRows(rows);editingExitId=null;$('ffExitMessage').textContent=(editing?'Your pending withdrawal notice has been updated.':'Your written withdrawal notice has been recorded.')+' Reference: '+r.id+'. Download the signed PDF and send it to the Admin. Your membership has not yet been marked as exited.';$('ffExitMessage').style.color='#087f5b';$('ffExitSignedActions').style.display='block';renderMemberHistory(name);renderAdmin();printRecord(r);};
  function renderMemberHistory(name){const host=$('ffMemberExitHistory');if(!host)return;const rows=getRows().filter(r=>String(r.member).toLowerCase()===String(name).toLowerCase()).sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''));host.innerHTML=rows.length?rows.map(r=>`<div style="border:1px solid #ddd6fe;border-radius:10px;padding:12px;margin:9px 0;background:#fff;"><b>Reference:</b> ${esc(r.id)}<br><b>Notice date:</b> ${esc(fmt(r.noticeDate))}<br><b>Intended exit:</b> ${esc(fmt(r.intendedExitDate))}<br><b>Status:</b> <strong>${esc(r.status||'Pending Admin Review')}</strong><div style="margin-top:10px;padding:10px;background:#f8f7fc;border-radius:8px;line-height:1.65;"><b>Financial reconciliation target:</b> ${esc(fmt(r.reconciliationDueDate||r.expectedSettlementDate))}<br><b>Personal savings allocated to Reward Back:</b> KSh ${Number(r.eligibleSavings||0).toLocaleString('en-KE')}<br><b>Reward period:</b> ${esc(r.rewardBackMonth||'Not recorded')}<br><b>Reward Back payment:</b> ${esc(r.rewardBackStatus||'Not recorded')}<br><b>Unpaid fines deduction:</b> KSh ${Number(r.finesDeduction||0).toLocaleString('en-KE')}<br><b>Welfare support deduction:</b> KSh ${Number(r.welfareSupportDeduction||0).toLocaleString('en-KE')}<br><b>Total deductions:</b> KSh ${Number(r.obligations||0).toLocaleString('en-KE')}<br><b>Provisional net settlement:</b> KSh ${Number(r.settlement||0).toLocaleString('en-KE')} — pending Chairlady confirmation; not yet paid<br><b>Reconciliation note:</b> All verified eligible personal savings are to be settled after reconciliation. The financial reconciliation target is ${esc(fmt(r.reconciliationDueDate||r.expectedSettlementDate))}; final approval and settlement remain pending.</div>${isExitPending(r)?`<br><span style="color:#92400e;font-size:13px;">Pending review — you may edit this notice until a decision is recorded.</span>`:String(r.status||'').toLowerCase().includes('reject')?`<br><span style="color:#b91c1c;font-size:13px;">Rejected — this notice can no longer be edited.</span>`:''}<br><button type="button" onclick="downloadExitNoticeById('${esc(r.id)}')" style="margin-top:9px;padding:8px 12px;border:0;border-radius:7px;background:#56328a;color:#fff;font-weight:700;cursor:pointer;">⬇ Download / Print Notice</button></div>`).join(''):'<p style="color:#64748b;">No withdrawal notices have been submitted.</p>'; }
- function renderAdmin(){const body=$('ffAdminExitTable');if(!body)return;const rows=getRows().sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''));if(!rows.length){body.innerHTML='<tr><td colspan="9" style="padding:14px;text-align:center;color:#64748b;">No withdrawal notices have been submitted in this browser.</td></tr>';return;}body.innerHTML=rows.map(r=>`<tr><td style="padding:8px;border-bottom:1px solid #ddd;">${esc(r.member)}<br><small>${esc(r.id)}</small></td><td style="padding:8px;border-bottom:1px solid #ddd;">${esc(fmt(r.noticeDate))}<br>${esc(fmt(r.intendedExitDate))}</td><td style="padding:8px;border-bottom:1px solid #ddd;"><select id="ff-exit-status-${esc(r.id)}" style="width:190px;padding:7px;">${['Notice Submitted — 30-Day Notice','Under Financial Reconciliation','Under Financial Reconciliation — Pending Chairlady Confirmation','Settlement Pending','Exit Recorded','Rejected','Notice Withdrawn'].map(v=>`<option ${r.status===v?'selected':''}>${v}</option>`).join('')}</select></td><td style="padding:8px;border-bottom:1px solid #ddd;"><input id="ff-exit-savings-${esc(r.id)}" type="number" min="0" step="0.01" value="${Number(r.eligibleSavings||0)}" style="width:110px;padding:7px;"></td><td style="padding:8px;border-bottom:1px solid #ddd;"><input id="ff-exit-obligations-${esc(r.id)}" type="number" min="0" step="0.01" value="${Number(r.obligations||0)}" style="width:110px;padding:7px;"></td><td style="padding:8px;border-bottom:1px solid #ddd;"><input id="ff-exit-due-${esc(r.id)}" type="number" min="0" step="0.01" value="${Number(r.approvedDue||0)}" style="width:110px;padding:7px;"></td><td style="padding:8px;border-bottom:1px solid #ddd;"><input id="ff-exit-net-${esc(r.id)}" type="number" readonly value="${Number(r.settlement||0)}" style="width:110px;padding:7px;background:#f1f5f9;"></td><td style="padding:8px;border-bottom:1px solid #ddd;"><textarea id="ff-exit-admin-${esc(r.id)}" placeholder="Admin remarks" rows="2" style="width:170px;">${esc(r.adminRemarks||'')}</textarea><textarea id="ff-exit-chair-${esc(r.id)}" placeholder="Chairlady remarks / oversight" rows="2" style="width:170px;margin-top:5px;">${esc(r.chairladyRemarks||'')}</textarea><label style="display:block;font-size:11px;">Reconciled <input id="ff-exit-reconciled-${esc(r.id)}" type="date" value="${esc(r.reconciliationDate||'')}"></label><label style="display:block;font-size:11px;">Expected settlement <input id="ff-exit-expected-${esc(r.id)}" type="date" value="${esc(r.expectedSettlementDate||'')}"></label><label style="display:block;font-size:11px;">Settled <input id="ff-exit-settled-${esc(r.id)}" type="date" value="${esc(r.settlementDate||'')}"></label><label style="display:block;font-size:11px;">Effective exit <input id="ff-exit-effective-${esc(r.id)}" type="date" value="${esc(r.effectiveExitDate||'')}"></label></td><td style="padding:8px;border-bottom:1px solid #ddd;white-space:nowrap;"><button type="button" onclick="saveAdminExitRecord('${esc(r.id)}')" style="padding:7px;cursor:pointer;">Save review</button> <button type="button" onclick="downloadExitNoticeById('${esc(r.id)}')" style="padding:7px;cursor:pointer;">PDF</button></td></tr>`).join('');}
+ function renderAdmin(){const body=$('ffAdminExitTable');if(!body)return;const rows=getRows().sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''));if(!rows.length){body.innerHTML='<tr><td colspan="9" style="padding:14px;text-align:center;color:#64748b;">No withdrawal notices have been submitted in this browser.</td></tr>';return;}body.innerHTML=rows.map(r=>`<tr><td style="padding:8px;border-bottom:1px solid #ddd;">${esc(r.member)}<br><small>${esc(r.id)}</small></td><td style="padding:8px;border-bottom:1px solid #ddd;">${esc(fmt(r.noticeDate))}<br>${esc(fmt(r.intendedExitDate))}</td><td style="padding:8px;border-bottom:1px solid #ddd;"><select id="ff-exit-status-${esc(r.id)}" style="width:190px;padding:7px;">${['Notice Submitted — 30-Day Notice','Under Financial Reconciliation','Under Financial Reconciliation — Pending Chairlady Confirmation','Approved','Settlement Pending','Exit Recorded','Rejected','Notice Withdrawn'].map(v=>`<option ${r.status===v?'selected':''}>${v}</option>`).join('')}</select></td><td style="padding:8px;border-bottom:1px solid #ddd;"><input id="ff-exit-savings-${esc(r.id)}" type="number" min="0" step="0.01" value="${Number(r.eligibleSavings||0)}" style="width:110px;padding:7px;"></td><td style="padding:8px;border-bottom:1px solid #ddd;"><input id="ff-exit-obligations-${esc(r.id)}" type="number" min="0" step="0.01" value="${Number(r.obligations||0)}" style="width:110px;padding:7px;"></td><td style="padding:8px;border-bottom:1px solid #ddd;"><input id="ff-exit-due-${esc(r.id)}" type="number" min="0" step="0.01" value="${Number(r.approvedDue||0)}" style="width:110px;padding:7px;"></td><td style="padding:8px;border-bottom:1px solid #ddd;"><input id="ff-exit-net-${esc(r.id)}" type="number" readonly value="${Number(r.settlement||0)}" style="width:110px;padding:7px;background:#f1f5f9;"></td><td style="padding:8px;border-bottom:1px solid #ddd;"><textarea id="ff-exit-admin-${esc(r.id)}" placeholder="Admin remarks" rows="2" style="width:170px;">${esc(r.adminRemarks||'')}</textarea><textarea id="ff-exit-chair-${esc(r.id)}" placeholder="Chairlady remarks / oversight" rows="2" style="width:170px;margin-top:5px;">${esc(r.chairladyRemarks||'')}</textarea><label style="display:block;font-size:11px;">Reconciled <input id="ff-exit-reconciled-${esc(r.id)}" type="date" value="${esc(r.reconciliationDate||'')}"></label><label style="display:block;font-size:11px;">Expected settlement <input id="ff-exit-expected-${esc(r.id)}" type="date" value="${esc(r.expectedSettlementDate||'')}"></label><label style="display:block;font-size:11px;">Settled <input id="ff-exit-settled-${esc(r.id)}" type="date" value="${esc(r.settlementDate||'')}"></label><label style="display:block;font-size:11px;">Effective exit <input id="ff-exit-effective-${esc(r.id)}" type="date" value="${esc(r.effectiveExitDate||'')}"></label></td><td style="padding:8px;border-bottom:1px solid #ddd;white-space:nowrap;"><button type="button" onclick="saveAdminExitRecord('${esc(r.id)}')" style="padding:7px;cursor:pointer;">Save review</button> <button type="button" onclick="downloadExitNoticeById('${esc(r.id)}')" style="padding:7px;cursor:pointer;">PDF</button></td></tr>`).join('');}
  window.saveAdminExitRecord=function(id){const rows=getRows();const i=rows.findIndex(r=>r.id===id);if(i<0)return;const r=rows[i];const savings=Number($('ff-exit-savings-'+id).value||0),obligations=Number($('ff-exit-obligations-'+id).value||0),due=Number($('ff-exit-due-'+id).value||0);if([savings,obligations,due].some(n=>!Number.isFinite(n)||n<0)){alert('Enter valid non-negative financial amounts.');return;}r.status=$('ff-exit-status-'+id).value;r.eligibleSavings=savings;r.obligations=obligations;r.approvedDue=due;r.settlement=savings+due-obligations;r.adminRemarks=$('ff-exit-admin-'+id).value.trim();r.chairladyRemarks=$('ff-exit-chair-'+id).value.trim();r.reconciliationDate=$('ff-exit-reconciled-'+id).value;r.expectedSettlementDate=$('ff-exit-expected-'+id).value;r.settlementDate=$('ff-exit-settled-'+id).value;r.effectiveExitDate=$('ff-exit-effective-'+id).value;r.adminUpdatedAt=new Date().toISOString();if(r.status==='Exit Recorded'&&!r.effectiveExitDate){alert('Enter the effective exit date before recording the exit.');return;}saveRows(rows);renderAdmin();renderMemberHistory(currentName());$('ffAdminExitMessage').textContent='Review saved locally in this browser. To publish this official exit record across devices, add it to the member exits array in index.html and redeploy.';$('ffAdminExitMessage').style.color='#087f5b';};
  window.downloadExitNoticeById=function(id){const r=getRows().find(x=>x.id===id);if(r)printRecord(r);else alert('Exit notice record not found.');};
  window.downloadMyExitNotice=function(){const r=latestFor(currentName());if(r)printRecord(r);else alert('No withdrawal notice found.');};
