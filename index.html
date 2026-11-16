@@ -2514,8 +2514,7 @@ style="width:150px; height:150px; border-radius:50%; object-fit:cover; box-shado
 <div id="navButtons">
 <a class="nav-btn" onclick="simulateAction(this,'home')">🏠 Home <span class="spinner"></span></a>
 <a class="nav-btn" onclick="simulateAction(this,'about')">ℹ️ About Us <span class="spinner"></span></a>
-<a class="nav-btn" onclick="simulateAction(this,'membership')">👥 Membership <span class="spinner"></span></a>
- <a class="nav-btn" onclick="simulateAction(this,'newMemberInfo')">🌟 New Members <span class="spinner"></span></a>
+<a class="nav-btn" id="membershipMainBtn" onclick="openMembershipMenu(this)">👥 Membership <span class="spinner"></span></a>
 <a class="nav-btn" onclick="simulateLoanThenDisable(this)">
     🎲 Pick Number
     <span class="spinner"></span>
@@ -2526,8 +2525,6 @@ style="width:150px; height:150px; border-radius:50%; object-fit:cover; box-shado
   <span id="newsBadge" style="display:none; color:red; font-weight:bold; margin-left:5px;">●</span>
 <span class="spinner"></span>
 </a>
-<a class="nav-btn" onclick="simulateAction(this,'loginForm')">🔑 Member Login <span class="spinner"></span></a>
-<a class="nav-btn" onclick="simulateAction(this,'adminLogin')">⚙️ Admin <span class="spinner"></span></a>
 <a class="nav-btn" onclick="simulateAction(this,'rules')">
   📜 The Constitution <span class="spinner"></span>
 </a>
@@ -2535,6 +2532,26 @@ style="width:150px; height:150px; border-radius:50%; object-fit:cover; box-shado
 </a>
 <a class="nav-btn" id="backBtn" onclick="showAllButtons()" style="display:none; background:#d32f2f;">⬅️ Back to Menu <span class="spinner"></span></a>
 </div>
+
+<!-- MEMBERSHIP SUB-MENU: new applicants and existing members -->
+<section id="membershipChoice" style="display:none;background:#f5f9fc;padding:clamp(20px,4vw,34px);">
+  <div style="max-width:850px;margin:0 auto;text-align:center;">
+    <div style="font-size:38px;">👥</div>
+    <h2 style="color:#12304a;margin:6px 0 8px;">Membership</h2>
+    <p style="color:#526579;line-height:1.65;margin:0 auto 22px;">Choose whether you are applying to become a new member or signing in to your existing member account.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:16px;text-align:left;">
+      <button type="button" onclick="openNewMembership()" style="min-height:145px;padding:22px;border:1px solid #cfe0e8;border-radius:15px;background:linear-gradient(135deg,#eaf7f4,#fff);color:#12304a;cursor:pointer;text-align:left;box-shadow:0 5px 16px rgba(18,48,74,.08);">
+        <span style="display:block;font-size:30px;margin-bottom:8px;">🌟</span><strong style="display:block;font-size:18px;">New Membership</strong><span style="display:block;margin-top:7px;font-size:13px;line-height:1.55;color:#526579;font-weight:500;">Read the welcome information, membership guide, requirements and complete the registration application.</span>
+      </button>
+      <button type="button" onclick="openExistingMemberLogin()" style="min-height:145px;padding:22px;border:1px solid #cfe0e8;border-radius:15px;background:linear-gradient(135deg,#edf3fb,#fff);color:#12304a;cursor:pointer;text-align:left;box-shadow:0 5px 16px rgba(18,48,74,.08);">
+        <span style="display:block;font-size:30px;margin-bottom:8px;">🔐</span><strong style="display:block;font-size:18px;">Member Login</strong><span style="display:block;margin-top:7px;font-size:13px;line-height:1.55;color:#526579;font-weight:500;">Already registered? Sign in to access your savings, contributions, loans and member services.</span>
+      </button>
+      <button type="button" onclick="openAdminLoginFromMembership()" style="min-height:145px;padding:22px;border:1px solid #e5d5f2;border-radius:15px;background:linear-gradient(135deg,#f5edfb,#fff);color:#35204d;cursor:pointer;text-align:left;box-shadow:0 5px 16px rgba(53,32,77,.08);">
+        <span style="display:block;font-size:30px;margin-bottom:8px;">⚙️</span><strong style="display:block;font-size:18px;">Admin</strong><span style="display:block;margin-top:7px;font-size:13px;line-height:1.55;color:#62536f;font-weight:500;">Authorized administrators can sign in to manage members, finances, loans and Chama records.</span>
+      </button>
+    </div>
+  </div>
+</section>
 
 <!-- 📜 The Constitution -->
 <section id="rules" style="background:#f5fff7; padding:30px; border-radius:12px; box-shadow:0 2px 12px rgba(0,0,0,0.08); font-family:'Poppins', sans-serif; color:#2e3b32;">
@@ -3327,6 +3344,11 @@ style="width:150px; height:150px; border-radius:50%; object-fit:cover; box-shado
       <h3 style="margin:0 0 7px;color:#fff;">Ready to learn more or join us?</h3>
       <p style="margin:0 0 12px;line-height:1.6;">Visit our membership section or contact our team on 0713953004.</p>
       <a href="https://wa.me/254713953004" target="_blank" rel="noopener" style="display:inline-block;background:#fff;color:#123d73;padding:10px 18px;border-radius:9px;text-decoration:none;font-weight:700;">Contact Us on WhatsApp</a>
+    </div>
+    <div style="max-width:720px;margin:28px auto 4px;padding:24px 18px;text-align:center;background:linear-gradient(135deg,#0b3b72,#087f5b);border-radius:16px;box-shadow:0 8px 22px rgba(13,52,103,.16);color:#fff;">
+      <h3 style="margin:0 0 8px;color:#fff;font-size:22px;">Ready to become a member?</h3>
+      <p style="margin:0 0 16px;line-height:1.65;color:#eef7ff;">Please read the information above first. When you are ready, click below to open the membership registration form.</p>
+      <button type="button" onclick="showNewMemberRegistration()" style="border:0;border-radius:10px;background:#f2b800;color:#17365d;padding:14px 24px;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.15);">📝 Click Here to Register</button>
     </div>
   </div>
 </section>
@@ -8660,6 +8682,8 @@ y += 38;
 <option>BENSON NYATUKA</option>
 <option>BOAZ KOKONYA</option>
 <option>PURITY MOMANYI</option>
+<option>SHARON ORINA</option>
+<option>ESTHER OBEGI</option>
 </select>
 <!-- Member Password -->
 <div class="password-container">
@@ -8731,7 +8755,7 @@ y += 38;
       <div class="ff-menu-hint">View your savings and contribution options.</div>
       <button type="button" class="ff-admin-action action-btn" onclick="showSavingsPopup()">💰 Open Savings Dashboard <span id="totalSavings" aria-label="Savings amount hidden">••••••</span></button>
       <button type="button" class="ff-admin-action action-btn" onclick="showTopSavers()">🥇 View Top Savers List</button>
-      <button type="button" class="ff-admin-action action-btn" onclick="openFFDownloads()">⬇️ Downloads</button>
+      <button type="button" class="ff-admin-action action-btn" onclick="openFFDownloads()">🧾 Receipts &amp; Downloads</button>
       <button type="button" class="ff-menu-close" onclick="confirmCloseFFMemberSection(this)">Close section −</button>
     </div>
   </details>
@@ -11402,7 +11426,7 @@ calculate2025();
       📊 Group Contributions for 2026
       <br>
       <span id="updateTime">
-        ⏱ Last updated on <b>16TH NOVEMBER  2026 AT 11:05 AM</b>
+        ⏱ Last updated on <b>11TH NOVEMBER  2026 AT 16:53 PM</b>
       </span>
     </h4>
 
@@ -11532,7 +11556,7 @@ calculate2025();
 <td><input type="number" value="400"></td>
 <td><input type="number" value="400"></td>
 <td><input type="number" value="400"></td>
-<td><input type="number" value="300"></td>
+<td><input type="number" value="200"></td>
 <td><input type="number" value="0"></td>
 <td class="rowTotal">0</td>
 <td class="saved2026">0</td>
@@ -11553,7 +11577,7 @@ calculate2025();
 <td><input type="number" value="0"></td>
 <td><input type="number" value="0"></td>
 <td><input type="number" value="100"></td>
-<td><input type="number" value="150"></td>
+<td><input type="number" value="100"></td>
 <td><input type="number" value="0"></td>
 <td class="rowTotal">0</td>
 <td class="saved2026">0</td>
@@ -11843,7 +11867,7 @@ calculate2025();
 <td><input type="number" value="0"></td>
 <td><input type="number" value="200"></td>
 <td><input type="number" value="50"></td>
-<td><input type="number" value="3647"></td>
+<td><input type="number" value="3597"></td>
 <td><input type="number" value="0"></td>
 <td class="rowTotal">0</td>
 <td class="saved2026">0</td>
@@ -12073,6 +12097,167 @@ window.onclick = function(event) {
 
 
 
+/* ==========================================================
+   2026 DECEMBER REWARD PAYMENT RECEIPTS
+   After a member's reward has actually been paid, add that
+   member to FF_YEARLY_REWARD_PAYMENTS below and republish.
+   The receipt button appears only for records marked Paid.
+========================================================== */
+window.FF_YEARLY_REWARD_PAYMENTS = window.FF_YEARLY_REWARD_PAYMENTS || {
+  // Example of the required hard-coded structure (leave commented
+  // until payment is actually completed):
+  // "MEMBER FULL NAME": {
+  //   status: "Paid",
+  //   paidDate: "15 December 2026",
+  //   paymentMethod: "M-Pesa",
+  //   transactionReference: "ACTUAL MPESA CODE",
+  //   receiptNumber: "FFC-RWD-2026-0001"
+  // }
+};
+
+function ffNormalizeRewardMemberName(name) {
+  return String(name || "").trim().replace(/\s+/g, " ").toUpperCase();
+}
+
+function ffRewardPaymentRecord(memberName) {
+  // 2026 Reward Back has NOT been paid. Keep all 2026 receipt records
+  // unavailable until Admin explicitly updates this release after payment.
+  return null;
+}
+
+window.downloadFFYearlyRewardReceipt = async function(memberName, amount, rowTotal) {
+  alert("The 2026 Reward Back payment has not yet been made. The receipt will be enabled only after the payment is completed and officially recorded by Admin.");
+  return;
+  const payment = ffRewardPaymentRecord(memberName);
+  if (!payment) {
+    alert("A receipt is available only after Admin has recorded the reward payment as Paid.");
+    return;
+  }
+  const paidAmount = Math.max(0, Number(payment.paidAmount || amount) || 0);
+  if (paidAmount <= 0) {
+    alert("The paid reward amount is missing. Please verify the payment record.");
+    return;
+  }
+  if (!window.jspdf || !window.jspdf.jsPDF) {
+    alert("The PDF receipt service could not load. Please check your internet connection and try again.");
+    return;
+  }
+
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({orientation:"portrait", unit:"mm", format:"a4"});
+  const pageW = doc.internal.pageSize.getWidth();
+  const navy = [13, 48, 79];
+  const green = [22, 101, 52];
+  const gold = [190, 148, 53];
+  const logoUrl = "https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/FUTURE%20FINDERS%20LOGO.jpeg";
+
+  doc.setFillColor(...navy);
+  doc.rect(0, 0, pageW, 43, "F");
+
+  try {
+    const logo = new Image();
+    logo.crossOrigin = "anonymous";
+    await new Promise((resolve, reject) => {
+      logo.onload = resolve;
+      logo.onerror = reject;
+      logo.src = logoUrl;
+    });
+    doc.addImage(logo, "JPEG", 13, 7, 28, 28);
+  } catch (e) {
+    doc.setDrawColor(255,255,255);
+    doc.circle(27,21,13,"S");
+    doc.setTextColor(255,255,255);
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(9);
+    doc.text("FF",27,24,{align:"center"});
+  }
+
+  doc.setTextColor(255,255,255);
+  doc.setFont("helvetica","bold");
+  doc.setFontSize(16);
+  doc.text("FUTURE FINDERS CHAMA GROUP", pageW/2+9, 17, {align:"center"});
+  doc.setFontSize(11);
+  doc.text("DECEMBER REWARD PAYMENT RECEIPT", pageW/2+9, 26, {align:"center"});
+  doc.setFont("helvetica","normal");
+  doc.setFontSize(8);
+  doc.text("Together We Save. Together We Grow. Together We Succeed.", pageW/2+9, 33, {align:"center"});
+
+  const receiptNo = String(payment.receiptNumber || ("FFC-RWD-2026-" + ffNormalizeRewardMemberName(memberName).replace(/[^A-Z0-9]/g,"").slice(0,12)));
+  let y = 56;
+  doc.setTextColor(...navy);
+  doc.setFont("helvetica","bold");
+  doc.setFontSize(17);
+  doc.text("OFFICIAL PAYMENT ACKNOWLEDGEMENT", 14, y);
+  y += 11;
+
+  doc.setDrawColor(...gold);
+  doc.setLineWidth(0.7);
+  doc.line(14, y, pageW-14, y);
+  y += 12;
+
+  const rows = [
+    ["Receipt Number", receiptNo],
+    ["Member Name", String(memberName)],
+    ["Payment Description", "2026 Annual Savings Reward Back"],
+    ["Reward / Payment Amount", "KSh " + paidAmount.toLocaleString("en-KE")],
+    ["Payment Status", "PAID — Payment received and recorded"],
+    ["Date Paid", String(payment.paidDate || "Not recorded")],
+    ["Payment Method", String(payment.paymentMethod || "Not recorded")],
+    ["Transaction Reference", String(payment.transactionReference || "Not recorded")]
+  ];
+  rows.forEach(([label,value]) => {
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(9);
+    doc.setTextColor(65,80,95);
+    doc.text(label.toUpperCase(), 16, y);
+    doc.setFont("helvetica","normal");
+    doc.setTextColor(25,40,55);
+    const lines = doc.splitTextToSize(String(value), 105);
+    doc.text(lines, 82, y);
+    y += Math.max(9, lines.length*5+3);
+    doc.setDrawColor(225,231,237);
+    doc.line(16,y-3,pageW-16,y-3);
+  });
+
+  y += 8;
+  doc.setFillColor(235,247,239);
+  doc.setDrawColor(170,211,181);
+  doc.roundedRect(14,y,pageW-28,25,3,3,"FD");
+  doc.setTextColor(...green);
+  doc.setFont("helvetica","bold");
+  doc.setFontSize(12);
+  doc.text("PAYMENT CONFIRMED", pageW/2, y+9, {align:"center"});
+  doc.setFont("helvetica","normal");
+  doc.setFontSize(9);
+  doc.text("This receipt acknowledges the reward payment recorded above.", pageW/2, y+17, {align:"center"});
+
+  y += 39;
+  doc.setTextColor(...navy);
+  doc.setFont("helvetica","bold");
+  doc.setFontSize(11);
+  doc.text("A MESSAGE FROM FUTURE FINDERS CHAMA GROUP", 14, y);
+  y += 8;
+  doc.setTextColor(55,65,75);
+  doc.setFont("helvetica","normal");
+  doc.setFontSize(10);
+  const message = "Dear " + String(memberName) + ",\n\nThank you for being part of Future Finders Chama Group and for your commitment to saving and growing together. We are pleased to acknowledge the payment of your 2026 annual reward as shown in this receipt.\n\nYour participation has been valued. We sincerely encourage you to remain connected with the Chama and to consider joining us again in the future. Our doors remain open, and we would be delighted to welcome you back whenever you are ready to save, support one another and grow together.\n\nWe wish you success, good health and prosperity in your future plans. Thank you for being part of our journey.";
+  const messageLines = doc.splitTextToSize(message, pageW-28);
+  doc.text(messageLines, 14, y, {lineHeightFactor:1.45});
+  y += messageLines.length*5.1 + 10;
+
+  doc.setTextColor(...green);
+  doc.setFont("helvetica","bold");
+  doc.setFontSize(11);
+  doc.text("Together We Save. Together We Grow. Together We Succeed.", pageW/2, Math.min(y,270), {align:"center"});
+  doc.setTextColor(105,115,125);
+  doc.setFont("helvetica","normal");
+  doc.setFontSize(8);
+  doc.text("Issued by Future Finders Chama Group Administration • Keep this receipt for your records.", pageW/2, 282, {align:"center"});
+
+  const safeName = ffNormalizeRewardMemberName(memberName).toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+  doc.save("Future-Finders-2026-Reward-Receipt-" + safeName + ".pdf");
+};
+
 /* =========================
    MAIN CALCULATION 2026
 ========================= */
@@ -12139,9 +12324,22 @@ function calculate2026() {
     if (rewardCell) rewardCell.textContent = money(reward);
 
     if (statusCell) {
-      // Canzedena Anyango has requested that her savings payout be deferred to 2027.
-      // Keep her calculated savings and reward figures unchanged; only override the payout status.
-      if (memberName === "CANZEDENA ANYANGO") {
+      // A hard-coded verified payment record takes priority over eligibility text.
+      // The receipt button is shown only after Admin records status: "Paid".
+      const paidRecord = ffRewardPaymentRecord(memberName);
+      if (paidRecord) {
+        const paidAmount = Math.max(0, Number(paidRecord.paidAmount || reward) || 0);
+        statusCell.innerHTML =
+          "✅ <strong>PAID</strong><br><small>" +
+          String(paidRecord.paidDate || "Date not recorded").replace(/[&<>"]/g, "") +
+          "</small><br><button type='button' class='ff-reward-receipt-btn' onclick='downloadFFYearlyRewardReceipt(" +
+          JSON.stringify(nameCell.textContent.trim()) + "," + paidAmount + "," + totalSavings +
+          ")' style='margin-top:7px;background:#14532d;color:#fff;border:0;border-radius:7px;padding:7px 10px;font-weight:700;cursor:pointer;'>⬇ Download Receipt</button>";
+        statusCell.style.color = "#166534";
+        statusCell.style.backgroundColor = "#ecfdf3";
+        statusCell.style.fontWeight = "700";
+        row.style.backgroundColor = "#f0fdf4";
+      } else if (memberName === "CANZEDENA ANYANGO") {
         statusCell.innerHTML = "⏸️ <strong>DEFERRED TO 2027</strong><br><small>Member requested to receive her savings next year.</small>";
         statusCell.style.color = "#854d0e";
         statusCell.style.backgroundColor = "#fef3c7";
@@ -13594,9 +13792,9 @@ const members = {
     phone: "0796860412",
     password: "0796860412",
     savings: 0,
-    rewardBack: 3122,
+    rewardBack: 2362,
     monthly: [1922, 400, 450, 350],
-    note: "Fines: KSh 360 as of 2 Nov 2025; paid KSh 0, unpaid KSh 360. Very active; good candidate for larger loans. EXIT NOTICE: FFC-EXIT-2026-66752312 — Approved. Eligible personal savings / December 2026 Reward Back: KSh 3,122. Deductions: KSh 360 unpaid fines + KSh 400 welfare support = KSh 760. Approved net settlement: KSh 2,362, scheduled for payment by 15 December 2026; not yet paid.",
+    note: "Fines: KSh 360 as of 2 Nov 2025; paid KSh 0, unpaid KSh 360. Very active; good candidate for larger loans. EXIT NOTICE: FFC-EXIT-2026-66752312 — Approved. Verified eligible personal savings before deductions: KSh 3,122. Final December 2026 Reward Back / net settlement confirmed: KSh 2,362 after KSh 360 unpaid fines and KSh 400 welfare support deductions (total KSh 760). Payment confirmed for on or before 15 December 2026; not yet paid.",
     contracts: [],
     loans: [],
     exits: [{
@@ -13615,16 +13813,17 @@ const members = {
       signedAtISO: "2026-11-03T00:00:00.000Z",
       status: "Approved",
       eligibleSavings: 3122,
-      rewardBackAmount: 3122,
+      rewardBackAmount: 2362,
+      finalRewardBackAmount: 2362,
       finesDeduction: 360,
       welfareSupportDeduction: 400,
       rewardBackMonth: "December 2026",
-      rewardBackStatus: "Approved — KSh 2,362 scheduled for payment by 15 December 2026; not yet paid",
+      rewardBackStatus: "Approved and confirmed — final KSh 2,362 to be paid on or before 15 December 2026; not yet paid",
       approvedDue: 0,
       obligations: 760,
       settlement: 2362,
-      adminRemarks: "Approved net settlement of KSh 2,362 after KSh 360 unpaid fines and KSh 400 welfare support deductions. Payment is scheduled by 15 December 2026.",
-      chairladyRemarks: "Approval recorded. Net settlement of KSh 2,362 is to be paid by 15 December 2026; payment remains pending until recorded.",
+      adminRemarks: "FINAL SETTLEMENT CONFIRMED: KSh 2,362 payable on or before 15 December 2026 after KSh 360 unpaid fines and KSh 400 welfare support deductions (total KSh 760).",
+      chairladyRemarks: "FINAL AMOUNT CONFIRMED: KSh 2,362 is approved for payment on or before 15 December 2026. This is a confirmed payment commitment; mark as paid only when the actual payment is made and recorded.",
       reconciliationDate: "",
       expectedSettlementDate: "2026-12-15",
       settlementDate: "",
@@ -14473,8 +14672,86 @@ const members = {
       }
     ],
     loans: []
+  },
+  "SHARON ORINA": {
+    phone: "0108037144",
+    password: "0108037144",
+    savings: 0,
+    monthly: [],
+    note: "Login account created; contact and membership details are awaiting admin confirmation.",
+    contracts: [],
+    loans: []
+  },
+  "ESTHER OBEGI": {
+    phone: "0748845363",
+    password: "0748845363",
+    savings: 0,
+    monthly: [],
+    note: "Login account created; contact and membership details are awaiting admin confirmation.",
+    contracts: [],
+    loans: []
   }
 };
+// Membership navigation: one main button opens the two membership pathways.
+function openMembershipMenu(button) {
+  const spinner = button.querySelector('.spinner');
+  if (spinner) spinner.style.display = 'inline-block';
+  button.style.pointerEvents = 'none';
+  setTimeout(() => {
+    if (spinner) spinner.style.display = 'none';
+    button.style.pointerEvents = 'auto';
+    document.querySelectorAll('section, #dashboard, #admin, #newsSection').forEach(el => el.style.display = 'none');
+    document.querySelectorAll('#navButtons .nav-btn').forEach(el => el.style.display = 'none');
+    button.style.display = 'inline-block';
+    const menu = document.getElementById('membershipChoice');
+    if (menu) menu.style.display = 'block';
+    const back = document.getElementById('backBtn');
+    if (back) back.style.display = 'inline-block';
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }, 450);
+}
+
+// New Membership opens the welcome and information centre first.
+function openNewMembership() {
+  document.querySelectorAll('section, #dashboard, #admin, #newsSection').forEach(el => el.style.display = 'none');
+  const welcome = document.getElementById('newMemberInfo');
+  const registration = document.getElementById('membership');
+  if (welcome) welcome.style.display = 'block';
+  if (registration) registration.style.display = 'none';
+  const back = document.getElementById('backBtn');
+  if (back) back.style.display = 'inline-block';
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+// Show the registration wizard only after the applicant clicks the registration button.
+function showNewMemberRegistration() {
+  const welcome = document.getElementById('newMemberInfo');
+  const registration = document.getElementById('membership');
+  if (welcome) welcome.style.display = 'none';
+  if (registration) registration.style.display = 'block';
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+// Existing members go directly to the original login form.
+function openExistingMemberLogin() {
+  document.querySelectorAll('section, #dashboard, #admin, #newsSection').forEach(el => el.style.display = 'none');
+  const login = document.getElementById('loginForm');
+  if (login) login.style.display = 'block';
+  const back = document.getElementById('backBtn');
+  if (back) back.style.display = 'inline-block';
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+// Admin access is grouped inside the Membership menu and still uses the existing secure login screen.
+function openAdminLoginFromMembership() {
+  document.querySelectorAll('section, #dashboard, #admin, #newsSection').forEach(el => el.style.display = 'none');
+  const login = document.getElementById('adminLogin');
+  if (login) login.style.display = 'block';
+  const back = document.getElementById('backBtn');
+  if (back) back.style.display = 'inline-block';
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
 // 🔄 Simulate loading action (button + spinner + section switch)
 function simulateAction(button, sectionId) {
   let spinner = button.querySelector(".spinner");
@@ -14873,7 +15150,63 @@ function ffRenderAdminPenaltyWelfareReports(){
   const penaltyHost=document.getElementById("ffAdminMGRPenaltyTable"), welfareHost=document.getElementById("ffAdminWelfareSummaryTable");
   const esc=v=>String(v??"—").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
   const money=v=>"KSh "+(Number(v)||0).toLocaleString("en-KE");
-  if(penaltyHost){const rows=getMGRPenaltyRecords();penaltyHost.innerHTML=rows.length?`<table style="width:100%;border-collapse:collapse;min-width:760px;"><thead><tr style="background:#ffedd5;text-align:left;"><th style="padding:9px;">Member</th><th style="padding:9px;">Type</th><th style="padding:9px;">No.</th><th style="padding:9px;">Amount each</th><th style="padding:9px;">Penalty date(s)</th><th style="padding:9px;">Paid</th><th style="padding:9px;">Payout</th><th style="padding:9px;">Outstanding</th></tr></thead><tbody>${rows.map(r=>{const n=Number(r.penaltyCount)||1,p=Number(r.penaltiesPaid)||0,a=Number(r.amountPerPenalty)||0;return `<tr><td style="padding:9px;border-bottom:1px solid #e2e8f0;">${esc(r.member||r.name)}</td><td style="padding:9px;border-bottom:1px solid #e2e8f0;">${esc(r.penaltyType||"—")}</td><td style="padding:9px;border-bottom:1px solid #e2e8f0;">${n}</td><td style="padding:9px;border-bottom:1px solid #e2e8f0;">${money(a)}</td><td style="padding:9px;border-bottom:1px solid #e2e8f0;">${esc(Array.isArray(r.penaltyDates)?r.penaltyDates.join(", "):r.penaltyDate||"—")}</td><td style="padding:9px;border-bottom:1px solid #e2e8f0;">${p}</td><td style="padding:9px;border-bottom:1px solid #e2e8f0;">${money(r.payoutAmount??r.paidAmount??0)}</td><td style="padding:9px;border-bottom:1px solid #e2e8f0;">${money(Math.max(0,(n-p)*a))}</td></tr>`;}).join("")}</tbody></table>`:'<div style="padding:16px;border:1px dashed #f59e0b;border-radius:10px;background:#fff7ed;color:#7c2d12;line-height:1.55;"><strong>⚠ No Merry-Go-Round penalty records found.</strong><p style="margin:7px 0 0;">The register is open and working, but no verified member penalty entries have been loaded into the official penalty records yet. Add the member name, weekly/monthly type, penalty count, amount per penalty and penalty date(s), then click <strong>Refresh records</strong>.</p><p style="margin:7px 0 0;font-size:12px;color:#9a3412;">No penalties or amounts have been assumed or generated.</p></div>';}
+  if(penaltyHost){
+    const rows=getMGRPenaltyRecords();
+    const totals=rows.reduce((t,r)=>{
+      const count=Math.max(0,Number(r.penaltyCount)||1);
+      const paidCount=Math.max(0,Number(r.penaltiesPaid)||0);
+      const each=Math.max(0,Number(r.amountPerPenalty)||0);
+      const assessed=count*each;
+      const paidAmount=Math.max(0,Number(r.paidAmount)||paidCount*each);
+      t.entries+=1; t.penalties+=count; t.assessed+=assessed;
+      t.paidCount+=paidCount; t.paidAmount+=paidAmount;
+      t.payout+=Math.max(0,Number(r.payoutAmount)||0);
+      t.outstanding+=Math.max(0,assessed-paidAmount);
+      return t;
+    },{entries:0,penalties:0,assessed:0,paidCount:0,paidAmount:0,payout:0,outstanding:0});
+    penaltyHost.innerHTML=rows.length?`
+      <table style="width:100%;border-collapse:collapse;min-width:760px;">
+        <thead><tr style="background:#ffedd5;text-align:left;">
+          <th style="padding:9px;">Member</th><th style="padding:9px;">Type</th>
+          <th style="padding:9px;">No.</th><th style="padding:9px;">Amount each</th>
+          <th style="padding:9px;">Penalty date(s)</th><th style="padding:9px;">Paid</th>
+          <th style="padding:9px;">Payout</th><th style="padding:9px;">Outstanding</th>
+        </tr></thead>
+        <tbody>${rows.map(r=>{
+          const n=Math.max(0,Number(r.penaltyCount)||1),p=Math.max(0,Number(r.penaltiesPaid)||0),a=Math.max(0,Number(r.amountPerPenalty)||0);
+          const paidAmount=Math.max(0,Number(r.paidAmount)||p*a);
+          return `<tr>
+            <td style="padding:9px;border-bottom:1px solid #e2e8f0;">${esc(r.member||r.name)}</td>
+            <td style="padding:9px;border-bottom:1px solid #e2e8f0;">${esc(r.penaltyType||"—")}</td>
+            <td style="padding:9px;border-bottom:1px solid #e2e8f0;">${n}</td>
+            <td style="padding:9px;border-bottom:1px solid #e2e8f0;">${money(a)}</td>
+            <td style="padding:9px;border-bottom:1px solid #e2e8f0;">${esc(Array.isArray(r.penaltyDates)?r.penaltyDates.join(", "):r.penaltyDate||"—")}</td>
+            <td style="padding:9px;border-bottom:1px solid #e2e8f0;">${p}</td>
+            <td style="padding:9px;border-bottom:1px solid #e2e8f0;">${money(r.payoutAmount??paidAmount)}</td>
+            <td style="padding:9px;border-bottom:1px solid #e2e8f0;">${money(Math.max(0,n*a-paidAmount))}</td>
+          </tr>`;
+        }).join("")}</tbody>
+        <tfoot>
+          <tr style="background:#fff7ed;font-weight:800;">
+            <td colspan="2" style="padding:10px;text-align:right;">TOTALS (${totals.entries} entries)</td>
+            <td style="padding:10px;">${totals.penalties}</td>
+            <td style="padding:10px;">${money(totals.assessed)}</td>
+            <td style="padding:10px;">All dates</td>
+            <td style="padding:10px;">${totals.paidCount}</td>
+            <td style="padding:10px;">${money(totals.payout||totals.paidAmount)}</td>
+            <td style="padding:10px;">${money(totals.outstanding)}</td>
+          </tr>
+        </tfoot>
+      </table>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:10px;margin-top:14px;">
+        <div style="padding:12px;border:1px solid #fed7aa;border-radius:10px;background:#fff7ed;"><small>Penalty entries</small><strong style="display:block;font-size:20px;">${totals.entries}</strong></div>
+        <div style="padding:12px;border:1px solid #fed7aa;border-radius:10px;background:#fff7ed;"><small>Total penalties</small><strong style="display:block;font-size:20px;">${totals.penalties}</strong></div>
+        <div style="padding:12px;border:1px solid #fed7aa;border-radius:10px;background:#fff7ed;"><small>Total assessed</small><strong style="display:block;font-size:20px;">${money(totals.assessed)}</strong></div>
+        <div style="padding:12px;border:1px solid #fed7aa;border-radius:10px;background:#fff7ed;"><small>Total paid</small><strong style="display:block;font-size:20px;">${money(totals.paidAmount)}</strong></div>
+        <div style="padding:12px;border:1px solid #fed7aa;border-radius:10px;background:#fff7ed;"><small>Outstanding balance</small><strong style="display:block;font-size:20px;">${money(totals.outstanding)}</strong></div>
+      </div>
+    `:'<div style="padding:16px;border:1px dashed #f59e0b;border-radius:10px;background:#fff7ed;color:#7c2d12;line-height:1.55;"><strong>⚠ No Merry-Go-Round penalty records found.</strong><p style="margin:7px 0 0;">The register is open and working, but no verified member penalty entries have been loaded into the official penalty records yet. Add the member name, weekly/monthly type, penalty count, amount per penalty and penalty date(s), then click <strong>Refresh records</strong>.</p><p style="margin:7px 0 0;font-size:12px;color:#9a3412;">No penalties or amounts have been assumed or generated.</p></div>';
+  }
   if(welfareHost){const apps=typeof getWelfareApplications==="function"?getWelfareApplications():[];const by={};apps.forEach(a=>{const name=String(a.member||a.applicant?.fullName||"Unknown member");(by[name]??=[]).push(a);});const names=Object.keys(by);welfareHost.innerHTML=names.length?`<table style="width:100%;border-collapse:collapse;min-width:650px;"><thead><tr style="background:#ede9fe;text-align:left;"><th style="padding:9px;">Member</th><th style="padding:9px;">Applications</th><th style="padding:9px;">Approved</th><th style="padding:9px;">Pending</th><th style="padding:9px;">Rejected</th><th style="padding:9px;">Approved amount</th></tr></thead><tbody>${names.map(name=>{const list=by[name],approved=list.filter(a=>/approv/i.test(String(a.status||""))&&!/reject/i.test(String(a.status||""))),pending=list.filter(a=>typeof isWelfarePending==="function"?isWelfarePending(a):!/approv|reject/i.test(String(a.status||""))),rejected=list.filter(a=>/reject/i.test(String(a.status||""))),amount=approved.reduce((n,a)=>n+(Number(a.approvedAmount??a.amountApproved??a.payoutAmount??0)||0),0);return `<tr><td style="padding:9px;border-bottom:1px solid #e2e8f0;">${esc(name)}</td><td style="padding:9px;border-bottom:1px solid #e2e8f0;">${list.length}</td><td style="padding:9px;border-bottom:1px solid #e2e8f0;">${approved.length}</td><td style="padding:9px;border-bottom:1px solid #e2e8f0;">${pending.length}</td><td style="padding:9px;border-bottom:1px solid #e2e8f0;">${rejected.length}</td><td style="padding:9px;border-bottom:1px solid #e2e8f0;">${money(amount)}</td></tr>`;}).join("")}</tbody></table>`:'<p style="color:#64748b;">No welfare applications have been published yet.</p>';}
 
 }
@@ -15168,6 +15501,14 @@ if (!window.FF_MGR_PENALTY_RECORDS.some(r => String(r.id || '') === 'FF-MGR-PEN-
     notes: 'Weekly Chama penalty recorded by Admin.'
   });
 }
+// Official Admin entries: weekly merry-go-round fines for 15 November 2026.
+[
+  {id:'FF-MGR-PEN-20261115-SHARON-ORINA', member:'SHARON ORINA', penaltyType:'Weekly', penaltyCount:1, amountPerPenalty:30, penaltyDates:['15 November 2026'], penaltiesPaid:0, paidAmount:0, notes:'Weekly Merry-Go-Round fine recorded by Admin for 15 November 2026.'},
+  {id:'FF-MGR-PEN-20261115-ESTHER-OBEGI', member:'ESTHER OBEGI', penaltyType:'Weekly', penaltyCount:1, amountPerPenalty:30, penaltyDates:['15 November 2026'], penaltiesPaid:0, paidAmount:0, notes:'Weekly Merry-Go-Round fine recorded by Admin for 15 November 2026.'},
+  {id:'FF-MGR-PEN-20261115-FAITH-MOKOGI', member:'FAITH MOKOGI', penaltyType:'Weekly', penaltyCount:1, amountPerPenalty:30, penaltyDates:['15 November 2026'], penaltiesPaid:0, paidAmount:0, notes:'Weekly Merry-Go-Round fine recorded by Admin for 15 November 2026.'}
+].forEach(record => {
+  if (!window.FF_MGR_PENALTY_RECORDS.some(r => String(r.id || '') === record.id)) window.FF_MGR_PENALTY_RECORDS.push(record);
+});
 function getMGRPenaltyRecords(){ return Array.isArray(window.FF_MGR_PENALTY_RECORDS) ? window.FF_MGR_PENALTY_RECORDS : []; }
 function ffMoney(value){ return "KSh " + (Number(value)||0).toLocaleString("en-KE"); }
 function toggleMemberMGRPenaltySummary(){
@@ -24106,7 +24447,10 @@ async function downloadIndividualSavingsReportsPDF() {
  function getRows(){let local=[];try{const x=JSON.parse(localStorage.getItem(STORE)||'[]');if(Array.isArray(x))local=x;}catch(e){}let seeded=[];try{if(typeof members!=='undefined'&&members)Object.entries(members).forEach(([name,data])=>(Array.isArray(data.exits)?data.exits:[]).forEach(r=>seeded.push({...r,member:r.member||name})));}catch(e){}const map=new Map();[...local,...seeded].forEach(r=>{if(r&&r.id)map.set(String(r.id),r)});return [...map.values()];}
  function saveRows(rows){localStorage.setItem(STORE,JSON.stringify(rows));try{if(typeof members!=='undefined'&&members){Object.keys(members).forEach(n=>members[n].exits=[]);rows.forEach(r=>{const key=Object.keys(members).find(n=>n.toLowerCase()===String(r.member||'').toLowerCase());if(key){if(!Array.isArray(members[key].exits))members[key].exits=[];members[key].exits.push({...r});}});}}catch(e){}}
  function latestFor(name){return getRows().filter(r=>String(r.member).toLowerCase()===String(name).toLowerCase()).sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''))[0];}
- function docHtml(r){const amount=n=>'KSh '+Number(n||0).toLocaleString('en-KE',{minimumFractionDigits:2,maximumFractionDigits:2});return `<div style="font-family:Arial,sans-serif;color:#1f2937;font-size:13px;line-height:1.55;border:3px double #56328a;padding:22px;position:relative;"><div style="border:1px solid #c6a75e;padding:5px;"><header style="text-align:center;border-bottom:2px solid #56328a;padding-bottom:12px;margin-bottom:14px;"><img src="https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/FUTURE%20FINDERS%20LOGO.jpeg" style="width:78px;height:78px;object-fit:contain" onerror="this.style.display='none'"><div style="letter-spacing:2px;color:#8a6b24;font-weight:bold;font-size:10px;">OFFICIAL MEMBERSHIP NOTICE</div><h1 style="color:#56328a;margin:6px 0;font-size:21px;">FUTURE FINDERS CHAMA GROUP</h1><h2 style="font-size:16px;margin:5px 0;">MEMBERSHIP WITHDRAWAL & EXIT NOTICE</h2><div>Constitutional basis: Article 11 — Membership Exit, Suspension and Termination</div></header><p><b>Exit Notice Reference:</b> ${esc(r.id)} &nbsp; <b>Current status:</b> ${esc(r.status||'Notice Submitted')}</p><h3 style="color:#56328a;border-bottom:1px solid #ddd;padding-bottom:4px;">1. Member and notice details</h3><table style="width:100%;border-collapse:collapse"><tr><td style="padding:5px;border:1px solid #ddd"><b>Full name</b><br>${esc(r.member)}</td><td style="padding:5px;border:1px solid #ddd"><b>Membership number</b><br>${esc(r.membershipNo||'Not provided')}</td></tr><tr><td style="padding:5px;border:1px solid #ddd"><b>Registered phone</b><br>${esc(r.phone||'Not recorded')}</td><td style="padding:5px;border:1px solid #ddd"><b>Existing contract reference</b><br>${esc(r.contractRef||'Not provided')}</td></tr><tr><td style="padding:5px;border:1px solid #ddd"><b>Notice submitted</b><br>${esc(fmt(r.noticeDate))}</td><td style="padding:5px;border:1px solid #ddd"><b>Intended exit date</b><br>${esc(fmt(r.intendedExitDate))}</td></tr></table><h3 style="color:#56328a;border-bottom:1px solid #ddd;padding-bottom:4px;">2. Reason and explanation</h3><p><b>Reason:</b> ${esc(r.reason)}</p><p>${esc(r.explanation||'No additional explanation provided.')}</p><h3 style="color:#56328a;border-bottom:1px solid #ddd;padding-bottom:4px;">3. Constitutional explanations acknowledged by the member</h3><ul><li>This is a written voluntary withdrawal notice requiring at least thirty (30) days' notice before the intended exit date (Article 11.1).</li><li>Submission does not itself approve or immediately complete withdrawal, terminate all obligations, or automatically cancel pending matters.</li><li>The Chama reviews savings, contributions, loans, repayments, penalties and other obligations during the notice period. Reconciliation is to be completed within thirty (30) days after the notice period ends (Article 11.2).</li><li>Eligible savings mean verified accumulated personal savings. Merry-Go-Round and welfare contributions are treated separately. Registration fees, properly applied fines, penalties and charges are not refundable savings (Article 11.3).</li><li>Any settlement is calculated from official records: eligible personal savings plus approved amounts due, less outstanding obligations and lawful deductions. No specific refund is guaranteed by this notice.</li><li>Withdrawal does not cancel outstanding loans, contributions, penalties, guarantees or other financial obligations (Article 11.1 and 11.7).</li><li>A pending dispute or disciplinary matter is not automatically cancelled by withdrawal; final settlement may be deferred where necessary (Article 11.10).</li><li>Temporary suspension from activities or benefits is not the same as ending membership (Articles 11.4–11.5).</li><li>Disciplinary termination is not requested through this voluntary form. It must follow the constitutional disciplinary and decision-making process, give the member a reasonable opportunity to respond and preserve applicable appeal rights (Article 11.6 and Article 10).</li><li>A former member may apply for re-admission, but re-admission and restoration of previous privileges are not automatic; outstanding previous obligations must be addressed (Article 11.8).</li><li>If a member dies, the Chama separately reconciles the member's financial affairs with the lawful representative of the estate; this withdrawal form is not a death-claim form (Article 11.9).</li><li>Membership and financial-clearance records must be maintained securely, confidentially and accurately (Article 11.11).</li><li>The Chama will update the official membership register to reflect the effective date and nature of exit when the process is completed (Article 11.12).</li><li>All withdrawal, suspension, termination and re-admission matters must follow Article 11 and other applicable constitutional provisions (Article 11.13).</li></ul><h3 style="color:#56328a;border-bottom:1px solid #ddd;padding-bottom:4px;">4. Member declaration and digital signature</h3><p>I, <b>${esc(r.member)}</b>, voluntarily give written notice of withdrawal from Future Finders Chama Group. I confirm that the details provided are accurate and that I have read and understood the explanations above and Article 11 of the Constitution. I understand that this notice does not immediately complete my exit or release me from any outstanding obligation.</p><p><b>Digital signature:</b> ${esc(r.signature)}</p><p><b>Date and time signed:</b> ${esc(r.signedAt)}</p><h3 style="color:#56328a;border-bottom:1px solid #ddd;padding-bottom:4px;">5. Administrative financial reconciliation</h3><table style="width:100%;border-collapse:collapse"><tr><td style="padding:6px;border:1px solid #ddd"><b>Eligible personal savings allocated to Reward Back</b><br>${amount(r.eligibleSavings)}</td><td style="padding:6px;border:1px solid #ddd"><b>Reward period</b><br>${esc(r.rewardBackMonth||'Not recorded')}</td></tr><tr><td style="padding:6px;border:1px solid #ddd"><b>Reward Back payment status</b><br>${esc(r.rewardBackStatus||'Not applicable / not recorded')}</td><td style="padding:6px;border:1px solid #ddd"><b>Financial reconciliation target</b><br>${esc(fmt(r.reconciliationDueDate||r.expectedSettlementDate))}</td></tr><tr><td style="padding:6px;border:1px solid #ddd">Unpaid fines deduction: <b>${amount(r.finesDeduction)}</b></td><td style="padding:6px;border:1px solid #ddd">Welfare support deduction: <b>${amount(r.welfareSupportDeduction)}</b></td></tr><tr><td style="padding:6px;border:1px solid #ddd"><b>Total deductions</b><br>${amount(r.obligations)}</td><td style="padding:6px;border:1px solid #ddd"><b>Provisional net settlement</b><br>${amount(r.settlement)} — pending Chairlady confirmation; not yet paid</td></tr></table><p>Approved amounts due: ${amount(r.approvedDue)}<br>Admin remarks: ${esc(r.adminRemarks||'Pending administrative review')}<br>Chairlady remarks: ${esc(r.chairladyRemarks||'Pending confirmation / oversight')}<br>Reconciliation completed: ${esc(fmt(r.reconciliationDate))}<br>Actual settlement date: ${esc(fmt(r.settlementDate))}<br>Effective exit date recorded: ${esc(fmt(r.effectiveExitDate))}</p><p><b>Reconciliation note:</b> All verified eligible personal savings are to be settled after reconciliation. The financial reconciliation target is ${esc(fmt(r.reconciliationDueDate||r.expectedSettlementDate))}; final approval and settlement remain pending.</p><div style="border-top:1px solid #c6a75e;margin-top:18px;padding-top:10px;text-align:center;font-size:10px;color:#64748b;">This notice is governed by the Future Finders Chama Group Constitution. In case of conflict, the Constitution prevails.<br><b style="color:#56328a;">FUTURE FINDERS CHAMA GROUP</b></div></div></div>`;}
+ function isExitPaid(r){return !!(r && (String(r.paymentStatus||'').toLowerCase()==='paid' || String(r.status||'').toLowerCase()==='paid') && r.settlementDate && Number(r.paidAmount??r.settlement??0)>0);}
+ function receiptHtml(r){const amount=n=>'KSh '+Number(n||0).toLocaleString('en-KE',{minimumFractionDigits:2,maximumFractionDigits:2});const paid=Number(r.paidAmount??r.settlement??0);const receiptNo='FFC-RCPT-'+String(r.id||'').replace(/^FFC-EXIT-/,'');return `<main style="font-family:Arial,sans-serif;color:#263445;font-size:13px;line-height:1.65;border:4px double #155e48;padding:25px;max-width:760px;margin:0 auto;background:#fff;"><div style="border:1px solid #c6a75e;padding:20px;"><header style="text-align:center;border-bottom:2px solid #155e48;padding-bottom:15px;margin-bottom:18px;"><img src="https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/FUTURE%20FINDERS%20LOGO.jpeg" alt="Future Finders Chama Group logo" style="width:92px;height:92px;object-fit:contain;margin-bottom:8px" onerror="this.style.display='none'"><div style="font-size:10px;letter-spacing:2px;color:#9a762d;font-weight:bold;">OFFICIAL PAYMENT ACKNOWLEDGEMENT</div><h1 style="color:#155e48;font-size:22px;margin:5px 0;">FUTURE FINDERS CHAMA GROUP</h1><div style="font-style:italic;color:#64748b;">Together We Save. Together We Grow. Together We Succeed.</div><h2 style="font-size:18px;margin:13px 0 3px;color:#173b32;">MEMBERSHIP EXIT SETTLEMENT RECEIPT</h2><div style="font-size:12px;color:#64748b;">Receipt No: <b>${esc(receiptNo)}</b></div></header><p><b>Date of payment:</b> ${esc(fmt(r.settlementDate))}<br><b>Exit reference:</b> ${esc(r.id)}<br><b>Member:</b> ${esc(r.member)}<br><b>Registered phone:</b> ${esc(r.phone||'Not recorded')}</p><table style="width:100%;border-collapse:collapse;margin:18px 0;"><tr style="background:#eef7f2"><th style="text-align:left;padding:11px;border:1px solid #d7e5dd">Description</th><th style="text-align:right;padding:11px;border:1px solid #d7e5dd">Amount</th></tr><tr><td style="padding:11px;border:1px solid #d7e5dd">Final net exit settlement paid to member</td><td style="padding:11px;border:1px solid #d7e5dd;text-align:right;font-weight:bold">${amount(paid)}</td></tr><tr style="background:#f8fafc"><td style="padding:11px;border:1px solid #d7e5dd;font-weight:bold">TOTAL RECEIVED</td><td style="padding:11px;border:1px solid #d7e5dd;text-align:right;font-size:17px;font-weight:bold;color:#155e48">${amount(paid)}</td></tr></table><p><b>Payment method:</b> ${esc(r.paymentMethod||'Not recorded')}<br><b>Payment / transaction reference:</b> ${esc(r.paymentReference||'Not provided')}<br><b>Recorded by:</b> ${esc(r.paymentRecordedBy||'Future Finders Chama Group Administration')}</p><div style="margin:20px 0;padding:16px;background:#f1f8f4;border-left:4px solid #155e48;border-radius:5px;"><h3 style="margin:0 0 8px;color:#155e48;font-size:15px;">A message of appreciation</h3><p style="margin:0 0 9px;">Dear <b>${esc(r.member)}</b>,</p><p style="margin:0 0 9px;">Thank you for being part of Future Finders Chama Group and for the time, trust and contribution you have shared with our community. We acknowledge receipt of your exit settlement in full as recorded above.</p><p style="margin:0 0 9px;">As you move forward, we wish you success in all your plans. Our doors remain open should you wish to apply for membership again in the future. Rejoining will be welcomed and considered in accordance with the Chama Constitution and the membership requirements in force at that time.</p><p style="margin:0;">Keep saving, keep growing and keep believing in the power of working together. Thank you for being part of our journey.</p></div><p style="margin-top:22px;">With appreciation,<br><b>Management</b><br>Future Finders Chama Group</p><div style="border-top:1px solid #c6a75e;margin-top:22px;padding-top:10px;text-align:center;color:#64748b;font-size:10px;">This receipt acknowledges the payment recorded by Future Finders Chama Group. Please retain it for your records.<br><b style="color:#155e48">FUTURE FINDERS CHAMA GROUP</b></div></div></main>`;}
+ function printReceipt(r){if(!isExitPaid(r)){alert('A receipt is available only after Admin records the settlement as PAID and enters the actual payment date.');return;}const w=window.open('','_blank');if(!w){alert('Please allow pop-ups to download or print your receipt.');return;}w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>Payment Receipt - ${esc(r.member)}</title><style>@page{size:A4;margin:14mm}body{margin:0;padding:8px;font-family:Arial,sans-serif}button{padding:10px 16px;margin:12px 0;background:#155e48;color:#fff;border:0;border-radius:6px;cursor:pointer}@media print{button{display:none}}</style></head><body><button onclick="window.print()">Print / Save Receipt as PDF</button>${receiptHtml(r)}<script>window.onload=()=>setTimeout(()=>window.print(),500)<\/script></body></html>`);w.document.close();}
+ function docHtml(r){const amount=n=>'KSh '+Number(n||0).toLocaleString('en-KE',{minimumFractionDigits:2,maximumFractionDigits:2});return `<div style="font-family:Arial,sans-serif;color:#1f2937;font-size:13px;line-height:1.55;border:3px double #56328a;padding:22px;position:relative;"><div style="border:1px solid #c6a75e;padding:5px;"><header style="text-align:center;border-bottom:2px solid #56328a;padding-bottom:12px;margin-bottom:14px;"><img src="https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/FUTURE%20FINDERS%20LOGO.jpeg" style="width:78px;height:78px;object-fit:contain" onerror="this.style.display='none'"><div style="letter-spacing:2px;color:#8a6b24;font-weight:bold;font-size:10px;">OFFICIAL MEMBERSHIP NOTICE</div><h1 style="color:#56328a;margin:6px 0;font-size:21px;">FUTURE FINDERS CHAMA GROUP</h1><h2 style="font-size:16px;margin:5px 0;">MEMBERSHIP WITHDRAWAL & EXIT NOTICE</h2><div>Constitutional basis: Article 11 — Membership Exit, Suspension and Termination</div></header><p><b>Exit Notice Reference:</b> ${esc(r.id)} &nbsp; <b>Current status:</b> ${esc(r.status||'Notice Submitted')}</p><h3 style="color:#56328a;border-bottom:1px solid #ddd;padding-bottom:4px;">1. Member and notice details</h3><table style="width:100%;border-collapse:collapse"><tr><td style="padding:5px;border:1px solid #ddd"><b>Full name</b><br>${esc(r.member)}</td><td style="padding:5px;border:1px solid #ddd"><b>Membership number</b><br>${esc(r.membershipNo||'Not provided')}</td></tr><tr><td style="padding:5px;border:1px solid #ddd"><b>Registered phone</b><br>${esc(r.phone||'Not recorded')}</td><td style="padding:5px;border:1px solid #ddd"><b>Existing contract reference</b><br>${esc(r.contractRef||'Not provided')}</td></tr><tr><td style="padding:5px;border:1px solid #ddd"><b>Notice submitted</b><br>${esc(fmt(r.noticeDate))}</td><td style="padding:5px;border:1px solid #ddd"><b>Intended exit date</b><br>${esc(fmt(r.intendedExitDate))}</td></tr></table><h3 style="color:#56328a;border-bottom:1px solid #ddd;padding-bottom:4px;">2. Reason and explanation</h3><p><b>Reason:</b> ${esc(r.reason)}</p><p>${esc(r.explanation||'No additional explanation provided.')}</p><h3 style="color:#56328a;border-bottom:1px solid #ddd;padding-bottom:4px;">3. Constitutional explanations acknowledged by the member</h3><ul><li>This is a written voluntary withdrawal notice requiring at least thirty (30) days' notice before the intended exit date (Article 11.1).</li><li>Submission does not itself approve or immediately complete withdrawal, terminate all obligations, or automatically cancel pending matters.</li><li>The Chama reviews savings, contributions, loans, repayments, penalties and other obligations during the notice period. Reconciliation is to be completed within thirty (30) days after the notice period ends (Article 11.2).</li><li>Eligible savings mean verified accumulated personal savings. Merry-Go-Round and welfare contributions are treated separately. Registration fees, properly applied fines, penalties and charges are not refundable savings (Article 11.3).</li><li>Any settlement is calculated from official records: eligible personal savings plus approved amounts due, less outstanding obligations and lawful deductions. No specific refund is guaranteed by this notice.</li><li>Withdrawal does not cancel outstanding loans, contributions, penalties, guarantees or other financial obligations (Article 11.1 and 11.7).</li><li>A pending dispute or disciplinary matter is not automatically cancelled by withdrawal; final settlement may be deferred where necessary (Article 11.10).</li><li>Temporary suspension from activities or benefits is not the same as ending membership (Articles 11.4–11.5).</li><li>Disciplinary termination is not requested through this voluntary form. It must follow the constitutional disciplinary and decision-making process, give the member a reasonable opportunity to respond and preserve applicable appeal rights (Article 11.6 and Article 10).</li><li>A former member may apply for re-admission, but re-admission and restoration of previous privileges are not automatic; outstanding previous obligations must be addressed (Article 11.8).</li><li>If a member dies, the Chama separately reconciles the member's financial affairs with the lawful representative of the estate; this withdrawal form is not a death-claim form (Article 11.9).</li><li>Membership and financial-clearance records must be maintained securely, confidentially and accurately (Article 11.11).</li><li>The Chama will update the official membership register to reflect the effective date and nature of exit when the process is completed (Article 11.12).</li><li>All withdrawal, suspension, termination and re-admission matters must follow Article 11 and other applicable constitutional provisions (Article 11.13).</li></ul><h3 style="color:#56328a;border-bottom:1px solid #ddd;padding-bottom:4px;">4. Member declaration and digital signature</h3><p>I, <b>${esc(r.member)}</b>, voluntarily give written notice of withdrawal from Future Finders Chama Group. I confirm that the details provided are accurate and that I have read and understood the explanations above and Article 11 of the Constitution. I understand that this notice does not immediately complete my exit or release me from any outstanding obligation.</p><p><b>Digital signature:</b> ${esc(r.signature)}</p><p><b>Date and time signed:</b> ${esc(r.signedAt)}</p><h3 style="color:#56328a;border-bottom:1px solid #ddd;padding-bottom:4px;">5. Administrative financial reconciliation</h3><table style="width:100%;border-collapse:collapse"><tr><td style="padding:6px;border:1px solid #ddd"><b>Final Reward Back amount confirmed</b><br>${amount(r.finalRewardBackAmount??r.rewardBackAmount??r.eligibleSavings)}</td><td style="padding:6px;border:1px solid #ddd"><b>Reward period</b><br>${esc(r.rewardBackMonth||'Not recorded')}</td></tr><tr><td style="padding:6px;border:1px solid #ddd"><b>Reward Back payment status</b><br>${esc(r.rewardBackStatus||'Not applicable / not recorded')}</td><td style="padding:6px;border:1px solid #ddd"><b>Financial reconciliation target</b><br>${esc(fmt(r.reconciliationDueDate||r.expectedSettlementDate))}</td></tr><tr><td style="padding:6px;border:1px solid #ddd">Unpaid fines deduction: <b>${amount(r.finesDeduction)}</b></td><td style="padding:6px;border:1px solid #ddd">Welfare support deduction: <b>${amount(r.welfareSupportDeduction)}</b></td></tr><tr><td style="padding:6px;border:1px solid #ddd"><b>Total deductions</b><br>${amount(r.obligations)}</td><td style="padding:6px;border:1px solid #ddd"><b>Final confirmed net settlement</b><br>${amount(r.settlement)} — approved for payment on or before ${esc(fmt(r.expectedSettlementDate||r.reconciliationDueDate))}; not yet paid</td></tr></table><p>Approved amounts due: ${amount(r.approvedDue)}<br>Admin remarks: ${esc(r.adminRemarks||'Pending administrative review')}<br>Chairlady remarks: ${esc(r.chairladyRemarks||'Pending confirmation / oversight')}<br>Reconciliation completed: ${esc(fmt(r.reconciliationDate))}<br>Actual settlement date: ${esc(fmt(r.settlementDate))}<br>Effective exit date recorded: ${esc(fmt(r.effectiveExitDate))}</p><p><b>Reconciliation note:</b> The final net settlement of KSh ${Number(r.settlement||0).toLocaleString('en-KE')} is confirmed and approved for payment on or before ${esc(fmt(r.expectedSettlementDate||r.reconciliationDueDate))}. Payment has not yet been made; this record will be updated when payment is completed.</p><div style="border-top:1px solid #c6a75e;margin-top:18px;padding-top:10px;text-align:center;font-size:10px;color:#64748b;">This notice is governed by the Future Finders Chama Group Constitution. In case of conflict, the Constitution prevails.<br><b style="color:#56328a;">FUTURE FINDERS CHAMA GROUP</b></div></div></div>`;}
  function printRecord(r){
   const w=window.open('','_blank');
   if(!w){alert('Please allow pop-ups to download or print your signed notice.');return;}
@@ -24141,10 +24485,13 @@ async function downloadIndividualSavingsReportsPDF() {
 
  window.previewMemberExitNotice=preview;
  window.submitMemberExitNotice=function(ev){ev.preventDefault();const name=currentName();if(!name){alert('Please log in first.');return;}const rows=getRows();const editing=editingExitId?rows.find(x=>x.id===editingExitId):null;const latest=latestFor(name);if(editing&&(!isExitPending(editing)||String(editing.member).toLowerCase()!==name.toLowerCase())){alert('Only your own pending exit notice can be edited.');return;}if(!editing&&latest&&isExitPending(latest)){$('ffExitMessage').textContent='You already have a pending withdrawal notice ('+latest.id+'). Please use Edit Pending Exit Notice in your history.';$('ffExitMessage').style.color='#b91c1c';return;}if(!editing&&latest&&!String(latest.status||'').toLowerCase().includes('reject')&&latest.status!=='Notice Withdrawn'){$('ffExitMessage').textContent='An exit notice is already in progress or recorded. Please contact the Admin.';$('ffExitMessage').style.color='#b91c1c';return;}const intended=$('ffExitIntendedDate').value;if(!intended||intended<addDays(today(),30)){$('ffExitMessage').textContent='The intended exit date must be at least 30 days after the notice date, as required by Article 11.1.';$('ffExitMessage').style.color='#b91c1c';return;}const sig=$('ffExitSignature').value.trim();if(sig.toLowerCase()!==name.toLowerCase()){$('ffExitMessage').textContent='Your digital signature must match your full registered member name.';$('ffExitMessage').style.color='#b91c1c';return;}if(!$('ffExitPreviewAck').checked){$('ffExitMessage').textContent='Please review the complete notice preview and confirm that you have read it before signing.';$('ffExitMessage').style.color='#b91c1c';$('ffExitPreviewWrap').style.display='block';return;}const now=new Date();const signedAt=now.toLocaleString('en-KE',{timeZone:'Africa/Nairobi',dateStyle:'long',timeStyle:'short'});let r;if(editing){Object.assign(editing,{membershipNo:$('ffExitMembershipNo').value.trim(),phone:$('ffExitPhone').value,contractRef:$('ffExitContractRef').value.trim(),intendedExitDate:intended,reconciliationDueDate:addDays(intended,30),reason:$('ffExitReason').value,explanation:$('ffExitExplanation').value.trim(),signature:sig,signedAt,signedAtISO:now.toISOString(),updatedAt:now.toISOString(),disputeAcknowledged:$('ffExitDisputeAck').checked});r=editing;}else{r={id:'FFC-EXIT-'+now.getFullYear()+'-'+now.getTime().toString().slice(-7),member:name,membershipNo:$('ffExitMembershipNo').value.trim(),phone:$('ffExitPhone').value,contractRef:$('ffExitContractRef').value.trim(),noticeDate:today(),intendedExitDate:intended,reconciliationDueDate:addDays(intended,30),reason:$('ffExitReason').value,explanation:$('ffExitExplanation').value.trim(),signature:sig,signedAt,signedAtISO:now.toISOString(),status:'Notice Submitted — 30-Day Notice',eligibleSavings:0,approvedDue:0,obligations:0,settlement:0,adminRemarks:'',chairladyRemarks:'',reconciliationDate:'',expectedSettlementDate:addDays(intended,30),settlementDate:'',effectiveExitDate:'',createdAt:now.toISOString(),article:'11',disputeAcknowledged:$('ffExitDisputeAck').checked};rows.push(r);}saveRows(rows);editingExitId=null;$('ffExitMessage').textContent=(editing?'Your pending withdrawal notice has been updated.':'Your written withdrawal notice has been recorded.')+' Reference: '+r.id+'. Download the signed PDF and send it to the Admin. Your membership has not yet been marked as exited.';$('ffExitMessage').style.color='#087f5b';$('ffExitSignedActions').style.display='block';renderMemberHistory(name);renderAdmin();printRecord(r);};
- function renderMemberHistory(name){const host=$('ffMemberExitHistory');if(!host)return;const rows=getRows().filter(r=>String(r.member).toLowerCase()===String(name).toLowerCase()).sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''));host.innerHTML=rows.length?rows.map(r=>`<div style="border:1px solid #ddd6fe;border-radius:10px;padding:12px;margin:9px 0;background:#fff;"><b>Reference:</b> ${esc(r.id)}<br><b>Notice date:</b> ${esc(fmt(r.noticeDate))}<br><b>Intended exit:</b> ${esc(fmt(r.intendedExitDate))}<br><b>Status:</b> <strong>${esc(r.status||'Pending Admin Review')}</strong><div style="margin-top:10px;padding:10px;background:#f8f7fc;border-radius:8px;line-height:1.65;"><b>Financial reconciliation target:</b> ${esc(fmt(r.reconciliationDueDate||r.expectedSettlementDate))}<br><b>Personal savings allocated to Reward Back:</b> KSh ${Number(r.eligibleSavings||0).toLocaleString('en-KE')}<br><b>Reward period:</b> ${esc(r.rewardBackMonth||'Not recorded')}<br><b>Reward Back payment:</b> ${esc(r.rewardBackStatus||'Not recorded')}<br><b>Unpaid fines deduction:</b> KSh ${Number(r.finesDeduction||0).toLocaleString('en-KE')}<br><b>Welfare support deduction:</b> KSh ${Number(r.welfareSupportDeduction||0).toLocaleString('en-KE')}<br><b>Total deductions:</b> KSh ${Number(r.obligations||0).toLocaleString('en-KE')}<br><b>Provisional net settlement:</b> KSh ${Number(r.settlement||0).toLocaleString('en-KE')} — pending Chairlady confirmation; not yet paid<br><b>Reconciliation note:</b> All verified eligible personal savings are to be settled after reconciliation. The financial reconciliation target is ${esc(fmt(r.reconciliationDueDate||r.expectedSettlementDate))}; final approval and settlement remain pending.</div>${isExitPending(r)?`<br><span style="color:#92400e;font-size:13px;">Pending review — you may edit this notice until a decision is recorded.</span>`:String(r.status||'').toLowerCase().includes('reject')?`<br><span style="color:#b91c1c;font-size:13px;">Rejected — this notice can no longer be edited.</span>`:''}<br><button type="button" onclick="downloadExitNoticeById('${esc(r.id)}')" style="margin-top:9px;padding:8px 12px;border:0;border-radius:7px;background:#56328a;color:#fff;font-weight:700;cursor:pointer;">⬇ Download / Print Notice</button></div>`).join(''):'<p style="color:#64748b;">No withdrawal notices have been submitted.</p>'; }
- function renderAdmin(){const body=$('ffAdminExitTable');if(!body)return;const rows=getRows().sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''));if(!rows.length){body.innerHTML='<tr><td colspan="9" style="padding:14px;text-align:center;color:#64748b;">No withdrawal notices have been submitted in this browser.</td></tr>';return;}body.innerHTML=rows.map(r=>`<tr><td style="padding:8px;border-bottom:1px solid #ddd;">${esc(r.member)}<br><small>${esc(r.id)}</small></td><td style="padding:8px;border-bottom:1px solid #ddd;">${esc(fmt(r.noticeDate))}<br>${esc(fmt(r.intendedExitDate))}</td><td style="padding:8px;border-bottom:1px solid #ddd;"><select id="ff-exit-status-${esc(r.id)}" style="width:190px;padding:7px;">${['Notice Submitted — 30-Day Notice','Under Financial Reconciliation','Under Financial Reconciliation — Pending Chairlady Confirmation','Approved','Settlement Pending','Exit Recorded','Rejected','Notice Withdrawn'].map(v=>`<option ${r.status===v?'selected':''}>${v}</option>`).join('')}</select></td><td style="padding:8px;border-bottom:1px solid #ddd;"><input id="ff-exit-savings-${esc(r.id)}" type="number" min="0" step="0.01" value="${Number(r.eligibleSavings||0)}" style="width:110px;padding:7px;"></td><td style="padding:8px;border-bottom:1px solid #ddd;"><input id="ff-exit-obligations-${esc(r.id)}" type="number" min="0" step="0.01" value="${Number(r.obligations||0)}" style="width:110px;padding:7px;"></td><td style="padding:8px;border-bottom:1px solid #ddd;"><input id="ff-exit-due-${esc(r.id)}" type="number" min="0" step="0.01" value="${Number(r.approvedDue||0)}" style="width:110px;padding:7px;"></td><td style="padding:8px;border-bottom:1px solid #ddd;"><input id="ff-exit-net-${esc(r.id)}" type="number" readonly value="${Number(r.settlement||0)}" style="width:110px;padding:7px;background:#f1f5f9;"></td><td style="padding:8px;border-bottom:1px solid #ddd;"><textarea id="ff-exit-admin-${esc(r.id)}" placeholder="Admin remarks" rows="2" style="width:170px;">${esc(r.adminRemarks||'')}</textarea><textarea id="ff-exit-chair-${esc(r.id)}" placeholder="Chairlady remarks / oversight" rows="2" style="width:170px;margin-top:5px;">${esc(r.chairladyRemarks||'')}</textarea><label style="display:block;font-size:11px;">Reconciled <input id="ff-exit-reconciled-${esc(r.id)}" type="date" value="${esc(r.reconciliationDate||'')}"></label><label style="display:block;font-size:11px;">Expected settlement <input id="ff-exit-expected-${esc(r.id)}" type="date" value="${esc(r.expectedSettlementDate||'')}"></label><label style="display:block;font-size:11px;">Settled <input id="ff-exit-settled-${esc(r.id)}" type="date" value="${esc(r.settlementDate||'')}"></label><label style="display:block;font-size:11px;">Effective exit <input id="ff-exit-effective-${esc(r.id)}" type="date" value="${esc(r.effectiveExitDate||'')}"></label></td><td style="padding:8px;border-bottom:1px solid #ddd;white-space:nowrap;"><button type="button" onclick="saveAdminExitRecord('${esc(r.id)}')" style="padding:7px;cursor:pointer;">Save review</button> <button type="button" onclick="downloadExitNoticeById('${esc(r.id)}')" style="padding:7px;cursor:pointer;">PDF</button></td></tr>`).join('');}
- window.saveAdminExitRecord=function(id){const rows=getRows();const i=rows.findIndex(r=>r.id===id);if(i<0)return;const r=rows[i];const savings=Number($('ff-exit-savings-'+id).value||0),obligations=Number($('ff-exit-obligations-'+id).value||0),due=Number($('ff-exit-due-'+id).value||0);if([savings,obligations,due].some(n=>!Number.isFinite(n)||n<0)){alert('Enter valid non-negative financial amounts.');return;}r.status=$('ff-exit-status-'+id).value;r.eligibleSavings=savings;r.obligations=obligations;r.approvedDue=due;r.settlement=savings+due-obligations;r.adminRemarks=$('ff-exit-admin-'+id).value.trim();r.chairladyRemarks=$('ff-exit-chair-'+id).value.trim();r.reconciliationDate=$('ff-exit-reconciled-'+id).value;r.expectedSettlementDate=$('ff-exit-expected-'+id).value;r.settlementDate=$('ff-exit-settled-'+id).value;r.effectiveExitDate=$('ff-exit-effective-'+id).value;r.adminUpdatedAt=new Date().toISOString();if(r.status==='Exit Recorded'&&!r.effectiveExitDate){alert('Enter the effective exit date before recording the exit.');return;}saveRows(rows);renderAdmin();renderMemberHistory(currentName());$('ffAdminExitMessage').textContent='Review saved locally in this browser. To publish this official exit record across devices, add it to the member exits array in index.html and redeploy.';$('ffAdminExitMessage').style.color='#087f5b';};
+ function renderMemberHistory(name){const host=$('ffMemberExitHistory');if(!host)return;const rows=getRows().filter(r=>String(r.member).toLowerCase()===String(name).toLowerCase()).sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''));host.innerHTML=rows.length?rows.map(r=>`<div style="border:1px solid #ddd6fe;border-radius:10px;padding:12px;margin:9px 0;background:#fff;"><b>Reference:</b> ${esc(r.id)}<br><b>Notice date:</b> ${esc(fmt(r.noticeDate))}<br><b>Intended exit:</b> ${esc(fmt(r.intendedExitDate))}<br><b>Status:</b> <strong>${esc(r.status||'Pending Admin Review')}</strong><div style="margin-top:10px;padding:10px;background:#f8f7fc;border-radius:8px;line-height:1.65;"><b>Financial reconciliation target:</b> ${esc(fmt(r.reconciliationDueDate||r.expectedSettlementDate))}<br><b>Final Reward Back amount confirmed:</b> KSh ${Number(r.finalRewardBackAmount??r.rewardBackAmount??r.eligibleSavings??0).toLocaleString('en-KE')}<br><b>Reward period:</b> ${esc(r.rewardBackMonth||'Not recorded')}<br><b>Reward Back payment:</b> ${esc(r.rewardBackStatus||'Not recorded')}<br><b>Unpaid fines deduction:</b> KSh ${Number(r.finesDeduction||0).toLocaleString('en-KE')}<br><b>Welfare support deduction:</b> KSh ${Number(r.welfareSupportDeduction||0).toLocaleString('en-KE')}<br><b>Total deductions:</b> KSh ${Number(r.obligations||0).toLocaleString('en-KE')}<br><b>Final confirmed net settlement:</b> KSh ${Number(r.settlement||0).toLocaleString('en-KE')} — ${isExitPaid(r)?'PAID on '+esc(fmt(r.settlementDate)):'approved for payment on or before '+esc(fmt(r.expectedSettlementDate||r.reconciliationDueDate))+'; not yet paid'}<br><b>Reconciliation note:</b> All verified eligible personal savings are to be settled after reconciliation. The financial reconciliation target is ${esc(fmt(r.reconciliationDueDate||r.expectedSettlementDate))}; final approval and settlement remain pending.</div>${isExitPending(r)?`<br><span style="color:#92400e;font-size:13px;">Pending review — you may edit this notice until a decision is recorded.</span>`:String(r.status||'').toLowerCase().includes('reject')?`<br><span style="color:#b91c1c;font-size:13px;">Rejected — this notice can no longer be edited.</span>`:''}<br><button type="button" onclick="downloadExitNoticeById('${esc(r.id)}')" style="margin-top:9px;padding:8px 12px;border:0;border-radius:7px;background:#56328a;color:#fff;font-weight:700;cursor:pointer;">⬇ Download / Print Notice</button>${isExitPaid(r)?`<div style="margin-top:10px;padding:10px;background:#ecfdf5;border:1px solid #86efac;border-radius:8px;color:#166534;"><b>Payment received:</b> KSh ${Number(r.paidAmount??r.settlement).toLocaleString('en-KE')} on ${esc(fmt(r.settlementDate))}<br><button type="button" onclick="downloadMyExitReceiptById('${esc(r.id)}')" style="margin-top:8px;padding:9px 13px;border:0;border-radius:7px;background:#166534;color:#fff;font-weight:700;cursor:pointer;">⬇ Download Payment Receipt</button></div>`:`<p style="margin:8px 0 0;color:#92400e;font-size:12px;">Payment receipt will appear here once Admin records the actual payment as paid.</p>`}</div>`).join(''):'<p style="color:#64748b;">No withdrawal notices have been submitted.</p>'; }
+ function renderAdmin(){const body=$('ffAdminExitTable');if(!body)return;const rows=getRows().sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''));if(!rows.length){body.innerHTML='<tr><td colspan="9" style="padding:14px;text-align:center;color:#64748b;">No withdrawal notices have been submitted in this browser.</td></tr>';return;}body.innerHTML=rows.map(r=>`<tr><td style="padding:8px;border-bottom:1px solid #ddd;">${esc(r.member)}<br><small>${esc(r.id)}</small></td><td style="padding:8px;border-bottom:1px solid #ddd;">${esc(fmt(r.noticeDate))}<br>${esc(fmt(r.intendedExitDate))}</td><td style="padding:8px;border-bottom:1px solid #ddd;"><select id="ff-exit-status-${esc(r.id)}" style="width:190px;padding:7px;">${['Notice Submitted — 30-Day Notice','Under Financial Reconciliation','Under Financial Reconciliation — Pending Chairlady Confirmation','Approved','Settlement Pending','Paid','Exit Recorded','Rejected','Notice Withdrawn'].map(v=>`<option ${r.status===v?'selected':''}>${v}</option>`).join('')}</select></td><td style="padding:8px;border-bottom:1px solid #ddd;"><input id="ff-exit-savings-${esc(r.id)}" type="number" min="0" step="0.01" value="${Number(r.eligibleSavings||0)}" style="width:110px;padding:7px;"></td><td style="padding:8px;border-bottom:1px solid #ddd;"><input id="ff-exit-obligations-${esc(r.id)}" type="number" min="0" step="0.01" value="${Number(r.obligations||0)}" style="width:110px;padding:7px;"></td><td style="padding:8px;border-bottom:1px solid #ddd;"><input id="ff-exit-due-${esc(r.id)}" type="number" min="0" step="0.01" value="${Number(r.approvedDue||0)}" style="width:110px;padding:7px;"></td><td style="padding:8px;border-bottom:1px solid #ddd;"><input id="ff-exit-net-${esc(r.id)}" type="number" readonly value="${Number(r.settlement||0)}" style="width:110px;padding:7px;background:#f1f5f9;"></td><td style="padding:8px;border-bottom:1px solid #ddd;"><textarea id="ff-exit-admin-${esc(r.id)}" placeholder="Admin remarks" rows="2" style="width:170px;">${esc(r.adminRemarks||'')}</textarea><textarea id="ff-exit-chair-${esc(r.id)}" placeholder="Chairlady remarks / oversight" rows="2" style="width:170px;margin-top:5px;">${esc(r.chairladyRemarks||'')}</textarea><label style="display:block;font-size:11px;">Reconciled <input id="ff-exit-reconciled-${esc(r.id)}" type="date" value="${esc(r.reconciliationDate||'')}"></label><label style="display:block;font-size:11px;">Expected settlement <input id="ff-exit-expected-${esc(r.id)}" type="date" value="${esc(r.expectedSettlementDate||'')}"></label><label style="display:block;font-size:11px;">Actual payment date <input id="ff-exit-settled-${esc(r.id)}" type="date" value="${esc(r.settlementDate||'')}"></label><label style="display:block;font-size:11px;">Payment method <input id="ff-exit-method-${esc(r.id)}" type="text" placeholder="e.g. M-Pesa / Bank" value="${esc(r.paymentMethod||'')}" style="width:170px;"></label><label style="display:block;font-size:11px;">Payment reference <input id="ff-exit-payment-ref-${esc(r.id)}" type="text" placeholder="Transaction code" value="${esc(r.paymentReference||'')}" style="width:170px;"></label><label style="display:block;font-size:11px;">Effective exit <input id="ff-exit-effective-${esc(r.id)}" type="date" value="${esc(r.effectiveExitDate||'')}"></label></td><td style="padding:8px;border-bottom:1px solid #ddd;white-space:nowrap;"><button type="button" onclick="saveAdminExitRecord('${esc(r.id)}')" style="padding:7px;cursor:pointer;">Save review</button> <button type="button" onclick="downloadExitNoticeById('${esc(r.id)}')" style="padding:7px;cursor:pointer;">Notice PDF</button>${isExitPaid(r)?` <button type="button" onclick="downloadExitReceiptById('${esc(r.id)}')" style="padding:7px;cursor:pointer;background:#166534;color:#fff;border:0;border-radius:5px;">Receipt PDF</button>`:''}</td></tr>`).join('');}
+ window.saveAdminExitRecord=function(id){const rows=getRows();const i=rows.findIndex(r=>r.id===id);if(i<0)return;const r=rows[i];const savings=Number($('ff-exit-savings-'+id).value||0),obligations=Number($('ff-exit-obligations-'+id).value||0),due=Number($('ff-exit-due-'+id).value||0);if([savings,obligations,due].some(n=>!Number.isFinite(n)||n<0)){alert('Enter valid non-negative financial amounts.');return;}r.status=$('ff-exit-status-'+id).value;r.eligibleSavings=savings;r.obligations=obligations;r.approvedDue=due;r.settlement=savings+due-obligations;r.adminRemarks=$('ff-exit-admin-'+id).value.trim();r.chairladyRemarks=$('ff-exit-chair-'+id).value.trim();r.reconciliationDate=$('ff-exit-reconciled-'+id).value;r.expectedSettlementDate=$('ff-exit-expected-'+id).value;r.settlementDate=$('ff-exit-settled-'+id).value;r.paymentMethod=$('ff-exit-method-'+id).value.trim();r.paymentReference=$('ff-exit-payment-ref-'+id).value.trim();r.effectiveExitDate=$('ff-exit-effective-'+id).value;r.adminUpdatedAt=new Date().toISOString();if(r.status==='Paid'){if(!r.settlementDate){alert('Enter the actual payment date before marking this settlement as PAID.');return;}if(r.settlement<=0){alert('The settlement amount must be greater than zero before recording payment.');return;}r.paymentStatus='Paid';r.paidAmount=Number(r.settlement);r.paymentRecordedAt=new Date().toISOString();r.paymentRecordedBy='Future Finders Chama Group Administration';r.rewardBackStatus='Paid — KSh '+Number(r.paidAmount).toLocaleString('en-KE')+' on '+r.settlementDate;}else if(String(r.paymentStatus||'').toLowerCase()==='paid'&&!r.settlementDate){r.paymentStatus='Pending';r.paidAmount=0;}if(r.status==='Exit Recorded'&&!r.effectiveExitDate){alert('Enter the effective exit date before recording the exit.');return;}saveRows(rows);renderAdmin();renderMemberHistory(currentName());$('ffAdminExitMessage').textContent='Review saved locally in this browser. To publish this official exit record across devices, add it to the member exits array in index.html and redeploy.';$('ffAdminExitMessage').style.color='#087f5b';};
  window.downloadExitNoticeById=function(id){const r=getRows().find(x=>x.id===id);if(r)printRecord(r);else alert('Exit notice record not found.');};
+ window.downloadMyExitReceiptById=function(id){const r=getRows().find(x=>x.id===id&&String(x.member).toLowerCase()===currentName().toLowerCase());if(r)printReceipt(r);else alert('No payment receipt is available for this member.');};
+ window.downloadExitReceiptById=function(id){const r=getRows().find(x=>x.id===id);if(r)printReceipt(r);else alert('Exit record not found.');};
+ window.downloadMyExitReceipt=function(){const r=latestFor(currentName());if(r)printReceipt(r);else alert('No exit settlement record found.');};
  window.downloadMyExitNotice=function(){const r=latestFor(currentName());if(r)printRecord(r);else alert('No withdrawal notice found.');};
  window.sendExitNoticeWhatsApp=function(){const r=latestFor(currentName());if(!r){alert('Submit your notice first.');return;}const msg=`Hello Admin, I am ${r.member}. I am submitting my written 30-day membership withdrawal notice under Article 11 of the Future Finders Chama Group Constitution. Reference: ${r.id}. Intended exit date: ${r.intendedExitDate}. I will attach the signed PDF for your records and review.`;window.open('https://wa.me/254713953004?text='+encodeURIComponent(msg),'_blank');};
  document.addEventListener('DOMContentLoaded',()=>{renderAdmin();const modal=$('ffMemberExitModal');if(modal)modal.addEventListener('click',e=>{if(e.target===modal)closeMemberExitForm();});});
@@ -24760,12 +25107,13 @@ async function downloadIndividualSavingsReportsPDF() {
 <div id="ffDownloadsOverlay" role="dialog" aria-modal="true" aria-labelledby="ffDownloadsTitle" onclick="if(event.target===this)closeFFDownloads()">
  <div id="ffDownloadsCard">
   <button id="ffDownloadsClose" type="button" onclick="closeFFDownloads()" aria-label="Close downloads">✕</button>
-  <h2 id="ffDownloadsTitle">⬇️ Member Downloads</h2>
-  <p>Select the contribution year, then choose the document you want to download. Group tables are formatted in a clear landscape PDF. Individual reports contain only your own savings record.</p>
+  <h2 id="ffDownloadsTitle">🧾 Member Receipts &amp; Downloads</h2>
+  <p>Choose a year (2025, 2026 or 2027) to download your individual savings report or, once your Reward Back payment is recorded as PAID, your official Chama payment receipt.</p>
   <label for="ffDownloadsYear">Choose contribution year</label>
   <select id="ffDownloadsYear"><option value="2025">2025</option><option value="2026" selected>2026</option><option value="2027">2027</option></select>
   <button class="ff-download-choice" id="ffDownloadGroupBtn" type="button" onclick="downloadFFGroupTablePDF()"><span style="font-size:24px">📄</span><span>Download <span id="ffDownloadGroupYear">2026</span> Group Contributions Table (PDF)</span></button>
   <button class="ff-download-choice secondary" id="ffDownloadIndividualBtn" type="button" onclick="downloadFFIndividualSavingsPDF()"><span style="font-size:24px">👤</span><span>Download My Individual Savings Report (PDF)</span></button>
+  <button class="ff-download-choice secondary" id="ffDownloadRewardReceiptBtn" type="button" onclick="downloadFFSelectedYearRewardReceipt()"><span style="font-size:24px">🧾</span><span>Download My <span id="ffDownloadReceiptYear">2026</span> Reward Payment Receipt (PDF)</span></button>
   <button class="ff-download-choice" id="ffDownloadAllMembersBtn" type="button" style="display:none;background:linear-gradient(135deg,#6b3fa0,#3457a4)" onclick="downloadFFAllMembersSavingsPDF()"><span style="font-size:24px">👥</span><span>Download All Members’ Individual Savings Reports (PDF)</span></button>
   <div id="ffDownloadsStatus" role="status" aria-live="polite"></div>
  </div>
@@ -24783,7 +25131,23 @@ async function downloadIndividualSavingsReportsPDF() {
  };
  window.closeFFDownloads=function(){$('ffDownloadsOverlay').style.display='none';};
  function year(){return $('ffDownloadsYear').value;}
- function updateYearLabel(){$('ffDownloadGroupYear').textContent=year();}
+ function updateYearLabel(){
+   const selected=year();
+   $('ffDownloadGroupYear').textContent=selected;
+   const receiptYear=$('ffDownloadReceiptYear');if(receiptYear)receiptYear.textContent=selected;
+   const receiptBtn=$('ffDownloadRewardReceiptBtn');
+   if(receiptBtn){
+     const unpaid2026=selected==='2026';
+     receiptBtn.disabled=unpaid2026;
+     receiptBtn.style.opacity=unpaid2026?'.58':'';
+     receiptBtn.style.cursor=unpaid2026?'not-allowed':'';
+     receiptBtn.title=unpaid2026?'2026 Reward Back has not yet been paid.':'Download your receipt only after payment is recorded as PAID.';
+     const span=receiptBtn.querySelector('span:last-child');
+     if(span)span.innerHTML=unpaid2026?'2026 Reward Payment Receipt — Not Yet Paid':'Download My '+selected+' Reward Payment Receipt (PDF)';
+   }
+   if(selected==='2026')$('ffDownloadsStatus').textContent='2026 Reward Back has not yet been paid. The receipt is currently unavailable.';
+   else if($('ffDownloadsStatus').textContent.indexOf('2026 Reward Back has not yet been paid')===0)$('ffDownloadsStatus').textContent='';
+ }
  $('ffDownloadsYear').addEventListener('change',updateYearLabel);
  function tableFor(y){
    if(y==='2027'&&typeof window.open2027Popup==='function'){
@@ -24919,6 +25283,99 @@ async function downloadIndividualSavingsReportsPDF() {
    }catch(e){alert('Could not prepare all members’ reports. '+e.message);status().textContent='Please check the selected year and try again.';}
    finally{btn.disabled=false;btn.innerHTML=old;}
  };
+
+ window.downloadFFSelectedYearRewardReceipt=async function(){
+   const btn=$('ffDownloadRewardReceiptBtn'),old=btn.innerHTML;
+   btn.disabled=true;btn.innerHTML='Preparing your receipt…';status().textContent='';
+   try{
+     const y=year();
+     if(y==='2026')throw new Error('The 2026 Reward Back payment has not yet been made. The receipt is not available. Admin will enable it after the payment is completed and recorded.');
+     const member=(typeof loggedInUser!=='undefined'&&loggedInUser?String(loggedInUser):$('memberDisplay')?.textContent||'').trim();
+     if(!member)throw new Error('Please log in to your member account first.');
+     const table=tableFor(y),data=tableData(table);
+     const row=data.body.find(r=>String(r[0]||'').trim().toUpperCase()===member.trim().toUpperCase());
+     if(!row)throw new Error('Your name was not found in the '+y+' contribution and reward table. Please contact Admin.');
+     const statusIndex=data.head.findIndex(h=>/PAYMENT\s*STATUS/i.test(String(h||'')));
+     const rewardIndex=data.head.findIndex(h=>/REWARD\s*BACK/i.test(String(h||'')));
+     if(statusIndex<0)throw new Error('The '+y+' table does not contain a payment-status column.');
+     if(rewardIndex<0)throw new Error('The '+y+' table does not contain a Reward Back amount.');
+     const paymentStatus=String(row[statusIndex]||'').replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim();
+     if(!/\bPAID\b/i.test(paymentStatus))throw new Error('Your '+y+' Reward Back payment is not recorded as PAID yet. A receipt will become available after Admin confirms and records the payment.');
+     const amountText=String(row[rewardIndex]||'').replace(/,/g,'');
+     const paidAmount=Number((amountText.match(/-?\d+(?:\.\d+)?/)||[])[0]||0);
+     if(!(paidAmount>0))throw new Error('The '+y+' Reward Back amount is missing or zero. Please ask Admin to verify the payment record.');
+
+     const allPayments=window.FF_YEARLY_REWARD_PAYMENTS||{};
+     const yearMap=allPayments[y]||allPayments[String(y)]||{};
+     const legacy=allPayments[member.toUpperCase()]||allPayments[member]||{};
+     const meta=yearMap[member.toUpperCase()]||yearMap[member]||(y==='2026'&&legacy.status?legacy:{});
+     const receiptNo=String(meta.receiptNumber||('FFC-RWD-'+y+'-'+member.toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,10)));
+     const paidDate=String(meta.paidDate||meta.paymentDate||'Not recorded');
+     const method=String(meta.paymentMethod||'Not recorded');
+     const reference=String(meta.transactionReference||meta.reference||'Not recorded');
+
+     if(!window.jspdf||!window.jspdf.jsPDF)throw new Error('The PDF service is unavailable. Please refresh the website and try again.');
+     const {jsPDF}=window.jspdf;
+     const doc=new jsPDF({orientation:'portrait',unit:'mm',format:'a4',compress:true});
+     const w=doc.internal.pageSize.getWidth(),h=doc.internal.pageSize.getHeight();
+     doc.setFillColor(9,43,75);doc.rect(0,0,w,38,'F');
+     await addLogo(doc,12,5,28);
+     doc.setTextColor(255,255,255);doc.setFont('helvetica','bold');doc.setFontSize(15);
+     doc.text('FUTURE FINDERS CHAMA GROUP',w/2+8,15,{align:'center'});
+     doc.setFontSize(10);doc.text(y+' ANNUAL REWARD BACK PAYMENT RECEIPT',w/2+8,23,{align:'center'});
+     doc.setFont('helvetica','normal');doc.setFontSize(8);
+     doc.text('Together We Save. Together We Grow. Together We Succeed.',w/2+8,30,{align:'center'});
+
+     let yy=53;
+     doc.setTextColor(9,43,75);doc.setFont('helvetica','bold');doc.setFontSize(14);
+     doc.text('OFFICIAL PAYMENT RECEIPT',14,yy);yy+=9;
+     doc.setDrawColor(190,148,53);doc.setLineWidth(.7);doc.line(14,yy,w-14,yy);yy+=10;
+     const fields=[
+       ['Receipt Number',receiptNo],
+       ['Member Name',member],
+       ['Payment Description',y+' Annual Reward Back'],
+       ['Amount Received','KSh '+paidAmount.toLocaleString('en-KE')],
+       ['Payment Status','PAID — Confirmed in the official payment table'],
+       ['Date Paid',paidDate],
+       ['Payment Method',method],
+       ['Transaction Reference',reference]
+     ];
+     fields.forEach(([label,value])=>{
+       doc.setFont('helvetica','bold');doc.setFontSize(9);doc.setTextColor(65,80,95);
+       doc.text(label.toUpperCase(),16,yy);
+       doc.setFont('helvetica','normal');doc.setTextColor(25,40,55);
+       const lines=doc.splitTextToSize(String(value),105);
+       doc.text(lines,82,yy);
+       yy+=Math.max(9,lines.length*4.5+3);
+       doc.setDrawColor(225,231,237);doc.line(16,yy-3,w-16,yy-3);
+     });
+     yy+=5;
+     doc.setFillColor(235,247,239);doc.setDrawColor(170,211,181);
+     doc.roundedRect(14,yy,w-28,23,3,3,'FD');
+     doc.setTextColor(22,101,52);doc.setFont('helvetica','bold');doc.setFontSize(11);
+     doc.text('PAYMENT RECEIVED — THANK YOU',w/2,yy+9,{align:'center'});
+     doc.setFont('helvetica','normal');doc.setFontSize(8.5);
+     doc.text('This receipt confirms the Reward Back payment recorded for the year '+y+'.',w/2,yy+16,{align:'center'});
+     yy+=34;
+
+     doc.setTextColor(9,43,75);doc.setFont('helvetica','bold');doc.setFontSize(10.5);
+     doc.text('A MESSAGE FROM FUTURE FINDERS CHAMA GROUP',14,yy);yy+=7;
+     doc.setTextColor(55,65,75);doc.setFont('helvetica','normal');doc.setFontSize(9.5);
+     const letter='Dear '+member+',\\n\\nThank you for being part of Future Finders Chama Group and for your commitment to saving and growing together. We are pleased to acknowledge that your '+y+' annual Reward Back payment has been recorded as paid.\\n\\nYour participation and contribution to our Chama journey are appreciated. We warmly encourage you to stay connected and consider joining us again in the future. You will always be welcome to return and continue saving, supporting one another and growing together.\\n\\nWe wish you success and prosperity in your future plans. Thank you for being part of Future Finders Chama Group.';
+     const letterLines=doc.splitTextToSize(letter,w-28);
+     doc.text(letterLines,14,yy,{lineHeightFactor:1.45});
+     doc.setTextColor(22,101,52);doc.setFont('helvetica','bold');doc.setFontSize(10);
+     doc.text('Together We Save. Together We Grow. Together We Succeed.',w/2,273,{align:'center'});
+     doc.setTextColor(100,110,120);doc.setFont('helvetica','normal');doc.setFontSize(7.5);
+     doc.text('Issued by Future Finders Chama Group Administration • Please keep this receipt for your records.',w/2,282,{align:'center'});
+     doc.save('Future_Finders_'+y+'_Reward_Back_Receipt_'+member.replace(/[^a-z0-9]+/gi,'_')+'.pdf');
+     status().textContent='Your '+y+' Reward Back payment receipt is ready.';
+   }catch(e){
+     alert('Could not prepare your reward payment receipt. '+e.message);
+     status().textContent='A receipt is available only after the payment is recorded as PAID.';
+   }finally{btn.disabled=false;btn.innerHTML=old;}
+ };
+
  window.downloadFFIndividualSavingsPDF=async function(){
    const btn=$('ffDownloadIndividualBtn'),old=btn.innerHTML;btn.disabled=true;btn.lastChild.textContent='Preparing your report…';status().textContent='';
    try{
