@@ -223,6 +223,14 @@ footer{background:#12304a!important;color:#eaf4f7!important;padding:20px!importa
 @media(max-width:768px){body{font-size:14px}section,#dashboard{margin:14px 10px!important;padding:14px!important}table{display:block;overflow-x:auto;white-space:nowrap}th,td{padding:8px 9px}header h1,h1{font-size:clamp(1.35rem,5vw,2rem)}button,.btn{max-width:100%}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}}
 </style>
+<style id="ff-typing-and-loading-polish">
+.ff-typing-caret::after{content:"▋";display:inline-block;margin-left:2px;color:#087f8c;animation:ffCaretBlink .8s steps(1) infinite;font-weight:500}
+@keyframes ffCaretBlink{50%{opacity:0}}
+.ff-action-loading{display:inline-flex;align-items:center;justify-content:center;gap:9px;font-weight:700;letter-spacing:.2px}
+.ff-action-loading .ff-mini-loader{width:15px;height:15px;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:ffMiniSpin .75s linear infinite;flex:0 0 auto}
+@keyframes ffMiniSpin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.ff-typing-caret::after,.ff-action-loading .ff-mini-loader{animation:none!important}}
+</style>
 
 <style id="future-finders-layout-refinement">
 /* Clear, consistent navigation */
@@ -1739,17 +1747,40 @@ table th {
   transform: translateY(-2px);
 }
 
-/* 🎨 Individual button colors (order matters) */
-#navButtons .nav-btn:nth-child(1) { background: #1976d2; } /* Home – Blue */
-#navButtons .nav-btn:nth-child(2) { background: #0097a7; } /* About – Cyan */
-#navButtons .nav-btn:nth-child(3) { background: #7b1fa2; } /* Membership – Purple */
-#navButtons .nav-btn:nth-child(4) { background: #f57c00; } /* Pick Number – Orange */
-#navButtons .nav-btn:nth-child(5) { background: #388e3c; } /* Services – Green */
-#navButtons .nav-btn:nth-child(6) { background: #d32f2f; } /* News – Red */
-#navButtons .nav-btn:nth-child(7) { background: #5d4037; } /* Member Login – Brown */
-#navButtons .nav-btn:nth-child(8) { background: #455a64; } /* Admin – Blue Grey */
-#navButtons .nav-btn:nth-child(9) { background: #2b2c2c; } /* Rules – Deep Purple */
-#navButtons .nav-btn:nth-child(10){ background: #0288d1; } /* Contact – Sky Blue */
+/* Professional unified navigation: three consistent navy buttons */
+#navButtons { display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:10px; }
+#navButtons .nav-btn {
+  background:#18364a !important;
+  color:#fff !important;
+  border:1px solid #244b62;
+  border-radius:10px;
+  padding:12px 22px;
+  min-width:132px;
+  text-align:center;
+  box-shadow:0 3px 9px rgba(15,39,55,.12);
+}
+#navButtons .nav-btn:hover { background:#24536b !important; transform:translateY(-1px); }
+#exploreChoice .explore-group{margin:22px 0 0;padding:18px;background:#eef3f6;border:1px solid #e0e8ed;border-radius:15px;}
+#exploreChoice .explore-group-title{margin:0 0 12px;color:#18364a;font-size:16px;font-weight:750;}
+#exploreChoice .explore-link{min-height:82px;}
+#exploreChoice .explore-link>span:first-child{display:flex;flex-direction:column;gap:5px;}
+#exploreChoice .explore-link small{font-size:12px;font-weight:450;line-height:1.45;color:#647789;}
+.home-info-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;margin-top:8px;}
+.home-info-card{padding:20px;border:1px solid #dce6ec;border-radius:14px;background:#fff;box-shadow:0 4px 14px rgba(15,39,55,.045);}
+.home-info-icon{width:42px;height:42px;display:flex;align-items:center;justify-content:center;border-radius:12px;background:#eaf1f5;font-size:22px;}
+.home-info-card h3{margin:13px 0 7px;color:#18364a;font-size:17px;}
+.home-info-card p{margin:0;color:#5c6e7d;line-height:1.65;font-size:14px;}
+@media(max-width:700px){.home-info-grid{grid-template-columns:1fr;}#exploreChoice .explore-group{padding:13px;}}
+.explore-menu-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr)); gap:12px; max-width:900px; margin:22px auto 0; }
+.explore-link {
+  display:flex; align-items:center; justify-content:space-between; gap:12px; width:100%;
+  padding:16px 18px; border:1px solid #d8e2e9; border-radius:11px;
+  background:#fff; color:#18364a; font-size:15px; font-weight:600; font-family:inherit; text-align:left; cursor:pointer;
+  box-shadow:0 3px 10px rgba(15,39,55,.05); transition:background .2s ease,border-color .2s ease,transform .2s ease;
+}
+.explore-link:hover { background:#f0f7f9; border-color:#8eabb9; transform:translateY(-1px); }
+.explore-link .spinner { flex:0 0 auto; }
+@media(max-width:520px) { #navButtons { gap:7px; } #navButtons .nav-btn { flex:1 1 calc(50% - 7px); min-width:0; padding:11px 8px; } }
 
 /* Back button (already exists, just enforce) */
 #backBtn {
@@ -2511,27 +2542,39 @@ style="width:150px; height:150px; border-radius:50%; object-fit:cover; box-shado
 <p>Empowering our members through savings, merry-go-round, and loans.</p>
 </header>
 <!-- NAVIGATION -->
-<div id="navButtons">
+<div id="navButtons" aria-label="Main navigation">
 <a class="nav-btn" onclick="simulateAction(this,'home')">🏠 Home <span class="spinner"></span></a>
-<a class="nav-btn" onclick="simulateAction(this,'about')">ℹ️ About Us <span class="spinner"></span></a>
 <a class="nav-btn" id="membershipMainBtn" onclick="openMembershipMenu(this)">👥 Membership <span class="spinner"></span></a>
-<a class="nav-btn" onclick="simulateLoanThenDisable(this)">
-    🎲 Pick Number
-    <span class="spinner"></span>
-</a>
-<a class="nav-btn" onclick="simulateAction(this,'services')">💼 Services <span class="spinner"></span></a>
-<a class="nav-btn" onclick="simulateAction(this,'updates')">
-  📰 News 
-  <span id="newsBadge" style="display:none; color:red; font-weight:bold; margin-left:5px;">●</span>
-<span class="spinner"></span>
-</a>
-<a class="nav-btn" onclick="simulateAction(this,'rules')">
-  📜 The Constitution <span class="spinner"></span>
-</a>
-<a class="nav-btn" onclick="simulateAction(this,'contact')">📞 Contact <span class="spinner"></span>
-</a>
-<a class="nav-btn" id="backBtn" onclick="showAllButtons()" style="display:none; background:#d32f2f;">⬅️ Back to Menu <span class="spinner"></span></a>
+<a class="nav-btn" id="exploreMainBtn" onclick="openExploreMenu(this)">☰ Explore <span class="spinner"></span></a>
+<a class="nav-btn" id="backBtn" onclick="showAllButtons()" style="display:none;">⬅️ Back to Menu <span class="spinner"></span></a>
 </div>
+
+<!-- EXPLORE SUB-MENU: all public information and member tools -->
+<section id="exploreChoice" style="display:none;background:#f7f9fb;padding:clamp(20px,4vw,34px);">
+  <div style="max-width:980px;margin:0 auto;">
+    <div style="text-align:center;">
+      <div style="display:inline-flex;width:54px;height:54px;align-items:center;justify-content:center;border-radius:16px;background:#e7eef3;color:#18364a;font-size:27px;">☰</div>
+      <h2 style="color:#18364a;margin:10px 0 8px;">Explore Future Finders</h2>
+      <p style="color:#526579;line-height:1.65;margin:0 auto 24px;max-width:680px;">Browse the Chama information, services, official rules, announcements and member tools. Select any item to open its section.</p>
+    </div>
+    <div class="explore-group">
+      <h3 class="explore-group-title">Learn About the Chama</h3>
+      <div class="explore-menu-grid">
+        <button type="button" class="explore-link" onclick="simulateAction(this,'about')"><span><b>ℹ️ About Us</b><small>Our background, mission and vision</small></span><span class="spinner"></span></button>
+        <button type="button" class="explore-link" onclick="simulateAction(this,'services')"><span><b>💼 Services</b><small>Explore the Chama's member services</small></span><span class="spinner"></span></button>
+        <button type="button" class="explore-link" onclick="simulateAction(this,'rules')"><span><b>📜 The Constitution</b><small>Read the governing rules and procedures</small></span><span class="spinner"></span></button>
+      </div>
+    </div>
+    <div class="explore-group">
+      <h3 class="explore-group-title">Updates & Member Support</h3>
+      <div class="explore-menu-grid">
+        <button type="button" class="explore-link" onclick="simulateAction(this,'updates')"><span><b>📰 News & Updates</b><small>Read announcements and group updates</small></span><span id="newsBadge" style="display:none;color:#c0392b;font-weight:bold;">●</span><span class="spinner"></span></button>
+        <button type="button" class="explore-link" onclick="simulateLoanThenDisable(this)"><span><b>🎲 Pick Number</b><small>Open the member number-picking tool</small></span><span class="spinner"></span></button>
+        <button type="button" class="explore-link" onclick="simulateAction(this,'contact')"><span><b>📞 Contact</b><small>Reach the Future Finders team</small></span><span class="spinner"></span></button>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- MEMBERSHIP SUB-MENU: new applicants and existing members -->
 <section id="membershipChoice" style="display:none;background:#f5f9fc;padding:clamp(20px,4vw,34px);">
@@ -3830,9 +3873,24 @@ function closeSystemUpdatePopup(){
 <button class="contact-btn phone" onclick="contactPhone()">📞 Call Us</button>
 <button class="contact-btn whatsapp" onclick="contactWhatsApp()">💬 WhatsApp Chat</button>
 </section>
-<section class="active" id="home">
-<h2>🏠 Home</h2>
-<p>Welcome to Future Finders Chama. Together we save, invest, and grow.</p>
+<section class="active" id="home" style="padding:clamp(22px,4vw,38px);">
+  <div style="max-width:1050px;margin:0 auto;">
+    <div style="text-align:center;padding:8px 8px 22px;">
+      <span style="display:inline-block;padding:6px 13px;border-radius:30px;background:#eaf1f5;color:#18364a;font-size:12px;font-weight:700;letter-spacing:1px;">WELCOME TO OUR COMMUNITY</span>
+      <h2 style="color:#18364a;margin:14px 0 9px;font-size:clamp(25px,4vw,34px);">🏠 Welcome to Future Finders Chama</h2>
+      <p data-ff-typing="true" style="max-width:760px;margin:0 auto;color:#526579;line-height:1.8;font-size:16px;">Together we save, invest, and grow. Future Finders Chama brings members together through a shared commitment to disciplined saving, mutual support and responsible financial growth.</p>
+      <p data-ff-typing="true" style="margin:12px 0 0;color:#087f8c;font-weight:700;letter-spacing:.2px;">Together We Save. Together We Grow. Together We Succeed.</p>
+    </div>
+    <div class="home-info-grid">
+      <article class="home-info-card"><div class="home-info-icon">🤝</div><h3 data-ff-typing="true">Who We Are</h3><p data-ff-typing="true">We are a community of members working together with trust, discipline and a shared vision of financial independence.</p></article>
+      <article class="home-info-card"><div class="home-info-icon">🌱</div><h3 data-ff-typing="true">What We Believe In</h3><p data-ff-typing="true">Consistent savings, responsible participation, mutual support and respect for the Chama's Constitution and approved rules.</p></article>
+      <article class="home-info-card"><div class="home-info-icon">📈</div><h3 data-ff-typing="true">Growing Together</h3><p data-ff-typing="true">Our goal is to help members build stronger financial habits and access the Chama services available under its rules.</p></article>
+    </div>
+    <div style="margin-top:22px;padding:20px clamp(16px,3vw,26px);border:1px solid #dce6ec;border-radius:14px;background:#f8fafc;">
+      <h3 data-ff-typing="true" style="margin:0 0 8px;color:#18364a;">Explore the Chama</h3>
+      <p data-ff-typing="true" style="margin:0;color:#526579;line-height:1.7;">Use <b>Membership</b> to access new-member information, registration, member login and administration. Choose <b>Explore</b> to learn about our services, read the Constitution, view news or reach our team.</p>
+    </div>
+  </div>
 </section>
 <!-- Random Picker -->
 <section id="picker">
@@ -10923,11 +10981,15 @@ GRAND TOTAL
         const name = oldRow.cells[0]?.textContent.trim();
         const newRow = Array.from(body.rows).find(r => r.cells[0]?.textContent.trim() === name);
         if (!newRow || !name || /grand total/i.test(name)) return;
-        const carried = Number((oldRow.querySelector(".saved2026")?.textContent || "0").replace(/[^0-9.-]/g,"")) || 0;
-        const carryInput = newRow.querySelector("input[data-opening-balance]");
-        if (carryInput && !carryInput.dataset.manuallyLocked) carryInput.value = carried;
+        const carriedTotal2026 = Number((oldRow.querySelector(".saved2026")?.textContent || "0").replace(/[^0-9.-]/g,"")) || 0;
         const priorRow = Array.from(document.querySelectorAll("#table2025 tbody tr")).find(r => r.cells[0]?.textContent.trim().toUpperCase() === name.toUpperCase());
         const prior = Number((priorRow?.querySelector(".saved2025")?.textContent || "0").replace(/[^0-9.-]/g,"")) || 0;
+        // Carry the full 2026 saved-after-reward amount into 2027.
+        // The 2027 total separately adds the 2025 saved-after-reward amount,
+        // so both previous-year figures remain visible in the cumulative total.
+        const carried = Math.max(0, carriedTotal2026);
+        const carryInput = newRow.querySelector("input[data-opening-balance]");
+        if (carryInput && !carryInput.dataset.manuallyLocked) carryInput.value = carried;
         if(newRow.cells[1]) newRow.cells[1].textContent = ffMoney(prior);
       });
       calculate2027();
@@ -10938,10 +11000,13 @@ GRAND TOTAL
       const name = oldRow.cells[0]?.textContent.trim();
       if (!name || /grand total/i.test(name) || name.toUpperCase().replace(/\s+/g," ") === "SAMUEL OYUGI") return;
       const savedText = oldRow.querySelector(".saved2026")?.textContent || "0";
-      const opening = Number(savedText.replace(/[^0-9.-]/g,"")) || 0;
+      const carriedTotal2026 = Number(savedText.replace(/[^0-9.-]/g,"")) || 0;
       const priorRow = Array.from(document.querySelectorAll("#table2025 tbody tr")).find(r => r.cells[0]?.textContent.trim().toUpperCase() === name.toUpperCase());
       const priorText = priorRow?.querySelector(".saved2025")?.textContent || "0";
       const priorSavings = Number(priorText.replace(/[^0-9.-]/g,"")) || 0;
+      // Carry the full 2026 saved-after-reward amount.
+      // 2027 calculation adds the separate 2025 saved-after-reward amount as well.
+      const opening = Math.max(0, carriedTotal2026);
       const tr = document.createElement("tr");
       const nameTd = document.createElement("td");
       nameTd.textContent = name;
@@ -14502,7 +14567,7 @@ const members = {
         monthlyRepay: 2300,
         amountPaid: 1000,
         balance: 1300,
-        latePenalty: 60,
+        latePenalty: 70,
         latePenaltyPaid: 0,
         date: "10/10/2026",
         firstRepaymentDate: "10/11/2026",
@@ -14512,7 +14577,7 @@ const members = {
           { date: "06/11/2026", amount: 1000, note: "Repayment received" }
         ],
         status: "APPROVED",
-        reason: "PARTIALLY REPAID — KSH 1,000 RECEIVED ON 06/11/2026. KSH 1,300 LOAN BALANCE OUTSTANDING; KSH 60 LATE PAYMENT FINE ACCRUED AS AT 15/11/2026.",
+        reason: "PARTIALLY REPAID — KSH 1,000 RECEIVED ON 06/11/2026. KSH 1,300 LOAN BALANCE OUTSTANDING; KSH 70 LATE PAYMENT FINE ACCRUED AS AT 17/11/2026.",
         repaymentSchedule: [
           {
             month: 1,
@@ -14692,27 +14757,109 @@ const members = {
     loans: []
   }
 };
-// Membership navigation: one main button opens the two membership pathways.
-function openMembershipMenu(button) {
-  const spinner = button.querySelector('.spinner');
-  if (spinner) spinner.style.display = 'inline-block';
+// Friendly loading message shown while a navigation choice is opening.
+function ffBeginButtonLoading(button, message) {
+  if (!button) return null;
+  if (!button.dataset.ffOriginalMarkup) button.dataset.ffOriginalMarkup = button.innerHTML;
+  button.setAttribute('aria-busy','true');
   button.style.pointerEvents = 'none';
+  button.innerHTML = '<span class="ff-action-loading"><span class="ff-mini-loader" aria-hidden="true"></span>' + (message || 'Please wait...') + '</span>';
+  return function ffEndButtonLoading() {
+    button.innerHTML = button.dataset.ffOriginalMarkup || button.innerHTML;
+    button.style.pointerEvents = '';
+    button.removeAttribute('aria-busy');
+  };
+}
+
+// Type the Home information in a calm, one-by-one sequence over about 30 seconds.
+let ffHomeTypingRun = 0;
+function startFutureFindersHomeTyping() {
+  const home = document.getElementById('home');
+  if (!home) return;
+  const run = ++ffHomeTypingRun;
+  const items = Array.from(home.querySelectorAll('[data-ff-typing="true"]'));
+  if (!items.length) return;
+  const records = items.map(el => {
+    if (!el.dataset.ffOriginalHtml) el.dataset.ffOriginalHtml = el.innerHTML;
+    if (!el.dataset.ffFullText) el.dataset.ffFullText = el.textContent.trim();
+    return {el, text:el.dataset.ffFullText};
+  });
+  const totalChars = records.reduce((n, item) => n + item.text.length, 0) || 1;
+  const typingDelay = Math.max(24, Math.floor(30000 / totalChars));
+  records.forEach(({el}) => { el.textContent = ''; el.classList.remove('ff-typing-caret'); });
+  let itemIndex = 0;
+  function typeNextItem() {
+    if (run !== ffHomeTypingRun || itemIndex >= records.length) return;
+    const {el, text} = records[itemIndex++];
+    let charIndex = 0;
+    el.classList.add('ff-typing-caret');
+    function typeCharacter() {
+      if (run !== ffHomeTypingRun) return;
+      charIndex++;
+      el.textContent = text.slice(0, charIndex);
+      if (charIndex < text.length) {
+        const ch = text.charAt(charIndex - 1);
+        setTimeout(typeCharacter, typingDelay + (/[.,!?;]/.test(ch) ? 100 : 0));
+      } else {
+        el.classList.remove('ff-typing-caret');
+        if (itemIndex >= records.length) {
+          // Restore original inline emphasis after the final character is typed.
+          records.forEach(({el}) => { el.innerHTML = el.dataset.ffOriginalHtml; });
+        } else {
+          setTimeout(typeNextItem, 180);
+        }
+      }
+    }
+    if (text.length) typeCharacter(); else typeNextItem();
+  }
+  typeNextItem();
+}
+
+// Keep the visitor at the same reading position when switching website sections.
+let ffNavScrollY = window.scrollY || 0;
+function ffCaptureViewport() { ffNavScrollY = window.scrollY || 0; return ffNavScrollY; }
+function ffRestoreViewport(y) {
+  const targetY = Math.max(0, Number(y) || 0);
+  requestAnimationFrame(() => window.scrollTo({left:window.scrollX || 0, top:targetY, behavior:'auto'}));
+  setTimeout(() => window.scrollTo({left:window.scrollX || 0, top:targetY, behavior:'auto'}), 80);
+}
+
+// Membership navigation: one main button opens the two membership pathways.
+function openExploreMenu(button) {
+  const keepViewportY = ffCaptureViewport();
+  const finishLoading = ffBeginButtonLoading(button, 'Please wait...');
   setTimeout(() => {
-    if (spinner) spinner.style.display = 'none';
-    button.style.pointerEvents = 'auto';
+    if (finishLoading) finishLoading();
     document.querySelectorAll('section, #dashboard, #admin, #newsSection').forEach(el => el.style.display = 'none');
     document.querySelectorAll('#navButtons .nav-btn').forEach(el => el.style.display = 'none');
-    button.style.display = 'inline-block';
+    button.style.display = 'inline-flex';
+    const menu = document.getElementById('exploreChoice');
+    if (menu) menu.style.display = 'block';
+    const back = document.getElementById('backBtn');
+    if (back) back.style.display = 'inline-flex';
+    ffRestoreViewport(keepViewportY);
+  }, 650);
+}
+
+function openMembershipMenu(button) {
+  const keepViewportY = ffCaptureViewport();
+  const finishLoading = ffBeginButtonLoading(button, 'Please wait...');
+  setTimeout(() => {
+    if (finishLoading) finishLoading();
+    document.querySelectorAll('section, #dashboard, #admin, #newsSection').forEach(el => el.style.display = 'none');
+    document.querySelectorAll('#navButtons .nav-btn').forEach(el => el.style.display = 'none');
+    button.style.display = 'inline-flex';
     const menu = document.getElementById('membershipChoice');
     if (menu) menu.style.display = 'block';
     const back = document.getElementById('backBtn');
-    if (back) back.style.display = 'inline-block';
-    window.scrollTo({top: 0, behavior: 'smooth'});
-  }, 450);
+    if (back) back.style.display = 'inline-flex';
+    ffRestoreViewport(keepViewportY);
+  }, 650);
 }
 
 // New Membership opens the welcome and information centre first.
 function openNewMembership() {
+  const keepViewportY = ffCaptureViewport();
   document.querySelectorAll('section, #dashboard, #admin, #newsSection').forEach(el => el.style.display = 'none');
   const welcome = document.getElementById('newMemberInfo');
   const registration = document.getElementById('membership');
@@ -14720,82 +14867,66 @@ function openNewMembership() {
   if (registration) registration.style.display = 'none';
   const back = document.getElementById('backBtn');
   if (back) back.style.display = 'inline-block';
-  window.scrollTo({top: 0, behavior: 'smooth'});
+  ffRestoreViewport(keepViewportY);
 }
 
 // Show the registration wizard only after the applicant clicks the registration button.
 function showNewMemberRegistration() {
+  const keepViewportY = ffCaptureViewport();
   const welcome = document.getElementById('newMemberInfo');
   const registration = document.getElementById('membership');
   if (welcome) welcome.style.display = 'none';
   if (registration) registration.style.display = 'block';
-  window.scrollTo({top: 0, behavior: 'smooth'});
+  ffRestoreViewport(keepViewportY);
 }
 
 // Existing members go directly to the original login form.
 function openExistingMemberLogin() {
+  const keepViewportY = ffCaptureViewport();
   document.querySelectorAll('section, #dashboard, #admin, #newsSection').forEach(el => el.style.display = 'none');
   const login = document.getElementById('loginForm');
   if (login) login.style.display = 'block';
   const back = document.getElementById('backBtn');
   if (back) back.style.display = 'inline-block';
-  window.scrollTo({top: 0, behavior: 'smooth'});
+  ffRestoreViewport(keepViewportY);
 }
 
 // Admin access is grouped inside the Membership menu and still uses the existing secure login screen.
 function openAdminLoginFromMembership() {
+  const keepViewportY = ffCaptureViewport();
   document.querySelectorAll('section, #dashboard, #admin, #newsSection').forEach(el => el.style.display = 'none');
   const login = document.getElementById('adminLogin');
   if (login) login.style.display = 'block';
   const back = document.getElementById('backBtn');
   if (back) back.style.display = 'inline-block';
-  window.scrollTo({top: 0, behavior: 'smooth'});
+  ffRestoreViewport(keepViewportY);
 }
 
 // 🔄 Simulate loading action (button + spinner + section switch)
 function simulateAction(button, sectionId) {
-  let spinner = button.querySelector(".spinner");
-
-  // Show spinner
-  if (spinner) spinner.style.display = "inline-block";
-  button.style.pointerEvents = "none";
-
+  const keepViewportY = ffCaptureViewport();
+  const finishLoading = ffBeginButtonLoading(button, 'Please wait...');
   setTimeout(() => {
-    if (spinner) spinner.style.display = "none";
-    button.style.pointerEvents = "auto";
-
-    // Hide all sections
-    document.querySelectorAll("section, #dashboard, #admin, #newsSection").forEach(sec => {
-      sec.style.display = "none";
-    });
-
-    // Hide all nav buttons except the clicked one
-    document.querySelectorAll("#navButtons .nav-btn").forEach(btn => {
-      btn.style.display = "none";
-    });
-    button.style.display = "inline-block"; // keep clicked one
-
-    // Show selected section
-    let target = document.getElementById(sectionId);
+    if (finishLoading) finishLoading();
+    document.querySelectorAll("section, #dashboard, #admin, #newsSection").forEach(sec => { sec.style.display = 'none'; });
+    document.querySelectorAll("#navButtons .nav-btn").forEach(btn => { btn.style.display = 'none'; });
+    button.style.display = 'inline-flex';
+    const target = document.getElementById(sectionId);
     if (target) {
-      target.style.display = "block";
-
-      // ✅ Special handling for News Section
-      if (sectionId === "newsSection") {
-        loadNews();
-        markNewsRead();
-      }
-    } else {
-      console.error("❌ Section not found:", sectionId);
-    }
-
-    // ✅ Show Back button
-    document.getElementById("backBtn").style.display = "inline-block";
-  }, 800); // 0.8 sec loading effect
+      target.style.display = 'block';
+      if (sectionId === 'home') startFutureFindersHomeTyping();
+      if (sectionId === 'newsSection') { loadNews(); markNewsRead(); }
+    } else { console.error("Section not found:", sectionId); }
+    const back = document.getElementById("backBtn");
+    if (back) back.style.display = 'inline-flex';
+    ffRestoreViewport(keepViewportY);
+  }, 650);
 }
 
 
+
 function showAllButtons() {
+  const keepViewportY = ffCaptureViewport();
   // Show all nav buttons again
   document.querySelectorAll("#navButtons .nav-btn").forEach(btn => {
     btn.style.display = "inline-block";
@@ -14809,6 +14940,8 @@ function showAllButtons() {
     sec.style.display = "none";
   });
   document.getElementById("home").style.display = "block"; // default back to Home
+  ffRestoreViewport(keepViewportY);
+  startFutureFindersHomeTyping();
 }
 
 function delayedShowAllButtons(btn) {
@@ -23358,16 +23491,12 @@ function closeSystemUpdatePopup(){
 // Pick Number - Simulate Loan First
 // ================================
 function simulateLoanThenDisable(button) {
-
-    const spinner = button.querySelector(".spinner");
-    if (spinner) spinner.style.display = "inline-block";
-
+    const finishLoading = (typeof ffBeginButtonLoading === 'function')
+      ? ffBeginButtonLoading(button, 'Please wait...') : null;
     setTimeout(() => {
-
-        if (spinner) spinner.style.display = "none";
-
-        document.getElementById("disabledPopup").style.display = "flex";
-
+        if (finishLoading) finishLoading();
+        const popup = document.getElementById("disabledPopup");
+        if (popup) popup.style.display = "flex";
     }, 2000);
 }
 
@@ -24465,7 +24594,6 @@ async function downloadIndividualSavingsReportsPDF() {
 
 
 
-
 </body></html>`);
   w.document.close();
  }
@@ -24825,7 +24953,7 @@ async function downloadIndividualSavingsReportsPDF() {
     // Interest earned means interest actually collected from repayments,
     // not the interest merely expected on outstanding loans.
     const interestEarnedCard=document.getElementById('totalInterestEarnedCard');
-    if(interestEarnedCard)interestEarnedCard.textContent='💹 Total Interest Earned (MMF + Loans): '+money(4514+a.interestPaid);
+    if(interestEarnedCard)interestEarnedCard.textContent='💹 Total Interest Earned (MMF + Loans): '+money(4588+a.interestPaid);
     const statusCard=document.getElementById('loanBreakdownCard');
     if(statusCard)statusCard.textContent=`📊 Loan Status: ${pending} Pending / ${active} Active / ${overdue} Overdue / ${cleared} Cleared / ${rejected} Rejected`;
     // Build the admin's expanded member summaries from the same unified
@@ -24890,7 +25018,7 @@ async function downloadIndividualSavingsReportsPDF() {
     const penaltyReport=document.getElementById('ffAdminPenaltyWelfareReports');
     const welfareReport=document.getElementById('ffAdminWelfareReport');
     const loanPenaltyReport=document.getElementById('ffAdminLoanPenaltyReport');
-    panel.innerHTML=`<h3 style="margin:0 0 5px;color:#173b57;">📊 Overall Loan Financial Summary</h3><p style="margin:0 0 12px;font-size:12px;color:#64748b;">Calculated from approved and disbursed loans across all members. Pending and rejected applications are excluded from money lent.</p><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:9px;">${card('Loans issued',a.count)}${card('Total principal lent',money(a.principal))}${card('Total interest expected',money(a.interest))}${card('Total repayment expected',money(a.totalDue))}${card('Total repayments received',money(a.paid))}${card('Principal recovered',money(a.principalPaid))}${card('Interest returned',money(a.interestPaid))}${card('Outstanding principal',money(a.outstandingPrincipal))}${card('Outstanding interest',money(a.outstandingInterest))}${card('Total outstanding balance',money(a.balance))}</div><div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;"><span style="padding:7px 10px;border-radius:7px;background:#fff;border:1px solid #dbe4ec;">Pending: <b>${pending}</b></span><span style="padding:7px 10px;border-radius:7px;background:#fff;border:1px solid #dbe4ec;">Active / owing: <b>${active}</b></span><span style="padding:7px 10px;border-radius:7px;background:#fff;border:1px solid #dbe4ec;">Overdue: <b>${overdue}</b></span><span style="padding:7px 10px;border-radius:7px;background:#fff;border:1px solid #dbe4ec;">Cleared: <b>${cleared}</b></span><span style="padding:7px 10px;border-radius:7px;background:#fff;border:1px solid #dbe4ec;">Rejected: <b>${rejected}</b></span></div><div style="margin-top:14px;padding:14px;background:#ecfdf5;border:1px solid #86efac;border-radius:10px;"><h4 style="margin:0 0 10px;color:#14532d;font-size:15px;">💹 Chama Investment & Interest Earnings</h4><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:9px;"><div style="padding:12px;background:#fff;border:1px solid #bbf7d0;border-radius:8px;"><div style="font-size:12px;color:#64748b;">🏦 Money Market Fund (MMF) Interest</div><b style="display:block;margin-top:5px;font-size:21px;color:#14532d;">${money(4514)}</b></div><div style="padding:12px;background:#fff;border:1px solid #bbf7d0;border-radius:8px;"><div style="font-size:12px;color:#64748b;">💰 Loan Interest Earned</div><b style="display:block;margin-top:5px;font-size:21px;color:#14532d;">${money(a.interestPaid)}</b></div><div style="padding:12px;background:#dcfce7;border:1px solid #86efac;border-radius:8px;"><div style="font-size:12px;color:#166534;font-weight:800;">💹 TOTAL INTEREST EARNED (MMF + LOANS)</div><b style="display:block;margin-top:5px;font-size:23px;color:#166534;">${money(4514+a.interestPaid)}</b></div></div><p style="margin:8px 0 0;color:#64748b;font-size:11px;">MMF earnings are hard-coded and can be updated when a new figure is provided.</p></div><div style="margin-top:16px;"><button type="button" id="ffToggleAllMemberLoanSummaries" onclick="toggleAdminMemberLoanSummaries()" aria-expanded="false" style="width:100%;padding:13px 16px;border:1px solid #cbd5e1;border-radius:9px;background:#173b57;color:#fff;font-weight:700;text-align:left;cursor:pointer;font-size:14px;">📋 All Members’ Loan Summaries <span style="float:right;">＋</span></button><div id="ffAllMemberLoanSummariesContent" hidden style="padding:8px 0 0;">${memberSummaryCards||'<p style="padding:14px;text-align:center;color:#64748b;background:#fff;border:1px solid #dbe4ec;border-radius:9px;">No approved or disbursed member loans recorded for individual display.</p>'}</div></div>`;
+    panel.innerHTML=`<h3 style="margin:0 0 5px;color:#173b57;">📊 Overall Loan Financial Summary</h3><p style="margin:0 0 12px;font-size:12px;color:#64748b;">Calculated from approved and disbursed loans across all members. Pending and rejected applications are excluded from money lent.</p><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:9px;">${card('Loans issued',a.count)}${card('Total principal lent',money(a.principal))}${card('Total interest expected',money(a.interest))}${card('Total repayment expected',money(a.totalDue))}${card('Total repayments received',money(a.paid))}${card('Principal recovered',money(a.principalPaid))}${card('Interest returned',money(a.interestPaid))}${card('Outstanding principal',money(a.outstandingPrincipal))}${card('Outstanding interest',money(a.outstandingInterest))}${card('Total outstanding balance',money(a.balance))}</div><div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;"><span style="padding:7px 10px;border-radius:7px;background:#fff;border:1px solid #dbe4ec;">Pending: <b>${pending}</b></span><span style="padding:7px 10px;border-radius:7px;background:#fff;border:1px solid #dbe4ec;">Active / owing: <b>${active}</b></span><span style="padding:7px 10px;border-radius:7px;background:#fff;border:1px solid #dbe4ec;">Overdue: <b>${overdue}</b></span><span style="padding:7px 10px;border-radius:7px;background:#fff;border:1px solid #dbe4ec;">Cleared: <b>${cleared}</b></span><span style="padding:7px 10px;border-radius:7px;background:#fff;border:1px solid #dbe4ec;">Rejected: <b>${rejected}</b></span></div><div style="margin-top:14px;padding:14px;background:#ecfdf5;border:1px solid #86efac;border-radius:10px;"><h4 style="margin:0 0 10px;color:#14532d;font-size:15px;">💹 Chama Investment & Interest Earnings</h4><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:9px;"><div style="padding:12px;background:#fff;border:1px solid #bbf7d0;border-radius:8px;"><div style="font-size:12px;color:#64748b;">🏦 Money Market Fund (MMF) Interest</div><b style="display:block;margin-top:5px;font-size:21px;color:#14532d;">${money(4588)}</b></div><div style="padding:12px;background:#fff;border:1px solid #bbf7d0;border-radius:8px;"><div style="font-size:12px;color:#64748b;">💰 Loan Interest Earned</div><b style="display:block;margin-top:5px;font-size:21px;color:#14532d;">${money(a.interestPaid)}</b></div><div style="padding:12px;background:#dcfce7;border:1px solid #86efac;border-radius:8px;"><div style="font-size:12px;color:#166534;font-weight:800;">💹 TOTAL INTEREST EARNED (MMF + LOANS)</div><b style="display:block;margin-top:5px;font-size:23px;color:#166534;">${money(4588+a.interestPaid)}</b></div></div><p style="margin:8px 0 0;color:#64748b;font-size:11px;">MMF earnings are hard-coded and can be updated when a new figure is provided.</p></div><div style="margin-top:16px;"><button type="button" id="ffToggleAllMemberLoanSummaries" onclick="toggleAdminMemberLoanSummaries()" aria-expanded="false" style="width:100%;padding:13px 16px;border:1px solid #cbd5e1;border-radius:9px;background:#173b57;color:#fff;font-weight:700;text-align:left;cursor:pointer;font-size:14px;">📋 All Members’ Loan Summaries <span style="float:right;">＋</span></button><div id="ffAllMemberLoanSummariesContent" hidden style="padding:8px 0 0;">${memberSummaryCards||'<p style="padding:14px;text-align:center;color:#64748b;background:#fff;border:1px solid #dbe4ec;border-radius:9px;">No approved or disbursed member loans recorded for individual display.</p>'}</div></div>`;
     // Place the savings button immediately AFTER the All Members' Loan Summaries
     // control and its expandable member-loan details, inside Dashboard Summary.
     if(savingsPanel){
@@ -25458,3 +25586,12 @@ async function downloadIndividualSavingsReportsPDF() {
   };
 })();
 </script>
+<script id="ff-home-typewriter-start-and-viewport-fix">
+document.addEventListener('DOMContentLoaded', function(){
+  setTimeout(function(){
+    const home = document.getElementById('home');
+    if (home && getComputedStyle(home).display !== 'none') startFutureFindersHomeTyping();
+  }, 900);
+});
+</script>
+
