@@ -10922,7 +10922,7 @@ GRAND TOTAL
 <div id="popup2027" class="popup2026" style="z-index:10001;">
   <div class="popup2026-content">
     <span class="close2026" onclick="close2027Popup()">&times;</span>
-    <h4 class="animated-header">📊 Group Contributions for 2027<br><span style="font-size:13px;">Opening balance is carried forward from 2026 savings after reward.</span></h4>
+    <h4 class="animated-header">📊 Group Contributions for 2027<br><span style="font-size:13px;">2025 retained savings + 2026 retained savings are carried forward separately.</span></h4>
     <div style="display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap;margin:12px 0 16px;">
       <button type="button" onclick="download2027TablePDF()" style="background:#0b6b57;color:#fff;border:0;border-radius:8px;padding:12px 18px;font-weight:700;cursor:pointer;">📄 Download 2027 Table (PDF)</button>
     </div>
@@ -10932,7 +10932,8 @@ GRAND TOTAL
           <tr>
             <th>NAME</th>
             <th style="background:#7b1fa2;color:white;">2025 SAVINGS</th>
-            <th style="background:#9c27b0;color:white;">2026 SAVINGS (OPENING BALANCE)</th>
+            <th style="background:#9c27b0;color:white;">2026 RETAINED SAVINGS</th>
+            <th style="background:#0f766e;color:white;">2027 OPENING BALANCE (2025+2026)</th>
             <th>JAN 27</th><th>FEB</th><th>MAR</th><th>APR</th><th>MAY</th><th>JUNE</th>
             <th>JULY</th><th>AUG</th><th>SEPT</th><th>OCT</th><th>NOV</th><th>DEC</th>
             <th style="background:#17da48;">TOTAL (2025+2026+2027)</th>
@@ -10947,14 +10948,16 @@ GRAND TOTAL
     <div class="contribution-totals-summary">
       <h3>2027 Contributions — Group Totals</h3>
       <div class="contribution-total-grid">
-        <div class="contribution-total-card"><span>2026 Savings Opening Balance</span><strong id="summaryOpening2027">Ksh 0</strong></div>
+        <div class="contribution-total-card"><span>2025 Retained Savings</span><strong id="summaryPrior2025_2027">Ksh 0</strong></div>
+        <div class="contribution-total-card"><span>2026 Retained Savings</span><strong id="summaryOpening2027">Ksh 0</strong></div>
+        <div class="contribution-total-card total-highlight"><span>2027 Opening Balance (2025 + 2026)</span><strong id="summaryOpeningCombined2027">Ksh 0</strong></div>
         <div class="contribution-total-card"><span>2027 Contributions Total</span><strong id="summaryContributions2027">Ksh 0</strong></div>
         <div class="contribution-total-card total-highlight"><span>Total Savings (2025 + 2026 + 2027)</span><strong id="summaryGrand2027">Ksh 0</strong></div>
         <div class="contribution-total-card saved-highlight"><span>Saved 2027 After Reward</span><strong id="summarySaved2027">Ksh 0</strong></div>
         <div class="contribution-total-card reward-highlight"><span>Total Reward Back</span><strong id="summaryReward2027">Ksh 0</strong></div>
       </div>
     </div>
-    <p style="font-size:12px;color:#64748b;margin-top:12px;">The 2027 monthly contribution cells start at KSh 0. The opening balance is carried forward from the 2026 table and is not editable here.</p>
+    <p style="font-size:12px;color:#64748b;margin-top:12px;">The 2027 monthly contribution cells start at KSh 0. The 2025 and 2026 retained balances are carried forward automatically and are not editable here.</p>
   </div>
 </div>
 
@@ -10973,90 +10976,114 @@ GRAND TOTAL
 
   function initialize2027Table(){
     const body = document.getElementById("table2027Body");
-    const source = document.querySelectorAll("#table2026 tbody tr");
-    if (!body || !source.length) return;
-    if (body.dataset.initialized === "yes") {
-      // Refresh carried-forward figures if 2026 values have changed.
-      source.forEach(oldRow => {
-        const name = oldRow.cells[0]?.textContent.trim();
-        const newRow = Array.from(body.rows).find(r => r.cells[0]?.textContent.trim() === name);
-        if (!newRow || !name || /grand total/i.test(name)) return;
-        const carriedTotal2026 = Number((oldRow.querySelector(".saved2026")?.textContent || "0").replace(/[^0-9.-]/g,"")) || 0;
-        const priorRow = Array.from(document.querySelectorAll("#table2025 tbody tr")).find(r => r.cells[0]?.textContent.trim().toUpperCase() === name.toUpperCase());
-        const prior = Number((priorRow?.querySelector(".saved2025")?.textContent || "0").replace(/[^0-9.-]/g,"")) || 0;
-        // Carry the full 2026 saved-after-reward amount into 2027.
-        // The 2027 total separately adds the 2025 saved-after-reward amount,
-        // so both previous-year figures remain visible in the cumulative total.
-        const carried = Math.max(0, carriedTotal2026);
-        const carryInput = newRow.querySelector("input[data-opening-balance]");
-        if (carryInput && !carryInput.dataset.manuallyLocked) carryInput.value = carried;
-        if(newRow.cells[1]) newRow.cells[1].textContent = ffMoney(prior);
-      });
-      calculate2027();
-      return;
-    }
-    body.innerHTML = "";
-    source.forEach(oldRow => {
-      const name = oldRow.cells[0]?.textContent.trim();
-      if (!name || /grand total/i.test(name) || name.toUpperCase().replace(/\s+/g," ") === "SAMUEL OYUGI") return;
-      const savedText = oldRow.querySelector(".saved2026")?.textContent || "0";
-      const carriedTotal2026 = Number(savedText.replace(/[^0-9.-]/g,"")) || 0;
-      const priorRow = Array.from(document.querySelectorAll("#table2025 tbody tr")).find(r => r.cells[0]?.textContent.trim().toUpperCase() === name.toUpperCase());
-      const priorText = priorRow?.querySelector(".saved2025")?.textContent || "0";
-      const priorSavings = Number(priorText.replace(/[^0-9.-]/g,"")) || 0;
-      // Carry the full 2026 saved-after-reward amount.
-      // 2027 calculation adds the separate 2025 saved-after-reward amount as well.
-      const opening = Math.max(0, carriedTotal2026);
-      const tr = document.createElement("tr");
-      const nameTd = document.createElement("td");
-      nameTd.textContent = name;
-      tr.appendChild(nameTd);
+    if (!body) return;
 
-      const priorTd = document.createElement("td");
-      priorTd.textContent = ffMoney(priorSavings);
-      priorTd.style.fontWeight = "700";
-      tr.appendChild(priorTd);
-
-      const openingTd = document.createElement("td");
-      const openingInput = document.createElement("input");
-      openingInput.type = "number";
-      openingInput.min = "0";
-      openingInput.step = "1";
-      openingInput.value = opening;
-      openingInput.readOnly = true;
-      openingInput.dataset.openingBalance = "true";
-      openingInput.style.background = "#f1f5f9";
-      openingInput.style.fontWeight = "700";
-      openingTd.appendChild(openingInput);
-      tr.appendChild(openingTd);
-
-      ffMonths.forEach((month, i) => {
-        const td = document.createElement("td");
-        const input = document.createElement("input");
-        input.type = "number";
-        input.min = "0";
-        input.step = "1";
-        input.value = "0";
-        input.setAttribute("aria-label", name + " " + month + " 2027");
-        if (name.toUpperCase().replace(/\s+/g," ") !== "BONIFACE CHELLUGET") input.disabled = true;
-        td.appendChild(input);
-        tr.appendChild(td);
+    // Include every member found in any annual register, without silently
+    // omitting members who are absent from one particular year's table.
+    const sourceTables = ["table2025", "table2026", "table2027"];
+    const memberMap = new Map();
+    sourceTables.forEach(id => {
+      document.querySelectorAll("#" + id + " tbody tr").forEach(row => {
+        const name = row.cells[0]?.textContent.trim().replace(/\s+/g, " ") || "";
+        if (!name || /grand total/i.test(name)) return;
+        const key = name.toUpperCase();
+        if (!memberMap.has(key)) memberMap.set(key, name);
       });
-      ["rowTotal","saved2027","reward2027","paymentStatus"].forEach((cls, idx) => {
-        const td = document.createElement("td");
-        td.className = cls;
-        td.textContent = idx === 3 ? "PENDING" : "Ksh 0";
-        tr.appendChild(td);
-      });
-      body.appendChild(tr);
     });
 
-    const totalRow = document.createElement("tr");
-    totalRow.style.fontWeight = "bold";
-    totalRow.style.background = "#e0f2f1";
-    totalRow.innerHTML = '<td colspan="15" style="text-align:right;">GRAND TOTAL</td><td id="grandTotal_2027">Ksh 0</td><td id="savedTotal_2027">Ksh 0</td><td id="rewardTotal_2027">Ksh 0</td><td>-</td>';
-    body.appendChild(totalRow);
-    body.dataset.initialized = "yes";
+    const findRow = (tableId, name) => Array.from(document.querySelectorAll("#" + tableId + " tbody tr"))
+      .find(row => (row.cells[0]?.textContent || "").trim().replace(/\s+/g, " ").toUpperCase() === name.toUpperCase());
+    const readMoney = value => Math.max(0, Number(String(value || "0").replace(/[^0-9.-]/g, "")) || 0);
+
+    if (typeof window.calculate2025 === "function") window.calculate2025();
+    if (typeof window.calculate2026 === "function") window.calculate2026();
+
+    if (body.dataset.initialized !== "yes") {
+      body.innerHTML = "";
+      memberMap.forEach(name => {
+        const tr = document.createElement("tr");
+        const nameTd = document.createElement("td");
+        nameTd.textContent = name;
+        tr.appendChild(nameTd);
+
+        const priorTd = document.createElement("td");
+        priorTd.style.fontWeight = "700";
+        tr.appendChild(priorTd);
+
+        const openingTd = document.createElement("td");
+        const openingInput = document.createElement("input");
+        openingInput.type = "number";
+        openingInput.min = "0";
+        openingInput.step = "1";
+        openingInput.readOnly = true;
+        openingInput.dataset.openingBalance = "true";
+        openingInput.style.background = "#f1f5f9";
+        openingInput.style.fontWeight = "700";
+        openingTd.appendChild(openingInput);
+        tr.appendChild(openingTd);
+
+        const combinedOpeningTd = document.createElement("td");
+        combinedOpeningTd.className = "openingTotal2027";
+        combinedOpeningTd.style.fontWeight = "700";
+        combinedOpeningTd.textContent = ffMoney(0);
+        tr.appendChild(combinedOpeningTd);
+
+        ffMonths.forEach(month => {
+          const td = document.createElement("td");
+          const input = document.createElement("input");
+          input.type = "number";
+          input.min = "0";
+          input.step = "1";
+          input.value = "0";
+          input.setAttribute("aria-label", name + " " + month + " 2027");
+          td.appendChild(input);
+          tr.appendChild(td);
+        });
+        ["rowTotal", "saved2027", "reward2027", "paymentStatus"].forEach((cls, idx) => {
+          const td = document.createElement("td");
+          td.className = cls;
+          td.textContent = idx === 3 ? "PENDING" : "Ksh 0";
+          tr.appendChild(td);
+        });
+        body.appendChild(tr);
+      });
+
+      const totalRow = document.createElement("tr");
+      totalRow.style.fontWeight = "bold";
+      totalRow.style.background = "#e0f2f1";
+      totalRow.innerHTML = '<td colspan="16" style="text-align:right;">GRAND TOTAL</td><td id="grandTotal_2027">Ksh 0</td><td id="savedTotal_2027">Ksh 0</td><td id="rewardTotal_2027">Ksh 0</td><td>-</td>';
+      body.appendChild(totalRow);
+      body.dataset.initialized = "yes";
+    } else {
+      // If a new member was added to a 2025/2026 register after initialization,
+      // append that member without resetting existing 2027 monthly entries.
+      memberMap.forEach(name => {
+        if (Array.from(body.rows).some(row => (row.cells[0]?.textContent || "").trim().toUpperCase() === name.toUpperCase())) return;
+        const tr = document.createElement("tr");
+        tr.innerHTML = '<td></td><td></td><td><input type="number" min="0" step="1" readonly data-opening-balance="true" style="background:#f1f5f9;font-weight:700;"></td><td class="openingTotal2027" style="font-weight:700;">Ksh 0</td>';
+        tr.cells[0].textContent = name;
+        ffMonths.forEach(month => {
+          const td = document.createElement("td");
+          const input = document.createElement("input"); input.type="number"; input.min="0"; input.step="1"; input.value="0"; input.setAttribute("aria-label", name + " " + month + " 2027"); td.appendChild(input); tr.appendChild(td);
+        });
+        ["rowTotal", "saved2027", "reward2027", "paymentStatus"].forEach((cls, idx) => { const td=document.createElement("td"); td.className=cls; td.textContent=idx===3?"PENDING":"Ksh 0"; tr.appendChild(td); });
+        body.insertBefore(tr, body.lastElementChild);
+      });
+    }
+
+    // 2025 retained savings and 2026 retained savings are shown separately.
+    // The 2027 opening/cumulative balance is their sum, as agreed.
+    Array.from(body.rows).forEach(row => {
+      const name = row.cells[0]?.textContent.trim();
+      if (!name || /grand total/i.test(name)) return;
+      const priorRow = findRow("table2025", name);
+      const currentRow = findRow("table2026", name);
+      const prior = readMoney(priorRow?.querySelector(".saved2025")?.textContent);
+      const carried2026 = readMoney(currentRow?.querySelector(".saved2026")?.textContent);
+      if (row.cells[1]) row.cells[1].textContent = ffMoney(prior);
+      const openingInput = row.querySelector("input[data-opening-balance]");
+      if (openingInput) openingInput.value = carried2026;
+    });
     calculate2027();
   }
 
@@ -11072,46 +11099,64 @@ GRAND TOTAL
       const rewardCell = row.querySelector(".reward2027");
       const statusCell = row.querySelector(".paymentStatus");
       if (!totalCell || inputs.length !== 13 || /grand total/i.test(name)) return;
-      const prior2025 = Math.max(0, Number((row.cells[1]?.textContent || "0").replace(/[^0-9.-]/g,"")) || 0);
-      const opening = Math.max(0, Number(inputs[0].value)||0);
+      const prior2025 = Math.max(0, Number(String(row.cells[1]?.textContent || "0").replace(/[^0-9.-]/g,"")) || 0);
+      const retained2026 = Math.max(0, Number(inputs[0].value)||0);
       let contributions=0, activeMonths=0;
       for(let i=1;i<=12;i++){
         const v=Math.max(0,Number(inputs[i].value)||0);
         contributions+=v;
         if(v>0) activeMonths++;
       }
-      // 2025 and 2026 balances are retained in full. Only 2027 contributions
-      // qualify for the 2027 reward calculation.
-      const rewardBase=contributions;
+      // Rewards apply only to the current year's monthly contributions.
       let rate=0;
-      if(rewardBase>=1500 && activeMonths>=10) rate=0.75;
-      else if(rewardBase>=1500 && activeMonths>=6) rate=0.70;
-      else if(rewardBase>=1000) rate=0.30;
-      const reward=Math.round(rewardBase*rate);
-      const saved=prior2025+opening+contributions-reward;
-      totalCell.textContent=ffMoney(prior2025+opening+contributions);
-      if(savedCell) savedCell.textContent=ffMoney(saved);
+      if(contributions>=1500 && activeMonths>=10) rate=0.75;
+      else if(contributions>=1500 && activeMonths>=6) rate=0.70;
+      else if(contributions>=1000) rate=0.30;
+      const reward=Math.round(contributions*rate);
+      const openingBalance=prior2025+retained2026;
+      const saved2027=contributions-reward;
+      const cumulativeClosingBalance=openingBalance+saved2027;
+      const openingCell=row.querySelector(".openingTotal2027");
+      if(openingCell) openingCell.textContent=ffMoney(openingBalance);
+      // TOTAL is the cumulative closing balance; SAVED 2027 AFTER REWARD
+      // contains only the net savings made during 2027.
+      totalCell.textContent=ffMoney(cumulativeClosingBalance);
+      if(savedCell) savedCell.textContent=ffMoney(saved2027);
       if(rewardCell) rewardCell.textContent=ffMoney(reward);
       if(statusCell){
-        if(rewardBase>=1500) statusCell.textContent="🟢 YOU ARE ELIGIBLE";
-        else if(rewardBase>=1000) statusCell.textContent="🟡 YOU ARE PARTIALLY ELIGIBLE";
-        else if(rewardBase>0) statusCell.textContent="🔴 YOU ARE NOT ELIGIBLE";
+        if(contributions>=1500) statusCell.textContent="🟢 YOU ARE ELIGIBLE";
+        else if(contributions>=1000) statusCell.textContent="🟡 YOU ARE PARTIALLY ELIGIBLE";
+        else if(contributions>0) statusCell.textContent="🔴 YOU ARE NOT ELIGIBLE";
         else statusCell.textContent="⚪ NO SAVINGS YET";
       }
       if(name.toUpperCase().replace(/\s+/g," ")!=="BONIFACE CHELLUGET"){
-        prior2025Total+=prior2025; openingTotal+=opening; contributionTotal+=contributions;
-        grand+=prior2025+opening+contributions;
-        savedTotal+=saved; rewardTotal+=reward;
+        prior2025Total+=prior2025; openingTotal+=retained2026; contributionTotal+=contributions;
+        grand+=cumulativeClosingBalance;
+        savedTotal+=saved2027; rewardTotal+=reward;
       }
     });
     const set=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=ffMoney(v);};
     set("grandTotal_2027",grand); set("savedTotal_2027",savedTotal); set("rewardTotal_2027",rewardTotal);
-    set("summaryPrior2025_2027",prior2025Total); set("summaryOpening2027",openingTotal); set("summaryContributions2027",contributionTotal);
+    set("summaryPrior2025_2027",prior2025Total); set("summaryOpening2027",openingTotal); set("summaryOpeningCombined2027",prior2025Total+openingTotal); set("summaryContributions2027",contributionTotal);
     set("summaryGrand2027",grand); set("summarySaved2027",savedTotal); set("summaryReward2027",rewardTotal);
   };
 
+  // Keep the carry-forward columns and all summaries live when prior-year
+  // contribution figures are edited by an administrator.
   document.addEventListener("input", e => {
+    if(e.target.matches("#table2025 input[type='number'], #table2026 input[type='number']")){
+      if(typeof window.calculate2025 === "function") window.calculate2025();
+      if(typeof window.calculate2026 === "function") window.calculate2026();
+      initialize2027Table();
+    }
     if(e.target.matches("#table2027 input[type='number']:not([data-opening-balance])")) calculate2027();
+  });
+  document.addEventListener("change", e => {
+    if(e.target.matches("#table2025 input[type='number'], #table2026 input[type='number']")){
+      if(typeof window.calculate2025 === "function") window.calculate2025();
+      if(typeof window.calculate2026 === "function") window.calculate2026();
+      initialize2027Table();
+    }
   });
 
   window.download2027TablePDF = async function(){
@@ -12366,6 +12411,9 @@ function calculate2026() {
       if (value > 0) activeMonths++;
     }
 
+    // Keep the 2026 annual retained amount separate from the cumulative
+    // account balance. The 2025 retained amount is already carried forward
+    // separately into the 2027 opening balance.
     const totalSavings = savings2025 + currentSavings;
     const rewardBase = currentSavings;
 
@@ -12380,10 +12428,11 @@ function calculate2026() {
     }
 
     const reward = Math.round(rewardBase * rewardRate);
-    // Retain all previous-year savings; deduct only the 2026 reward.
-    const saved = totalSavings - reward;
+    // This column is the 2026 year's savings after its reward only.
+    // 2025 retained savings remain in .saved2025 and are carried separately.
+    const saved = currentSavings - reward;
 
-    // Individual member values always include Boniface
+    // Row total remains cumulative (2025 + 2026); saved2026 is annual-only.
     rowTotalCell.textContent = money(totalSavings);
     if (savedCell) savedCell.textContent = money(saved);
     if (rewardCell) rewardCell.textContent = money(reward);
@@ -14567,7 +14616,7 @@ const members = {
         monthlyRepay: 2300,
         amountPaid: 1000,
         balance: 1300,
-        latePenalty: 70,
+        latePenalty: 80,
         latePenaltyPaid: 0,
         date: "10/10/2026",
         firstRepaymentDate: "10/11/2026",
@@ -14577,7 +14626,7 @@ const members = {
           { date: "06/11/2026", amount: 1000, note: "Repayment received" }
         ],
         status: "APPROVED",
-        reason: "PARTIALLY REPAID — KSH 1,000 RECEIVED ON 06/11/2026. KSH 1,300 LOAN BALANCE OUTSTANDING; KSH 70 LATE PAYMENT FINE ACCRUED AS AT 17/11/2026.",
+        reason: "PARTIALLY REPAID — KSH 1,000 RECEIVED ON 06/11/2026. KSH 1,300 LOAN BALANCE OUTSTANDING; KSH 80 LATE PAYMENT FINE ACCRUED AS AT 17/11/2026.",
         repaymentSchedule: [
           {
             month: 1,
@@ -24165,6 +24214,19 @@ async function downloadIndividualSavingsReportsPDF() {
 @media(max-width:600px){#admin .ff-admin-card.is-open{inset:5px!important;border-radius:10px!important}#admin .ff-admin-card.is-open .ff-admin-content{padding:12px!important}}
 @media(max-width:600px){#admin .ff-admin-toolbar{grid-template-columns:1fr!important;}}
 </style>
+
+<style id="ff-admin-clean-navigation-v2">
+#admin .ff-admin-toolbar{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:14px!important;margin:18px 0 28px!important}
+#admin .ff-admin-toolbar-label{font-size:14px;color:#647789;margin:6px 0 0!important}
+#admin .ff-admin-card{border:1px solid #d7e3ea!important;border-radius:14px!important;background:#fff!important}
+#admin .ff-admin-toggle{min-height:70px!important;padding:15px 18px!important;font-size:14px!important;line-height:1.4!important;background:linear-gradient(135deg,#f7fbfd,#edf5f7)!important}
+#admin .ff-admin-toggle[aria-expanded="true"]{background:#e5f3f4!important;border-color:#79b8bd!important}
+#admin .ff-admin-card.is-open{inset:clamp(8px,2vh,22px)!important}
+#admin .ff-admin-card.is-open .ff-admin-content{padding:clamp(16px,2.5vw,30px)!important}
+#admin .ff-admin-content>section,#admin .ff-admin-content>[id$="Panel"],#admin .ff-admin-content>.admin-panel{margin:0 0 18px!important;max-width:100%!important}
+#admin .ff-admin-close{position:sticky!important;top:0!important;align-self:flex-end!important;margin:0 0 16px auto!important}
+@media(max-width:680px){#admin .ff-admin-toolbar{grid-template-columns:1fr!important;gap:10px!important}#admin .ff-admin-toggle{min-height:58px!important}#admin .ff-admin-card.is-open{inset:5px!important}}
+</style>
 <script id="ff-admin-accordion-script">
 (function(){
   function initFutureFindersAdminAccordion(){
@@ -24174,17 +24236,12 @@ async function downloadIndividualSavingsReportsPDF() {
     const toolbar=document.createElement('div');toolbar.className='ff-admin-toolbar';toolbar.setAttribute('aria-label','Administrator sections');
     const intro=document.createElement('p');intro.className='ff-admin-toolbar-label';intro.textContent='Choose a section below to view its tools and records. Close it when you are finished.';
     const definitions=[
-      {key:'summary',title:'📊 Dashboard Summary',selectors:['#ffChamaFinancialOverview','#adminSummary','#ffAdminSavingsSummary','#ffAdminLoanFinancialSummary','#ffAdminOverviewDashboard']},
-      {key:'notes',title:'🗒️ Members Notes',selectors:['#membersNotesPanel']},
-      {key:'members',title:'👥 Members Overview',selectors:['#membersOverviewPanel']},
-      {key:'loans',title:'📑 Loan Management & Applications',selectors:['h3.ff-mm-heading','#loanSearch','#loanStatusFilter','button.ff-export-loans','h3.ff-loan-heading','table.ff-loan-table']},
-      {key:'contracts',title:'📄 Membership Contracts & Review',selectors:['#memberContractsAdminPanel']},
-      {key:'welfare',title:'🤝 Welfare Application Review',selectors:['#ffAdminWelfarePanel']},
-      {key:'registrations',title:'📝 Pending Member Registrations',selectors:['#pendingMembersPanel']},
-      {key:'numbers',title:'🎲 Picked Lucky Numbers',selectors:['button.ff-picked-trigger','#pickedNumbersTable']},
-      {key:'updates',title:'🚀 System Updates & Notifications',selectors:['h3.ff-updates-heading','#updateMessage','button.ff-post-update','#memberSelectionBox','label.ff-whatsapp-label','div.ff-update-history']},
-      {key:'loanAvailability',title:'💰 Loan Availability Control',selectors:['#loanAvailabilityAdminPanel']},
-      {key:'membershipExit',title:'🚪 Membership Withdrawal & Exit Register',selectors:['#ffExitAdminPanel']}
+      {key:'dashboard',title:'📊 Dashboard & Financial Reports',selectors:['#ffChamaFinancialOverview','#adminSummary','#ffAdminSavingsSummary','#ffAdminLoanFinancialSummary','#ffAdminOverviewDashboard','#ffAdminPenaltyWelfareReports']},
+      {key:'members',title:'👥 Members, Notes & Membership Records',selectors:['#membersNotesPanel','#membersOverviewPanel','#memberContractsAdminPanel','#pendingMembersPanel','#ffExitAdminPanel']},
+      {key:'loans',title:'💳 Loans, Repayments & Loan Controls',selectors:['h3.ff-mm-heading','#loanSearch','#loanStatusFilter','button.ff-export-loans','h3.ff-loan-heading','table.ff-loan-table','#loanAvailabilityAdminPanel','#ffAdminLoanPenaltyReport']},
+      {key:'welfare',title:'🤝 Welfare Management & Applications',selectors:['#ffAdminWelfarePanel','#ffAdminWelfareReport']},
+      {key:'tools',title:'🎲 Chama Tools & Lucky Numbers',selectors:['button.ff-picked-trigger','#pickedNumbersTable']},
+      {key:'updates',title:'📢 Announcements & Member Notifications',selectors:['h3.ff-updates-heading','#updateMessage','button.ff-post-update','#memberSelectionBox','label.ff-whatsapp-label','div.ff-update-history']}
     ];
     const cards={};
     definitions.forEach(d=>{
@@ -24196,7 +24253,7 @@ async function downloadIndividualSavingsReportsPDF() {
       const content=document.createElement('div');content.className='ff-admin-content';content.id='ff-admin-content-'+d.key;content.hidden=true;
       const close=document.createElement('button');close.type='button';close.className='ff-admin-close';close.textContent='✕ Close section';close.setAttribute('aria-label','Close this administrator section');
       close.addEventListener('click',()=>{content.hidden=true;toggle.setAttribute('aria-expanded','false');card.classList.remove('is-open');Array.from(toolbar.children).forEach(other=>{other.hidden=false;});intro.hidden=false;toolbar.scrollIntoView({behavior:'smooth',block:'start'});});
-      toggle.addEventListener('click',()=>{const opening=content.hidden;if(opening){Array.from(toolbar.children).forEach(other=>{if(other!==card)other.hidden=true;});intro.hidden=true;content.hidden=false;card.classList.add('is-open');toggle.setAttribute('aria-expanded','true');content.prepend(close);if(d.key==='summary'&&window.FFContributionsSummary&&typeof window.FFContributionsSummary.refreshAdmin==='function'){window.FFContributionsSummary.refreshAdmin();}if(d.key==='contracts'){const panel=content.querySelector('#memberContractsAdminPanel');if(panel){panel.style.setProperty('display','block','important');panel.style.setProperty('visibility','visible','important');panel.style.setProperty('opacity','1','important');}if(typeof window.ffRefreshAdminContracts==='function'){window.ffRefreshAdminContracts();}else{const body=content.querySelector('#ffAdminContractsTable');if(body)body.innerHTML='<tr><td colspan="11" style="padding:14px;text-align:center;color:#b91c1c;">Contract review loaded, but the review script is unavailable. Please refresh the page.</td></tr>';}}if(d.key==='welfare'){const panel=content.querySelector('#ffAdminWelfarePanel');if(panel){panel.style.setProperty('display','block','important');panel.style.setProperty('visibility','visible','important');panel.style.setProperty('opacity','1','important');}if(typeof window.ffRefreshAdminWelfare==='function')window.ffRefreshAdminWelfare();}close.focus({preventScroll:true});}else{content.hidden=true;toggle.setAttribute('aria-expanded','false');card.classList.remove('is-open');Array.from(toolbar.children).forEach(other=>{other.hidden=false;});intro.hidden=false;}});
+      toggle.addEventListener('click',()=>{const opening=content.hidden;if(opening){Array.from(toolbar.children).forEach(other=>{if(other!==card)other.hidden=true;});intro.hidden=true;content.hidden=false;card.classList.add('is-open');toggle.setAttribute('aria-expanded','true');content.prepend(close);if(d.key==='dashboard'&&window.FFContributionsSummary&&typeof window.FFContributionsSummary.refreshAdmin==='function'){window.FFContributionsSummary.refreshAdmin();}if(d.key==='members'&&content.querySelector('#memberContractsAdminPanel')){const panel=content.querySelector('#memberContractsAdminPanel');if(panel){panel.style.setProperty('display','block','important');panel.style.setProperty('visibility','visible','important');panel.style.setProperty('opacity','1','important');}if(typeof window.ffRefreshAdminContracts==='function'){window.ffRefreshAdminContracts();}else{const body=content.querySelector('#ffAdminContractsTable');if(body)body.innerHTML='<tr><td colspan="11" style="padding:14px;text-align:center;color:#b91c1c;">Contract review loaded, but the review script is unavailable. Please refresh the page.</td></tr>';}}if(d.key==='welfare'){const panel=content.querySelector('#ffAdminWelfarePanel');if(panel){panel.style.setProperty('display','block','important');panel.style.setProperty('visibility','visible','important');panel.style.setProperty('opacity','1','important');}if(typeof window.ffRefreshAdminWelfare==='function')window.ffRefreshAdminWelfare();}close.focus({preventScroll:true});}else{content.hidden=true;toggle.setAttribute('aria-expanded','false');card.classList.remove('is-open');Array.from(toolbar.children).forEach(other=>{other.hidden=false;});intro.hidden=false;}});
       card.append(toggle,content);cards[d.key]={card,content};toolbar.append(card);
     });
     const findHeading=(text)=>Array.from(admin.querySelectorAll('h2,h3,h4')).find(e=>e.textContent.trim().includes(text));
@@ -24210,28 +24267,22 @@ async function downloadIndividualSavingsReportsPDF() {
     const check=admin.querySelector('#sendWhatsAppUpdate');if(check&&check.closest('label'))check.closest('label').classList.add('ff-whatsapp-label');
     const history=admin.querySelector('#updateHistoryBody')?.closest('div');if(history)history.classList.add('ff-update-history');
     function move(selector,target){const el=admin.querySelector(selector);if(el&&target&&!el.closest('.ff-admin-content'))target.appendChild(el);}
-    // Keep the complete financial overview and every admin summary/report in one
-    // clearly ordered Dashboard Summary accordion. Existing IDs and data remain intact.
-    move('#ffChamaFinancialOverview',cards.summary.content);
-    move('#adminSummary',cards.summary.content);
-    move('#ffAdminLoanFinancialSummary',cards.summary.content);
-    move('#ffAdminSavingsSummary',cards.summary.content);
-    move('#ffAdminOverviewDashboard',cards.summary.content);
-     // The all-members savings report is attached after the individual loan summaries
-     // by renderAdminLoanSummary(), so it is visible in the requested position.
+    // Arrange all existing admin tools into six practical work areas.
+    // Existing panels and IDs are moved intact so their data and handlers remain connected.
+    ['#ffChamaFinancialOverview','#adminSummary','#ffAdminSavingsSummary','#ffAdminLoanFinancialSummary','#ffAdminOverviewDashboard','#ffAdminPenaltyWelfareReports'].forEach(sel=>move(sel,cards.dashboard.content));
+    ['#memberContractsAdminPanel','#membersNotesPanel','#pendingMembersPanel','#ffExitAdminPanel','#membersOverviewPanel'].forEach(sel=>move(sel,cards.members.content));
+    ['h3.ff-mm-heading','#loanSearch','#loanStatusFilter','button.ff-export-loans','h3.ff-loan-heading','table.ff-loan-table','#loanAvailabilityAdminPanel','#ffAdminLoanPenaltyReport'].forEach(sel=>move(sel,cards.loans.content));
+    ['#ffAdminWelfarePanel','#ffAdminWelfareReport'].forEach(sel=>move(sel,cards.welfare.content));
+    ['button.ff-picked-trigger','#pickedNumbersTable'].forEach(sel=>move(sel,cards.tools.content));
+    ['h3.ff-updates-heading','#updateMessage','button.ff-post-update','#memberSelectionBox','label.ff-whatsapp-label','div.ff-update-history'].forEach(sel=>move(sel,cards.updates.content));
 
-     move('#membersNotesPanel',cards.notes.content);
-    // Extract contracts before moving Members Overview, because the contract panel can be nested inside it.
-    move('#memberContractsAdminPanel',cards.contracts.content);move('#ffAdminWelfarePanel',cards.welfare.content);move('#membersOverviewPanel',cards.members.content);move('#pendingMembersPanel',cards.registrations.content);
-    // Contract panel recovery: ensure the real panel is inside the review accordion and visible.
+    // Keep the existing contract and welfare review panels visible and fully functional.
     const contractPanel=admin.querySelector('#memberContractsAdminPanel');
-    if(contractPanel){cards.contracts.content.appendChild(contractPanel);contractPanel.style.setProperty('display','block','important');contractPanel.style.setProperty('visibility','visible','important');contractPanel.style.setProperty('opacity','1','important');contractPanel.style.setProperty('width','100%','important');contractPanel.style.setProperty('height','auto','important');contractPanel.style.setProperty('max-height','none','important');}
-    const contractTable=admin.querySelector('#ffAdminContractsTable');if(contractTable){contractTable.style.setProperty('display','table-row-group','important');contractTable.style.setProperty('visibility','visible','important');}
-    const welfarePanel=admin.querySelector('#ffAdminWelfarePanel');if(welfarePanel){cards.welfare.content.appendChild(welfarePanel);welfarePanel.style.setProperty('display','block','important');welfarePanel.style.setProperty('visibility','visible','important');welfarePanel.style.setProperty('opacity','1','important');welfarePanel.style.setProperty('width','100%','important');}
-    move('#loanAvailabilityAdminPanel',cards.loanAvailability.content);move('#ffExitAdminPanel',cards.membershipExit.content);
-    ['h3.ff-mm-heading','#loanSearch','#loanStatusFilter','button.ff-export-loans','h3.ff-loan-heading','table.ff-loan-table'].forEach(s=>move(s,cards.loans.content));
-    ['button.ff-picked-trigger','#pickedNumbersTable'].forEach(s=>move(s,cards.numbers.content));
-    ['h3.ff-updates-heading','#updateMessage','button.ff-post-update','#memberSelectionBox','label.ff-whatsapp-label','div.ff-update-history'].forEach(s=>move(s,cards.updates.content));
+    if(contractPanel){contractPanel.style.setProperty('display','block','important');contractPanel.style.setProperty('visibility','visible','important');contractPanel.style.setProperty('opacity','1','important');contractPanel.style.setProperty('width','100%','important');contractPanel.style.setProperty('height','auto','important');contractPanel.style.setProperty('max-height','none','important');}
+    const contractTable=admin.querySelector('#ffAdminContractsTable');
+    if(contractTable){contractTable.style.setProperty('display','table-row-group','important');contractTable.style.setProperty('visibility','visible','important');}
+    const welfarePanel=admin.querySelector('#ffAdminWelfarePanel');
+    if(welfarePanel){welfarePanel.style.setProperty('display','block','important');welfarePanel.style.setProperty('visibility','visible','important');welfarePanel.style.setProperty('opacity','1','important');welfarePanel.style.setProperty('width','100%','important');}
     // Always place the section picker visibly inside the admin panel, immediately
     // after the quick-action button when available. Fall back safely if markup changes.
     const quick=Array.from(admin.querySelectorAll('button')).find(e=>e.getAttribute('onclick')==='showAvailableNumbers()');
@@ -24254,7 +24305,7 @@ async function downloadIndividualSavingsReportsPDF() {
     toolbar.querySelectorAll('.ff-admin-card').forEach(el=>{el.style.setProperty('display','block','important');el.style.setProperty('visibility','visible','important');el.style.setProperty('opacity','1','important');});
     toolbar.querySelectorAll('.ff-admin-toggle').forEach(el=>{el.style.setProperty('display','flex','important');el.style.setProperty('visibility','visible','important');el.style.setProperty('opacity','1','important');});
     // Summary and tools stay closed until the administrator explicitly opens a section.
-    cards.summary.content.hidden=true;
+    cards.dashboard.content.hidden=true;
     // Ensure buttons inside the panels remain usable and sections start closed.
     toolbar.querySelectorAll('.ff-admin-content').forEach(c=>c.hidden=true);
   }
@@ -25166,7 +25217,7 @@ async function downloadIndividualSavingsReportsPDF() {
   function record(year,row){
     if(!row)return {found:false,contrib:0,total:0,saved:0,reward:0,status:'Not listed'};
     const inputs=[...row.querySelectorAll('input[type="number"]')].map(x=>Math.max(0,Number(x.value)||0));
-    const start=year===2025?0:year===2026?1:2;
+    const start=year===2025?0:1;
     const contrib=inputs.slice(start,start+12).reduce((a,b)=>a+b,0);
     const total=val(row.querySelector('.rowTotal'));
     const saved=val(row.querySelector(year===2025?'.saved2025':year===2026?'.saved2026':'.saved2027'));
@@ -25186,10 +25237,10 @@ async function downloadIndividualSavingsReportsPDF() {
     if(!name){host.innerHTML='<p>Please log in to view your personal savings summary.</p>';return;}
     refresh();
     const a=record(2025,rowFor(2025,name)),b=record(2026,rowFor(2026,name)),c=record(2027,rowFor(2027,name));
-    const latest=c.found?c.saved:(b.found?b.saved:a.saved);
+    const latest=c.found?c.total:(b.found?b.total:a.total);
     const card=(label,v,sub='')=>`<div style="padding:12px;border:1px solid #dbe5ed;border-radius:9px;background:#f8fbfd;min-width:0;"><div style="font-size:11px;color:#64748b;font-weight:800;text-transform:uppercase;">${label}</div><div style="font-size:20px;color:#12304a;font-weight:800;margin-top:5px;">${money(v)}</div>${sub?`<div style="font-size:11px;color:#64748b;margin-top:4px;">${sub}</div>`:''}</div>`;
     const yearCard=(y,r)=>`<div style="padding:12px;border:1px solid #dbe5ed;border-radius:9px;background:#fff;"><b style="color:#12304a;">${y} Contributions</b><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:8px;margin-top:9px;"><div>Monthly contributions<br><b>${money(r.contrib)}</b></div><div>Reward Back<br><b>${money(r.reward)}</b></div><div>Saved After Reward<br><b>${money(r.saved)}</b></div><div>Payment Status<br><b>${r.status}</b></div></div>${r.found?'':'<p style="font-size:11px;color:#9a3412;margin:7px 0 0;">No matching row in the official '+y+' table.</p>'}</div>`;
-    host.innerHTML=`<h4 style="margin:0 0 10px;color:#173b57;">💰 ${name.replace(/[&<>]/g,'')} — My Contributions Summary (2025–2027)</h4><p style="font-size:12px;color:#64748b;margin:0 0 12px;">Previous-year savings remain in your account. Each year's reward is calculated only from that year's monthly contributions.</p><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:9px;margin-bottom:12px;">${card('2025 Saved After Reward',a.saved)}${card('2026 Saved After Reward',b.saved,'2025 savings carried forward; 2026 reward based only on 2026 contributions')}${card('2027 Saved After Reward',c.saved,'2025 and 2026 savings retained; 2027 reward based only on 2027 contributions')}${card('Latest Total Savings Balance',latest)}</div><div style="display:grid;gap:9px;">${yearCard('2025',a)}${yearCard('2026',b)}${yearCard('2027',c)}</div>`;
+    host.innerHTML=`<h4 style="margin:0 0 10px;color:#173b57;">💰 ${name.replace(/[&<>]/g,'')} — My Contributions Summary (2025–2027)</h4><p style="font-size:12px;color:#64748b;margin:0 0 12px;">Previous-year savings remain in your account. Each year's reward is calculated only from that year's monthly contributions.</p><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:9px;margin-bottom:12px;">${card('2025 Saved After Reward',a.saved)}${card('2026 Saved After Reward',b.saved,'2026 contributions less 2026 reward; 2025 savings are carried separately')}${card('2027 Saved After Reward',c.saved,'2027 contributions less 2027 reward; previous savings remain in the cumulative balance')}${card('Latest Total Savings Balance',latest)}</div><div style="display:grid;gap:9px;">${yearCard('2025',a)}${yearCard('2026',b)}${yearCard('2027',c)}</div>`;
   }
   function renderAdmin(){
     const body=$('ffAdminSavingsSummaryBody'),cards=$('ffAdminSavingsSummaryCards');if(!body||!cards)return;
@@ -25208,7 +25259,7 @@ async function downloadIndividualSavingsReportsPDF() {
     const card=(label,v)=>`<div style="padding:11px;background:#fff;border:1px solid #bbf7d0;border-radius:9px;"><div style="font-size:11px;color:#64748b;font-weight:700;">${label}</div><b style="display:block;font-size:18px;color:#14532d;margin-top:4px;">${money(v)}</b></div>`;
     cards.innerHTML=card('2025 CONTRIBUTIONS',sums[2025].contrib)+card('2025 REWARD BACK',sums[2025].reward)+card('2025 SAVED AFTER REWARD',sums[2025].saved)+card('2026 CONTRIBUTIONS',sums[2026].contrib)+card('2026 REWARD BACK',sums[2026].reward)+card('2026 SAVED AFTER REWARD',sums[2026].saved)+card('2027 CONTRIBUTIONS',sums[2027].contrib)+card('2027 REWARD BACK',sums[2027].reward)+card('TOTAL (2025+2026+2027)',sums[2027].total)+card('2027 SAVED AFTER REWARD',sums[2027].saved);
     body.innerHTML=detail+`<tr style="font-weight:800;background:#dcfce7;"><td style="padding:9px;text-align:left;">GROUP TOTAL (Boniface excluded)</td><td>${money(sums[2025].contrib)}</td><td>${money(sums[2025].reward)}</td><td>${money(sums[2025].saved)}</td><td>${money(sums[2026].contrib)}</td><td>${money(sums[2026].reward)}</td><td>${money(sums[2026].saved)}</td><td>${money(sums[2027].contrib)}</td><td>${money(sums[2027].reward)}</td><td>${money(sums[2027].total)}</td><td>${money(sums[2027].saved)}</td></tr>`;
-    const stamp=$('ffAdminSavingsSummaryUpdated');if(stamp)stamp.textContent='Live figures from the official contribution tables. Every member appearing in any of the 2025, 2026 or 2027 contribution tables is listed. Group totals exclude Boniface; Samuel Oyugi is not listed in the 2027 table.';
+    const stamp=$('ffAdminSavingsSummaryUpdated');if(stamp)stamp.textContent='Live figures from the official contribution tables. Every member appearing in any of the 2025, 2026 or 2027 contribution tables is listed. Group totals exclude Boniface Chelluget.';
   }
   window.toggleMemberContributionsSummary=function(){const host=$('memberContributionsSummarySection'),btn=$('toggleMemberContributionsSummaryBtn');if(!host)return;const opening=host.style.display==='none'||!host.style.display;if(opening){renderMember();host.style.display='block';if(btn)btn.textContent='🙈 Hide My Contributions & Savings';}else{host.style.display='none';if(btn)btn.textContent='💰 My Contributions & Savings (2025–2027)';}};
   document.addEventListener('input',e=>{if(e.target?.closest?.('#table2025,#table2026,#table2027')){renderAdmin();if($('memberContributionsSummarySection')?.style.display==='block')renderMember();}});
