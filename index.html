@@ -2562,7 +2562,7 @@ style="width:150px; height:150px; border-radius:50%; object-fit:cover; box-shado
       <div class="explore-menu-grid">
         <button type="button" class="explore-link" onclick="simulateAction(this,'about')"><span><b>ℹ️ About Us</b><small>Our background, mission and vision</small></span><span class="spinner"></span></button>
         <button type="button" class="explore-link" onclick="simulateAction(this,'services')"><span><b>💼 Services</b><small>Explore the Chama's member services</small></span><span class="spinner"></span></button>
-        <button type="button" class="explore-link" onclick="simulateAction(this,'rules')"><span><b>📜 The Constitution</b><small>Read the governing rules and procedures</small></span><span class="spinner"></span></button>
+        <button type="button" class="explore-link" onclick="openFFConstitutionPage()"><span><b>📜 Find Constitution</b><small>Read the official Constitution on this website</small></span><span aria-hidden="true">↗</span></button>
       </div>
     </div>
     <div class="explore-group">
@@ -2573,6 +2573,25 @@ style="width:150px; height:150px; border-radius:50%; object-fit:cover; box-shado
         <button type="button" class="explore-link" onclick="simulateAction(this,'contact')"><span><b>📞 Contact</b><small>Reach the Future Finders team</small></span><span class="spinner"></span></button>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- OFFICIAL CONSTITUTION READER: opens on the website; download is optional -->
+<section id="ffConstitutionReader" style="display:none;background:#f4f7fb;padding:clamp(12px,3vw,26px);">
+  <div style="max-width:1150px;margin:0 auto;background:#fff;border:1px solid #d8e1eb;border-radius:14px;padding:clamp(12px,2.5vw,24px);box-shadow:0 5px 18px rgba(15,35,60,.08);">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px;">
+      <div>
+        <h2 style="margin:0;color:#123d73;text-align:left;">📜 Future Finders Chama Group Constitution</h2>
+        <p style="margin:6px 0 0;color:#526579;">Official Constitution · 55 pages · Read below without downloading.</p>
+      </div>
+      <a href="https://bony87.github.io/my-future-finder-chama-group/Future_Finders_Chama_Constitution_FINAL_WITH_CENTERED_COVER_LOGO_AND_BORDERS.pdf" target="_blank" rel="noopener noreferrer" download="Future_Finders_Chama_Constitution.pdf" style="display:inline-block;background:#0b477e;color:#fff;text-decoration:none;padding:11px 16px;border-radius:8px;font-weight:700;">⬇ Download Official Constitution PDF</a>
+    </div>
+    <div style="width:100%;height:min(78vh,900px);min-height:560px;border:1px solid #cbd5e1;border-radius:9px;overflow:hidden;background:#e9eef5;">
+      <iframe title="Future Finders Chama Group Official Constitution" src="https://bony87.github.io/my-future-finder-chama-group/Future_Finders_Chama_Constitution_FINAL_WITH_CENTERED_COVER_LOGO_AND_BORDERS.pdf#view=FitH" style="display:block;width:100%;height:100%;border:0;" loading="lazy">
+        Your browser cannot display the PDF here. Please use the Download Official Constitution PDF link above.
+      </iframe>
+    </div>
+    <p style="margin:10px 0 0;color:#64748b;font-size:13px;line-height:1.5;">If the document does not appear, use the download link above or open the PDF in a new tab.</p>
   </div>
 </section>
 
@@ -2595,700 +2614,6 @@ style="width:150px; height:150px; border-radius:50%; object-fit:cover; box-shado
     </div>
   </div>
 </section>
-
-<!-- 📜 The Constitution -->
-<section id="rules" style="background:#f5fff7; padding:30px; border-radius:12px; box-shadow:0 2px 12px rgba(0,0,0,0.08); font-family:'Poppins', sans-serif; color:#2e3b32;">
-  
-<h2 style="text-align:center; color:#1b5e20;">📜 CHAMA CONSTITUTION</h2>
-<p style="text-align:center; font-style:italic; color:#2e7d32;">
-  This Constitution outlines the rules, structure, and operations of the chama and shall guide all members.
-</p>
-
-<!-- ARTICLE 1 -->
-<h3 style="color:#1b5e20;">👥 Article 1: Membership</h3>
-
-<ul style="line-height:1.8;">
-
-  <!-- GENERAL REGISTRATION -->
-  <li><b>Registration and Records:</b>
-    <ul style="margin-top:8px;">
-      <li>Every member must register officially with the chama and provide accurate personal and contact details.</li>
-      <li>Members are required to update their information whenever changes occur.</li>
-    </ul>
-  </li>
-
-  <!-- ADMISSION -->
-  <li><b>Admission of Members:</b>
-    <ul style="margin-top:8px;">
-      <li>New members may only join after approval by existing members or leadership.</li>
-      <li>This ensures trust, accountability, and harmony within the group.</li>
-    </ul>
-  </li>
-
-  <!-- ACTIVE MEMBERSHIP -->
-  <li><b>Active Membership Requirement:</b>
-    <ul style="margin-top:8px;">
-      <li>Membership shall be confirmed after a minimum of <b>four (4) months</b> of active participation.</li>
-      <li>Active participation includes consistent contributions, engagement in meetings, and compliance with chama rules.</li>
-    </ul>
-  </li>
-
-  <!-- MERRY-GO-ROUND RULE -->
-  <li>🔄 <b>Merry-Go-Round Participation Rule:</b>
-    <ul style="margin-top:8px;">
-      <li>Members are encouraged to participate in the merry-go-round system as part of group financial support.</li>
-      <li>📌 Members who are <b>not participating in the merry-go-round</b> are required to <b>actively contribute to savings</b> without fail.</li>
-      <li>This ensures fairness and guarantees that all members remain eligible for welfare and other chama benefits.</li>
-      <li>Failure to participate in either savings or contributions may affect a member’s active status and benefits.</li>
-    </ul>
-  </li>
-
-  <!-- REGISTRATION FEE -->
-  <li>🆕 <b>Registration Fee (Effective January 2027):</b>
-    <ul style="margin-top:8px;">
-      <li>All new members shall pay a one-time registration fee of <b>Ksh 500</b>.</li>
-      <li>This fee shall be used for administrative and logistical support, especially during physical meetings.</li>
-    </ul>
-  </li>
-
-  <!-- CONTRIBUTION CATEGORIES -->
-  <li>💡 <b>Contribution Categories (From 2026):</b>
-    <ul style="margin-top:8px;">
-      <li>💎 <b>Category A:</b> Weekly contribution of <b>Ksh 300</b> + minimum savings of <b>Ksh 50</b>.  
-      Estimated monthly savings: <b>Ksh 200</b>.</li>
-
-      <li>💼 <b>Category B:</b> Contribution of <b>Ksh 500 twice a month</b> + minimum savings of <b>Ksh 50</b>.  
-      Estimated monthly savings: <b>Ksh 300</b>.</li>
-    </ul>
-  </li>
-
-  <!-- FINAL NOTE -->
-  <li>📌 <b>General Principle:</b>
-    <ul style="margin-top:8px;">
-      <li>All members must remain active through either savings or merry-go-round participation.</li>
-      <li>Consistency, discipline, and commitment define full membership eligibility and benefits.</li>
-    </ul>
-  </li>
-
-</ul>
-
-<!-- ARTICLE 2 -->
-<h3 style="color:#2e7d32;">💰 Article 2: Savings & Contributions</h3>
-
-<ul style="line-height:1.8;">
-
-  <!-- GENERAL CONTRIBUTION -->
-  <li><b>Contribution Requirement:</b>
-    <ul style="margin-top:8px;">
-      <li>Every member must contribute according to their chosen category without fail.</li>
-      <li>All contributions must be made consistently to ensure smooth operation of the chama.</li>
-    </ul>
-  </li>
-
-  <!-- SAVINGS IMPORTANCE -->
-  <li><b>Importance of Savings:</b>
-    <ul style="margin-top:8px;">
-      <li>Savings above the minimum are highly encouraged as they improve financial stability and increase loan eligibility.</li>
-      <li>Consistent saving reflects discipline, commitment, and trustworthiness within the chama.</li>
-    </ul>
-  </li>
-
-  <!-- PAYMENT DEADLINES -->
-  <li>⏰ <b>Payment Deadlines:</b>
-    <ul style="margin-top:8px;">
-      <li>All weekly or bi-monthly contributions must be submitted on or before the agreed deadlines.</li>
-      <li>Timely payments ensure smooth financial planning and group stability.</li>
-    </ul>
-  </li>
-
-  <!-- PENALTIES -->
-  <li>⚠️ <b>Penalties for Late Payment:</b>
-    <ul style="margin-top:8px;">
-      <li>Failure to pay by the deadline shall attract a fine of <b>Ksh 30</b>.</li>
-      <li>The fine will be added to the member’s account and must be cleared accordingly.</li>
-    </ul>
-  </li>
-
-  <!-- TRANSPARENCY -->
-  <li>📊 <b>Transparency and Records:</b>
-    <ul style="margin-top:8px;">
-      <li>All savings and contribution records shall be transparent and accessible to members at any time.</li>
-      <li>Members are encouraged to regularly check their records for accuracy.</li>
-    </ul>
-  </li>
-
-  <!-- WELFARE ELIGIBILITY -->
-  <li>💞 <b>Welfare Eligibility Requirement:</b>
-    <ul style="margin-top:8px;">
-      <li>To qualify for any welfare support, a member must have total savings of at least <b>Ksh 2,000 and above</b>.</li>
-      <li>Members with savings below this threshold shall not be eligible for welfare benefits such as emergency support, wedding, or funeral assistance.</li>
-      <li>Members who do not actively participate in savings are not eligible for welfare support or Chama loans.</li>
-      <li>Members on the <b>Savings Only</b> plan may be considered for welfare or loans only after meeting the applicable minimum savings and all other eligibility requirements; they do not qualify for Merry-Go-Round payouts.</li>
-      <li>This rule ensures fairness and sustainability of the chama welfare fund.</li>
-    </ul>
-  </li>
-
-  <!-- MERRY-GO-ROUND SAFETY RULE -->
-  <li>🔄 <b>Merry-Go-Round Participation Safety Rule:</b>
-    <ul style="margin-top:8px;">
-      <li>Members who participate in the Merry-Go-Round but do not actively participate in savings may not receive an early payout when the Merry-Go-Round payout/turn list is being prepared. Early payout priority will consider active savings participation, contribution consistency and compliance with approved Chama rules. Merry-Go-Round participation alone does not guarantee an early payout.</li>
-      <li>Members are encouraged to actively participate in the merry-go-round system to enjoy full group benefits.</li>
-      <li>📌 Members whose savings are below the required minimum or below agreed contribution levels may <b>not receive merry-go-round payouts early</b>.</li>
-      <li>This measure is put in place to ensure <b>financial safety, fairness, and sustainability</b> of the chama funds.</li>
-      <li>Priority in merry-go-round payouts shall be given to members who are consistent in savings and contributions.</li>
-    </ul>
-  </li>
-
- <ul>
-
-  <!-- SAVING DISCIPLINE -->
-
-  <li>📌 <b>Saving Discipline:</b>
-    <ul style="margin-top:8px;">
-      <li>Members are strongly encouraged to save consistently in order to strengthen their financial position within the chama.</li>
-    </ul>
-  </li>
-
-  <br>
-
-  <!-- REWARD SYSTEM -->
-
-  <li>🏆 <b>Savings Reward System:</b>
-    <ul style="margin-top:8px;">
-
-```
-  <li>Members with total savings of <b>1500 or more</b> and active for at least <b>10 months</b> shall qualify for the <b>highest reward rate of 80%</b>, while the remaining <b>20%</b> shall be retained as group capital.</li>
-
-  <li>Members with total savings of <b>1500 or more</b> and active for at least <b>6 months</b> shall qualify for a <b>75% reward rate</b>, while the remaining <b>25%</b> shall be retained as group capital.</li>
-
-  <li>Members with total savings of <b>1000 or more</b> but who do not meet the above conditions shall qualify for a <b>30% reward rate</b>, while the remaining <b>70%</b> shall be retained as group capital.</li>
-
-  <li>📌 Reward percentages may be reviewed depending on the financial position and sustainability of the group.</li>
-
-</ul>
-```
-
-  </li>
-
-  <br>
-
-  <!-- EXIT POLICY -->
-
-  <li>📢 <b>Exit Settlement:</b>
-    <ul style="margin-top:8px;">
-
-```
-  <li>Any member who exits the chama shall receive <b>100% of their savings</b> after clearing all outstanding obligations.</li>
-
-</ul>
-```
-
-  </li>
-
-</ul>
-
-
-
-
-<!-- ARTICLE 3 -->
-
-<h3 style="color:#43a047;">🏦 Article 3: Loans</h3>
-
-<ul style="line-height:1.8;">
-
-  <!-- ANNUAL LOAN OPERATING PERIOD -->
-  <li>📅 <b>Annual Loan Operating Period and Closure:</b>
-    <ul style="margin-top:8px;">
-      <li>The chama's normal loan operating period shall run annually from <b>1 January to 31 October</b>.</li>
-      <li>Loan applications and new loan disbursements shall close from <b>1 November to 31 December</b> each year.</li>
-      <li>The annual closure shall allow the chama to prepare for its December activities and the close of the year.</li>
-      <li>Normal loan services shall resume on <b>1 January</b> of the following year, subject to the availability of funds and the usual approval requirements.</li>
-    </ul>
-  </li>
-
-  <!-- ELIGIBILITY -->
-  <li><b>Loan Eligibility:</b>
-    <ul style="margin-top:8px;">
-      <li>A member qualifies for a loan after saving at least <b>Ksh 1,500</b>.</li>
-      <li>The member must have been active in the chama for at least <b>four (4) months</b>.</li>
-      <li>Active participation includes consistent savings, contributions, and adherence to chama rules.</li>
-
-      <!-- ADDED -->
-      <li>Loans shall also be assessed based on the member's <b>savings history, consistency, and financial discipline</b>.</li>
-      <li>Priority shall be given to members with <b>higher savings balances</b>.</li>
-      <li>Members actively participating in the <b>Monthly Merry-Go-Round</b> may receive additional consideration during loan assessment.</li>
-    </ul>
-  </li>
-
-  <!-- ASSESSMENT -->
-  <li><b>Loan Assessment Criteria:</b>
-    <ul style="margin-top:8px;">
-      <li>Loans shall be issued based on the member’s savings history and consistency.</li>
-      <li>Discipline and commitment within the chama shall be considered.</li>
-      <li>The member’s ability to repay within the agreed period will also be assessed.</li>
-
-      <!-- ADDED -->
-      <li>The leadership shall also consider the availability of loan funds before approving any application.</li>
-    </ul>
-  </li>
-
-  <!-- APPLICATION -->
-  <li>📝 <b>Loan Application Requirements:</b>
-    <ul style="margin-top:8px;">
-      <li>Every loan application shall be completed using the official Loan Application Form.</li>
-      <li>The application must include the member's <b>Next of Kin</b> details.</li>
-      <li>The application must also include the details of the proposed <b>Guarantor(s)</b>.</li>
-      <li>All guarantors must be <b>active members</b> of the chama.</li>
-    </ul>
-  </li>
-
-  <!-- APPROVAL -->
-  <li>📌 <b>Loan Approval:</b>
-    <ul style="margin-top:8px;">
-      <li>All loan requests must be approved by both the <b>Admin and Chairlady</b>.</li>
-      <li>Approval shall ensure fairness, accountability, and proper fund management.</li>
-      <li>The leadership reserves the right to reject or adjust loan requests based on available funds.</li>
-
-      <!-- ADDED -->
-      <li>Once all loan requirements have been met, loan approval shall normally take approximately <b>10 minutes</b>.</li>
-      <li>Every approved loan shall remain subject to the chama's <b>Loan Terms and Conditions</b>.</li>
-    </ul>
-  </li>
-
-  <!-- REPAYMENT -->
-  <li>⏳ <b>Loan Repayment Terms:</b>
-    <ul style="margin-top:8px;">
-      <li>All loans must be repaid within the agreed timeframe.</li>
-      <li>Any member who fails to repay a loan within the required period shall be charged a penalty of <b>Ksh 10 per day</b> until the loan is fully repaid.</li>
-      <li>Loans above <b>Ksh 5,000</b> with a repayment period of <b>one (1) month or two (2) months</b> may be granted a <b>one-week extension period</b> upon approval by the Admin and Chairlady.</li>
-      <li>Once the extension period expires, the daily penalty of <b>Ksh 10</b> shall immediately apply until full repayment is made.</li>
-      <li>Late repayment may attract restrictions on future borrowing.</li>
-      <li>Repeated default may lead to suspension of loan privileges.</li>
-    </ul>
-  </li>
-
-  <!-- INTEREST DISTRIBUTION -->
-  <li>💸 <b>Interest Distribution Policy:</b>
-    <ul style="margin-top:8px;">
-      <li>Upon loan repayment, the interest earned shall be shared as follows:</li>
-      <li>🌿 <b>20%</b> is credited back to the borrower’s personal savings account.</li>
-      <li>🤝 <b>80%</b> is distributed among all members based on their savings ratio.</li>
-    </ul>
-  </li>
-
-  <!-- FAIRNESS -->
-  <li>📘 <b>Fairness and Sustainability:</b>
-    <ul style="margin-top:8px;">
-      <li>This system ensures fairness among members and rewards consistent savers.</li>
-      <li>It also strengthens the financial stability and growth of the chama.</li>
-      <li>All loan activities shall be recorded transparently for accountability.</li>
-
-      <!-- ADDED -->
-      <li>As the group's savings continue to grow, the chama may introduce <b>larger loan limits</b> subject to approval by members.</li>
-    </ul>
-  </li>
-
-</ul>
-<!-- ARTICLE 4 -->
-<h3 style="color:#1b5e20;">🧑‍💼 Article 4: Leadership</h3>
-
-<ul style="line-height:1.8;">
-
-  <li><b>The chama shall have two key leadership roles:</b></li>
-
-  <!-- ADMIN ROLE -->
-  <li>💰 <b>Founder & Admin Roles:</b>
-    <ul style="margin-top:8px;">
-      <li>Oversee all financial management of the chama.</li>
-      <li>Maintain accurate records of savings, contributions, and balances.</li>
-      <li>Control and safeguard all group funds.</li>
-      <li>Approve and process loan requests together with the Chairlady.</li>
-      <li>Track loan repayments and ensure compliance with terms.</li>
-      <li>Communicate important updates, deadlines, and announcements.</li>
-      <li>Prepare and present financial reports to members.</li>
-      <li>Ensure transparency and accountability in all financial matters.</li>
-      <li>Coordinate overall operations of the chama.</li>
-    </ul>
-  </li>
-
-  <!-- CHAIRLADY ROLE -->
-  <li>👩‍💼 <b>Chairlady Roles:</b>
-    <ul style="margin-top:8px;">
-      <li>Represent the interests and welfare of all members.</li>
-      <li>Coordinate group activities, meetings, and discussions.</li>
-      <li>Work closely with the Admin to ensure smooth operations.</li>
-      <li>Assist in approval of loans and welfare requests.</li>
-      <li>Ensure discipline, unity, and fairness among members.</li>
-      <li>Handle member concerns, conflicts, and feedback.</li>
-      <li>Mobilize members for meetings and participation.</li>
-      <li>Support enforcement of the constitution and rules.</li>
-    </ul>
-  </li>
-
-  <!-- GENERAL LEADERSHIP RULES -->
-  <li><b>General Leadership Provisions:</b>
-    <ul style="margin-top:8px;">
-      <li>The Chairlady shall be elected by members.</li>
-      <li>The term of service shall be <b>one (1) year</b>.</li>
-      <li>Members may re-elect or extend the term based on performance.</li>
-      <li>The Admin and Chairlady shall work together to ensure transparency, fairness, and unity.</li>
-      <li>Leadership must ensure proper tracking of contributions, savings, loans, and welfare matters.</li>
-      <li>Regular updates on finances and chama activities shall be shared with all members.</li>
-    </ul>
-  </li>
-
-</ul>
-
-<!-- ARTICLE 5 -->
-<h3 style="color:#2e7d32;">💞 Article 5: Welfare Support</h3>
-
-<ul style="line-height:1.8;">
-
-  <!-- WELFARE SUPPORT -->
-  <li>🤝 <b>Welfare Support Package:</b>
-    <ul style="margin-top:8px;">
-      <li>The chama shall provide a <b>KSh 8,000 Welfare Support Package</b> to eligible active members during approved welfare events.</li>
-      <li>The welfare package shall apply to the following events:
-        <ul>
-          <li>👶 Newborn Baby Support</li>
-          <li>💍 Wedding Support</li>
-          <li>🕊️ Burial Support</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-
-  <!-- BURIAL SUPPORT -->
-  <li>🕊️ <b>Burial Support Eligibility:</b>
-    <ul style="margin-top:8px;">
-      <li>Burial support shall be provided in the event of the loss of:
-        <ul>
-          <li>A parent.</li>
-          <li>A guardian (where the member has no surviving parent).</li>
-          <li>A son or daughter.</li>
-        </ul>
-      </li>
-      <li>In exceptional circumstances, the group may approve support for the loss of a biological brother or biological sister upon members' agreement.</li>
-    </ul>
-  </li>
-
-  <!-- CONTRIBUTION METHOD -->
-  <li>💰 <b>Contribution Method:</b>
-    <ul style="margin-top:8px;">
-      <li>The <b>KSh 8,000</b> welfare amount shall be contributed collectively by members based on the current active membership.</li>
-      <li>Members may either:
-        <ul>
-          <li>Make a direct contribution; or</li>
-          <li>Authorize the amount to be deducted from their savings.</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-
-  <!-- ELIGIBILITY -->
-  <li>✅ <b>Eligibility:</b>
-    <ul style="margin-top:8px;">
-      <li>Only <b>active members</b> shall qualify for welfare support.</li>
-      <li>A member must have active savings of at least <b>KSh 2,00</b> at the time assistance is requested.</li>
-      <li>Members with savings below KSh 2,000 must first increase their savings to the minimum qualifying amount before becoming eligible.</li>
-    </ul>
-  </li>
-
-  <!-- IDENTIFICATION -->
-  <li>🪪 <b>Member Identification:</b>
-    <ul style="margin-top:8px;">
-      <li>Every member applying for welfare support shall provide a clear copy of their <b>National Identity Card (ID)</b> or any other government-issued identification document.</li>
-      <li>The identification document shall be submitted together with the required supporting documents.</li>
-      <li>The Admin shall keep all identification documents confidential and use them only for verification and record-keeping purposes.</li>
-    </ul>
-  </li>
-
-  <!-- VERIFICATION -->
-  <li>🔍 <b>Verification of Welfare Requests:</b>
-    <ul style="margin-top:8px;">
-      <li>Every welfare request shall be supported by appropriate documents before approval.</li>
-
-      <li><b>👶 Newborn Baby Support:</b>
-        <ul>
-          <li>Copy of the member's National ID.</li>
-          <li>Birth Notification issued by a health facility; or</li>
-          <li>Birth Certificate (if available); or</li>
-          <li>Hospital discharge documents confirming the birth.</li>
-        </ul>
-      </li>
-
-      <li><b>💍 Wedding Support:</b>
-        <ul>
-          <li>Copy of the member's National ID.</li>
-          <li>Wedding invitation card; or</li>
-          <li>Marriage Certificate (if available); or</li>
-          <li>Confirmation letter from the church, mosque, registrar, or officiating authority.</li>
-        </ul>
-      </li>
-
-      <li><b>🕊️ Burial Support:</b>
-        <ul>
-          <li>Copy of the member's National ID.</li>
-          <li>Burial Permit; or</li>
-          <li>Death Notification from a hospital or relevant authority; or</li>
-          <li>Funeral Programme; or</li>
-          <li>Obituary or funeral announcement; or</li>
-          <li>Any other acceptable document approved by the members.</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-
-  <!-- VERIFICATION COMMITTEE -->
-  <li>👥 <b>Verification Committee:</b>
-    <ul style="margin-top:8px;">
-      <li>The Chairlady and the Admin shall verify every welfare request before it is presented to members for approval.</li>
-      <li>Where necessary, they may contact family members, religious leaders, local administrators, hospitals, or other reliable persons to confirm the information provided.</li>
-    </ul>
-  </li>
-
-  <!-- APPROVAL -->
-  <li>🗳️ <b>Approval Procedure:</b>
-    <ul style="margin-top:8px;">
-      <li>The welfare request shall first be verified by the Chairlady and Admin.</li>
-      <li>The verified request shall then be presented to members through an official meeting or the group's approved communication platform.</li>
-      
-      <li>The approval and supporting documents shall be recorded by the Admin for accountability.</li>
-    </ul>
-  </li>
-
-  <!-- FALSE INFORMATION -->
-  <li>⚠️ <b>False Information:</b>
-    <ul style="margin-top:8px;">
-      <li>Any member found to have knowingly submitted false information or forged documents to obtain welfare support shall not receive the welfare support.</li>
-      <li>Such a member shall lose eligibility for welfare benefits for <b>twelve (6) months</b>.</li>
-      <li>The member may also face disciplinary action, including suspension or expulsion, in accordance with this Constitution.</li>
-    </ul>
-  </li>
-
-  <!-- RECORD KEEPING -->
-  <li>📁 <b>Record Keeping:</b>
-    <ul style="margin-top:8px;">
-      <li>The Admin shall securely maintain records of all welfare applications, supporting documents, approvals, payments, and verification reports for future reference and auditing.</li>
-    </ul>
-  </li>
-
-  <!-- NOTIFICATION -->
-  <li>📢 <b>Notification Requirement:</b>
-    <ul style="margin-top:8px;">
-      <li>Members shall notify the Chairlady or Admin as early as reasonably possible for all planned welfare-related events to allow proper planning and coordination.</li>
-    </ul>
-  </li>
-
-  <!-- ADDITIONAL SUPPORT -->
-  <li>🤝 <b>Additional Assistance:</b>
-    <ul style="margin-top:8px;">
-      <li>Additional support may be considered by members depending on the circumstances and availability of funds.</li>
-      <li>Every request shall be discussed and approved transparently during a members' meeting.</li>
-    </ul>
-  </li>
-
-  <!-- RESOLUTION -->
-  <li>📌 <b>Resolution:</b>
-    <ul style="margin-top:8px;">
-      <li>The Welfare Support Package was unanimously approved by members and shall take effect immediately upon adoption of these Constitution and Rules.</li>
-    </ul>
-  </li>
-
-</ul>
-<!-- ARTICLE 6 -->
-<h3 style="color:#388e3c;">🤝 Article 6: Conduct</h3>
-
-<ul style="line-height:1.8;">
-
-  <!-- GENERAL PRINCIPLE -->
-  <li><b>General Code of Conduct:</b>
-    <ul style="margin-top:8px;">
-      <li>All members shall uphold respect, honesty, integrity, and transparency in all chama activities.</li>
-      <li>Members shall act in good faith and prioritize the unity and growth of the chama.</li>
-    </ul>
-  </li>
-
-  <!-- RESPECT & RELATIONSHIPS -->
-  <li>🤝 <b>Respect and Interpersonal Relations:</b>
-    <ul style="margin-top:8px;">
-      <li>Members shall treat one another with respect, dignity, and fairness at all times.</li>
-      <li>Abusive language, harassment, or discrimination of any kind shall not be tolerated.</li>
-      <li>Members shall resolve disagreements peacefully and professionally.</li>
-    </ul>
-  </li>
-
-  <!-- PARTICIPATION -->
-  <li>📅 <b>Participation and Meetings:</b>
-    <ul style="margin-top:8px;">
-      <li>Members are expected to attend all scheduled meetings and group activities.</li>
-      <li>In case of absence, members must communicate in advance to the leadership.</li>
-      <li>Active participation in discussions and decisions is encouraged.</li>
-    </ul>
-  </li>
-
-  <!-- COMMUNICATION -->
-  <li>📢 <b>Communication:</b>
-    <ul style="margin-top:8px;">
-      <li>Members shall communicate clearly, honestly, and respectfully in all group platforms.</li>
-      <li>Official communication channels of the chama must be used for updates and announcements.</li>
-      <li>Misleading or false information shall not be shared.</li>
-    </ul>
-  </li>
-
-  <!-- CONFIDENTIALITY -->
-  <li>🔒 <b>Confidentiality:</b>
-    <ul style="margin-top:8px;">
-      <li>All group matters, including financial records and member information, shall remain confidential.</li>
-      <li>Members shall not disclose internal chama information to outsiders without approval.</li>
-    </ul>
-  </li>
-
-  <!-- RESPONSIBILITY -->
-  <li>📌 <b>Member Responsibility:</b>
-    <ul style="margin-top:8px;">
-      <li>Members shall take responsibility for their financial commitments and obligations.</li>
-      <li>Members shall comply with all rules outlined in this constitution.</li>
-      <li>Any issues or concerns shall be reported promptly to the leadership.</li>
-    </ul>
-  </li>
-
-</ul>
-
-<!-- ARTICLE 7 -->
-<h3 style="color:#558b2f;">⚖️ Article 7: Discipline</h3>
-
-<ul style="line-height:1.8;">
-
-  <!-- GENERAL RULE -->
-  <li><b>General Principle:</b>
-    <ul style="margin-top:8px;">
-      <li>All members are expected to uphold discipline, responsibility, and commitment to the chama.</li>
-      <li>Failure to follow the constitution and agreed rules shall attract appropriate action.</li>
-    </ul>
-  </li>
-
-  <!-- FAILURE TO MEET OBLIGATIONS -->
-  <li>📌 <b>Failure to Meet Obligations:</b>
-    <ul style="margin-top:8px;">
-      <li>Late or missed contributions shall attract penalties as defined in Article 2.</li>
-      <li>Repeated failure to contribute may lead to warnings and possible suspension.</li>
-      <li>Members with continuous default may lose eligibility for loans and welfare benefits.</li>
-    </ul>
-  </li>
-<li>🔄 <b>Merry-Go-Round Contribution Discipline:</b>
-  <ul style="margin-top:8px;">
-    <li>Members are required to pay their Merry-Go-Round contribution on or before the agreed due date.</li>
-    <li>A member who misses one Merry-Go-Round payment without a valid reason shall receive a warning and be required to clear the missed contribution immediately.</li>
-    <li>A member who misses two consecutive Merry-Go-Round payments shall be issued a final warning and may temporarily lose eligibility to receive the Merry-Go-Round benefit until all arrears are cleared.</li>
-    <li>A member who continuously defaults on Merry-Go-Round contributions for three consecutive cycles may be suspended from the Merry-Go-Round program by the Admin and Chairlady.</li>
-    <li>If the member fails to regularize payments after suspension, the matter may be presented to the members for further disciplinary action, including possible removal from the chama.</li>
-    <li>Any member facing genuine financial difficulties is encouraged to communicate early with the Admin or Chairlady for consideration and guidance.</li>
-  </ul>
-</li>
-
-  <!-- INACTIVITY -->
-  <li>⏳ <b>Inactive Members:</b>
-    <ul style="margin-top:8px;">
-      <li>Members who remain inactive without communication may be issued a warning.</li>
-      <li>Continued inactivity may lead to temporary suspension.</li>
-      <li>Prolonged inactivity may result in removal from the chama.</li>
-    </ul>
-  </li>
-
-  <!-- MISCONDUCT -->
-  <li>⚠️ <b>Misconduct and Behavior:</b>
-    <ul style="margin-top:8px;">
-      <li>Any form of disrespect, dishonesty, or conflict among members is prohibited.</li>
-      <li>Fraud, misuse of funds, or intentional misinformation shall lead to strict disciplinary action.</li>
-      <li>Actions that damage the reputation or unity of the chama shall not be tolerated.</li>
-    </ul>
-  </li>
-
-  <!-- DISCIPLINARY ACTION -->
-  <li>🚫 <b>Disciplinary Measures:</b>
-    <ul style="margin-top:8px;">
-      <li>Verbal or written warning.</li>
-      <li>Fines or penalties.</li>
-      <li>Suspension from group activities or benefits.</li>
-      <li>Permanent removal from the chama.</li>
-    </ul>
-  </li>
-
-  <!-- FAIR HEARING -->
-  <li>⚖️ <b>Right to Fair Hearing:</b>
-    <ul style="margin-top:8px;">
-      <li>Every member shall be given an opportunity to explain themselves before any major action is taken.</li>
-      <li>Decisions shall be made fairly by the Admin and Chairlady, with member consultation where necessary.</li>
-    </ul>
-  </li>
-
-</ul>
-
-<!-- ARTICLE 8 -->
-<h3 style="color:#2e7d32;">🔁 Article 8: Exit Policy</h3>
-
-<ul style="line-height:1.8;">
-
-  <!-- GENERAL RULE -->
-  <li><b>Definition of Exit:</b>
-    <ul style="margin-top:8px;">
-      <li>A member shall be considered to have exited the chama upon full withdrawal of their savings.</li>
-      <li>Exit may be voluntary or as a result of disciplinary action.</li>
-    </ul>
-  </li>
-
-  <!-- NOTICE -->
-  <li>📢 <b>Notice Requirement:</b>
-    <ul style="margin-top:8px;">
-      <li>Members intending to exit must notify the Admin in advance.</li>
-      <li>Notice should be given at least <b>7 days</b> before the intended withdrawal date.</li>
-      <li>This allows proper financial planning and record updates.</li>
-    </ul>
-  </li>
-
-  <!-- CLEARANCE -->
-  <li>📋 <b>Clearance of Obligations:</b>
-    <ul style="margin-top:8px;">
-      <li>All outstanding loans must be fully repaid before exit.</li>
-      <li>Any pending fines or penalties must be cleared.</li>
-      <li>The member must settle all obligations with the chama before payment is processed.</li>
-    </ul>
-  </li>
-
-  <!-- PAYOUT -->
-  <li>💰 <b>Processing of Payments:</b>
-    <ul style="margin-top:8px;">
-      <li>All payments shall be processed within <b>7 days</b> after official notification and clearance.</li>
-      <li>The exiting member shall receive <b>100% of their savings</b> after deductions (if any).</li>
-      <li>Payments shall be recorded and confirmed by both the Admin and Chairlady.</li>
-    </ul>
-  </li>
-
-  <!-- LIMITATIONS -->
-  <li>⚠️ <b>Limitations:</b>
-    <ul style="margin-top:8px;">
-      <li>An exited member shall lose access to all chama benefits, including loans and welfare support.</li>
-      <li>Rejoining the chama shall be treated as a new membership and subject to approval.</li>
-    </ul>
-  </li>
-
-</ul>
-
-<hr style="border:0; height:2px; background:#a5d6a7; margin:25px 0; border-radius:2px;">
-
-<p style="text-align:center; color:#1b5e20; font-weight:bold;">
-  ✔️ This Constitution is binding to all members upon approval.
-</p>
-  <!-- Back Button -->
-  <div style="text-align:center; margin-top:25px;">
-    <a class="action-btn" onclick="simulateAction(this,'home')" 
-       style="background:#2e7d32; color:white; padding:12px 24px; border-radius:8px; text-decoration:none; font-weight:bold; box-shadow:0 2px 5px rgba(46,125,50,0.3);">
-      ⬅️ Back to Home <span class="spinner"></span>
-    </a>
-  </div>
-</section>
-
 
 <!-- 💼 SERVICES -->
 <section id="services" style="padding:28px 18px;">
@@ -4103,12 +3428,12 @@ function closeSystemUpdatePopup(){
       <span style="padding:6px 10px;border-radius:20px;background:#dcfce7;color:#166534;font-size:12px;font-weight:700;">ADMIN SUMMARY</span>
     </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:11px;margin-bottom:16px;">
-      <div style="padding:15px;background:#fff;border:1px solid #bbf7d0;border-radius:10px;"><div style="font-size:12px;color:#64748b;font-weight:700;">👥 TOTAL MEMBERS</div><div style="font-size:27px;font-weight:800;color:#14532d;margin-top:5px;">23</div></div>
+      <div style="padding:15px;background:#fff;border:1px solid #bbf7d0;border-radius:10px;"><div style="font-size:12px;color:#64748b;font-weight:700;">👥 TOTAL MEMBERS</div><div style="font-size:27px;font-weight:800;color:#14532d;margin-top:5px;">25</div></div>
       <div style="padding:15px;background:#fff;border:1px solid #bbf7d0;border-radius:10px;"><div style="font-size:12px;color:#64748b;font-weight:700;">💰 TOTAL SAVINGS</div><div style="font-size:27px;font-weight:800;color:#14532d;margin-top:5px;">KSh 190,624</div></div>
       <div style="padding:15px;background:#fff;border:1px solid #bbf7d0;border-radius:10px;"><div style="font-size:12px;color:#64748b;font-weight:700;">📑 TOTAL LOANS ISSUED</div><div style="font-size:27px;font-weight:800;color:#14532d;margin-top:5px;">KSh 35,400.00</div></div>
       <div style="padding:15px;background:#fff;border:1px solid #bbf7d0;border-radius:10px;"><div style="font-size:12px;color:#64748b;font-weight:700;">💹 LOAN INTEREST EARNED</div><div style="font-size:27px;font-weight:800;color:#14532d;margin-top:5px;">KSh 4,159.43</div></div>
-      <div style="padding:15px;background:#fff;border:1px solid #bbf7d0;border-radius:10px;"><div style="font-size:12px;color:#64748b;font-weight:700;">🏦 MONEY MARKET FUND (MMF) INTEREST</div><div style="font-size:27px;font-weight:800;color:#14532d;margin-top:5px;">KSh 4,514.00</div></div>
-      <div style="padding:15px;background:#ecfdf5;border:1px solid #86efac;border-radius:10px;"><div style="font-size:12px;color:#166534;font-weight:800;">💰 TOTAL INTEREST EARNED (MMF + LOANS)</div><div style="font-size:27px;font-weight:900;color:#166534;margin-top:5px;">KSh 8,673.43</div></div>
+      <div style="padding:15px;background:#fff;border:1px solid #bbf7d0;border-radius:10px;"><div style="font-size:12px;color:#64748b;font-weight:700;">🏦 MONEY MARKET FUND (MMF) INTEREST</div><div style="font-size:27px;font-weight:800;color:#14532d;margin-top:5px;">KSh 4,663.00</div></div>
+      <div style="padding:15px;background:#ecfdf5;border:1px solid #86efac;border-radius:10px;"><div style="font-size:12px;color:#166534;font-weight:800;">💰 TOTAL INTEREST EARNED (MMF + LOANS)</div><div style="font-size:27px;font-weight:900;color:#166534;margin-top:5px;">KSh 8,822.43</div></div>
     </div>
     <div style="padding:13px 15px;background:#fff;border:1px solid #bbf7d0;border-radius:10px;margin-bottom:15px;">
       <div style="font-weight:800;color:#14532d;margin-bottom:9px;">📊 Loan Status</div>
@@ -14616,7 +13941,7 @@ const members = {
         monthlyRepay: 2300,
         amountPaid: 1000,
         balance: 1300,
-        latePenalty: 80,
+        latePenalty: 90,
         latePenaltyPaid: 0,
         date: "10/10/2026",
         firstRepaymentDate: "10/11/2026",
@@ -14626,7 +13951,7 @@ const members = {
           { date: "06/11/2026", amount: 1000, note: "Repayment received" }
         ],
         status: "APPROVED",
-        reason: "PARTIALLY REPAID — KSH 1,000 RECEIVED ON 06/11/2026. KSH 1,300 LOAN BALANCE OUTSTANDING; KSH 80 LATE PAYMENT FINE ACCRUED AS AT 17/11/2026.",
+        reason: "PARTIALLY REPAID — KSH 1,000 RECEIVED ON 06/11/2026. KSH 1,300 LOAN BALANCE OUTSTANDING; KSH 90 LATE PAYMENT FINE ACCRUED AS AT 19/11/2026.",
         repaymentSchedule: [
           {
             month: 1,
@@ -14949,6 +14274,18 @@ function openAdminLoginFromMembership() {
   const back = document.getElementById('backBtn');
   if (back) back.style.display = 'inline-block';
   ffRestoreViewport(keepViewportY);
+}
+
+// Open the official Constitution in an on-site reader. Download remains optional.
+function openFFConstitutionPage() {
+  const keepViewportY = ffCaptureViewport();
+  document.querySelectorAll("section, #dashboard, #admin, #newsSection").forEach(sec => { sec.style.display = 'none'; });
+  document.querySelectorAll("#navButtons .nav-btn").forEach(btn => { btn.style.display = 'none'; });
+  const reader = document.getElementById('ffConstitutionReader');
+  if (reader) reader.style.display = 'block';
+  const back = document.getElementById('backBtn');
+  if (back) back.style.display = 'inline-flex';
+  window.scrollTo({top:0,behavior:'auto'});
 }
 
 // 🔄 Simulate loading action (button + spinner + section switch)
@@ -15400,14 +14737,16 @@ function ffRenderAdminLoanPenaltyReport(){
   const money=v=>'KSh '+(Number(v)||0).toLocaleString('en-KE');
   const source=(typeof members==='object'&&members)?members:{};
   const entries=[];
-  Object.keys(source).forEach(member=>{
+  Object.keys(source).sort((a,b)=>a.localeCompare(b)).forEach(member=>{
     const loans=Array.isArray(source[member]?.loans)?source[member].loans:[];
-    loans.forEach((loan,index)=>{
-      if(!loan||typeof loan!=='object'||/(reject|declin|cancel|pending|awaiting|under review)/i.test(String(loan.status||'')))return;
+    const eligible=loans.filter(loan=>loan&&typeof loan==='object'&&!/(reject|declin|cancel|pending|awaiting|under review)/i.test(String(loan.status||''))&&(Number(loan.requestedAmount??loan.amount??loan.principal??0)||0)>0);
+    if(!eligible.length){
+      entries.push({member,loanNo:'No approved/disbursed loan recorded',date:'—',due:'—',principal:0,charged:0,paid:0,outstanding:0,status:'No loan recorded'});
+      return;
+    }
+    eligible.forEach((loan,index)=>{
       const principal=Math.max(0,Number(loan.requestedAmount??loan.amount??loan.principal??0)||0);
-      if(!principal)return;
       const charged=Math.max(0,Number(loan.latePenalty??loan.penalty??0)||0);
-      if(!charged)return;
       const expected=Math.max(principal,Number(loan.repaymentAmount??loan.totalRepayment??principal)||principal);
       const rawPaid=Math.max(0,Number(loan.amountPaid??loan.paid??0)||0);
       const inferredPaid=Math.min(charged,Math.max(0,rawPaid-expected));
@@ -15415,9 +14754,21 @@ function ffRenderAdminLoanPenaltyReport(){
       entries.push({member,loanNo:loan.id||('Loan '+(index+1)),date:loan.date||'—',due:loan.finalRepaymentDate||loan.dueDate||'—',principal,charged,paid,outstanding:Math.max(0,charged-paid),status:loan.status||'—'});
     });
   });
+  const penaltyEntries=entries.filter(r=>r.charged>0);
   const totalCharged=entries.reduce((n,r)=>n+r.charged,0),totalPaid=entries.reduce((n,r)=>n+r.paid,0),totalOutstanding=entries.reduce((n,r)=>n+r.outstanding,0);
-  if(totalsHost)totalsHost.innerHTML=[['Members with penalties',new Set(entries.map(r=>r.member)).size],['Loans with penalties',entries.length],['Total penalties charged',money(totalCharged)],['Penalties paid',money(totalPaid)],['Outstanding loan penalties',money(totalOutstanding)]].map(([label,value])=>`<div style="padding:11px;background:#fff;border:1px solid #fecaca;border-radius:9px;"><div style="font-size:12px;color:#64748b;">${label}</div><strong style="display:block;margin-top:5px;font-size:19px;color:#991b1b;">${value}</strong></div>`).join('');
-  host.innerHTML=entries.length?`<table style="width:100%;border-collapse:collapse;min-width:900px;"><thead><tr style="background:#fee2e2;text-align:left;"><th style="padding:9px;">Member</th><th style="padding:9px;">Loan reference</th><th style="padding:9px;">Loan date</th><th style="padding:9px;">Due date</th><th style="padding:9px;">Loan principal</th><th style="padding:9px;">Penalty charged</th><th style="padding:9px;">Penalty paid</th><th style="padding:9px;">Outstanding penalty</th><th style="padding:9px;">Loan status</th></tr></thead><tbody>${entries.map(r=>`<tr><td style="padding:9px;border-bottom:1px solid #e2e8f0;font-weight:700;">${esc(r.member)}</td><td style="padding:9px;border-bottom:1px solid #e2e8f0;">${esc(r.loanNo)}</td><td style="padding:9px;border-bottom:1px solid #e2e8f0;">${esc(r.date)}</td><td style="padding:9px;border-bottom:1px solid #e2e8f0;">${esc(r.due)}</td><td style="padding:9px;border-bottom:1px solid #e2e8f0;">${money(r.principal)}</td><td style="padding:9px;border-bottom:1px solid #e2e8f0;">${money(r.charged)}</td><td style="padding:9px;border-bottom:1px solid #e2e8f0;">${money(r.paid)}</td><td style="padding:9px;border-bottom:1px solid #e2e8f0;font-weight:700;color:${r.outstanding?'#b91c1c':'#15803d'};">${money(r.outstanding)}</td><td style="padding:9px;border-bottom:1px solid #e2e8f0;">${esc(r.status)}</td></tr>`).join('')}</tbody><tfoot><tr style="background:#fff1f2;font-weight:800;"><td colspan="5" style="padding:10px;text-align:right;">TOTAL</td><td style="padding:10px;">${money(totalCharged)}</td><td style="padding:10px;">${money(totalPaid)}</td><td style="padding:10px;">${money(totalOutstanding)}</td><td></td></tr></tfoot></table>`:'<div style="padding:16px;border:1px dashed #fca5a5;border-radius:10px;background:#fff1f2;color:#7f1d1d;">No loan penalties are currently recorded in the members’ loan records. This report only displays penalties actually recorded in the member loan data; it does not calculate or invent penalties.</div>';
+  if(totalsHost)totalsHost.innerHTML=[
+    ['Total members listed',new Set(entries.map(r=>r.member)).size],
+    ['Members with loan penalties',new Set(penaltyEntries.map(r=>r.member)).size],
+    ['Loans with penalties',penaltyEntries.length],
+    ['Total penalties charged',money(totalCharged)],
+    ['Penalties paid',money(totalPaid)],
+    ['Outstanding loan penalties',money(totalOutstanding)]
+  ].map(([label,value])=>`<div style="padding:11px;background:#fff;border:1px solid #fecaca;border-radius:9px;"><div style="font-size:12px;color:#64748b;">${label}</div><strong style="display:block;margin-top:5px;font-size:19px;color:#991b1b;">${value}</strong></div>`).join('');
+  host.innerHTML=entries.length?`<table style="width:100%;border-collapse:collapse;min-width:900px;"><thead><tr style="background:#fee2e2;text-align:left;"><th style="padding:9px;">Member</th><th style="padding:9px;">Loan reference</th><th style="padding:9px;">Loan date</th><th style="padding:9px;">Due date</th><th style="padding:9px;">Loan principal</th><th style="padding:9px;">Penalty charged</th><th style="padding:9px;">Penalty paid</th><th style="padding:9px;">Outstanding penalty</th><th style="padding:9px;">Loan status</th></tr></thead><tbody>${entries.map(r=>`<tr><td style="padding:9px;border-bottom:1px solid #e2e8f0;font-weight:700;">${esc(r.member)}</td><td style="padding:9px;border-bottom:1px solid #e2e8f0;">${esc(r.loanNo)}</td><td style="padding:9px;border-bottom:1px solid #e2e8f0;">${esc(r.date)}</td><td style="padding:9px;border-bottom:1px solid #e2e8f0;">${esc(r.due)}</td><td style="padding:9px;border-bottom:1px solid #e2e8f0;">${money(r.principal)}</td><td style="padding:9px;border-bottom:1px solid #e2e8f0;font-weight:700;">${money(r.charged)}</td><td style="padding:9px;border-bottom:1px solid #e2e8f0;">${money(r.paid)}</td><td style="padding:9px;border-bottom:1px solid #e2e8f0;font-weight:700;color:${r.outstanding?'#b91c1c':'#15803d'};">${money(r.outstanding)}</td><td style="padding:9px;border-bottom:1px solid #e2e8f0;">${esc(r.status)}</td></tr>`).join('')}</tbody><tfoot><tr style="background:#fff1f2;font-weight:800;"><td colspan="5" style="padding:10px;text-align:right;">TOTAL</td><td style="padding:10px;">${money(totalCharged)}</td><td style="padding:10px;">${money(totalPaid)}</td><td style="padding:10px;">${money(totalOutstanding)}</td><td></td></tr></tfoot></table>`:'<div style="padding:16px;border:1px dashed #fca5a5;border-radius:10px;background:#fff1f2;color:#7f1d1d;">No members are currently listed in the loan register.</div>';
+  host.style.setProperty('display','block','important');
+  host.style.setProperty('visibility','visible','important');
+  host.style.setProperty('width','100%','important');
+  host.style.setProperty('overflow-x','auto','important');
 }
 function getLoggedInMemberMonthlyTableData(year = "2026") {
   if (!loggedInUser) return null;
@@ -24253,7 +23604,7 @@ async function downloadIndividualSavingsReportsPDF() {
       const content=document.createElement('div');content.className='ff-admin-content';content.id='ff-admin-content-'+d.key;content.hidden=true;
       const close=document.createElement('button');close.type='button';close.className='ff-admin-close';close.textContent='✕ Close section';close.setAttribute('aria-label','Close this administrator section');
       close.addEventListener('click',()=>{content.hidden=true;toggle.setAttribute('aria-expanded','false');card.classList.remove('is-open');Array.from(toolbar.children).forEach(other=>{other.hidden=false;});intro.hidden=false;toolbar.scrollIntoView({behavior:'smooth',block:'start'});});
-      toggle.addEventListener('click',()=>{const opening=content.hidden;if(opening){Array.from(toolbar.children).forEach(other=>{if(other!==card)other.hidden=true;});intro.hidden=true;content.hidden=false;card.classList.add('is-open');toggle.setAttribute('aria-expanded','true');content.prepend(close);if(d.key==='dashboard'&&window.FFContributionsSummary&&typeof window.FFContributionsSummary.refreshAdmin==='function'){window.FFContributionsSummary.refreshAdmin();}if(d.key==='members'&&content.querySelector('#memberContractsAdminPanel')){const panel=content.querySelector('#memberContractsAdminPanel');if(panel){panel.style.setProperty('display','block','important');panel.style.setProperty('visibility','visible','important');panel.style.setProperty('opacity','1','important');}if(typeof window.ffRefreshAdminContracts==='function'){window.ffRefreshAdminContracts();}else{const body=content.querySelector('#ffAdminContractsTable');if(body)body.innerHTML='<tr><td colspan="11" style="padding:14px;text-align:center;color:#b91c1c;">Contract review loaded, but the review script is unavailable. Please refresh the page.</td></tr>';}}if(d.key==='welfare'){const panel=content.querySelector('#ffAdminWelfarePanel');if(panel){panel.style.setProperty('display','block','important');panel.style.setProperty('visibility','visible','important');panel.style.setProperty('opacity','1','important');}if(typeof window.ffRefreshAdminWelfare==='function')window.ffRefreshAdminWelfare();}close.focus({preventScroll:true});}else{content.hidden=true;toggle.setAttribute('aria-expanded','false');card.classList.remove('is-open');Array.from(toolbar.children).forEach(other=>{other.hidden=false;});intro.hidden=false;}});
+      toggle.addEventListener('click',()=>{const opening=content.hidden;if(opening){Array.from(toolbar.children).forEach(other=>{if(other!==card)other.hidden=true;});intro.hidden=true;content.hidden=false;card.classList.add('is-open');toggle.setAttribute('aria-expanded','true');content.prepend(close);if(d.key==='dashboard'){if(window.FFContributionsSummary&&typeof window.FFContributionsSummary.refreshAdmin==='function')window.FFContributionsSummary.refreshAdmin();const menu=content.querySelector('#ffAdminDashboardSubmenu');if(menu)menu.hidden=false;content.querySelectorAll('[id^="ffAdminDashboardView-"]').forEach(p=>p.hidden=p.id!=='ffAdminDashboardView-overview');const intro=content.querySelector('#ffAdminDashboardSubmenu')?.previousElementSibling;if(intro)intro.hidden=false;}if(d.key==='members'){const menu=content.querySelector('#ffMembersSubmenu');if(menu)menu.hidden=false;content.querySelectorAll('[id^="ffMembersView-"]').forEach(p=>p.hidden=true);}if(d.key==='loans'){const menu=content.querySelector('#ffLoansSubmenu');if(menu){menu.hidden=false;menu.style.setProperty('display','grid','important');}const loanIntro=menu?.previousElementSibling;if(loanIntro&&loanIntro.tagName==='P')loanIntro.hidden=false;content.querySelectorAll('[id^="ffLoansView-"]').forEach(p=>p.hidden=true);}if(d.key==='welfare'){const panel=content.querySelector('#ffAdminWelfarePanel');if(panel){panel.style.setProperty('display','block','important');panel.style.setProperty('visibility','visible','important');panel.style.setProperty('opacity','1','important');}if(typeof window.ffRefreshAdminWelfare==='function')window.ffRefreshAdminWelfare();}close.focus({preventScroll:true});}else{content.hidden=true;toggle.setAttribute('aria-expanded','false');card.classList.remove('is-open');Array.from(toolbar.children).forEach(other=>{other.hidden=false;});intro.hidden=false;}});
       card.append(toggle,content);cards[d.key]={card,content};toolbar.append(card);
     });
     const findHeading=(text)=>Array.from(admin.querySelectorAll('h2,h3,h4')).find(e=>e.textContent.trim().includes(text));
@@ -24271,7 +23622,106 @@ async function downloadIndividualSavingsReportsPDF() {
     // Existing panels and IDs are moved intact so their data and handlers remain connected.
     ['#ffChamaFinancialOverview','#adminSummary','#ffAdminSavingsSummary','#ffAdminLoanFinancialSummary','#ffAdminOverviewDashboard','#ffAdminPenaltyWelfareReports'].forEach(sel=>move(sel,cards.dashboard.content));
     ['#memberContractsAdminPanel','#membersNotesPanel','#pendingMembersPanel','#ffExitAdminPanel','#membersOverviewPanel'].forEach(sel=>move(sel,cards.members.content));
+    // Members workspace: show a simple four-button menu, then one register at a time.
+    const memberContent=cards.members.content;
+    const memberMenu=document.createElement('div');
+    memberMenu.id='ffMembersSubmenu';
+    memberMenu.style.cssText='display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:4px 0 18px;';
+    const memberIntro=document.createElement('p');
+    memberIntro.textContent='Choose one members register to open. Only the selected register will be displayed.';
+    memberIntro.style.cssText='margin:0 0 14px;color:#64748b;';
+    const memberViews=[
+      {key:'contracts',label:'📄 Member Contract Management — Submission Register',ids:['memberContractsAdminPanel'],color:'#075985'},
+      {key:'notes',label:'🗒️ Members Notes',ids:['membersNotesPanel'],color:'#1976d2'},
+      {key:'exit',label:'🚪 Membership Withdrawal & Exit Register',ids:['ffExitAdminPanel'],color:'#6d28d9'},
+      {key:'overview',label:'👥 Members Overview',ids:['membersOverviewPanel','pendingMembersPanel'],color:'#166534'}
+    ];
+    const memberSections={};
+    memberViews.forEach(view=>{
+      const button=document.createElement('button');button.type='button';button.textContent=view.label;
+      button.style.cssText=`padding:15px 16px;border:1px solid #d5e1e8;border-left:5px solid ${view.color};border-radius:10px;background:#f8fbfd;color:#17384d;font-weight:700;text-align:left;cursor:pointer;min-height:62px;`;
+      const pane=document.createElement('div');pane.id='ffMembersView-'+view.key;pane.hidden=true;pane.style.cssText='margin-top:12px;';
+      const close=document.createElement('button');close.type='button';close.textContent='← Back to Members menu';close.style.cssText='display:block;margin:0 0 14px auto;padding:9px 13px;border:0;border-radius:8px;background:#17384d;color:#fff;font-weight:700;cursor:pointer;';
+      close.addEventListener('click',()=>{pane.hidden=true;memberMenu.hidden=false;memberIntro.hidden=false;});
+      pane.appendChild(close);
+      view.ids.forEach(id=>{const panel=memberContent.querySelector('#'+id);if(panel){panel.style.setProperty('display','block','important');panel.style.setProperty('width','100%','important');pane.appendChild(panel);}});
+      button.addEventListener('click',()=>{Object.values(memberSections).forEach(x=>x.hidden=true);memberMenu.hidden=true;memberIntro.hidden=true;pane.hidden=false;
+        if(view.key==='contracts'&&typeof window.ffRefreshAdminContracts==='function')window.ffRefreshAdminContracts();
+        if(view.key==='overview'&&typeof window.ffRefreshAdminDashboard==='function')window.ffRefreshAdminDashboard();
+      });
+      memberMenu.appendChild(button);memberSections[view.key]=pane;memberContent.appendChild(pane);
+    });
+    memberContent.insertBefore(memberIntro,memberContent.firstChild);
+    memberContent.insertBefore(memberMenu,memberIntro.nextSibling);
     ['h3.ff-mm-heading','#loanSearch','#loanStatusFilter','button.ff-export-loans','h3.ff-loan-heading','table.ff-loan-table','#loanAvailabilityAdminPanel','#ffAdminLoanPenaltyReport'].forEach(sel=>move(sel,cards.loans.content));
+    // Loans workspace: two clear entry points, with the existing controls and
+    // application register moved intact so their IDs and event handlers remain valid.
+    const loansContent=cards.loans.content;
+    const loansIntro=document.createElement('p');
+    loansIntro.textContent='Choose a section below to manage member loan records or review submitted loan applications.';
+    loansIntro.style.cssText='margin:0 0 14px;color:#64748b;line-height:1.55;';
+    const loansMenu=document.createElement('div');
+    loansMenu.id='ffLoansSubmenu';
+    loansMenu.style.cssText='display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin:4px 0 18px;';
+    const loansViews={};
+    const makeLoansView=(key,label,color)=>{
+      const button=document.createElement('button');button.type='button';button.textContent=label;
+      button.style.cssText=`display:flex;align-items:center;min-height:68px;width:100%;padding:16px 18px;border:1px solid #d5e1e8;border-left:5px solid ${color};border-radius:11px;background:linear-gradient(135deg,#fff,#f6fafc);color:#17384d;font-weight:750;text-align:left;cursor:pointer;box-shadow:0 3px 10px rgba(18,48,74,.05);`;
+      const pane=document.createElement('div');pane.id='ffLoansView-'+key;pane.hidden=true;pane.style.cssText='display:block;margin-top:14px;padding:16px;border:1px solid #e1e9ee;border-radius:12px;background:#fff;';
+      const back=document.createElement('button');back.type='button';back.textContent='← Back to Loans menu';back.style.cssText='display:block;margin:0 0 14px auto;padding:9px 13px;border:0;border-radius:8px;background:#17384d;color:#fff;font-weight:700;cursor:pointer;';
+      back.addEventListener('click',()=>{pane.hidden=true;loansMenu.hidden=false;loansIntro.hidden=false;});
+      pane.appendChild(back);
+      button.addEventListener('click',()=>{Object.values(loansViews).forEach(v=>v.hidden=true);loansMenu.hidden=true;loansIntro.hidden=true;pane.hidden=false;});
+      loansMenu.appendChild(button);loansViews[key]=pane;loansContent.appendChild(pane);
+      return pane;
+    };
+    const memberManagementPane=makeLoansView('members','👤 Member Management','#0f766e');
+    const loanApplicationsPane=makeLoansView('applications','📜 Loan Applications','#1d4ed8');
+    // Build the two loan workspaces from the ORIGINAL live controls and register.
+    // Search the whole Admin section (not only the current card) because earlier
+    // layout passes may already have moved an element into another container.
+    const findLoanHeading=(phrase)=>Array.from(admin.querySelectorAll('h2,h3,h4')).find(el=>String(el.textContent||'').toLowerCase().includes(phrase.toLowerCase()));
+    const moveInto=(node,target)=>{
+      if(!node||!target||node===target||target.contains(node))return node;
+      target.appendChild(node);
+      return node;
+    };
+    // Member Management: search, filter, export and PDF tools.
+    const memberHeading=findLoanHeading('Member Management');
+    if(memberHeading)moveInto(memberHeading,memberManagementPane);
+    moveInto(admin.querySelector('#loanSearch'),memberManagementPane);
+    moveInto(admin.querySelector('#loanStatusFilter'),memberManagementPane);
+    const exportButton=Array.from(admin.querySelectorAll('button')).find(el=>el.getAttribute('onclick')==='exportLoans()');
+    if(exportButton)moveInto(exportButton,memberManagementPane);
+    const loanPdfButton=admin.querySelector('button[onclick="downloadAdminLoansPDF()"]');
+    const loanPdfPanel=loanPdfButton?.parentElement;
+    if(loanPdfPanel)moveInto(loanPdfPanel,memberManagementPane);
+    const availabilityPanel=admin.querySelector('#loanAvailabilityAdminPanel');
+    if(availabilityPanel)moveInto(availabilityPanel,memberManagementPane);
+    const penaltyPanel=admin.querySelector('#ffAdminLoanPenaltyReport');
+    if(penaltyPanel)moveInto(penaltyPanel,memberManagementPane);
+    if(!memberManagementPane.querySelector('#loanSearch')&&!memberManagementPane.querySelector('#loanStatusFilter')){
+      const note=document.createElement('p');note.textContent='Member loan search and management controls are being restored. Please refresh the page if this message remains visible.';note.style.cssText='padding:12px;border-radius:8px;background:#fff7ed;color:#9a3412;';memberManagementPane.appendChild(note);
+    }
+    // Loan Applications: move the actual existing heading, description and live table.
+    const applicationHeading=findLoanHeading('Loan Applications');
+    if(applicationHeading){
+      const description=applicationHeading.nextElementSibling;
+      moveInto(applicationHeading,loanApplicationsPane);
+      if(description&&description.tagName==='P')moveInto(description,loanApplicationsPane);
+    }
+    const liveLoanBody=admin.querySelector('#adminLoanBody');
+    const liveLoanTable=liveLoanBody?.closest('table');
+    if(liveLoanTable)moveInto(liveLoanTable,loanApplicationsPane);
+    // Preserve the register ID and force the original table to remain visible.
+    if(liveLoanTable){liveLoanTable.style.setProperty('display','table','important');liveLoanTable.style.setProperty('visibility','visible','important');liveLoanTable.style.setProperty('width','100%','important');}
+    if(!liveLoanBody||!liveLoanTable){
+      const note=document.createElement('p');note.textContent='The original loan applications table could not be found in the page source. Please contact the administrator before making changes.';note.style.cssText='padding:12px;border-radius:8px;background:#fff7ed;color:#9a3412;';loanApplicationsPane.appendChild(note);
+    }
+    loansIntro.textContent='Choose a section below to manage member loan records or review submitted loan applications.';
+    loansIntro.style.cssText='margin:0 0 14px;color:#64748b;line-height:1.55;';
+    loansContent.insertBefore(loansIntro,loansContent.firstChild);
+    loansContent.insertBefore(loansMenu,loansIntro.nextSibling);
     ['#ffAdminWelfarePanel','#ffAdminWelfareReport'].forEach(sel=>move(sel,cards.welfare.content));
     ['button.ff-picked-trigger','#pickedNumbersTable'].forEach(sel=>move(sel,cards.tools.content));
     ['h3.ff-updates-heading','#updateMessage','button.ff-post-update','#memberSelectionBox','label.ff-whatsapp-label','div.ff-update-history'].forEach(sel=>move(sel,cards.updates.content));
@@ -24313,6 +23763,133 @@ async function downloadIndividualSavingsReportsPDF() {
 })();
 </script>
 
+<script id="ff-admin-dashboard-submenu">
+(function(){
+  function setupDashboardMenu(){
+    const host=document.getElementById('ff-admin-content-dashboard');
+    if(!host||host.dataset.dashboardMenuReady==='1')return;
+    host.dataset.dashboardMenuReady='1';
+    const menu=document.createElement('div');menu.id='ffAdminDashboardSubmenu';
+    menu.style.cssText='display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin:4px 0 18px;';
+    const intro=document.createElement('p');intro.textContent='Choose one dashboard report to open. Only the selected report will be displayed.';intro.style.cssText='margin:0 0 14px;color:#64748b;';
+    const views=[
+      {key:'overview',label:'📊 Light Overview',color:'#166534'},
+      {key:'loan',label:'📊 Overall Loan Financial Summary',color:'#075985'},
+      {key:'member-loans',label:'📋 All Members’ Loan Summaries',color:'#0f766e'},
+      {key:'mgr',label:'🔄 VIEW ALL MEMBERS’ MERRY-GO-ROUND PENALTY REGISTER ＋',color:'#9a3412'},
+      {key:'welfare',label:'🤝 VIEW ALL MEMBERS’ WELFARE APPLICATIONS ＋',color:'#5b21b6'},
+      {key:'loan-penalties',label:'⚠️ VIEW ALL MEMBERS’ LOAN PENALTIES SUMMARY ＋',color:'#991b1b'},
+      {key:'savings',label:'💰 VIEW ALL MEMBERS’ CONTRIBUTIONS & SAVINGS (2025–2027) ＋',color:'#087f5b'}
+    ];
+    const panes={};
+    views.forEach(v=>{
+      const b=document.createElement('button');b.type='button';b.textContent=v.label;
+      b.style.cssText=`display:flex;align-items:center;justify-content:flex-start;width:100%;min-height:58px;padding:13px 15px;border:1px solid #d5e1e8;border-left:5px solid ${v.color};border-radius:10px;background:#f8fbfd;color:#17384d;font-weight:750;text-align:left;line-height:1.4;cursor:pointer;`;
+      const pane=document.createElement('div');pane.id='ffAdminDashboardView-'+v.key;pane.hidden=true;pane.style.cssText='margin:12px 0 18px;padding:16px;border:1px solid #dce5ec;border-radius:13px;background:#fff;';
+      const back=document.createElement('button');back.type='button';back.textContent='← Back to Dashboard menu';back.hidden=false;back.setAttribute('aria-hidden','false');
+      back.style.cssText='display:inline-flex;align-items:center;justify-content:center;margin:0 0 14px;padding:10px 15px;border:1px solid #cbd5e1;border-radius:9px;background:#f1f5f9;color:#17384d;font-weight:700;cursor:pointer;';
+      back.addEventListener('click',()=>{
+        pane.hidden=true;pane.style.removeProperty('display');
+        menu.hidden=false;intro.hidden=false;
+        menu.scrollIntoView({behavior:'smooth',block:'start'});
+      });
+      pane.appendChild(back);
+      b.addEventListener('click',()=>{
+        Object.values(panes).forEach(x=>{x.hidden=true;x.style.removeProperty('display');});
+        menu.hidden=false;intro.hidden=false;pane.hidden=false;pane.style.setProperty('display','block','important');pane.style.setProperty('visibility','visible','important');
+        if(v.key==='overview'){
+          pane.style.setProperty('display','block','important');
+          pane.style.setProperty('visibility','visible','important');
+          pane.style.setProperty('opacity','1','important');
+          pane.querySelectorAll('*').forEach(el=>{if(el.tagName!=='BUTTON'){el.hidden=false;el.style.setProperty('visibility','visible','important');if(getComputedStyle(el).display==='none')el.style.setProperty('display',el.tagName==='SECTION'?'block':'');}});
+          const overviewSection=pane.querySelector('#ffChamaFinancialOverview');if(overviewSection){overviewSection.hidden=false;overviewSection.style.setProperty('display','block','important');overviewSection.style.setProperty('visibility','visible','important');overviewSection.style.setProperty('opacity','1','important');}
+        }
+        if(v.key==='savings'&&window.FFContributionsSummary&&typeof window.FFContributionsSummary.refreshAdmin==='function')window.FFContributionsSummary.refreshAdmin();
+        if(v.key==='mgr'&&typeof window.ffRenderAdminPenaltyWelfareReports==='function')window.ffRenderAdminPenaltyWelfareReports();
+        if(v.key==='welfare'&&typeof window.ffRenderAdminPenaltyWelfareReports==='function')window.ffRenderAdminPenaltyWelfareReports();
+        if(v.key==='loan-penalties'){
+          const report=document.getElementById('ffAdminLoanPenaltyReport');
+          if(report){report.hidden=false;report.style.setProperty('display','block','important');report.style.setProperty('visibility','visible','important');report.style.setProperty('width','100%','important');report.style.setProperty('height','auto','important');report.style.setProperty('max-height','none','important');}
+          const totals=document.getElementById('ffAdminLoanPenaltyTotals');
+          const table=document.getElementById('ffAdminLoanPenaltyTable');
+          [totals,table].forEach(el=>{if(el){el.hidden=false;el.style.setProperty('display',el===totals?'grid':'block','important');el.style.setProperty('visibility','visible','important');el.style.setProperty('width','100%','important');}});
+          if(typeof window.ffRenderAdminLoanPenaltyReport==='function')window.ffRenderAdminLoanPenaltyReport();
+          else if(table)table.innerHTML='<p style="padding:14px;color:#b91c1c;">The loan penalty report could not be loaded. Please refresh the Admin Dashboard.</p>';
+        }
+        pane.scrollIntoView({behavior:'smooth',block:'start'});
+      });
+      menu.appendChild(b);panes[v.key]=pane;host.appendChild(pane);
+    });
+    host.insertBefore(menu,host.firstChild);host.insertBefore(intro,menu);
+    const byId=id=>document.getElementById(id);
+    const overview=panes.overview;
+    // Light Overview: render a self-contained visible copy of the supplied
+    // headline figures. Keeping it separate from the legacy dashboard wrapper
+    // prevents other report arrangers from moving or hiding its contents.
+    const staticOverview=byId('ffChamaFinancialOverview');
+    if(staticOverview){
+      // Move the original, fully populated overview into its report pane.
+      // Do not clone it: the live source can be affected by hidden/display rules
+      // and cloning can leave the overview looking empty in some browsers.
+      staticOverview.hidden=false;
+      staticOverview.style.setProperty('display','block','important');
+      staticOverview.style.setProperty('visibility','visible','important');
+      staticOverview.style.setProperty('opacity','1','important');
+      staticOverview.style.setProperty('width','100%','important');
+      staticOverview.style.setProperty('max-width','100%','important');
+      staticOverview.style.setProperty('height','auto','important');
+      // Keep the detailed loan report exclusively in its own menu item.
+      const heading=Array.from(staticOverview.querySelectorAll('h3')).find(h=>h.textContent.includes('Overall Loan Financial Summary'));
+      if(heading){const card=heading.parentElement;if(card&&card!==staticOverview)card.remove();}
+      overview.appendChild(staticOverview);
+    }
+    const dynamicCards=byId('adminSummary');if(dynamicCards){dynamicCards.hidden=true;dynamicCards.style.setProperty('display','none','important');}
+    const liveDashboard=byId('ffAdminOverviewDashboard');
+    // Detach the report panels from the legacy dashboard wrapper before placing
+    // them in their own panes. The wrapper itself stays hidden; the Light Overview
+    // has its own independent summary copy above.
+    const mgr=byId('ffAdminPenaltyWelfareReports');
+    const welfare=byId('ffAdminWelfareReport');
+    const loanPenalties=byId('ffAdminLoanPenaltyReport');
+    if(mgr)panes.mgr.appendChild(mgr);
+    if(welfare)panes.welfare.appendChild(welfare);
+    if(loanPenalties)panes['loan-penalties'].appendChild(loanPenalties);
+    if(liveDashboard){liveDashboard.hidden=true;liveDashboard.style.setProperty('display','none','important');liveDashboard.style.setProperty('width','100%','important');}
+    const loanPanel=byId('ffAdminLoanFinancialSummary');
+    window.ffArrangeAdminDashboardReports=function(){
+      // Clear only the generated contents of these two report panes, preserving
+      // their Back buttons. This prevents repeated refreshes duplicating reports.
+      [panes.loan,panes['member-loans']].forEach(p=>{while(p&&p.children.length>1)p.lastElementChild.remove();});
+      const loan=byId('ffAdminLoanFinancialSummary');
+      const savings=byId('ffAdminSavingsSummary');
+      const loanToggle=loan?.querySelector('#ffToggleAllMemberLoanSummaries');
+      const memberDetails=loan?.querySelector('#ffAllMemberLoanSummariesContent');
+      if(loan){
+        Array.from(loan.children).forEach(el=>{
+          if(el!==loanToggle&&el!==memberDetails)panes.loan.appendChild(el);
+        });
+        if(loanToggle)panes['member-loans'].appendChild(loanToggle);
+        if(memberDetails)panes['member-loans'].appendChild(memberDetails);
+        Array.from(panes.loan.children).filter(el=>!el.textContent.trim()&&!el.querySelector('*')).forEach(el=>el.remove());
+        loan.style.setProperty('display','none','important');
+      }
+      if(mgr){mgr.hidden=false;mgr.style.setProperty('display','block','important');}
+      if(welfare){welfare.hidden=false;welfare.style.setProperty('display','block','important');}
+      if(loanPenalties){loanPenalties.hidden=false;loanPenalties.style.setProperty('display','block','important');}
+      if(savings){panes.savings.appendChild(savings);savings.hidden=false;savings.style.setProperty('display','block','important');savings.style.setProperty('visibility','visible','important');savings.style.setProperty('width','100%','important');}
+      // Remove legacy generated controls if an earlier render left any behind.
+      ['ffToggleAdminMGRPenaltyRegister','ffToggleAdminWelfareReport','ffToggleAdminLoanPenaltyReport','ffToggleAdminSavingsSummary'].forEach(id=>document.querySelectorAll('#'+id).forEach(el=>el.remove()));
+      // Keep the overview populated and all other views closed until selected.
+      overview.hidden=false;overview.style.setProperty('display','block','important');overview.style.setProperty('visibility','visible','important');
+      Object.entries(panes).forEach(([key,pane])=>{if(key!=='overview')pane.hidden=true;});
+    };
+    // Move existing report content immediately; the loan summary renderer calls
+    // this again after every refresh, and this function is safe to repeat.
+    window.ffArrangeAdminDashboardReports();
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',setupDashboardMenu);else setupDashboardMenu();
+})();
+</script>
 
 <script>
 /* Future Finders Member Contracts — member-submitted workflow. Records currently use this browser's localStorage. */
@@ -24642,6 +24219,9 @@ async function downloadIndividualSavingsReportsPDF() {
 #popup2027 input[type=number]{width:68px;box-sizing:border-box}
 #popup2027 .close2026{z-index:3}
 </style>
+
+
+
 
 
 
@@ -25004,7 +24584,7 @@ async function downloadIndividualSavingsReportsPDF() {
     // Interest earned means interest actually collected from repayments,
     // not the interest merely expected on outstanding loans.
     const interestEarnedCard=document.getElementById('totalInterestEarnedCard');
-    if(interestEarnedCard)interestEarnedCard.textContent='💹 Total Interest Earned (MMF + Loans): '+money(4588+a.interestPaid);
+    if(interestEarnedCard)interestEarnedCard.textContent='💹 Total Interest Earned (MMF + Loans): '+money(4663+a.interestPaid);
     const statusCard=document.getElementById('loanBreakdownCard');
     if(statusCard)statusCard.textContent=`📊 Loan Status: ${pending} Pending / ${active} Active / ${overdue} Overdue / ${cleared} Cleared / ${rejected} Rejected`;
     // Build the admin's expanded member summaries from the same unified
@@ -25069,95 +24649,26 @@ async function downloadIndividualSavingsReportsPDF() {
     const penaltyReport=document.getElementById('ffAdminPenaltyWelfareReports');
     const welfareReport=document.getElementById('ffAdminWelfareReport');
     const loanPenaltyReport=document.getElementById('ffAdminLoanPenaltyReport');
-    panel.innerHTML=`<h3 style="margin:0 0 5px;color:#173b57;">📊 Overall Loan Financial Summary</h3><p style="margin:0 0 12px;font-size:12px;color:#64748b;">Calculated from approved and disbursed loans across all members. Pending and rejected applications are excluded from money lent.</p><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:9px;">${card('Loans issued',a.count)}${card('Total principal lent',money(a.principal))}${card('Total interest expected',money(a.interest))}${card('Total repayment expected',money(a.totalDue))}${card('Total repayments received',money(a.paid))}${card('Principal recovered',money(a.principalPaid))}${card('Interest returned',money(a.interestPaid))}${card('Outstanding principal',money(a.outstandingPrincipal))}${card('Outstanding interest',money(a.outstandingInterest))}${card('Total outstanding balance',money(a.balance))}</div><div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;"><span style="padding:7px 10px;border-radius:7px;background:#fff;border:1px solid #dbe4ec;">Pending: <b>${pending}</b></span><span style="padding:7px 10px;border-radius:7px;background:#fff;border:1px solid #dbe4ec;">Active / owing: <b>${active}</b></span><span style="padding:7px 10px;border-radius:7px;background:#fff;border:1px solid #dbe4ec;">Overdue: <b>${overdue}</b></span><span style="padding:7px 10px;border-radius:7px;background:#fff;border:1px solid #dbe4ec;">Cleared: <b>${cleared}</b></span><span style="padding:7px 10px;border-radius:7px;background:#fff;border:1px solid #dbe4ec;">Rejected: <b>${rejected}</b></span></div><div style="margin-top:14px;padding:14px;background:#ecfdf5;border:1px solid #86efac;border-radius:10px;"><h4 style="margin:0 0 10px;color:#14532d;font-size:15px;">💹 Chama Investment & Interest Earnings</h4><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:9px;"><div style="padding:12px;background:#fff;border:1px solid #bbf7d0;border-radius:8px;"><div style="font-size:12px;color:#64748b;">🏦 Money Market Fund (MMF) Interest</div><b style="display:block;margin-top:5px;font-size:21px;color:#14532d;">${money(4588)}</b></div><div style="padding:12px;background:#fff;border:1px solid #bbf7d0;border-radius:8px;"><div style="font-size:12px;color:#64748b;">💰 Loan Interest Earned</div><b style="display:block;margin-top:5px;font-size:21px;color:#14532d;">${money(a.interestPaid)}</b></div><div style="padding:12px;background:#dcfce7;border:1px solid #86efac;border-radius:8px;"><div style="font-size:12px;color:#166534;font-weight:800;">💹 TOTAL INTEREST EARNED (MMF + LOANS)</div><b style="display:block;margin-top:5px;font-size:23px;color:#166534;">${money(4588+a.interestPaid)}</b></div></div><p style="margin:8px 0 0;color:#64748b;font-size:11px;">MMF earnings are hard-coded and can be updated when a new figure is provided.</p></div><div style="margin-top:16px;"><button type="button" id="ffToggleAllMemberLoanSummaries" onclick="toggleAdminMemberLoanSummaries()" aria-expanded="false" style="width:100%;padding:13px 16px;border:1px solid #cbd5e1;border-radius:9px;background:#173b57;color:#fff;font-weight:700;text-align:left;cursor:pointer;font-size:14px;">📋 All Members’ Loan Summaries <span style="float:right;">＋</span></button><div id="ffAllMemberLoanSummariesContent" hidden style="padding:8px 0 0;">${memberSummaryCards||'<p style="padding:14px;text-align:center;color:#64748b;background:#fff;border:1px solid #dbe4ec;border-radius:9px;">No approved or disbursed member loans recorded for individual display.</p>'}</div></div>`;
-    // Place the savings button immediately AFTER the All Members' Loan Summaries
-    // control and its expandable member-loan details, inside Dashboard Summary.
-    if(savingsPanel){
-      const loanDetails=panel.querySelector('#ffAllMemberLoanSummariesContent');
-      const savingsButton=document.createElement('button');
-      savingsButton.type='button';
-      savingsButton.id='ffToggleAdminSavingsSummary';
-      savingsButton.textContent='💰 VIEW ALL MEMBERS’ CONTRIBUTIONS & SAVINGS (2025–2027)  ＋';
-      savingsButton.setAttribute('aria-expanded','false');
-      savingsButton.style.cssText='display:block!important;visibility:visible!important;opacity:1!important;width:100%;margin:12px 0;padding:15px 18px;border:2px solid #087f5b;border-radius:10px;background:#087f5b;color:#fff;font-size:15px;font-weight:800;text-align:left;cursor:pointer;box-shadow:0 3px 9px rgba(8,127,91,.18);';
-      savingsButton.addEventListener('click',()=>{
-        const opening=savingsPanel.hidden;
-        savingsPanel.hidden=!opening;
-        savingsPanel.style.setProperty('display',opening?'block':'none','important');
-        savingsButton.setAttribute('aria-expanded',String(opening));
-        savingsButton.textContent=(opening?'🙈 HIDE':'💰 VIEW')+' ALL MEMBERS’ CONTRIBUTIONS & SAVINGS (2025–2027)  '+(opening?'−':'＋');
-        if(opening){
-          if(window.FFContributionsSummary&&typeof window.FFContributionsSummary.refreshAdmin==='function')window.FFContributionsSummary.refreshAdmin();
-          savingsPanel.scrollIntoView({behavior:'smooth',block:'start'});
-        }
-      });
-      // Add the all-members Merry-Go-Round penalty register directly below loan summaries.
-      const penaltyButton=document.createElement('button');
-      penaltyButton.type='button';
-      penaltyButton.id='ffToggleAdminMGRPenaltyRegister';
-      penaltyButton.textContent='🔄 VIEW ALL MEMBERS’ MERRY-GO-ROUND PENALTY REGISTER  ＋';
-      penaltyButton.setAttribute('aria-expanded','false');
-      penaltyButton.setAttribute('aria-controls','ffAdminPenaltyWelfareReports');
-      penaltyButton.style.cssText='display:block!important;visibility:visible!important;opacity:1!important;width:100%;margin:12px 0;padding:15px 18px;border:2px solid #b45309;border-radius:10px;background:#9a3412;color:#fff;font-size:15px;font-weight:800;text-align:left;cursor:pointer;box-shadow:0 3px 9px rgba(154,52,18,.16);';
-      if(penaltyReport){
-        penaltyReport.hidden=true;
-        penaltyReport.style.setProperty('display','none','important');
-        // Use one stable global handler rather than a closure over a panel that may
-        // be moved/rebuilt whenever the Admin Dashboard Summary refreshes.
-        penaltyButton.addEventListener('click',function(){ if(typeof window.toggleAdminMGRPenaltyRegister==='function') window.toggleAdminMGRPenaltyRegister(); });
+    panel.innerHTML=`<h3 style="margin:0 0 5px;color:#173b57;">📊 Overall Loan Financial Summary</h3><p style="margin:0 0 12px;font-size:12px;color:#64748b;">Calculated from approved and disbursed loans across all members. Pending and rejected applications are excluded from money lent.</p><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:9px;">${card('Loans issued',a.count)}${card('Total principal lent',money(a.principal))}${card('Total interest expected',money(a.interest))}${card('Total repayment expected',money(a.totalDue))}${card('Total repayments received',money(a.paid))}${card('Principal recovered',money(a.principalPaid))}${card('Interest returned',money(a.interestPaid))}${card('Outstanding principal',money(a.outstandingPrincipal))}${card('Outstanding interest',money(a.outstandingInterest))}${card('Total outstanding balance',money(a.balance))}</div><div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;"><span style="padding:7px 10px;border-radius:7px;background:#fff;border:1px solid #dbe4ec;">Pending: <b>${pending}</b></span><span style="padding:7px 10px;border-radius:7px;background:#fff;border:1px solid #dbe4ec;">Active / owing: <b>${active}</b></span><span style="padding:7px 10px;border-radius:7px;background:#fff;border:1px solid #dbe4ec;">Overdue: <b>${overdue}</b></span><span style="padding:7px 10px;border-radius:7px;background:#fff;border:1px solid #dbe4ec;">Cleared: <b>${cleared}</b></span><span style="padding:7px 10px;border-radius:7px;background:#fff;border:1px solid #dbe4ec;">Rejected: <b>${rejected}</b></span></div><div style="margin-top:14px;padding:14px;background:#ecfdf5;border:1px solid #86efac;border-radius:10px;"><h4 style="margin:0 0 10px;color:#14532d;font-size:15px;">💹 Chama Investment & Interest Earnings</h4><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:9px;"><div style="padding:12px;background:#fff;border:1px solid #bbf7d0;border-radius:8px;"><div style="font-size:12px;color:#64748b;">🏦 Money Market Fund (MMF) Interest</div><b style="display:block;margin-top:5px;font-size:21px;color:#14532d;">${money(4663)}</b></div><div style="padding:12px;background:#fff;border:1px solid #bbf7d0;border-radius:8px;"><div style="font-size:12px;color:#64748b;">💰 Loan Interest Earned</div><b style="display:block;margin-top:5px;font-size:21px;color:#14532d;">${money(a.interestPaid)}</b></div><div style="padding:12px;background:#dcfce7;border:1px solid #86efac;border-radius:8px;"><div style="font-size:12px;color:#166534;font-weight:800;">💹 TOTAL INTEREST EARNED (MMF + LOANS)</div><b style="display:block;margin-top:5px;font-size:23px;color:#166534;">${money(4663+a.interestPaid)}</b></div></div><p style="margin:8px 0 0;color:#64748b;font-size:11px;">MMF earnings are hard-coded and can be updated when a new figure is provided.</p></div><div style="margin-top:16px;"><button type="button" id="ffToggleAllMemberLoanSummaries" onclick="toggleAdminMemberLoanSummaries()" aria-expanded="false" style="width:100%;padding:13px 16px;border:1px solid #cbd5e1;border-radius:9px;background:#173b57;color:#fff;font-weight:700;text-align:left;cursor:pointer;font-size:14px;">📋 All Members’ Loan Summaries <span style="float:right;">＋</span></button><div id="ffAllMemberLoanSummariesContent" hidden style="padding:8px 0 0;">${memberSummaryCards||'<p style="padding:14px;text-align:center;color:#64748b;background:#fff;border:1px solid #dbe4ec;border-radius:9px;">No approved or disbursed member loans recorded for individual display.</p>'}</div></div>`;
+    // The Dashboard menu now owns navigation to each report. Do not generate
+    // additional VIEW/HIDE buttons here: repeated refreshes previously left
+    // duplicate controls behind in the report panes.
+    [
+      ['ffToggleAdminMGRPenaltyRegister', penaltyReport],
+      ['ffToggleAdminWelfareReport', welfareReport],
+      ['ffToggleAdminLoanPenaltyReport', loanPenaltyReport],
+      ['ffToggleAdminSavingsSummary', savingsPanel]
+    ].forEach(([id, panelEl]) => {
+      document.querySelectorAll('#'+id).forEach(el => el.remove());
+      if(panelEl){
+        panelEl.hidden=false;
+        panelEl.style.setProperty('display','block','important');
+        panelEl.style.setProperty('visibility','visible','important');
+        panelEl.style.setProperty('width','100%','important');
+        panelEl.style.setProperty('box-sizing','border-box','important');
       }
-      if(loanDetails)loanDetails.insertAdjacentElement('afterend',penaltyButton);
-      else panel.appendChild(penaltyButton);
-      const welfareButton=document.createElement('button');
-      welfareButton.type='button';
-      welfareButton.id='ffToggleAdminWelfareReport';
-      welfareButton.textContent='🤝 VIEW ALL MEMBERS’ WELFARE APPLICATIONS  ＋';
-      welfareButton.setAttribute('aria-expanded','false');
-      welfareButton.setAttribute('aria-controls','ffAdminWelfareReport');
-      welfareButton.style.cssText='display:block!important;visibility:visible!important;opacity:1!important;width:100%;margin:12px 0;padding:15px 18px;border:2px solid #6d28d9;border-radius:10px;background:#5b21b6;color:#fff;font-size:15px;font-weight:800;text-align:left;cursor:pointer;box-shadow:0 3px 9px rgba(91,33,182,.16);';
-      welfareButton.addEventListener('click',function(){ if(typeof window.toggleAdminWelfareReport==='function') window.toggleAdminWelfareReport(); });
-      const loanPenaltyButton=document.createElement('button');
-      loanPenaltyButton.type='button';
-      loanPenaltyButton.id='ffToggleAdminLoanPenaltyReport';
-      loanPenaltyButton.textContent='⚠️ VIEW ALL MEMBERS’ LOAN PENALTIES SUMMARY  ＋';
-      loanPenaltyButton.setAttribute('aria-expanded','false');
-      loanPenaltyButton.setAttribute('aria-controls','ffAdminLoanPenaltyReport');
-      loanPenaltyButton.style.cssText='display:block!important;visibility:visible!important;opacity:1!important;width:100%;margin:12px 0;padding:15px 18px;border:2px solid #b91c1c;border-radius:10px;background:#991b1b;color:#fff;font-size:15px;font-weight:800;text-align:left;cursor:pointer;box-shadow:0 3px 9px rgba(153,27,27,.16);';
-      loanPenaltyButton.addEventListener('click',function(){if(typeof window.toggleAdminLoanPenaltyReport==='function')window.toggleAdminLoanPenaltyReport();});
-      if(loanPenaltyReport){loanPenaltyReport.hidden=true;loanPenaltyReport.style.setProperty('display','none','important');}
-      if(welfareReport){
-        welfareReport.hidden=true;
-        welfareReport.style.setProperty('display','none','important');
-      }
-      if(penaltyReport){
-        penaltyButton.insertAdjacentElement('afterend',penaltyReport);
-        penaltyReport.insertAdjacentElement('afterend',welfareButton);
-        welfareButton.insertAdjacentElement('afterend',welfareReport);
-        welfareReport.insertAdjacentElement('afterend',loanPenaltyButton);
-        loanPenaltyButton.insertAdjacentElement('afterend',loanPenaltyReport);
-        loanPenaltyReport.insertAdjacentElement('afterend',savingsButton);
-      }else if(loanDetails){
-        loanDetails.insertAdjacentElement('afterend',penaltyButton);
-        penaltyButton.insertAdjacentElement('afterend',welfareButton);
-        welfareButton.insertAdjacentElement('afterend',welfareReport);
-        welfareReport.insertAdjacentElement('afterend',loanPenaltyButton);
-        loanPenaltyButton.insertAdjacentElement('afterend',loanPenaltyReport);
-        loanPenaltyReport.insertAdjacentElement('afterend',savingsButton);
-      }else{
-        panel.appendChild(penaltyButton);
-        panel.appendChild(welfareButton);
-        if(welfareReport)panel.appendChild(welfareReport);
-        panel.appendChild(loanPenaltyButton);
-        if(loanPenaltyReport)panel.appendChild(loanPenaltyReport);
-        panel.appendChild(savingsButton);
-      }
-      savingsButton.insertAdjacentElement('afterend',savingsPanel);
-      savingsPanel.hidden=true;
-      savingsPanel.style.setProperty('display','none','important');
-      savingsPanel.style.setProperty('visibility','visible','important');
-      savingsPanel.style.setProperty('width','100%','important');
-      savingsPanel.style.setProperty('box-sizing','border-box','important');
-    }
+    });
+    if(typeof window.ffArrangeAdminDashboardReports==='function')window.ffArrangeAdminDashboardReports();
   }
   window.toggleAdminMemberLoanSummaries=function(){
     const content=document.getElementById('ffAllMemberLoanSummariesContent');
@@ -25646,3 +25157,67 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 </script>
 
+
+<!-- Removed conflicting duplicate Loans menu repair script; the original live-register placement is retained. -->
+
+<script id="ff-loans-submenu-content-repair-v2">
+(function(){
+  function repairLoansSubmenuContent(){
+    const admin=document.getElementById('admin');
+    const memberPane=document.getElementById('ffLoansView-members');
+    const applicationPane=document.getElementById('ffLoansView-applications');
+    if(!admin||!memberPane||!applicationPane)return false;
+
+    const findHeading=(phrase)=>Array.from(admin.querySelectorAll('h2,h3,h4')).find(el=>
+      (el.textContent||'').trim().toLowerCase()===phrase.toLowerCase()
+    );
+    const move=(node,target)=>{if(node&&target&&node!==target)target.appendChild(node);};
+    const ensureBack=(pane)=>{
+      let back=Array.from(pane.querySelectorAll('button')).find(b=>/Back to Loans menu/i.test(b.textContent||''));
+      if(!back){back=document.createElement('button');back.type='button';back.textContent='← Back to Loans menu';back.style.cssText='display:block;margin:0 0 14px auto;padding:9px 13px;border:0;border-radius:8px;background:#17384d;color:#fff;font-weight:700;cursor:pointer;';back.addEventListener('click',()=>{pane.hidden=true;const menu=document.getElementById('ffLoansSubmenu');const intro=menu?.previousElementSibling;if(menu)menu.hidden=false;if(intro&&intro.tagName==='P')intro.hidden=false;});pane.prepend(back);}
+    };
+    ensureBack(memberPane);ensureBack(applicationPane);
+
+    // Member Management: move the original controls and PDF tools into the
+    // click-open pane. Moving (not cloning) preserves IDs and handlers.
+    const memberHeading=findHeading('👤 Member Management')||findHeading('Member Management');
+    move(memberHeading,memberPane);
+    move(document.getElementById('loanSearch'),memberPane);
+    move(document.getElementById('loanStatusFilter'),memberPane);
+    const exportButton=Array.from(admin.querySelectorAll('button')).find(b=>(b.getAttribute('onclick')||'').trim()==='exportLoans()');
+    move(exportButton,memberPane);
+    const pdfButton=Array.from(admin.querySelectorAll('button')).find(b=>(b.getAttribute('onclick')||'').trim()==='downloadAdminLoansPDF()');
+    if(pdfButton)move(pdfButton.parentElement,memberPane);
+    move(document.getElementById('loanAvailabilityAdminPanel'),memberPane);
+    // Keep the All Members' Loan Penalties report in its dedicated Dashboard
+    // submenu pane. Moving it into Member Management here leaves the Dashboard
+    // button pointing to an empty pane.
+
+    // Loan Applications: move the actual live register, including its tbody
+    // with id adminLoanBody, into the second click-open pane.
+    const appHeading=findHeading('📜 Loan Applications')||findHeading('Loan Applications');
+    if(appHeading){const description=appHeading.nextElementSibling;move(appHeading,applicationPane);if(description&&description.tagName==='P')move(description,applicationPane);}
+    const body=document.getElementById('adminLoanBody');
+    const table=body?body.closest('table'):null;
+    if(table){move(table,applicationPane);table.style.setProperty('display','table','important');table.style.setProperty('visibility','visible','important');table.style.setProperty('width','100%','important');table.style.setProperty('min-width','1050px','important');}
+
+    // Remove stale diagnostic placeholders left by earlier failed layouts.
+    applicationPane.querySelectorAll('p').forEach(p=>{
+      if(/register could not be found|could not be located in this page/i.test(p.textContent||''))p.remove();
+    });
+    const menu=document.getElementById('ffLoansSubmenu');
+    const intro=menu?.previousElementSibling;
+    if(menu){menu.hidden=false;menu.style.setProperty('display','grid','important');}
+    if(intro&&intro.tagName==='P'){intro.hidden=false;}
+    // Both data panes start closed; data appears only after its matching button.
+    memberPane.hidden=true;applicationPane.hidden=true;
+    memberPane.style.removeProperty('display');applicationPane.style.removeProperty('display');
+    return true;
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',repairLoansSubmenuContent,{once:true});
+  else repairLoansSubmenuContent();
+  // Run once more after the existing accordion initializer has finished moving
+  // its original panels. This is deterministic and does not duplicate content.
+  window.addEventListener('load',repairLoansSubmenuContent,{once:true});
+})();
+</script>
