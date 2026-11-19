@@ -3541,6 +3541,24 @@ function closeSystemUpdatePopup(){
     <div style="padding:15px;background:#fff;border:1px solid #e2e8f0;border-radius:10px;"><h3 style="margin:0 0 10px;color:#075985;text-align:left;">📤 Quick reports</h3><p style="margin:0 0 12px;color:#64748b;">Exports are snapshots of the records currently stored in this HTML index. They do not create or verify payments.</p><div style="display:flex;gap:8px;flex-wrap:wrap;"><button type="button" onclick="ffExportDashboardMembers()" style="padding:9px 12px;border:0;border-radius:7px;background:#166534;color:#fff;font-weight:700;cursor:pointer;">⬇ Member summary CSV</button><button type="button" onclick="ffExportDashboardContracts()" style="padding:9px 12px;border:0;border-radius:7px;background:#1d4ed8;color:#fff;font-weight:700;cursor:pointer;">⬇ Contract register CSV</button></div></div>
   </div>
 
+  <div id="ffAdminRegistrationFeesPanel" hidden style="margin-top:18px;padding:18px;background:#fff;border:1px solid #c4b5fd;border-top:5px solid #7c3aed;border-radius:12px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">
+      <div><h3 style="margin:0;color:#6d28d9;text-align:left;">💳 Registration Fees Report</h3><p style="margin:5px 0;color:#64748b;font-size:13px;">Payment status is read from each member's Contract Submission Register in this published index. This report does not create or verify payments.</p></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button type="button" onclick="ffRenderRegistrationFees()" style="padding:9px 12px;border:0;border-radius:8px;background:#075985;color:#fff;font-weight:700;cursor:pointer;">↻ Refresh</button>
+        <button type="button" onclick="ffExportRegistrationFees()" style="padding:9px 12px;border:0;border-radius:8px;background:#166534;color:#fff;font-weight:700;cursor:pointer;">⬇ Export CSV</button>
+        <button type="button" onclick="ffToggleRegistrationFees(false)" style="padding:9px 12px;border:0;border-radius:8px;background:#64748b;color:#fff;font-weight:700;cursor:pointer;">✕ Close</button>
+      </div>
+    </div>
+    <div id="ffRegistrationFeeMetrics" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0;"></div>
+    <h4 style="margin:18px 0 8px;color:#166534;text-align:left;">✅ Registration Fees Paid</h4>
+    <div id="ffRegistrationFeesPaidTable" style="overflow-x:auto;"></div>
+    <h4 style="margin:20px 0 8px;color:#b91c1c;text-align:left;">⏳ Registration Fees Not Paid / Outstanding</h4>
+    <div id="ffRegistrationFeesUnpaidTable" style="overflow-x:auto;"></div>
+    <h4 style="margin:20px 0 8px;color:#64748b;text-align:left;">❔ Payment Status Not Specified</h4>
+    <div id="ffRegistrationFeesUnknownTable" style="overflow-x:auto;"></div>
+    <p style="margin:12px 0 0;color:#64748b;font-size:12px;">A record appears as paid or unpaid only when its contract record contains an explicit payment flag or a clear fee-category declaration. Records without either are listed separately for verification.</p>
+  </div>
   <div id="ffAdminPenaltyWelfareReports" style="margin-top:20px;padding:16px;background:#fff;border:1px solid #cbd5e1;border-radius:12px;">
     <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;"><h3 style="margin:0;color:#9a3412;">🔄 Merry-Go-Round Penalties — All Members</h3><button type="button" onclick="ffRenderAdminPenaltyWelfareReports()" style="padding:9px 13px;border:0;border-radius:8px;background:#9a3412;color:#fff;font-weight:700;cursor:pointer;">↻ Refresh penalty records</button></div>
     <p style="font-size:13px;color:#64748b;">Admin overview of each member's published Merry-Go-Round penalties. Update the verified entries in the official penalty register, then refresh this report.</p>
@@ -23779,7 +23797,8 @@ async function downloadIndividualSavingsReportsPDF() {
       {key:'mgr',label:'🔄 VIEW ALL MEMBERS’ MERRY-GO-ROUND PENALTY REGISTER ＋',color:'#9a3412'},
       {key:'welfare',label:'🤝 VIEW ALL MEMBERS’ WELFARE APPLICATIONS ＋',color:'#5b21b6'},
       {key:'loan-penalties',label:'⚠️ VIEW ALL MEMBERS’ LOAN PENALTIES SUMMARY ＋',color:'#991b1b'},
-      {key:'savings',label:'💰 VIEW ALL MEMBERS’ CONTRIBUTIONS & SAVINGS (2025–2027) ＋',color:'#087f5b'}
+      {key:'savings',label:'💰 VIEW ALL MEMBERS’ CONTRIBUTIONS & SAVINGS (2025–2027) ＋',color:'#087f5b'},
+      {key:'registration-fees',label:'💳 REGISTRATION FEES — PAID & UNPAID ＋',color:'#7c3aed'}
     ];
     const panes={};
     views.forEach(v=>{
@@ -23805,6 +23824,7 @@ async function downloadIndividualSavingsReportsPDF() {
           const overviewSection=pane.querySelector('#ffChamaFinancialOverview');if(overviewSection){overviewSection.hidden=false;overviewSection.style.setProperty('display','block','important');overviewSection.style.setProperty('visibility','visible','important');overviewSection.style.setProperty('opacity','1','important');}
         }
         if(v.key==='savings'&&window.FFContributionsSummary&&typeof window.FFContributionsSummary.refreshAdmin==='function')window.FFContributionsSummary.refreshAdmin();
+        if(v.key==='registration-fees'&&typeof window.ffRenderRegistrationFees==='function')window.ffRenderRegistrationFees();
         if(v.key==='mgr'&&typeof window.ffRenderAdminPenaltyWelfareReports==='function')window.ffRenderAdminPenaltyWelfareReports();
         if(v.key==='welfare'&&typeof window.ffRenderAdminPenaltyWelfareReports==='function')window.ffRenderAdminPenaltyWelfareReports();
         if(v.key==='loan-penalties'){
@@ -23851,6 +23871,8 @@ async function downloadIndividualSavingsReportsPDF() {
     const mgr=byId('ffAdminPenaltyWelfareReports');
     const welfare=byId('ffAdminWelfareReport');
     const loanPenalties=byId('ffAdminLoanPenaltyReport');
+    const registrationFees=byId('ffAdminRegistrationFeesPanel');
+    if(registrationFees){registrationFees.hidden=false;registrationFees.style.setProperty('display','block','important');panes['registration-fees'].appendChild(registrationFees);}
     if(mgr)panes.mgr.appendChild(mgr);
     if(welfare)panes.welfare.appendChild(welfare);
     if(loanPenalties)panes['loan-penalties'].appendChild(loanPenalties);
@@ -24344,6 +24366,53 @@ async function downloadIndividualSavingsReportsPDF() {
   };
   window.ffExportDashboardMembers=function(){const list=rows();const data=[['Member','Phone','Savings snapshot (KSh)','Monthly deposit entries','Contract count','Loan count','Member note'],...list.map(x=>[x.name,x.member.phone||'',x.member.savings||0,Array.isArray(x.member.monthly)?x.member.monthly.length:0,Array.isArray(x.member.contracts)?x.member.contracts.length:0,Array.isArray(x.member.loans)?x.member.loans.length:0,x.member.note||''])];download('Future_Finders_Member_Summary.csv',csv(data));};
   window.ffExportDashboardContracts=function(){const data=[['Member','Reference','Contract type','Participation','Fee category','Fee amount (KSh)','Registration fee paid','Signed at','Status','Start date','Expiry date','Admin notes'],...allContracts(rows()).map(c=>[c.member,c.id||'',c.type||'',c.participation||'',c.feeCategory||'',c.contractFee??'',c.registrationFeePaid===true?'Yes':c.registrationFeePaid===false?'No':'Not specified',c.signedAt||'',c.adminStatus||c.status||'',c.startDate||'',c.expiryDate||'',c.adminNotes||''])];download('Future_Finders_Contract_Register.csv',csv(data));};
+  function registrationFeeRows(){
+    return allContracts(rows()).map(c=>{
+      const category=String(c.feeCategory||'').toLowerCase();
+      let status='unknown';
+      if(c.registrationFeePaid===true || /registration fee paid|fee already paid|previously paid|paid in full/.test(category)) status='paid';
+      else if(c.registrationFeePaid===false || /outstanding|unpaid|not paid|payable/.test(category)) status='unpaid';
+      const amount=Number(c.contractFee||0);
+      return {...c,_feeStatus:status,_feeAmount:Number.isFinite(amount)?amount:0};
+    });
+  }
+  function feeTable(records,emptyText){
+    if(!records.length)return '<p style="padding:14px;color:#64748b;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;">'+esc(emptyText)+'</p>';
+    const body=records.map((c,i)=>'<tr><td>'+ (i+1) +'</td><td>'+esc(c.member)+'</td><td>'+esc(c.id||'—')+'</td><td>'+esc(c.type||'—')+'</td><td>'+esc(c.feeCategory||'—')+'</td><td style="text-align:right;white-space:nowrap;">'+money(c._feeAmount)+'</td><td>'+esc(c.signedAt||'—')+'</td><td>'+esc(c.adminStatus||c.status||'—')+'</td></tr>').join('');
+    return '<table style="width:100%;min-width:1050px;border-collapse:collapse;font-size:13px;"><thead><tr style="background:#f1f5f9;"><th style="padding:9px;">No.</th><th style="padding:9px;text-align:left;">Member</th><th style="padding:9px;text-align:left;">Contract reference</th><th style="padding:9px;text-align:left;">Contract type</th><th style="padding:9px;text-align:left;">Fee declaration</th><th style="padding:9px;text-align:right;">Fee amount</th><th style="padding:9px;text-align:left;">Signed at</th><th style="padding:9px;text-align:left;">Contract status</th></tr></thead><tbody>'+body+'</tbody></table>';
+  }
+  window.ffRenderRegistrationFees=function(){
+    const records=registrationFeeRows();
+    const paid=records.filter(c=>c._feeStatus==='paid');
+    const unpaid=records.filter(c=>c._feeStatus==='unpaid');
+    const unknown=records.filter(c=>c._feeStatus==='unknown');
+    const paidAmount=paid.reduce((s,c)=>s+c._feeAmount,0);
+    const unpaidAmount=unpaid.reduce((s,c)=>s+c._feeAmount,0);
+    const metrics=byId('ffRegistrationFeeMetrics');
+    if(metrics)metrics.innerHTML=[
+      card('Paid contract records',paid.length,'Explicitly recorded as paid'),
+      card('Unpaid contract records',unpaid.length,'Flagged outstanding / not paid'),
+      card('Recorded paid amount',money(paidAmount),'Sum of fee amounts on paid records'),
+      card('Outstanding amount',money(unpaidAmount),'Sum of fee amounts on unpaid records'),
+      card('Payment status unknown',unknown.length,'Requires checking against receipts')
+    ].join('');
+    const paidBox=byId('ffRegistrationFeesPaidTable');if(paidBox)paidBox.innerHTML=feeTable(paid,'No contract records are currently marked as paid.');
+    const unpaidBox=byId('ffRegistrationFeesUnpaidTable');if(unpaidBox)unpaidBox.innerHTML=feeTable(unpaid,'No contract records are currently marked as unpaid / outstanding.');
+    const unknownBox=byId('ffRegistrationFeesUnknownTable');if(unknownBox)unknownBox.innerHTML=feeTable(unknown,'All contract records have an explicit paid or unpaid declaration.');
+    return records;
+  };
+  window.ffToggleRegistrationFees=function(force){
+    const panel=byId('ffAdminRegistrationFeesPanel');if(!panel)return;
+    const show=typeof force==='boolean'?force:panel.hidden;
+    panel.hidden=!show;
+    if(show){window.ffRenderRegistrationFees();panel.scrollIntoView({behavior:'smooth',block:'start'});}
+  };
+  window.ffExportRegistrationFees=function(){
+    const records=registrationFeeRows();
+    const data=[['Member','Contract reference','Contract type','Fee declaration','Fee amount (KSh)','Payment status','Signed at','Contract status','Admin notes'],
+      ...records.map(c=>[c.member,c.id||'',c.type||'',c.feeCategory||'',c._feeAmount,c._feeStatus==='paid'?'Paid':c._feeStatus==='unpaid'?'Not paid / outstanding':'Not specified',c.signedAt||'',c.adminStatus||c.status||'',c.adminNotes||''])];
+    download('Future_Finders_Registration_Fees_Report.csv',csv(data));
+  };
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',window.ffRefreshAdminDashboard);else window.ffRefreshAdminDashboard();
 })();
 </script>
