@@ -388,6 +388,39 @@ body:not(.ff-ready) > *:not(#splash){visibility:hidden !important;}
 body:not(.ff-ready) #splash{visibility:visible !important;display:flex !important;}
 body.ff-ready #splash{display:none !important;}
 </style>
+
+<style id="ff-leadership-login-polish">
+#adminLogin{box-sizing:border-box;width:calc(100% - 24px);max-width:560px;padding:clamp(16px,4vw,28px);overflow:hidden;}
+#adminLogin *{box-sizing:border-box;}
+.ff-role-heading{font-weight:800;color:#164e63;font-size:16px;margin:18px 0 4px;text-align:left;}
+.ff-role-hint{font-size:12px;color:#64748b;margin:0 0 12px;text-align:left;}
+.ff-role-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;width:100%;margin:0 0 18px;}
+.ff-role-option{min-width:0;width:100%;min-height:104px;padding:12px 9px;border:1.5px solid #dbe4ea;border-radius:13px;background:linear-gradient(145deg,#fff,#f5fafb);color:#1e293b;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;text-align:center;cursor:pointer;transition:border-color .18s,background .18s,box-shadow .18s,transform .18s;overflow-wrap:anywhere;}
+.ff-role-option:hover{border-color:#0f8b78;box-shadow:0 4px 12px #0f766e20;transform:translateY(-1px);}
+.ff-role-option.is-selected{border:2px solid #087f5b;background:linear-gradient(145deg,#ecfdf5,#dff7ed);box-shadow:0 0 0 3px #10b98120;}
+.ff-role-icon{font-size:23px;line-height:1.2;}
+.ff-role-name{font-size:13px;font-weight:800;line-height:1.3;}
+.ff-role-title{font-size:11px;color:#64748b;line-height:1.3;}
+#adminLogin .password-container{width:100%;max-width:100%;}
+#adminLogin .password-container input{width:100%;max-width:100%;padding-right:44px;box-sizing:border-box;}
+#adminBtn{display:flex;width:100%;max-width:100%;min-height:48px;box-sizing:border-box;align-items:center;justify-content:center;gap:9px;margin:16px 0 0;padding:13px 16px;text-align:center;white-space:normal;overflow-wrap:anywhere;}
+#adminLoginMessage{overflow-wrap:anywhere;}
+@media(max-width:380px){.ff-role-grid{grid-template-columns:1fr;}.ff-role-option{min-height:76px;flex-direction:row;flex-wrap:wrap;}.ff-role-icon{font-size:21px;margin-right:4px;}.ff-role-name,.ff-role-title{max-width:calc(100% - 42px);}}
+.ff-role-option.ff-role-hidden{display:none!important;}
+.ff-role-grid.ff-role-focused{grid-template-columns:minmax(0,1fr);margin-bottom:10px;}
+.ff-role-grid.ff-role-focused .ff-role-option.is-selected{min-height:86px;}
+#ffBackToHeads{display:none;width:100%;max-width:100%;min-height:42px;margin:4px 0 14px;padding:10px 14px;border:1px solid #0f766e;border-radius:10px;background:#f0fdfa;color:#115e59;font-weight:800;cursor:pointer;}
+#ffBackToHeads:hover{background:#ccfbf1;}
+
+/* Keep authentication controls hidden until a leadership role is selected */
+#adminLogin:not(.ff-role-selected) > label[for="adminPass"],
+#adminLogin:not(.ff-role-selected) > .password-container,
+#adminLogin:not(.ff-role-selected) > #adminBtn{display:none !important;}
+#adminLogin.ff-role-selected > label[for="adminPass"],
+#adminLogin.ff-role-selected > .password-container,
+#adminLogin.ff-role-selected > #adminBtn{display:block;}
+
+</style>
 </head>
 
 <style>
@@ -3369,21 +3402,25 @@ function closeSystemUpdatePopup(){
 <!-- ⚙️ Admin Login -->
 <section id="adminLogin" aria-labelledby="adminLoginHeading">
   <div class="ff-login-icon" aria-hidden="true">⚙️</div>
-  <h2 id="adminLoginHeading">Administrator Login</h2>
-  <p class="ff-login-intro">Sign in to manage members, savings, loans and group records.</p>
-  <label for="adminLoginSearch">Search your administrator name</label>
-  <div class="member-login-search" style="display:flex;gap:8px;margin:8px 0 12px;align-items:stretch;">
-    <input id="adminLoginSearch" type="search" placeholder="Type your name, then click Search" autocomplete="off"
-      style="flex:1;min-width:0;padding:11px 12px;border:1px solid #cbd5e1;border-radius:8px;font-size:15px;" />
-    <button id="adminLoginSearchBtn" type="button" onclick="searchAdminLoginName()"
-      style="padding:10px 16px;border:0;border-radius:8px;background:#087f8c;color:#fff;font-weight:700;cursor:pointer;">Search</button>
+  <h2 id="adminLoginHeading">Leadership Portal Login</h2>
+  <p class="ff-login-intro">Select your leadership role and sign in to access your authorized Chama records.</p>
+  <div class="ff-role-heading">Choose your leadership position</div>
+  <p class="ff-role-hint">Tap the option assigned to you. Your selection will be highlighted.</p>
+  <div class="ff-role-grid" role="group" aria-label="Select leadership role">
+    <button type="button" class="ff-role-option" data-user="boniface chelluget" aria-pressed="false" onclick="selectLeadershipRole(this)"><span class="ff-role-icon">👑</span><span class="ff-role-name">Boniface Chelluget</span><span class="ff-role-title">Founder & Chief Administrator</span></button>
+    <button type="button" class="ff-role-option" data-user="faith kwamboka" aria-pressed="false" onclick="selectLeadershipRole(this)"><span class="ff-role-icon">🤝</span><span class="ff-role-name">Faith Kwamboka</span><span class="ff-role-title">Chairperson</span></button>
+    <button type="button" class="ff-role-option" data-user="claudia moraa" aria-pressed="false" onclick="selectLeadershipRole(this)"><span class="ff-role-icon">💼</span><span class="ff-role-name">Claudia Moraa</span><span class="ff-role-title">Head of Welfare and Member Relations</span></button>
+    <button type="button" class="ff-role-option" data-user="shalik shiverenge" aria-pressed="false" onclick="selectLeadershipRole(this)"><span class="ff-role-icon">📑</span><span class="ff-role-name">Shalik Shiverenge</span><span class="ff-role-title">Head of Loans and Membership Services</span></button>
+    <button type="button" class="ff-role-option" data-user="kepha angwenyi" aria-pressed="false" onclick="selectLeadershipRole(this)"><span class="ff-role-icon">🛡️</span><span class="ff-role-name">Kepha Angwenyi</span><span class="ff-role-title">Head of Registration and Financial Compliance</span></button>
   </div>
-  <p id="adminLoginSearchMessage" role="status" aria-live="polite" style="margin:0 0 10px;font-size:13px;color:#475569;"></p>
-  <label for="adminUser">Administrator name</label>
-  <select id="adminUser" name="adminUser" autocomplete="username" required>
+  <button type="button" id="ffBackToHeads" onclick="backToLeadershipHeads()">← Back to Heads</button>
+  <select id="adminUser" name="adminUser" autocomplete="username" required aria-label="Selected leadership name" style="display:none;">
     <option value="">-- Choose your name --</option>
     <option value="boniface chelluget">BONIFACE CHELLUGET</option>
-    <option value="faith kwamboka">FAITH KWAMBOKA</option>
+    <option value="faith kwamboka">FAITH KWAMBOKA — CHAIRPERSON</option>
+    <option value="claudia moraa">CLAUDIA MORAA — HEAD OF WELFARE AND MEMBER RELATIONS</option>
+    <option value="shalik shiverenge">SHALIK SHIVERENGE — HEAD OF LOANS AND MEMBERSHIP SERVICES</option>
+    <option value="kepha angwenyi">KEPHA ANGWENYI — HEAD OF REGISTRATION AND FINANCIAL COMPLIANCE</option>
   </select>
 
   <label for="adminPass">Password</label>
@@ -3393,7 +3430,7 @@ function closeSystemUpdatePopup(){
   </div>
 
   <a class="action-btn" id="adminBtn" onclick="adminLogin()">
-    Admin Login <span class="spinner"></span>
+    Leadership Login <span class="spinner"></span>
   </a>
   <p id="adminLoginMessage"></p>
 </section>
@@ -19477,10 +19514,61 @@ function searchAdminLoginName() {
   }
 }
 
+function selectLeadershipRole(button) {
+    const selectedName = button.getAttribute("data-user");
+    const userSelect = document.getElementById("adminUser");
+    const roleGrid = document.querySelector(".ff-role-grid");
+    const backButton = document.getElementById("ffBackToHeads");
+    if (!selectedName || !userSelect || !roleGrid) return;
+    userSelect.value = selectedName;
+    document.getElementById("adminLogin")?.classList.add("ff-role-selected");
+    document.querySelectorAll(".ff-role-option").forEach(option => {
+        const active = option === button;
+        option.classList.toggle("is-selected", active);
+        option.classList.toggle("ff-role-hidden", !active);
+        option.setAttribute("aria-pressed", active ? "true" : "false");
+    });
+    roleGrid.classList.add("ff-role-focused");
+    if (backButton) backButton.style.display = "block";
+    const message = document.getElementById("adminLoginMessage");
+    if (message) {
+        message.style.color = "#0f766e";
+        message.textContent = "Selected: " + button.querySelector(".ff-role-name").textContent + ". Enter your password to continue.";
+    }
+    const password = document.getElementById("adminPass");
+    if (password) password.focus({preventScroll:true});
+}
+
+function backToLeadershipHeads() {
+    const roleGrid = document.querySelector(".ff-role-grid");
+    const userSelect = document.getElementById("adminUser");
+    const backButton = document.getElementById("ffBackToHeads");
+    if (userSelect) userSelect.value = "";
+    document.getElementById("adminLogin")?.classList.remove("ff-role-selected");
+    document.querySelectorAll(".ff-role-option").forEach(option => {
+        option.classList.remove("is-selected", "ff-role-hidden");
+        option.setAttribute("aria-pressed", "false");
+    });
+    if (roleGrid) roleGrid.classList.remove("ff-role-focused");
+    if (backButton) backButton.style.display = "none";
+    const message = document.getElementById("adminLoginMessage");
+    if (message) { message.textContent = "Choose your leadership position to continue."; message.style.color = "#64748b"; }
+    const password = document.getElementById("adminPass");
+    if (password) password.value = "";
+}
+
 function adminLogin() {
 
     let usernameInput =
         document.getElementById("adminUser");
+    if (!usernameInput || !usernameInput.value) {
+        const message = document.getElementById("adminLoginMessage");
+        if (message) {
+            message.style.color = "#b45309";
+            message.textContent = "Please select your leadership role before entering your password.";
+        }
+        return;
+    }
 
     let passwordInput =
         document.getElementById("adminPass");
@@ -19490,6 +19578,13 @@ function adminLogin() {
 
     let password =
         passwordInput.value.trim();
+
+    if (!username) {
+        const missingRoleMessage = document.getElementById("adminLoginMessage");
+        missingRoleMessage.textContent = "Please choose your leadership role before logging in.";
+        missingRoleMessage.style.color = "#b45309";
+        return;
+    }
 
     let message =
         document.getElementById("adminLoginMessage");
@@ -19525,16 +19620,26 @@ function adminLogin() {
 
         const isAdmin = username === "boniface chelluget" && password === "2025";
         const isChairlady = username === "faith kwamboka" && password === "2027";
+        const isFinancialManager = username === "claudia moraa" && password === "moraa2026";
+        const isShalikManager = username === "shalik shiverenge" && password === "sha2026";
+        const isKephaManager = username === "kepha angwenyi" && password === "ke2026";
+        const loginRole = isAdmin ? "admin" : isChairlady ? "chairlady" : isFinancialManager ? "financialManager" : isShalikManager ? "shalikManager" : isKephaManager ? "kephaManager" : "";
 
-        if (isAdmin || isChairlady) {
+        if (loginRole) {
 
             message.style.color = "green";
 
             message.innerHTML = isChairlady
                 ? "✅ Login successful! Welcome, Chairlady Faith."
-                : "✅ Login successful! Welcome, Admin.";
+                : isFinancialManager
+                    ? "✅ Login successful! Welcome, Financial Manager Claudia Moraa."
+                    : isShalikManager
+                        ? "✅ Login successful! Welcome, Financial Manager Shalik Shiverenge."
+                        : isKephaManager
+                            ? "✅ Login successful! Welcome, Financial Manager Kepha Angwenyi."
+                            : "✅ Login successful! Welcome, Admin Boniface.";
 
-            localStorage.setItem("adminLoginRole", isChairlady ? "chairlady" : "admin");
+            localStorage.setItem("adminLoginRole", loginRole);
 
 
             document.getElementById(
@@ -19552,6 +19657,69 @@ function adminLogin() {
                 "true"
             );
 
+            const applyLeadershipRoleAccess = () => {
+              const adminPanel = document.getElementById("admin");
+              if (!adminPanel) return;
+              const role = loginRole;
+              const roleConfig = {
+                financialManager: {
+                  cards: ["dashboard"],
+                  dashboard: ["MERRY-GO-ROUND PENALTY REGISTER", "WELFARE APPLICATIONS"],
+                  intro: "Claudia Moraa — Financial Manager: access is limited to the Merry-Go-Round Penalty Register and Welfare Applications."
+                },
+                shalikManager: {
+                  cards: ["dashboard", "members", "loans"],
+                  dashboard: ["All Members’ Loan Summaries"],
+                  members: ["Membership Withdrawal & Exit Register"],
+                  loans: ["📜 Loan Applications"],
+                  intro: "Shalik Shiverenge — Financial Manager: access is limited to Loan Applications, All Members’ Loan Summaries, and the Membership Withdrawal & Exit Register."
+                },
+                kephaManager: {
+                  cards: ["dashboard"],
+                  dashboard: ["REGISTRATION FEES", "LOAN PENALTIES SUMMARY"],
+                  intro: "Kepha Angwenyi — Financial Manager: access is limited to Registration Fees and the Loan Penalties Summary."
+                }
+              };
+              const cfg = roleConfig[role];
+              adminPanel.classList.remove("ff-financial-manager-session", "ff-shalik-manager-session", "ff-kepha-manager-session");
+              if (!cfg) return;
+              adminPanel.classList.add(role === "financialManager" ? "ff-financial-manager-session" : role === "shalikManager" ? "ff-shalik-manager-session" : "ff-kepha-manager-session");
+              adminPanel.querySelectorAll(".ff-admin-card").forEach(card => {
+                card.hidden = !cfg.cards.includes(card.dataset.adminPanel);
+              });
+              const filterMenu = (selector, allowed) => {
+                const menu = adminPanel.querySelector(selector);
+                if (!menu) return;
+                menu.querySelectorAll("button").forEach(button => {
+                  const label = button.textContent || "";
+                  button.hidden = !allowed.some(term => label.toLowerCase().includes(term.toLowerCase()));
+                });
+                const intro = menu.previousElementSibling;
+                if (intro && intro.tagName === "P") intro.textContent = cfg.intro;
+              };
+              if (cfg.dashboard) filterMenu("#ffAdminDashboardSubmenu", cfg.dashboard);
+              if (cfg.members) filterMenu("#ffMembersSubmenu", cfg.members);
+              if (cfg.loans) filterMenu("#ffLoansSubmenu", cfg.loans);
+              const quickTools = adminPanel.querySelector('button[onclick="showAvailableNumbers()"]');
+              if (quickTools) quickTools.hidden = true;
+              // Re-apply after the dashboard's dynamic menus finish initializing.
+              setTimeout(() => {
+                if (localStorage.getItem("adminLoginRole") !== role) return;
+                if (cfg.dashboard) filterMenu("#ffAdminDashboardSubmenu", cfg.dashboard);
+                if (cfg.members) filterMenu("#ffMembersSubmenu", cfg.members);
+                if (cfg.loans) filterMenu("#ffLoansSubmenu", cfg.loans);
+              }, 500);
+            };
+            if (["financialManager", "shalikManager", "kephaManager"].includes(loginRole)) {
+              applyLeadershipRoleAccess();
+            } else {
+              const adminPanel = document.getElementById("admin");
+              if (adminPanel) {
+                adminPanel.classList.remove("ff-financial-manager-session", "ff-shalik-manager-session", "ff-kepha-manager-session");
+                adminPanel.querySelectorAll(".ff-admin-card").forEach(card => card.hidden = false);
+                adminPanel.querySelectorAll("#ffAdminDashboardSubmenu button, #ffMembersSubmenu button, #ffLoansSubmenu button").forEach(button => button.hidden = false);
+              }
+            }
 
             // 📋 LOAD LOAN APPLICATIONS
 
@@ -19593,6 +19761,12 @@ function adminLogout() {
   setTimeout(() => {
     localStorage.removeItem("adminLoggedIn");
     localStorage.removeItem("adminLoginRole");
+    const adminPanel = document.getElementById("admin");
+    if (adminPanel) {
+      adminPanel.classList.remove("ff-financial-manager-session", "ff-shalik-manager-session", "ff-kepha-manager-session");
+      adminPanel.querySelectorAll(".ff-admin-card").forEach(card => card.hidden = false);
+      adminPanel.querySelectorAll("#ffAdminDashboardSubmenu button").forEach(button => button.hidden = false);
+    }
 
     document.getElementById("admin").style.display = "none";
     document.getElementById("adminLogin").style.display = "block";
@@ -23066,6 +23240,17 @@ async function downloadIndividualSavingsReportsPDF() {
 #admin .ff-admin-card.is-open .ff-admin-content{padding:clamp(16px,2.5vw,30px)!important}
 #admin .ff-admin-content>section,#admin .ff-admin-content>[id$="Panel"],#admin .ff-admin-content>.admin-panel{margin:0 0 18px!important;max-width:100%!important}
 #admin .ff-admin-close{position:sticky!important;top:0!important;align-self:flex-end!important;margin:0 0 16px auto!important}
+#admin.ff-financial-manager-session .ff-admin-card:not([data-admin-panel="dashboard"]),
+#admin.ff-kepha-manager-session .ff-admin-card:not([data-admin-panel="dashboard"]),
+#admin.ff-shalik-manager-session .ff-admin-card:not([data-admin-panel="dashboard"]):not([data-admin-panel="members"]):not([data-admin-panel="loans"]){display:none!important}
+#admin.ff-financial-manager-session .ff-admin-toolbar-label,#admin.ff-kepha-manager-session .ff-admin-toolbar-label,#admin.ff-shalik-manager-session .ff-admin-toolbar-label{display:none!important}
+#admin.ff-financial-manager-session #ffAdminDashboardSubmenu button[hidden],#admin.ff-kepha-manager-session #ffAdminDashboardSubmenu button[hidden],#admin.ff-shalik-manager-session #ffAdminDashboardSubmenu button[hidden],#admin.ff-shalik-manager-session #ffMembersSubmenu button[hidden],#admin.ff-shalik-manager-session #ffLoansSubmenu button[hidden]{display:none!important}
+#admin.ff-financial-manager-session #ffAdminDashboardSubmenu,#admin.ff-kepha-manager-session #ffAdminDashboardSubmenu,#admin.ff-shalik-manager-session #ffAdminDashboardSubmenu,#admin.ff-shalik-manager-session #ffMembersSubmenu,#admin.ff-shalik-manager-session #ffLoansSubmenu{grid-template-columns:1fr!important}
+#admin.ff-financial-manager-session #ffAdminDashboardView-overview,#admin.ff-kepha-manager-session #ffAdminDashboardView-overview{display:none!important}
+#admin.ff-financial-manager-session .ff-admin-toolbar-label{display:none!important}
+#admin.ff-financial-manager-session #ffAdminDashboardSubmenu button[hidden]{display:none!important}
+#admin.ff-financial-manager-session #ffAdminDashboardSubmenu{grid-template-columns:1fr!important}
+#admin.ff-financial-manager-session #ffAdminDashboardView-overview{display:none!important}
 @media(max-width:680px){#admin .ff-admin-toolbar{grid-template-columns:1fr!important;gap:10px!important}#admin .ff-admin-toggle{min-height:58px!important}#admin .ff-admin-card.is-open{inset:5px!important}}
 </style>
 <script id="ff-admin-accordion-script">
@@ -23277,7 +23462,7 @@ async function downloadIndividualSavingsReportsPDF() {
     ];
     const panes={};
     views.forEach(v=>{
-      const b=document.createElement('button');b.type='button';b.textContent=v.label;
+      const b=document.createElement('button');b.type='button';b.dataset.adminReportKey=v.key;b.textContent=v.label;
       b.style.cssText=`display:flex;align-items:center;justify-content:flex-start;width:100%;min-height:58px;padding:13px 15px;border:1px solid #d5e1e8;border-left:5px solid ${v.color};border-radius:10px;background:#f8fbfd;color:#17384d;font-weight:750;text-align:left;line-height:1.4;cursor:pointer;`;
       const pane=document.createElement('div');pane.id='ffAdminDashboardView-'+v.key;pane.hidden=true;pane.style.cssText='margin:12px 0 18px;padding:16px;border:1px solid #dce5ec;border-radius:13px;background:#fff;';
       const back=document.createElement('button');back.type='button';back.textContent='← Back to Dashboard menu';back.hidden=false;back.setAttribute('aria-hidden','false');
