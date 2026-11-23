@@ -3432,8 +3432,8 @@ function closeSystemUpdatePopup(){
       <div style="padding:15px;background:#fff;border:1px solid #bbf7d0;border-radius:10px;"><div style="font-size:12px;color:#64748b;font-weight:700;">💰 TOTAL SAVINGS</div><div style="font-size:27px;font-weight:800;color:#14532d;margin-top:5px;">KSh 190,624</div></div>
       <div style="padding:15px;background:#fff;border:1px solid #bbf7d0;border-radius:10px;"><div style="font-size:12px;color:#64748b;font-weight:700;">📑 TOTAL LOANS ISSUED</div><div style="font-size:27px;font-weight:800;color:#14532d;margin-top:5px;">KSh 35,400.00</div></div>
       <div style="padding:15px;background:#fff;border:1px solid #bbf7d0;border-radius:10px;"><div style="font-size:12px;color:#64748b;font-weight:700;">💹 LOAN INTEREST EARNED</div><div style="font-size:27px;font-weight:800;color:#14532d;margin-top:5px;">KSh 4,159.43</div></div>
-      <div style="padding:15px;background:#fff;border:1px solid #bbf7d0;border-radius:10px;"><div style="font-size:12px;color:#64748b;font-weight:700;">🏦 MONEY MARKET FUND (MMF) INTEREST</div><div style="font-size:27px;font-weight:800;color:#14532d;margin-top:5px;">KSh 4,663.00</div></div>
-      <div style="padding:15px;background:#ecfdf5;border:1px solid #86efac;border-radius:10px;"><div style="font-size:12px;color:#166534;font-weight:800;">💰 TOTAL INTEREST EARNED (MMF + LOANS)</div><div style="font-size:27px;font-weight:900;color:#166534;margin-top:5px;">KSh 8,822.43</div></div>
+      <div style="padding:15px;background:#fff;border:1px solid #bbf7d0;border-radius:10px;"><div style="font-size:12px;color:#64748b;font-weight:700;">🏦 MONEY MARKET FUND (MMF) INTEREST</div><div style="font-size:27px;font-weight:800;color:#14532d;margin-top:5px;">KSh 4,777.00</div></div>
+      <div style="padding:15px;background:#ecfdf5;border:1px solid #86efac;border-radius:10px;"><div style="font-size:12px;color:#166534;font-weight:800;">💰 TOTAL INTEREST EARNED (MMF + LOANS)</div><div style="font-size:27px;font-weight:900;color:#166534;margin-top:5px;">KSh 8,936.43</div></div>
     </div>
     <div style="padding:13px 15px;background:#fff;border:1px solid #bbf7d0;border-radius:10px;margin-bottom:15px;">
       <div style="font-weight:800;color:#14532d;margin-bottom:9px;">📊 Loan Status</div>
@@ -3964,7 +3964,7 @@ function closeSystemUpdatePopup(){
     <p class="ff-muted">Follow these five simple steps to submit your membership application. The application form below will guide you through each step, just like the Chama welfare application.</p>
     <div class="ff-steps">
       <div class="ff-step"><span class="ff-step-no">01</span><b>Review the rules</b><small>Read the Chama requirements and understand member responsibilities.</small></div>
-      <div class="ff-step"><span class="ff-step-no">02</span><b>Choose a category</b><small>Select weekly or monthly Merry-Go-Round contributions.</small></div>
+      <div class="ff-step"><span class="ff-step-no">02</span><b>Choose a category</b><small>Choose weekly, monthly, or savings-only participation.</small></div>
       <div class="ff-step"><span class="ff-step-no">03</span><b>Pay the fee</b><small>Pay the one-time registration fee and keep your confirmation.</small></div>
       <div class="ff-step"><span class="ff-step-no">04</span><b>Fill in your details</b><small>Provide accurate contact, identification and account details.</small></div>
       <div class="ff-step"><span class="ff-step-no">05</span><b>Submit for review</b><small>The administrator will verify your application before approval.</small></div>
@@ -4003,10 +4003,31 @@ function closeSystemUpdatePopup(){
 
 <script>
 (function(){
-  function setupFutureFindersRegistrationForm(){
-    var dob=document.getElementById('regDOB');
-    if(dob){dob.max=new Date().toISOString().slice(0,10);}
+  function calculateRegistrationAge(value){
+    if(!value)return null;
+    var birth=new Date(value+'T00:00:00');
+    if(isNaN(birth.getTime()))return null;
+    var today=new Date();var age=today.getFullYear()-birth.getFullYear();
+    var month=today.getMonth()-birth.getMonth();
+    if(month<0||(month===0&&today.getDate()<birth.getDate()))age--;
+    return age;
   }
+  window.getFutureFindersApplicantAge=calculateRegistrationAge;
+  function updateRegistrationAge(){
+    var dob=document.getElementById('regDOB');var ageBox=document.getElementById('regAgeDisplay');
+    var id=document.getElementById('regID');var idField=document.getElementById('regIDField');var idMark=document.getElementById('regIDRequiredMark');var idHint=document.getElementById('regIDHint');
+    var guardian=document.getElementById('regGuardianSection');var gName=document.getElementById('regGuardianName');var gRel=document.getElementById('regGuardianRelation');var gPhone=document.getElementById('regGuardianPhone');var gConsent=document.getElementById('regGuardianConsent');
+    if(dob){dob.max=new Date().toISOString().slice(0,10);}
+    var age=calculateRegistrationAge(dob&&dob.value);
+    if(ageBox)ageBox.textContent=age===null?'Age: Enter date of birth':(age<0?'Invalid date of birth':'Calculated age: '+age+' years');
+    if(id){id.required=age!==null&&age>=18;id.disabled=age!==null&&age<18;if(age!==null&&age<18)id.value='';else id.disabled=false;}
+    if(idField)idField.style.opacity=age!==null&&age<18?'.65':'1';
+    if(idMark)idMark.style.display=age!==null&&age<18?'none':'inline';
+    if(idHint)idHint.textContent=age!==null&&age<18?'Not required for applicants below 18 years.':'Required for applicants aged 18 years and above. Enter digits only.';
+    if(guardian){guardian.style.display=age!==null&&age<18?'block':'none';}
+    [gName,gRel,gPhone,gConsent].forEach(function(el){if(el)el.required=age!==null&&age<18;});
+  }
+  function setupFutureFindersRegistrationForm(){var dob=document.getElementById('regDOB');if(dob)dob.addEventListener('change',updateRegistrationAge);updateRegistrationAge();}
   if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',setupFutureFindersRegistrationForm);}else{setupFutureFindersRegistrationForm();}
 })();
 </script>
@@ -4022,11 +4043,12 @@ function closeSystemUpdatePopup(){
   </section>
 
   <section id="membershipCategories" class="ff-panel">
-    <h3>Choose your Merry-Go-Round category</h3>
-    <p class="ff-muted">Select the contribution category you wish to join. Your selection will also be made in the registration form below.</p>
+    <h3>Choose your membership category</h3>
+    <p class="ff-muted">Choose weekly, monthly, or savings-only participation. Your selection will also be made in the registration form below.</p>
     <div class="ff-category-grid">
-      <div class="ff-category"><span class="tag">Category A</span><strong>KSh 300 <small style="font-size:14px;font-weight:600">/ weekly</small></strong><p>Merry-Go-Round contribution paid weekly.</p></div>
-      <div class="ff-category blue"><span class="tag">Category B</span><strong>KSh 1,000 <small style="font-size:14px;font-weight:600">/ monthly</small></strong><p>Merry-Go-Round contribution paid monthly.</p></div>
+      <div class="ff-category"><span class="tag">Category A (Weekly)</span><strong>Weekly</strong><p>For members joining the weekly Merry-Go-Round arrangement.</p></div>
+      <div class="ff-category blue"><span class="tag">Category B (Monthly)</span><strong>Monthly</strong><p>For members joining the monthly Merry-Go-Round arrangement.</p></div>
+      <div class="ff-category" style="background:#f0fdf4;border-color:#86efac"><span class="tag">Category C (Other)</span><strong>Savings Only</strong><p>For members who wish to save without joining the Merry-Go-Round.</p></div>
     </div>
   </section>
 
@@ -4050,25 +4072,31 @@ function closeSystemUpdatePopup(){
       </div>
     </div>
     <div class="ff-form-body">
-      <p class="mem-required-note"><span class="req">*</span> Required fields must be completed. Please use accurate details as they appear on your National ID.</p>
+      <p class="mem-required-note"><span class="req">*</span> Required fields must be completed. Adults aged 18 and above must provide a National ID. Applicants below 18 do not need an ID but must provide parent / guardian details and consent.</p>
 
       <div class="membershipWizardStep active" id="membershipStep1">
-        <fieldset class="ff-form-section"><legend>Step 1 · Choose your Merry-Go-Round category</legend><div class="ff-fields">
-          <div class="ff-field full"><label for="regCategory">Merry-Go-Round category <span class="req">*</span></label><select id="regCategory" required><option value="">-- Select Category --</option><option value="Category A - Ksh 300 Weekly">Category A — KSh 300 Weekly</option><option value="Category B - Ksh 1,000 Monthly">Category B — KSh 1,000 Monthly</option></select><small class="ff-hint">Select the contribution category you wish to join.</small></div>
+        <fieldset class="ff-form-section"><legend>Step 1 · Choose your membership category</legend><div class="ff-fields">
+          <div class="ff-field full"><label for="regCategory">Membership category <span class="req">*</span></label><select id="regCategory" required><option value="">-- Select your category --</option><option value="Category A (Weekly)">Category A (Weekly)</option><option value="Category B (Monthly)">Category B (Monthly)</option><option value="Category C (Other - Savings Only)">Category C (Other – Savings Only)</option></select><small class="ff-hint">Choose the arrangement that best describes how you want to participate in the Chama.</small></div>
         </div></fieldset>
-        <div class="mem-info-box"><b>Category A:</b> KSh 300 weekly Merry-Go-Round contribution.<br><b>Category B:</b> KSh 1,000 monthly Merry-Go-Round contribution.</div>
+        <div class="mem-info-box"><b>Category A (Weekly):</b> Weekly Merry-Go-Round participation.<br><b>Category B (Monthly):</b> Monthly Merry-Go-Round participation.<br><b>Category C (Other – Savings Only):</b> Save with the Chama without joining the Merry-Go-Round. Savings-only membership does not automatically qualify a member for Merry-Go-Round payouts.</div>
       </div>
 
       <div class="membershipWizardStep" id="membershipStep2" hidden>
         <fieldset class="ff-form-section"><legend>Step 2 · Personal information</legend><div class="ff-fields">
-          <div class="ff-field"><label for="regName">Full name as shown on ID <span class="req">*</span></label><input id="regName" type="text" placeholder="Enter your full name" autocomplete="name" required></div>
-          <div class="ff-field"><label for="regID">National ID number <span class="req">*</span></label><input id="regID" type="text" placeholder="7–9 digit ID number" maxlength="9" inputmode="numeric" autocomplete="off" oninput="this.value=this.value.replace(/[^0-9]/g,'')" required><small class="ff-hint">Enter digits only.</small></div>
+          <div class="ff-field full"><label for="regName">Full legal name <span class="req">*</span></label><input id="regName" type="text" placeholder="Enter your full name" autocomplete="name" required></div>
+          <div class="ff-field"><label for="regDOB">Date of birth <span class="req">*</span></label><input id="regDOB" type="date" required><small class="ff-hint">Your age will be calculated automatically.</small><div id="regAgeDisplay" class="ff-hint" style="font-weight:800;color:#1565c0;margin-top:5px">Age: Enter date of birth</div></div>
+          <div class="ff-field" id="regIDField"><label for="regID">National ID number <span class="req" id="regIDRequiredMark">*</span></label><input id="regID" type="text" placeholder="Enter 7–9 digit ID number" maxlength="9" inputmode="numeric" autocomplete="off" oninput="this.value=this.value.replace(/[^0-9]/g,'')" required><small class="ff-hint" id="regIDHint">Required for applicants aged 18 years and above. Enter digits only.</small></div>
           <div class="ff-field"><label for="regPhone">Active phone number <span class="req">*</span></label><input id="regPhone" type="tel" placeholder="e.g. 0712345678" maxlength="10" inputmode="numeric" autocomplete="tel" oninput="this.value=this.value.replace(/[^0-9]/g,'')" required></div>
           <div class="ff-field"><label for="regEmail">Email address <span class="req">*</span></label><input id="regEmail" type="email" placeholder="name@example.com" autocomplete="email" required></div>
-          <div class="ff-field"><label for="regDOB">Date of birth <span class="req">*</span></label><input id="regDOB" type="date" required></div>
           <div class="ff-field"><label for="regAddress">Physical address / town</label><input id="regAddress" type="text" placeholder="Your town or area" autocomplete="street-address"></div>
           <div class="ff-field"><label for="regOccupation">Occupation / employer</label><input id="regOccupation" type="text" placeholder="Your occupation or employer"></div>
           <div class="ff-field"><label for="regSavings">Initial savings amount (KSh)</label><input id="regSavings" type="number" min="0" step="1" placeholder="Enter amount, if applicable"></div>
+          <div class="ff-field full" id="regGuardianSection" style="display:none;border:1px solid #fbbf24;background:#fffbeb;border-radius:12px;padding:14px"><strong style="color:#92400e;display:block;margin-bottom:8px">Parent / Guardian information (required for applicants below 18)</strong><div class="ff-fields">
+            <div class="ff-field"><label for="regGuardianName">Guardian full name <span class="req">*</span></label><input id="regGuardianName" type="text" placeholder="Parent or guardian full name"></div>
+            <div class="ff-field"><label for="regGuardianRelation">Relationship <span class="req">*</span></label><select id="regGuardianRelation"><option value="">Select relationship</option><option>Parent</option><option>Legal guardian</option><option>Other approved guardian</option></select></div>
+            <div class="ff-field full"><label for="regGuardianPhone">Guardian phone number <span class="req">*</span></label><input id="regGuardianPhone" type="tel" maxlength="10" inputmode="numeric" placeholder="e.g. 0712345678" oninput="this.value=this.value.replace(/[^0-9]/g,'')"></div>
+            <div class="ff-field full"><label class="ff-check" style="margin:4px 0"><input type="checkbox" id="regGuardianConsent"><span>Parent / guardian confirms awareness of this application and consents to the applicant's participation, subject to Chama rules.</span></label></div>
+          </div></div>
         </div></fieldset>
       </div>
 
@@ -4155,6 +4183,11 @@ async function registerMember() {
 
     const idNumber =
         document.getElementById("regID").value.trim();
+    const applicantAge = window.getFutureFindersApplicantAge ? window.getFutureFindersApplicantAge(dob) : null;
+    const guardianName = (document.getElementById("regGuardianName") || {}).value || "";
+    const guardianRelation = (document.getElementById("regGuardianRelation") || {}).value || "";
+    const guardianPhone = (document.getElementById("regGuardianPhone") || {}).value || "";
+    const guardianConsent = !!(document.getElementById("regGuardianConsent") || {}).checked;
 
     const address =
         document.getElementById("regAddress").value.trim();
@@ -4194,7 +4227,9 @@ async function registerMember() {
         !phone ||
         !email ||
         !dob ||
-        !idNumber ||
+        applicantAge === null || applicantAge < 0 ||
+        (applicantAge >= 18 && !idNumber) ||
+        (applicantAge < 18 && (!guardianName.trim() || !guardianRelation || !/^0\d{9}$/.test(guardianPhone.trim()) || !guardianConsent)) ||
         !password ||
         !confirmPassword ||
         !agree ||
@@ -4213,7 +4248,7 @@ async function registerMember() {
        ID VALIDATION
        ===================================================== */
 
-    if (!/^\d{7,9}$/.test(idNumber)) {
+    if (applicantAge >= 18 && !/^\d{7,9}$/.test(idNumber)) {
 
         alert(
             "ID Number must contain between 7 and 9 digits."
@@ -4315,9 +4350,12 @@ async function registerMember() {
 
     const timestamp =
         new Date().toLocaleString();
+    const applicationReference = "FFC-APP-" + Date.now().toString().slice(-8);
 
 
     const newMember = {
+
+        applicationReference: applicationReference,
 
         name: name,
 
@@ -4327,7 +4365,13 @@ async function registerMember() {
 
         dob: dob,
 
-        idNumber: idNumber,
+        idNumber: idNumber || "Not required (under 18)",
+
+        age: applicantAge,
+        guardianName: guardianName.trim(),
+        guardianRelation: guardianRelation,
+        guardianPhone: guardianPhone.trim(),
+        guardianConsent: guardianConsent,
 
         address: address,
 
@@ -4354,18 +4398,18 @@ async function registerMember() {
        SAVE TO LOCAL STORAGE
        ===================================================== */
 
-    const members =
+    // Use a separate local variable name so it does not shadow the
+    // global Chama member register used by the duplicate-check above.
+    const savedMembers =
         JSON.parse(
-            localStorage.getItem("members")
+            localStorage.getItem("members") || "[]"
         ) || [];
 
-
-    members.push(newMember);
-
+    savedMembers.push(newMember);
 
     localStorage.setItem(
         "members",
-        JSON.stringify(members)
+        JSON.stringify(savedMembers)
     );
 
 
@@ -4411,7 +4455,9 @@ async function registerMember() {
 
         "📝 *NEW FUTURE FINDERS CHAMA MEMBER REGISTRATION*\n\n" +
 
-        "👤 *Full Name:* " +
+        "📄 *Application Reference:* " + applicationReference +
+
+        "\n👤 *Full Name:* " +
         name +
 
         "\n📞 *Phone:* " +
@@ -4423,8 +4469,9 @@ async function registerMember() {
         "\n🗓 *Date of Birth:* " +
         dob +
 
-        "\n🆔 *ID Number:* " +
-        idNumber +
+        "\n🎂 *Age:* " + applicantAge + " years" +
+        "\n🆔 *ID Number:* " + (applicantAge >= 18 ? idNumber : "Not required (under 18)") +
+        (applicantAge < 18 ? "\n👨‍👩‍👧 *Guardian:* " + guardianName + " (" + guardianRelation + ")\n📞 *Guardian Phone:* " + guardianPhone + "\n✅ *Guardian Consent:* Yes" : "") +
 
         "\n🏠 *Address / Town:* " +
         (address || "N/A") +
@@ -4561,756 +4608,114 @@ document.getElementById(
    CREATE PROFESSIONAL PDF
    ========================================================= */
 
-function createRegistrationPDF(
-    doc,
-    img,
-    member
-) {
+function createRegistrationPDF(doc, img, member) {
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const margin = 15;
+    const category = String(member.category || "Not specified");
+    const isSavingsOnly = category.indexOf("Savings Only") !== -1;
+    const isMinor = Number(member.age) < 18;
 
-
-    /* =====================================================
-       PAGE BACKGROUND / HEADER
-       ===================================================== */
-
-    doc.setFillColor(
-        8,
-        127,
-        91
-    );
-
-
-    doc.rect(
-        0,
-        0,
-        210,
-        42,
-        "F"
-    );
-
-
-    /* =====================================================
-       LOGO
-       ===================================================== */
-
-    if (img) {
-
-        try {
-
-            doc.addImage(
-                img,
-                "PNG",
-                15,
-                6,
-                30,
-                30
-            );
-
-        } catch(error) {
-
-            console.log(
-                "Logo could not be added.",
-                error
-            );
-
+    function drawPageFrame() {
+        doc.setDrawColor(8, 127, 91);
+        doc.setLineWidth(0.7);
+        doc.roundedRect(7, 7, pageWidth - 14, 283, 3, 3, "S");
+        doc.setFillColor(8, 127, 91);
+        doc.rect(8, 8, pageWidth - 16, 36, "F");
+        if (img) {
+            try { doc.addImage(img, "JPEG", 15, 11, 28, 28); }
+            catch (e) { try { doc.addImage(img, "PNG", 15, 11, 28, 28); } catch (_) {} }
         }
-
+        doc.setTextColor(255,255,255);
+        doc.setFont("helvetica","bold");
+        doc.setFontSize(16);
+        doc.text("FUTURE FINDERS CHAMA GROUP", 49, 21);
+        doc.setFont("helvetica","normal");
+        doc.setFontSize(10);
+        doc.text("NEW MEMBER REGISTRATION APPLICATION", 49, 29);
+        doc.setFontSize(8);
+        doc.text("Together We Save. Together We Grow. Together We Succeed.", 49, 36);
+        doc.setTextColor(80,80,80);
+        doc.setFontSize(8);
+        doc.text("Application Ref: " + String(member.applicationReference || "Pending"), margin, 50);
+        doc.text("Generated: " + String(member.timestamp || new Date().toLocaleString()), pageWidth - margin, 50, {align:"right"});
+        doc.setDrawColor(8,127,91);
+        doc.line(margin, 54, pageWidth-margin, 54);
     }
 
+    drawPageFrame();
 
-    /* =====================================================
-       HEADER TEXT
-       ===================================================== */
+    const rows = [];
+    const section = (title) => rows.push([{content:title, colSpan:2, styles:{fillColor:[21,101,192],textColor:[255,255,255],fontStyle:"bold",fontSize:10,cellPadding:2.5}}]);
+    const pair = (label, value) => rows.push([{content:label,styles:{fontStyle:"bold",fillColor:[245,248,250],cellWidth:55}},{content:String(value===undefined||value===null||value===""?"N/A":value),styles:{cellWidth:125}}]);
 
-    doc.setTextColor(
-        255,
-        255,
-        255
-    );
+    section("1. APPLICANT PERSONAL INFORMATION");
+    pair("Full legal name", member.name);
+    pair("Date of birth", member.dob);
+    pair("Age", String(member.age === undefined ? "Not recorded" : member.age) + " years");
+    pair("National ID number", isMinor ? "Not required — applicant is below 18 years" : member.idNumber);
+    pair("Phone number", member.phone);
+    pair("Email address", member.email);
+    pair("Physical address / town", member.address);
+    pair("Occupation / employer", member.occupation);
 
-
-    doc.setFont(
-        "helvetica",
-        "bold"
-    );
-
-
-    doc.setFontSize(
-        19
-    );
-
-
-    doc.text(
-        "FUTURE FINDERS CHAMA GROUP",
-        52,
-        18
-    );
-
-
-    doc.setFont(
-        "helvetica",
-        "normal"
-    );
-
-
-    doc.setFontSize(
-        12
-    );
-
-
-    doc.text(
-        "Membership Registration Form",
-        52,
-        28
-    );
-
-
-    doc.setFontSize(
-        9
-    );
-
-
-    doc.text(
-        "Official Member Registration Document",
-        52,
-        35
-    );
-
-
-    /* =====================================================
-       SECTION FUNCTION
-       ===================================================== */
-
-    function sectionTitle(
-        title,
-        y
-    ) {
-
-        doc.setFillColor(
-            21,
-            101,
-            192
-        );
-
-
-        doc.roundedRect(
-            15,
-            y,
-            180,
-            9,
-            2,
-            2,
-            "F"
-        );
-
-
-        doc.setTextColor(
-            255,
-            255,
-            255
-        );
-
-
-        doc.setFont(
-            "helvetica",
-            "bold"
-        );
-
-
-        doc.setFontSize(
-            11
-        );
-
-
-        doc.text(
-            title,
-            20,
-            y + 6
-        );
-
+    if (isMinor) {
+        section("2. PARENT / GUARDIAN INFORMATION");
+        pair("Guardian full name", member.guardianName);
+        pair("Relationship to applicant", member.guardianRelation);
+        pair("Guardian phone number", member.guardianPhone);
+        pair("Guardian consent", member.guardianConsent ? "Confirmed" : "Not recorded");
     }
 
+    section(isMinor ? "3. MEMBERSHIP CATEGORY & SAVINGS" : "2. MEMBERSHIP CATEGORY & SAVINGS");
+    pair("Selected category", category);
+    pair("Participation", isSavingsOnly ? "Savings Only — no Merry-Go-Round participation selected" : (category.indexOf("Weekly")!==-1 ? "Weekly Merry-Go-Round" : "Monthly Merry-Go-Round"));
+    pair("Initial savings", "KSh " + String(member.savings || "0"));
+    pair("Preferred communication", member.comm);
 
-    /* =====================================================
-       MEMBER INFORMATION
-       ===================================================== */
+    section(isMinor ? "4. ACCOUNT & REGISTRATION PAYMENT" : "3. ACCOUNT & REGISTRATION PAYMENT");
+    pair("Member login ID", member.phone);
+    pair("Password security", "Private — password is not printed on this document");
+    pair("One-time registration fee", "KSh 500 — subject to administrator verification");
+    pair("M-Pesa confirmation code", member.mpesaCode || "Not provided yet");
+    pair("Paybill / Till number", "3591312");
+    pair("Till account name", "BONIFACE CHELLUGET");
 
-    sectionTitle(
-        "1. MEMBER INFORMATION",
-        50
-    );
+    section(isMinor ? "5. APPLICANT DECLARATION & CONSENT" : "4. APPLICANT DECLARATION & CONSENT");
+    rows.push([{content:"I declare that the information provided is true and correct. I have read and agree to follow the Future Finders Chama Group rules and applicable membership requirements. I understand that submitting this application does not guarantee approval.",colSpan:2,styles:{fillColor:[255,251,230],textColor:[65,65,65],fontSize:8.5,cellPadding:4}}]);
+    if (isMinor) {
+        rows.push([{content:"The parent / guardian confirms awareness of this application and gives consent for the applicant to be considered, subject to the Chama constitution and administrator review.",colSpan:2,styles:{fillColor:[255,251,230],textColor:[65,65,65],fontSize:8.5,cellPadding:4}}]);
+    }
 
+    section(isMinor ? "6. OFFICIAL REVIEW & SIGNATURES" : "5. OFFICIAL REVIEW & SIGNATURES");
+    pair("Applicant signature", "________________________________________");
+    if (isMinor) pair("Parent / guardian signature", "________________________________________");
+    pair("Administrator review", "Name: _____________________  Signature: _____________________");
+    pair("Chairlady review", "Name: Faith Kwamboka  Signature: _____________________");
+    pair("Application status", "Pending administrator verification");
 
-    let y =
-        66;
-
-
-    const fields = [
-
-        [
-            "Full Name",
-            member.name
-        ],
-
-        [
-            "Phone Number",
-            member.phone
-        ],
-
-        [
-            "Email Address",
-            member.email
-        ],
-
-        [
-            "Date of Birth",
-            member.dob
-        ],
-
-        [
-            "ID Number",
-            member.idNumber
-        ],
-
-        [
-            "Physical Address / Town",
-            member.address || "N/A"
-        ],
-
-        [
-            "Occupation / Employer",
-            member.occupation || "N/A"
-        ]
-
-    ];
-
-
-    fields.forEach(
-        function(field) {
-
-            doc.setFillColor(
-                245,
-                248,
-                250
-            );
-
-
-            doc.roundedRect(
-                15,
-                y - 5,
-                180,
-                9,
-                1,
-                1,
-                "F"
-            );
-
-
-            doc.setTextColor(
-                60,
-                60,
-                60
-            );
-
-
-            doc.setFont(
-                "helvetica",
-                "bold"
-            );
-
-
-            doc.setFontSize(
-                9
-            );
-
-
-            doc.text(
-                field[0] + ":",
-                20,
-                y + 1
-            );
-
-
-            doc.setFont(
-                "helvetica",
-                "normal"
-            );
-
-
-            doc.text(
-                String(field[1]),
-                65,
-                y + 1
-            );
-
-
-            y += 12;
-
+    doc.autoTable({
+        startY: 58,
+        body: rows,
+        theme: "grid",
+        margin: {left:margin,right:margin,top:58,bottom:18},
+        styles: {font:"helvetica",fontSize:8.5,textColor:[45,55,65],lineColor:[210,220,230],lineWidth:0.2,cellPadding:2.2,overflow:"linebreak",valign:"middle"},
+        columnStyles: {0:{cellWidth:55},1:{cellWidth:125}},
+        didDrawPage: function(data) {
+            if (data.pageNumber > 1) drawPageFrame();
+            const h=doc.internal.pageSize.getHeight();
+            doc.setDrawColor(8,127,91);doc.line(margin,h-13,pageWidth-margin,h-13);
+            doc.setFont("helvetica","normal");doc.setFontSize(7);doc.setTextColor(110,110,110);
+            doc.text("Future Finders Chama Group • Official membership application",margin,h-8);
+            doc.text("Page " + data.pageNumber,pageWidth-margin,h-8,{align:"right"});
         }
-    );
-
-
-    /* =====================================================
-       MEMBERSHIP CATEGORY
-       ===================================================== */
-
-    sectionTitle(
-        "2. MERRY-GO-ROUND CATEGORY",
-        y + 3
-    );
-
-
-    y += 18;
-
-
-    doc.setFillColor(
-        232,
-        245,
-        233
-    );
-
-
-    doc.roundedRect(
-        15,
-        y - 5,
-        180,
-        15,
-        2,
-        2,
-        "F"
-    );
-
-
-    doc.setTextColor(
-        8,
-        127,
-        91
-    );
-
-
-    doc.setFont(
-        "helvetica",
-        "bold"
-    );
-
-
-    doc.setFontSize(
-        11
-    );
-
-
-    doc.text(
-        member.category,
-        22,
-        y + 5
-    );
-
-
-    /* =====================================================
-       SAVINGS
-       ===================================================== */
-
-    y += 23;
-
-
-    doc.setTextColor(
-        60,
-        60,
-        60
-    );
-
-
-    doc.setFontSize(
-        9
-    );
-
-
-    doc.setFont(
-        "helvetica",
-        "bold"
-    );
-
-
-    doc.text(
-        "Initial Savings:",
-        20,
-        y
-    );
-
-
-    doc.setFont(
-        "helvetica",
-        "normal"
-    );
-
-
-    doc.text(
-        "Ksh " +
-        (member.savings || "0"),
-        65,
-        y
-    );
-
-
-    /* =====================================================
-       COMMUNICATION
-       ===================================================== */
-
-    y += 10;
-
-
-    doc.setFont(
-        "helvetica",
-        "bold"
-    );
-
-
-    doc.text(
-        "Preferred Communication:",
-        20,
-        y
-    );
-
-
-    doc.setFont(
-        "helvetica",
-        "normal"
-    );
-
-
-    doc.text(
-        member.comm,
-        70,
-        y
-    );
-
-
-    /* =====================================================
-       MEMBER ACCOUNT & REGISTRATION FEE
-       Passwords are private and must never be printed/shared.
-       ===================================================== */
-
-    sectionTitle(
-        "3. MEMBER ACCOUNT & REGISTRATION FEE",
-        y + 10
-    );
-
-    y += 25;
-
-    doc.setFillColor(239, 246, 255);
-    doc.roundedRect(15, y - 6, 180, 31, 2, 2, "F");
-    doc.setTextColor(45, 55, 65);
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(9);
-    doc.text("Member Login ID (Phone):", 20, y + 3);
-    doc.setFont("helvetica", "normal");
-    doc.text(String(member.phone || "Not provided"), 75, y + 3);
-
-    doc.setFont("helvetica", "bold");
-    doc.text("Password Security:", 20, y + 12);
-    doc.setFont("helvetica", "normal");
-    doc.text("Private — not printed or shared with the administrator", 75, y + 12);
-
-    doc.setFont("helvetica", "bold");
-    doc.text("Registration Fee:", 20, y + 21);
-    doc.setFont("helvetica", "normal");
-    doc.text("Ksh 500 (one-time, non-refundable)", 75, y + 21);
-
-    /* =====================================================
-       PAYMENT DETAILS
-       ===================================================== */
-
-    y += 32;
-
-
-    sectionTitle(
-        "4. REGISTRATION PAYMENT DETAILS",
-        y
-    );
-
-
-    y += 15;
-
-
-    doc.setTextColor(
-        60,
-        60,
-        60
-    );
-
-
-    doc.setFont(
-        "helvetica",
-        "bold"
-    );
-
-
-    doc.text(
-        "Till Number:",
-        20,
-        y
-    );
-
-
-    doc.setFont(
-        "helvetica",
-        "normal"
-    );
-
-
-    doc.text(
-        "3591312",
-        65,
-        y
-    );
-
-
-    y += 9;
-
-
-    doc.setFont(
-        "helvetica",
-        "bold"
-    );
-
-
-    doc.text(
-        "Till Account Name:",
-        20,
-        y
-    );
-
-
-    doc.setFont(
-        "helvetica",
-        "normal"
-    );
-
-
-    doc.text(
-        "BONIFACE CHELLUGET",
-        65,
-        y
-    );
-
-
-    /* =====================================================
-       DECLARATION
-       ===================================================== */
-
-    y += 17;
-
-
-    sectionTitle(
-        "5. MEMBER DECLARATION",
-        y
-    );
-
-
-    y += 15;
-
-
-    doc.setFillColor(
-        255,
-        251,
-        230
-    );
-
-
-    doc.roundedRect(
-        15,
-        y - 5,
-        180,
-        25,
-        2,
-        2,
-        "F"
-    );
-
-
-    doc.setTextColor(
-        60,
-        60,
-        60
-    );
-
-
-    doc.setFont(
-        "helvetica",
-        "normal"
-    );
-
-
-    doc.setFontSize(
-        9
-    );
-
-
-    const declarationText =
-        "I hereby declare that the information provided in this registration form is true and correct. I agree to abide by the Future Finders Chama Group rules and regulations and to fulfill my membership obligations.";
-
-
-    const declarationLines =
-        doc.splitTextToSize(
-            declarationText,
-            165
-        );
-
-
-    doc.text(
-        declarationLines,
-        20,
-        y + 3
-    );
-
-
-    /* =====================================================
-       SIGNATURES
-       ===================================================== */
-
-    y += 38;
-
-
-    sectionTitle(
-        "6. OFFICIAL SIGNATURES",
-        y
-    );
-
-
-    y += 17;
-
-
-    doc.setFont(
-        "helvetica",
-        "normal"
-    );
-
-
-    doc.setTextColor(
-        50,
-        50,
-        50
-    );
-
-
-    doc.text(
-        "Member Signature: ______________________________",
-        20,
-        y
-    );
-
-
-    y += 14;
-
-
-    doc.text(
-        "Name: " +
-        member.name,
-        20,
-        y
-    );
-
-
-    y += 18;
-
-
-    doc.text(
-        "Administrator: Boniface Kaiser __________________",
-        20,
-        y
-    );
-
-
-    y += 14;
-
-
-    doc.text(
-        "Chairlady: Faith Kwamboka _______________________",
-        20,
-        y
-    );
-
-
-    /* =====================================================
-       FOOTER
-       ===================================================== */
-
-    doc.setDrawColor(
-        8,
-        127,
-        91
-    );
-
-
-    doc.setLineWidth(
-        0.5
-    );
-
-
-    doc.line(
-        15,
-        280,
-        195,
-        280
-    );
-
-
-    doc.setFontSize(
-        8
-    );
-
-
-    doc.setTextColor(
-        120,
-        120,
-        120
-    );
-
-
-    doc.text(
-        "Future Finders Chama Group • Membership Registration Portal",
-        20,
-        288
-    );
-
-
-    doc.text(
-        "Registered: " +
-        member.timestamp,
-        20,
-        295
-    );
-
-
-    /* =====================================================
-       SAVE PDF
-       ===================================================== */
-
-    doc.save(
-        "Future_Finders_Membership_" +
-        member.name.replace(
-            /[^a-z0-9]/gi,
-            "_"
-        ) +
-        ".pdf"
-    );
-
-
-    setTimeout(
-        function() {
-
-            alert(
-                "✅ Registration form downloaded successfully!\n\n" +
-                "Please keep the form safely and share it with the administrator.\n\nYour password is intentionally excluded. The administrator should issue a temporary password privately; never send your chosen password."
-            );
-
-        },
-        500
-    );
-
+    });
+
+    const filename = "Future_Finders_Membership_" + String(member.name || "Applicant").replace(/[^a-z0-9]/gi,"_") + ".pdf";
+    doc.save(filename);
+    setTimeout(function(){
+        alert("✅ Registration PDF downloaded successfully. Please keep it safely and share it with the administrator for verification. Passwords are never printed on the PDF.");
+    }, 400);
 }
-
-
-
 
 
 // ========================= 💞 Welfare Support Application =========================
@@ -8081,6 +7486,7 @@ y += 38;
 <option>JAPHETH MULI</option>
 <option>DEFTERS PHOLIUS</option>
 <option>BENSON NYATUKA</option>
+  <option>BENARD NYASIMI</option>
 <option>BOAZ KOKONYA</option>
 <option>PURITY MOMANYI</option>
 <option>SHARON ORINA</option>
@@ -10879,7 +10285,7 @@ calculate2025();
       📊 Group Contributions for 2026
       <br>
       <span id="updateTime">
-        ⏱ Last updated on <b>18TH NOVEMBER  2026 AT 16:53 PM</b>
+        ⏱ Last updated on <b>23RD NOVEMBER  2026 AT 14:06 PM</b>
       </span>
     </h4>
 
@@ -10988,7 +10394,7 @@ calculate2025();
 <td><input type="number" value="480"></td>
 <td><input type="number" value="250"></td>
 <td><input type="number" value="820"></td>
-<td><input type="number" value="500"></td>
+<td><input type="number" value="550"></td>
 <td><input type="number" value="0"></td>
 <td class="rowTotal">0</td>
 <td class="saved2026">0</td>
@@ -11009,7 +10415,7 @@ calculate2025();
 <td><input type="number" value="400"></td>
 <td><input type="number" value="400"></td>
 <td><input type="number" value="400"></td>
-<td><input type="number" value="200"></td>
+<td><input type="number" value="400"></td>
 <td><input type="number" value="0"></td>
 <td class="rowTotal">0</td>
 <td class="saved2026">0</td>
@@ -11030,7 +10436,7 @@ calculate2025();
 <td><input type="number" value="0"></td>
 <td><input type="number" value="0"></td>
 <td><input type="number" value="100"></td>
-<td><input type="number" value="150"></td>
+<td><input type="number" value="200"></td>
 <td><input type="number" value="0"></td>
 <td class="rowTotal">0</td>
 <td class="saved2026">0</td>
@@ -11134,7 +10540,7 @@ calculate2025();
 <td><input type="number" value="0"></td>
 <td><input type="number" value="50"></td>
 <td><input type="number" value="138"></td>
-<td><input type="number" value="100"></td>
+<td><input type="number" value="120"></td>
 <td><input type="number" value="0"></td>
 <td class="rowTotal">0</td>
 <td class="saved2026">0</td>
@@ -11301,7 +10707,7 @@ calculate2025();
 <td><input type="number" value="0"></td>
 <td><input type="number" value="470"></td>
 <td><input type="number" value="100"></td>
-<td><input type="number" value="0"></td>
+<td><input type="number" value="30"></td>
 <td><input type="number" value="0"></td>
 <td class="rowTotal">0</td>
 <td class="saved2026">0</td>
@@ -11320,7 +10726,7 @@ calculate2025();
 <td><input type="number" value="0"></td>
 <td><input type="number" value="200"></td>
 <td><input type="number" value="50"></td>
-<td><input type="number" value="3647"></td>
+<td><input type="number" value="3697"></td>
 <td><input type="number" value="0"></td>
 <td class="rowTotal">0</td>
 <td class="saved2026">0</td>
@@ -13121,7 +12527,7 @@ const members = {
     ],
     loans: [
       {
-        id: "",
+        id: "FF-0798577851-260715",
         requestedAmount: 2500,
         qualifiedAmount: 2500,
         idNumber: "",
@@ -13131,7 +12537,7 @@ const members = {
         amountPaid: 2875,
         balance: 0,
         latePenalty: 0,
-        date: "17/09/2026",
+        date: "15/07/2026",
         firstRepaymentDate: "15/08/2026",
         finalRepaymentDate: "15/09/2026",
         status: "APPROVED",
@@ -13152,7 +12558,7 @@ const members = {
         ]
       },
       {
-        id: "",
+        id: "FF-0798577851-260723",
         requestedAmount: 3000,
         qualifiedAmount: 3000,
         idNumber: "",
@@ -13162,7 +12568,7 @@ const members = {
         amountPaid: 3450,
         balance: 0,
         latePenalty: 0,
-        date: "",
+        date: "23/07/2026",
         firstRepaymentDate: "23/08/2026",
         finalRepaymentDate: "23/09/2026",
         status: "APPROVED",
@@ -13318,7 +12724,7 @@ const members = {
       }],
     loans: [
       {
-        id: "",
+        id: "FF-0759237482-260605",
         requestedAmount: 1500,
         qualifiedAmount: 1500,
         idNumber: "407818334",
@@ -13374,7 +12780,8 @@ const members = {
         ]
       },
       {
-        id: "",
+        id: "FF-0759237482-260915",
+        applicationNo: "FF-0759237482-260915",
         requestedAmount: 2600,
         qualifiedAmount: 2600,
         idNumber: "40781834",
@@ -13462,7 +12869,7 @@ const members = {
     ],
     loans: [
       {
-        id: "",
+        id: "FF-0706918919-260628",
         requestedAmount: 1500,
         qualifiedAmount: 1500,
         idNumber: "33959157",
@@ -13487,7 +12894,7 @@ const members = {
         ]
       },
       {
-        id: "",
+        id: "FF-0706918919-260206",
         requestedAmount: 1500,
         qualifiedAmount: 1500,
         idNumber: "33959157",
@@ -13512,7 +12919,7 @@ const members = {
         ]
       },
       {
-        id: "",
+        id: "FF-0706918919-260109",
         requestedAmount: 1000,
         qualifiedAmount: 1000,
         idNumber: "33959157",
@@ -13568,7 +12975,7 @@ const members = {
     ],
     loans: [
       {
-        id: "",
+        id: "FF-0725979420-260410",
         requestedAmount: 500,
         qualifiedAmount: 500,
         idNumber: "",
@@ -13624,7 +13031,7 @@ const members = {
         ]
       },
       {
-        id: "",
+        id: "FF-0725979420-260609",
         requestedAmount: 1000,
         qualifiedAmount: 1000,
         idNumber: "",
@@ -13888,7 +13295,7 @@ const members = {
     ],
     loans: [
       {
-        id: "",
+        id: "FF-0746989737-260507",
         requestedAmount: 2000,
         qualifiedAmount: 2000,
         idNumber: "42195496",
@@ -13919,7 +13326,7 @@ const members = {
         ]
       },
       {
-        id: "",
+        id: "FF-0746989737-260608",
         requestedAmount: 3000,
         qualifiedAmount: 3000,
         idNumber: "42195496",
@@ -13950,7 +13357,7 @@ const members = {
         ]
       },
       {
-        id: "",
+        id: "FF-0746989737-261010",
         requestedAmount: 2000,
         qualifiedAmount: 2000,
         idNumber: "42195496",
@@ -13959,7 +13366,7 @@ const members = {
         monthlyRepay: 2300,
         amountPaid: 1000,
         balance: 1300,
-        latePenalty: 90,
+        latePenalty: 140,
         latePenaltyPaid: 0,
         date: "10/10/2026",
         firstRepaymentDate: "10/11/2026",
@@ -13969,7 +13376,7 @@ const members = {
           { date: "06/11/2026", amount: 1000, note: "Repayment received" }
         ],
         status: "APPROVED",
-        reason: "PARTIALLY REPAID — KSH 1,000 RECEIVED ON 06/11/2026. KSH 1,300 LOAN BALANCE OUTSTANDING; KSH 90 LATE PAYMENT FINE ACCRUED AS AT 19/11/2026.",
+        reason: "PARTIALLY REPAID — KSH 1,000 RECEIVED ON 06/11/2026. KSH 1,300 LOAN BALANCE OUTSTANDING; KSH 140 LATE PAYMENT FINE ACCRUED AS AT 23/11/2026.",
         repaymentSchedule: [
           {
             month: 1,
@@ -14017,7 +13424,25 @@ const members = {
     savings: 4359,
     monthly: [0, 0, 0, 0, 0, 0, 0, 0, 0],
     note: "",
-    contracts: [],
+    contracts: [{
+      id: "FFC-2026-0485089",
+      member: "BENSON NYATUKA",
+      type: "Membership Contract Renewal",
+      participation: "Weekly merry-go-round plus savings",
+      feeCategory: "Previously paid registration fee — 2027 renewal exempt",
+      contractFee: 0,
+      registrationFeePaid: true,
+      signatureName: "BENSON NYATUKA",
+      signedAt: "22 November 2026 at 18:14 (EAT)",
+      signedAtISO: "2026-11-22T18:14:00+03:00",
+      adminStatus: "Approved / Active",
+      startDate: "2027-01-01",
+      expiryDate: "2027-12-31",
+      adminNotes: "Approved and activated by Admin on 23 November 2026 for the 2027 membership year, effective 1 January 2027 to 31 December 2027. Previous registration fee was paid; the member is exempt from an additional 2027 renewal fee.",
+      createdAt: "2026-11-22T18:14:00+03:00",
+      approvedAt: "2026-11-23T09:00:00+03:00",
+      version: 3
+    }],
     loans: []
   },
 
@@ -14146,6 +13571,33 @@ const members = {
     monthly: [],
     note: "Login account created; contact and membership details are awaiting admin confirmation.",
     contracts: [],
+    loans: []
+  },
+  "BENARD NYASIMI": {
+    phone: "0782822475",
+    password: "733750",
+    savings: 0,
+    monthly: [],
+    note: "Registration fee of KSh 200 received and recorded as paid. Approved for Savings Only participation; no Merry-Go-Round participation.",
+    contracts: [{
+      id: "FFC-2026-6387151",
+      member: "BENARD NYASIMI",
+      type: "New Membership Contract",
+      participation: "Savings Only (No Merry-Go-Round)",
+      feeCategory: "Registration fee paid — KSh 200 (2026 fee schedule)",
+      contractFee: 200,
+      registrationFeePaid: true,
+      signatureName: "BENARD NYASIMI",
+      signedAt: "23 November 2026 at 12:33 (EAT)",
+      signedAtISO: "2026-11-23T12:33:00+03:00",
+      adminStatus: "Approved / Active",
+      startDate: "2027-01-01",
+      expiryDate: "2027-12-31",
+      adminNotes: "Approved by Admin on 23 November 2026. Registration fee of KSh 200 received and recorded as paid under the 2026 fee schedule. The KSh 500 registration fee applies to new admissions from 1 January 2027. Contract is approved for the 2027 membership year, effective 1 January 2027 to 31 December 2027. Participation is Savings Only; the member does not participate in Merry-Go-Round.",
+      createdAt: "2026-11-23T12:33:00+03:00",
+      approvedAt: "2026-11-23T13:00:00+03:00",
+      version: 3
+    }],
     loans: []
   }
 };
@@ -14758,10 +14210,9 @@ function ffRenderAdminLoanPenaltyReport(){
   Object.keys(source).sort((a,b)=>a.localeCompare(b)).forEach(member=>{
     const loans=Array.isArray(source[member]?.loans)?source[member].loans:[];
     const eligible=loans.filter(loan=>loan&&typeof loan==='object'&&!/(reject|declin|cancel|pending|awaiting|under review)/i.test(String(loan.status||''))&&(Number(loan.requestedAmount??loan.amount??loan.principal??0)||0)>0);
-    if(!eligible.length){
-      entries.push({member,loanNo:'No approved/disbursed loan recorded',date:'—',due:'—',principal:0,charged:0,paid:0,outstanding:0,status:'No loan recorded'});
-      return;
-    }
+    // Show only members who have at least one approved/disbursed loan.
+    // Members without a qualifying loan are intentionally omitted from this report.
+    if(!eligible.length)return;
     eligible.forEach((loan,index)=>{
       const principal=Math.max(0,Number(loan.requestedAmount??loan.amount??loan.principal??0)||0);
       const charged=Math.max(0,Number(loan.latePenalty??loan.penalty??0)||0);
@@ -14775,14 +14226,14 @@ function ffRenderAdminLoanPenaltyReport(){
   const penaltyEntries=entries.filter(r=>r.charged>0);
   const totalCharged=entries.reduce((n,r)=>n+r.charged,0),totalPaid=entries.reduce((n,r)=>n+r.paid,0),totalOutstanding=entries.reduce((n,r)=>n+r.outstanding,0);
   if(totalsHost)totalsHost.innerHTML=[
-    ['Total members listed',new Set(entries.map(r=>r.member)).size],
+    ['Members with loans',new Set(entries.map(r=>r.member)).size],
     ['Members with loan penalties',new Set(penaltyEntries.map(r=>r.member)).size],
     ['Loans with penalties',penaltyEntries.length],
     ['Total penalties charged',money(totalCharged)],
     ['Penalties paid',money(totalPaid)],
     ['Outstanding loan penalties',money(totalOutstanding)]
   ].map(([label,value])=>`<div style="padding:11px;background:#fff;border:1px solid #fecaca;border-radius:9px;"><div style="font-size:12px;color:#64748b;">${label}</div><strong style="display:block;margin-top:5px;font-size:19px;color:#991b1b;">${value}</strong></div>`).join('');
-  host.innerHTML=entries.length?`<table style="width:100%;border-collapse:collapse;min-width:900px;"><thead><tr style="background:#fee2e2;text-align:left;"><th style="padding:9px;">Member</th><th style="padding:9px;">Loan reference</th><th style="padding:9px;">Loan date</th><th style="padding:9px;">Due date</th><th style="padding:9px;">Loan principal</th><th style="padding:9px;">Penalty charged</th><th style="padding:9px;">Penalty paid</th><th style="padding:9px;">Outstanding penalty</th><th style="padding:9px;">Loan status</th></tr></thead><tbody>${entries.map(r=>`<tr><td style="padding:9px;border-bottom:1px solid #e2e8f0;font-weight:700;">${esc(r.member)}</td><td style="padding:9px;border-bottom:1px solid #e2e8f0;">${esc(r.loanNo)}</td><td style="padding:9px;border-bottom:1px solid #e2e8f0;">${esc(r.date)}</td><td style="padding:9px;border-bottom:1px solid #e2e8f0;">${esc(r.due)}</td><td style="padding:9px;border-bottom:1px solid #e2e8f0;">${money(r.principal)}</td><td style="padding:9px;border-bottom:1px solid #e2e8f0;font-weight:700;">${money(r.charged)}</td><td style="padding:9px;border-bottom:1px solid #e2e8f0;">${money(r.paid)}</td><td style="padding:9px;border-bottom:1px solid #e2e8f0;font-weight:700;color:${r.outstanding?'#b91c1c':'#15803d'};">${money(r.outstanding)}</td><td style="padding:9px;border-bottom:1px solid #e2e8f0;">${esc(r.status)}</td></tr>`).join('')}</tbody><tfoot><tr style="background:#fff1f2;font-weight:800;"><td colspan="5" style="padding:10px;text-align:right;">TOTAL</td><td style="padding:10px;">${money(totalCharged)}</td><td style="padding:10px;">${money(totalPaid)}</td><td style="padding:10px;">${money(totalOutstanding)}</td><td></td></tr></tfoot></table>`:'<div style="padding:16px;border:1px dashed #fca5a5;border-radius:10px;background:#fff1f2;color:#7f1d1d;">No members are currently listed in the loan register.</div>';
+  host.innerHTML=entries.length?`<table style="width:100%;border-collapse:collapse;min-width:900px;"><thead><tr style="background:#fee2e2;text-align:left;"><th style="padding:9px;">Member</th><th style="padding:9px;">Loan reference</th><th style="padding:9px;">Loan date</th><th style="padding:9px;">Due date</th><th style="padding:9px;">Loan principal</th><th style="padding:9px;">Penalty charged</th><th style="padding:9px;">Penalty paid</th><th style="padding:9px;">Outstanding penalty</th><th style="padding:9px;">Loan status</th></tr></thead><tbody>${entries.map(r=>`<tr><td style="padding:9px;border-bottom:1px solid #e2e8f0;font-weight:700;">${esc(r.member)}</td><td style="padding:9px;border-bottom:1px solid #e2e8f0;">${esc(r.loanNo)}</td><td style="padding:9px;border-bottom:1px solid #e2e8f0;">${esc(r.date)}</td><td style="padding:9px;border-bottom:1px solid #e2e8f0;">${esc(r.due)}</td><td style="padding:9px;border-bottom:1px solid #e2e8f0;">${money(r.principal)}</td><td style="padding:9px;border-bottom:1px solid #e2e8f0;font-weight:700;">${money(r.charged)}</td><td style="padding:9px;border-bottom:1px solid #e2e8f0;">${money(r.paid)}</td><td style="padding:9px;border-bottom:1px solid #e2e8f0;font-weight:700;color:${r.outstanding?'#b91c1c':'#15803d'};">${money(r.outstanding)}</td><td style="padding:9px;border-bottom:1px solid #e2e8f0;">${esc(r.status)}</td></tr>`).join('')}</tbody><tfoot><tr style="background:#fff1f2;font-weight:800;"><td colspan="5" style="padding:10px;text-align:right;">TOTAL</td><td style="padding:10px;">${money(totalCharged)}</td><td style="padding:10px;">${money(totalPaid)}</td><td style="padding:10px;">${money(totalOutstanding)}</td><td></td></tr></tfoot></table>`:'<div style="padding:16px;border:1px dashed #fca5a5;border-radius:10px;background:#fff1f2;color:#7f1d1d;">No approved or disbursed member loans are currently recorded.</div>';
   host.style.setProperty('display','block','important');
   host.style.setProperty('visibility','visible','important');
   host.style.setProperty('width','100%','important');
@@ -15057,6 +14508,21 @@ if (!window.FF_MGR_PENALTY_RECORDS.some(r => String(r.id || '') === 'FF-MGR-PEN-
   {id:'FF-MGR-PEN-20261115-SHARON-ORINA', member:'SHARON ORINA', penaltyType:'Weekly', penaltyCount:1, amountPerPenalty:30, penaltyDates:['15 November 2026'], penaltiesPaid:0, paidAmount:0, notes:'Weekly Merry-Go-Round fine recorded by Admin for 15 November 2026.'},
   {id:'FF-MGR-PEN-20261115-ESTHER-OBEGI', member:'ESTHER OBEGI', penaltyType:'Weekly', penaltyCount:1, amountPerPenalty:30, penaltyDates:['15 November 2026'], penaltiesPaid:0, paidAmount:0, notes:'Weekly Merry-Go-Round fine recorded by Admin for 15 November 2026.'},
   {id:'FF-MGR-PEN-20261115-FAITH-MOKOGI', member:'FAITH MOKOGI', penaltyType:'Weekly', penaltyCount:1, amountPerPenalty:30, penaltyDates:['15 November 2026'], penaltiesPaid:0, paidAmount:0, notes:'Weekly Merry-Go-Round fine recorded by Admin for 15 November 2026.'}
+].forEach(record => {
+  if (!window.FF_MGR_PENALTY_RECORDS.some(r => String(r.id || '') === record.id)) window.FF_MGR_PENALTY_RECORDS.push(record);
+});
+// Official Admin entries: weekly Merry-Go-Round penalties recorded on 23 November 2026.
+[
+  {id:'FF-MGR-PEN-20261123-FAITH-MOKOGI-WEEKLY', member:'FAITH MOKOGI', penaltyType:'Weekly', penaltyCount:1, amountPerPenalty:30, penaltyDates:['23 November 2026'], penaltiesPaid:0, paidAmount:0, notes:'Weekly Merry-Go-Round penalty recorded by Admin for 23 November 2026.'},
+  {id:'FF-MGR-PEN-20261123-EDINAH-NANCY-WEEKLY', member:'EDINAH NANCY', penaltyType:'Weekly', penaltyCount:1, amountPerPenalty:30, penaltyDates:['23 November 2026'], penaltiesPaid:0, paidAmount:0, notes:'Weekly Merry-Go-Round penalty recorded by Admin for 23 November 2026.'},
+  {id:'FF-MGR-PEN-20261123-SHARON-ORINA-WEEKLY', member:'SHARON ORINA', penaltyType:'Weekly', penaltyCount:1, amountPerPenalty:30, penaltyDates:['23 November 2026'], penaltiesPaid:0, paidAmount:0, notes:'Weekly Merry-Go-Round penalty recorded by Admin for 23 November 2026.'}
+].forEach(record => {
+  if (!window.FF_MGR_PENALTY_RECORDS.some(r => String(r.id || '') === record.id)) window.FF_MGR_PENALTY_RECORDS.push(record);
+});
+// Official Admin entries: monthly Chama late-payment fines recorded on 20 November 2026.
+[
+  {id:'FF-MGR-PEN-20261120-FAITH-MOKOGI-MONTHLY', member:'FAITH MOKOGI', penaltyType:'Monthly', penaltyCount:1, amountPerPenalty:30, penaltyDates:['20 November 2026'], penaltiesPaid:0, paidAmount:0, notes:'Late monthly Chama payment fine recorded by Admin.'},
+  {id:'FF-MGR-PEN-20261120-KEPHA-ANGWENYI-MONTHLY', member:'KEPHA ANGWENYI', penaltyType:'Monthly', penaltyCount:1, amountPerPenalty:30, penaltyDates:['20 November 2026'], penaltiesPaid:0, paidAmount:0, notes:'Late monthly Chama payment fine recorded by Admin.'}
 ].forEach(record => {
   if (!window.FF_MGR_PENALTY_RECORDS.some(r => String(r.id || '') === record.id)) window.FF_MGR_PENALTY_RECORDS.push(record);
 });
@@ -21190,14 +20656,20 @@ function showAvailableNumbers() {
   let allNumbers = Array.from({ length: 25 }, (_, i) => i + 1); // [1..25]
   let available = allNumbers.filter(n => !usedNumbers.includes(n));
 
-  // ✅ Ensure container exists inside Admin panel
-  let adminPanel = document.getElementById("admin");
-  let box = document.getElementById("availableNumbersBox");
-
-  if (!box) {
-    box = document.createElement("div");
-    box.id = "availableNumbersBox";
-    adminPanel.appendChild(box); // put it inside #admin
+  // Keep the results directly inside the Chama Tools & Lucky Numbers
+  // accordion content, beneath the Show Available Numbers button.
+  const trigger = Array.from(document.querySelectorAll('#admin button'))
+    .find(button => button.getAttribute('onclick') === 'showAvailableNumbers()' && !button.closest('#availableNumbersBox'));
+  const toolsContent = trigger?.closest('.ff-admin-content')
+    || document.querySelector('#admin .ff-admin-card[data-admin-panel="tools"] .ff-admin-content');
+  const box = document.getElementById("availableNumbersBox") || document.createElement("div");
+  box.id = "availableNumbersBox";
+  if (toolsContent && box.parentElement !== toolsContent) {
+    const toolsButton = toolsContent.querySelector('button[onclick="showAvailableNumbers()"]');
+    if (toolsButton) toolsButton.insertAdjacentElement('afterend', box);
+    else toolsContent.appendChild(box);
+  } else if (!toolsContent && !box.isConnected) {
+    document.getElementById("admin")?.appendChild(box);
   }
 
   // ✅ Render content with refresh button
@@ -23609,7 +23081,7 @@ async function downloadIndividualSavingsReportsPDF() {
       {key:'members',title:'👥 Members, Notes & Membership Records',selectors:['#membersNotesPanel','#membersOverviewPanel','#memberContractsAdminPanel','#pendingMembersPanel','#ffExitAdminPanel']},
       {key:'loans',title:'💳 Loans, Repayments & Loan Controls',selectors:['h3.ff-mm-heading','#loanSearch','#loanStatusFilter','button.ff-export-loans','h3.ff-loan-heading','table.ff-loan-table','#loanAvailabilityAdminPanel','#ffAdminLoanPenaltyReport']},
       {key:'welfare',title:'🤝 Welfare Management & Applications',selectors:['#ffAdminWelfarePanel','#ffAdminWelfareReport']},
-      {key:'tools',title:'🎲 Chama Tools & Lucky Numbers',selectors:['button.ff-picked-trigger','#pickedNumbersTable']},
+      {key:'tools',title:'🎲 Chama Tools & Lucky Numbers',selectors:['button[onclick="showAvailableNumbers()"]','button.ff-picked-trigger','#pickedNumbersTable']},
       {key:'updates',title:'📢 Announcements & Member Notifications',selectors:['h3.ff-updates-heading','#updateMessage','button.ff-post-update','#memberSelectionBox','label.ff-whatsapp-label','div.ff-update-history']}
     ];
     const cards={};
@@ -23637,8 +23109,11 @@ async function downloadIndividualSavingsReportsPDF() {
     const history=admin.querySelector('#updateHistoryBody')?.closest('div');if(history)history.classList.add('ff-update-history');
     function move(selector,target){const el=admin.querySelector(selector);if(el&&target&&!el.closest('.ff-admin-content'))target.appendChild(el);}
     // Arrange all existing admin tools into six practical work areas.
+    // Keep Show Available Numbers inside the Chama Tools & Lucky Numbers section.
     // Existing panels and IDs are moved intact so their data and handlers remain connected.
     ['#ffChamaFinancialOverview','#adminSummary','#ffAdminSavingsSummary','#ffAdminLoanFinancialSummary','#ffAdminOverviewDashboard','#ffAdminPenaltyWelfareReports'].forEach(sel=>move(sel,cards.dashboard.content));
+    move('button[onclick="showAvailableNumbers()"]',cards.tools.content);
+    move('#availableNumbersBox',cards.tools.content);
     ['#memberContractsAdminPanel','#membersNotesPanel','#pendingMembersPanel','#ffExitAdminPanel','#membersOverviewPanel'].forEach(sel=>move(sel,cards.members.content));
     // Members workspace: show a simple four-button menu, then one register at a time.
     const memberContent=cards.members.content;
@@ -23741,7 +23216,7 @@ async function downloadIndividualSavingsReportsPDF() {
     loansContent.insertBefore(loansIntro,loansContent.firstChild);
     loansContent.insertBefore(loansMenu,loansIntro.nextSibling);
     ['#ffAdminWelfarePanel','#ffAdminWelfareReport'].forEach(sel=>move(sel,cards.welfare.content));
-    ['button.ff-picked-trigger','#pickedNumbersTable'].forEach(sel=>move(sel,cards.tools.content));
+    ['button[onclick="showAvailableNumbers()"]','button.ff-picked-trigger','#pickedNumbersTable'].forEach(sel=>move(sel,cards.tools.content));
     ['h3.ff-updates-heading','#updateMessage','button.ff-post-update','#memberSelectionBox','label.ff-whatsapp-label','div.ff-update-history'].forEach(sel=>move(sel,cards.updates.content));
 
     // Keep the existing contract and welfare review panels visible and fully functional.
@@ -24653,7 +24128,7 @@ async function downloadIndividualSavingsReportsPDF() {
     // Interest earned means interest actually collected from repayments,
     // not the interest merely expected on outstanding loans.
     const interestEarnedCard=document.getElementById('totalInterestEarnedCard');
-    if(interestEarnedCard)interestEarnedCard.textContent='💹 Total Interest Earned (MMF + Loans): '+money(4663+a.interestPaid);
+    if(interestEarnedCard)interestEarnedCard.textContent='💹 Total Interest Earned (MMF + Loans): '+money(4777+a.interestPaid);
     const statusCard=document.getElementById('loanBreakdownCard');
     if(statusCard)statusCard.textContent=`📊 Loan Status: ${pending} Pending / ${active} Active / ${overdue} Overdue / ${cleared} Cleared / ${rejected} Rejected`;
     // Build the admin's expanded member summaries from the same unified
@@ -24718,7 +24193,7 @@ async function downloadIndividualSavingsReportsPDF() {
     const penaltyReport=document.getElementById('ffAdminPenaltyWelfareReports');
     const welfareReport=document.getElementById('ffAdminWelfareReport');
     const loanPenaltyReport=document.getElementById('ffAdminLoanPenaltyReport');
-    panel.innerHTML=`<h3 style="margin:0 0 5px;color:#173b57;">📊 Overall Loan Financial Summary</h3><p style="margin:0 0 12px;font-size:12px;color:#64748b;">Calculated from approved and disbursed loans across all members. Pending and rejected applications are excluded from money lent.</p><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:9px;">${card('Loans issued',a.count)}${card('Total principal lent',money(a.principal))}${card('Total interest expected',money(a.interest))}${card('Total repayment expected',money(a.totalDue))}${card('Total repayments received',money(a.paid))}${card('Principal recovered',money(a.principalPaid))}${card('Interest returned',money(a.interestPaid))}${card('Outstanding principal',money(a.outstandingPrincipal))}${card('Outstanding interest',money(a.outstandingInterest))}${card('Total outstanding balance',money(a.balance))}</div><div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;"><span style="padding:7px 10px;border-radius:7px;background:#fff;border:1px solid #dbe4ec;">Pending: <b>${pending}</b></span><span style="padding:7px 10px;border-radius:7px;background:#fff;border:1px solid #dbe4ec;">Active / owing: <b>${active}</b></span><span style="padding:7px 10px;border-radius:7px;background:#fff;border:1px solid #dbe4ec;">Overdue: <b>${overdue}</b></span><span style="padding:7px 10px;border-radius:7px;background:#fff;border:1px solid #dbe4ec;">Cleared: <b>${cleared}</b></span><span style="padding:7px 10px;border-radius:7px;background:#fff;border:1px solid #dbe4ec;">Rejected: <b>${rejected}</b></span></div><div style="margin-top:14px;padding:14px;background:#ecfdf5;border:1px solid #86efac;border-radius:10px;"><h4 style="margin:0 0 10px;color:#14532d;font-size:15px;">💹 Chama Investment & Interest Earnings</h4><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:9px;"><div style="padding:12px;background:#fff;border:1px solid #bbf7d0;border-radius:8px;"><div style="font-size:12px;color:#64748b;">🏦 Money Market Fund (MMF) Interest</div><b style="display:block;margin-top:5px;font-size:21px;color:#14532d;">${money(4663)}</b></div><div style="padding:12px;background:#fff;border:1px solid #bbf7d0;border-radius:8px;"><div style="font-size:12px;color:#64748b;">💰 Loan Interest Earned</div><b style="display:block;margin-top:5px;font-size:21px;color:#14532d;">${money(a.interestPaid)}</b></div><div style="padding:12px;background:#dcfce7;border:1px solid #86efac;border-radius:8px;"><div style="font-size:12px;color:#166534;font-weight:800;">💹 TOTAL INTEREST EARNED (MMF + LOANS)</div><b style="display:block;margin-top:5px;font-size:23px;color:#166534;">${money(4663+a.interestPaid)}</b></div></div><p style="margin:8px 0 0;color:#64748b;font-size:11px;">MMF earnings are hard-coded and can be updated when a new figure is provided.</p></div><div style="margin-top:16px;"><button type="button" id="ffToggleAllMemberLoanSummaries" onclick="toggleAdminMemberLoanSummaries()" aria-expanded="false" style="width:100%;padding:13px 16px;border:1px solid #cbd5e1;border-radius:9px;background:#173b57;color:#fff;font-weight:700;text-align:left;cursor:pointer;font-size:14px;">📋 All Members’ Loan Summaries <span style="float:right;">＋</span></button><div id="ffAllMemberLoanSummariesContent" hidden style="padding:8px 0 0;">${memberSummaryCards||'<p style="padding:14px;text-align:center;color:#64748b;background:#fff;border:1px solid #dbe4ec;border-radius:9px;">No approved or disbursed member loans recorded for individual display.</p>'}</div></div>`;
+    panel.innerHTML=`<h3 style="margin:0 0 5px;color:#173b57;">📊 Overall Loan Financial Summary</h3><p style="margin:0 0 12px;font-size:12px;color:#64748b;">Calculated from approved and disbursed loans across all members. Pending and rejected applications are excluded from money lent.</p><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:9px;">${card('Loans issued',a.count)}${card('Total principal lent',money(a.principal))}${card('Total interest expected',money(a.interest))}${card('Total repayment expected',money(a.totalDue))}${card('Total repayments received',money(a.paid))}${card('Principal recovered',money(a.principalPaid))}${card('Interest returned',money(a.interestPaid))}${card('Outstanding principal',money(a.outstandingPrincipal))}${card('Outstanding interest',money(a.outstandingInterest))}${card('Total outstanding balance',money(a.balance))}</div><div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;"><span style="padding:7px 10px;border-radius:7px;background:#fff;border:1px solid #dbe4ec;">Pending: <b>${pending}</b></span><span style="padding:7px 10px;border-radius:7px;background:#fff;border:1px solid #dbe4ec;">Active / owing: <b>${active}</b></span><span style="padding:7px 10px;border-radius:7px;background:#fff;border:1px solid #dbe4ec;">Overdue: <b>${overdue}</b></span><span style="padding:7px 10px;border-radius:7px;background:#fff;border:1px solid #dbe4ec;">Cleared: <b>${cleared}</b></span><span style="padding:7px 10px;border-radius:7px;background:#fff;border:1px solid #dbe4ec;">Rejected: <b>${rejected}</b></span></div><div style="margin-top:14px;padding:14px;background:#ecfdf5;border:1px solid #86efac;border-radius:10px;"><h4 style="margin:0 0 10px;color:#14532d;font-size:15px;">💹 Chama Investment & Interest Earnings</h4><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:9px;"><div style="padding:12px;background:#fff;border:1px solid #bbf7d0;border-radius:8px;"><div style="font-size:12px;color:#64748b;">🏦 Money Market Fund (MMF) Interest</div><b style="display:block;margin-top:5px;font-size:21px;color:#14532d;">${money(4777)}</b></div><div style="padding:12px;background:#fff;border:1px solid #bbf7d0;border-radius:8px;"><div style="font-size:12px;color:#64748b;">💰 Loan Interest Earned</div><b style="display:block;margin-top:5px;font-size:21px;color:#14532d;">${money(a.interestPaid)}</b></div><div style="padding:12px;background:#dcfce7;border:1px solid #86efac;border-radius:8px;"><div style="font-size:12px;color:#166534;font-weight:800;">💹 TOTAL INTEREST EARNED (MMF + LOANS)</div><b style="display:block;margin-top:5px;font-size:23px;color:#166534;">${money(4777+a.interestPaid)}</b></div></div><p style="margin:8px 0 0;color:#64748b;font-size:11px;">MMF earnings are hard-coded and can be updated when a new figure is provided.</p></div><div style="margin-top:16px;"><button type="button" id="ffToggleAllMemberLoanSummaries" onclick="toggleAdminMemberLoanSummaries()" aria-expanded="false" style="width:100%;padding:13px 16px;border:1px solid #cbd5e1;border-radius:9px;background:#173b57;color:#fff;font-weight:700;text-align:left;cursor:pointer;font-size:14px;">📋 All Members’ Loan Summaries <span style="float:right;">＋</span></button><div id="ffAllMemberLoanSummariesContent" hidden style="padding:8px 0 0;">${memberSummaryCards||'<p style="padding:14px;text-align:center;color:#64748b;background:#fff;border:1px solid #dbe4ec;border-radius:9px;">No approved or disbursed member loans recorded for individual display.</p>'}</div></div>`;
     // The Dashboard menu now owns navigation to each report. Do not generate
     // additional VIEW/HIDE buttons here: repeated refreshes previously left
     // duplicate controls behind in the report panes.
