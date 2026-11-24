@@ -399,6 +399,9 @@ body.ff-ready #splash{display:none !important;}
 .ff-role-option:hover{border-color:#0f8b78;box-shadow:0 4px 12px #0f766e20;transform:translateY(-1px);}
 .ff-role-option.is-selected{border:2px solid #087f5b;background:linear-gradient(145deg,#ecfdf5,#dff7ed);box-shadow:0 0 0 3px #10b98120;}
 .ff-role-icon{font-size:23px;line-height:1.2;}
+.ff-role-photo{display:block;width:58px;height:58px;flex:0 0 58px;object-fit:cover;border-radius:50%;border:3px solid #d1fae5;box-shadow:0 2px 8px #0f766e24;background:#f1f5f9;}
+.ff-role-option.is-selected .ff-role-photo{border-color:#059669;}
+@media(max-width:380px){.ff-role-photo{width:48px;height:48px;flex-basis:48px;}}
 .ff-role-name{font-size:13px;font-weight:800;line-height:1.3;}
 .ff-role-title{font-size:11px;color:#64748b;line-height:1.3;}
 #adminLogin .password-container{width:100%;max-width:100%;}
@@ -3407,11 +3410,11 @@ function closeSystemUpdatePopup(){
   <div class="ff-role-heading">Choose your leadership position</div>
   <p class="ff-role-hint">Tap the option assigned to you. Your selection will be highlighted.</p>
   <div class="ff-role-grid" role="group" aria-label="Select leadership role">
-    <button type="button" class="ff-role-option" data-user="boniface chelluget" aria-pressed="false" onclick="selectLeadershipRole(this)"><span class="ff-role-icon">👑</span><span class="ff-role-name">Boniface Chelluget</span><span class="ff-role-title">Founder & Chief Administrator</span></button>
-    <button type="button" class="ff-role-option" data-user="faith kwamboka" aria-pressed="false" onclick="selectLeadershipRole(this)"><span class="ff-role-icon">🤝</span><span class="ff-role-name">Faith Kwamboka</span><span class="ff-role-title">Chairperson</span></button>
-    <button type="button" class="ff-role-option" data-user="claudia moraa" aria-pressed="false" onclick="selectLeadershipRole(this)"><span class="ff-role-icon">💼</span><span class="ff-role-name">Claudia Moraa</span><span class="ff-role-title">Head of Welfare and Member Relations</span></button>
-    <button type="button" class="ff-role-option" data-user="shalik shiverenge" aria-pressed="false" onclick="selectLeadershipRole(this)"><span class="ff-role-icon">📑</span><span class="ff-role-name">Shalik Shiverenge</span><span class="ff-role-title">Head of Loans and Membership Services</span></button>
-    <button type="button" class="ff-role-option" data-user="kepha angwenyi" aria-pressed="false" onclick="selectLeadershipRole(this)"><span class="ff-role-icon">🛡️</span><span class="ff-role-name">Kepha Angwenyi</span><span class="ff-role-title">Head of Registration and Financial Compliance</span></button>
+    <button type="button" class="ff-role-option" data-user="boniface chelluget" aria-pressed="false" onclick="selectLeadershipRole(this)"><img class="ff-role-photo" src="https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/FUTURE%20FINDERS%20LOGO.jpeg" alt="Boniface Chelluget profile photo" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none'"><span class="ff-role-name">Boniface Chelluget</span><span class="ff-role-title">Founder & Chief Administrator</span></button>
+    <button type="button" class="ff-role-option" data-user="faith kwamboka" aria-pressed="false" onclick="selectLeadershipRole(this)"><img class="ff-role-photo" src="https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/FUTURE%20FINDERS%20LOGO.jpeg" alt="Faith Kwamboka profile photo" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none'"><span class="ff-role-name">Faith Kwamboka</span><span class="ff-role-title">Chairperson</span></button>
+    <button type="button" class="ff-role-option" data-user="claudia moraa" aria-pressed="false" onclick="selectLeadershipRole(this)"><img class="ff-role-photo" src="https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/FUTURE%20FINDERS%20LOGO.jpeg" alt="Claudia Moraa profile photo" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none'"><span class="ff-role-name">Claudia Moraa</span><span class="ff-role-title">Head of Welfare and Member Relations</span></button>
+    <button type="button" class="ff-role-option" data-user="shalik shiverenge" aria-pressed="false" onclick="selectLeadershipRole(this)"><img class="ff-role-photo" src="https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/FUTURE%20FINDERS%20LOGO.jpeg" alt="Shalik Shiverenge profile photo" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none'"><span class="ff-role-name">Shalik Shiverenge</span><span class="ff-role-title">Head of Loans and Membership Services</span></button>
+    <button type="button" class="ff-role-option" data-user="kepha angwenyi" aria-pressed="false" onclick="selectLeadershipRole(this)"><img class="ff-role-photo" src="https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/FUTURE%20FINDERS%20LOGO.jpeg" alt="Kepha Angwenyi profile photo" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none'"><span class="ff-role-name">Kepha Angwenyi</span><span class="ff-role-title">Head of Registration and Financial Compliance</span></button>
   </div>
   <button type="button" id="ffBackToHeads" onclick="backToLeadershipHeads()">← Back to Heads</button>
   <select id="adminUser" name="adminUser" autocomplete="username" required aria-label="Selected leadership name" style="display:none;">
@@ -10322,7 +10325,7 @@ calculate2025();
       📊 Group Contributions for 2026
       <br>
       <span id="updateTime">
-        ⏱ Last updated on <b>18TH NOVEMBER  2026 AT 16:53 PM</b>
+        ⏱ Last updated on <b>24TH NOVEMBER  2026 AT 13:53 PM</b>
       </span>
     </h4>
 
@@ -10431,7 +10434,7 @@ calculate2025();
 <td><input type="number" value="480"></td>
 <td><input type="number" value="250"></td>
 <td><input type="number" value="820"></td>
-<td><input type="number" value="500"></td>
+<td><input type="number" value="550"></td>
 <td><input type="number" value="0"></td>
 <td class="rowTotal">0</td>
 <td class="saved2026">0</td>
@@ -10452,7 +10455,7 @@ calculate2025();
 <td><input type="number" value="400"></td>
 <td><input type="number" value="400"></td>
 <td><input type="number" value="400"></td>
-<td><input type="number" value="200"></td>
+<td><input type="number" value="400"></td>
 <td><input type="number" value="0"></td>
 <td class="rowTotal">0</td>
 <td class="saved2026">0</td>
@@ -10473,7 +10476,7 @@ calculate2025();
 <td><input type="number" value="0"></td>
 <td><input type="number" value="0"></td>
 <td><input type="number" value="100"></td>
-<td><input type="number" value="150"></td>
+<td><input type="number" value="200"></td>
 <td><input type="number" value="0"></td>
 <td class="rowTotal">0</td>
 <td class="saved2026">0</td>
@@ -10515,7 +10518,7 @@ calculate2025();
 <td><input type="number" value="250"></td>
 <td><input type="number" value="370"></td>
 <td><input type="number" value="350"></td>
-<td><input type="number" value="0"></td>
+<td><input type="number" value="200"></td>
 <td><input type="number" value="0"></td>
 <td class="rowTotal">0</td>
 <td class="saved2026">0</td>
@@ -10577,7 +10580,7 @@ calculate2025();
 <td><input type="number" value="0"></td>
 <td><input type="number" value="50"></td>
 <td><input type="number" value="138"></td>
-<td><input type="number" value="100"></td>
+<td><input type="number" value="120"></td>
 <td><input type="number" value="0"></td>
 <td class="rowTotal">0</td>
 <td class="saved2026">0</td>
@@ -10598,7 +10601,7 @@ calculate2025();
 <td><input type="number" value="0"></td>
 <td><input type="number" value="200"></td>
 <td><input type="number" value="1900"></td>
-<td><input type="number" value="2000"></td>
+<td><input type="number" value="2400"></td>
 <td><input type="number" value="0"></td>
 <td class="rowTotal">0</td>
 <td class="saved2026">0</td>
@@ -10744,7 +10747,7 @@ calculate2025();
 <td><input type="number" value="0"></td>
 <td><input type="number" value="470"></td>
 <td><input type="number" value="100"></td>
-<td><input type="number" value="0"></td>
+<td><input type="number" value="180"></td>
 <td><input type="number" value="0"></td>
 <td class="rowTotal">0</td>
 <td class="saved2026">0</td>
@@ -10763,7 +10766,7 @@ calculate2025();
 <td><input type="number" value="0"></td>
 <td><input type="number" value="200"></td>
 <td><input type="number" value="50"></td>
-<td><input type="number" value="3647"></td>
+<td><input type="number" value="3697"></td>
 <td><input type="number" value="0"></td>
 <td class="rowTotal">0</td>
 <td class="saved2026">0</td>
@@ -10803,6 +10806,26 @@ calculate2025();
 <td><input type="number" value="2500"></td>
 <td><input type="number" value="1500"></td>
 <td><input type="number" value="0"></td>
+<td class="rowTotal">0</td>
+<td class="saved2026">0</td>
+<td class="reward2026">0</td>
+<td class="paymentStatus">PENDING</td>
+</tr>
+<tr>
+<td>BENARD NYASIMI</td>
+<td><input type="number" min="0" value="0"></td>
+<td><input type="number" min="0" value="0"></td>
+<td><input type="number" min="0" value="0"></td>
+<td><input type="number" min="0" value="0"></td>
+<td><input type="number" min="0" value="0"></td>
+<td><input type="number" min="0" value="0"></td>
+<td><input type="number" min="0" value="0"></td>
+<td><input type="number" min="0" value="0"></td>
+<td><input type="number" min="0" value="0"></td>
+<td><input type="number" min="0" value="0"></td>
+<td><input type="number" min="0" value="0"></td>
+<td><input type="number" min="0" value="100"></td>
+<td><input type="number" min="0" value="0"></td>
 <td class="rowTotal">0</td>
 <td class="saved2026">0</td>
 <td class="reward2026">0</td>
@@ -13102,6 +13125,7 @@ const members = {
   },
 
   "CLAUDIA MORAA": {
+    profileImage: "https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/WhatsApp%20Image%202026-11-24%20at%201.01.05%20PM.jpeg",
     phone: "0741520782",
     password: "0741520782",
     savings: 8400,
@@ -13403,7 +13427,7 @@ const members = {
         monthlyRepay: 2300,
         amountPaid: 1000,
         balance: 1300,
-        latePenalty: 140,
+        latePenalty: 150,
         latePenaltyPaid: 0,
         date: "10/10/2026",
         firstRepaymentDate: "10/11/2026",
@@ -13413,7 +13437,7 @@ const members = {
           { date: "06/11/2026", amount: 1000, note: "Repayment received" }
         ],
         status: "APPROVED",
-        reason: "PARTIALLY REPAID — KSH 1,000 RECEIVED ON 06/11/2026. KSH 1,300 LOAN BALANCE OUTSTANDING; KSH 140 LATE PAYMENT FINE ACCRUED AS AT 23/11/2026.",
+        reason: "PARTIALLY REPAID — KSH 1,000 RECEIVED ON 06/11/2026. KSH 1,300 LOAN BALANCE OUTSTANDING; KSH 150 LATE PAYMENT FINE ACCRUED AS AT 24/11/2026 AT KSH 10 PER DAY.",
         repaymentSchedule: [
           {
             month: 1,
@@ -19832,6 +19856,104 @@ const HARDCODED_LOAN_APPLICATIONS = [
 // status on that browser only. To publish a decision to every device under
 // Option 1, also update that record's status in HARDCODED_LOAN_APPLICATIONS
 // and push the updated index.html to GitHub.
+const HARDCODED_LOAN_DECISIONS = {
+  "FF-0798577851-260715": {
+    "applicationDecision": "APPROVED",
+    "repaymentStatus": "FULLY REPAID",
+    "decisionReason": "QUALIFIED FOR A LOAN"
+  },
+  "FF-0798577851-260723": {
+    "applicationDecision": "APPROVED",
+    "repaymentStatus": "FULLY REPAID",
+    "decisionReason": "QUALIFIED"
+  },
+  "FF-0759237482-260605": {
+    "applicationDecision": "APPROVED",
+    "repaymentStatus": "FULLY REPAID",
+    "decisionReason": "QUALIFIED — FULLY REPAID"
+  },
+  "FF-0759237482-260729": {
+    "applicationDecision": "APPROVED",
+    "repaymentStatus": "FULLY REPAID",
+    "decisionReason": "QUALIFIED — FULLY REPAID"
+  },
+  "FF-0759237482-260915": {
+    "applicationDecision": "APPROVED",
+    "repaymentStatus": "FULLY REPAID",
+    "decisionReason": "QUALIFIED — FULLY REPAID ON TIME"
+  },
+  "FF-0759237482-261110": {
+    "applicationDecision": "APPROVED",
+    "repaymentStatus": "ACTIVE — REPAYMENT ONGOING",
+    "decisionReason": "APPROVED BY ADMIN — ONE-MONTH REPAYMENT; FULL PAYMENT OF KSH 2,990 DUE BY 09/12/2026"
+  },
+  "FF-0706918919-260628": {
+    "applicationDecision": "APPROVED",
+    "repaymentStatus": "OVERDUE — PARTIALLY REPAID",
+    "decisionReason": "PARTIALLY REPAID — KSH 1000 OUTSTANDING"
+  },
+  "FF-0706918919-260206": {
+    "applicationDecision": "APPROVED",
+    "repaymentStatus": "FULLY REPAID",
+    "decisionReason": "QUALIFIED — FULLY REPAID WITH NO PENALTY"
+  },
+  "FF-0706918919-260109": {
+    "applicationDecision": "APPROVED",
+    "repaymentStatus": "FULLY REPAID",
+    "decisionReason": "QUALIFIED — FULLY REPAID ON TIME"
+  },
+  "FF-0725979420-260410": {
+    "applicationDecision": "APPROVED",
+    "repaymentStatus": "FULLY REPAID",
+    "decisionReason": "QUALIFIED — FULLY REPAID ON TIME"
+  },
+  "FF-0725979420-260719": {
+    "applicationDecision": "APPROVED",
+    "repaymentStatus": "FULLY REPAID",
+    "decisionReason": "QUALIFIED — FULLY REPAID ON 01/09/2026"
+  },
+  "FF-0725979420-260609": {
+    "applicationDecision": "APPROVED",
+    "repaymentStatus": "FULLY REPAID",
+    "decisionReason": "QUALIFIED — FULLY REPAID ON TIME"
+  },
+  "FF-0727428906-260823": {
+    "applicationDecision": "APPROVED",
+    "repaymentStatus": "FULLY REPAID",
+    "decisionReason": "QUALIFIED — FULLY REPAID ON TIME"
+  },
+  "FF-0757905172-260919": {
+    "applicationDecision": "APPROVED",
+    "repaymentStatus": "FULLY REPAID",
+    "decisionReason": "QUALIFIED — FULLY REPAID ON TIME"
+  },
+  "FF-0757905172-261006": {
+    "applicationDecision": "APPROVED",
+    "repaymentStatus": "FULLY REPAID",
+    "decisionReason": "QUALIFIED — FULLY REPAID ON 01/11/2026"
+  },
+  "FF-0746989737-260507": {
+    "applicationDecision": "APPROVED",
+    "repaymentStatus": "FULLY REPAID",
+    "decisionReason": "QUALIFIED — FULLY REPAID ON TIME"
+  },
+  "FF-0746989737-260608": {
+    "applicationDecision": "APPROVED",
+    "repaymentStatus": "FULLY REPAID WITH PENALTY",
+    "decisionReason": "FULLY REPAID — KSH 3,450 LOAN REPAYMENT PLUS KSH 280 LATE PENALTY PAID (KSH 3,730 TOTAL RECEIVED)."
+  },
+  "FF-0746989737-261010": {
+    "applicationDecision": "APPROVED",
+    "repaymentStatus": "OVERDUE — PARTIALLY REPAID",
+    "decisionReason": "PARTIALLY REPAID — KSH 1,000 RECEIVED ON 06/11/2026. KSH 1,300 LOAN BALANCE OUTSTANDING; KSH 150 LATE PAYMENT FINE ACCRUED AS AT 24/11/2026 AT KSH 10 PER DAY."
+  },
+  "FF-0757905172-261108": {
+    "applicationDecision": "APPROVED",
+    "repaymentStatus": "ACTIVE — REPAYMENT ONGOING",
+    "decisionReason": "APPROVED BY THE FUTURE FINDERS LOAN COMMITTEE. FULL REPAYMENT OF KSH 1,680 DUE BY 8 DECEMBER 2026."
+  }
+};
+
 function getLoanApplications() {
   // Read browser-local applications only as extra submissions. They do not
   // override code-managed member records and are not shared across devices.
@@ -19878,6 +20000,11 @@ function getLoanApplications() {
           balance: Number(loan.balance ?? Math.max(0, repaymentAmount - amountPaid)),
           outstandingPrincipal: Number(loan.outstandingPrincipal ?? amount),
           ...loan,
+          ...(HARDCODED_LOAN_DECISIONS[stableId] ? {
+            hardcodedApplicationDecision: HARDCODED_LOAN_DECISIONS[stableId].applicationDecision,
+            hardcodedRepaymentStatus: HARDCODED_LOAN_DECISIONS[stableId].repaymentStatus,
+            hardcodedDecisionReason: HARDCODED_LOAN_DECISIONS[stableId].decisionReason
+          } : {}),
           id: stableId,
           name: loan.name || memberName,
           phone: loan.phone || member.phone || "",
@@ -19893,10 +20020,17 @@ function getLoanApplications() {
   }
 
   // Keep the previous manual register working during the transition.
-  const olderManualLoans = HARDCODED_LOAN_APPLICATIONS.map((app, index) => ({
-    ...app,
-    id: String(app.id || `FF-MANUAL-${index + 1}`)
-  }));
+  const olderManualLoans = HARDCODED_LOAN_APPLICATIONS.map((app, index) => {
+    const id = String(app.id || `FF-MANUAL-${index + 1}`);
+    const decision = HARDCODED_LOAN_DECISIONS[id];
+    return {
+      ...app,
+      ...(decision ? { hardcodedApplicationDecision: decision.applicationDecision,
+        hardcodedRepaymentStatus: decision.repaymentStatus,
+        hardcodedDecisionReason: decision.decisionReason } : {}),
+      id
+    };
+  });
   const sharedById = new Map();
   [...memberLoans, ...olderManualLoans].forEach(app => sharedById.set(String(app.id), app));
   // Code-managed records always win: status, dates, repayments and reason
@@ -19997,7 +20131,7 @@ function loadLoanApplications() {
       <td>${esc(app.repaymentPeriod || "—")}</td>
       <td>${money(totalRepayment)}<br><small>Paid: ${money(amountPaid)}<br>Late penalty: <span style="color:${penaltyDetails.penalty ? '#c62828' : '#64748b'};">${money(penaltyDetails.penalty)}</span><br>Balance incl. penalty: ${money(balance)}</small></td>
       <td>${esc(app.date || "—")}<br><small>First: ${esc(firstDate)}<br>Final: ${esc(finalDate)}</small></td>
-      <td style="font-weight:bold;color:${statusColor};">${esc(status)}${app.reason ? `<br><small style="color:#555;font-weight:normal;">Reason: ${esc(app.reason)}</small>` : ""}<br><small style="color:#64748b;font-weight:normal;">Decision is managed in the member record in code</small></td>
+      <td style="font-weight:bold;color:${statusColor};"><div>${esc(app.hardcodedApplicationDecision || status)}</div><small style="display:block;color:#334155;font-weight:600;margin-top:4px;">Repayment: ${esc(app.hardcodedRepaymentStatus || "STATUS NOT RECORDED")}</small>${(app.hardcodedDecisionReason || app.reason) ? `<small style="display:block;color:#555;font-weight:normal;margin-top:4px;">Reason: ${esc(app.hardcodedDecisionReason || app.reason)}</small>` : ""}<small style="display:block;color:#64748b;font-weight:normal;margin-top:4px;">Hardcoded in website records</small></td>
       <td>${schedule}</td>
       <td style="min-width:125px;">
         ${/pending|awaiting|under review/i.test(status) && !/reject|approved|disbursed/i.test(status)
@@ -22219,7 +22353,7 @@ function renderMembersTable() {
     const months = (data.monthly || []).join(", ");
     return `
       <tr>
-        <td>${name}</td>
+        <td style="white-space:nowrap;vertical-align:middle;">${data.profileImage ? `<img src="${data.profileImage}" alt="${name} profile photo" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none'" style="width:42px;height:42px;object-fit:cover;border-radius:50%;border:2px solid #dbeafe;vertical-align:middle;margin-right:9px;">` : ""}<span style="vertical-align:middle;">${name}</span></td>
         <td>${data.phone}</td>
         <td>Ksh ${(data.savings || 0).toLocaleString()}</td>
         <td>Ksh ${(data.rewardBack || 0).toLocaleString()}</td>
@@ -22323,7 +22457,7 @@ function renderSortedMembers(sortedData) {
     const months = (data.monthly || []).join(", ");
     return `
       <tr>
-        <td>${name}</td>
+        <td style="white-space:nowrap;vertical-align:middle;">${data.profileImage ? `<img src="${data.profileImage}" alt="${name} profile photo" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none'" style="width:42px;height:42px;object-fit:cover;border-radius:50%;border:2px solid #dbeafe;vertical-align:middle;margin-right:9px;">` : ""}<span style="vertical-align:middle;">${name}</span></td>
         <td>${data.phone}</td>
         <td>Ksh ${(data.savings || 0).toLocaleString()}</td>
         <td>Ksh ${(data.rewardBack || 0).toLocaleString()}</td>
