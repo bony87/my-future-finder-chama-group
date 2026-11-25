@@ -12958,19 +12958,23 @@ const members = {
         interestAmount: 390,
         repaymentAmount: 2990,
         monthlyRepay: 2990,
-        amountPaid: 0,
-        balance: 2990,
+        amountPaid: 2990,
+        balance: 0,
         latePenalty: 0,
         date: "10/11/2026",
         firstRepaymentDate: "09/12/2026",
         finalRepaymentDate: "09/12/2026",
+        lastPaymentDate: "23/11/2026",
+        paymentHistory: [
+          { date: "23/11/2026", amount: 2990, note: "Full loan repayment received; loan cleared." }
+        ],
         paymentMethod: "M-Pesa",
         status: "APPROVED",
-        reason: "APPROVED BY ADMIN — ONE-MONTH REPAYMENT; FULL PAYMENT OF KSH 2,990 DUE BY 09/12/2026",
+        reason: "APPROVED — FULLY REPAID ON 23/11/2026. KSH 2,990 RECEIVED; OUTSTANDING LOAN BALANCE KSH 0.",
         approvedAt: "2026-11-10T12:15:00+03:00",
         signatureName: "Kepha Angwenyi",
         repaymentSchedule: [
-          { month: 1, dueDate: "09/12/2026", amountDue: 2990, amountPaid: 0 }
+          { month: 1, dueDate: "09/12/2026", amountDue: 2990, amountPaid: 2990, status: "PAID IN FULL — 23/11/2026" }
         ]
       }
     ]
