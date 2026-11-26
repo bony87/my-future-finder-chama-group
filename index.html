@@ -424,6 +424,40 @@ body.ff-ready #splash{display:none !important;}
 #adminLogin.ff-role-selected > #adminBtn{display:block;}
 
 </style>
+
+<style id="ff-admin-compliance-scroll-fix-v1">
+/* Keep the full-screen leadership workspace genuinely scrollable. */
+html, body { overscroll-behavior-y: auto !important; }
+#admin .ff-admin-card.is-open {
+  height: calc(100vh - 24px) !important;
+  height: calc(100dvh - 24px) !important;
+  max-height: calc(100vh - 24px) !important;
+  max-height: calc(100dvh - 24px) !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+#admin .ff-admin-card.is-open > .ff-admin-content {
+  display: block !important;
+  flex: 1 1 auto !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  overflow-y: auto !important;
+  overflow-x: auto !important;
+  overscroll-behavior: contain !important;
+  -webkit-overflow-scrolling: touch !important;
+  touch-action: pan-y pan-x !important;
+  scrollbar-width: auto !important;
+}
+#admin .ff-admin-card.is-open .ffMembersView,
+#admin .ff-admin-card.is-open [id^="ffMembersView-"] {
+  min-height: max-content !important;
+  overflow: visible !important;
+}
+@media (max-width: 600px) {
+  #admin .ff-admin-card.is-open { inset: 5px !important; height: calc(100dvh - 10px) !important; max-height: calc(100dvh - 10px) !important; }
+}
+</style>
 </head>
 
 <style>
@@ -3716,9 +3750,9 @@ function closeSystemUpdatePopup(){
     </div>
     <div id="ffComplianceTotals" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:15px 0;"></div>
     <div style="overflow-x:auto;border:1px solid #dbe4ec;border-radius:10px;background:#fff;">
-      <table style="width:100%;min-width:920px;border-collapse:collapse;font-size:13px;line-height:1.5;">
-        <thead style="background:#12304a;color:#fff;"><tr><th style="padding:11px;text-align:left;">No.</th><th style="padding:11px;text-align:left;">Member</th><th style="padding:11px;text-align:left;">Loan position</th><th style="padding:11px;text-align:left;">Penalty position</th><th style="padding:11px;text-align:left;">Compliance status / reason</th><th style="padding:11px;text-align:left;">Certificate</th></tr></thead>
-        <tbody id="ffComplianceRows"><tr><td colspan="6" style="padding:18px;text-align:center;color:#64748b;">Loading compliance records…</td></tr></tbody>
+      <table style="width:100%;min-width:1180px;border-collapse:collapse;font-size:13px;line-height:1.5;">
+        <thead style="background:#12304a;color:#fff;"><tr><th style="padding:11px;text-align:left;">No.</th><th style="padding:11px;text-align:left;">Member</th><th style="padding:11px;text-align:left;">Savings balance</th><th style="padding:11px;text-align:left;">Contribution records</th><th style="padding:11px;text-align:left;">Loan position</th><th style="padding:11px;text-align:left;">Penalty position</th><th style="padding:11px;text-align:left;">Compliance status / reason</th><th style="padding:11px;text-align:left;">Certificate</th></tr></thead>
+        <tbody id="ffComplianceRows"><tr><td colspan="8" style="padding:18px;text-align:center;color:#64748b;">Loading compliance records…</td></tr></tbody>
       </table>
     </div>
     <p style="margin:10px 0 0;color:#64748b;font-size:11px;line-height:1.5;">Assessment is based on the hard-coded records published in this website at the time of checking. It does not include unrecorded cash, bank or M-Pesa transactions. A certificate is valid only as at its issue date.</p>
@@ -19804,20 +19838,20 @@ function adminLogin() {
                   cards: ["dashboard", "members"],
                   dashboard: ["MERRY-GO-ROUND PENALTY REGISTER", "WELFARE APPLICATIONS", "INTEREST DISTRIBUTION & MMF RETURNS"],
                   members: ["Member Financial Compliance Certificates"],
-                  intro: "Claudia Moraa — Financial Manager: access is limited to the Merry-Go-Round Penalty Register, Welfare Applications and the view/download-only Member Financial Compliance Certificates register."
+                  intro: "Claudia Moraa — Financial Manager: access is limited to the Merry-Go-Round Penalty Register, Welfare Applications and the view-only Member Financial Compliance Certificates register."
                 },
                 shalikManager: {
                   cards: ["dashboard", "members", "loans"],
                   dashboard: ["All Members’ Loan Summaries", "INTEREST DISTRIBUTION & MMF RETURNS"],
                   members: ["Membership Withdrawal & Exit Register", "Member Financial Compliance Certificates"],
                   loans: ["📜 Loan Applications"],
-                  intro: "Shalik Shiverenge — Financial Manager: access includes Loan Applications, All Members’ Loan Summaries, the Membership Withdrawal & Exit Register and view/download-only Member Financial Compliance Certificates."
+                  intro: "Shalik Shiverenge — Financial Manager: access includes Loan Applications, All Members’ Loan Summaries, the Membership Withdrawal & Exit Register and download-enabled Member Financial Compliance Certificates."
                 },
                 kephaManager: {
                   cards: ["dashboard", "members"],
                   dashboard: ["REGISTRATION FEES", "LOAN PENALTIES SUMMARY", "INTEREST DISTRIBUTION & MMF RETURNS"],
                   members: ["Member Financial Compliance Certificates"],
-                  intro: "Kepha Angwenyi — Financial Manager: access includes Registration Fees, the Loan Penalties Summary and view/download-only Member Financial Compliance Certificates."
+                  intro: "Kepha Angwenyi — Financial Manager: access includes Registration Fees, the Loan Penalties Summary and download-enabled Member Financial Compliance Certificates."
                 }
               };
               const cfg = roleConfig[role];
@@ -23590,6 +23624,7 @@ async function downloadIndividualSavingsReportsPDF() {
       const button=document.createElement('button');button.type='button';button.textContent=view.label;
       button.style.cssText=`padding:15px 16px;border:1px solid #d5e1e8;border-left:5px solid ${view.color};border-radius:10px;background:#f8fbfd;color:#17384d;font-weight:700;text-align:left;cursor:pointer;min-height:62px;`;
       const pane=document.createElement('div');pane.id='ffMembersView-'+view.key;pane.hidden=true;pane.style.cssText='margin-top:12px;';
+      if(view.key==='compliance'){pane.style.cssText='position:fixed;inset:0;z-index:2147483000;width:100vw;height:100vh;height:100dvh;max-height:100dvh;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;touch-action:pan-y;scrollbar-width:auto;padding:22px max(14px,calc((100vw - 1120px)/2)) 34px;box-sizing:border-box;background:rgba(10,25,40,.72);';pane.setAttribute('role','dialog');pane.setAttribute('aria-modal','true');pane.setAttribute('aria-label','Member Compliance Certificate Register');}
       const close=document.createElement('button');close.type='button';close.textContent='← Back to Members menu';close.style.cssText='display:block;margin:0 0 14px auto;padding:9px 13px;border:0;border-radius:8px;background:#17384d;color:#fff;font-weight:700;cursor:pointer;';
       close.addEventListener('click',()=>{pane.hidden=true;memberMenu.hidden=false;memberIntro.hidden=false;});
       pane.appendChild(close);
@@ -23602,6 +23637,9 @@ async function downloadIndividualSavingsReportsPDF() {
         if(view.key==='contracts'&&typeof window.ffRefreshAdminContracts==='function')window.ffRefreshAdminContracts();
         if(view.key==='overview'&&typeof window.ffRefreshAdminDashboard==='function')window.ffRefreshAdminDashboard();
         if(view.key==='compliance'){
+          pane.style.setProperty('overflow-y','auto','important');
+          pane.style.setProperty('overflow-x','hidden','important');
+          pane.scrollTop=0;
           // Re-attach the register to its own view every time it is opened. It
           // originally sits inside Members Overview and must not remain hidden there.
           const compliancePanel=document.getElementById('ffComplianceRegister');
@@ -23619,7 +23657,7 @@ async function downloadIndividualSavingsReportsPDF() {
           setTimeout(()=>{if(typeof window.ffRenderComplianceRegister==='function')window.ffRenderComplianceRegister();},80);
         }
       });
-      memberMenu.appendChild(button);memberSections[view.key]=pane;memberContent.appendChild(pane);
+      memberMenu.appendChild(button);memberSections[view.key]=pane;if(view.key==='compliance'){document.body.appendChild(pane);}else{memberContent.appendChild(pane);}
     });
     memberContent.insertBefore(memberIntro,memberContent.firstChild);
     memberContent.insertBefore(memberMenu,memberIntro.nextSibling);
@@ -25601,17 +25639,25 @@ document.addEventListener('DOMContentLoaded', function(){
     {name:'Shalik Shiverenge',role:'Head of Loans and Membership Services'},
     {name:'Kepha Angwenyi',role:'Head of Registration and Financial Compliance'}
   ];
-  const norm=v=>String(v??'').trim().toLowerCase().replace(/\s+/g,' ');
+  const norm=v=>String(v??'').trim().toLowerCase().replace(/\\s+/g,' ');
+  // Kepha Angwenyi is the leadership name for the existing KEPHA MOMANYI
+  // member account. Both names resolve to the same financial record.
+  const canonicalRecordName=v=>{
+    const key=norm(v).replace(/[^a-z0-9]/g,'');
+    if(key==='kephaangwenyi'||key==='kephamomanyi')return 'kephamomanyi';
+    return key;
+  };
+  const displayMemberName=v=>canonicalRecordName(v)==='kephamomanyi'?'KEPHA ANGWENYI':String(v);
   const money=v=>'KSh '+(Number(v)||0).toLocaleString('en-KE',{maximumFractionDigits:2});
   const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   function memberRows(){
     if(typeof members==='undefined'||!members||typeof members!=='object')return [];
-    return Object.entries(members).map(([name,member])=>({name,member:member||{}})).sort((a,b)=>a.name.localeCompare(b.name));
+    return Object.entries(members).map(([recordName,member])=>({name:displayMemberName(recordName),recordName,member:member||{}})).sort((a,b)=>a.name.localeCompare(b.name));
   }
   function getMGRRows(name){
     let rows=[];
     try{rows=typeof getMGRPenaltyRecords==='function'?getMGRPenaltyRecords():Array.isArray(window.FF_MGR_PENALTY_RECORDS)?window.FF_MGR_PENALTY_RECORDS:[];}catch(e){rows=[];}
-    return rows.filter(r=>norm(r.member||r.name)===norm(name));
+    return rows.filter(r=>canonicalRecordName(r.member||r.name)===canonicalRecordName(name));
   }
   function assess(name,member){
     const reasons=[];let loanBalance=0,loanPenaltyOutstanding=0;
@@ -25653,33 +25699,65 @@ document.addEventListener('DOMContentLoaded', function(){
       else if(totalPaidMatch)noteOutstanding=Math.max(0,(Number(totalPaidMatch[1].replace(/,/g,''))||0)-(Number(totalPaidMatch[2].replace(/,/g,''))||0));
       if(noteOutstanding>0.009){notePenaltyOutstanding=noteOutstanding;reasons.push('Member note records an unverified unpaid fine of '+money(noteOutstanding)+'. Admin must verify the payment and update the official penalty record.');}
     }
-    return {name,member,compliant:reasons.length===0,reasons,loanBalance,loanPenaltyOutstanding,mgrOutstanding,notePenaltyOutstanding,memberFines,loansChecked:loans.length,mgrRecords:mgr.length};
+    return {name,member,compliant:reasons.length===0,reasons,loanBalance,loanPenaltyOutstanding,mgrOutstanding,notePenaltyOutstanding,memberFines,loansChecked:loans.length,mgrRecords:mgr.length,savings:Math.max(0,Number(member.savings)||0),monthlyEntries:Array.isArray(member.monthly)?member.monthly.length:0};
   }
   // Public read-only assessment used by the interest-distribution safeguard.
   // Unknown members fail closed: they cannot receive a distribution until their
   // published financial record can be assessed.
   window.ffGetMemberComplianceAssessment=function(memberName){
-    const entry=memberRows().find(x=>norm(x.name)===norm(memberName));
+    const entry=memberRows().find(x=>canonicalRecordName(x.name)===canonicalRecordName(memberName)||canonicalRecordName(x.recordName)===canonicalRecordName(memberName));
     if(!entry)return {name:String(memberName||''),compliant:false,reasons:['No published member financial record was found; Admin verification is required.']};
     const result=assess(entry.name,entry.member);
     return {name:result.name,compliant:!!result.compliant,reasons:[...(result.reasons||[])]};
   };
   function assessAll(){return memberRows().map(x=>assess(x.name,x.member));}
   function summaryCard(label,value,color){return '<div style="padding:12px;background:#fff;border:1px solid #dbe4ec;border-radius:10px;"><div style="font-size:11px;color:#64748b;font-weight:800;text-transform:uppercase;">'+esc(label)+'</div><div style="font-size:23px;font-weight:900;color:'+color+';margin-top:5px;">'+esc(value)+'</div></div>';}
+  function ffComplianceDownloadPermission(){
+    const role=String(localStorage.getItem('adminLoginRole')||'').trim();
+    // Only the Founder & Chief Administrator and the Head of Finance & Compliance
+    // may download certificates. All other leadership roles are strictly view-only.
+    const allowedRoles=['admin','kephaManager'];
+    const leadershipRoles=['admin','chairlady','financialManager','shalikManager','kephaManager'];
+    const leadershipSession=leadershipRoles.includes(role);
+    return {allowed:allowedRoles.includes(role) || !leadershipSession,role};
+  }
+  function ffShowComplianceDownloadRestriction(){
+    alert('This compliance register is view-only for your leadership role. Please contact Kepha Angwenyi, Head of Finance and Compliance, to request the official compliance certificate.');
+    return false;
+  }
   window.ffRenderComplianceRegister=function(){
     const host=document.getElementById('ffComplianceRows');if(!host)return;
     const list=assessAll();const compliant=list.filter(x=>x.compliant).length;const not=list.length-compliant;
     const totals=document.getElementById('ffComplianceTotals');
     if(totals)totals.innerHTML=summaryCard('Members assessed',list.length,'#12304a')+summaryCard('Compliant',compliant,'#15803d')+summaryCard('Not compliant',not,'#b91c1c');
     host.innerHTML=list.map((x,i)=>{
-      const loan=x.loanBalance>0.009?'<span style="color:#b91c1c;font-weight:800;">Outstanding '+esc(money(x.loanBalance))+'</span>':'<span style="color:#15803d;font-weight:800;">No outstanding loan balance</span>';
+      const loan=x.loanBalance>0.009
+        ? '<span style="color:#b91c1c;font-weight:800;">Outstanding '+esc(money(x.loanBalance))+'</span><div style="font-size:11px;color:#64748b;">'+x.loansChecked+' loan record(s) checked</div>'
+        : '<span style="color:#15803d;font-weight:800;">No outstanding balance</span><div style="font-size:11px;color:#64748b;">'+x.loansChecked+' loan record(s) checked</div>';
       const penalties=x.loanPenaltyOutstanding+x.mgrOutstanding+x.notePenaltyOutstanding+x.memberFines;
-      const penalty=penalties>0.009?'<span style="color:#b91c1c;font-weight:800;">Outstanding '+esc(money(penalties))+'</span>':'<span style="color:#15803d;font-weight:800;">No unpaid penalties</span>';
-      const status=x.compliant?'<span style="display:inline-block;padding:5px 9px;border-radius:20px;background:#dcfce7;color:#166534;font-weight:900;">✓ COMPLIANT</span>':'<span style="display:inline-block;padding:5px 9px;border-radius:20px;background:#fee2e2;color:#991b1b;font-weight:900;">✕ NOT COMPLIANT</span><ul style="margin:6px 0 0;padding-left:18px;color:#991b1b;">'+x.reasons.map(r=>'<li>'+esc(r)+'</li>').join('')+'</ul>';
+      const penalty=penalties>0.009
+        ? '<span style="color:#b91c1c;font-weight:800;">Outstanding '+esc(money(penalties))+'</span>'
+        : '<span style="color:#15803d;font-weight:800;">No unpaid penalties</span>';
+      const status=x.compliant
+        ? '<span style="display:inline-block;padding:5px 9px;border-radius:20px;background:#dcfce7;color:#166534;font-weight:900;">✓ COMPLIANT</span>'
+        : '<span style="display:inline-block;padding:5px 9px;border-radius:20px;background:#fee2e2;color:#991b1b;font-weight:900;">✕ NOT COMPLIANT</span><ul style="margin:6px 0 0;padding-left:18px;color:#991b1b;">'+x.reasons.map(r=>'<li>'+esc(r)+'</li>').join('')+'</ul>';
       const memberArg=JSON.stringify(x.name).replace(/"/g,'&quot;');
-      const action=x.compliant?'<button type="button" onclick="ffDownloadComplianceCertificate('+memberArg+')" style="padding:8px 11px;border:0;border-radius:8px;background:#0f766e;color:#fff;font-weight:800;cursor:pointer;white-space:nowrap;">⬇ Download PDF</button>':'<span style="font-size:12px;color:#991b1b;font-weight:700;">Unavailable until cleared</span>';
-      return '<tr style="border-top:1px solid #e2e8f0;vertical-align:top;"><td style="padding:11px;">'+(i+1)+'</td><td style="padding:11px;font-weight:800;color:#12304a;">'+esc(x.name)+'</td><td style="padding:11px;">'+loan+'</td><td style="padding:11px;">'+penalty+'</td><td style="padding:11px;">'+status+'</td><td style="padding:11px;">'+action+'</td></tr>';
-    }).join('')||'<tr><td colspan="6" style="padding:18px;text-align:center;color:#64748b;">No hard-coded member records are available.</td></tr>';
+      const permission=ffComplianceDownloadPermission();
+      const action=x.compliant
+        ? (permission.allowed
+          ? '<button type="button" onclick="ffDownloadComplianceCertificate('+memberArg+')" style="padding:8px 11px;border:0;border-radius:8px;background:#0f766e;color:#fff;font-weight:800;cursor:pointer;white-space:nowrap;">⬇ Download PDF</button>'
+          : '<button type="button" onclick="ffShowComplianceDownloadRestriction()" style="padding:8px 11px;border:1px solid #cbd5e1;border-radius:8px;background:#eef2f7;color:#475569;font-weight:800;cursor:pointer;white-space:nowrap;">👁 View only</button>')
+        : '<span style="font-size:12px;color:#991b1b;font-weight:700;">Unavailable until cleared</span>';
+      return '<tr style="border-top:1px solid #e2e8f0;vertical-align:top;">'+
+        '<td style="padding:11px;">'+(i+1)+'</td>'+
+        '<td style="padding:11px;font-weight:800;color:#12304a;">'+esc(x.name)+(canonicalRecordName(x.name)==='kephamomanyi'?' <div style="font-size:11px;font-weight:500;color:#64748b;">Member record: KEPHA MOMANYI</div>':'')+'</td>'+
+        '<td style="padding:11px;font-weight:800;">'+esc(money(x.savings))+'</td>'+
+        '<td style="padding:11px;">'+x.monthlyEntries+' recorded contribution entries</td>'+
+        '<td style="padding:11px;">'+loan+'</td>'+
+        '<td style="padding:11px;">'+penalty+'</td>'+
+        '<td style="padding:11px;">'+status+'</td>'+
+        '<td style="padding:11px;">'+action+'</td></tr>';
+    }).join('')||'<tr><td colspan="8" style="padding:18px;text-align:center;color:#64748b;">No hard-coded member records are available.</td></tr>';
   };
   function currentMemberName(){
     let name='';try{name=typeof loggedInUser!=='undefined'&&loggedInUser?String(loggedInUser):'';}catch(e){}
@@ -25709,8 +25787,10 @@ document.addEventListener('DOMContentLoaded', function(){
   function dateText(d){return d.toLocaleDateString('en-KE',{day:'2-digit',month:'long',year:'numeric'});}
   function safeFile(v){return String(v||'Member').trim().replace(/[^a-z0-9]+/gi,'_').replace(/^_+|_+$/g,'');}
   window.ffDownloadComplianceCertificate=async function(name){
+    const permission=ffComplianceDownloadPermission();
+    if(!permission.allowed)return ffShowComplianceDownloadRestriction();
     const target=String(name||currentMemberName()).trim();
-    const entry=memberRows().find(x=>norm(x.name)===norm(target));
+    const entry=memberRows().find(x=>canonicalRecordName(x.name)===canonicalRecordName(target)||canonicalRecordName(x.recordName)===canonicalRecordName(target));
     if(!entry){alert('No published financial record was found for this member.');return false;}
     const result=assess(entry.name,entry.member);
     if(!result.compliant){alert('Compliance certificate unavailable for '+entry.name+':\n\n'+result.reasons.map((r,i)=>(i+1)+'. '+r).join('\n'));if(typeof window.ffRenderComplianceRegister==='function')window.ffRenderComplianceRegister();return false;}
@@ -25780,3 +25860,43 @@ document.addEventListener('DOMContentLoaded', function(){
 })();
 </script>
 
+
+<style id="ff-compliance-register-scroll-final-fix">
+/* The Members card must retain its full available height; do not collapse its content to zero. */
+#admin .ff-admin-card.is-open {display:flex!important;flex-direction:column!important;overflow:hidden!important;}
+#admin .ff-admin-card.is-open > .ff-admin-content {
+  display:block!important; flex:1 1 auto!important; height:auto!important; min-height:0!important;
+  max-height:none!important; overflow-y:auto!important; overflow-x:hidden!important;
+  box-sizing:border-box!important;
+}
+/* Only the selected Compliance Certificates view gets its own clearly usable scroll area. */
+#admin #ffMembersView-compliance {
+  display:block; width:100%; height:min(70vh,720px); min-height:min(55vh,360px);
+  max-height:calc(100dvh - 190px); overflow-y:scroll!important; overflow-x:hidden!important;
+  overscroll-behavior:contain; -webkit-overflow-scrolling:touch; touch-action:pan-y;
+  scrollbar-width:auto; padding:0 14px 24px 0; box-sizing:border-box;
+}
+#admin #ffMembersView-compliance::-webkit-scrollbar {width:12px;}
+#admin #ffMembersView-compliance::-webkit-scrollbar-thumb {background:#8295a3;border-radius:10px;border:3px solid #eef3f6;}
+#admin #ffMembersView-compliance::-webkit-scrollbar-track {background:#eef3f6;border-radius:10px;}
+@media(max-width:600px){
+  #admin #ffMembersView-compliance {height:calc(100dvh - 210px);min-height:240px;max-height:calc(100dvh - 170px);}
+}
+</style>
+
+<style id="ff-compliance-popup-scroll">
+#ffMembersView-compliance[role="dialog"] {display:none;}
+#ffMembersView-compliance[role="dialog"]:not([hidden]) {display:block!important;}
+#ffMembersView-compliance #ffComplianceRegister {
+  display:block!important; width:100%!important; max-width:1120px!important;
+  margin:0 auto 24px!important; box-sizing:border-box!important;
+}
+#ffMembersView-compliance > button {
+  position:sticky!important; top:0!important; z-index:2!important;
+  margin:0 auto 14px!important; max-width:1120px!important;
+  box-shadow:0 2px 8px rgba(0,0,0,.18)!important;
+}
+#ffMembersView-compliance::-webkit-scrollbar {width:13px;}
+#ffMembersView-compliance::-webkit-scrollbar-thumb {background:#91a4b2;border-radius:10px;border:3px solid #e8eef2;}
+#ffMembersView-compliance::-webkit-scrollbar-track {background:#e8eef2;}
+</style>
