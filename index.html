@@ -3776,7 +3776,7 @@ function closeSystemUpdatePopup(){
 <!-- Welfare Application Review -->
 <div id="ffAdminWelfarePanel" style="margin-top:28px;padding-top:22px;border-top:2px solid #d1fae5;">
   <h3 style="color:#166534;">🤝 Welfare Application Review</h3>
-  <p style="color:#475569;line-height:1.6;">Members submit their completed welfare application PDF and supporting documents to Admin. After verification, Admin manually adds or updates the official hard-coded welfare record in this index, then republishes the website. Pending, approved and rejected statuses shown below come only from the published register. Final decisions and approved payout amounts are not saved in this browser.</p>
+  <p style="color:#475569;line-height:1.6;">Members’ application history stays saved locally on their own device. For shared progress updates, Admin updates the matching hard-coded record in window.FF_WELFARE_RECORDS (for example: Pending Verification, Under Review, Approved or Rejected), adds review notes / dates / approved amount, then republishes this index. The published record overrides the local status in the member history on the next website load. Approved members can download their final application PDF from their history.</p>
   <div id="ffAdminWelfareSummary" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0;"></div>
   <div style="overflow-x:auto;border:1px solid #bbf7d0;border-radius:10px;background:#fff;">
     <table style="width:100%;min-width:1360px;border-collapse:collapse;font-size:13px;line-height:1.5;">
@@ -5608,19 +5608,19 @@ Thank you for completing your Welfare Support Application.
 
 <br><br>
 
-To enable verification of your application, kindly send the required supporting documents together with your <b>Application Reference Number</b> via the official Future Finders Chama WhatsApp number below.
+To enable verification of your application, kindly send the required supporting documents together with your <b>Application Reference Number</b> via the official Future Finders Chama WhatsApp number below. Members are <b>recommended to contact Claudia Moraa (Head of Welfare) first</b> for guidance before submitting their documents.
 
 </p>
 
-<div style="
-text-align:center;
-font-size:30px;
-font-weight:bold;
-color:#2e7d32;
-margin:20px 0;">
+<div style="background:#eef6ff;border:1px solid #bfdbfe;border-radius:10px;padding:14px;text-align:center;margin:14px 0;">
+  <b style="color:#1d4ed8;">🤝 Head of Welfare — Claudia Moraa</b><br>
+  <a href="https://wa.me/254741520782" target="_blank" rel="noopener" style="display:inline-block;margin-top:7px;font-size:23px;font-weight:bold;color:#1d4ed8;text-decoration:none;">📱 0741 520 782</a>
+  <div style="font-size:12px;color:#475569;margin-top:5px;">Recommended first contact for welfare application guidance.</div>
+</div>
 
-📱 0713 953 004
-
+<div style="text-align:center;font-size:12px;color:#64748b;font-weight:700;">OFFICIAL CHAMA DOCUMENT SUBMISSION</div>
+<div style="text-align:center;font-size:27px;font-weight:bold;color:#2e7d32;margin:10px 0;">
+  <a href="https://wa.me/254713953004" target="_blank" rel="noopener" style="color:#2e7d32;text-decoration:none;">📱 0713 953 004</a>
 </div>
 
 </div>
@@ -6297,7 +6297,9 @@ margin-bottom:25px;">
 
 <ul style="line-height:2;">
 
-<li>📱 Send the downloaded PDF together with your National ID and supporting documents.</li>
+<li>🤝 Members are recommended to contact Claudia Moraa (Head of Welfare) first on <b>0741 520 782</b> for guidance.</li>
+
+<li>📱 Then send the downloaded PDF together with your National ID and supporting documents.</li>
 
 <li>📄 Include your Application Reference Number when sending the documents.</li>
 
@@ -6393,8 +6395,58 @@ let currentWelfareStep = 1;
 // =========================
 // SHOW WELFARE FORM
 // =========================
-// Your existing showWelfareApplication() stays as it is.
-// After it renders, we initialize listeners.
+// Welfare applications open in a focused modal instead of expanding below the member dashboard.
+// The original #loanMessage element is moved into the modal (not copied), so existing
+// form IDs, validation, PDF generation and submission handlers continue to work unchanged.
+let ffWelfareModalOverlay = null;
+let ffWelfareModalPlaceholder = null;
+function openWelfareApplicationModal() {
+  const host = document.getElementById("loanMessage");
+  if (!host) return;
+  if (ffWelfareModalOverlay) return;
+  ffWelfareModalPlaceholder = document.createComment("welfare application modal return point");
+  host.parentNode.insertBefore(ffWelfareModalPlaceholder, host);
+  ffWelfareModalOverlay = document.createElement("div");
+  ffWelfareModalOverlay.id = "ffWelfareApplicationModal";
+  ffWelfareModalOverlay.style.cssText = "position:fixed;inset:0;z-index:100000;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(15,23,42,.72);overflow-y:auto;";
+  ffWelfareModalOverlay.addEventListener("click", function(e) {
+    if (e.target === ffWelfareModalOverlay) closeWelfareForm();
+  });
+  const panel = document.createElement("div");
+  panel.style.cssText = "width:min(760px,100%);max-height:94vh;overflow-y:auto;position:relative;background:#fff;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.3);";
+  panel.setAttribute("role", "dialog");
+  panel.setAttribute("aria-modal", "true");
+  panel.setAttribute("aria-label", "Welfare Support Application");
+  const closeFormBtn = document.createElement("button");
+  closeFormBtn.type = "button";
+  closeFormBtn.textContent = "✖ Close Form";
+  closeFormBtn.style.cssText = "position:sticky;top:8px;float:right;z-index:5;margin:8px 8px -42px 0;padding:9px 14px;background:#b91c1c;color:#fff;border:0;border-radius:8px;font-weight:700;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.2);";
+  closeFormBtn.addEventListener("click", closeWelfareForm);
+  panel.appendChild(closeFormBtn);
+  ffWelfareModalOverlay.appendChild(panel);
+  document.body.appendChild(ffWelfareModalOverlay);
+  panel.appendChild(host);
+  host.style.marginTop = "0";
+  document.addEventListener("keydown", ffWelfareModalEscape);
+}
+function ffWelfareModalEscape(e) {
+  if (e.key === "Escape" && ffWelfareModalOverlay) closeWelfareForm();
+}
+function closeWelfareApplicationModal() {
+  if (!ffWelfareModalOverlay) return;
+  const host = document.getElementById("loanMessage");
+  if (host && ffWelfareModalPlaceholder && ffWelfareModalPlaceholder.parentNode) {
+    ffWelfareModalPlaceholder.parentNode.insertBefore(host, ffWelfareModalPlaceholder);
+    host.style.marginTop = "15px";
+    ffWelfareModalPlaceholder.remove();
+  }
+  ffWelfareModalOverlay.remove();
+  ffWelfareModalOverlay = null;
+  ffWelfareModalPlaceholder = null;
+  document.removeEventListener("keydown", ffWelfareModalEscape);
+}
+
+// After the form renders, initialize listeners inside the modal.
 let editingWelfareRef = null;
 
 const originalShowWelfareApplication = typeof showWelfareApplication === "function" ? showWelfareApplication : null;
@@ -6402,8 +6454,32 @@ const originalShowWelfareApplication = typeof showWelfareApplication === "functi
 if (originalShowWelfareApplication) {
   const _oldShowWelfareApplication = showWelfareApplication;
   showWelfareApplication = function (editRefNo) {
+    const currentMember = String(typeof loggedInUser !== "undefined" && loggedInUser ? loggedInUser : document.getElementById("memberDisplay")?.textContent || "").trim();
+    const allApps = getWelfareApplications();
+    if (editRefNo) {
+      const target = allApps.find(a => String(a.refNo) === String(editRefNo));
+      const owner = String(target?.member || target?.applicant?.fullName || "").trim();
+      if (!target || owner.toLowerCase() !== currentMember.toLowerCase() || !isWelfarePending(target)) {
+        alert("This application cannot be edited. Only your pending application can be changed before a final decision is recorded.");
+        return;
+      }
+    } else {
+      const active = allApps.find(a => {
+        const owner = String(a.member || a.applicant?.fullName || "").trim();
+        return owner.toLowerCase() === currentMember.toLowerCase() && !String(a.status || "").toLowerCase().includes("rejected");
+      });
+      if (active) {
+        const host = document.getElementById("loanMessage");
+        if (host) {
+          host.innerHTML = `<div style="max-width:650px;margin:25px auto;padding:22px;background:#fff;border:1px solid #f59e0b;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.1);"><h3 style="color:#92400e;margin-top:0;">⚠️ Welfare Application Already on Record</h3><p>Your application <b>${welfareEscape(active.refNo)}</b> is currently <b>${welfareEscape(active.status || "Pending Verification")}</b>. You cannot submit another welfare application until this one is rejected.</p><button type="button" onclick="renderMemberWelfareHistory(false)" style="padding:10px 15px;border:0;border-radius:8px;background:#1565c0;color:#fff;font-weight:700;cursor:pointer;">📋 View My Application History</button> <button type="button" onclick="closeWelfareForm()" style="padding:10px 15px;border:0;border-radius:8px;background:#64748b;color:#fff;font-weight:700;cursor:pointer;">Close</button></div>`;
+          openWelfareApplicationModal();
+        }
+        return;
+      }
+    }
     editingWelfareRef = editRefNo || null;
     _oldShowWelfareApplication();
+    openWelfareApplicationModal();
     setTimeout(() => {
       initWelfareForm();
       if (editingWelfareRef) {
@@ -6438,6 +6514,7 @@ function initWelfareForm() {
 function closeWelfareForm() {
   const welfareContainer = document.getElementById("loanMessage");
   if (welfareContainer) welfareContainer.innerHTML = "";
+  if (typeof closeWelfareApplicationModal === "function") closeWelfareApplicationModal();
 }
 
 // =========================
@@ -6822,7 +6899,7 @@ function safe(val) {
 // =========================
 function collectWelfareData() {
   return {
-    refNo: generateWelfareReference(),
+    refNo: editingWelfareRef || generateWelfareReference(),
     applicationDate: new Date().toLocaleDateString("en-KE"),
 
     applicant: {
@@ -6899,13 +6976,35 @@ window.FF_WELFARE_RECORDS = window.FF_WELFARE_RECORDS || [
   // }
 ];
 
+const FF_MEMBER_WELFARE_STORAGE_KEY = "ff_member_welfare_applications_v1";
+function getMemberSavedWelfareApplications() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(FF_MEMBER_WELFARE_STORAGE_KEY) || "[]");
+    return Array.isArray(saved) ? saved : [];
+  } catch (error) { console.warn("Could not read member welfare history", error); return []; }
+}
+function saveMemberWelfareApplications(applications) {
+  try { localStorage.setItem(FF_MEMBER_WELFARE_STORAGE_KEY, JSON.stringify(applications)); return true; }
+  catch (error) { console.error("Could not save member welfare history", error); return false; }
+}
 function getWelfareApplications() {
-  return Array.isArray(window.FF_WELFARE_RECORDS) ? window.FF_WELFARE_RECORDS : [];
+  const official = Array.isArray(window.FF_WELFARE_RECORDS) ? window.FF_WELFARE_RECORDS : [];
+  const memberSaved = getMemberSavedWelfareApplications();
+  const merged = new Map();
+  memberSaved.forEach(app => { if (app && app.refNo) merged.set(String(app.refNo), app); });
+  // Published official records take precedence for status, remarks and approved amount.
+  official.forEach(app => {
+    if (!app || !app.refNo) return;
+    const local = merged.get(String(app.refNo)) || {};
+    merged.set(String(app.refNo), { ...local, ...app, applicant: app.applicant || local.applicant });
+  });
+  return Array.from(merged.values());
 }
 
-// Deliberately disabled: welfare records are published by editing the hard-coded register above.
-function putWelfareApplications() {
-  console.warn("Welfare records are hard-coded. Update window.FF_WELFARE_RECORDS in the index and republish it.");
+// Member submissions are saved locally in the member's browser. The official register
+// above remains the published source of verified decisions across members/devices.
+function putWelfareApplications(applications) {
+  return saveMemberWelfareApplications(applications);
 }
 
 function isWelfarePending(application) {
@@ -6955,12 +7054,27 @@ function renderMemberWelfareHistory(toggleVisibility = true) {
           <b>Submitted:</b> ${welfareEscape(app.applicationDate || "Not recorded")}
           ${app.lastUpdated ? `<br><b>Last updated:</b> ${welfareEscape(new Date(app.lastUpdated).toLocaleString("en-KE"))}` : ""}
         </p>
-        ${pending ? '<span style="font-size:12px;color:#a16207;">Your PDF has been submitted for administrative verification. The published status will appear here after Admin updates the official index.</span>' : '<span style="font-size:12px;color:#64748b;">This application is locked because a final decision has been recorded in the official index.</span>'}
+        ${app.adminNotes ? `<div style="margin:8px 0;padding:9px 11px;border-left:3px solid #0f766e;background:#f0fdfa;color:#115e59;font-size:13px;"><b>Latest update:</b> ${welfareEscape(app.adminNotes)}${app.adminReviewedAt ? `<br><small>${welfareEscape(app.adminReviewedAt)}</small>` : ''}</div>` : ''}${pending ? `<span style="font-size:12px;color:#a16207;">${/review/i.test(status) ? 'Your application is under review.' : 'Your application is awaiting verification.'} You cannot submit another welfare application while this one is active. You may edit and download an updated PDF until a final decision is recorded.</span><br><button type="button" onclick="showWelfareApplication('${welfareEscape(app.refNo)}')" style="margin-top:10px;padding:9px 14px;border:0;border-radius:8px;background:#1565c0;color:#fff;font-weight:700;cursor:pointer;">✏️ Edit Pending Application</button>` : /approv/i.test(status) ? `<span style="font-size:12px;color:#166534;">Approved — your application is locked. You can download the approved application form below.</span><br><button type="button" onclick="downloadWelfareApplicationPDF('${welfareEscape(app.refNo)}')" style="margin-top:10px;padding:9px 14px;border:0;border-radius:8px;background:#15803d;color:#fff;font-weight:700;cursor:pointer;">⬇️ Download Approved Application Form</button>${app.approvedAmount != null && Number(app.approvedAmount)>0 ? `<div style="margin-top:8px;font-weight:700;color:#166534;">Approved support: KSh ${Number(app.approvedAmount).toLocaleString('en-KE')}</div>` : ''}` : '<span style="font-size:12px;color:#b91c1c;">Rejected — this application is locked. You may submit a new application.</span>'}
       </div>`;
-    }).join("") : '<p style="margin:12px 0 0;color:#64748b;">You have not submitted a welfare application yet. Your applications will appear here after Admin publishes their verified records in the official index.</p>'}
+    }).join("") : '<p style="margin:12px 0 0;color:#64748b;">You have not submitted a welfare application yet. Once submitted on this device, your application will be saved here automatically.</p>'}
   `;
   if (toggleVisibility) host.style.display = host.style.display === "none" ? "block" : "none";
   else host.style.display = "block";
+}
+
+async function downloadWelfareApplicationPDF(refNo) {
+  const memberName = String(typeof loggedInUser !== "undefined" && loggedInUser ? loggedInUser : document.getElementById("memberDisplay")?.textContent || "").trim();
+  const app = getWelfareApplications().find(item => String(item.refNo) === String(refNo));
+  const owner = String(app?.member || app?.applicant?.fullName || "").trim();
+  if (!app || owner.toLowerCase() !== memberName.toLowerCase()) {
+    alert("This welfare application could not be found in your member history.");
+    return;
+  }
+  if (!/approv/i.test(String(app.status || ""))) {
+    alert("The application form can be downloaded as an approved form only after approval has been published.");
+    return;
+  }
+  await generateWelfarePDF(app);
 }
 
 function populateWelfareFormForEdit(app) {
@@ -7007,14 +7121,40 @@ async function submitWelfareApplication() {
   if (!validateCurrentStep(6)) return;
 
   const data = collectWelfareData();
-  data.status = "Submitted — Awaiting Admin Verification";
   data.member = (typeof loggedInUser !== "undefined" && loggedInUser ? loggedInUser : data.applicant.fullName);
+  data.status = editingWelfareRef ? "Pending Verification" : "Pending Verification";
   data.lastUpdated = new Date().toISOString();
+  const savedApps = getMemberSavedWelfareApplications();
+  const memberKey = String(data.member || data.applicant.fullName).trim().toLowerCase();
+  const existingActive = getWelfareApplications().find(app => {
+    const owner = String(app.member || app.applicant?.fullName || "").trim().toLowerCase();
+    return owner === memberKey && String(app.refNo) !== String(editingWelfareRef || "") && !String(app.status || "").toLowerCase().includes("rejected");
+  });
+  if (!editingWelfareRef && existingActive) {
+    alert(`You already have welfare application ${existingActive.refNo} on record. You cannot apply again until it is rejected.`);
+    return;
+  }
+  const existingIndex = savedApps.findIndex(app => String(app.refNo) === String(data.refNo));
+  if (existingIndex >= 0) {
+    const old = savedApps[existingIndex];
+    if (!isWelfarePending(old)) { alert("This application is locked because a final decision has been recorded."); return; }
+    data.applicationDate = old.applicationDate || data.applicationDate;
+    data.createdAt = old.createdAt || old.lastUpdated || data.lastUpdated;
+    savedApps[existingIndex] = { ...old, ...data };
+  } else {
+    data.createdAt = data.lastUpdated;
+    savedApps.push(data);
+  }
+  if (!saveMemberWelfareApplications(savedApps)) {
+    alert("Your application could not be saved in this browser. Please check browser storage and try again.");
+    return;
+  }
 
-  // Submission creates the signed PDF only. The official application/status record is
-  // manually hard-coded by Admin after receiving and checking the PDF and supporting documents.
+  // Keep the existing PDF download and WhatsApp document-submission process.
+  const submittedRef = data.refNo;
   editingWelfareRef = null;
   await generateWelfarePDF(data);
+  renderMemberWelfareHistory(false);
 
   const welfareContainer = document.getElementById("loanMessage");
   if (welfareContainer) {
@@ -7032,7 +7172,7 @@ async function submitWelfareApplication() {
           <div style="font-size:60px;">✅</div>
           <h2 style="margin:10px 0 0;">Application Submitted Successfully</h2>
           <p style="margin-top:10px;font-size:15px;">
-            Your Welfare Support Application PDF has been generated and downloaded. The official record will be published after Admin receives and verifies your documents.
+            Your Welfare Support Application has been saved in My Welfare Application History, and the PDF has been generated and downloaded. You may edit it while it is pending. The official status will update when the published register is updated.
           </p>
         </div>
 
@@ -7051,10 +7191,10 @@ async function submitWelfareApplication() {
           <div style="background:#fff3cd;border-left:5px solid #ff9800;padding:16px;border-radius:10px;margin-bottom:20px;">
             <h3 style="margin-top:0;color:#ef6c00;">Next Step</h3>
             <p style="line-height:1.8;margin:0;">
-              Kindly send the downloaded PDF together with your National ID and supporting documents
-              to the official Future Finders Chama WhatsApp number:
-              <br><br>
-              <b style="font-size:18px;">0713 953 004</b>
+              We recommend contacting <b>Claudia Moraa, Head of Welfare</b> first for guidance:
+              <br><b style="font-size:18px;">0741 520 782</b><br><br>
+              Then send the downloaded PDF together with your National ID and supporting documents to the official Chama WhatsApp number:
+              <br><b style="font-size:18px;">0713 953 004</b>
             </p>
           </div>
 
@@ -7383,7 +7523,7 @@ async function generateWelfarePDF(data) {
   section("5. Required Supporting Documents");
 
   paragraphBox(
-    "The applicant is required to send this downloaded PDF together with a clear copy of the National ID and the relevant supporting documents through the official Future Finders Chama WhatsApp number 0713 953 004 for verification.",
+    "Members are recommended to contact Claudia Moraa, Head of Welfare, first on 0741 520 782 for guidance. The applicant must then send this downloaded PDF together with a clear copy of the National ID and the relevant supporting documents through the official Future Finders Chama WhatsApp number 0713 953 004 for verification.",
     [255, 252, 235],
     [245, 204, 99]
   );
@@ -7481,35 +7621,30 @@ async function generateWelfarePDF(data) {
 
   y += 18;
 
-  // Signature boxes
-  ensureSpace(45);
+  // Three balanced welfare signatory boxes: Admin, Chairlady and Head of Welfare.
+  ensureSpace(50);
 
-  doc.setFillColor(252, 252, 252);
-  doc.setDrawColor(220);
-  doc.roundedRect(margin, y, 84, 32, 2, 2, "FD");
-  doc.roundedRect(114, y, 84, 32, 2, 2, "FD");
+  const welfareSignatories = [
+    {x:margin, label:"Admin Signature", name:"Boniface Chelluget"},
+    {x:77, label:"Chairlady Signature", name:"Faith"},
+    {x:139, label:"Head of Welfare", name:"Claudia Moraa"}
+  ];
+  welfareSignatories.forEach(sig=>{
+    doc.setFillColor(252,252,252);
+    doc.setDrawColor(220);
+    doc.roundedRect(sig.x,y,56,38,2,2,"FD");
+    doc.setDrawColor(180);
+    doc.line(sig.x+4,y+17,sig.x+52,y+17);
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(7.1);
+    doc.setTextColor(40);
+    doc.text(sig.label,sig.x+4,y+23,{maxWidth:48});
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(7.2);
+    doc.text(sig.name,sig.x+4,y+30,{maxWidth:48});
+  });
 
-  // Admin
-  doc.setDrawColor(180);
-  doc.line(margin + 6, y + 18, margin + 78, y + 18);
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(10);
-  doc.text("Admin Signature", margin + 6, y + 24);
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(9);
-  doc.text("Name: Boniface Chelluget", margin + 6, y + 29);
-
-  // Chairlady
-  doc.setDrawColor(180);
-  doc.line(120, y + 18, 192, y + 18);
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(10);
-  doc.text("Chairlady Signature", 120, y + 24);
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(9);
-  doc.text("Name: Faith", 120, y + 29);
-
-  y += 42;
+  y += 47;
 
   // =========================
 // DIGITAL OFFICE STAMP
@@ -7735,7 +7870,7 @@ y += 38;
   <details class="ff-member-menu">
     <summary><span class="ff-menu-icon">🤝</span><span>Member Support</span></summary>
     <div class="ff-menu-items" data-menu="support">
-      <div class="ff-menu-hint">Apply for welfare support and follow the status of your submitted applications.</div>
+      <div class="ff-menu-hint">Apply for welfare support, edit pending applications and follow your application history. You cannot submit another application while one is pending or approved; a rejected application allows you to apply again.</div>
       <button type="button" class="ff-admin-action action-btn" onclick="showWelfareApplication()">🤝 Apply for Welfare Support</button>
       <button type="button" class="ff-admin-action action-btn" onclick="renderMemberWelfareHistory()">📋 My Welfare Application History</button>
       <div id="ffMemberWelfareHistory" style="display:none;margin-top:10px;padding:12px;border:1px solid #dbe5ed;border-radius:10px;background:#fff;"></div>
@@ -8643,7 +8778,7 @@ document.addEventListener(
   To change availability later, edit the value below and republish index.html.
   No admin control is used for this setting.
 */
-const PUBLISHED_LOANS_OPEN = false;
+const PUBLISHED_LOANS_OPEN = true;
 const PUBLISHED_LOAN_AVAILABILITY_REASON = "The Chama's normal loan operating period runs annually from 1 January to 31 October. Loan applications and new loan disbursements are closed from 1 November to 31 December each year to allow the Chama to prepare for its December activities and the close of the year. Normal loan services will resume on 1 January of the following year, subject to the availability of funds and the usual approval requirements.";
 
 function getLoanAvailabilityState() {
@@ -15047,24 +15182,93 @@ function checkLoan() {
     ? `<br><small>💡 Emergency loan: Save more to qualify for a higher loan amount.</small>`
     : "";
 
-  loanResult.innerHTML = `
-    <div style="padding:15px; background:#e3f2fd; border-radius:10px;
-                box-shadow:0 3px 6px rgba(0,0,0,0.1);">
+  // Show the successful loan eligibility result in a focused popup,
+  // rather than displaying it underneath the member dashboard.
+  showLoanEligibilityPopup(loggedInUser, loanAmount, repaymentPeriod, loanNote);
+}
 
-      ✅ <b>Congratulations, ${loggedInUser}!</b><br><br>
+let ffLoanEligibilityOverlay = null;
+function showLoanEligibilityPopup(memberName, maximumLoan, repaymentPeriod, loanNote = "") {
+  closeLoanEligibilityPopup();
 
-      <b>Maximum Loan:</b> Ksh ${loanAmount.toLocaleString()}<br>
-      <b>Repayment Period:</b> ${repaymentPeriod}
-      ${loanNote}
-      <br><br>
+  const overlay = document.createElement("div");
+  overlay.id = "ffLoanEligibilityPopup";
+  overlay.style.cssText = "position:fixed;inset:0;z-index:100050;display:flex;align-items:center;justify-content:center;padding:18px;box-sizing:border-box;background:rgba(15,23,42,.72);";
+  overlay.setAttribute("role", "presentation");
+  overlay.addEventListener("click", function (event) {
+    if (event.target === overlay) closeLoanEligibilityPopup();
+  });
 
-      <button onclick="showLoanForm('${loggedInUser}', ${loanAmount}, '${repaymentPeriod}')"
-        style="padding:10px 15px; background:#1976d2; color:white;
-               border:none; border-radius:5px; cursor:pointer;">
-        👉 Apply for Loan
-      </button>
-    </div>
-  `;
+  const panel = document.createElement("div");
+  panel.setAttribute("role", "dialog");
+  panel.setAttribute("aria-modal", "true");
+  panel.setAttribute("aria-labelledby", "ffLoanEligibilityTitle");
+  panel.style.cssText = "position:relative;width:min(460px,100%);box-sizing:border-box;padding:30px 24px 24px;background:#fff;border-radius:18px;text-align:center;box-shadow:0 22px 65px rgba(0,0,0,.32);border-top:7px solid #16a34a;animation:ffLoanPopupIn .22s ease-out;";
+
+  const closeButton = document.createElement("button");
+  closeButton.type = "button";
+  closeButton.textContent = "✕";
+  closeButton.setAttribute("aria-label", "Close loan eligibility popup");
+  closeButton.style.cssText = "position:absolute;top:10px;right:12px;width:36px;height:36px;border:0;border-radius:50%;background:#f1f5f9;color:#334155;font-size:19px;font-weight:800;cursor:pointer;";
+  closeButton.addEventListener("click", closeLoanEligibilityPopup);
+
+  const title = document.createElement("h2");
+  title.id = "ffLoanEligibilityTitle";
+  title.textContent = "🎉 Loan Eligibility Confirmed!";
+  title.style.cssText = "margin:8px 25px 12px;color:#166534;font-size:22px;line-height:1.3;";
+
+  const greeting = document.createElement("p");
+  greeting.style.cssText = "margin:0 0 18px;color:#1e293b;font-size:17px;font-weight:800;";
+  greeting.textContent = "✅ Congratulations, " + memberName + "!";
+
+  const details = document.createElement("div");
+  details.style.cssText = "padding:17px 14px;margin:0 0 18px;background:#ecfdf5;border:1px solid #bbf7d0;border-radius:12px;color:#14532d;line-height:1.8;";
+  details.innerHTML = '<div style="font-size:13px;color:#64748b;font-weight:700;text-transform:uppercase;letter-spacing:.5px;">Maximum Loan</div><div style="font-size:30px;font-weight:900;color:#166534;">Ksh ' + Number(maximumLoan).toLocaleString() + '</div><div style="font-weight:700;">Repayment Period: ' + repaymentPeriod + '</div>' + loanNote;
+
+  const applyButton = document.createElement("button");
+  applyButton.type = "button";
+  applyButton.textContent = "👉 Apply for Loan";
+  applyButton.style.cssText = "display:block;width:100%;padding:13px 18px;background:#1976d2;color:#fff;border:0;border-radius:9px;font-size:16px;font-weight:800;cursor:pointer;";
+  applyButton.addEventListener("click", function () {
+    closeLoanEligibilityPopup();
+    showLoanForm(memberName, maximumLoan, repaymentPeriod);
+  });
+
+  const closeTextButton = document.createElement("button");
+  closeTextButton.type = "button";
+  closeTextButton.textContent = "Close";
+  closeTextButton.style.cssText = "margin-top:10px;padding:9px 18px;background:#e2e8f0;color:#334155;border:0;border-radius:8px;font-weight:700;cursor:pointer;";
+  closeTextButton.addEventListener("click", closeLoanEligibilityPopup);
+
+  panel.append(closeButton, title, greeting, details, applyButton, closeTextButton);
+  overlay.appendChild(panel);
+  document.body.appendChild(overlay);
+  ffLoanEligibilityOverlay = overlay;
+  document.addEventListener("keydown", ffLoanEligibilityEscape);
+  document.body.style.overflow = "hidden";
+  closeButton.focus();
+}
+
+function ffLoanEligibilityEscape(event) {
+  if (event.key === "Escape") closeLoanEligibilityPopup();
+}
+
+function closeLoanEligibilityPopup() {
+  if (ffLoanEligibilityOverlay) {
+    ffLoanEligibilityOverlay.remove();
+    ffLoanEligibilityOverlay = null;
+  }
+  document.removeEventListener("keydown", ffLoanEligibilityEscape);
+  if (!document.querySelector('#ffLoanApplicationModal, #ffLoanFormModal, #ffLoanEligibilityPopup')) {
+    document.body.style.overflow = "";
+  }
+}
+
+if (!document.getElementById("ffLoanEligibilityPopupStyles")) {
+  const style = document.createElement("style");
+  style.id = "ffLoanEligibilityPopupStyles";
+  style.textContent = "@keyframes ffLoanPopupIn{from{opacity:0;transform:translateY(12px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}@media(max-width:480px){#ffLoanEligibilityPopup>div{padding:27px 17px 19px!important}}";
+  document.head.appendChild(style);
 }
 let currentStep = 1;
 
@@ -15162,14 +15366,54 @@ function updateProgress(){
     }
 
 }
-function closeLoanForm() {
-
-    if (confirm("Are you sure you want to cancel this loan application?")) {
-
-        document.getElementById("loanMessage").innerHTML = "";
-
+let ffLoanModalOverlay = null;
+let ffLoanModalPlaceholder = null;
+function openLoanApplicationModal() {
+    const host = document.getElementById("loanMessage");
+    if (!host || ffLoanModalOverlay) return;
+    ffLoanModalPlaceholder = document.createComment("loan application modal return point");
+    host.parentNode.insertBefore(ffLoanModalPlaceholder, host);
+    ffLoanModalOverlay = document.createElement("div");
+    ffLoanModalOverlay.id = "ffLoanApplicationModal";
+    ffLoanModalOverlay.style.cssText = "position:fixed;inset:0;z-index:100001;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(15,23,42,.72);overflow-y:auto;";
+    ffLoanModalOverlay.addEventListener("click", e => { if (e.target === ffLoanModalOverlay) closeLoanForm(); });
+    const panel = document.createElement("div");
+    panel.style.cssText = "width:min(760px,100%);max-height:94vh;overflow-y:auto;position:relative;background:#fff;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.3);";
+    panel.setAttribute("role", "dialog");
+    panel.setAttribute("aria-modal", "true");
+    panel.setAttribute("aria-label", "Loan Application");
+    const closeBtn = document.createElement("button");
+    closeBtn.type = "button";
+    closeBtn.textContent = "✖ Close Form";
+    closeBtn.style.cssText = "position:sticky;top:8px;float:right;z-index:5;margin:8px 8px -42px 0;padding:9px 14px;background:#b91c1c;color:#fff;border:0;border-radius:8px;font-weight:700;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.2);";
+    closeBtn.addEventListener("click", closeLoanForm);
+    panel.appendChild(closeBtn);
+    ffLoanModalOverlay.appendChild(panel);
+    document.body.appendChild(ffLoanModalOverlay);
+    panel.appendChild(host);
+    host.style.marginTop = "0";
+    document.addEventListener("keydown", ffLoanModalEscape);
+}
+function ffLoanModalEscape(e) { if (e.key === "Escape" && ffLoanModalOverlay) closeLoanForm(); }
+function closeLoanApplicationModal() {
+    if (!ffLoanModalOverlay) return;
+    const host = document.getElementById("loanMessage");
+    if (host && ffLoanModalPlaceholder && ffLoanModalPlaceholder.parentNode) {
+        ffLoanModalPlaceholder.parentNode.insertBefore(host, ffLoanModalPlaceholder);
+        host.style.marginTop = "15px";
+        ffLoanModalPlaceholder.remove();
     }
-
+    ffLoanModalOverlay.remove();
+    ffLoanModalOverlay = null;
+    ffLoanModalPlaceholder = null;
+    document.removeEventListener("keydown", ffLoanModalEscape);
+}
+function closeLoanForm() {
+    if (confirm("Are you sure you want to close this loan application? Any unsaved information will be lost.")) {
+        const host = document.getElementById("loanMessage");
+        if (host) host.innerHTML = "";
+        closeLoanApplicationModal();
+    }
 }
 
  // ========================= 📝 Styled Loan Application Form =========================
@@ -15216,6 +15460,12 @@ margin-top:8px;
 font-size:14px;">
 Complete all steps to submit your application.
 </p>
+<div style="margin:12px auto 0;padding:10px 12px;max-width:460px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);border-radius:10px;font-size:13px;line-height:1.6;">
+  <b>Head of Loans: Shalik Shiverenge</b><br>
+  Contact: <a href="tel:0746277086" style="color:#fff;font-weight:800;text-decoration:underline;">0746 277 086</a>
+  &nbsp;|&nbsp; <a href="https://wa.me/254746277086" target="_blank" rel="noopener" style="color:#fff;font-weight:800;text-decoration:underline;">WhatsApp Shalik</a>
+  <div style="font-size:11px;margin-top:3px;">After downloading your completed form, use the sharing option below to send it to the Head of Loans.</div>
+</div>
 
 <!-- STEP INDICATOR -->
 
@@ -16034,6 +16284,7 @@ cursor:pointer;">
 `;
 currentStep = 1;
 updateProgress();
+openLoanApplicationModal();
 }
 
 async function submitLoan(event, name, maxAmount, phone) {
@@ -16745,6 +16996,11 @@ function drawPageHeader() {
             align: "center"
         }
     );
+
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(8);
+    doc.setTextColor(21, 101, 192);
+    doc.text("Head of Loans: Shalik Shiverenge • 0746 277 086", 105, 294, { align: "center" });
 }
 
 // =========================
@@ -18833,91 +19089,31 @@ if (
 }
 
 // =========================
-// SIGNATURE LINES
+// SIGNATURE LINES — APPLICANT + THREE OFFICIAL SIGNATORIES
 // =========================
-
+// Four balanced columns keep every full name readable on the A4 form.
 y += 5;
-
-doc.setDrawColor(
-    80,
-    80,
-    80
-);
-
+const loanSignatureCols = [
+    {x:20, end:61, title:"Applicant", name:"Member Signature"},
+    {x:66, end:107, title:"Head of Loans", name:"Shalik Shiverenge"},
+    {x:112, end:153, title:"Chairperson", name:"Faith Mokogi"},
+    {x:158, end:199, title:"Administrator", name:"Boniface Chelluget"}
+];
+doc.setDrawColor(80,80,80);
 doc.setLineWidth(0.4);
-
-doc.line(
-    20,
-    y,
-    70,
-    y
-);
-
-doc.line(
-    80,
-    y,
-    130,
-    y
-);
-
-doc.line(
-    140,
-    y,
-    190,
-    y
-);
-
+loanSignatureCols.forEach(col=>doc.line(col.x,y,col.end,y));
 y += 6;
-
-// =========================
-// SIGNATURE LABELS
-// =========================
-
-doc.setFont(
-    "helvetica",
-    "normal"
-);
-
-doc.setFontSize(8.5);
-
-doc.setTextColor(
-    0,
-    0,
-    0
-);
-
-// Applicant
-doc.text(
-    "Applicant Signature",
-    20,
-    y
-);
-
-// Chairlady
-doc.text(
-    "Chairlady",
-    80,
-    y
-);
-
-doc.text(
-    "(Faith Kwamboka)",
-    80,
-    y + 5
-);
-
-// Administrator
-doc.text(
-    "Administrator",
-    140,
-    y
-);
-
-doc.text(
-    "(Boniface Kaiser)",
-    140,
-    y + 5
-);
+doc.setFont("helvetica","normal");
+doc.setFontSize(7.2);
+doc.setTextColor(0,0,0);
+loanSignatureCols.forEach(col=>{
+    doc.text(col.title,col.x,y,{maxWidth:col.end-col.x});
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(6.8);
+    doc.text(col.name,col.x,y+5,{maxWidth:col.end-col.x});
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(7.2);
+});
 // Make sure there is enough space for the complete stamp
 if (y + 42 > bottomLimit) {
     doc.addPage();
@@ -19251,6 +19447,23 @@ try {
             "PDF could not be downloaded. Please try again."
         );
     }
+}
+
+// Offer the member a direct WhatsApp hand-off to the Head of Loans.
+// WhatsApp cannot attach the downloaded PDF automatically; the member attaches it in the chat.
+try {
+    const loanMessageBox = document.getElementById("loanMessage");
+    if (loanMessageBox) {
+        const oldShare = document.getElementById("ffLoanShareToHead");
+        if (oldShare) oldShare.remove();
+        const sharePanel = document.createElement("div");
+        sharePanel.id = "ffLoanShareToHead";
+        sharePanel.style.cssText = "max-width:620px;margin:12px auto;padding:15px;background:#eff6ff;border:1px solid #93c5fd;border-radius:12px;text-align:center;font-family:Arial,sans-serif;";
+        sharePanel.innerHTML = `<b style="color:#1e3a8a;">Your loan application PDF is ready.</b><p style="margin:7px 0 12px;font-size:13px;color:#334155;">Send the downloaded PDF to Shalik Shiverenge, Head of Loans. WhatsApp will open with your application reference; attach the PDF before pressing Send.</p><a href="https://wa.me/254746277086?text=${encodeURIComponent(`Hello Shalik, please find attached my Future Finders Chama loan application. Application Reference: ${applicationNo}. Member: ${name}.`)}" target="_blank" rel="noopener" style="display:inline-block;background:#16a34a;color:#fff;text-decoration:none;padding:11px 16px;border-radius:8px;font-weight:700;">🟢 Share Loan Form with Head of Loans on WhatsApp</a><p style="margin:9px 0 0;font-size:12px;color:#475569;">Contact: <a href="tel:0746277086" style="color:#1d4ed8;font-weight:700;">0746 277 086</a></p>`;
+        loanMessageBox.appendChild(sharePanel);
+    }
+} catch (shareUiError) {
+    console.warn("Could not display loan WhatsApp sharing option:", shareUiError);
 }
 
 // =========================
