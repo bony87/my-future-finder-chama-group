@@ -26737,3 +26737,354 @@ document.addEventListener('DOMContentLoaded', function(){
   document.addEventListener('click',e=>{if(e.target&&e.target.closest('#admin'))setTimeout(run,150);});
 })();
 </script>
+
+
+<!-- Future Finders: Merry-Go-Round Penalty Notice / Payment Receipt -->
+<script id="ff-mgr-penalty-receipt-v1">
+(function(){
+  const LOGO_URL="https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/FUTURE%20FINDERS%20LOGO.jpeg";
+  const money=v=>"KSh "+(Number(v)||0).toLocaleString("en-KE",{minimumFractionDigits:2,maximumFractionDigits:2});
+  const esc=v=>String(v??"—").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  function records(){return Array.isArray(window.FF_MGR_PENALTY_RECORDS)?window.FF_MGR_PENALTY_RECORDS:[];}
+  function getAmounts(r){
+    const count=Math.max(0,Number(r.penaltyCount)||1);
+    const each=Math.max(0,Number(r.amountPerPenalty)||0);
+    const assessed=count*each;
+    const paid=Math.min(assessed,Math.max(0,Number(r.paidAmount)||((Number(r.penaltiesPaid)||0)*each)));
+    return {count,each,assessed,paid,balance:Math.max(0,assessed-paid)};
+  }
+  function loadLogo(){
+    return new Promise(resolve=>{
+      const img=new Image();img.crossOrigin="anonymous";
+      img.onload=()=>resolve(img);img.onerror=()=>resolve(null);img.src=LOGO_URL;
+    });
+  }
+  window.downloadFFMGRPenaltyDocument=async function(index,scope){
+    const r=records()[Number(index)];
+    if(!r){alert("This Merry-Go-Round penalty record could not be found. Refresh the register and try again.");return;}
+    const member=String(r.member||r.name||"").trim();
+    if(scope==="member"){
+      const activeMember=(typeof loggedInUser!=="undefined"?loggedInUser:window.loggedInUser)||window.loggedInUser||"";
+      const logged=String(activeMember).trim().toLowerCase().replace(/\s+/g," ");
+      if(!logged||logged!==member.toLowerCase().replace(/\s+/g," ")){
+        alert("Members can download documents only for their own Merry-Go-Round penalty records.");return;
+      }
+    }
+    if(!window.jspdf||!window.jspdf.jsPDF){alert("The PDF service is still loading. Please try again.");return;}
+    const {jsPDF}=window.jspdf,doc=new jsPDF("p","mm","a4");
+    const W=doc.internal.pageSize.getWidth(),H=doc.internal.pageSize.getHeight();
+    const a=getAmounts(r),dates=Array.isArray(r.penaltyDates)?r.penaltyDates:(r.penaltyDate?[r.penaltyDate]:[]);
+    const fullyPaid=a.balance<=0&&a.paid>0;
+    const title=fullyPaid?"MERRY-GO-ROUND PENALTY PAYMENT RECEIPT":"MERRY-GO-ROUND PENALTY NOTICE";
+    const ref=String(r.id||("FF-MGR-"+(Number(index)+1))).replace(/[^a-z0-9_-]/gi,"_");
+    const issue=new Date().toLocaleDateString("en-KE",{day:"2-digit",month:"long",year:"numeric"});
+    doc.setDrawColor(18,48,74);doc.setLineWidth(0.8);doc.roundedRect(10,10,W-20,H-20,3,3);
+    const logo=await loadLogo();if(logo){try{doc.addImage(logo,"JPEG",17,15,25,25,undefined,"FAST");}catch(e){}}
+    doc.setTextColor(18,48,74);doc.setFont("helvetica","bold");doc.setFontSize(17);
+    doc.text("FUTURE FINDERS CHAMA GROUP",W/2,23,{align:"center"});
+    doc.setFont("helvetica","normal");doc.setFontSize(8);doc.setTextColor(15,118,110);
+    doc.text("TOGETHER WE SAVE. TOGETHER WE GROW. TOGETHER WE SUCCEED.",W/2,30,{align:"center"});
+    doc.setDrawColor(15,118,110);doc.line(17,43,W-17,43);
+    doc.setFont("helvetica","bold");doc.setFontSize(15);doc.setTextColor(18,48,74);
+    doc.text(title,W/2,56,{align:"center"});
+    doc.setFont("helvetica","normal");doc.setFontSize(9);doc.setTextColor(80,95,110);
+    doc.text("Document Ref: "+ref,17,66);doc.text("Date issued: "+issue,W-17,66,{align:"right"});
+    let y=82;
+    const rows=[
+      ["Member name",member],
+      ["Merry-Go-Round arrangement",String(r.penaltyType||"Not specified")],
+      ["Penalty date(s)",dates.length?dates.join(", "):String(r.penaltyDate||"Not recorded")],
+      ["Number of penalties",String(a.count)],
+      ["Amount per penalty",money(a.each)],
+      ["Total penalty assessed",money(a.assessed)],
+      ["Amount paid and recorded",money(a.paid)],
+      ["Outstanding balance",money(a.balance)],
+      ["Payment status",fullyPaid?"PAID IN FULL":a.paid>0?"PART PAYMENT RECORDED":"UNPAID / OUTSTANDING"]
+    ];
+    rows.forEach((row,i)=>{
+      const fill=i%2===0?[244,248,250]:[255,255,255];
+      doc.setFillColor(...fill);doc.rect(17,y-5,W-34,11,"F");
+      doc.setFont("helvetica","bold");doc.setFontSize(9);doc.setTextColor(45,62,78);doc.text(row[0],21,y+2);
+      doc.setFont("helvetica",i===8?"bold":"normal");doc.setTextColor(i===8?(fullyPaid?21:185):45,i===8?(fullyPaid?128:28):62,i===8?(fullyPaid?61:28):78);
+      doc.text(doc.splitTextToSize(row[1],W-100),W-21,y+2,{align:"right"});
+      y+=12;
+    });
+    y+=8;doc.setFont("helvetica","italic");doc.setFontSize(8);doc.setTextColor(90,105,120);
+    const note=fullyPaid
+      ?"This receipt confirms the payment amount recorded in the Future Finders Chama Group Merry-Go-Round penalty register."
+      :a.paid>0
+        ?"This notice acknowledges the penalty assessment and the part-payment recorded. The remaining balance is still outstanding."
+        :"This is a penalty notice based on the official register. It is not a payment receipt; payment must be recorded by Admin before a paid receipt can be issued.";
+    doc.text(doc.splitTextToSize(note,W-36),18,y);y+=23;
+    if(r.notes){doc.setFont("helvetica","normal");doc.setFontSize(8);doc.text(doc.splitTextToSize("Admin remarks: "+String(r.notes),W-36),18,y);y+=15;}
+    y=Math.max(y,210);
+    doc.setDrawColor(185,198,208);doc.line(17,y,W-17,y);
+    doc.setFont("helvetica","bold");doc.setFontSize(10);doc.setTextColor(18,48,74);
+    doc.text("APPROVAL SIGNATORIES",W/2,y+10,{align:"center"});
+    const sigs=[
+      {name:"Claudia Moraa",role:"Financial Manager"},
+      {name:"Faith Mokogi",role:"Chairperson"},
+      {name:"Boniface Chelluget",role:"Administrator"}
+    ];
+    const col=(W-34)/3;
+    sigs.forEach((sig,i)=>{
+      const x=17+i*col+col/2;
+      doc.setFont("times","italic");doc.setFontSize(10);doc.setTextColor(18,48,74);
+      doc.text(sig.name,x,y+27,{align:"center"});
+      doc.setDrawColor(125,140,152);doc.line(x-col/2+4,y+30,x+col/2-4,y+30);
+      doc.setFont("helvetica","bold");doc.setFontSize(7);doc.setTextColor(75,90,105);
+      doc.text(sig.role,x,y+36,{align:"center"});
+      doc.setFont("helvetica","italic");doc.setFontSize(6);doc.text("Digitally recorded name",x,y+41,{align:"center"});
+    });
+    doc.setFont("helvetica","normal");doc.setFontSize(7);doc.setTextColor(100,110,120);
+    doc.text("Official member financial record • Future Finders Chama Group",W/2,H-17,{align:"center"});
+    doc.save("Future_Finders_MGR_Penalty_"+(fullyPaid?"Receipt_":"Notice_")+ref+".pdf");
+  };
+
+  function addMemberDownloadButtons(){
+    const host=document.getElementById("memberMGRPenaltySummarySection");
+    if(!host||host.style.display==="none"||!host.querySelector("table tbody"))return;
+    const activeMember=(typeof loggedInUser!=="undefined"?loggedInUser:window.loggedInUser)||window.loggedInUser||"";
+    const all=records(),name=String(activeMember).trim().toLowerCase().replace(/\s+/g," ");
+    const own=all.map((r,i)=>({r,i})).filter(x=>String(x.r.member||x.r.name||"").trim().toLowerCase().replace(/\s+/g," ")===name);
+    const rows=host.querySelectorAll("table tbody tr");
+    rows.forEach((tr,j)=>{
+      if(tr.dataset.ffMgrReceiptAdded==="1")return;
+      const item=own[j];if(!item)return;
+      const td=document.createElement("td");td.style.cssText="padding:9px;border-bottom:1px solid #f1f5f9;vertical-align:top;";
+      const b=document.createElement("button");b.type="button";b.textContent="⬇ Download Notice / Receipt";
+      b.style.cssText="padding:8px 10px;border:0;border-radius:7px;background:#9a3412;color:#fff;font-weight:700;cursor:pointer;white-space:normal;";
+      b.addEventListener("click",()=>window.downloadFFMGRPenaltyDocument(item.i,"member"));
+      td.appendChild(b);tr.appendChild(td);tr.dataset.ffMgrReceiptAdded="1";
+    });
+    const head=host.querySelector("table thead tr");
+    if(head&&!head.querySelector("[data-ff-mgr-action-head]")){
+      const th=document.createElement("th");th.textContent="Document";th.dataset.ffMgrActionHead="1";th.style.cssText="padding:10px;background:#ffedd5;";head.appendChild(th);
+    }
+  }
+  function addAdminDownloadButtons(){
+    const host=document.getElementById("ffAdminMGRPenaltyTable"),table=host&&host.querySelector("table");
+    if(!table)return;
+    const all=records(),rows=table.querySelectorAll("tbody tr");
+    rows.forEach((tr,j)=>{
+      if(tr.dataset.ffMgrReceiptAdded==="1")return;
+      const item=all[j];if(!item)return;
+      const td=document.createElement("td");td.style.cssText="padding:8px;border-bottom:1px solid #e2e8f0;";
+      const b=document.createElement("button");b.type="button";b.textContent="⬇ Notice / Receipt";
+      b.style.cssText="padding:7px 9px;border:0;border-radius:7px;background:#9a3412;color:#fff;font-weight:700;cursor:pointer;white-space:nowrap;";
+      b.addEventListener("click",()=>window.downloadFFMGRPenaltyDocument(j,"admin"));
+      td.appendChild(b);tr.appendChild(td);tr.dataset.ffMgrReceiptAdded="1";
+    });
+    const head=table.querySelector("thead tr");
+    if(head&&!head.querySelector("[data-ff-mgr-action-head]")){
+      const th=document.createElement("th");th.textContent="Notice / Receipt";th.dataset.ffMgrActionHead="1";th.style.cssText="padding:9px;background:#ffedd5;";head.appendChild(th);
+    }
+  }
+  function install(){
+    if(typeof window.ffRenderAdminPenaltyWelfareReports==="function"&&!window.ffRenderAdminPenaltyWelfareReports.__ffMgrReceiptWrapped){
+      const original=window.ffRenderAdminPenaltyWelfareReports;
+      const wrapped=function(){const out=original.apply(this,arguments);setTimeout(addAdminDownloadButtons,0);return out;};
+      wrapped.__ffMgrReceiptWrapped=true;window.ffRenderAdminPenaltyWelfareReports=wrapped;
+    }
+    if(typeof window.toggleMemberMGRPenaltySummary==="function"&&!window.toggleMemberMGRPenaltySummary.__ffMgrReceiptWrapped){
+      const original=window.toggleMemberMGRPenaltySummary;
+      const wrapped=function(){const out=original.apply(this,arguments);setTimeout(addMemberDownloadButtons,0);return out;};
+      wrapped.__ffMgrReceiptWrapped=true;window.toggleMemberMGRPenaltySummary=wrapped;
+    }
+    addAdminDownloadButtons();addMemberDownloadButtons();
+  }
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",()=>setTimeout(install,250));
+  else setTimeout(install,250);
+  document.addEventListener("click",e=>{
+    if(e.target&&e.target.closest("#admin"))setTimeout(addAdminDownloadButtons,120);
+    if(e.target&&e.target.closest("#memberMGRPenaltySummarySection"))setTimeout(addMemberDownloadButtons,120);
+  });
+})();
+</script>
+
+
+<!-- Future Finders: Combined Merry-Go-Round penalty statement / receipt -->
+<script id="ff-mgr-combined-receipt-v1">
+(function(){
+  const LOGO_URL="https://raw.githubusercontent.com/bony87/my-future-finder-chama-group/main/FUTURE%20FINDERS%20LOGO.jpeg";
+  const money=v=>"KSh "+(Number(v)||0).toLocaleString("en-KE",{minimumFractionDigits:2,maximumFractionDigits:2});
+  const norm=v=>String(v||"").trim().toLowerCase().replace(/\s+/g," ");
+  const records=()=>Array.isArray(window.FF_MGR_PENALTY_RECORDS)?window.FF_MGR_PENALTY_RECORDS:[];
+  function amounts(r){
+    const count=Math.max(0,Number(r.penaltyCount)||1);
+    const each=Math.max(0,Number(r.amountPerPenalty)||0);
+    const assessed=count*each;
+    const paid=Math.min(assessed,Math.max(0,Number(r.paidAmount)||((Number(r.penaltiesPaid)||0)*each)));
+    return {count,each,assessed,paid,balance:Math.max(0,assessed-paid)};
+  }
+  function dateText(r){
+    const dates=Array.isArray(r.penaltyDates)?r.penaltyDates:[];
+    return dates.length?dates.join(", "):(r.penaltyDate||"Not recorded");
+  }
+  function logo(){
+    return new Promise(resolve=>{
+      const img=new Image();img.crossOrigin="anonymous";
+      img.onload=()=>resolve(img);img.onerror=()=>resolve(null);img.src=LOGO_URL;
+    });
+  }
+  window.downloadFFMGRCombinedPenaltyDocument=async function(memberName,scope){
+    const name=String(memberName||"").trim();
+    if(scope==="member"){
+      const active=(typeof loggedInUser!=="undefined"?loggedInUser:window.loggedInUser)||"";
+      if(!norm(active)||norm(active)!==norm(name)){
+        alert("Members can download combined documents only for their own penalty records.");return;
+      }
+    }
+    const items=records().map((r,i)=>({r,i,a:amounts(r)})).filter(x=>norm(x.r.member||x.r.name)===norm(name));
+    if(items.length<2){alert("A combined document is available when this member has more than one penalty record.");return;}
+    if(!window.jspdf||!window.jspdf.jsPDF){alert("The PDF service is still loading. Please try again.");return;}
+    const total=items.reduce((s,x)=>s+x.a.assessed,0);
+    const paid=items.reduce((s,x)=>s+x.a.paid,0);
+    const balance=Math.max(0,total-paid);
+    const allPaid=balance<=0&&paid>0;
+    const {jsPDF}=window.jspdf,doc=new jsPDF("p","mm","a4");
+    const W=doc.internal.pageSize.getWidth(),H=doc.internal.pageSize.getHeight();
+    const ref="FF-MGR-COMBINED-"+Date.now().toString(36).toUpperCase();
+    const issued=new Date().toLocaleDateString("en-KE",{day:"2-digit",month:"long",year:"numeric"});
+    const img=await logo();
+    function pageHeader(){
+      doc.setDrawColor(18,48,74);doc.setLineWidth(.7);doc.roundedRect(10,10,W-20,H-20,3,3);
+      if(img){try{doc.addImage(img,"JPEG",17,15,22,22,undefined,"FAST");}catch(e){}}
+      doc.setFont("helvetica","bold");doc.setFontSize(15);doc.setTextColor(18,48,74);
+      doc.text("FUTURE FINDERS CHAMA GROUP",W/2,23,{align:"center"});
+      doc.setFont("helvetica","normal");doc.setFontSize(7);doc.setTextColor(15,118,110);
+      doc.text("TOGETHER WE SAVE. TOGETHER WE GROW. TOGETHER WE SUCCEED.",W/2,30,{align:"center"});
+      doc.setDrawColor(15,118,110);doc.line(17,42,W-17,42);
+    }
+    pageHeader();
+    doc.setFont("helvetica","bold");doc.setFontSize(13);doc.setTextColor(18,48,74);
+    doc.text(allPaid?"COMBINED MERRY-GO-ROUND PENALTY PAYMENT RECEIPT":"COMBINED MERRY-GO-ROUND PENALTY STATEMENT",W/2,53,{align:"center"});
+    doc.setFont("helvetica","normal");doc.setFontSize(8);doc.setTextColor(75,90,105);
+    doc.text("Member: "+name,17,63);doc.text("Document Ref: "+ref,17,69);doc.text("Date issued: "+issued,W-17,69,{align:"right"});
+    let y=81;
+    const summary=[
+      ["Number of penalty records",String(items.length)],
+      ["Total penalties assessed",money(total)],
+      ["Total amount paid",money(paid)],
+      ["Total outstanding balance",money(balance)],
+      ["Overall status",allPaid?"PAID IN FULL":paid>0?"PART PAYMENT / BALANCE OUTSTANDING":"UNPAID / OUTSTANDING"]
+    ];
+    summary.forEach((row,i)=>{
+      doc.setFillColor(i%2?255:244,i%2?255:248,i%2?255:250);doc.rect(17,y-5,W-34,9,"F");
+      doc.setFont("helvetica","bold");doc.setFontSize(8);doc.setTextColor(45,62,78);doc.text(row[0],20,y+1);
+      doc.setFont("helvetica",i===4?"bold":"normal");doc.text(row[1],W-20,y+1,{align:"right"});y+=10;
+    });
+    y+=7;
+    doc.setFont("helvetica","bold");doc.setFontSize(9);doc.setTextColor(18,48,74);doc.text("ITEMISED PENALTY RECORDS",17,y);y+=7;
+    const cols=[17,49,77,105,134,163, W-17];
+    function tableHeader(){
+      doc.setFillColor(18,48,74);doc.rect(17,y-5,W-34,10,"F");
+      doc.setFont("helvetica","bold");doc.setFontSize(6.5);doc.setTextColor(255,255,255);
+      ["Date","Type","Count","Each","Assessed","Paid","Balance"].forEach((t,i)=>doc.text(t,cols[i]+1,y+1));
+      y+=9;
+    }
+    tableHeader();
+    items.forEach((x,i)=>{
+      if(y>H-78){doc.addPage();pageHeader();y=53;doc.setFont("helvetica","bold");doc.setFontSize(9);doc.setTextColor(18,48,74);doc.text("ITEMISED PENALTY RECORDS (CONTINUED)",17,y);y+=8;tableHeader();}
+      const vals=[
+        dateText(x.r),
+        String(x.r.penaltyType||"—"),
+        String(x.a.count),
+        money(x.a.each),
+        money(x.a.assessed),
+        money(x.a.paid),
+        money(x.a.balance)
+      ];
+      if(i%2===0){doc.setFillColor(244,248,250);doc.rect(17,y-5,W-34,10,"F");}
+      doc.setFont("helvetica","normal");doc.setFontSize(6.3);doc.setTextColor(45,62,78);
+      vals.forEach((v,j)=>{
+        const max=j===0?29:j===1?27:22;
+        const lines=doc.splitTextToSize(String(v),max);
+        doc.text(lines[0]||"—",cols[j]+1,y+1);
+      });
+      y+=10;
+    });
+    if(y>H-65){doc.addPage();pageHeader();y=58;}
+    y+=7;doc.setFont("helvetica","italic");doc.setFontSize(7.5);doc.setTextColor(85,100,115);
+    const note=allPaid
+      ?"This combined receipt confirms the payments recorded against all penalty entries listed for this member."
+      :"This combined statement brings together all penalty entries for this member. It is not proof of full payment; only amounts recorded as paid are reflected above.";
+    doc.text(doc.splitTextToSize(note,W-36),18,y);y+=15;
+    doc.setDrawColor(185,198,208);doc.line(17,y,W-17,y);y+=9;
+    doc.setFont("helvetica","bold");doc.setFontSize(9);doc.setTextColor(18,48,74);doc.text("APPROVAL SIGNATORIES",W/2,y,{align:"center"});
+    const signers=[["Claudia Moraa","Financial Manager"],["Faith Mokogi","Chairperson"],["Boniface Chelluget","Administrator"]];
+    const cw=(W-34)/3;
+    signers.forEach((s,i)=>{
+      const x=17+i*cw+cw/2;
+      doc.setFont("times","italic");doc.setFontSize(9);doc.setTextColor(18,48,74);doc.text(s[0],x,y+15,{align:"center"});
+      doc.setDrawColor(125,140,152);doc.line(x-cw/2+4,y+18,x+cw/2-4,y+18);
+      doc.setFont("helvetica","bold");doc.setFontSize(6.5);doc.setTextColor(75,90,105);doc.text(s[1],x,y+24,{align:"center"});
+      doc.setFont("helvetica","italic");doc.setFontSize(6);doc.text("Digitally recorded name",x,y+29,{align:"center"});
+    });
+    doc.setFont("helvetica","normal");doc.setFontSize(6.5);doc.setTextColor(100,110,120);
+    doc.text("Official member financial record • Future Finders Chama Group",W/2,H-17,{align:"center"});
+    doc.save("Future_Finders_MGR_Combined_"+(allPaid?"Payment_Receipt_":"Penalty_Statement_")+name.replace(/[^a-z0-9]+/gi,"_")+".pdf");
+  };
+  function button(text,fn){
+    const b=document.createElement("button");b.type="button";b.textContent=text;
+    b.style.cssText="padding:9px 12px;border:0;border-radius:8px;background:#14532d;color:#fff;font-weight:700;cursor:pointer;margin:8px 8px 8px 0;";
+    b.addEventListener("click",fn);return b;
+  }
+  function addMemberCombined(){
+    const host=document.getElementById("memberMGRPenaltySummarySection");
+    if(!host||host.style.display==="none"||host.querySelector("[data-ff-mgr-combined-member]"))return;
+    const active=(typeof loggedInUser!=="undefined"?loggedInUser:window.loggedInUser)||"";
+    const own=records().filter(r=>norm(r.member||r.name)===norm(active));
+    if(own.length<2)return;
+    const target=host.querySelector("table")||host;
+    const wrap=document.createElement("div");wrap.dataset.ffMgrCombinedMember="1";
+    wrap.style.cssText="margin:10px 0;padding:12px;background:#ecfdf5;border:1px solid #86efac;border-radius:9px;";
+    const p=document.createElement("div");p.textContent="You have "+own.length+" penalty records. Download one combined document covering all your penalties and payments.";
+    p.style.cssText="font-weight:600;color:#14532d;margin-bottom:5px;";
+    wrap.appendChild(p);
+    wrap.appendChild(button("⬇ Download Combined Penalty Receipt / Statement",()=>window.downloadFFMGRCombinedPenaltyDocument(active,"member")));
+    target.parentNode.insertBefore(wrap,target);
+  }
+  function addAdminCombined(){
+    const host=document.getElementById("ffAdminMGRPenaltyTable");
+    if(!host||host.querySelector("[data-ff-mgr-combined-admin]"))return;
+    const groups=new Map();
+    records().forEach(r=>{
+      const n=String(r.member||r.name||"").trim();if(!n)return;
+      const k=norm(n);if(!groups.has(k))groups.set(k,{name:n,count:0});groups.get(k).count++;
+    });
+    const eligible=[...groups.values()].filter(x=>x.count>1);
+    if(!eligible.length)return;
+    const wrap=document.createElement("div");wrap.dataset.ffMgrCombinedAdmin="1";
+    wrap.style.cssText="margin:12px 0;padding:12px;background:#eff6ff;border:1px solid #93c5fd;border-radius:9px;";
+    const title=document.createElement("div");title.textContent="📄 Combined penalty documents — members with multiple penalty records";
+    title.style.cssText="font-weight:800;color:#1e3a8a;margin-bottom:8px;";wrap.appendChild(title);
+    eligible.forEach(x=>{
+      const line=document.createElement("div");line.style.cssText="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:6px 0;border-top:1px solid #dbeafe;";
+      const label=document.createElement("span");label.textContent=x.name+" — "+x.count+" penalty records";
+      line.appendChild(label);line.appendChild(button("⬇ Combined Receipt / Statement",()=>window.downloadFFMGRCombinedPenaltyDocument(x.name,"admin")));
+      wrap.appendChild(line);
+    });
+    host.insertBefore(wrap,host.firstChild);
+  }
+  function install(){
+    addMemberCombined();addAdminCombined();
+    if(typeof window.ffRenderAdminPenaltyWelfareReports==="function"&&!window.ffRenderAdminPenaltyWelfareReports.__ffMgrCombinedWrapped){
+      const old=window.ffRenderAdminPenaltyWelfareReports;
+      const wrapped=function(){const result=old.apply(this,arguments);setTimeout(addAdminCombined,30);return result;};
+      wrapped.__ffMgrCombinedWrapped=true;window.ffRenderAdminPenaltyWelfareReports=wrapped;
+    }
+    if(typeof window.toggleMemberMGRPenaltySummary==="function"&&!window.toggleMemberMGRPenaltySummary.__ffMgrCombinedWrapped){
+      const old=window.toggleMemberMGRPenaltySummary;
+      const wrapped=function(){const result=old.apply(this,arguments);setTimeout(addMemberCombined,30);return result;};
+      wrapped.__ffMgrCombinedWrapped=true;window.toggleMemberMGRPenaltySummary=wrapped;
+    }
+  }
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",()=>setTimeout(install,400));
+  else setTimeout(install,400);
+  document.addEventListener("click",e=>{
+    if(e.target&&e.target.closest("#admin"))setTimeout(addAdminCombined,180);
+    if(e.target&&e.target.closest("#memberMGRPenaltySummarySection"))setTimeout(addMemberCombined,180);
+  });
+})();
+</script>
